@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox flex-direction Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 4px solid #764ba2;
+            padding-bottom: 15px;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+            border-radius: 8px;
+            font-size: 1.05em;
+        }
+
+        .code-label {
+            background: #2c3e50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .demo-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .demo-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        /* ===================== ROW LAYOUT ===================== */
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+            min-height: 100px;
+            margin-bottom: 15px;
+        }
+
+        .flex-item {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            font-size: 1.1em;
+        }
+
+        .flex-item:nth-child(1) { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .flex-item:nth-child(2) { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .flex-item:nth-child(3) { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .flex-item:nth-child(4) { background: linear-gradient(135deg, #f39c12, #d68910); }
+        .flex-item:nth-child(5) { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+
+        /* ===================== COLUMN LAYOUT ===================== */
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+            min-height: 100px;
+        }
+
+        .flex-item-col {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+            font-size: 1em;
+        }
+
+        .flex-item-col:nth-child(1) { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .flex-item-col:nth-child(2) { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .flex-item-col:nth-child(3) { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .flex-item-col:nth-child(4) { background: linear-gradient(135deg, #f39c12, #d68910); }
+
+        /* ===================== ROW-REVERSE LAYOUT ===================== */
+        .flex-row-reverse {
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+            min-height: 100px;
+        }
+
+        .flex-item-reverse {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            font-size: 1.1em;
+        }
+
+        .flex-item-reverse:nth-child(1) { background: linear-gradient(135deg, #3498db, #2980b9); order: 5; }
+        .flex-item-reverse:nth-child(2) { background: linear-gradient(135deg, #2ecc71, #27ae60); order: 4; }
+        .flex-item-reverse:nth-child(3) { background: linear-gradient(135deg, #e74c3c, #c0392b); order: 3; }
+        .flex-item-reverse:nth-child(4) { background: linear-gradient(135deg, #f39c12, #d68910); order: 2; }
+        .flex-item-reverse:nth-child(5) { background: linear-gradient(135deg, #9b59b6, #8e44ad); order: 1; }
+
+        /* ===================== COLUMN-REVERSE LAYOUT ===================== */
+        .flex-column-reverse {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+            min-height: 100px;
+        }
+
+        .flex-item-col-reverse {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+            font-size: 1em;
+        }
+
+        .flex-item-col-reverse:nth-child(1) { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .flex-item-col-reverse:nth-child(2) { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .flex-item-col-reverse:nth-child(3) { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .flex-item-col-reverse:nth-child(4) { background: linear-gradient(135deg, #f39c12, #d68910); }
+
+        /* ===================== COMPARISON TABLE ===================== */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 1.05em;
+        }
+
+        .comparison-table td {
+            padding: 18px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 1em;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .direction-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ===================== USE CASES ===================== */
+        .use-case {
+            background: linear-gradient(135deg, #f8f9fa, #ecf0f1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+        }
+
+        .use-case-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .use-case-text {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        /* ===================== VISUAL AXIS DIAGRAM ===================== */
+        .axis-diagram {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+        }
+
+        .axis-labels {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+            margin: 15px 0;
+        }
+
+        .axis-image {
+            font-size: 4em;
+            margin: 20px 0;
+        }
+
+        /* ===================== INTERACTIVE EXAMPLES ===================== */
+        .interactive-example {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 10px 18px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        .control-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .control-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .flex-container {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            min-height: 150px;
+            border: 2px dashed #667eea;
+        }
+
+        .flex-child {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .flex-child:nth-child(1) { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .flex-child:nth-child(2) { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .flex-child:nth-child(3) { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+
+        /* ===================== FOOTER ===================== */
+        footer {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            text-align: center;
+            color: #666;
+            border-top: 2px solid #e0e0e0;
+            font-size: 1.05em;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #f39c12;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 CSS Flexbox flex-direction</h1>
+            <p>Master the main axis direction control in flexbox layouts</p>
+        </header>
+
+        <div class="content">
+            <!-- Introduction -->
+            <div class="section">
+                <h2>What is flex-direction?</h2>
+                <div class="description">
+                    The <span class="highlight">flex-direction</span> property controls the direction in which flex items are placed inside the flex container. It defines the main axis along which items flow. This is one of the most fundamental flexbox properties.
+                </div>
+            </div>
+
+            <!-- The Four Values -->
+            <div class="section">
+                <h2>The Four Values</h2>
+                <div class="description">
+                    <span class="highlight">flex-direction</span> accepts exactly four values, each determining a different layout direction:
+                </div>
+
+                <!-- ROW -->
+                <div class="demo-section">
+                    <div class="demo-title">1️⃣ flex-direction: row (Default)</div>
+                    <div class="code-label">CSS</div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-direction: row;
+}</div>
+                    <div style="margin-bottom: 15px; color: #666; line-height: 1.7;">
+                        Items flow <strong>left to right</strong> horizontally. The main axis is horizontal. Main start is left, main end is right. This is the default value.
+                    </div>
+                    <div class="flex-row">
+                        <div class="flex-item">Item 1</div>
+                        <div class="flex-item">Item 2</div>
+                        <div class="flex-item">Item 3</div>
+                        <div class="flex-item">Item 4</div>
+                        <div class="flex-item">Item 5</div>
+                    </div>
+                    <div style="color: #999; font-size: 0.95em; margin-top: 10px;">
+                        ← Main Axis →
+                    </div>
+                </div>
+
+                <!-- COLUMN -->
+                <div class="demo-section">
+                    <div class="demo-title">2️⃣ flex-direction: column</div>
+                    <div class="code-label">CSS</div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-direction: column;
+}</div>
+                    <div style="margin-bottom: 15px; color: #666; line-height: 1.7;">
+                        Items flow <strong>top to bottom</strong> vertically. The main axis is vertical. Main start is top, main end is bottom.
+                    </div>
+                    <div class="flex-column">
+                        <div class="flex-item-col">Item 1</div>
+                        <div class="flex-item-col">Item 2</div>
+                        <div class="flex-item-col">Item 3</div>
+                        <div class="flex-item-col">Item 4</div>
+                    </div>
+                    <div style="color: #999; font-size: 0.95em; margin-top: 10px;">
+                        ↓ Main Axis ↓
+                    </div>
+                </div>
+
+                <!-- ROW-REVERSE -->
+                <div class="demo-section">
+                    <div class="demo-title">3️⃣ flex-direction: row-reverse</div>
+                    <div class="code-label">CSS</div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-direction: row-reverse;
+}</div>
+                    <div style="margin-bottom: 15px; color: #666; line-height: 1.7;">
+                        Items flow <strong>right to left</strong> horizontally. The main axis is horizontal but reversed. Main start is right, main end is left.
+                    </div>
+                    <div class="flex-row-reverse">
+                        <div class="flex-item-reverse">Item 1</div>
+                        <div class="flex-item-reverse">Item 2</div>
+                        <div class="flex-item-reverse">Item 3</div>
+                        <div class="flex-item-reverse">Item 4</div>
+                        <div class="flex-item-reverse">Item 5</div>
+                    </div>
+                    <div style="color: #999; font-size: 0.95em; margin-top: 10px;">
+                        ← Main Axis (Reversed) →
+                    </div>
+                </div>
+
+                <!-- COLUMN-REVERSE -->
+                <div class="demo-section">
+                    <div class="demo-title">4️⃣ flex-direction: column-reverse</div>
+                    <div class="code-label">CSS</div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-direction: column-reverse;
+}</div>
+                    <div style="margin-bottom: 15px; color: #666; line-height: 1.7;">
+                        Items flow <strong>bottom to top</strong> vertically. The main axis is vertical but reversed. Main start is bottom, main end is top.
+                    </div>
+                    <div class="flex-column-reverse">
+                        <div class="flex-item-col-reverse">Item 1</div>
+                        <div class="flex-item-col-reverse">Item 2</div>
+                        <div class="flex-item-col-reverse">Item 3</div>
+                        <div class="flex-item-col-reverse">Item 4</div>
+                    </div>
+                    <div style="color: #999; font-size: 0.95em; margin-top: 10px;">
+                        ↑ Main Axis (Reversed) ↑
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Reference Table -->
+            <div class="section">
+                <h2>Quick Reference Table</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Direction</th>
+                            <th>Main Axis</th>
+                            <th>Main Start → Main End</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="direction-name">row</span></td>
+                            <td>Left to Right</td>
+                            <td>Horizontal</td>
+                            <td>Left → Right</td>
+                            <td>Navigation bars, horizontal menus, sidebars</td>
+                        </tr>
+                        <tr>
+                            <td><span class="direction-name">column</span></td>
+                            <td>Top to Bottom</td>
+                            <td>Vertical</td>
+                            <td>Top → Bottom</td>
+                            <td>Vertical stacking, forms, mobile layouts</td>
+                        </tr>
+                        <tr>
+                            <td><span class="direction-name">row-reverse</span></td>
+                            <td>Right to Left</td>
+                            <td>Horizontal</td>
+                            <td>Right → Left</td>
+                            <td>RTL languages, reversed layouts, alternate designs</td>
+                        </tr>
+                        <tr>
+                            <td><span class="direction-name">column-reverse</span></td>
+                            <td>Bottom to Top</td>
+                            <td>Vertical</td>
+                            <td>Bottom → Top</td>
+                            <td>Chat bubbles (newest at top), reversed forms</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Main Axis vs Cross Axis -->
+            <div class="section">
+                <h2>Understanding Main Axis vs Cross Axis</h2>
+                <div class="description">
+                    <span class="highlight">flex-direction</span> determines which axis is the <strong>main axis</strong>. The other axis automatically becomes the <strong>cross axis</strong>. This distinction is crucial because other flexbox properties like <span class="highlight">justify-content</span> and <span class="highlight">align-items</span> depend on it.
+                </div>
+
+                <div class="axis-diagram">
+                    <div class="demo-title" style="margin-bottom: 20px;">How Axes Change with flex-direction</div>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>flex-direction</th>
+                                <th>Main Axis</th>
+                                <th>Cross Axis</th>
+                                <th>justify-content Aligns Along</th>
+                                <th>align-items Aligns Along</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="direction-name">row</span></td>
+                                <td>→ Horizontal</td>
+                                <td>↓ Vertical</td>
+                                <td>Horizontally (left-right)</td>
+                                <td>Vertically (top-bottom)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="direction-name">column</span></td>
+                                <td>↓ Vertical</td>
+                                <td>→ Horizontal</td>
+                                <td>Vertically (top-bottom)</td>
+                                <td>Horizontally (left-right)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="direction-name">row-reverse</span></td>
+                                <td>← Horizontal</td>
+                                <td>↓ Vertical</td>
+                                <td>Horizontally (right-left)</td>
+                                <td>Vertically (top-bottom)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="direction-name">column-reverse</span></td>
+                                <td>↑ Vertical</td>
+                                <td>→ Horizontal</td>
+                                <td>Vertically (bottom-top)</td>
+                                <td>Horizontally (left-right)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>💡 Key Insight:</strong> When you change <span class="highlight">flex-direction</span>, the behavior of <span class="highlight">justify-content</span> and <span class="highlight">align-items</span> changes too! This is because they always work along the main and cross axes respectively.
+                </div>
+            </div>
+
+            <!-- Real-World Use Cases -->
+            <div class="section">
+                <h2>Real-World Use Cases</h2>
+
+                <div class="use-case">
+                    <div class="use-case-title">📱 Responsive Navigation</div>
+                    <div class="use-case-text">
+                        Use <span class="highlight">flex-direction: row</span> on desktop for horizontal navigation. Switch to <span class="highlight">flex-direction: column</span> on mobile using media queries for a vertical mobile menu.
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-title">🌍 Right-to-Left Languages</div>
+                    <div class="use-case-text">
+                        Use <span class="highlight">flex-direction: row-reverse</span> for Arabic, Hebrew, and other RTL languages. This automatically reverses the layout without changing the HTML structure.
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-title">📋 Form Layouts</div>
+                    <div class="use-case-text">
+                        Use <span class="highlight">flex-direction: column</span> for vertical form layouts. This creates clean, readable forms with labels above inputs stacked vertically.
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-title">💬 Chat Applications</div>
+                    <div class="use-case-text">
+                        Use <span class="highlight">flex-direction: column-reverse</span> for chat bubbles to display the newest messages at the top while keeping older messages below, scrolling naturally.
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-title">📊 Dashboard Layouts</div>
+                    <div class="use-case-text">
+                        Use <span class="highlight">flex-direction: row</span> for side-by-side layouts on desktop. Change to <span class="highlight">flex-direction: column</span> on mobile for single-column stacking.
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-title">🔄 Slider/Carousel</div>
+                    <div class="use-case-text">
+                        Use <span class="highlight">flex-direction: row</span> to create horizontal carousels. Each item sits side-by-side, perfect for image galleries and product sliders.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combining with Other Properties -->
+            <div class="section">
+                <h2>Combining flex-direction with Other Flexbox Properties</h2>
+                
+                <div class="demo-section">
+                    <div class="demo-title">Example: flex-direction + justify-content</div>
+                    <div class="code-label">CSS</div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;  /* Distributes along main axis */
+}</div>
+                    <div style="margin-bottom: 15px; color: #666; line-height: 1.7;">
+                        When using <span class="highlight">row</span>, <span class="highlight">justify-content</span> aligns items horizontally. With <span class="highlight">column</span>, it aligns them vertically.
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <div class="demo-title">Example: flex-direction + align-items</div>
+                    <div class="code-label">CSS</div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Centers along cross axis */
+}</div>
+                    <div style="margin-bottom: 15px; color: #666; line-height: 1.7;">
+                        When using <span class="highlight">column</span>, <span class="highlight">align-items</span> aligns items horizontally (cross axis). With <span class="highlight">row</span>, it aligns them vertically.
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>📌 Remember:</strong> The role of <span class="highlight">justify-content</span> (main axis) and <span class="highlight">align-items</span> (cross axis) swap depending on <span class="highlight">flex-direction</span>!
+                </div>
+            </div>
+
+            <!-- Responsive Design Pattern -->
+            <div class="section">
+                <h2>Responsive Design Pattern</h2>
+                <div class="code-label">CSS</div>
+                <div class="code-block">/* Desktop: Horizontal layout */
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+/* Mobile: Vertical layout */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+}</div>
+                <div class="description" style="margin-top: 20px;">
+                    This is the most common responsive pattern. Start with a horizontal layout using <span class="highlight">flex-direction: row</span> on desktop. Switch to <span class="highlight">flex-direction: column</span> on mobile to stack items vertically. This maintains clean readability on smaller screens without changing the HTML.
+                </div>
+            </div>
+
+            <!-- Common Mistakes -->
+            <div class="section">
+                <h2>⚠️ Common Mistakes to Avoid</h2>
+
+                <div class="use-case" style="border-left-color: #e74c3c;">
+                    <div class="use-case-title">❌ Forgetting flex-direction is default 'row'</div>
+                    <div class="use-case-text">
+                        Many developers forget that <span class="highlight">flex-direction: row</span> is the default. They're surprised when items appear horizontally without explicitly setting it. Always be aware of the default!
+                    </div>
+                </div>
+
+                <div class="use-case" style="border-left-color: #e74c3c;">
+                    <div class="use-case-title">❌ Mixing up justify-content and align-items after changing direction</div>
+                    <div class="use-case-text">
+                        When you change <span class="highlight">flex-direction</span>, remember that <span class="highlight">justify-content</span> works on the main axis and <span class="highlight">align-items</span> on the cross axis. Their behavior changes with the direction!
+                    </div>
+                </div>
+
+                <div class="use-case" style="border-left-color: #e74c3c;">
+                    <div class="use-case-title">❌ Not accounting for reverse directions with order property</div>
+                    <div class="use-case-text">
+                        When using <span class="highlight">row-reverse</span> or <span class="highlight">column-reverse</span>, the visual order is reversed but the DOM order remains the same. This can cause accessibility issues. Use these properties carefully!
+                    </div>
+                </div>
+
+                <div class="use-case" style="border-left-color: #e74c3c;">
+                    <div class="use-case-title">❌ Forgetting to include all device sizes in media queries</div>
+                    <div class="use-case-text">
+                        When using responsive <span class="highlight">flex-direction</span> changes, test on multiple breakpoints. A layout that works on mobile might break on tablets!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browser Support -->
+            <div class="section">
+                <h2>🌐 Browser Support</h2>
+                <div class="description">
+                    <strong>flex-direction</strong> is supported by all modern browsers:
+                    <br><br>
+                    ✅ Chrome 29+
+                    <br>
+                    ✅ Firefox 28+
+                    <br>
+                    ✅ Safari 9+
+                    <br>
+                    ✅ Edge (All versions)
+                    <br>
+                    ✅ IE 11 (Partial support)
+                    <br><br>
+                    For IE 11 support, you may need to use the <span class="highlight">-webkit-</span> and <span class="highlight">-moz-</span> prefixes in some cases.
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="section">
+                <h2>✨ Key Takeaways</h2>
+                <div class="description">
+                    <strong>1. Four main values:</strong> <span class="highlight">row</span>, <span class="highlight">column</span>, <span class="highlight">row-reverse</span>, <span class="highlight">column-reverse</span>
+                    <br><br>
+                    <strong>2. Default is row:</strong> Items flow horizontally left-to-right unless you specify otherwise
+                    <br><br>
+                    <strong>3. Defines main axis:</strong> Other properties like <span class="highlight">justify-content</span> depend on which axis is the main axis
+                    <br><br>
+                    <strong>4. Great for responsive:</strong> Change direction in media queries to adapt to different screen sizes
+                    <br><br>
+                    <strong>5. Reversing is visual:</strong> <span class="highlight">row-reverse</span> and <span class="highlight">column-reverse</span> reverse visual order but not DOM order
+                    <br><br>
+                    <strong>6. Combine with gap:</strong> Use <span class="highlight">gap</span> property to add consistent spacing regardless of direction
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            🎯 Master flex-direction to control your flexbox layouts with precision!
+        </footer>
+    </div>
+</body>
+</html>

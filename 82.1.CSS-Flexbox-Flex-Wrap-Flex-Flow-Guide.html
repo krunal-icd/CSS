@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox flex-wrap & flex-flow Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 4px solid #764ba2;
+            padding-bottom: 15px;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+            border-radius: 8px;
+            font-size: 1.05em;
+        }
+
+        .code-label {
+            background: #2c3e50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .demo-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .demo-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        /* ===================== FLEX-WRAP: NOWRAP ===================== */
+        .flex-nowrap {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+            overflow-x: auto;
+            min-height: 120px;
+        }
+
+        .flex-item-nowrap {
+            flex: 0 0 150px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+        }
+
+        .flex-item-nowrap:nth-child(1) { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .flex-item-nowrap:nth-child(2) { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .flex-item-nowrap:nth-child(3) { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .flex-item-nowrap:nth-child(4) { background: linear-gradient(135deg, #f39c12, #d68910); }
+        .flex-item-nowrap:nth-child(5) { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        .flex-item-nowrap:nth-child(6) { background: linear-gradient(135deg, #1abc9c, #16a085); }
+
+        /* ===================== FLEX-WRAP: WRAP ===================== */
+        .flex-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+            min-height: 100px;
+        }
+
+        .flex-item-wrap {
+            flex: 0 0 calc(33.333% - 10px);
+            min-width: 120px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+        }
+
+        .flex-item-wrap:nth-child(1) { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .flex-item-wrap:nth-child(2) { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .flex-item-wrap:nth-child(3) { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .flex-item-wrap:nth-child(4) { background: linear-gradient(135deg, #f39c12, #d68910); }
+        .flex-item-wrap:nth-child(5) { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        .flex-item-wrap:nth-child(6) { background: linear-gradient(135deg, #1abc9c, #16a085); }
+
+        /* ===================== FLEX-WRAP: WRAP-REVERSE ===================== */
+        .flex-wrap-reverse {
+            display: flex;
+            flex-wrap: wrap-reverse;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+            min-height: 100px;
+        }
+
+        .flex-item-wrap-reverse {
+            flex: 0 0 calc(33.333% - 10px);
+            min-width: 120px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+        }
+
+        .flex-item-wrap-reverse:nth-child(1) { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .flex-item-wrap-reverse:nth-child(2) { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .flex-item-wrap-reverse:nth-child(3) { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .flex-item-wrap-reverse:nth-child(4) { background: linear-gradient(135deg, #f39c12, #d68910); }
+        .flex-item-wrap-reverse:nth-child(5) { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        .flex-item-wrap-reverse:nth-child(6) { background: linear-gradient(135deg, #1abc9c, #16a085); }
+
+        /* ===================== COMPARISON TABLE ===================== */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 1.05em;
+        }
+
+        .comparison-table td {
+            padding: 18px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 1em;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .property-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+            font-family: 'Courier New', monospace;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #f39c12;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .use-case {
+            background: linear-gradient(135deg, #f8f9fa, #ecf0f1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+        }
+
+        .use-case-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .use-case-text {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* ===================== RESPONSIVE GRID EXAMPLES ===================== */
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+        }
+
+        .grid-item {
+            flex: 1 1 calc(25% - 11px);
+            min-width: 100px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+        }
+
+        .grid-item:nth-child(1) { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .grid-item:nth-child(2) { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .grid-item:nth-child(3) { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .grid-item:nth-child(4) { background: linear-gradient(135deg, #f39c12, #d68910); }
+        .grid-item:nth-child(5) { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        .grid-item:nth-child(6) { background: linear-gradient(135deg, #1abc9c, #16a085); }
+        .grid-item:nth-child(7) { background: linear-gradient(135deg, #e67e22, #d35400); }
+        .grid-item:nth-child(8) { background: linear-gradient(135deg, #34495e, #2c3e50); }
+
+        /* ===================== FLEX-FLOW EXAMPLES ===================== */
+        .flex-flow-row-wrap {
+            display: flex;
+            flex-flow: row wrap;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+        }
+
+        .flex-flow-column-wrap {
+            display: flex;
+            flex-flow: column wrap;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+            max-height: 200px;
+        }
+
+        .flex-flow-item {
+            flex: 0 0 100px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+        }
+
+        .flex-flow-item:nth-child(1) { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .flex-flow-item:nth-child(2) { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .flex-flow-item:nth-child(3) { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .flex-flow-item:nth-child(4) { background: linear-gradient(135deg, #f39c12, #d68910); }
+        .flex-flow-item:nth-child(5) { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        .flex-flow-item:nth-child(6) { background: linear-gradient(135deg, #1abc9c, #16a085); }
+
+        footer {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            text-align: center;
+            color: #666;
+            border-top: 2px solid #e0e0e0;
+            font-size: 1.05em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 CSS Flexbox flex-wrap & flex-flow</h1>
+            <p>Control wrapping behavior and combine direction with wrapping</p>
+        </header>
+
+        <div class="content">
+            <!-- Introduction -->
+            <div class="section">
+                <h2>Understanding flex-wrap & flex-flow</h2>
+                <div class="description">
+                    <strong>flex-wrap</strong> controls whether flex items are forced onto a single line or can wrap to multiple lines. <strong>flex-flow</strong> is a shorthand that combines both <span class="highlight">flex-direction</span> and <span class="highlight">flex-wrap</span> in one property.
+                </div>
+            </div>
+
+            <!-- flex-wrap Section -->
+            <div class="section">
+                <h2>flex-wrap Property</h2>
+                <div class="description">
+                    <span class="highlight">flex-wrap</span> has three values: <span class="highlight">nowrap</span> (default), <span class="highlight">wrap</span>, and <span class="highlight">wrap-reverse</span>. It determines whether items shrink to fit on one line or wrap to multiple lines.
+                </div>
+
+                <!-- NOWRAP -->
+                <div class="demo-section">
+                    <div class="demo-title">1️⃣ flex-wrap: nowrap (Default)</div>
+                    <div class="code-label">CSS</div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-wrap: nowrap;  /* All items on one line */
+}</div>
+                    <div style="margin-bottom: 15px; color: #666; line-height: 1.7;">
+                        Items are forced onto a single line. They shrink to fit or overflow. Scroll horizontally to see all items (6 items in one line).
+                    </div>
+                    <div class="flex-nowrap">
+                        <div class="flex-item-nowrap">Item 1</div>
+                        <div class="flex-item-nowrap">Item 2</div>
+                        <div class="flex-item-nowrap">Item 3</div>
+                        <div class="flex-item-nowrap">Item 4</div>
+                        <div class="flex-item-nowrap">Item 5</div>
+                        <div class="flex-item-nowrap">Item 6</div>
+                    </div>
+                </div>
+
+                <!-- WRAP -->
+                <div class="demo-section">
+                    <div class="demo-title">2️⃣ flex-wrap: wrap</div>
+                    <div class="code-label">CSS</div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-wrap: wrap;  /* Items wrap to next line */
+}</div>
+                    <div style="margin-bottom: 15px; color: #666; line-height: 1.7;">
+                        Items wrap to multiple lines if needed. First line gets filled, overflow wraps below. This is common for responsive grids.
+                    </div>
+                    <div class="flex-wrap">
+                        <div class="flex-item-wrap">Item 1</div>
+                        <div class="flex-item-wrap">Item 2</div>
+                        <div class="flex-item-wrap">Item 3</div>
+                        <div class="flex-item-wrap">Item 4</div>
+                        <div class="flex-item-wrap">Item 5</div>
+                        <div class="flex-item-wrap">Item 6</div>
+                    </div>
+                </div>
+
+                <!-- WRAP-REVERSE -->
+                <div class="demo-section">
+                    <div class="demo-title">3️⃣ flex-wrap: wrap-reverse</div>
+                    <div class="code-label">CSS</div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-wrap: wrap-reverse;  /* Wrap in reverse */
+}</div>
+                    <div style="margin-bottom: 15px; color: #666; line-height: 1.7;">
+                        Items wrap to multiple lines, but lines are reversed. First line appears at the bottom, wrapped lines move upward.
+                    </div>
+                    <div class="flex-wrap-reverse">
+                        <div class="flex-item-wrap-reverse">Item 1</div>
+                        <div class="flex-item-wrap-reverse">Item 2</div>
+                        <div class="flex-item-wrap-reverse">Item 3</div>
+                        <div class="flex-item-wrap-reverse">Item 4</div>
+                        <div class="flex-item-wrap-reverse">Item 5</div>
+                        <div class="flex-item-wrap-reverse">Item 6</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Reference Table -->
+            <div class="section">
+                <h2>flex-wrap Quick Reference</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Behavior</th>
+                            <th>Line Order</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="property-name">nowrap</span></td>
+                            <td>Single line, items shrink to fit</td>
+                            <td>N/A</td>
+                            <td>Navigation bars, fixed layouts</td>
+                        </tr>
+                        <tr>
+                            <td><span class="property-name">wrap</span></td>
+                            <td>Multiple lines, items flow naturally</td>
+                            <td>Top to bottom</td>
+                            <td>Responsive grids, card layouts</td>
+                        </tr>
+                        <tr>
+                            <td><span class="property-name">wrap-reverse</span></td>
+                            <td>Multiple lines, first line at bottom</td>
+                            <td>Bottom to top</td>
+                            <td>Reversed layouts, chat feeds</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- flex-flow Section -->
+            <div class="section">
+                <h2>flex-flow Shorthand Property</h2>
+                <div class="description">
+                    <span class="highlight">flex-flow</span> is a shorthand that combines <span class="highlight">flex-direction</span> and <span class="highlight">flex-wrap</span>. Instead of writing two separate properties, you can specify both in one line. The syntax is: <span class="highlight">flex-flow: [direction] [wrap]</span>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Syntax:</strong> flex-flow: row wrap | column nowrap | row-reverse wrap-reverse | etc.
+                </div>
+
+                <!-- flex-flow Examples -->
+                <div class="demo-section">
+                    <div class="demo-title">📌 Common flex-flow Values</div>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>flex-flow Value</th>
+                                <th>Equivalent To</th>
+                                <th>Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="property-name">row wrap</span></td>
+                                <td>flex-direction: row; flex-wrap: wrap;</td>
+                                <td>Responsive grids, card layouts (most common)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="property-name">row nowrap</span></td>
+                                <td>flex-direction: row; flex-wrap: nowrap;</td>
+                                <td>Navigation bars, single-line layouts</td>
+                            </tr>
+                            <tr>
+                                <td><span class="property-name">column wrap</span></td>
+                                <td>flex-direction: column; flex-wrap: wrap;</td>
+                                <td>Vertical columns that wrap horizontally</td>
+                            </tr>
+                            <tr>
+                                <td><span class="property-name">column nowrap</span></td>
+                                <td>flex-direction: column; flex-wrap: nowrap;</td>
+                                <td>Single column layouts, vertical lists</td>
+                            </tr>
+                            <tr>
+                                <td><span class="property-name">row-reverse wrap</span></td>
+                                <td>flex-direction: row-reverse; flex-wrap: wrap;</td>
+                                <td>RTL reversed layouts with wrapping</td>
+                            </tr>
+                            <tr>
+                                <td><span class="property-name">column-reverse wrap-reverse</span></td>
+                                <td>flex-direction: column-reverse; flex-wrap: wrap-reverse;</td>
+                                <td>Complex reversed layouts</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- flex-flow: row wrap -->
+                <div class="demo-section">
+                    <div class="demo-title">✅ flex-flow: row wrap (Most Common)</div>
+                    <div class="code-label">CSS</div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-flow: row wrap;  /* Horizontal + wrapping */
+}</div>
+                    <div style="margin-bottom: 15px; color: #666; line-height: 1.7;">
+                        Combines horizontal layout with line wrapping. Perfect for responsive grids that adapt to screen width.
+                    </div>
+                    <div class="flex-flow-row-wrap">
+                        <div class="flex-flow-item">Item 1</div>
+                        <div class="flex-flow-item">Item 2</div>
+                        <div class="flex-flow-item">Item 3</div>
+                        <div class="flex-flow-item">Item 4</div>
+                        <div class="flex-flow-item">Item 5</div>
+                        <div class="flex-flow-item">Item 6</div>
+                    </div>
+                </div>
+
+                <!-- flex-flow: column wrap -->
+                <div class="demo-section">
+                    <div class="demo-title">📊 flex-flow: column wrap</div>
+                    <div class="code-label">CSS</div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-flow: column wrap;  /* Vertical + wrapping */
+    max-height: 200px;
+}</div>
+                    <div style="margin-bottom: 15px; color: #666; line-height: 1.7;">
+                        Items flow vertically. When container height is full, items wrap to the right. Creates multi-column layouts.
+                    </div>
+                    <div class="flex-flow-column-wrap">
+                        <div class="flex-flow-item">Item 1</div>
+                        <div class="flex-flow-item">Item 2</div>
+                        <div class="flex-flow-item">Item 3</div>
+                        <div class="flex-flow-item">Item 4</div>
+                        <div class="flex-flow-item">Item 5</div>
+                        <div class="flex-flow-item">Item 6</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-World Use Cases -->
+            <div class="section">
+                <h2>Real-World Use Cases</h2>
+
+                <div class="use-case">
+                    <div class="use-case-title">🛍️ Product Grid</div>
+                    <div class="use-case-text">
+                        Use <span class="highlight">flex-flow: row wrap</span> to create product grids that automatically adjust from 4 columns on desktop to 2 columns on tablet to 1 column on mobile.
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-title">📱 Responsive Navigation</div>
+                    <div class="use-case-text">
+                        Use <span class="highlight">flex-wrap: nowrap</span> on desktop for horizontal navigation. Switch to <span class="highlight">flex-wrap: wrap</span> on mobile so menu items stack properly.
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-title">🏷️ Tag Cloud</div>
+                    <div class="use-case-text">
+                        Use <span class="highlight">flex-flow: row wrap</span> for tags or badges. Items naturally flow left-to-right and wrap to the next line when space runs out.
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-title">📋 Form with Dynamic Fields</div>
+                    <div class="use-case-text">
+                        Use <span class="highlight">flex-flow: row wrap</span> for form layouts. Each input field takes a percentage width and wraps to new line on smaller screens.
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-title">🎨 Gallery Layout</div>
+                    <div class="use-case-text">
+                        Use <span class="highlight">flex-flow: row wrap</span> with equal-width items to create masonry-like gallery layouts. Items maintain uniform size while wrapping naturally.
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-title">💬 Comment Thread (Reversed)</div>
+                    <div class="use-case-text">
+                        Use <span class="highlight">flex-flow: column-reverse wrap-reverse</span> to display newest comments at the top while allowing horizontal wrapping if needed.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Responsive Grid Example -->
+            <div class="section">
+                <h2>Practical Example: Responsive Product Grid</h2>
+                <div class="description">
+                    This grid uses <span class="highlight">flex-flow: row wrap</span> to automatically adapt the number of columns based on available space. Resize your browser to see it adapt!
+                </div>
+                <div class="code-label">CSS</div>
+                <div class="code-block">.grid {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 15px;
+}
+
+.item {
+    flex: 1 1 calc(25% - 11px);  /* 4 columns */
+    min-width: 100px;
+}
+
+@media (max-width: 1024px) {
+    .item {
+        flex-basis: calc(33.333% - 10px);  /* 3 columns */
+    }
+}
+
+@media (max-width: 768px) {
+    .item {
+        flex-basis: calc(50% - 7px);  /* 2 columns */
+    }
+}
+
+@media (max-width: 480px) {
+    .item {
+        flex-basis: 100%;  /* 1 column */
+    }
+}</div>
+                <div style="margin: 20px 0;">
+                    <div class="grid-container">
+                        <div class="grid-item">Product 1</div>
+                        <div class="grid-item">Product 2</div>
+                        <div class="grid-item">Product 3</div>
+                        <div class="grid-item">Product 4</div>
+                        <div class="grid-item">Product 5</div>
+                        <div class="grid-item">Product 6</div>
+                        <div class="grid-item">Product 7</div>
+                        <div class="grid-item">Product 8</div>
+                    </div>
+                </div>
+                <div class="highlight-box">
+                    <strong>💡 Tip:</strong> Resize your browser window to see the grid adapt from 4 columns → 3 → 2 → 1 column as the screen gets smaller.
+                </div>
+            </div>
+
+            <!-- Combining with Other Properties -->
+            <div class="section">
+                <h2>Combining flex-wrap/flex-flow with Other Properties</h2>
+                
+                <div class="demo-section">
+                    <div class="demo-title">flex-wrap + align-content</div>
+                    <div class="code-label">CSS</div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;  /* Aligns wrapped lines */
+}</div>
+                    <div style="margin-bottom: 15px; color: #666; line-height: 1.7;">
+                        When items wrap to multiple lines, use <span class="highlight">align-content</span> to control spacing between the lines (not individual items).
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <div class="demo-title">flex-flow + gap</div>
+                    <div class="code-label">CSS</div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 15px;  /* Consistent spacing between items */
+}</div>
+                    <div style="margin-bottom: 15px; color: #666; line-height: 1.7;">
+                        Use <span class="highlight">gap</span> to create consistent spacing between all items, whether they're on the same line or wrapped to different lines.
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>📌 Remember:</strong> <span class="highlight">justify-content</span> aligns items on the main axis. <span class="highlight">align-content</span> aligns wrapped lines on the cross axis. Use both for full control!
+                </div>
+            </div>
+
+            <!-- Common Mistakes -->
+            <div class="section">
+                <h2>⚠️ Common Mistakes to Avoid</h2>
+
+                <div class="use-case" style="border-left-color: #e74c3c;">
+                    <div class="use-case-title">❌ Forgetting flex-wrap defaults to nowrap</div>
+                    <div class="use-case-text">
+                        Many developers forget that <span class="highlight">flex-wrap: nowrap</span> is the default. Items won't wrap unless you explicitly set <span class="highlight">wrap</span>. Always specify wrapping behavior!
+                    </div>
+                </div>
+
+                <div class="use-case" style="border-left-color: #e74c3c;">
+                    <div class="use-case-title">❌ Using justify-content instead of align-content for wrapped lines</div>
+                    <div class="use-case-text">
+                        <span class="highlight">justify-content</span> aligns items on the main axis. For wrapped lines, use <span class="highlight">align-content</span> on the cross axis. These are different!
+                    </div>
+                </div>
+
+                <div class="use-case" style="border-left-color: #e74c3c;">
+                    <div class="use-case-title">❌ Not setting min-width on flex items in wrapping containers</div>
+                    <div class="use-case-text">
+                        Items can shrink indefinitely without <span class="highlight">min-width</span>. For proper wrapping, always set <span class="highlight">min-width</span> or <span class="highlight">flex-basis</span> to control when items wrap.
+                    </div>
+                </div>
+
+                <div class="use-case" style="border-left-color: #e74c3c;">
+                    <div class="use-case-title">❌ Confusing flex-flow syntax</div>
+                    <div class="use-case-text">
+                        <span class="highlight">flex-flow: row wrap</span> is the correct order (direction first, wrapping second). Not <span class="highlight">wrap row</span>!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browser Support -->
+            <div class="section">
+                <h2>🌐 Browser Support</h2>
+                <div class="description">
+                    <strong>flex-wrap & flex-flow</strong> are supported by all modern browsers:
+                    <br><br>
+                    ✅ Chrome 29+
+                    <br>
+                    ✅ Firefox 28+
+                    <br>
+                    ✅ Safari 9+
+                    <br>
+                    ✅ Edge (All versions)
+                    <br>
+                    ✅ IE 11 (Partial support)
+                    <br><br>
+                    These properties are well-supported. No prefixes needed for modern browsers.
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="section">
+                <h2>✨ Key Takeaways</h2>
+                <div class="description">
+                    <strong>1. flex-wrap controls wrapping:</strong> <span class="highlight">nowrap</span> (single line), <span class="highlight">wrap</span> (multiple lines), <span class="highlight">wrap-reverse</span> (reversed lines)
+                    <br><br>
+                    <strong>2. flex-flow is a shorthand:</strong> Combines flex-direction and flex-wrap: <span class="highlight">flex-flow: row wrap</span>
+                    <br><br>
+                    <strong>3. Most common use case:</strong> <span class="highlight">flex-flow: row wrap</span> for responsive grids and card layouts
+                    <br><br>
+                    <strong>4. Set min-width for proper wrapping:</strong> Items need constraints to wrap, otherwise they shrink indefinitely
+                    <br><br>
+                    <strong>5. Use align-content for wrapped lines:</strong> Control spacing between multiple wrapped lines, not just items
+                    <br><br>
+                    <strong>6. Combine with gap:</strong> Use <span class="highlight">gap</span> for consistent spacing between all items regardless of wrapping
+                    <br><br>
+                    <strong>7. Add media queries:</strong> Adjust flex-basis at breakpoints to change columns on different screen sizes
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            🎯 Master flex-wrap and flex-flow to build truly responsive, adaptive layouts!
+        </footer>
+    </div>
+</body>
+</html>

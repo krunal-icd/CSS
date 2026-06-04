@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox Flex-Grow Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+
+        .intro-text {
+            text-align: center;
+            color: #555;
+            margin-bottom: 40px;
+            font-size: 1.05em;
+        }
+
+        .example-section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid #667eea;
+        }
+
+        .example-title {
+            font-size: 1.6em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .code-label {
+            background: #34495e;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        /* ============ EXAMPLE 1: Equal Width Columns ============ */
+        .column-grid {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .column {
+            flex-grow: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .column-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .column-content {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        /* ============ EXAMPLE 2: Sidebar + Main Content ============ */
+        .sidebar-layout {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .sidebar {
+            flex: 0 0 250px;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .sidebar-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .sidebar-item:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .main-content h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .main-content p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* ============ EXAMPLE 3: Proportional Columns ============ */
+        .proportional-grid {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .proportional-col {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .proportional-col.small {
+            flex-grow: 1;
+        }
+
+        .proportional-col.medium {
+            flex-grow: 1;
+        }
+
+        .proportional-col.large {
+            flex-grow: 2;
+        }
+
+        .col-ratio {
+            font-size: 0.85em;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        /* ============ EXAMPLE 4: Navigation Bar ============ */
+        .navbar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            color: white;
+        }
+
+        .nav-logo {
+            flex: 0 0 auto;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .nav-items {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-items a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-items a:hover {
+            opacity: 0.7;
+        }
+
+        .nav-spacer {
+            flex: 1;
+        }
+
+        .nav-auth {
+            flex: 0 0 auto;
+            background: white;
+            color: #667eea;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* ============ EXAMPLE 5: Card Grid ============ */
+        .card-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            flex: 1 1 calc(25% - 15px);
+            min-width: 180px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* ============ EXAMPLE 6: Form Layout ============ */
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group.full {
+            flex-basis: 100%;
+        }
+
+        /* ============ EXAMPLE 7: Header with Flexible Search ============ */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-logo {
+            flex: 0 0 auto;
+            font-weight: bold;
+            font-size: 1.3em;
+            color: #667eea;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .header-icons {
+            flex: 0 0 auto;
+            display: flex;
+            gap: 15px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        /* ============ EXAMPLE 8: Dashboard Grid ============ */
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .widget {
+            flex: 1;
+            min-width: 200px;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .widget-title {
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .widget-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .widget-change {
+            color: #4caf50;
+            font-size: 0.9em;
+        }
+
+        /* ============ EXAMPLE 9: Footer ============ */
+        .footer-content {
+            display: flex;
+            gap: 40px;
+            margin: 20px 0;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .footer-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .footer-link {
+            display: block;
+            color: #666;
+            text-decoration: none;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: #667eea;
+        }
+
+        /* ============ EXAMPLE 10: Split Layout ============ */
+        .split-layout {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .split-left {
+            flex: 1;
+        }
+
+        .split-right {
+            flex: 2;
+        }
+
+        .split-left,
+        .split-right {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .split-left h4,
+        .split-right h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .split-left p,
+        .split-right p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .column-grid,
+            .sidebar-layout,
+            .proportional-grid,
+            .split-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                flex: 1;
+                min-width: auto;
+            }
+
+            .split-left,
+            .split-right {
+                flex: 1 !important;
+            }
+
+            .card {
+                flex: 0 1 calc(50% - 10px) !important;
+            }
+
+            .navbar {
+                flex-wrap: wrap;
+            }
+
+            .nav-spacer {
+                flex-basis: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📈 CSS Flexbox Flex-Grow Practical Examples</h1>
+        <p class="intro-text">Real-world components using flex-grow for responsive, proportional layouts</p>
+
+        <!-- EXAMPLE 1: Equal Width Columns -->
+        <div class="example-section">
+            <h2 class="example-title">1️⃣ Equal Width Columns - flex-grow: 1</h2>
+            <p class="example-description">Three columns that grow equally to fill available space.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.column {
+    flex-grow: 1;  /* All columns grow equally */
+}
+
+.column-grid {
+    display: flex;
+    gap: 20px;
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="column-grid">
+                <div class="column">
+                    <div class="column-title">Column 1</div>
+                    <div class="column-content">Equal width</div>
+                </div>
+                <div class="column">
+                    <div class="column-title">Column 2</div>
+                    <div class="column-content">Equal width</div>
+                </div>
+                <div class="column">
+                    <div class="column-title">Column 3</div>
+                    <div class="column-content">Equal width</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 2: Sidebar + Main Content -->
+        <div class="example-section">
+            <h2 class="example-title">2️⃣ Sidebar + Main Content - flex: 0 0 250px vs flex: 1</h2>
+            <p class="example-description">Fixed-width sidebar with flexible main content area.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.sidebar {
+    flex: 0 0 250px;  /* Fixed width, doesn't grow */
+}
+
+.main-content {
+    flex: 1;          /* Grows to fill remaining space */
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="sidebar-layout">
+                <div class="sidebar">
+                    <div class="sidebar-item">📊 Dashboard</div>
+                    <div class="sidebar-item">👤 Profile</div>
+                    <div class="sidebar-item">⚙️ Settings</div>
+                    <div class="sidebar-item">📧 Messages</div>
+                </div>
+                <div class="main-content">
+                    <h3>Welcome to Dashboard</h3>
+                    <p>The sidebar maintains a fixed width of 250px while the main content area grows to fill all available space. This is a perfect example of flex-grow: 1 being used for flexible layouts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 3: Proportional Columns -->
+        <div class="example-section">
+            <h2 class="example-title">3️⃣ Proportional Columns - 1:1:2 Ratio</h2>
+            <p class="example-description">Three columns with different flex-grow values creating proportional sizes.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.col-small { flex-grow: 1; }   /* 1/4 of space */
+.col-medium { flex-grow: 1; }  /* 1/4 of space */
+.col-large { flex-grow: 2; }   /* 2/4 (1/2) of space */
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="proportional-grid">
+                <div class="proportional-col small">
+                    <div style="font-size: 1.3em; font-weight: bold;">25%</div>
+                    <div class="col-ratio">flex-grow: 1</div>
+                </div>
+                <div class="proportional-col medium">
+                    <div style="font-size: 1.3em; font-weight: bold;">25%</div>
+                    <div class="col-ratio">flex-grow: 1</div>
+                </div>
+                <div class="proportional-col large">
+                    <div style="font-size: 1.3em; font-weight: bold;">50%</div>
+                    <div class="col-ratio">flex-grow: 2</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 4: Navigation Bar -->
+        <div class="example-section">
+            <h2 class="example-title">4️⃣ Navigation Bar - Spacer with flex-grow: 1</h2>
+            <p class="example-description">Logo fixed, menu items fixed, spacer grows to push auth button to right.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.nav-logo { flex: 0 0 auto; }
+.nav-items { flex: 0 0 auto; }
+.nav-spacer { flex: 1; }       /* Grows to push items apart */
+.nav-auth { flex: 0 0 auto; }
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="navbar">
+                <div class="nav-logo">🏢 Brand</div>
+                <ul class="nav-items">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Docs</a></li>
+                </ul>
+                <div class="nav-spacer"></div>
+                <a class="nav-auth">Sign In</a>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 5: Responsive Card Grid -->
+        <div class="example-section">
+            <h2 class="example-title">5️⃣ Responsive Card Grid - flex: 1 with flex-wrap</h2>
+            <p class="example-description">Cards grow to fill width, wrap to multiple rows on smaller screens.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.card-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    flex: 1 1 calc(25% - 15px);
+    min-width: 180px;
+}
+            </div>
+
+            <span class="code-label">Live Example (Resize to see wrap)</span>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-image">📱</div>
+                    <div class="card-content">
+                        <div class="card-title">Phone</div>
+                        <div class="card-description">Mobile device</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image">💻</div>
+                    <div class="card-content">
+                        <div class="card-title">Laptop</div>
+                        <div class="card-description">Desktop computer</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image">⌚</div>
+                    <div class="card-content">
+                        <div class="card-title">Watch</div>
+                        <div class="card-description">Wearable device</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image">🎧</div>
+                    <div class="card-content">
+                        <div class="card-title">Headphones</div>
+                        <div class="card-description">Audio device</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 6: Form Layout -->
+        <div class="example-section">
+            <h2 class="example-title">6️⃣ Form Layout - Input Fields with flex-grow: 1</h2>
+            <p class="example-description">Form fields grow equally to fill available width.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.form-group {
+    flex: 1;        /* Grows to fill available space */
+    min-width: 150px;
+}
+
+.form-group.full {
+    flex-basis: 100%;
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <input class="form-input" type="text" placeholder="John">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Last Name</label>
+                    <input class="form-input" type="text" placeholder="Doe">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group full">
+                    <label class="form-label">Email</label>
+                    <input class="form-input" type="email" placeholder="john@example.com">
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 7: Header with Search -->
+        <div class="example-section">
+            <h2 class="example-title">7️⃣ Header with Flexible Search Box</h2>
+            <p class="example-description">Logo and icons fixed, search box grows to fill space.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.header-logo { flex: 0 0 auto; }
+.search-box { flex: 1; min-width: 150px; }
+.header-icons { flex: 0 0 auto; }
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="header">
+                <div class="header-logo">🔍 Search</div>
+                <div class="search-box">
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="header-icons">
+                    🔔 👤 ⚙️
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 8: Dashboard Grid -->
+        <div class="example-section">
+            <h2 class="example-title">8️⃣ Dashboard Grid - Equal Width Widgets</h2>
+            <p class="example-description">Dashboard metrics with flex-grow for responsive layout.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.widget {
+    flex: 1;
+    min-width: 200px;
+}
+            </div>
+
+            <span class="code-label">Live Example (Resize to see reflow)</span>
+            <div class="dashboard">
+                <div class="widget">
+                    <div class="widget-title">Revenue</div>
+                    <div class="widget-value">$48.5K</div>
+                    <div class="widget-change">+12% from last month</div>
+                </div>
+                <div class="widget">
+                    <div class="widget-title">Users</div>
+                    <div class="widget-value">2.5M</div>
+                    <div class="widget-change">+8% from last month</div>
+                </div>
+                <div class="widget">
+                    <div class="widget-title">Orders</div>
+                    <div class="widget-value">1,823</div>
+                    <div class="widget-change">+15% from last month</div>
+                </div>
+                <div class="widget">
+                    <div class="widget-title">Conversion</div>
+                    <div class="widget-value">3.2%</div>
+                    <div class="widget-change">+0.5% from last month</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 9: Footer -->
+        <div class="example-section">
+            <h2 class="example-title">9️⃣ Footer - Equal Width Sections</h2>
+            <p class="example-description">Footer sections grow equally to fill width.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.footer-content {
+    display: flex;
+    gap: 40px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 150px;
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-title">Product</div>
+                    <a class="footer-link">Features</a>
+                    <a class="footer-link">Pricing</a>
+                    <a class="footer-link">Security</a>
+                </div>
+                <div class="footer-section">
+                    <div class="footer-title">Company</div>
+                    <a class="footer-link">About</a>
+                    <a class="footer-link">Blog</a>
+                    <a class="footer-link">Careers</a>
+                </div>
+                <div class="footer-section">
+                    <div class="footer-title">Legal</div>
+                    <a class="footer-link">Privacy</a>
+                    <a class="footer-link">Terms</a>
+                    <a class="footer-link">Cookies</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 10: Split Layout -->
+        <div class="example-section">
+            <h2 class="example-title">🔟 Split Layout - 1:2 Ratio</h2>
+            <p class="example-description">Sidebar (1) and main content (2) with proportional flex-grow.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.split-left { flex: 1; }
+.split-right { flex: 2; }
+
+/* Result: Left gets 1/3, Right gets 2/3 */
+            </div>
+
+            <span class="code-label">Live Example (Resize to see change)</span>
+            <div class="split-layout">
+                <div class="split-left">
+                    <h4>Sidebar (1/3)</h4>
+                    <p>Takes 33% of available space with flex: 1</p>
+                </div>
+                <div class="split-right">
+                    <h4>Main Content (2/3)</h4>
+                    <p>Takes 67% of available space with flex: 2. This area is twice as wide as the sidebar, making it perfect for content-heavy layouts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Takeaways -->
+        <div class="example-section">
+            <h2 class="example-title">💡 Key Takeaways</h2>
+            
+            <div class="info-box">
+                <strong>Equal Width:</strong> Use <code>flex: 1</code> on all items for equal width distribution
+            </div>
+
+            <div class="info-box">
+                <strong>Sidebar + Content:</strong> Use <code>flex: 0 0 250px</code> for sidebar, <code>flex: 1</code> for content
+            </div>
+
+            <div class="info-box">
+                <strong>Proportional:</strong> Use different flex-grow values (1, 1, 2) for 1:1:2 ratio
+            </div>
+
+            <div class="info-box">
+                <strong>Spacer Element:</strong> Use <code>flex: 1</code> on empty div to push other items apart
+            </div>
+
+            <div class="info-box">
+                <strong>Shorthand:</strong> <code>flex: 1</code> = <code>flex-grow: 1; flex-shrink: 1; flex-basis: 0</code>
+            </div>
+
+            <div class="info-box">
+                <strong>Min-Width:</strong> Always set <code>min-width</code> with <code>flex: 1</code> for responsive safety
+            </div>
+
+            <div class="info-box">
+                <strong>🎯 Pro Tip:</strong> Combine flex-grow with flex-wrap and gap for responsive, flexible layouts
+            </div>
+
+            <div class="info-box">
+                <strong>✅ Remember:</strong> flex-grow only expands items, doesn't shrink them. Use flex-shrink for that!
+            </div>
+        </div>
+    </div>
+</body>
+</html>

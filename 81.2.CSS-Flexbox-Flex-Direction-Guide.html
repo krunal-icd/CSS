@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox flex-direction Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 50px;
+            font-size: 2.5em;
+        }
+
+        .example-block {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-title {
+            font-size: 1.6em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+            padding-left: 20px;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        .code-section {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        /* ===================== EXAMPLE 1: HORIZONTAL NAV ===================== */
+        .horizontal-nav {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            gap: 20px;
+        }
+
+        .nav-logo {
+            font-weight: bold;
+            font-size: 1.4em;
+            flex: 0 0 auto;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-menu a:hover {
+            opacity: 0.8;
+        }
+
+        .nav-user {
+            flex: 0 0 auto;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        /* ===================== EXAMPLE 2: VERTICAL MENU ===================== */
+        .vertical-menu-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            flex: 0 0 150px;
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            background: #667eea;
+            transform: translateX(5px);
+        }
+
+        .content-area {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+
+        /* ===================== EXAMPLE 3: FORM LAYOUT ===================== */
+        .form-wrapper {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 500px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .form-input,
+        .form-textarea {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-actions {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .btn-secondary:hover {
+            background: #bdc3c7;
+        }
+
+        /* ===================== EXAMPLE 4: CARD WITH DIRECTION ===================== */
+        .cards-grid {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            flex: 1 1 calc(33.333% - 14px);
+            min-width: 250px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            font-size: 2.5em;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 25px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #2c3e50;
+        }
+
+        .card-text {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .card-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .card-button:hover {
+            background: #5a67d8;
+        }
+
+        /* ===================== EXAMPLE 5: CHAT APPLICATION ===================== */
+        .chat-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .chat-box {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 15px;
+        }
+
+        .message {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex: 0 0 40px;
+        }
+
+        .message.user .message-avatar {
+            background: #2ecc71;
+            order: 2;
+        }
+
+        .message-text {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 12px;
+            max-width: 70%;
+            word-wrap: break-word;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .message.user .message-text {
+            background: #667eea;
+            color: white;
+        }
+
+        /* ===================== EXAMPLE 6: RESPONSIVE LAYOUT ===================== */
+        .responsive-hero {
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+            align-items: center;
+            background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+            color: white;
+            padding: 50px 40px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .hero-image {
+            flex: 0 0 40%;
+            background: rgba(255, 255, 255, 0.2);
+            height: 250px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5em;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .hero-text p {
+            line-height: 1.8;
+            font-size: 1.05em;
+            opacity: 0.95;
+        }
+
+        /* ===================== EXAMPLE 7: PRODUCT SHOWCASE ===================== */
+        .product-showcase {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            align-items: center;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            flex: 0 0 45%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 300px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5em;
+        }
+
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .product-name {
+            font-size: 2em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .product-price {
+            font-size: 1.8em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .product-description {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .product-features {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .feature {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .feature-icon {
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        /* ===================== EXAMPLE 8: PROFILE CARD ===================== */
+        .profile-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            text-align: center;
+        }
+
+        .profile-name {
+            font-size: 1.5em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .profile-title {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .profile-bio {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .profile-actions {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .profile-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .profile-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        /* ===================== RESPONSIVE ===================== */
+        @media (max-width: 1024px) {
+            .product-showcase {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .product-image {
+                flex: 0 0 auto;
+                width: 100%;
+            }
+
+            .cards-grid .card {
+                flex: 1 1 calc(50% - 10px);
+            }
+
+            .responsive-hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-image {
+                flex: 0 0 auto;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .horizontal-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .vertical-menu-container {
+                flex-direction: column;
+            }
+
+            .sidebar-menu {
+                flex: 0 0 auto;
+                flex-direction: row;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+
+            .menu-item {
+                flex: 1 1 calc(50% - 5px);
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .cards-grid .card {
+                flex: 1 1 100%;
+            }
+
+            .message-text {
+                max-width: 85%;
+            }
+
+            .product-features {
+                align-items: flex-start;
+            }
+        }
+
+        .code-label {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .tip-box {
+            background: #fff3cd;
+            border-left: 4px solid #f39c12;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .tip-box strong {
+            color: #f39c12;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Flexbox flex-direction Practical Examples</h1>
+
+        <!-- Example 1: Horizontal Navigation -->
+        <div class="example-block">
+            <div class="example-title">1️⃣ Horizontal Navigation Bar</div>
+            <div class="example-description">
+                A responsive navigation bar using <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: row</code> to layout logo, menu, and user profile horizontally.
+            </div>
+            <div class="code-label">CSS</div>
+            <div class="code-section">
+.navbar {
+    display: flex;
+    flex-direction: row;  /* Horizontal layout */
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: row;  /* Horizontal menu items */
+    gap: 30px;
+    flex: 1;
+    justify-content: center;
+}</div>
+            <div class="horizontal-nav">
+                <div class="nav-logo">🚀 MyApp</div>
+                <div class="nav-menu">
+                    <a href="#">Home</a>
+                    <a href="#">Features</a>
+                    <a href="#">Pricing</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="nav-user">👤 Profile</div>
+            </div>
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> On mobile, switch to <code style="background: #ecf0f1; padding: 2px 6px; border-radius: 3px;">flex-direction: column</code> in media queries for a vertical menu.
+            </div>
+        </div>
+
+        <!-- Example 2: Sidebar + Content -->
+        <div class="example-block">
+            <div class="example-title">2️⃣ Sidebar Navigation with Content</div>
+            <div class="example-description">
+                Combines <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: row</code> for the main layout and <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: column</code> for the vertical menu.
+            </div>
+            <div class="code-label">CSS</div>
+            <div class="code-section">
+.container {
+    display: flex;
+    flex-direction: row;  /* Horizontal: sidebar left, content right */
+    gap: 20px;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;  /* Vertical: stack menu items */
+    gap: 10px;
+    flex: 0 0 150px;
+}
+
+.content {
+    flex: 1;
+}</div>
+            <div class="vertical-menu-container">
+                <div class="sidebar-menu">
+                    <div class="menu-item">📊 Dashboard</div>
+                    <div class="menu-item">📈 Analytics</div>
+                    <div class="menu-item">👥 Users</div>
+                    <div class="menu-item">⚙️ Settings</div>
+                </div>
+                <div class="content-area">
+                    <h2>Main Content Area</h2>
+                    <p>Select a menu item to view content here</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> On mobile, change to <code style="background: #ecf0f1; padding: 2px 6px; border-radius: 3px;">flex-direction: column</code> to stack sidebar and content vertically.
+            </div>
+        </div>
+
+        <!-- Example 3: Vertical Form -->
+        <div class="example-block">
+            <div class="example-title">3️⃣ Vertical Form Layout</div>
+            <div class="example-description">
+                Uses <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: column</code> for vertical form stacking and <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: row</code> for buttons.
+            </div>
+            <div class="code-label">CSS</div>
+            <div class="code-section">
+.form-container {
+    display: flex;
+    flex-direction: column;  /* Stack form fields vertically */
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;  /* Label above input */
+    gap: 8px;
+}
+
+.form-actions {
+    display: flex;
+    flex-direction: row;  /* Buttons side-by-side */
+    gap: 10px;
+    justify-content: flex-end;
+}</div>
+            <div class="form-wrapper">
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-textarea" placeholder="Your message here..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-secondary">Cancel</button>
+                        <button class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> This is the most common form pattern—vertical stacking on all screen sizes for readability.
+            </div>
+        </div>
+
+        <!-- Example 4: Card Grid -->
+        <div class="example-block">
+            <div class="example-title">4️⃣ Responsive Card Grid</div>
+            <div class="example-description">
+                Uses <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: row</code> with <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-wrap: wrap</code> for a responsive grid. Each card uses <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: column</code> internally.
+            </div>
+            <div class="code-label">CSS</div>
+            <div class="code-section">
+.cards-grid {
+    display: flex;
+    flex-direction: row;  /* Horizontal layout */
+    flex-wrap: wrap;      /* Wrap to next line */
+    gap: 20px;
+}
+
+.card {
+    flex: 1 1 calc(33.333% - 14px);
+    min-width: 250px;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;  /* Vertical card content */
+    gap: 15px;
+}</div>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">💡</div>
+                    <div class="card-body">
+                        <div class="card-title">Feature One</div>
+                        <div class="card-text">Powerful features designed to help you succeed in your projects.</div>
+                        <button class="card-button">Learn More</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">⚡</div>
+                    <div class="card-body">
+                        <div class="card-title">Feature Two</div>
+                        <div class="card-text">Lightning-fast performance with optimized infrastructure and caching.</div>
+                        <button class="card-button">Learn More</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">🔒</div>
+                    <div class="card-body">
+                        <div class="card-title">Feature Three</div>
+                        <div class="card-text">Enterprise-grade security with SSL encryption and data protection.</div>
+                        <button class="card-button">Learn More</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> Resize your browser to see the grid adapt from 3 columns → 2 columns → 1 column.
+            </div>
+        </div>
+
+        <!-- Example 5: Chat Application -->
+        <div class="example-block">
+            <div class="example-title">5️⃣ Chat Application with column-reverse</div>
+            <div class="example-description">
+                Uses <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: column-reverse</code> to display newest messages at the top, with each message using <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: row</code>.
+            </div>
+            <div class="code-label">CSS</div>
+            <div class="code-section">
+.chat-box {
+    display: flex;
+    flex-direction: column-reverse;  /* Newest at top */
+    gap: 15px;
+}
+
+.message {
+    display: flex;
+    flex-direction: row;  /* Avatar and text side-by-side */
+    gap: 10px;
+    align-items: flex-end;
+}</div>
+            <div class="chat-container">
+                <div class="chat-box">
+                    <div class="message user">
+                        <div class="message-text">Thanks! This really helps!</div>
+                        <div class="message-avatar">You</div>
+                    </div>
+                    <div class="message bot">
+                        <div class="message-avatar">Bot</div>
+                        <div class="message-text">You're welcome! Let me know if you need anything else.</div>
+                    </div>
+                    <div class="message user">
+                        <div class="message-text">Can you explain flex-direction?</div>
+                        <div class="message-avatar">You</div>
+                    </div>
+                    <div class="message bot">
+                        <div class="message-avatar">Bot</div>
+                        <div class="message-text">Of course! flex-direction controls the main axis direction...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> <code style="background: #ecf0f1; padding: 2px 6px; border-radius: 3px;">column-reverse</code> is perfect for chat because newest messages appear at the top visually, but the DOM order stays natural.
+            </div>
+        </div>
+
+        <!-- Example 6: Responsive Hero -->
+        <div class="example-block">
+            <div class="example-title">6️⃣ Responsive Hero Section</div>
+            <div class="example-description">
+                Uses <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: row</code> on desktop and switches to <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: column</code> on mobile via media queries.
+            </div>
+            <div class="code-label">CSS</div>
+            <div class="code-section">
+/* Desktop */
+.hero {
+    display: flex;
+    flex-direction: row;  /* Image and text side-by-side */
+    gap: 40px;
+    align-items: center;
+}
+
+/* Mobile */
+@media (max-width: 1024px) {
+    .hero {
+        flex-direction: column;  /* Stack vertically */
+        text-align: center;
+    }
+}</div>
+            <div class="responsive-hero">
+                <div class="hero-image">🎨</div>
+                <div class="hero-text">
+                    <h3>Responsive Design</h3>
+                    <p>This hero section changes direction at different screen sizes. On desktop, it displays horizontally. On tablets and mobile, it stacks vertically for better readability.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> Resize your browser to see the layout change from horizontal to vertical at the breakpoint (1024px).
+            </div>
+        </div>
+
+        <!-- Example 7: Product Showcase -->
+        <div class="example-block">
+            <div class="example-title">7️⃣ Product Showcase</div>
+            <div class="example-description">
+                Main container uses <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: row</code> for image and info side-by-side. Product info uses <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: column</code> for vertical content stacking.
+            </div>
+            <div class="code-label">CSS</div>
+            <div class="code-section">
+.product-showcase {
+    display: flex;
+    flex-direction: row;  /* Image and info horizontal */
+    gap: 30px;
+    align-items: center;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;  /* Stack info vertically */
+    gap: 15px;
+}</div>
+            <div class="product-showcase">
+                <div class="product-image">📱</div>
+                <div class="product-info">
+                    <div class="product-name">Premium Smartphone</div>
+                    <div class="product-price">$999</div>
+                    <div class="product-description">The latest flagship smartphone with cutting-edge technology and sleek design.</div>
+                    <div class="product-features">
+                        <div class="feature">
+                            <div class="feature-icon">✓</div>
+                            <div>6.7-inch AMOLED display</div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">✓</div>
+                            <div>12GB RAM, 256GB Storage</div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">✓</div>
+                            <div>Dual 50MP + 12MP cameras</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">Add to Cart</button>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> On mobile, this changes to <code style="background: #ecf0f1; padding: 2px 6px; border-radius: 3px;">flex-direction: column</code> so image appears above product info.
+            </div>
+        </div>
+
+        <!-- Example 8: Profile Card -->
+        <div class="example-block">
+            <div class="example-title">8️⃣ Centered Profile Card</div>
+            <div class="example-description">
+                Uses <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: column</code> with centered alignment to create a vertical profile card. Action buttons use <code style="background: #ecf0f1; padding: 2px 8px; border-radius: 3px;">flex-direction: row</code>.
+            </div>
+            <div class="code-label">CSS</div>
+            <div class="code-section">
+.profile-card {
+    display: flex;
+    flex-direction: column;  /* Vertical stacking */
+    align-items: center;  /* Center horizontally */
+    gap: 20px;
+}
+
+.profile-actions {
+    display: flex;
+    flex-direction: row;  /* Buttons side-by-side */
+    gap: 10px;
+    justify-content: center;
+}</div>
+            <div class="profile-card">
+                <div class="profile-avatar">👨</div>
+                <div class="profile-info">
+                    <div class="profile-name">John Doe</div>
+                    <div class="profile-title">Product Designer</div>
+                    <div class="profile-bio">Passionate about creating beautiful and intuitive user experiences for millions of users worldwide.</div>
+                </div>
+                <div class="profile-actions">
+                    <button class="profile-btn">Follow</button>
+                    <button class="profile-btn">Message</button>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> This card uses centering along both axes for perfect symmetry—great for social profiles and team pages.
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="example-block" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="example-title" style="color: white; border-left-color: white;">✨ Key Takeaways</div>
+            <div style="line-height: 1.9; font-size: 1.05em;">
+                <strong>1. flex-direction: row</strong> – Items flow left-to-right. Use for horizontal navigation, sidebars, product layouts.
+                <br><br>
+                <strong>2. flex-direction: column</strong> – Items flow top-to-bottom. Use for forms, vertical menus, centered profiles.
+                <br><br>
+                <strong>3. Responsive changes</strong> – Use media queries to change from row to column for mobile devices.
+                <br><br>
+                <strong>4. Nested directions</strong> – Combine row containers with column children for complex layouts.
+                <br><br>
+                <strong>5. column-reverse for chats</strong> – Display newest messages at top without changing DOM order.
+                <br><br>
+                <strong>6. Always test</strong> – Resize browsers and test on different devices to ensure layouts adapt correctly.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

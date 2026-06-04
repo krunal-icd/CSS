@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox Flex-Basis Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .tutorial-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            color: #f5576c;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #f5576c;
+            padding-bottom: 10px;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            font-size: 1.05em;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border-left: 4px solid #f5576c;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .syntax-highlight {
+            background: #fffacd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+
+        /* Demo Styles */
+        .demo-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .demo-container {
+            background: #f0f0f0;
+            border: 2px dashed #f5576c;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            display: flex;
+            gap: 10px;
+            position: relative;
+            min-height: 120px;
+            flex-wrap: wrap;
+        }
+
+        .demo-label {
+            position: absolute;
+            top: -25px;
+            left: 0;
+            background: #f5576c;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .comparison-item {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            overflow: hidden;
+        }
+
+        .comparison-item h4 {
+            color: #f5576c;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .comparison-item .demo-container {
+            margin: 15px 0;
+            min-height: 100px;
+        }
+
+        .value-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .value-table th,
+        .value-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .value-table th {
+            background: #f5576c;
+            color: white;
+            font-weight: bold;
+        }
+
+        .value-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .value-table tr:hover {
+            background: #f0f0f0;
+        }
+
+        .value-table code {
+            background: #f5f5f5;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .tip-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .tip-box strong {
+            color: #2e7d32;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .warning-box strong {
+            color: #e65100;
+        }
+
+        .interactive-section {
+            background: #f9f9f9;
+            border: 2px solid #f5576c;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .control-group {
+            margin: 15px 0;
+        }
+
+        .control-group label {
+            display: block;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .control-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #f5576c;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .flex-demo-interactive {
+            background: #f0f0f0;
+            border: 2px dashed #f5576c;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            min-height: 150px;
+            flex-wrap: wrap;
+        }
+
+        .flex-demo-interactive > div {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .use-case-box {
+            background: #f0f7ff;
+            border-left: 4px solid #f5576c;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .use-case-box strong {
+            color: #f5576c;
+        }
+
+        .important-note {
+            background: #ffe8e8;
+            border-left: 4px solid #f5576c;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            color: #c2185b;
+        }
+
+        .flex-comparison {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tutorial-section {
+                padding: 20px;
+            }
+
+            .flex-demo-interactive {
+                flex-direction: column;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 40px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📐 CSS Flexbox Flex-Basis Tutorial</h1>
+        <p class="subtitle">Master the base size of flex items before growth or shrinkage</p>
+
+        <!-- Introduction -->
+        <div class="tutorial-section">
+            <h2 class="section-title">What is Flex-Basis?</h2>
+            <p class="description">
+                The <span class="syntax-highlight">flex-basis</span> property defines the default size of a flex item before the remaining space is distributed according to flex-grow and flex-shrink. It sets the main size (width in row direction, height in column direction).
+            </p>
+            <p class="description">
+                Default value is <span class="syntax-highlight">auto</span>, which means the item's size is based on its content or width property. You can set it to any length value (px, em, %) or auto.
+            </p>
+
+            <div class="important-note">
+                <strong>💡 Key Point:</strong> Flex-basis defines the starting size BEFORE flex-grow/flex-shrink calculations. It's the foundation for all flex sizing.
+            </div>
+
+            <div class="code-block">
+/* Basic Syntax - Applied to individual flex items */
+.flex-item {
+    flex-basis: 200px;  /* Item starts at 200px */
+}
+
+/* Default value */
+.flex-item-default {
+    flex-basis: auto;   /* Size based on content/width */
+}
+
+/* Shorthand */
+.flex-item {
+    flex: 1 1 200px;  /* flex-grow flex-shrink flex-basis */
+}
+            </div>
+        </div>
+
+        <!-- Values Table -->
+        <div class="tutorial-section">
+            <h2 class="section-title">Flex-Basis Property Values</h2>
+            <table class="value-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>auto</code></td>
+                        <td>Default - size based on content or width property</td>
+                        <td><code>flex-basis: auto</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>0</code></td>
+                        <td>Item starts at zero, only flex-grow matters</td>
+                        <td><code>flex-basis: 0</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>Length (px)</code></td>
+                        <td>Fixed pixel size as starting point</td>
+                        <td><code>flex-basis: 200px</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>Percentage (%)</code></td>
+                        <td>Percentage of container width</td>
+                        <td><code>flex-basis: 25%</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>em/rem</code></td>
+                        <td>Relative to font size</td>
+                        <td><code>flex-basis: 15em</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Visual Comparison -->
+        <div class="tutorial-section">
+            <h2 class="section-title">Visual Comparison of Flex-Basis Values</h2>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h4>flex-basis: auto (default)</h4>
+                    <div class="demo-label">auto</div>
+                    <div class="demo-container">
+                        <div class="demo-item" style="flex-basis: auto;">Content</div>
+                        <div class="demo-item" style="flex-basis: auto;">Content</div>
+                        <div class="demo-item" style="flex-basis: auto;">Content</div>
+                    </div>
+                    <p style="color: #666; margin-top: 10px; font-size: 0.95em;">Size from content</p>
+                </div>
+
+                <div class="comparison-item">
+                    <h4>flex-basis: 0</h4>
+                    <div class="demo-label">0</div>
+                    <div class="demo-container">
+                        <div class="demo-item" style="flex: 1 1 0;">Item</div>
+                        <div class="demo-item" style="flex: 1 1 0;">Item</div>
+                        <div class="demo-item" style="flex: 1 1 0;">Item</div>
+                    </div>
+                    <p style="color: #666; margin-top: 10px; font-size: 0.95em;">Items start at 0, grow equally</p>
+                </div>
+
+                <div class="comparison-item">
+                    <h4>flex-basis: 100px</h4>
+                    <div class="demo-label">100px</div>
+                    <div class="demo-container">
+                        <div class="demo-item" style="flex: 1 1 100px;">100px</div>
+                        <div class="demo-item" style="flex: 1 1 100px;">100px</div>
+                        <div class="demo-item" style="flex: 1 1 100px;">100px</div>
+                    </div>
+                    <p style="color: #666; margin-top: 10px; font-size: 0.95em;">Each starts at 100px, then grows</p>
+                </div>
+
+                <div class="comparison-item">
+                    <h4>flex-basis: 25%</h4>
+                    <div class="demo-label">25%</div>
+                    <div class="demo-container">
+                        <div class="demo-item" style="flex: 1 1 25%;">25%</div>
+                        <div class="demo-item" style="flex: 1 1 25%;">25%</div>
+                        <div class="demo-item" style="flex: 1 1 25%;">25%</div>
+                    </div>
+                    <p style="color: #666; margin-top: 10px; font-size: 0.95em;">Each starts at 25% of container</p>
+                </div>
+
+                <div class="comparison-item">
+                    <h4>Mixed flex-basis Values</h4>
+                    <div class="demo-label">auto, 150px, 200px</div>
+                    <div class="demo-container">
+                        <div class="demo-item" style="flex: 1 1 auto;">Auto</div>
+                        <div class="demo-item" style="flex: 1 1 150px;">150px</div>
+                        <div class="demo-item" style="flex: 1 1 200px;">200px</div>
+                    </div>
+                    <p style="color: #666; margin-top: 10px; font-size: 0.95em;">Different starting sizes</p>
+                </div>
+
+                <div class="comparison-item">
+                    <h4>flex-basis with flex-grow</h4>
+                    <div class="demo-label">50px + grow</div>
+                    <div class="demo-container">
+                        <div class="demo-item" style="flex: 0 1 50px;">Fixed</div>
+                        <div class="demo-item" style="flex: 1 1 50px;">Grow</div>
+                        <div class="demo-item" style="flex: 2 1 50px;">Grow 2x</div>
+                    </div>
+                    <p style="color: #666; margin-top: 10px; font-size: 0.95em;">Base size then growth applied</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Explanations -->
+        <div class="tutorial-section">
+            <h2 class="section-title">Understanding Flex-Basis Behavior</h2>
+
+            <h3 style="color: #f5576c; margin-top: 25px; margin-bottom: 15px;">📌 flex-basis: auto</h3>
+            <p class="description">Default value. Item size is based on content or the width property.</p>
+            <div class="code-block">
+.item {
+    flex-basis: auto;  /* OR just don't set it */
+}
+
+/* Size = content width or width property */
+            </div>
+
+            <h3 style="color: #f5576c; margin-top: 25px; margin-bottom: 15px;">📌 flex-basis: 0</h3>
+            <p class="description">Item starts at zero size. Useful with flex-grow to create equal-width layouts.</p>
+            <div class="code-block">
+.item {
+    flex: 1 1 0;  /* flex-grow flex-shrink flex-basis */
+}
+
+/* All items: 0 starting size, grow equally */
+            </div>
+
+            <h3 style="color: #f5576c; margin-top: 25px; margin-bottom: 15px;">📌 flex-basis: 200px</h3>
+            <p class="description">Item starts at 200px, then grows or shrinks based on flex-grow/shrink.</p>
+            <div class="code-block">
+.item {
+    flex-basis: 200px;
+}
+
+/* Item will be at least 200px before growth */
+            </div>
+
+            <h3 style="color: #f5576c; margin-top: 25px; margin-bottom: 15px;">📌 flex-basis: 25%</h3>
+            <p class="description">Item starts at 25% of container width, then grows/shrinks.</p>
+            <div class="code-block">
+.item {
+    flex-basis: 25%;
+}
+
+/* Item starts at 1/4 of container width */
+            </div>
+
+            <div class="use-case-box">
+                <strong>Use case:</strong> Setting default item sizes in flexible layouts
+            </div>
+        </div>
+
+        <!-- Interactive Demo -->
+        <div class="tutorial-section">
+            <h2 class="section-title">Interactive Demo</h2>
+            <p class="description">Adjust flex-basis values to see how items are sized:</p>
+
+            <div class="interactive-section">
+                <div class="control-group">
+                    <label for="basis-input">Flex-Basis Value (e.g., 100px, 25%, auto):</label>
+                    <input type="text" id="basis-input" value="100px" onchange="updateBasis()" placeholder="100px">
+                </div>
+
+                <p style="margin-top: 15px; color: #666;"><strong>Items:</strong> flex: 1 1 [basis value]</p>
+
+                <div class="flex-demo-interactive" style="height: 180px;">
+                    <div id="item-1" style="flex: 1 1 100px;">Item 1</div>
+                    <div id="item-2" style="flex: 1 1 100px;">Item 2</div>
+                    <div id="item-3" style="flex: 1 1 100px;">Item 3</div>
+                </div>
+
+                <p style="margin-top: 15px; color: #666; font-size: 0.9em;">Try: 100px, 0, 25%, 50px, 150px</p>
+            </div>
+        </div>
+
+        <!-- Flex-Basis vs Width -->
+        <div class="tutorial-section">
+            <h2 class="section-title">Flex-Basis vs Width</h2>
+            
+            <div class="flex-comparison">
+                <h4 style="color: #f5576c; margin-bottom: 15px;">Key Differences:</h4>
+                <ul style="color: #555; margin-left: 20px; line-height: 2;">
+                    <li><strong>Width:</strong> Fixed, doesn't consider flex properties</li>
+                    <li><strong>Flex-Basis:</strong> Starting point, can grow/shrink</li>
+                    <li><strong>Direction:</strong> Width is always horizontal, flex-basis follows flex-direction</li>
+                    <li><strong>Priority:</strong> Flex-basis takes precedence over width in flex containers</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+/* In flex container */
+.item-with-width {
+    width: 200px;           /* May be overridden */
+}
+
+.item-with-basis {
+    flex-basis: 200px;      /* Takes precedence */
+}
+
+.item-both {
+    width: 200px;
+    flex-basis: 300px;      /* flex-basis wins */
+}
+            </div>
+        </div>
+
+        <!-- Common Patterns -->
+        <div class="tutorial-section">
+            <h2 class="section-title">Common Layout Patterns with Flex-Basis</h2>
+
+            <h3 style="color: #f5576c; margin: 20px 0 15px;">🎨 Equal Width Items</h3>
+            <div class="code-block">
+.item {
+    flex: 1 1 0;  /* Start at 0, grow equally */
+}
+
+/* Result: All items equal width */
+            </div>
+
+            <h3 style="color: #f5576c; margin: 20px 0 15px;">🎨 Minimum Width Items</h3>
+            <div class="code-block">
+.item {
+    flex: 1 1 200px;  /* At least 200px, can grow */
+}
+
+/* Result: Items never smaller than 200px */
+            </div>
+
+            <h3 style="color: #f5576c; margin: 20px 0 15px;">🎨 Sidebar + Content</h3>
+            <div class="code-block">
+.sidebar {
+    flex: 0 1 250px;  /* Fixed 250px sidebar */
+}
+
+.content {
+    flex: 1 1 0;      /* Fills remaining space */
+}
+            </div>
+
+            <h3 style="color: #f5576c; margin: 20px 0 15px;">🎨 Responsive Percentages</h3>
+            <div class="code-block">
+.item {
+    flex: 1 1 calc(33.333% - 10px);  /* 3 columns with gap */
+}
+            </div>
+        </div>
+
+        <!-- Important Tips -->
+        <div class="tutorial-section">
+            <h2 class="section-title">Important Tips & Best Practices</h2>
+
+            <div class="tip-box">
+                <strong>✓ Flex-Basis vs Width:</strong> In flex containers, use flex-basis, not width. It works better with flex-grow/shrink.
+            </div>
+
+            <div class="tip-box">
+                <strong>✓ Use Shorthand:</strong> <span class="syntax-highlight">flex: 1 1 0</span> is cleaner than separate properties.
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠ 0 vs auto:</strong> <span class="syntax-highlight">flex-basis: 0</span> ignores content size; <span class="syntax-highlight">auto</span> respects it.
+            </div>
+
+            <div class="tip-box">
+                <strong>✓ With Flex-Grow:</strong> <span class="syntax-highlight">flex-basis: 0</span> + <span class="syntax-highlight">flex-grow: 1</span> = equal distribution.
+            </div>
+
+            <div class="tip-box">
+                <strong>✓ Percentage Basis:</strong> Use percentages for responsive grids. Combine with gap and calc().
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠ Content Overflow:</strong> Small flex-basis values may cause content overflow. Test thoroughly.
+            </div>
+
+            <div class="tip-box">
+                <strong>✓ Min/Max Width:</strong> Combine with min-width/max-width for better control.
+            </div>
+        </div>
+
+        <!-- Real World Examples -->
+        <div class="tutorial-section">
+            <h2 class="section-title">Real-World Use Cases</h2>
+
+            <div style="background: #f9f9f9; border-left: 4px solid #f5576c; padding: 15px; margin: 15px 0; border-radius: 4px;">
+                <strong style="color: #f5576c;">📊 3-Column Grid:</strong> <code>flex-basis: calc(33.333% - 10px)</code>
+            </div>
+
+            <div style="background: #f9f9f9; border-left: 4px solid #f5576c; padding: 15px; margin: 15px 0; border-radius: 4px;">
+                <strong style="color: #f5576c;">📱 Responsive Cards:</strong> <code>flex-basis: 0</code> with <code>flex-grow: 1</code>
+            </div>
+
+            <div style="background: #f9f9f9; border-left: 4px solid #f5576c; padding: 15px; margin: 15px 0; border-radius: 4px;">
+                <strong style="color: #f5576c;">🎯 Sidebar Layout:</strong> <code>flex-basis: 250px</code> for fixed sidebar
+            </div>
+
+            <div style="background: #f9f9f9; border-left: 4px solid #f5576c; padding: 15px; margin: 15px 0; border-radius: 4px;">
+                <strong style="color: #f5576c;">📝 Form Inputs:</strong> <code>flex-basis: auto</code> to fit content
+            </div>
+
+            <div style="background: #f9f9f9; border-left: 4px solid #f5576c; padding: 15px; margin: 15px 0; border-radius: 4px;">
+                <strong style="color: #f5576c;">🎨 Gallery Layout:</strong> <code>flex-basis: 200px</code> with grow
+            </div>
+        </div>
+
+        <!-- Browser Support -->
+        <div class="tutorial-section">
+            <h2 class="section-title">Browser Support</h2>
+            <p class="description">
+                The <span class="syntax-highlight">flex-basis</span> property is supported in all modern browsers including Chrome, Firefox, Safari, Edge, and Internet Explorer 11+. It's a core flexbox feature with excellent cross-browser compatibility.
+            </p>
+            <div class="code-block">
+.item {
+    flex-basis: 200px;
+    
+    /* No vendor prefixes needed for modern browsers */
+}
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Master flex-basis for precise flex item sizing! 🎉</p>
+        </div>
+    </div>
+
+    <script>
+        function updateBasis() {
+            const basisInput = document.getElementById('basis-input').value || '100px';
+            document.getElementById('item-1').style.flexBasis = basisInput;
+            document.getElementById('item-2').style.flexBasis = basisInput;
+            document.getElementById('item-3').style.flexBasis = basisInput;
+        }
+    </script>
+</body>
+</html>

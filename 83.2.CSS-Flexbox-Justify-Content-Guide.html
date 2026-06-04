@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox Justify-Content Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+
+        .intro-text {
+            text-align: center;
+            color: #555;
+            margin-bottom: 40px;
+            font-size: 1.05em;
+        }
+
+        .example-section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid #3498db;
+        }
+
+        .example-title {
+            font-size: 1.6em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .code-label {
+            background: #34495e;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        /* ============ EXAMPLE 1: Navigation Bar ============ */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            margin: 20px 0;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.7;
+        }
+
+        .nav-button {
+            background: white;
+            color: #667eea;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.3s;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* ============ EXAMPLE 2: Header with Logo, Nav, and Auth ============ */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 8px;
+            border-bottom: 3px solid #3498db;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #3498db;
+            min-width: 150px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .header-nav a {
+            color: #555;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover {
+            color: #3498db;
+        }
+
+        .header-auth {
+            display: flex;
+            gap: 12px;
+        }
+
+        .login-btn, .signup-btn {
+            padding: 10px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn {
+            color: #3498db;
+            background: transparent;
+            border: 2px solid #3498db;
+        }
+
+        .login-btn:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        .signup-btn {
+            background: #3498db;
+            color: white;
+        }
+
+        .signup-btn:hover {
+            background: #2980b9;
+        }
+
+        /* ============ EXAMPLE 3: Hero Section ============ */
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 30px;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            margin: 20px 0;
+            min-height: 250px;
+        }
+
+        .hero-content h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .hero-content p {
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .cta-button {
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+
+        .primary-btn {
+            background: white;
+            color: #667eea;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .secondary-btn:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        /* ============ EXAMPLE 4: Feature Cards ============ */
+        .features-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* ============ EXAMPLE 5: Footer with Space-Between ============ */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #3498db;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: #34495e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .social-icon:hover {
+            background: #3498db;
+        }
+
+        /* ============ EXAMPLE 6: Product Showcase ============ */
+        .product-showcase {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .product-image {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .product-info h3 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .product-info p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .product-price {
+            font-size: 1.5em;
+            color: #3498db;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .product-button {
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .product-button:hover {
+            background: #2980b9;
+        }
+
+        /* ============ EXAMPLE 7: Form Buttons ============ */
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-top: 3px solid #e74c3c;
+        }
+
+        .cancel-btn, .submit-btn {
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cancel-btn {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .cancel-btn:hover {
+            background: #bdc3c7;
+        }
+
+        .submit-btn {
+            background: #27ae60;
+            color: white;
+        }
+
+        .submit-btn:hover {
+            background: #229954;
+        }
+
+        /* ============ EXAMPLE 8: Breadcrumb Navigation ============ */
+        .breadcrumb {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: #95a5a6;
+        }
+
+        /* ============ EXAMPLE 9: Centered Modal ============ */
+        .modal-overlay {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 300px;
+            margin: 20px 0;
+        }
+
+        .modal {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal h3 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-confirm {
+            background: #27ae60;
+            color: white;
+        }
+
+        .modal-confirm:hover {
+            background: #229954;
+        }
+
+        .modal-cancel {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .modal-cancel:hover {
+            background: #c0392b;
+        }
+
+        /* ============ EXAMPLE 10: Statistics Bar ============ */
+        .stats-container {
+            display: flex;
+            justify-content: space-evenly;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            border-radius: 8px;
+            margin: 20px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .stat-item {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .navbar, .header, .footer, .features-container, .stats-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            .example-title {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 CSS Flexbox Justify-Content Practical Examples</h1>
+        <p class="intro-text">Real-world use cases and implementations you can use in your projects</p>
+
+        <!-- EXAMPLE 1: Navigation Bar -->
+        <div class="example-section">
+            <h2 class="example-title">1️⃣ Navigation Bar - space-between</h2>
+            <p class="example-description">A typical navigation bar with logo on the left, links in the middle, and button on the right.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="navbar">
+                <div class="logo">🏢 MyBrand</div>
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                </ul>
+                <button class="nav-button">Sign In</button>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 2: Header -->
+        <div class="example-section">
+            <h2 class="example-title">2️⃣ Website Header - space-between</h2>
+            <p class="example-description">Professional header with logo, navigation menu, and authentication buttons.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="header">
+                <div class="header-logo">ACME Corp</div>
+                <ul class="header-nav">
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Docs</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <div class="header-auth">
+                    <button class="login-btn">Login</button>
+                    <button class="signup-btn">Sign Up</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 3: Hero Section -->
+        <div class="example-section">
+            <h2 class="example-title">3️⃣ Hero Section - center</h2>
+            <p class="example-description">Centered hero section with call-to-action buttons. Perfect for landing pages.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="hero">
+                <div class="hero-content">
+                    <h2>Welcome to Our Platform</h2>
+                    <p>Build amazing things with cutting-edge technology</p>
+                    <div class="hero-buttons">
+                        <button class="cta-button primary-btn">Get Started Free</button>
+                        <button class="cta-button secondary-btn">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 4: Feature Cards -->
+        <div class="example-section">
+            <h2 class="example-title">4️⃣ Feature Cards - space-around</h2>
+            <p class="example-description">Multiple feature cards distributed evenly across the container. Great for showcasing features.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.features-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="features-container">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast</h3>
+                    <p>Lightning-fast performance optimized for speed</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure</h3>
+                    <p>Enterprise-grade security and encryption</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Responsive</h3>
+                    <p>Works perfectly on all devices and screens</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 5: Footer -->
+        <div class="example-section">
+            <h2 class="example-title">5️⃣ Footer - space-between</h2>
+            <p class="example-description">Footer with multiple sections distributed across the width and social media icons.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="footer">
+                <div class="footer-section">
+                    <div class="footer-title">Product</div>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <div class="footer-title">Company</div>
+                    <ul class="footer-links">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <div class="footer-title">Legal</div>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <div class="footer-title">Follow</div>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">f</a>
+                        <a href="#" class="social-icon">𝕏</a>
+                        <a href="#" class="social-icon">in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 6: Product Showcase -->
+        <div class="example-section">
+            <h2 class="example-title">6️⃣ Product Showcase - center</h2>
+            <p class="example-description">Product image and description centered together using flexbox.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.product-showcase {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="product-showcase">
+                <div class="product-image">Product Image</div>
+                <div class="product-info">
+                    <h3>Premium Headphones</h3>
+                    <p>Experience crystal-clear sound with our professional-grade headphones. Designed for audiophiles who demand the best in sound quality and comfort.</p>
+                    <div class="product-price">$299.99</div>
+                    <button class="product-button">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 7: Form Buttons -->
+        <div class="example-section">
+            <h2 class="example-title">7️⃣ Form Buttons - flex-end</h2>
+            <p class="example-description">Cancel and Submit buttons aligned to the right, which is a common form pattern.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="form-buttons">
+                <button class="cancel-btn">Cancel</button>
+                <button class="submit-btn">Save Changes</button>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 8: Breadcrumb -->
+        <div class="example-section">
+            <h2 class="example-title">8️⃣ Breadcrumb Navigation - flex-start</h2>
+            <p class="example-description">Navigation breadcrumb that helps users understand their location in the site hierarchy.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.breadcrumb {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="breadcrumb">
+                <a href="#">Home</a>
+                <span>/</span>
+                <a href="#">Products</a>
+                <span>/</span>
+                <a href="#">Electronics</a>
+                <span>/</span>
+                <span>Headphones</span>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 9: Modal Dialog -->
+        <div class="example-section">
+            <h2 class="example-title">9️⃣ Centered Modal - center</h2>
+            <p class="example-description">Centered modal dialog box, perfect for confirmations or important messages.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.modal-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="modal-overlay">
+                <div class="modal">
+                    <h3>Confirm Action</h3>
+                    <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+                    <div class="modal-buttons">
+                        <button class="modal-btn modal-cancel">Cancel</button>
+                        <button class="modal-btn modal-confirm">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 10: Statistics Bar -->
+        <div class="example-section">
+            <h2 class="example-title">🔟 Statistics Bar - space-evenly</h2>
+            <p class="example-description">Display statistics or metrics with perfectly equal spacing, great for dashboards.</p>
+            
+            <span class="code-label">CSS Code</span>
+            <div class="code-block">
+.stats-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+            </div>
+
+            <span class="code-label">Live Example</span>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number">2.5M+</div>
+                    <div class="stat-label">Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50K</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Takeaways -->
+        <div class="example-section">
+            <h2 class="example-title">💡 Key Takeaways</h2>
+            
+            <div class="info-box">
+                <strong>space-between:</strong> Use when you want elements pushed to opposite ends (navbars, headers, footers)
+            </div>
+
+            <div class="info-box">
+                <strong>center:</strong> Use when you want to center content (hero sections, modals, showcase items)
+            </div>
+
+            <div class="info-box">
+                <strong>space-around:</strong> Use for feature cards or product listings where you want even spacing
+            </div>
+
+            <div class="info-box">
+                <strong>space-evenly:</strong> Use for statistics or metrics where perfect spacing matters
+            </div>
+
+            <div class="info-box">
+                <strong>flex-start:</strong> Use when items should naturally align to the left (breadcrumbs, lists)
+            </div>
+
+            <div class="info-box">
+                <strong>flex-end:</strong> Use for buttons or actions that should be on the right (save buttons, form controls)
+            </div>
+
+            <div class="info-box">
+                <strong>🎨 Responsive Tip:</strong> Always combine with <strong>flex-wrap: wrap</strong> and <strong>gap</strong> for mobile-friendly designs. Test your layouts on different screen sizes!
+            </div>
+        </div>
+    </div>
+</body>
+</html>
