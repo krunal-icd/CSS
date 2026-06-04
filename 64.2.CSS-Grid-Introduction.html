@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .example-section {
+            margin: 40px 0;
+        }
+
+        .example-header {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-header h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .example-header p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .demo-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ============ EXAMPLE 1: Magazine Layout ============ */
+        .magazine-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto auto 1fr;
+            gap: 20px;
+            grid-template-areas:
+                "featured sidebar"
+                "articles sidebar"
+                "articles sidebar";
+        }
+
+        .featured-article {
+            grid-area: featured;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 250px;
+        }
+
+        .featured-article h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .featured-article p {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+
+        .articles-grid {
+            grid-area: articles;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .article-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .article-content {
+            padding: 15px;
+        }
+
+        .article-content h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .article-content p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .article-meta {
+            color: #999;
+            font-size: 0.85em;
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+        }
+
+        .sidebar-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .sidebar-box h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .sidebar-box ul {
+            list-style: none;
+        }
+
+        .sidebar-box li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .sidebar-box li:last-child {
+            border-bottom: none;
+        }
+
+        /* ============ EXAMPLE 2: Dashboard Layout ============ */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto auto auto 1fr;
+            gap: 20px;
+            grid-template-areas:
+                "header header header header"
+                "stat1 stat2 stat3 stat4"
+                "chart1 chart1 chart2 chart2"
+                "list list metrics metrics";
+        }
+
+        .dashboard-header {
+            grid-area: header;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-header h3 {
+            font-size: 1.5em;
+        }
+
+        .dashboard-header p {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-top: 4px solid #667eea;
+        }
+
+        .stat-card:nth-child(3) { grid-area: stat1; }
+        .stat-card:nth-child(4) { grid-area: stat2; }
+        .stat-card:nth-child(5) { grid-area: stat3; }
+        .stat-card:nth-child(6) { grid-area: stat4; }
+
+        .stat-card h4 {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .stat-change {
+            color: #4caf50;
+            font-size: 0.85em;
+            margin-top: 8px;
+        }
+
+        .chart-placeholder {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            font-weight: bold;
+            color: #ccc;
+        }
+
+        .chart-placeholder:nth-child(7) { grid-area: chart1; }
+        .chart-placeholder:nth-child(8) { grid-area: chart2; }
+
+        .list-placeholder {
+            grid-area: list;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .list-placeholder h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .list-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95em;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .status.active {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .status.pending {
+            background-color: #fff9c4;
+            color: #f57f17;
+        }
+
+        .metrics-placeholder {
+            grid-area: metrics;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .metrics-placeholder h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .metric-row {
+            margin-bottom: 15px;
+        }
+
+        .metric-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .progress-bar {
+            background-color: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background-color: #667eea;
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        /* ============ EXAMPLE 3: E-Commerce Product Grid ============ */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .product-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-category {
+            color: #667eea;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .product-name {
+            color: #333;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+            flex-grow: 1;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-price {
+            color: #667eea;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .btn-add {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-add:hover {
+            background-color: #764ba2;
+        }
+
+        /* ============ EXAMPLE 4: Form Layout ============ */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-button {
+            grid-column: 1 / -1;
+            background-color: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-button:hover {
+            background-color: #764ba2;
+        }
+
+        .form-wrapper {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ============ EXAMPLE 5: Blog Homepage ============ */
+        .blog-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            grid-template-areas:
+                "posts sidebar"
+                "pagination sidebar";
+        }
+
+        .posts-container {
+            grid-area: posts;
+        }
+
+        .blog-post {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .post-thumbnail {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 200px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .post-content h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .post-meta {
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+        }
+
+        .post-excerpt {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .post-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .post-link:hover {
+            text-decoration: underline;
+        }
+
+        .pagination {
+            grid-area: pagination;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .page-btn:hover,
+        .page-btn.active {
+            background-color: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .blog-sidebar {
+            grid-area: sidebar;
+        }
+
+        .sidebar-widget {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .sidebar-widget h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .sidebar-widget ul {
+            list-style: none;
+        }
+
+        .sidebar-widget li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .sidebar-widget li:last-child {
+            border-bottom: none;
+        }
+
+        /* ============ Responsive ============ */
+        @media (max-width: 1024px) {
+            .magazine-layout {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "featured"
+                    "articles"
+                    "sidebar";
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto auto auto auto auto;
+                grid-template-areas:
+                    "header header"
+                    "stat1 stat2"
+                    "stat3 stat4"
+                    "chart1 chart2"
+                    "list metrics";
+            }
+
+            .blog-layout {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "posts"
+                    "sidebar"
+                    "pagination";
+            }
+
+            .blog-post {
+                grid-template-columns: 1fr;
+            }
+
+            .post-thumbnail {
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 1.8em;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "header"
+                    "stat1"
+                    "stat2"
+                    "stat3"
+                    "stat4"
+                    "chart1"
+                    "chart2"
+                    "list"
+                    "metrics";
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .example-header h2 {
+                font-size: 1.4em;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>CSS Grid Practical Examples</h1>
+        <p>Real-world layouts and implementations you can use immediately</p>
+    </div>
+
+    <div class="container">
+        <!-- EXAMPLE 1: MAGAZINE LAYOUT -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>1. Magazine Layout</h2>
+                <p>A classic two-column layout with featured article and related articles grid. Perfect for news sites, blogs, and magazines.</p>
+            </div>
+
+            <div class="code-block"><code>.magazine-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto 1fr;
+    gap: 20px;
+    grid-template-areas:
+        "featured sidebar"
+        "articles sidebar"
+        "articles sidebar";
+}</code></div>
+
+            <div class="demo-box">
+                <div class="magazine-layout">
+                    <div class="featured-article">
+                        <h3>Breaking News: CSS Grid Takes Over</h3>
+                        <p>Discover why modern web developers are choosing CSS Grid for their layout systems</p>
+                    </div>
+
+                    <div class="articles-grid">
+                        <div class="article-card">
+                            <div class="article-image">Article 1</div>
+                            <div class="article-content">
+                                <h4>Grid Basics</h4>
+                                <p>Learn the fundamentals of CSS Grid layout system.</p>
+                                <div class="article-meta">5 min read</div>
+                            </div>
+                        </div>
+
+                        <div class="article-card">
+                            <div class="article-image">Article 2</div>
+                            <div class="article-content">
+                                <h4>Advanced Techniques</h4>
+                                <p>Master complex layouts with Grid properties.</p>
+                                <div class="article-meta">8 min read</div>
+                            </div>
+                        </div>
+
+                        <div class="article-card">
+                            <div class="article-image">Article 3</div>
+                            <div class="article-content">
+                                <h4>Responsive Design</h4>
+                                <p>Create mobile-friendly layouts with Grid.</p>
+                                <div class="article-meta">6 min read</div>
+                            </div>
+                        </div>
+
+                        <div class="article-card">
+                            <div class="article-image">Article 4</div>
+                            <div class="article-content">
+                                <h4>Grid vs Flexbox</h4>
+                                <p>When to use Grid and when to use Flexbox.</p>
+                                <div class="article-meta">7 min read</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar">
+                        <div class="sidebar-box">
+                            <h4>Trending Now</h4>
+                            <ul>
+                                <li>📱 Mobile-First Design</li>
+                                <li>⚡ Web Performance</li>
+                                <li>🎨 CSS Animations</li>
+                                <li>🔧 Developer Tools</li>
+                            </ul>
+                        </div>
+
+                        <div class="sidebar-box">
+                            <h4>Popular Tags</h4>
+                            <ul>
+                                <li>#CSS #Grid #Layout</li>
+                                <li>#WebDesign #Responsive</li>
+                                <li>#Frontend #Tutorial</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 2: DASHBOARD LAYOUT -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>2. Admin Dashboard</h2>
+                <p>A comprehensive dashboard layout with stats, charts, and data tables. Ideal for analytics and admin panels.</p>
+            </div>
+
+            <div class="code-block"><code>.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto auto 1fr;
+    gap: 20px;
+    grid-template-areas:
+        "header header header header"
+        "stat1 stat2 stat3 stat4"
+        "chart1 chart1 chart2 chart2"
+        "list list metrics metrics";
+}</code></div>
+
+            <div class="demo-box">
+                <div class="dashboard">
+                    <div class="dashboard-header">
+                        <div>
+                            <h3>Welcome Back, Admin</h3>
+                            <p>Here's your performance overview for this month</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <h4>Total Users</h4>
+                        <div class="stat-value">12,453</div>
+                        <div class="stat-change">↑ 12% from last month</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <h4>Revenue</h4>
+                        <div class="stat-value">$45,231</div>
+                        <div class="stat-change">↑ 8% from last month</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <h4>Conversions</h4>
+                        <div class="stat-value">3.24%</div>
+                        <div class="stat-change">↑ 2.1% from last month</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <h4>Avg. Order Value</h4>
+                        <div class="stat-value">$156.42</div>
+                        <div class="stat-change">↓ 3% from last month</div>
+                    </div>
+
+                    <div class="chart-placeholder">📊 Sales Chart</div>
+                    <div class="chart-placeholder">📈 Growth Chart</div>
+
+                    <div class="list-placeholder">
+                        <h4>Recent Orders</h4>
+                        <div class="list-item">
+                            <span>Order #10234</span>
+                            <span class="status active">Completed</span>
+                        </div>
+                        <div class="list-item">
+                            <span>Order #10235</span>
+                            <span class="status pending">Pending</span>
+                        </div>
+                        <div class="list-item">
+                            <span>Order #10236</span>
+                            <span class="status active">Completed</span>
+                        </div>
+                        <div class="list-item">
+                            <span>Order #10237</span>
+                            <span class="status pending">Pending</span>
+                        </div>
+                    </div>
+
+                    <div class="metrics-placeholder">
+                        <h4>Performance Metrics</h4>
+                        <div class="metric-row">
+                            <div class="metric-label">
+                                <span>Page Load Time</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-row">
+                            <div class="metric-label">
+                                <span>User Engagement</span>
+                                <span>92%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-row">
+                            <div class="metric-label">
+                                <span>System Uptime</span>
+                                <span>99.8%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 99.8%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 3: E-COMMERCE PRODUCT GRID -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>3. E-Commerce Product Grid</h2>
+                <p>Responsive product grid that adapts to screen size. Uses auto-fit for flexible column count.</p>
+            </div>
+
+            <div class="code-block"><code>.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}</code></div>
+
+            <div class="demo-box">
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-image">Product Image</div>
+                        <div class="product-info">
+                            <div class="product-category">Premium</div>
+                            <div class="product-name">Wireless Headphones</div>
+                            <div class="product-description">High-quality audio with noise cancellation technology.</div>
+                            <div class="product-footer">
+                                <span class="product-price">$299</span>
+                                <button class="btn-add">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">Product Image</div>
+                        <div class="product-info">
+                            <div class="product-category">Standard</div>
+                            <div class="product-name">Smart Watch</div>
+                            <div class="product-description">Track fitness and receive notifications on the go.</div>
+                            <div class="product-footer">
+                                <span class="product-price">$199</span>
+                                <button class="btn-add">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">Product Image</div>
+                        <div class="product-info">
+                            <div class="product-category">Premium</div>
+                            <div class="product-name">Portable Speaker</div>
+                            <div class="product-description">Crystal clear sound with 12-hour battery life.</div>
+                            <div class="product-footer">
+                                <span class="product-price">$149</span>
+                                <button class="btn-add">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">Product Image</div>
+                        <div class="product-info">
+                            <div class="product-category">Budget</div>
+                            <div class="product-name">USB-C Cable</div>
+                            <div class="product-description">Fast charging and data transfer in one cable.</div>
+                            <div class="product-footer">
+                                <span class="product-price">$19</span>
+                                <button class="btn-add">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">Product Image</div>
+                        <div class="product-info">
+                            <div class="product-category">Premium</div>
+                            <div class="product-name">4K Webcam</div>
+                            <div class="product-description">Professional streaming quality with auto-focus.</div>
+                            <div class="product-footer">
+                                <span class="product-price">$249</span>
+                                <button class="btn-add">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">Product Image</div>
+                        <div class="product-info">
+                            <div class="product-category">Standard</div>
+                            <div class="product-name">Phone Stand</div>
+                            <div class="product-description">Adjustable stand for all phone sizes.</div>
+                            <div class="product-footer">
+                                <span class="product-price">$29</span>
+                                <button class="btn-add">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 4: CONTACT FORM -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>4. Contact Form with Grid</h2>
+                <p>Modern form layout using CSS Grid for organized input fields and better responsive behavior.</p>
+            </div>
+
+            <div class="code-block"><code>.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}</code></div>
+
+            <div class="demo-box">
+                <div class="form-wrapper">
+                    <form class="form-grid">
+                        <div class="form-group">
+                            <label for="fname">First Name</label>
+                            <input type="text" id="fname" placeholder="John">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lname">Last Name</label>
+                            <input type="text" id="lname" placeholder="Doe">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="john@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="(555) 123-4567">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input type="text" id="company" placeholder="Your Company">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" placeholder="How can we help?">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="message">Message</label>
+                            <textarea id="message" placeholder="Your message here..."></textarea>
+                        </div>
+
+                        <button type="submit" class="form-button">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 5: BLOG HOMEPAGE -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>5. Blog Homepage</h2>
+                <p>A blog layout with featured posts, sidebar, and pagination. Perfect for content-heavy websites.</p>
+            </div>
+
+            <div class="code-block"><code>.blog-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 30px;
+    grid-template-areas:
+        "posts sidebar"
+        "pagination sidebar";
+}</code></div>
+
+            <div class="demo-box">
+                <div class="blog-layout">
+                    <div class="posts-container">
+                        <div class="blog-post">
+                            <div class="post-thumbnail">Post 1</div>
+                            <div class="post-content">
+                                <h3>Getting Started with CSS Grid</h3>
+                                <div class="post-meta">Published on May 15, 2024 • by Sarah Wilson</div>
+                                <div class="post-excerpt">Learn the basics of CSS Grid layout system and how it revolutionizes modern web design. We'll cover grid containers, items, and fundamental properties.</div>
+                                <a href="#" class="post-link">Read More →</a>
+                            </div>
+                        </div>
+
+                        <div class="blog-post">
+                            <div class="post-thumbnail">Post 2</div>
+                            <div class="post-content">
+                                <h3>Responsive Design Patterns</h3>
+                                <div class="post-meta">Published on May 12, 2024 • by Mike Chen</div>
+                                <div class="post-excerpt">Discover common responsive design patterns and best practices for creating layouts that work seamlessly across all devices and screen sizes.</div>
+                                <a href="#" class="post-link">Read More →</a>
+                            </div>
+                        </div>
+
+                        <div class="blog-post">
+                            <div class="post-thumbnail">Post 3</div>
+                            <div class="post-content">
+                                <h3>Advanced Grid Techniques</h3>
+                                <div class="post-meta">Published on May 10, 2024 • by Emma Johnson</div>
+                                <div class="post-excerpt">Take your CSS Grid skills to the next level with advanced techniques including auto-placement, named areas, and complex responsive layouts.</div>
+                                <a href="#" class="post-link">Read More →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pagination">
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">Next</button>
+                    </div>
+
+                    <div class="blog-sidebar">
+                        <div class="sidebar-widget">
+                            <h4>About This Blog</h4>
+                            <ul>
+                                <li>Expert articles on web design</li>
+                                <li>Weekly CSS tips and tricks</li>
+                                <li>Industry news and updates</li>
+                            </ul>
+                        </div>
+
+                        <div class="sidebar-widget">
+                            <h4>Recent Posts</h4>
+                            <ul>
+                                <li>Grid Basics for Beginners</li>
+                                <li>Responsive Navigation Menus</li>
+                                <li>CSS Custom Properties Deep Dive</li>
+                                <li>Web Performance Optimization</li>
+                            </ul>
+                        </div>
+
+                        <div class="sidebar-widget">
+                            <h4>Popular Topics</h4>
+                            <ul>
+                                <li>#CSS (42)</li>
+                                <li>#Grid (38)</li>
+                                <li>#Design (35)</li>
+                                <li>#JavaScript (28)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSS Grid Practical Examples | Build responsive layouts with confidence</p>
+    </footer>
+</body>
+</html>

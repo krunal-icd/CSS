@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Lines Naming - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .example-section {
+            margin: 40px 0;
+        }
+
+        .example-header {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-header h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .example-header p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .code-section {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .demo-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .demo-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .info-note {
+            background: #e3f2fd;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .info-note strong {
+            color: #667eea;
+        }
+
+        /* ============ EXAMPLE 1: Website Layout ============ */
+        .website-layout {
+            display: grid;
+            grid-template-columns: 
+                [full-start nav-start] 200px 
+                [nav-end content-start] 1fr 
+                [content-end aside-start] 250px 
+                [aside-end full-end];
+            grid-template-rows: 
+                [header] 80px 
+                [nav] 50px 
+                [main] 1fr 
+                [footer] 60px;
+            gap: 15px;
+            min-height: 500px;
+        }
+
+        .website-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .header {
+            grid-column: full-start / full-end;
+            grid-row: header;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .nav-bar {
+            grid-column: full-start / full-end;
+            grid-row: nav;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .sidebar {
+            grid-column: nav-start / nav-end;
+            grid-row: main;
+            background: #f0f0f0;
+            color: #333;
+            border-left: 4px solid #667eea;
+        }
+
+        .main-content {
+            grid-column: content-start / content-end;
+            grid-row: main;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .aside-panel {
+            grid-column: aside-start / aside-end;
+            grid-row: main;
+            background: #f9f9f9;
+            color: #333;
+            border-left: 1px solid #e0e0e0;
+        }
+
+        .footer-section {
+            grid-column: full-start / full-end;
+            grid-row: footer;
+            background: #333;
+            color: white;
+        }
+
+        /* ============ EXAMPLE 2: Responsive Magazine ============ */
+        .magazine-layout {
+            display: grid;
+            grid-template-columns: 
+                [full-start] 1fr 
+                [col-1-start] 1fr 
+                [col-1-end col-2-start] 1fr 
+                [col-2-end col-3-start] 1fr 
+                [col-3-end full-end];
+            grid-template-rows: 
+                [feature] auto 
+                [articles] auto 
+                [footer] auto;
+            gap: 20px;
+        }
+
+        .magazine-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            min-height: 150px;
+        }
+
+        .featured-article {
+            grid-column: full-start / full-end;
+            grid-row: feature;
+        }
+
+        .article-main {
+            grid-column: col-1-start / col-2-end;
+            grid-row: articles;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .article-side {
+            grid-column: col-3-start / col-3-end;
+            grid-row: articles;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .magazine-footer {
+            grid-column: full-start / full-end;
+            grid-row: footer;
+            background: #333;
+            color: white;
+        }
+
+        /* ============ EXAMPLE 3: Dashboard Grid ============ */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 
+                [full-start sidebar-start] 250px 
+                [sidebar-end main-start] 1fr 
+                [main-mid] 1fr 
+                [main-end full-end];
+            grid-template-rows: 
+                [header] 80px 
+                [stats] auto 
+                [content] 1fr 
+                [footer] 60px;
+            gap: 20px;
+            min-height: 600px;
+        }
+
+        .dash-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .dash-header {
+            grid-column: sidebar-start / full-end;
+            grid-row: header;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .dash-sidebar {
+            grid-column: sidebar-start / sidebar-end;
+            grid-row: stats / footer;
+            background: #f0f0f0;
+            color: #333;
+            border-left: 4px solid #667eea;
+        }
+
+        .dash-stats {
+            grid-column: main-start / main-end;
+            grid-row: stats;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #667eea;
+            text-align: center;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        .dash-main {
+            grid-column: main-start / main-end;
+            grid-row: content;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .dash-footer {
+            grid-column: sidebar-start / full-end;
+            grid-row: footer;
+            background: #333;
+            color: white;
+        }
+
+        /* ============ EXAMPLE 4: Card Grid System ============ */
+        .card-system-layout {
+            display: grid;
+            grid-template-columns: 
+                [full-start] 1fr 
+                [card-2-start] 1fr 
+                [card-3-start] 1fr 
+                [full-end];
+            grid-template-rows: 
+                [header] auto 
+                [cards] auto 
+                [footer] auto;
+            gap: 25px;
+        }
+
+        .card-system-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card-system-item:hover {
+            transform: translateY(-8px);
+        }
+
+        .card-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .card-content {
+            padding: 15px;
+            color: #333;
+        }
+
+        .header-section {
+            grid-column: full-start / full-end;
+            grid-row: header;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .card-featured {
+            grid-column: full-start / card-2-start;
+            grid-row: cards;
+        }
+
+        .card-featured .card-image {
+            height: 200px;
+        }
+
+        .card-regular-1 {
+            grid-column: card-2-start / card-3-start;
+            grid-row: cards;
+        }
+
+        .card-regular-2 {
+            grid-column: card-3-start / full-end;
+            grid-row: cards;
+        }
+
+        .footer-area {
+            grid-column: full-start / full-end;
+            grid-row: footer;
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        /* ============ EXAMPLE 5: Asymmetric Blog ============ */
+        .blog-layout {
+            display: grid;
+            grid-template-columns: 
+                [full-start] 1fr 
+                [sidebar-start] 250px 
+                [sidebar-end full-end];
+            grid-template-rows: 
+                [hero] 250px 
+                [posts] auto 
+                [footer] auto;
+            gap: 25px;
+        }
+
+        .blog-item {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-hero {
+            grid-column: full-start / full-end;
+            grid-row: hero;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .blog-hero h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .blog-posts {
+            grid-column: full-start / sidebar-start;
+            grid-row: posts;
+        }
+
+        .blog-post {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .blog-post h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .blog-sidebar {
+            grid-column: sidebar-start / sidebar-end;
+            grid-row: posts;
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .blog-footer {
+            grid-column: full-start / full-end;
+            grid-row: footer;
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .sidebar-link {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .sidebar-link:last-child {
+            border-bottom: none;
+        }
+
+        /* ============ EXAMPLE 6: E-Commerce Product Grid ============ */
+        .ecommerce-layout {
+            display: grid;
+            grid-template-columns: 
+                [full-start filters-start] 200px 
+                [filters-end products-start] 1fr 
+                [products-end full-end];
+            grid-template-rows: 
+                [header] 80px 
+                [content] 1fr 
+                [footer] 60px;
+            gap: 20px;
+            min-height: 500px;
+        }
+
+        .ecom-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .ecom-header {
+            grid-column: filters-start / full-end;
+            grid-row: header;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .ecom-filters {
+            grid-column: filters-start / filters-end;
+            grid-row: content;
+            background: #f0f0f0;
+            color: #333;
+            border-left: 4px solid #667eea;
+        }
+
+        .ecom-products {
+            grid-column: products-start / products-end;
+            grid-row: content;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 12px;
+            color: #333;
+        }
+
+        .ecom-footer {
+            grid-column: filters-start / full-end;
+            grid-row: footer;
+            background: #333;
+            color: white;
+        }
+
+        /* ============ EXAMPLE 7: Timeline Layout ============ */
+        .timeline-layout {
+            display: grid;
+            grid-template-columns: 
+                [full-start date-start] 150px 
+                [date-end content-start] 1fr 
+                [content-end full-end];
+            gap: 25px;
+        }
+
+        .timeline-item {
+            display: contents;
+        }
+
+        .timeline-date {
+            grid-column: date-start / date-end;
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timeline-content {
+            grid-column: content-start / content-end;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .timeline-content h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        /* ============ Responsive ============ */
+        @media (max-width: 1024px) {
+            .website-layout {
+                grid-template-columns: 
+                    [full-start nav-start] 150px 
+                    [nav-end content-start] 1fr 
+                    [content-end full-end];
+            }
+
+            .aside-panel {
+                grid-column: content-start / content-end;
+                grid-row: main;
+            }
+
+            .magazine-layout {
+                grid-template-columns: 
+                    [full-start col-1-start] 1fr 
+                    [col-1-end col-2-start] 1fr 
+                    [col-2-end full-end];
+            }
+
+            .article-main {
+                grid-column: col-1-start / col-2-end;
+            }
+
+            .article-side {
+                grid-column: col-2-start / full-end;
+            }
+
+            .ecommerce-layout {
+                grid-template-columns: 
+                    [full-start products-start] 1fr 
+                    [products-end full-end];
+            }
+
+            .ecom-filters {
+                grid-column: products-start / products-end;
+                grid-row: header;
+            }
+
+            .ecom-header {
+                grid-column: full-start / full-end;
+                grid-row: header;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .website-layout {
+                grid-template-columns: [full-start] 1fr [full-end];
+            }
+
+            .sidebar,
+            .main-content,
+            .aside-panel {
+                grid-column: full-start / full-end;
+            }
+
+            .magazine-layout {
+                grid-template-columns: [full-start] 1fr [full-end];
+            }
+
+            .featured-article,
+            .article-main,
+            .article-side {
+                grid-column: full-start / full-end;
+            }
+
+            .card-system-layout {
+                grid-template-columns: [full-start] 1fr [full-end];
+            }
+
+            .card-featured,
+            .card-regular-1,
+            .card-regular-2 {
+                grid-column: full-start / full-end;
+            }
+
+            .timeline-layout {
+                grid-template-columns: [full-start] 1fr [full-end];
+            }
+
+            .timeline-date {
+                grid-column: full-start / full-end;
+            }
+
+            .timeline-content {
+                grid-column: full-start / full-end;
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CSS Grid Lines Naming - Practical Examples</h1>
+        <p>Real-world implementations using semantic named lines</p>
+    </header>
+
+    <div class="container">
+        <!-- EXAMPLE 1: Website Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>1. Website Layout with Semantic Names</h2>
+                <p>Full-width website using named lines for header, nav, sidebar, content, aside, and footer</p>
+            </div>
+
+            <div class="code-section"><code>
+.website-layout {
+    grid-template-columns: 
+        [full-start nav-start] 200px 
+        [nav-end content-start] 1fr 
+        [content-end aside-start] 250px 
+        [aside-end full-end];
+    grid-template-rows: 
+        [header] 80px 
+        [nav] 50px 
+        [main] 1fr 
+        [footer] 60px;
+}
+
+.header { grid-column: full-start / full-end; grid-row: header; }
+.sidebar { grid-column: nav-start / nav-end; grid-row: main; }
+.main { grid-column: content-start / content-end; grid-row: main; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Website Layout</div>
+                <div class="website-layout">
+                    <div class="website-item header">🏠 Header</div>
+                    <div class="website-item nav-bar">Navigation</div>
+                    <div class="website-item sidebar">Sidebar Navigation</div>
+                    <div class="website-item main-content">Main Content Area</div>
+                    <div class="website-item aside-panel">Aside Panel</div>
+                    <div class="website-item footer-section">© 2024 Footer</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Named lines [full-start], [nav-start/nav-end], [content-start/content-end], and [full-end] create a clear, readable layout structure.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 2: Magazine Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>2. Magazine Layout with Column Names</h2>
+                <p>Three-column magazine using col-1, col-2, col-3 naming for articles</p>
+            </div>
+
+            <div class="code-section"><code>
+.magazine-layout {
+    grid-template-columns: 
+        [full-start] 1fr 
+        [col-1-start] 1fr 
+        [col-1-end col-2-start] 1fr 
+        [col-2-end col-3-start] 1fr 
+        [col-3-end full-end];
+    grid-template-rows: 
+        [feature] auto 
+        [articles] auto 
+        [footer] auto;
+}
+
+.featured { grid-column: full-start / full-end; }
+.main-article { grid-column: col-1-start / col-2-end; }
+.side-article { grid-column: col-3-start / col-3-end; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Magazine Layout</div>
+                <div class="magazine-layout">
+                    <div class="magazine-item featured">🎯 Featured Story</div>
+                    <div class="magazine-item article-main">📰 Main Article</div>
+                    <div class="magazine-item article-side">📑 Side Article</div>
+                    <div class="magazine-item magazine-footer">Magazine Footer</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Multiple named lines create flexible column regions. col-1-end and col-2-start on same line allows items to reference different boundaries.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 3: Dashboard Grid -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>3. Dashboard with Positioned Sections</h2>
+                <p>Dashboard using sidebar-start/end, main-start/mid/end named lines for layout control</p>
+            </div>
+
+            <div class="code-section"><code>
+.dashboard-layout {
+    grid-template-columns: 
+        [full-start sidebar-start] 250px 
+        [sidebar-end main-start] 1fr 
+        [main-mid] 1fr 
+        [main-end full-end];
+    grid-template-rows: 
+        [header] 80px 
+        [stats] auto 
+        [content] 1fr 
+        [footer] 60px;
+}
+
+.dash-header { grid-column: sidebar-start / full-end; }
+.dash-sidebar { grid-column: sidebar-start / sidebar-end; }
+.dash-main { grid-column: main-start / main-end; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Dashboard Layout</div>
+                <div class="dashboard-layout">
+                    <div class="dash-item dash-header">📊 Dashboard Header</div>
+                    <div class="dash-item dash-sidebar">Navigation Menu</div>
+                    <div class="dash-stats">
+                        <div class="stat-box">
+                            <div style="color: #667eea; font-size: 1.8em;">12.4K</div>
+                            <div style="color: #999; font-size: 0.85em;">Users</div>
+                        </div>
+                        <div class="stat-box">
+                            <div style="color: #667eea; font-size: 1.8em;">$45K</div>
+                            <div style="color: #999; font-size: 0.85em;">Revenue</div>
+                        </div>
+                    </div>
+                    <div class="dash-item dash-main">📈 Main Content Charts</div>
+                    <div class="dash-item dash-footer">Dashboard Footer</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> sidebar-start, sidebar-end, main-start, main-mid, main-end provide precise positioning for dashboard components.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 4: Card Grid System -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>4. Card Grid System with Named Boundaries</h2>
+                <p>Responsive card layout using full-start, card-2-start, card-3-start, full-end names</p>
+            </div>
+
+            <div class="code-section"><code>
+.card-system-layout {
+    grid-template-columns: 
+        [full-start] 1fr 
+        [card-2-start] 1fr 
+        [card-3-start] 1fr 
+        [full-end];
+    grid-template-rows: 
+        [header] auto 
+        [cards] auto 
+        [footer] auto;
+}
+
+.card-featured { grid-column: full-start / card-2-start; }
+.card-1 { grid-column: card-2-start / card-3-start; }
+.card-2 { grid-column: card-3-start / full-end; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Card Grid System</div>
+                <div class="card-system-layout">
+                    <div class="header-section">🎨 Featured Collection</div>
+                    
+                    <div class="card-system-item card-featured">
+                        <div style="display: flex; flex-direction: column; width: 100%;">
+                            <div class="card-image">Featured Product</div>
+                            <div class="card-content">
+                                <strong>Premium Item</strong>
+                                <p style="color: #666; font-size: 0.9em;">Highlighted showcase</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-system-item card-regular-1">
+                        <div style="display: flex; flex-direction: column; width: 100%;">
+                            <div class="card-image">Product A</div>
+                            <div class="card-content">
+                                <strong>Product A</strong>
+                                <p style="color: #666; font-size: 0.9em;">Quality item</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-system-item card-regular-2">
+                        <div style="display: flex; flex-direction: column; width: 100%;">
+                            <div class="card-image">Product B</div>
+                            <div class="card-content">
+                                <strong>Product B</strong>
+                                <p style="color: #666; font-size: 0.9em;">Popular choice</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="footer-area">© 2024 Collection</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Card grid uses full-start/full-end to span header and footer, with card-2-start and card-3-start marking featured and regular card boundaries.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 5: Asymmetric Blog -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>5. Asymmetric Blog Layout</h2>
+                <p>Blog with hero, posts, and sidebar using full-start, sidebar-start/end naming</p>
+            </div>
+
+            <div class="code-section"><code>
+.blog-layout {
+    grid-template-columns: 
+        [full-start] 1fr 
+        [sidebar-start] 250px 
+        [sidebar-end full-end];
+    grid-template-rows: 
+        [hero] 250px 
+        [posts] auto 
+        [footer] auto;
+}
+
+.hero { grid-column: full-start / full-end; }
+.posts { grid-column: full-start / sidebar-start; }
+.sidebar { grid-column: sidebar-start / sidebar-end; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Blog Layout</div>
+                <div class="blog-layout">
+                    <div class="blog-hero">
+                        <h2>Welcome to Tech Blog</h2>
+                        <p>Discover latest insights on web development and design</p>
+                    </div>
+
+                    <div class="blog-posts">
+                        <div class="blog-post">
+                            <h3>CSS Grid Mastery</h3>
+                            <p>Learn semantic named lines for powerful layouts...</p>
+                        </div>
+                        <div class="blog-post">
+                            <h3>Responsive Design</h3>
+                            <p>Build layouts that adapt to any screen size...</p>
+                        </div>
+                    </div>
+
+                    <div class="blog-sidebar">
+                        <div class="sidebar-link">🔥 Latest Posts</div>
+                        <div class="sidebar-link">⭐ Popular</div>
+                        <div class="sidebar-link">📚 Categories</div>
+                        <div class="sidebar-link">💡 Resources</div>
+                    </div>
+
+                    <div class="blog-footer">© 2024 Tech Blog</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Asymmetric layout with sidebar-start and sidebar-end creates clear boundary for sidebar positioning separate from main content.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 6: E-Commerce Grid -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>6. E-Commerce Product Layout</h2>
+                <p>Shop layout with filters and products using filters-start/end, products-start/end</p>
+            </div>
+
+            <div class="code-section"><code>
+.ecommerce-layout {
+    grid-template-columns: 
+        [full-start filters-start] 200px 
+        [filters-end products-start] 1fr 
+        [products-end full-end];
+    grid-template-rows: 
+        [header] 80px 
+        [content] 1fr 
+        [footer] 60px;
+}
+
+.filters { grid-column: filters-start / filters-end; }
+.products { grid-column: products-start / products-end; }
+.header { grid-column: full-start / full-end; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: E-Commerce Layout</div>
+                <div class="ecommerce-layout">
+                    <div class="ecom-item ecom-header">🛍️ Shop</div>
+                    
+                    <div class="ecom-item ecom-filters">
+                        <div style="text-align: left; width: 100%;">
+                            <div style="margin-bottom: 15px; color: #667eea; font-weight: bold;">Filters</div>
+                            <div style="color: #666; font-size: 0.9em;">• Price Range</div>
+                            <div style="color: #666; font-size: 0.9em;">• Category</div>
+                            <div style="color: #666; font-size: 0.9em;">• Rating</div>
+                        </div>
+                    </div>
+
+                    <div class="ecom-products">
+                        <div class="product-card">
+                            <div class="product-image">Product 1</div>
+                            <div class="product-info"><strong>Item A</strong></div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">Product 2</div>
+                            <div class="product-info"><strong>Item B</strong></div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">Product 3</div>
+                            <div class="product-info"><strong>Item C</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="ecom-item ecom-footer">© 2024 E-Shop</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> E-commerce grid uses filters-start/end and products-start/end to clearly separate sidebar filters from product grid area.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 7: Timeline Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>7. Timeline with Named Columns</h2>
+                <p>Timeline using date-start/end and content-start/end for structured events</p>
+            </div>
+
+            <div class="code-section"><code>
+.timeline-layout {
+    grid-template-columns: 
+        [full-start date-start] 150px 
+        [date-end content-start] 1fr 
+        [content-end full-end];
+    gap: 25px;
+}
+
+.timeline-date { grid-column: date-start / date-end; }
+.timeline-content { grid-column: content-start / content-end; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Timeline Layout</div>
+                <div class="timeline-layout">
+                    <div class="timeline-date">Jan 2024</div>
+                    <div class="timeline-content">
+                        <h4>Project Started</h4>
+                        <p>Initial planning and setup completed</p>
+                    </div>
+
+                    <div class="timeline-date">Mar 2024</div>
+                    <div class="timeline-content">
+                        <h4>First Release</h4>
+                        <p>Alpha version launched for testing</p>
+                    </div>
+
+                    <div class="timeline-date">May 2024</div>
+                    <div class="timeline-content">
+                        <h4>v1.0 Launch</h4>
+                        <p>Official public release with full features</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Timeline uses date-start/end and content-start/end to maintain fixed-width date column while content spans remaining space.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSS Grid Lines Naming Practical Examples | Master semantic grid naming for maintainable layouts</p>
+    </footer>
+</body>
+</html>

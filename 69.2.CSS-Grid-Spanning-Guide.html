@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Item Spanning - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .example-section {
+            margin: 40px 0;
+        }
+
+        .example-header {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-header h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .example-header p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .code-section {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .demo-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .demo-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .info-note {
+            background: #e3f2fd;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .info-note strong {
+            color: #667eea;
+        }
+
+        /* ============ EXAMPLE 1: Blog Layout ============ */
+        .blog-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto 1fr auto;
+            gap: 20px;
+            min-height: 500px;
+        }
+
+        .blog-header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .blog-featured {
+            grid-column: 1 / 3;
+            grid-row: 2;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-featured-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 150px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .blog-featured h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .blog-featured p {
+            color: #666;
+            margin-bottom: 10px;
+            flex-grow: 1;
+        }
+
+        .blog-featured-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            align-self: flex-start;
+        }
+
+        .blog-sidebar {
+            grid-column: 3;
+            grid-row: 2;
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .blog-footer {
+            grid-column: 1 / -1;
+            background: #333;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .sidebar-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            color: #667eea;
+            font-size: 0.95em;
+            font-weight: bold;
+        }
+
+        .sidebar-item:last-child {
+            border-bottom: none;
+        }
+
+        /* ============ EXAMPLE 2: Portfolio Grid ============ */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 200px);
+            gap: 20px;
+        }
+
+        .portfolio-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .portfolio-featured {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .portfolio-item.alt1 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .portfolio-item.alt2 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .portfolio-item.alt3 {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        /* ============ EXAMPLE 3: Dashboard Layout ============ */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto auto 1fr;
+            gap: 20px;
+        }
+
+        .dash-header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .dash-stats {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #667eea;
+            text-align: center;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+
+        .chart-large {
+            grid-column: 1 / 3;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-weight: bold;
+        }
+
+        .chart-small {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-weight: bold;
+        }
+
+        /* ============ EXAMPLE 4: Magazine Layout ============ */
+        .magazine-layout {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(4, 150px);
+            gap: 15px;
+        }
+
+        .magazine-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            overflow: hidden;
+        }
+
+        .magazine-item.alt1 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .magazine-item.alt2 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .magazine-item.alt3 {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .magazine-featured {
+            grid-column: span 3;
+            grid-row: span 2;
+        }
+
+        .magazine-wide {
+            grid-column: span 2;
+        }
+
+        .magazine-tall {
+            grid-row: span 2;
+        }
+
+        /* ============ EXAMPLE 5: Card Gallery ============ */
+        .card-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+        }
+
+        .card-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-title {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .card.featured {
+            grid-column: span 2;
+        }
+
+        .card.featured .card-image {
+            height: 200px;
+        }
+
+        /* ============ EXAMPLE 6: Masonry Grid ============ */
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 150px;
+            gap: 15px;
+            grid-auto-flow: dense;
+        }
+
+        .masonry-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .masonry-item:hover {
+            transform: scale(1.05);
+        }
+
+        .masonry-item.alt1 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .masonry-item.alt2 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .masonry-item.alt3 {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .masonry-wide {
+            grid-column: span 2;
+        }
+
+        .masonry-tall {
+            grid-row: span 2;
+        }
+
+        .masonry-big {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        /* ============ EXAMPLE 7: Asymmetric Content ============ */
+        .asymmetric-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: 250px 1fr;
+            gap: 20px;
+        }
+
+        .hero-section {
+            grid-column: 1;
+            grid-row: 1 / 3;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-section h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .main-section {
+            grid-column: 2;
+            grid-row: 1;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .side-section {
+            grid-column: 3;
+            grid-row: 1 / 3;
+            background: #f0f0f0;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .content-grid {
+            grid-column: 2;
+            grid-row: 2;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .content-item {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ============ EXAMPLE 8: Newsletter ============ */
+        .newsletter-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .newsletter-section {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .newsletter-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .newsletter-item:last-child {
+            border-bottom: none;
+        }
+
+        .newsletter-featured {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+        }
+
+        .newsletter-featured h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        /* ============ EXAMPLE 9: Timeline ============ */
+        .timeline-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 20px;
+        }
+
+        .timeline-date {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-content h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* ============ EXAMPLE 10: Full-Width Header/Footer ============ */
+        .full-width-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto 1fr auto;
+            gap: 20px;
+            min-height: 500px;
+        }
+
+        .full-width-header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .full-width-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .full-width-footer {
+            grid-column: 1 / -1;
+            background: #333;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* ============ Responsive ============ */
+        @media (max-width: 1024px) {
+            .blog-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-featured {
+                grid-column: 1;
+            }
+
+            .blog-sidebar {
+                grid-column: 1;
+                grid-row: 3;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto;
+            }
+
+            .portfolio-featured {
+                grid-column: span 2;
+            }
+
+            .dashboard-layout {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chart-large {
+                grid-column: 1 / 3;
+            }
+
+            .asymmetric-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-section {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .main-section {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            .side-section {
+                grid-column: 1;
+                grid-row: 3;
+            }
+
+            .content-grid {
+                grid-column: 1;
+            }
+
+            .newsletter-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-featured {
+                grid-column: 1;
+            }
+
+            .timeline-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .magazine-layout {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(6, 150px);
+            }
+
+            .magazine-featured {
+                grid-column: span 2;
+                grid-row: span 2;
+            }
+
+            .card-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .card.featured {
+                grid-column: 1;
+            }
+
+            .masonry-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CSS Grid Item Spanning - Practical Examples</h1>
+        <p>Real-world implementations showing spanning techniques</p>
+    </header>
+
+    <div class="container">
+        <!-- EXAMPLE 1: Blog Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>1. Blog Layout with Spanning</h2>
+                <p>Featured article spans multiple columns, sidebar on the right</p>
+            </div>
+
+            <div class="code-section"><code>
+.blog-featured {
+    grid-column: 1 / 3;    /* Spans 2 columns */
+    grid-row: 2;
+}
+
+.blog-sidebar {
+    grid-column: 3;
+    grid-row: 2;
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Blog Layout</div>
+                <div class="blog-layout">
+                    <div class="blog-header">📰 Tech Blog</div>
+                    <div class="blog-featured">
+                        <div class="blog-featured-image">Featured Image</div>
+                        <h3>Top Story: CSS Grid Mastery</h3>
+                        <p>Learn advanced spanning techniques to create sophisticated layouts with precision control.</p>
+                        <a href="#" class="blog-featured-link">Read Full Article →</a>
+                    </div>
+                    <div class="blog-sidebar">
+                        <div class="sidebar-item">🔥 Popular Posts</div>
+                        <div class="sidebar-item">⭐ Recent Updates</div>
+                        <div class="sidebar-item">📚 Resources</div>
+                        <div class="sidebar-item">💡 Tips & Tricks</div>
+                    </div>
+                    <div class="blog-footer">© 2024 Tech Blog | All Rights Reserved</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Featured article uses grid-column: 1 / 3 to span 2 columns, making it wider than the sidebar.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 2: Portfolio Grid -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>2. Portfolio Grid with Featured Item</h2>
+                <p>Featured project spans 2×2, other projects fill remaining space</p>
+            </div>
+
+            <div class="code-section"><code>
+.portfolio-featured {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Portfolio Grid</div>
+                <div class="portfolio-grid">
+                    <div class="portfolio-item portfolio-featured">Featured Project</div>
+                    <div class="portfolio-item alt1">Project 2</div>
+                    <div class="portfolio-item alt2">Project 3</div>
+                    <div class="portfolio-item">Project 4</div>
+                    <div class="portfolio-item alt3">Project 5</div>
+                    <div class="portfolio-item">Project 6</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Featured item uses grid-column: span 2 and grid-row: span 2 to become a 2×2 showcase piece.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 3: Dashboard -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>3. Dashboard with Full-Width Sections</h2>
+                <p>Header and stats bar span all columns, charts positioned below</p>
+            </div>
+
+            <div class="code-section"><code>
+.dash-header {
+    grid-column: 1 / -1;   /* Spans all columns */
+}
+
+.dash-stats {
+    grid-column: 1 / -1;   /* Full width */
+}
+
+.chart-large {
+    grid-column: span 2;   /* 2 columns */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Dashboard Layout</div>
+                <div class="dashboard-layout">
+                    <div class="dash-header">📊 Analytics Dashboard</div>
+                    <div class="dash-stats">
+                        <div class="stat-card">
+                            <div class="stat-label">Users</div>
+                            <div class="stat-value">12.4K</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Revenue</div>
+                            <div class="stat-value">$45K</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Growth</div>
+                            <div class="stat-value">18%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Sessions</div>
+                            <div class="stat-value">8.9K</div>
+                        </div>
+                    </div>
+                    <div class="chart-large">📈 Main Chart</div>
+                    <div class="chart-small">📊 Chart 2</div>
+                    <div class="chart-small">📉 Chart 3</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Using grid-column: 1 / -1 makes header and stats span all columns responsively.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 4: Magazine Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>4. Magazine Layout with Mixed Spans</h2>
+                <p>Featured article 3×2, wide items, tall items, and regular items</p>
+            </div>
+
+            <div class="code-section"><code>
+.magazine-featured {
+    grid-column: span 3;
+    grid-row: span 2;
+}
+
+.magazine-wide {
+    grid-column: span 2;
+}
+
+.magazine-tall {
+    grid-row: span 2;
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Magazine Layout</div>
+                <div class="magazine-layout">
+                    <div class="magazine-item magazine-featured">Featured Story</div>
+                    <div class="magazine-item alt1">Article 1</div>
+                    <div class="magazine-item alt2 magazine-tall">Tall Article</div>
+                    <div class="magazine-item">Article 2</div>
+                    <div class="magazine-item magazine-wide alt3">Wide Article</div>
+                    <div class="magazine-item">Article 3</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Mix different span values to create visually varied magazine-style layouts with items of different sizes.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 5: Card Gallery -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>5. Responsive Card Gallery</h2>
+                <p>Featured card spans 2 columns in responsive auto-fit grid</p>
+            </div>
+
+            <div class="code-section"><code>
+.card-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.card.featured {
+    grid-column: span 2;
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Responsive Card Gallery (resize browser)</div>
+                <div class="card-gallery">
+                    <div class="card featured">
+                        <div class="card-image">Featured Product</div>
+                        <div class="card-content">
+                            <div class="card-title">Spotlight: Premium Widget</div>
+                            <div class="card-description">Our most popular product with amazing features and benefits.</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-image">Product A</div>
+                        <div class="card-content">
+                            <div class="card-title">Product A</div>
+                            <div class="card-description">Great quality and value</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-image">Product B</div>
+                        <div class="card-content">
+                            <div class="card-title">Product B</div>
+                            <div class="card-description">Popular choice</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-image">Product C</div>
+                        <div class="card-content">
+                            <div class="card-title">Product C</div>
+                            <div class="card-description">Best seller</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Featured card with grid-column: span 2 stands out in auto-fit responsive grids, scaling with available space.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 6: Masonry Grid -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>6. Masonry Layout with Dense Packing</h2>
+                <p>Mixed spans with grid-auto-flow: dense fills gaps efficiently</p>
+            </div>
+
+            <div class="code-section"><code>
+.masonry-grid {
+    grid-auto-flow: dense;
+}
+
+.masonry-wide {
+    grid-column: span 2;
+}
+
+.masonry-tall {
+    grid-row: span 2;
+}
+
+.masonry-big {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Masonry Grid</div>
+                <div class="masonry-grid">
+                    <div class="masonry-item">1</div>
+                    <div class="masonry-item alt1 masonry-wide">Wide Item</div>
+                    <div class="masonry-item alt2 masonry-tall">Tall</div>
+                    <div class="masonry-item">2</div>
+                    <div class="masonry-item">3</div>
+                    <div class="masonry-item alt3 masonry-big">Big 2×2</div>
+                    <div class="masonry-item">4</div>
+                    <div class="masonry-item">5</div>
+                    <div class="masonry-item">6</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> grid-auto-flow: dense intelligently fills gaps with varied-size items, creating Pinterest-like layouts.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 7: Asymmetric Content Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>7. Asymmetric Content with Row Spanning</h2>
+                <p>Hero section spans 2 rows, main content above, items grid below</p>
+            </div>
+
+            <div class="code-section"><code>
+.hero-section {
+    grid-column: 1;
+    grid-row: 1 / 3;    /* Spans 2 rows */
+}
+
+.main-section {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.side-section {
+    grid-column: 3;
+    grid-row: 1 / 3;    /* Spans 2 rows */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Asymmetric Layout</div>
+                <div class="asymmetric-layout">
+                    <div class="hero-section">
+                        <h2>Welcome!</h2>
+                        <p>This hero section spans 2 rows using grid-row: 1 / 3</p>
+                    </div>
+                    <div class="main-section">
+                        <h3>Main Content</h3>
+                        <p>Premium positioning in the grid</p>
+                    </div>
+                    <div class="side-section">
+                        <h3>Quick Links</h3>
+                        <p>Side navigation spanning 2 rows</p>
+                    </div>
+                    <div class="content-grid">
+                        <div class="content-item">Feature 1</div>
+                        <div class="content-item">Feature 2</div>
+                        <div class="content-item">Feature 3</div>
+                        <div class="content-item">Feature 4</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Using grid-row: 1 / 3 creates sidebar and hero sections that span multiple rows for asymmetric layouts.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 8: Newsletter Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>8. Newsletter with Full-Width Featured Section</h2>
+                <p>Featured section spans full width, content sections below</p>
+            </div>
+
+            <div class="code-section"><code>
+.newsletter-featured {
+    grid-column: 1 / -1;   /* Full width spanning */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Newsletter Layout</div>
+                <div class="newsletter-layout">
+                    <div class="newsletter-featured">
+                        <h2>🚀 This Month's Spotlight</h2>
+                        <p>Discover the latest trends and updates in web design and development</p>
+                    </div>
+                    <div class="newsletter-section">
+                        <h3>Featured Articles</h3>
+                        <div class="newsletter-item">📝 CSS Grid Advanced Techniques</div>
+                        <div class="newsletter-item">🎨 Design Trends 2024</div>
+                        <div class="newsletter-item">⚡ Performance Optimization</div>
+                    </div>
+                    <div class="newsletter-section">
+                        <h3>Community Highlights</h3>
+                        <div class="newsletter-item">🏆 Best Projects</div>
+                        <div class="newsletter-item">💬 Developer Spotlight</div>
+                        <div class="newsletter-item">🤝 Collaboration News</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Featured section uses grid-column: 1 / -1 to break across full width, creating visual hierarchy.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 9: Timeline Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>9. Timeline with Date Column</h2>
+                <p>Date sidebar with timeline content spanning right column</p>
+            </div>
+
+            <div class="code-section"><code>
+.timeline-layout {
+    grid-template-columns: 200px 1fr;
+}
+
+.timeline-date { /* Positioned in first column */ }
+.timeline-content { /* Positioned in second column */ }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Timeline Layout</div>
+                <div class="timeline-layout">
+                    <div class="timeline-date">Jan 2024</div>
+                    <div class="timeline-content">
+                        <h4>Project Started</h4>
+                        <p>Initial concept and planning phase completed</p>
+                    </div>
+                    <div class="timeline-date">Mar 2024</div>
+                    <div class="timeline-content">
+                        <h4>First Release</h4>
+                        <p>Alpha version released for testing</p>
+                    </div>
+                    <div class="timeline-date">May 2024</div>
+                    <div class="timeline-content">
+                        <h4>v1.0 Launch</h4>
+                        <p>Official public release with full features</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Two-column layout where left column is fixed width for dates, right column holds expanding content.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 10: Full-Width Header/Footer -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>10. Full-Width Header & Footer Layout</h2>
+                <p>Header and footer span all columns, content in middle rows</p>
+            </div>
+
+            <div class="code-section"><code>
+.full-width-header {
+    grid-column: 1 / -1;   /* Spans all columns */
+}
+
+.full-width-footer {
+    grid-column: 1 / -1;   /* Spans all columns */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Full-Width Header/Footer</div>
+                <div class="full-width-layout">
+                    <div class="full-width-header">
+                        <h2>🌟 Premium Website</h2>
+                        <p>Header spans all columns using grid-column: 1 / -1</p>
+                    </div>
+                    <div class="full-width-item">Left Content</div>
+                    <div class="full-width-item">Center Content</div>
+                    <div class="full-width-item">Right Content</div>
+                    <div class="full-width-footer">Footer © 2024 | Spans full width</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Using grid-column: 1 / -1 for header and footer creates full-width sections that maintain responsive structure.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSS Grid Item Spanning Practical Examples | Master spanning for flexible layouts</p>
+    </footer>
+</body>
+</html>

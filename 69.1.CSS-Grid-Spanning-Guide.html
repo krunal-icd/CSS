@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Items Spanning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        pre {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .demo {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .grid-demo {
+            display: grid;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+        }
+
+        .grid-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .grid-item.span-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .grid-item.span-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .grid-item.span-both {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .info-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .comparison-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .property-card {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 15px;
+        }
+
+        .property-card strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .feature-list {
+            background-color: #f0f8ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .feature-list ul {
+            margin-left: 20px;
+        }
+
+        .feature-list li {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 3px 6px;
+            border-radius: 3px;
+        }
+
+        .example-title {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 4px;
+        }
+
+        /* Example 1: Basic Spanning */
+        .grid-1 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 80px);
+            gap: 10px;
+        }
+
+        .grid-1 .item-1 { grid-column: span 2; }
+        .grid-1 .item-2 { grid-column: span 1; }
+        .grid-1 .item-3 { grid-row: span 2; }
+
+        /* Example 2: Explicit Line Numbers */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 80px);
+            gap: 10px;
+        }
+
+        .grid-2 .item-1 { grid-column: 1 / 3; }
+        .grid-2 .item-2 { grid-column: 3 / 5; }
+        .grid-2 .item-3 { grid-row: 2 / 4; grid-column: 1; }
+
+        /* Example 3: Row and Column Spanning */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 80px);
+            gap: 10px;
+        }
+
+        .grid-3 .item-1 { 
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        /* Example 4: Negative Spanning */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 80px);
+            gap: 10px;
+        }
+
+        .grid-4 .item-1 { grid-column: 1; grid-row: 1; }
+        .grid-4 .item-2 { grid-column: -2 / -1; grid-row: -2 / -1; }
+
+        /* Example 5: Full-width Spanning */
+        .grid-5 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 80px);
+            gap: 10px;
+        }
+
+        .grid-5 .item-1 { grid-column: 1 / -1; }
+        .grid-5 .item-last { grid-column: 1 / -1; }
+
+        /* Example 6: Overflow Spanning */
+        .grid-6 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 80px);
+            gap: 10px;
+            grid-auto-rows: 80px;
+        }
+
+        .grid-6 .item-1 { grid-column: span 2; }
+        .grid-6 .item-2 { grid-column: span 2; }
+
+        /* Example 7: Named Areas */
+        .grid-7 {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: auto 1fr auto;
+            gap: 10px;
+            grid-template-areas:
+                "header header header"
+                "sidebar main sidebar2"
+                "footer footer footer";
+        }
+
+        .grid-7 .header { grid-area: header; }
+        .grid-7 .sidebar { grid-area: sidebar; }
+        .grid-7 .main { grid-area: main; }
+        .grid-7 .sidebar2 { grid-area: sidebar2; }
+        .grid-7 .footer { grid-area: footer; }
+
+        /* Example 8: Complex Spanning */
+        .grid-8 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 80px);
+            gap: 10px;
+        }
+
+        .grid-8 .item-1 { grid-column: 1 / 3; grid-row: 1 / 3; }
+        .grid-8 .item-2 { grid-column: 3 / 5; grid-row: 1 / 2; }
+        .grid-8 .item-3 { grid-column: 3 / 4; grid-row: 2 / 4; }
+
+        /* Example 9: Auto-Fit with Spanning */
+        .grid-9 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+        }
+
+        .grid-9 .item-1 { grid-column: span 2; }
+        .grid-9 .item-2 { grid-column: span 1; }
+
+        /* Example 10: Masonry with Spanning */
+        .grid-10 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 100px;
+            gap: 10px;
+            grid-auto-flow: dense;
+        }
+
+        .grid-10 .wide { grid-column: span 2; }
+        .grid-10 .tall { grid-row: span 2; }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-1, .grid-2, .grid-3, .grid-4, .grid-5, .grid-6, .grid-7, .grid-8 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            h2 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CSS Grid: Items Spanning</h1>
+        <p>Master spanning techniques for multi-track grid items</p>
+    </header>
+
+    <div class="container">
+        <!-- Introduction -->
+        <section>
+            <h2>Understanding Grid Item Spanning</h2>
+            <p>Grid item spanning allows a single item to occupy multiple columns or rows. This is essential for creating complex, varied layouts where some items need more prominence or space.</p>
+            
+            <div class="feature-list">
+                <h3>Spanning Methods</h3>
+                <ul>
+                    <li><strong>span Keyword</strong> - Span N tracks from current position</li>
+                    <li><strong>Line Numbers</strong> - Explicit start and end lines</li>
+                    <li><strong>Negative Lines</strong> - Count from the end backwards</li>
+                    <li><strong>Auto-Spanning</strong> - Dynamic spanning with auto-fit/auto-fill</li>
+                    <li><strong>Full-Width Spanning</strong> - Span all available columns</li>
+                </ul>
+            </div>
+
+            <p>Combining column and row spanning creates flexible layouts with items of different sizes.</p>
+        </section>
+
+        <!-- span Keyword -->
+        <section>
+            <h2>The span Keyword</h2>
+
+            <h3>Basic Span Syntax</h3>
+            <p>Use <span class="highlight">span</span> to span a number of tracks from the item's starting position:</p>
+            <pre><code>.item {
+    grid-column: span 2;  /* Span 2 columns */
+    grid-row: span 1;     /* Span 1 row (default) */
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Different Column Spans</strong></p>
+                <div class="example-title">grid-column: span 1, 2, 1, 2, 3, etc.</div>
+                <div class="grid-demo grid-1">
+                    <div class="grid-item item-1">Span 2 Cols</div>
+                    <div class="grid-item item-2">Span 1 Col</div>
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item item-3">Span 2 Rows</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">6</div>
+                </div>
+            </div>
+
+            <h3>Row and Column Spanning</h3>
+            <p>Combine grid-column span and grid-row span for 2D spanning:</p>
+            <pre><code>.featured {
+    grid-column: span 2;  /* 2 columns wide */
+    grid-row: span 2;     /* 2 rows tall */
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: 2D Spanning (columns and rows)</strong></p>
+                <div class="example-title">Item spanning 2 columns × 2 rows</div>
+                <div class="grid-demo grid-3">
+                    <div class="grid-item span-both item-1">2×2</div>
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Key Concept:</strong> The span keyword is relative to the item's starting position. It says "span FROM here for N tracks."
+            </div>
+        </section>
+
+        <!-- Explicit Line Numbers -->
+        <section>
+            <h2>Explicit Line Number Spanning</h2>
+
+            <h3>Start / End Syntax</h3>
+            <p>Specify exact grid lines where the item starts and ends:</p>
+            <pre><code>.item {
+    grid-column: 1 / 3;   /* From line 1 to line 3 (2 columns) */
+    grid-row: 2 / 4;      /* From line 2 to line 4 (2 rows) */
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Explicit Line Number Positioning</strong></p>
+                <div class="example-title">Positioned items using start/end line numbers</div>
+                <div class="grid-demo grid-2">
+                    <div class="grid-item span-2">1-3</div>
+                    <div class="grid-item span-3">3-5</div>
+                    <div class="grid-item item-3">1, Row 2-4</div>
+                    <div class="grid-item">Item 4</div>
+                    <div class="grid-item">Item 5</div>
+                    <div class="grid-item">Item 6</div>
+                </div>
+            </div>
+
+            <h3>Line Number Calculation</h3>
+            <table>
+                <tr>
+                    <th>Syntax</th>
+                    <th>Lines Spanned</th>
+                    <th>Tracks Covered</th>
+                </tr>
+                <tr>
+                    <td><code>grid-column: 1 / 2;</code></td>
+                    <td>1 to 2</td>
+                    <td>1 column</td>
+                </tr>
+                <tr>
+                    <td><code>grid-column: 1 / 3;</code></td>
+                    <td>1 to 3</td>
+                    <td>2 columns</td>
+                </tr>
+                <tr>
+                    <td><code>grid-column: 2 / 5;</code></td>
+                    <td>2 to 5</td>
+                    <td>3 columns</td>
+                </tr>
+                <tr>
+                    <td><code>grid-column: 1 / -1;</code></td>
+                    <td>1 to end</td>
+                    <td>All columns</td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <strong>Important:</strong> The end line is exclusive—it marks where the item ENDS, not the last track it occupies.
+            </div>
+        </section>
+
+        <!-- Negative Lines -->
+        <section>
+            <h2>Negative Line Spanning</h2>
+
+            <h3>Counting From the End</h3>
+            <p>Negative line numbers count backwards from the end of the grid:</p>
+            <pre><code>.item {
+    grid-column: -3 / -1;  /* Last 2 columns */
+    grid-row: -2 / -1;     /* Last row */
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Negative Line Spanning</strong></p>
+                <div class="example-title">Item positioned using negative lines</div>
+                <div class="grid-demo grid-4">
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">6</div>
+                    <div class="grid-item">7</div>
+                    <div class="grid-item">8</div>
+                    <div class="grid-item item-1">Start</div>
+                    <div class="grid-item span-2 item-2">Last 2 (-3/-1)</div>
+                </div>
+            </div>
+
+            <h3>Benefits of Negative Lines</h3>
+            <div class="feature-list">
+                <ul>
+                    <li><strong>Dynamic:</strong> Works regardless of total grid size</li>
+                    <li><strong>Responsive:</strong> Positions from end automatically</li>
+                    <li><strong>Maintenance:</strong> No need to recalculate when grid changes</li>
+                </ul>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Negative Line</th>
+                    <th>Meaning (4-column grid)</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td><code>-1</code></td>
+                    <td>End of grid (line 5)</td>
+                    <td>Last column edge</td>
+                </tr>
+                <tr>
+                    <td><code>-2</code></td>
+                    <td>Before last track (line 4)</td>
+                    <td>Last column start</td>
+                </tr>
+                <tr>
+                    <td><code>-3</code></td>
+                    <td>Third from end (line 3)</td>
+                    <td>Last 2 columns</td>
+                </tr>
+                <tr>
+                    <td><code>-4</code></td>
+                    <td>Fourth from end (line 2)</td>
+                    <td>Last 3 columns</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Full-Width Spanning -->
+        <section>
+            <h2>Full-Width Spanning</h2>
+
+            <h3>Spanning All Columns</h3>
+            <p>Make items span the entire grid width regardless of column count:</p>
+            <pre><code>.full-width {
+    grid-column: 1 / -1;  /* From start to end */
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Full-Width Spanning</strong></p>
+                <div class="example-title">Items spanning full grid width</div>
+                <div class="grid-demo grid-5">
+                    <div class="grid-item item-1">Full Width Header</div>
+                    <div class="grid-item">Sidebar 1</div>
+                    <div class="grid-item">Main</div>
+                    <div class="grid-item">Sidebar 2</div>
+                    <div class="grid-item item-last">Full Width Footer</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Pro Tip:</strong> Using <code>grid-column: 1 / -1;</code> makes full-width items responsive. They automatically span all columns even if the number changes.
+            </div>
+        </section>
+
+        <!-- Overflow Spanning -->
+        <section>
+            <h2>Spanning Beyond the Explicit Grid</h2>
+
+            <h3>Implicit Grid Creation</h3>
+            <p>When items span beyond defined tracks, implicit tracks are automatically created:</p>
+            <pre><code>.grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 80px);
+    grid-auto-rows: 80px;  /* Size of implicit rows */
+}
+
+.item {
+    grid-column: span 2;
+    grid-row: span 3;  /* May exceed defined rows */
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Spanning Creates Implicit Grid</strong></p>
+                <div class="example-title">Items span beyond explicit grid definition</div>
+                <div class="grid-demo grid-6">
+                    <div class="grid-item span-2">Wide Item</div>
+                    <div class="grid-item">1</div>
+                    <div class="grid-item span-2">Wide Item</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Note:</strong> Implicit grid tracks are sized by grid-auto-rows and grid-auto-columns, not the explicit template.
+            </div>
+        </section>
+
+        <!-- Named Areas -->
+        <section>
+            <h2>Spanning with Named Grid Areas</h2>
+
+            <h3>Semantic Area Spanning</h3>
+            <p>Named areas automatically handle spanning without manual line numbers:</p>
+            <pre><code>.grid {
+    grid-template-areas:
+        "header header header"
+        "sidebar main main"
+        "footer footer footer";
+}
+
+.header { grid-area: header; }  /* Auto-spans 3 cols */</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Named Grid Areas with Spanning</strong></p>
+                <div class="example-title">Areas span automatically based on template</div>
+                <div class="grid-demo grid-7">
+                    <div class="grid-item header">Header (spans 3)</div>
+                    <div class="grid-item sidebar">Left</div>
+                    <div class="grid-item main">Main (spans 2 cols)</div>
+                    <div class="grid-item sidebar2">Right</div>
+                    <div class="grid-item footer">Footer (spans 3)</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Advantage:</strong> Named areas eliminate manual spanning math. The template visually shows what spans where.
+            </div>
+        </section>
+
+        <!-- Complex Spanning -->
+        <section>
+            <h2>Complex Multi-Item Spanning</h2>
+
+            <h3>Combining Multiple Spans</h3>
+            <p>Create sophisticated layouts by combining column and row spanning:</p>
+            <pre><code>.grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 80px);
+}
+
+.item-1 {
+    grid-column: 1 / 3;   /* 2 columns */
+    grid-row: 1 / 3;      /* 2 rows */
+}
+
+.item-2 {
+    grid-column: 3 / 5;   /* 2 columns */
+    grid-row: 1;          /* 1 row */
+}
+
+.item-3 {
+    grid-column: 3;       /* 1 column */
+    grid-row: 2 / 4;      /* 2 rows */
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Complex Spanning Combinations</strong></p>
+                <div class="example-title">Multiple items with different spans</div>
+                <div class="grid-demo grid-8">
+                    <div class="grid-item span-both">2×2</div>
+                    <div class="grid-item">3-5, Row 1</div>
+                    <div class="grid-item span-2">Tall (2 rows)</div>
+                    <div class="grid-item">Item 4</div>
+                    <div class="grid-item">Item 5</div>
+                    <div class="grid-item">Item 6</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Auto-Fit Spanning -->
+        <section>
+            <h2>Spanning with Auto-Fit/Auto-Fill</h2>
+
+            <h3>Responsive Spanning</h3>
+            <p>Spanning works with responsive auto-fit and auto-fill grids:</p>
+            <pre><code>.grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+.item-featured {
+    grid-column: span 2;  /* Spans 2 of the responsive columns */
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Spanning in Responsive Grid (resize browser)</strong></p>
+                <div class="example-title">Responsive grid with spanning items</div>
+                <div class="grid-demo grid-9">
+                    <div class="grid-item span-2 item-1">Featured (span 2)</div>
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Responsive:</strong> When the grid's auto-fit columns change at breakpoints, spanning items scale proportionally.
+            </div>
+        </section>
+
+        <!-- Masonry -->
+        <section>
+            <h2>Spanning in Masonry Layouts</h2>
+
+            <h3>Grid-Auto-Flow Dense with Spanning</h3>
+            <p>Use spanning with <code>grid-auto-flow: dense</code> for masonry-like layouts:</p>
+            <pre><code>.masonry {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 100px;
+    grid-auto-flow: dense;  /* Fill all gaps */
+}
+
+.item.wide {
+    grid-column: span 2;
+}
+
+.item.tall {
+    grid-row: span 2;
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Masonry with Spanning</strong></p>
+                <div class="example-title">Dense auto-flow with varying spans</div>
+                <div class="grid-demo grid-10">
+                    <div class="grid-item">1</div>
+                    <div class="grid-item wide">2 (wide)</div>
+                    <div class="grid-item tall">3 (tall)</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">6</div>
+                    <div class="grid-item wide">7 (wide)</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Masonry Effect:</strong> Dense auto-flow intelligently fills gaps with later items, creating a Pinterest-like layout.
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section>
+            <h2>Best Practices for Item Spanning</h2>
+
+            <div class="feature-list">
+                <h3>Do's ✓</h3>
+                <ul>
+                    <li>Use <code>span</code> for relative sizing from current position</li>
+                    <li>Use explicit line numbers for precise control</li>
+                    <li>Use <code>1 / -1</code> for full-width responsive items</li>
+                    <li>Use named areas for semantic spanning</li>
+                    <li>Combine row and column spanning for 2D layouts</li>
+                    <li>Test spanning at different breakpoints</li>
+                </ul>
+            </div>
+
+            <div class="feature-list" style="background-color: #fff0f0; border-left-color: #d32f2f;">
+                <h3>Don'ts ✗</h3>
+                <ul>
+                    <li>Don't over-span items unnecessarily</li>
+                    <li>Don't hardcode line numbers that might change</li>
+                    <li>Don't forget implicit grid creation when spanning beyond</li>
+                    <li>Don't ignore content when determining span sizes</li>
+                    <li>Don't use spanning for every item (simplicity matters)</li>
+                    <li>Don't forget accessibility of overlapping spans</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Comparison -->
+        <section>
+            <h2>Spanning Methods Comparison</h2>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4>span Keyword</h4>
+                    <p><strong>Use for:</strong> Relative spanning</p>
+                    <p style="margin-top: 10px; font-size: 0.95em;">Best when you want items to span from their current position. Simple and flexible.</p>
+                </div>
+
+                <div class="comparison-card">
+                    <h4>Line Numbers (start/end)</h4>
+                    <p><strong>Use for:</strong> Absolute positioning</p>
+                    <p style="margin-top: 10px; font-size: 0.95em;">Best for precise control. Specify exact lines where spanning starts and ends.</p>
+                </div>
+
+                <div class="comparison-card">
+                    <h4>Negative Lines</h4>
+                    <p><strong>Use for:</strong> Dynamic positioning</p>
+                    <p style="margin-top: 10px; font-size: 0.95em;">Best for responsive layouts. Position from the end automatically.</p>
+                </div>
+
+                <div class="comparison-card">
+                    <h4>Named Areas</h4>
+                    <p><strong>Use for:</strong> Semantic layouts</p>
+                    <p style="margin-top: 10px; font-size: 0.95em;">Best for readable code. Visual template shows spanning automatically.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section>
+            <h2>Quick Reference Cheat Sheet</h2>
+
+            <pre><code>/* Span by keyword (relative) */
+grid-column: span 2;       /* Span 2 columns */
+grid-row: span 3;          /* Span 3 rows */
+
+/* Explicit line numbers (absolute) */
+grid-column: 1 / 3;        /* From line 1 to 3 (2 cols) */
+grid-row: 2 / 5;           /* From line 2 to 5 (3 rows) */
+
+/* Negative lines (from end) */
+grid-column: -3 / -1;      /* Last 2 columns */
+grid-row: -2 / -1;         /* Last row */
+
+/* Full-width spanning */
+grid-column: 1 / -1;       /* All columns */
+grid-row: 1 / -1;          /* All rows */
+
+/* 2D Spanning */
+grid-column: span 2;
+grid-row: span 2;
+
+/* Named areas */
+grid-area: header;         /* Named area in template */</code></pre>
+
+            <h3>Common Spanning Patterns</h3>
+            <table>
+                <tr>
+                    <th>Pattern</th>
+                    <th>Code</th>
+                    <th>Result</th>
+                </tr>
+                <tr>
+                    <td>Full Width Item</td>
+                    <td><code>grid-column: 1 / -1;</code></td>
+                    <td>Spans all columns</td>
+                </tr>
+                <tr>
+                    <td>Full Height Sidebar</td>
+                    <td><code>grid-row: 1 / -1;</code></td>
+                    <td>Spans all rows</td>
+                </tr>
+                <tr>
+                    <td>Featured (2×2)</td>
+                    <td><code>grid-column: span 2;<br>grid-row: span 2;</code></td>
+                    <td>2 cols × 2 rows</td>
+                </tr>
+                <tr>
+                    <td>Last 2 Columns</td>
+                    <td><code>grid-column: -3 / -1;</code></td>
+                    <td>Responsive last 2 cols</td>
+                </tr>
+                <tr>
+                    <td>Wide Item</td>
+                    <td><code>grid-column: span 2;</code></td>
+                    <td>2 columns wide</td>
+                </tr>
+            </table>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSS Grid Item Spanning Guide | Master multi-track spanning techniques</p>
+    </footer>
+</body>
+</html>

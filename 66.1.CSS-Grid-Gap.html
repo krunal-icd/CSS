@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Gap Spacing Between Items</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        pre {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .demo {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .grid-demo {
+            display: grid;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+
+        .grid-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .grid-item:hover {
+            transform: scale(1.02);
+        }
+
+        .grid-item.alt {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .info-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .comparison-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .gap-visual {
+            display: grid;
+            padding: 20px;
+            background-color: white;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .gap-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .visual-gap {
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(90deg, transparent 0%, #667eea 10%, #667eea 90%, transparent 100%);
+            border-top: 1px dashed #999;
+            border-bottom: 1px dashed #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .property-card {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 15px;
+        }
+
+        .property-card strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .gap-showcase {
+            display: grid;
+            gap: 5px;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .gap-showcase.gap-10 {
+            gap: 10px;
+        }
+
+        .gap-showcase.gap-20 {
+            gap: 20px;
+        }
+
+        .gap-showcase.gap-40 {
+            gap: 40px;
+        }
+
+        .gap-showcase.row-gap-30-col-gap-10 {
+            row-gap: 30px;
+            column-gap: 10px;
+        }
+
+        .gap-showcase.row-gap-10-col-gap-30 {
+            row-gap: 10px;
+            column-gap: 30px;
+        }
+
+        .feature-list {
+            background-color: #f0f8ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .feature-list ul {
+            margin-left: 20px;
+        }
+
+        .feature-list li {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 3px 6px;
+            border-radius: 3px;
+        }
+
+        .side-by-side {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .demo-column h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        .visual-comparison {
+            background: linear-gradient(to right, #e0e0e0 1px, transparent 1px, transparent calc(50% - 1px), #e0e0e0 calc(50% - 1px), #e0e0e0 51%, transparent 51%, transparent calc(100% - 1px), #e0e0e0 calc(100% - 1px));
+            background-size: 20px 100%;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .example-title {
+            font-size: 0.95em;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .row-column-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 100px);
+            gap: 20px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .nested-grid-demo {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .nested-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .nested-grid-inner {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .nested-child {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .side-by-side {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            h2 {
+                font-size: 1.3em;
+            }
+
+            .gap-showcase {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CSS Grid: Gap Spacing Between Items</h1>
+        <p>Master gap, row-gap, and column-gap properties for perfect spacing</p>
+    </header>
+
+    <div class="container">
+        <!-- Introduction -->
+        <section>
+            <h2>Understanding Gap Properties</h2>
+            <p>The <span class="highlight">gap</span> property (formerly called <code>grid-gap</code>) is a powerful CSS Grid feature that controls the spacing between grid items. Instead of using margins on individual items, gap provides clean, consistent spacing throughout your entire grid layout.</p>
+            
+            <div class="feature-list">
+                <h3>Why Use Gap Instead of Margin?</h3>
+                <ul>
+                    <li><strong>Consistency:</strong> Applies uniform spacing to all items automatically</li>
+                    <li><strong>Simplicity:</strong> No need to add margin rules to every grid item</li>
+                    <li><strong>Flexibility:</strong> Separate control over row and column spacing</li>
+                    <li><strong>Responsive:</strong> Easy to adjust spacing at different breakpoints</li>
+                    <li><strong>Container-based:</strong> Spacing is defined on the grid container, not items</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>Note:</strong> <code>gap</code> only works on grid and flexbox containers. The older <code>grid-gap</code> property still works but is deprecated in favor of the universal <code>gap</code> property.
+            </div>
+        </section>
+
+        <!-- Basic Gap -->
+        <section>
+            <h2>Basic gap Property</h2>
+
+            <h3>Single Value - Uniform Spacing</h3>
+            <p>Set the same gap for both rows and columns:</p>
+            <pre><code>.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;  /* 20px gap on all sides */
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: gap: 20px</strong></p>
+                <div class="grid-demo gap-showcase gap-20">
+                    <div class="grid-item">Item 1</div>
+                    <div class="grid-item">Item 2</div>
+                    <div class="grid-item">Item 3</div>
+                    <div class="grid-item">Item 4</div>
+                    <div class="grid-item">Item 5</div>
+                    <div class="grid-item">Item 6</div>
+                </div>
+            </div>
+
+            <h3>Comparing Gap Sizes</h3>
+            <p>Notice how spacing changes visual hierarchy and density:</p>
+
+            <div class="example-title">gap: 5px (Compact)</div>
+            <div class="grid-demo gap-showcase gap-5" style="gap: 5px;">
+                <div class="grid-item">1</div>
+                <div class="grid-item">2</div>
+                <div class="grid-item">3</div>
+                <div class="grid-item">4</div>
+                <div class="grid-item">5</div>
+                <div class="grid-item">6</div>
+            </div>
+
+            <div class="example-title">gap: 20px (Moderate)</div>
+            <div class="grid-demo gap-showcase gap-20">
+                <div class="grid-item">1</div>
+                <div class="grid-item">2</div>
+                <div class="grid-item">3</div>
+                <div class="grid-item">4</div>
+                <div class="grid-item">5</div>
+                <div class="grid-item">6</div>
+            </div>
+
+            <div class="example-title">gap: 40px (Spacious)</div>
+            <div class="grid-demo gap-showcase gap-40">
+                <div class="grid-item">1</div>
+                <div class="grid-item">2</div>
+                <div class="grid-item">3</div>
+                <div class="grid-item">4</div>
+                <div class="grid-item">5</div>
+                <div class="grid-item">6</div>
+            </div>
+        </section>
+
+        <!-- Row Gap & Column Gap -->
+        <section>
+            <h2>row-gap and column-gap Properties</h2>
+
+            <h3>Different Spacing for Rows and Columns</h3>
+            <p>Use separate properties to control spacing independently:</p>
+            <pre><code>.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 30px;
+    column-gap: 10px;
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: row-gap: 30px, column-gap: 10px (more vertical space)</strong></p>
+                <div class="grid-demo gap-showcase row-gap-30-col-gap-10">
+                    <div class="grid-item">Item 1</div>
+                    <div class="grid-item">Item 2</div>
+                    <div class="grid-item">Item 3</div>
+                    <div class="grid-item">Item 4</div>
+                    <div class="grid-item">Item 5</div>
+                    <div class="grid-item">Item 6</div>
+                </div>
+            </div>
+
+            <h3>Opposite: More Horizontal Space</h3>
+            <p>Wider columns with tighter rows:</p>
+            <pre><code>.grid {
+    row-gap: 10px;
+    column-gap: 30px;
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: row-gap: 10px, column-gap: 30px (more horizontal space)</strong></p>
+                <div class="grid-demo gap-showcase row-gap-10-col-gap-30">
+                    <div class="grid-item">Item 1</div>
+                    <div class="grid-item">Item 2</div>
+                    <div class="grid-item">Item 3</div>
+                    <div class="grid-item">Item 4</div>
+                    <div class="grid-item">Item 5</div>
+                    <div class="grid-item">Item 6</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Shorthand:</strong> You can also use <code>gap: 10px 30px;</code> for <code>row-gap column-gap</code>, or <code>gap: 30px 10px;</code> to swap them.
+            </div>
+        </section>
+
+        <!-- Gap Units -->
+        <section>
+            <h2>Gap Units and Values</h2>
+
+            <h3>Supported Units</h3>
+            <p>Gap can use various CSS units:</p>
+            <table>
+                <tr>
+                    <th>Unit</th>
+                    <th>Example</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td><strong>Pixels (px)</strong></td>
+                    <td><code>gap: 20px;</code></td>
+                    <td>Fixed, predictable spacing</td>
+                </tr>
+                <tr>
+                    <td><strong>Relative (rem, em)</strong></td>
+                    <td><code>gap: 1.5rem;</code></td>
+                    <td>Scales with font size</td>
+                </tr>
+                <tr>
+                    <td><strong>Percentage (%)</strong></td>
+                    <td><code>gap: 5%;</code></td>
+                    <td>Responsive to container</td>
+                </tr>
+                <tr>
+                    <td><strong>CSS Variables</strong></td>
+                    <td><code>gap: var(--spacing);</code></td>
+                    <td>Dynamic, reusable spacing</td>
+                </tr>
+                <tr>
+                    <td><strong>Calc</strong></td>
+                    <td><code>gap: calc(1rem + 5px);</code></td>
+                    <td>Calculated values</td>
+                </tr>
+            </table>
+
+            <h3>CSS Variables for Responsive Gap</h3>
+            <pre><code>:root {
+    --spacing-small: 10px;
+    --spacing-medium: 20px;
+    --spacing-large: 40px;
+}
+
+.grid {
+    display: grid;
+    gap: var(--spacing-medium);
+}
+
+@media (max-width: 768px) {
+    .grid {
+        gap: var(--spacing-small);
+    }
+}</code></pre>
+        </section>
+
+        <!-- Gap vs Margin -->
+        <section>
+            <h2>Gap vs Margin: Key Differences</h2>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4>🎯 Using Gap</h4>
+                    <p><strong>Pros:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Applied to container</li>
+                        <li>Uniform spacing</li>
+                        <li>No external gaps</li>
+                        <li>Cleaner code</li>
+                        <li>Easy to adjust</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-card">
+                    <h4>📏 Using Margin</h4>
+                    <p><strong>Cons:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Applied to items</li>
+                        <li>Inconsistent edges</li>
+                        <li>Extra margin outside</li>
+                        <li>More code</li>
+                        <li>Harder to maintain</li>
+                    </ul>
+                </div>
+            </div>
+
+            <pre><code>/* ❌ Using Margin (Extra spacing at edges) */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-item {
+    margin: 10px;  /* Creates extra space on edges */
+}
+
+/* ✅ Using Gap (Clean edges) */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;  /* Only between items, not on edges */
+}</code></pre>
+        </section>
+
+        <!-- Practical Examples -->
+        <section>
+            <h2>Practical Gap Examples</h2>
+
+            <h3>1. Card Grid with Comfortable Spacing</h3>
+            <pre><code>.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;  /* Comfortable spacing between cards */
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Card Grid</strong></p>
+                <div class="grid-demo" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px;">
+                    <div class="grid-item">Card 1</div>
+                    <div class="grid-item">Card 2</div>
+                    <div class="grid-item">Card 3</div>
+                    <div class="grid-item">Card 4</div>
+                </div>
+            </div>
+
+            <h3>2. Compact Product List</h3>
+            <pre><code>.product-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;  /* Tight spacing for density */
+}</code></pre>
+
+            <h3>3. Form Layout with Varied Spacing</h3>
+            <pre><code>.form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 20px;      /* More vertical space between form rows */
+    column-gap: 15px;   /* Tighter horizontal space between columns */
+}</code></pre>
+
+            <h3>4. Dashboard with Asymmetric Spacing</h3>
+            <pre><code>.dashboard {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 15px;
+}
+
+.dashboard-main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;  /* Nested grid with different gap */
+}</code></pre>
+        </section>
+
+        <!-- Gap with Alignment -->
+        <section>
+            <h2>Gap Interaction with Alignment</h2>
+
+            <h3>Gap and justify-items</h3>
+            <p>Gap works independently from alignment properties:</p>
+            <pre><code>.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    gap: 20px;
+    justify-items: center;  /* Gap still applied */
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: gap + justify-items: center</strong></p>
+                <div class="grid-demo" style="grid-template-columns: repeat(3, 150px); gap: 20px; justify-items: center;">
+                    <div class="grid-item">Item 1</div>
+                    <div class="grid-item">Item 2</div>
+                    <div class="grid-item">Item 3</div>
+                </div>
+            </div>
+
+            <h3>Gap and justify-content</h3>
+            <p>Gap is applied first, then content alignment:</p>
+            <pre><code>.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    gap: 20px;
+    justify-content: space-around;  /* Space around all items including gaps */
+}</code></pre>
+
+            <div class="info-box">
+                <strong>Key Point:</strong> Gap creates space between grid tracks, while alignment properties position items within those tracks. They work together, not against each other.
+            </div>
+        </section>
+
+        <!-- Responsive Gap -->
+        <section>
+            <h2>Responsive Gap with Media Queries</h2>
+
+            <h3>Adjust Gap at Different Breakpoints</h3>
+            <pre><code>/* Mobile: Compact spacing */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+/* Tablet: Moderate spacing */
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+/* Desktop: Comfortable spacing */
+@media (min-width: 1200px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+    }
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Responsive Gap (resize your browser)</strong></p>
+                <p style="font-size: 0.9em; color: #666; margin-bottom: 15px;">
+                    Mobile: 10px gap, 2 columns | Tablet: 20px gap, 3 columns | Desktop: 30px gap, 4 columns
+                </p>
+                <div class="grid-demo" style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px;">
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">6</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nested Grids -->
+        <section>
+            <h2>Gap in Nested Grids</h2>
+
+            <p>Each grid has its own gap that doesn't affect parent or child grids:</p>
+            <pre><code>.parent-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;  /* Gap between parent items */
+}
+
+.child-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;  /* Gap between child items (independent) */
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Nested Grids with Different Gaps</strong></p>
+                <p style="font-size: 0.9em; color: #666; margin-bottom: 15px;">
+                    Parent grid gap: 30px | Child grid gap: 10px (no interaction)
+                </p>
+                <div class="nested-grid-demo">
+                    <div class="nested-item">
+                        <strong>Parent Item 1</strong>
+                        <div class="nested-grid-inner">
+                            <div class="nested-child">Child 1</div>
+                            <div class="nested-child">Child 2</div>
+                            <div class="nested-child">Child 3</div>
+                            <div class="nested-child">Child 4</div>
+                        </div>
+                    </div>
+                    <div class="nested-item">
+                        <strong>Parent Item 2</strong>
+                        <div class="nested-grid-inner">
+                            <div class="nested-child">Child 1</div>
+                            <div class="nested-child">Child 2</div>
+                            <div class="nested-child">Child 3</div>
+                            <div class="nested-child">Child 4</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section>
+            <h2>Best Practices for Gap</h2>
+
+            <div class="feature-list">
+                <h3>Do's ✓</h3>
+                <ul>
+                    <li>Use <code>gap</code> instead of margins on grid items</li>
+                    <li>Define gap on the grid container, not items</li>
+                    <li>Use CSS variables for reusable spacing values</li>
+                    <li>Adjust gap at different breakpoints for responsive design</li>
+                    <li>Use separate <code>row-gap</code> and <code>column-gap</code> when needed</li>
+                    <li>Consider the visual hierarchy when choosing gap size</li>
+                </ul>
+            </div>
+
+            <div class="feature-list" style="background-color: #fff0f0; border-left-color: #d32f2f;">
+                <h3>Don'ts ✗</h3>
+                <ul>
+                    <li>Don't use both gap and margins (creates double spacing)</li>
+                    <li>Don't apply gap to non-grid/non-flex elements</li>
+                    <li>Don't forget gap doesn't apply to grid edges (only between items)</li>
+                    <li>Don't use inconsistent gap values without reason</li>
+                    <li>Don't ignore responsive adjustments</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section>
+            <h2>Browser Support</h2>
+
+            <p><code>gap</code> has excellent modern browser support:</p>
+            <table>
+                <tr>
+                    <th>Browser</th>
+                    <th>Support Status</th>
+                    <th>Version</th>
+                </tr>
+                <tr>
+                    <td>Chrome/Edge</td>
+                    <td>✓ Full Support</td>
+                    <td>66+ / 79+</td>
+                </tr>
+                <tr>
+                    <td>Firefox</td>
+                    <td>✓ Full Support</td>
+                    <td>61+</td>
+                </tr>
+                <tr>
+                    <td>Safari</td>
+                    <td>✓ Full Support</td>
+                    <td>12+</td>
+                </tr>
+                <tr>
+                    <td>Opera</td>
+                    <td>✓ Full Support</td>
+                    <td>53+</td>
+                </tr>
+                <tr>
+                    <td>Internet Explorer</td>
+                    <td>✗ No Support</td>
+                    <td>-</td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <strong>Fallback:</strong> For older browsers, use the prefixed <code>grid-gap</code> property as a fallback, though it's deprecated.
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section>
+            <h2>Quick Reference Cheat Sheet</h2>
+
+            <pre><code>/* Uniform gap */
+gap: 20px;
+
+/* Separate row and column gap */
+gap: 20px 30px;  /* row-gap column-gap */
+row-gap: 20px;
+column-gap: 30px;
+
+/* Different units */
+gap: 1.5rem;
+gap: 5%;
+gap: calc(1rem + 10px);
+gap: var(--spacing-unit);
+
+/* Responsive gap */
+@media (max-width: 768px) {
+    gap: 10px;
+}
+
+/* With alignment */
+gap: 20px;
+justify-items: center;
+align-items: start;</code></pre>
+
+            <h3>Common Gap Values</h3>
+            <table>
+                <tr>
+                    <th>Gap Size</th>
+                    <th>Use Case</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><code>5px - 10px</code></td>
+                    <td>Compact, dense layouts</td>
+                    <td>Photo gallery, product grid</td>
+                </tr>
+                <tr>
+                    <td><code>15px - 25px</code></td>
+                    <td>Standard, balanced layouts</td>
+                    <td>Card grids, blog layouts</td>
+                </tr>
+                <tr>
+                    <td><code>30px - 50px</code></td>
+                    <td>Spacious, premium feel</td>
+                    <td>Dashboard, hero sections</td>
+                </tr>
+                <tr>
+                    <td><code>50px+</code></td>
+                    <td>Very spacious, breathing room</td>
+                    <td>Portfolio, landing pages</td>
+                </tr>
+            </table>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSS Grid Gap Spacing Guide | Master gap properties for perfect spacing</p>
+    </footer>
+</body>
+</html>

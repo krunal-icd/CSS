@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Lines Naming</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        pre {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .demo {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .grid-demo {
+            display: grid;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+        }
+
+        .grid-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .comparison-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .property-card {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 15px;
+        }
+
+        .property-card strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .feature-list {
+            background-color: #f0f8ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .feature-list ul {
+            margin-left: 20px;
+        }
+
+        .feature-list li {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 3px 6px;
+            border-radius: 3px;
+        }
+
+        .example-title {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 4px;
+        }
+
+        /* Example 1: Basic Named Lines */
+        .grid-1 {
+            display: grid;
+            grid-template-columns: [start] 1fr [mid] 1fr [end];
+            grid-template-rows: [top] 80px [middle] 1fr [bottom];
+            gap: 10px;
+        }
+
+        .grid-1 .item-1 { grid-column: start / mid; grid-row: top; }
+        .grid-1 .item-2 { grid-column: mid / end; grid-row: top; }
+        .grid-1 .item-3 { grid-column: start / mid; grid-row: middle / bottom; }
+        .grid-1 .item-4 { grid-column: mid / end; grid-row: middle / bottom; }
+
+        /* Example 2: Semantic Names */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: [sidebar-start] 200px [content-start] 1fr [content-end];
+            grid-template-rows: [header] 80px [main] 1fr [footer] 60px;
+            gap: 10px;
+            min-height: 400px;
+        }
+
+        .grid-2 .header { grid-column: sidebar-start / content-end; grid-row: header; }
+        .grid-2 .sidebar { grid-column: sidebar-start; grid-row: main; }
+        .grid-2 .main { grid-column: content-start / content-end; grid-row: main; }
+        .grid-2 .footer { grid-column: sidebar-start / content-end; grid-row: footer; }
+
+        /* Example 3: Multiple Names */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 
+                [full-start] 1fr 
+                [sidebar-start] 200px 
+                [sidebar-end content-start] 1fr 
+                [content-end full-end];
+            gap: 10px;
+        }
+
+        .grid-3 .wide { grid-column: full-start / full-end; }
+        .grid-3 .sidebar { grid-column: sidebar-start / sidebar-end; }
+        .grid-3 .main { grid-column: content-start / content-end; }
+
+        /* Example 4: Repeat with Names */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(3, [col-start] 1fr [col-end]);
+            gap: 10px;
+        }
+
+        .grid-4 .item-1 { grid-column: col-start 1 / col-end 2; }
+        .grid-4 .item-2 { grid-column: col-start 2 / col-end 3; }
+        .grid-4 .item-3 { grid-column: col-start 3 / col-end 4; }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-1, .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            h2 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CSS Grid: Lines Naming</h1>
+        <p>Master named grid lines for semantic, readable layouts</p>
+    </header>
+
+    <div class="container">
+        <!-- Introduction -->
+        <section>
+            <h2>Understanding Named Grid Lines</h2>
+            <p>Named grid lines allow you to assign meaningful names to grid lines instead of using numeric positions. This makes your CSS more readable, maintainable, and self-documenting.</p>
+            
+            <div class="feature-list">
+                <h3>Benefits of Named Lines</h3>
+                <ul>
+                    <li><strong>Readability:</strong> Code is more understandable with semantic names</li>
+                    <li><strong>Maintainability:</strong> Easier to modify grid structure without breaking layouts</li>
+                    <li><strong>Semantics:</strong> Names convey meaning about the grid structure</li>
+                    <li><strong>Documentation:</strong> Grid structure is self-explanatory through names</li>
+                    <li><strong>Flexibility:</strong> Combine named lines with template areas</li>
+                </ul>
+            </div>
+
+            <p>Named lines work alongside or instead of numeric line numbers, giving you maximum flexibility in grid positioning.</p>
+        </section>
+
+        <!-- Basic Named Lines -->
+        <section>
+            <h2>Basic Named Grid Lines</h2>
+
+            <h3>Simple Line Names</h3>
+            <p>Define line names by placing them in brackets <span class="highlight">[name]</span> in grid-template-columns or grid-template-rows:</p>
+            <pre><code>.grid {
+    display: grid;
+    grid-template-columns: [start] 1fr [middle] 1fr [end];
+    grid-template-rows: [top] 80px [bottom];
+}
+
+.item {
+    grid-column: start / middle;  /* Use named lines */
+    grid-row: top / bottom;
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Basic Named Lines</strong></p>
+                <div class="example-title">grid-column: [start] 1fr [middle] 1fr [end]</div>
+                <div class="grid-demo grid-1">
+                    <div class="grid-item">Start to Mid</div>
+                    <div class="grid-item">Mid to End</div>
+                    <div class="grid-item">Item 3</div>
+                    <div class="grid-item">Item 4</div>
+                </div>
+            </div>
+
+            <h3>Line Naming Syntax</h3>
+            <p>Names are placed before or after track sizes:</p>
+            <pre><code>/* Before the track */
+[name] 1fr
+
+/* After the track */
+1fr [name]
+
+/* Both before and after */
+[start] 1fr [end]
+
+/* Multiple names for same line */
+[sidebar-end] [content-start] 200px</code></pre>
+
+            <div class="info-box">
+                <strong>Key Point:</strong> Names are assigned to grid lines, not tracks. A line exists between and around tracks.
+            </div>
+        </section>
+
+        <!-- Semantic Naming -->
+        <section>
+            <h2>Semantic Line Names</h2>
+
+            <h3>Meaningful Names for Grid Structure</h3>
+            <p>Use descriptive names that convey the grid's purpose:</p>
+            <pre><code>.grid {
+    display: grid;
+    grid-template-columns: 
+        [sidebar-start] 200px 
+        [sidebar-end content-start] 1fr 
+        [content-end];
+    grid-template-rows: 
+        [header] 80px 
+        [main] 1fr 
+        [footer] 60px;
+}
+
+.header { grid-column: sidebar-start / content-end; grid-row: header; }
+.sidebar { grid-column: sidebar-start / sidebar-end; grid-row: main; }
+.main { grid-column: content-start / content-end; grid-row: main; }
+.footer { grid-column: sidebar-start / content-end; grid-row: footer; }</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Semantic Named Lines Layout</strong></p>
+                <div class="example-title">Named lines creating a semantic layout</div>
+                <div class="grid-demo grid-2">
+                    <div class="grid-item" style="background: #667eea;">Header</div>
+                    <div class="grid-item" style="background: #764ba2;">Sidebar</div>
+                    <div class="grid-item" style="background: #667eea;">Main Content</div>
+                    <div class="grid-item" style="background: #333;">Footer</div>
+                </div>
+            </div>
+
+            <h3>Naming Conventions</h3>
+            <table>
+                <tr>
+                    <th>Pattern</th>
+                    <th>Example</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td>start-end pairs</td>
+                    <td><code>[header-start] ... [header-end]</code></td>
+                    <td>Clearly marks region boundaries</td>
+                </tr>
+                <tr>
+                    <td>Direction-based</td>
+                    <td><code>[top] ... [middle] ... [bottom]</code></td>
+                    <td>Vertical or horizontal position</td>
+                </tr>
+                <tr>
+                    <td>Content-based</td>
+                    <td><code>[sidebar] ... [main] ... [aside]</code></td>
+                    <td>Describes grid area purpose</td>
+                </tr>
+                <tr>
+                    <td>Functional</td>
+                    <td><code>[nav-start] ... [content-start]</code></td>
+                    <td>Describes grid element role</td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <strong>Best Practice:</strong> Use consistent naming patterns like [region-start] and [region-end] for clarity.
+            </div>
+        </section>
+
+        <!-- Multiple Names -->
+        <section>
+            <h2>Multiple Names for Same Line</h2>
+
+            <h3>Assigning Multiple Names</h3>
+            <p>A single line can have multiple names, useful for marking both the end of one region and start of another:</p>
+            <pre><code>.grid {
+    grid-template-columns: 
+        [full-start sidebar-start] 200px 
+        [sidebar-end content-start] 1fr 
+        [content-end full-end];
+}
+
+.full-width {
+    grid-column: full-start / full-end;  /* Spans everything */
+}
+
+.sidebar {
+    grid-column: sidebar-start / sidebar-end;  /* Just sidebar */
+}
+
+.main {
+    grid-column: content-start / content-end;  /* Just main */
+}</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Multiple Names on Same Lines</strong></p>
+                <div class="example-title">Lines with multiple semantic names</div>
+                <div class="grid-demo grid-3">
+                    <div class="grid-item wide" style="background: #667eea;">Full Width Item</div>
+                    <div class="grid-item sidebar" style="background: #764ba2;">Sidebar</div>
+                    <div class="grid-item main" style="background: #667eea;">Main</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Advantage:</strong> Multiple names let you reference the same line in different ways, making code more flexible and readable.
+            </div>
+        </section>
+
+        <!-- Repeat with Names -->
+        <section>
+            <h2>Named Lines with repeat()</h2>
+
+            <h3>Using Named Lines in repeat()</h3>
+            <p>Combine named lines with the repeat() function for automatic name generation:</p>
+            <pre><code>.grid {
+    display: grid;
+    grid-template-columns: repeat(3, [col-start] 1fr [col-end]);
+    grid-template-rows: repeat(4, [row-start] 100px [row-end]);
+}
+
+.item-1 { grid-column: col-start 1 / col-end 2; }
+.item-2 { grid-column: col-start 2 / col-end 3; }
+.item-3 { grid-column: col-start 3 / col-end 4; }</code></pre>
+
+            <div class="demo">
+                <p><strong>Demo: Named Lines with repeat()</strong></p>
+                <div class="example-title">repeat(3, [col-start] 1fr [col-end])</div>
+                <div class="grid-demo grid-4">
+                    <div class="grid-item">Item 1</div>
+                    <div class="grid-item">Item 2</div>
+                    <div class="grid-item">Item 3</div>
+                    <div class="grid-item">Item 4</div>
+                    <div class="grid-item">Item 5</div>
+                    <div class="grid-item">Item 6</div>
+                </div>
+            </div>
+
+            <h3>How repeat() Generates Names</h3>
+            <p>When repeat() is used with named lines, numeric suffixes are automatically added:</p>
+            <table>
+                <tr>
+                    <th>repeat() Definition</th>
+                    <th>Generated Names</th>
+                </tr>
+                <tr>
+                    <td><code>repeat(3, [col] 1fr)</code></td>
+                    <td><code>[col 1] [col 2] [col 3] [col 4]</code></td>
+                </tr>
+                <tr>
+                    <td><code>repeat(2, [a] 1fr [b])</code></td>
+                    <td><code>[a 1] [b 1] [a 2] [b 2]</code></td>
+                </tr>
+                <tr>
+                    <td><code>repeat(4, [row-start] 80px [row-end])</code></td>
+                    <td>Numbered rows with both start and end names</td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <strong>Auto-Numbering:</strong> repeat() automatically numbers names, so col-start becomes col-start 1, col-start 2, etc.
+            </div>
+        </section>
+
+        <!-- Named Lines vs Grid Areas -->
+        <section>
+            <h2>Named Lines vs Grid Areas</h2>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4>Named Lines</h4>
+                    <p><strong>Best for:</strong> Flexible positioning</p>
+                    <p style="margin-top: 10px; font-size: 0.95em;">
+                        • More granular control<br>
+                        • Can position anywhere<br>
+                        • Works with individual items<br>
+                        • Combine multiple items easily
+                    </p>
+                </div>
+
+                <div class="comparison-card">
+                    <h4>Grid Areas</h4>
+                    <p><strong>Best for:</strong> Block-based layouts</p>
+                    <p style="margin-top: 10px; font-size: 0.95em;">
+                        • Visual template representation<br>
+                        • Block-level regions<br>
+                        • Easier to visualize structure<br>
+                        • Best for semantic zones
+                    </p>
+                </div>
+            </div>
+
+            <h3>Comparison Example</h3>
+            <pre><code>/* Named Lines */
+grid-template-columns: [nav-start] 200px [nav-end content-start] 1fr [content-end];
+grid-column: nav-start / nav-end;  /* Position item */
+
+/* Grid Areas */
+grid-template-areas: "nav" "content";
+grid-area: nav;  /* Assign item to area */</code></pre>
+
+            <div class="info-box">
+                <strong>Combination:</strong> You can use named lines and grid areas together for maximum flexibility!
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section>
+            <h2>Best Practices for Named Lines</h2>
+
+            <div class="feature-list">
+                <h3>Do's ✓</h3>
+                <ul>
+                    <li>Use semantic, descriptive names that reflect the grid's purpose</li>
+                    <li>Use consistent naming patterns (like start/end pairs)</li>
+                    <li>Combine named lines with comments explaining the structure</li>
+                    <li>Use start/end pairs for clear region boundaries</li>
+                    <li>Mix named lines with numeric positioning when appropriate</li>
+                    <li>Test responsive behavior with named lines</li>
+                </ul>
+            </div>
+
+            <div class="feature-list" style="background-color: #fff0f0; border-left-color: #d32f2f;">
+                <h3>Don'ts ✗</h3>
+                <ul>
+                    <li>Don't use cryptic or meaningless names</li>
+                    <li>Don't mix naming conventions inconsistently</li>
+                    <li>Don't over-complicate simple grids with unnecessary names</li>
+                    <li>Don't forget that names are on lines, not tracks</li>
+                    <li>Don't use reserved or confusing keywords</li>
+                    <li>Don't ignore the visual structure when naming</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Real-World Examples -->
+        <section>
+            <h2>Real-World Naming Patterns</h2>
+
+            <h3>Website Layout</h3>
+            <pre><code>grid-template-columns: 
+    [full-start] 
+    [nav-start] 60px [nav-end] 
+    [content-start] 1fr [content-end]
+    [full-end];
+
+grid-template-rows:
+    [header] 80px
+    [nav] 50px
+    [main] 1fr
+    [footer] 60px;</code></pre>
+
+            <h3>Magazine Grid</h3>
+            <pre><code>grid-template-columns:
+    [magazine-start col-1-start] 1fr [col-1-end col-2-start] 1fr [col-2-end col-3-start] 1fr [col-3-end magazine-end];
+
+grid-template-rows:
+    [feature-start] 300px [feature-end articles-start] auto [articles-end];</code></pre>
+
+            <h3>Dashboard</h3>
+            <pre><code>grid-template-columns:
+    [sidebar-start] 250px [sidebar-end]
+    [content-start] 1fr [content-end]
+    [aside-start] 300px [aside-end];
+
+grid-template-rows:
+    [header] 80px
+    [toolbar] 50px
+    [workspace] 1fr;</code></pre>
+        </section>
+
+        <!-- Quick Reference -->
+        <section>
+            <h2>Quick Reference Cheat Sheet</h2>
+
+            <pre><code>/* Basic named line */
+grid-template-columns: [start] 1fr [end];
+
+/* Multiple names on same line */
+[full-start content-start] 1fr [content-end]
+
+/* Named lines with repeat() */
+repeat(3, [col-start] 1fr [col-end])
+
+/* Using named lines */
+grid-column: start / end;
+grid-row: header / footer;
+
+/* Combining with numeric */
+grid-column: col-start 2 / col-end 4;
+grid-row: row-start 1 / row-end 3;
+
+/* Multiple names on single line */
+[sidebar-end] [content-start] 1fr
+
+/* Full pattern */
+grid-template-columns: 
+    [full-start nav-start] 200px 
+    [nav-end content-start] 1fr 
+    [content-end full-end];
+grid-template-rows: 
+    [header] 80px 
+    [main] 1fr 
+    [footer] 60px;</code></pre>
+
+            <h3>Common Naming Patterns</h3>
+            <table>
+                <tr>
+                    <th>Pattern</th>
+                    <th>Code</th>
+                    <th>When to Use</th>
+                </tr>
+                <tr>
+                    <td>Start/End Pair</td>
+                    <td><code>[region-start] 200px [region-end]</code></td>
+                    <td>Clearly mark boundaries</td>
+                </tr>
+                <tr>
+                    <td>Positional</td>
+                    <td><code>[top] 1fr [bottom]</code></td>
+                    <td>Simple vertical/horizontal position</td>
+                </tr>
+                <tr>
+                    <td>Functional</td>
+                    <td><code>[nav] 200px [main]</code></td>
+                    <td>Describe what each area does</td>
+                </tr>
+                <tr>
+                    <td>Repeated</td>
+                    <td><code>repeat(3, [col] 1fr)</code></td>
+                    <td>Regular, repeating columns/rows</td>
+                </tr>
+                <tr>
+                    <td>Multi-Purpose</td>
+                    <td><code>[full] [nav] 200px [nav-end]</code></td>
+                    <td>Allow different span combinations</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Advantages Summary -->
+        <section>
+            <h2>Why Use Named Grid Lines?</h2>
+
+            <div class="feature-list">
+                <h3>Main Advantages</h3>
+                <ul>
+                    <li><strong>Readability:</strong> Code is self-explanatory without needing to count lines</li>
+                    <li><strong>Maintainability:</strong> Change grid structure without recalculating all position numbers</li>
+                    <li><strong>Flexibility:</strong> Easy to add/remove columns or rows without breaking layouts</li>
+                    <li><strong>Semantic:</strong> Names convey meaning about the layout purpose</li>
+                    <li><strong>Debugging:</strong> Easier to understand and fix layout issues</li>
+                    <li><strong>Collaboration:</strong> Other developers quickly understand the grid structure</li>
+                    <li><strong>Reusability:</strong> Grid patterns become portable and reusable</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>Example:</strong> Instead of remembering "column 2 to column 4 for main content," you use `grid-column: content-start / content-end`.
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSS Grid Lines Naming Guide | Master semantic grid naming</p>
+    </footer>
+</body>
+</html>

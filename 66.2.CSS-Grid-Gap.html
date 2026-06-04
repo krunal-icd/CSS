@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Gap Spacing - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .example-section {
+            margin: 40px 0;
+        }
+
+        .example-header {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-header h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .example-header p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .code-section {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .demo-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .demo-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        /* ============ EXAMPLE 1: Card Grid with Comfortable Spacing ============ */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .card-description {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-price {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+        }
+
+        /* ============ EXAMPLE 2: Product List - Compact Gap ============ */
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+        }
+
+        .product-item {
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .product-item:hover {
+            transform: scale(1.03);
+        }
+
+        .product-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 120px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-name {
+            color: #333;
+            font-weight: bold;
+            font-size: 0.95em;
+            margin-bottom: 6px;
+        }
+
+        .product-price {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        /* ============ EXAMPLE 3: Photo Gallery - Tight Gap ============ */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 5px;
+        }
+
+        .photo-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            aspect-ratio: 1;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ============ EXAMPLE 4: Form Layout - Varied Gap ============ */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-button {
+            grid-column: 1 / -1;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .form-button:hover {
+            background: #764ba2;
+        }
+
+        /* ============ EXAMPLE 5: Dashboard Stats - Asymmetric Gap ============ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            row-gap: 20px;
+            column-gap: 15px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #667eea;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-size: 2.2em;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .stat-change {
+            color: #4caf50;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        /* ============ EXAMPLE 6: Blog Grid - Generous Gap ============ */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .blog-post {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-8px);
+        }
+
+        .blog-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-date {
+            color: #999;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .blog-title {
+            color: #333;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .blog-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .blog-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ============ EXAMPLE 7: Icon Grid - No Gap ============ */
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0;
+        }
+
+        .icon-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .icon-item:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        /* ============ EXAMPLE 8: Responsive Gap - CSS Variables ============ */
+        :root {
+            --gap-mobile: 8px;
+            --gap-tablet: 15px;
+            --gap-desktop: 25px;
+        }
+
+        .responsive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--gap-desktop);
+        }
+
+        @media (max-width: 1024px) {
+            .responsive-grid {
+                gap: var(--gap-tablet);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .responsive-grid {
+                gap: var(--gap-mobile);
+            }
+        }
+
+        .responsive-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* ============ EXAMPLE 9: Nested Grids with Different Gaps ============ */
+        .outer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .outer-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .outer-item h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .inner-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .inner-item {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            color: #333;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        /* ============ EXAMPLE 10: Newsletter Grid - Split Layout ============ */
+        .newsletter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            row-gap: 30px;
+            column-gap: 40px;
+        }
+
+        .newsletter-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .newsletter-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .newsletter-section p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .newsletter-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .newsletter-item:last-child {
+            border-bottom: none;
+        }
+
+        /* ============ Comparison Display ============ */
+        .comparison-boxes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .comparison-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .comparison-box p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* ============ Responsive ============ */
+        @media (max-width: 1024px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .newsletter-grid {
+                grid-template-columns: 1fr;
+                row-gap: 20px;
+                column-gap: 0;
+            }
+
+            .outer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-boxes {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                row-gap: 15px;
+                column-gap: 10px;
+            }
+
+            .icon-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .photo-gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .icon-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .photo-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+
+        .info-note {
+            background: #e3f2fd;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .info-note strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CSS Grid Gap Spacing - Practical Examples</h1>
+        <p>Real-world implementations showing different gap strategies</p>
+    </header>
+
+    <div class="container">
+        <!-- EXAMPLE 1: Card Grid -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>1. Card Grid - Comfortable Spacing</h2>
+                <p>Product or content cards with generous gap for breathing room (gap: 25px)</p>
+            </div>
+
+            <div class="code-section"><code>
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;  /* Comfortable spacing */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Card Grid with 25px Gap</div>
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-image">Product Image</div>
+                        <div class="card-content">
+                            <div class="card-title">Premium Headphones</div>
+                            <div class="card-description">High-quality audio with noise cancellation and 30-hour battery life</div>
+                            <div class="card-footer">
+                                <span class="card-price">$299</span>
+                                <button class="btn">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">Product Image</div>
+                        <div class="card-content">
+                            <div class="card-title">Smart Watch</div>
+                            <div class="card-description">Track fitness, receive notifications, and stay connected on the go</div>
+                            <div class="card-footer">
+                                <span class="card-price">$199</span>
+                                <button class="btn">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">Product Image</div>
+                        <div class="card-content">
+                            <div class="card-title">Portable Speaker</div>
+                            <div class="card-description">Crystal clear sound with immersive bass and 12-hour battery</div>
+                            <div class="card-footer">
+                                <span class="card-price">$149</span>
+                                <button class="btn">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">Product Image</div>
+                        <div class="card-content">
+                            <div class="card-title">4K Webcam</div>
+                            <div class="card-description">Professional streaming quality with auto-focus and built-in mic</div>
+                            <div class="card-footer">
+                                <span class="card-price">$249</span>
+                                <button class="btn">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Use Case:</strong> Card grids benefit from generous gap because it helps each card "breathe" and improves visual hierarchy. 25px is ideal for standard product/content cards.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 2: Product List -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>2. Product List - Compact Spacing</h2>
+                <p>Quick product browsing with tight gap for density (gap: 10px)</p>
+            </div>
+
+            <div class="code-section"><code>
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;  /* Compact spacing */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Compact Product List with 10px Gap</div>
+                <div class="product-list">
+                    <div class="product-item">
+                        <div class="product-image">Item A</div>
+                        <div class="product-name">Product 1</div>
+                        <div class="product-price">$29</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">Item B</div>
+                        <div class="product-name">Product 2</div>
+                        <div class="product-price">$39</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">Item C</div>
+                        <div class="product-name">Product 3</div>
+                        <div class="product-price">$49</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">Item D</div>
+                        <div class="product-name">Product 4</div>
+                        <div class="product-price">$59</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">Item E</div>
+                        <div class="product-name">Product 5</div>
+                        <div class="product-price">$69</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">Item F</div>
+                        <div class="product-name">Product 6</div>
+                        <div class="product-price">$79</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Use Case:</strong> Compact listings prioritize showing more items. Tight gaps create density and efficiency, perfect for browsing catalogs or quick selections.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 3: Photo Gallery -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>3. Photo Gallery - Minimal Gap</h2>
+                <p>Seamless photo display with almost no gap (gap: 5px)</p>
+            </div>
+
+            <div class="code-section"><code>
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 5px;  /* Minimal gap for photos */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Photo Gallery with 5px Gap</div>
+                <div class="photo-gallery">
+                    <div class="photo-item">Photo 1</div>
+                    <div class="photo-item">Photo 2</div>
+                    <div class="photo-item">Photo 3</div>
+                    <div class="photo-item">Photo 4</div>
+                    <div class="photo-item">Photo 5</div>
+                    <div class="photo-item">Photo 6</div>
+                    <div class="photo-item">Photo 7</div>
+                    <div class="photo-item">Photo 8</div>
+                    <div class="photo-item">Photo 9</div>
+                    <div class="photo-item">Photo 10</div>
+                    <div class="photo-item">Photo 11</div>
+                    <div class="photo-item">Photo 12</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Use Case:</strong> Photo galleries work best with minimal gaps to create a cohesive visual experience and maximize image viewing area.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 4: Form Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>4. Form Layout - Balanced Gap</h2>
+                <p>Two-column form with moderate gap between fields (gap: 25px)</p>
+            </div>
+
+            <div class="code-section"><code>
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;  /* Balanced spacing between fields */
+}
+
+.form-group.full {
+    grid-column: 1 / -1;  /* Full width for email */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Contact Form with 25px Gap</div>
+                <form class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-input" placeholder="John" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-input" placeholder="Doe" readonly>
+                    </div>
+
+                    <div class="form-group full">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" placeholder="john@example.com" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" placeholder="(555) 123-4567" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Company</label>
+                        <input type="text" class="form-input" placeholder="Your Company" readonly>
+                    </div>
+
+                    <div class="form-group full">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-textarea" placeholder="Your message here..." readonly></textarea>
+                    </div>
+
+                    <button type="submit" class="form-button">Send Message</button>
+                </form>
+            </div>
+
+            <div class="info-note">
+                <strong>Use Case:</strong> Forms need enough gap to visually separate fields, improving readability and reducing errors. 25px provides clear field grouping.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 5: Dashboard Stats -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>5. Dashboard Stats - Asymmetric Gap</h2>
+                <p>Different row and column gaps for dashboard metrics (row-gap: 20px, column-gap: 15px)</p>
+            </div>
+
+            <div class="code-section"><code>
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 20px;      /* More vertical space */
+    column-gap: 15px;   /* Tighter horizontal space */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Dashboard with Asymmetric Gap</div>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">Total Users</div>
+                        <div class="stat-value">12,453</div>
+                        <div class="stat-change">↑ 12% from last month</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-label">Revenue</div>
+                        <div class="stat-value">$45.2K</div>
+                        <div class="stat-change">↑ 8% from last month</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-label">Conversions</div>
+                        <div class="stat-value">3.24%</div>
+                        <div class="stat-change">↑ 2.1% from last month</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-label">Avg Order Value</div>
+                        <div class="stat-value">$156.42</div>
+                        <div class="stat-change">↓ 3% from last month</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-label">Active Sessions</div>
+                        <div class="stat-value">2,847</div>
+                        <div class="stat-change">↑ 15% from last month</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-label">Bounce Rate</div>
+                        <div class="stat-value">32.5%</div>
+                        <div class="stat-change">↓ 5% from last month</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-label">Page Views</div>
+                        <div class="stat-value">89.3K</div>
+                        <div class="stat-change">↑ 22% from last month</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-label">Avg. Session</div>
+                        <div class="stat-value">4m 32s</div>
+                        <div class="stat-change">↑ 8% from last month</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Use Case:</strong> Dashboards benefit from asymmetric gap: more vertical breathing room helps scan columns vertically, tighter columns fit more data horizontally.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 6: Blog Grid -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>6. Blog Grid - Generous Spacing</h2>
+                <p>Blog posts with spacious layout for premium feel (gap: 40px)</p>
+            </div>
+
+            <div class="code-section"><code>
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;  /* Generous spacing for premium feel */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Blog Grid with 40px Gap</div>
+                <div class="blog-grid">
+                    <div class="blog-post">
+                        <div class="blog-image">Article Image</div>
+                        <div class="blog-content">
+                            <div class="blog-date">May 15, 2024</div>
+                            <div class="blog-title">Getting Started with CSS Grid</div>
+                            <div class="blog-excerpt">Learn the fundamentals of CSS Grid layout system and how it revolutionizes modern web design with clean, semantic markup.</div>
+                            <a href="#" class="blog-link">Read More →</a>
+                        </div>
+                    </div>
+
+                    <div class="blog-post">
+                        <div class="blog-image">Article Image</div>
+                        <div class="blog-content">
+                            <div class="blog-date">May 12, 2024</div>
+                            <div class="blog-title">Responsive Design Patterns</div>
+                            <div class="blog-excerpt">Discover common responsive design patterns and best practices for creating layouts that work seamlessly across all devices.</div>
+                            <a href="#" class="blog-link">Read More →</a>
+                        </div>
+                    </div>
+
+                    <div class="blog-post">
+                        <div class="blog-image">Article Image</div>
+                        <div class="blog-content">
+                            <div class="blog-date">May 10, 2024</div>
+                            <div class="blog-title">Advanced Grid Techniques</div>
+                            <div class="blog-excerpt">Take your CSS Grid skills to the next level with advanced techniques including auto-placement and named grid areas.</div>
+                            <a href="#" class="blog-link">Read More →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Use Case:</strong> Content-focused layouts like blogs benefit from generous spacing to reduce cognitive load and create an inviting, premium reading experience.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 7: Icon Grid -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>7. Icon Grid - No Gap</h2>
+                <p>Seamless icon grid with no spacing (gap: 0)</p>
+            </div>
+
+            <div class="code-section"><code>
+.icon-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;  /* No gap for seamless look */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Icon Grid with No Gap</div>
+                <div class="icon-grid">
+                    <div class="icon-item">⚙️</div>
+                    <div class="icon-item">🎨</div>
+                    <div class="icon-item">📱</div>
+                    <div class="icon-item">🔒</div>
+                    <div class="icon-item">⚡</div>
+                    <div class="icon-item">✨</div>
+                    <div class="icon-item">📊</div>
+                    <div class="icon-item">🌍</div>
+                    <div class="icon-item">💡</div>
+                    <div class="icon-item">🚀</div>
+                    <div class="icon-item">🎯</div>
+                    <div class="icon-item">🏆</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Use Case:</strong> Icon grids look great with no gap for a unified, seamless appearance. Add borders instead to define individual cells.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 8: Responsive Gap -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>8. Responsive Gap with CSS Variables</h2>
+                <p>Same grid adapts spacing based on screen size (8px mobile, 15px tablet, 25px desktop)</p>
+            </div>
+
+            <div class="code-section"><code>
+:root {
+    --gap-mobile: 8px;
+    --gap-tablet: 15px;
+    --gap-desktop: 25px;
+}
+
+.responsive-grid {
+    gap: var(--gap-desktop);
+}
+
+@media (max-width: 1024px) {
+    .responsive-grid { gap: var(--gap-tablet); }
+}
+
+@media (max-width: 768px) {
+    .responsive-grid { gap: var(--gap-mobile); }
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Responsive Gap (resize browser)</div>
+                <div class="responsive-grid">
+                    <div class="responsive-item">Mobile: 8px Gap</div>
+                    <div class="responsive-item">Tablet: 15px Gap</div>
+                    <div class="responsive-item">Desktop: 25px Gap</div>
+                    <div class="responsive-item">Adapts Automatically</div>
+                    <div class="responsive-item">Same Grid Layout</div>
+                    <div class="responsive-item">Different Spacing</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Use Case:</strong> Responsive gaps improve usability on mobile by reducing space, and provide premium feel on desktop by increasing space.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 9: Nested Grids -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>9. Nested Grids - Independent Gap</h2>
+                <p>Parent grid (30px) contains items with their own child grids (8px)</p>
+            </div>
+
+            <div class="code-section"><code>
+.outer-grid {
+    gap: 30px;  /* Large spacing between outer items */
+}
+
+.inner-grid {
+    gap: 8px;   /* Tight spacing for inner items */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Nested Grids with Different Gaps</div>
+                <div class="outer-grid">
+                    <div class="outer-item">
+                        <h3>Features</h3>
+                        <div class="inner-grid">
+                            <div class="inner-item">✨ Fast</div>
+                            <div class="inner-item">🔒 Secure</div>
+                            <div class="inner-item">📱 Mobile</div>
+                            <div class="inner-item">🎨 Design</div>
+                            <div class="inner-item">⚡ Efficient</div>
+                            <div class="inner-item">💻 Code</div>
+                        </div>
+                    </div>
+
+                    <div class="outer-item">
+                        <h3>Benefits</h3>
+                        <div class="inner-grid">
+                            <div class="inner-item">💰 Save Money</div>
+                            <div class="inner-item">⏱️ Save Time</div>
+                            <div class="inner-item">📈 Scale</div>
+                            <div class="inner-item">🎯 Focus</div>
+                            <div class="inner-item">🚀 Grow</div>
+                            <div class="inner-item">✅ Succeed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Use Case:</strong> Nested grids let each level have independent spacing. Parent grid creates structure, child grids create density within sections.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 10: Newsletter Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>10. Newsletter Layout - Asymmetric Split Gap</h2>
+                <p>Two-column section with custom row and column gaps (row-gap: 30px, column-gap: 40px)</p>
+            </div>
+
+            <div class="code-section"><code>
+.newsletter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 30px;      /* Space between rows */
+    column-gap: 40px;   /* Space between columns */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Newsletter Layout with Asymmetric Gap</div>
+                <div class="newsletter-grid">
+                    <div class="newsletter-section">
+                        <h3>This Week's Highlights</h3>
+                        <p>Stay updated with the latest developments in web design and technology.</p>
+                        <div class="newsletter-item">• New CSS Grid features released</div>
+                        <div class="newsletter-item">• Upcoming webinar on responsive design</div>
+                        <div class="newsletter-item">• Community showcase: Best layouts</div>
+                        <div class="newsletter-item">• Resources: Grid patterns library</div>
+                    </div>
+
+                    <div class="newsletter-section">
+                        <h3>Featured Resources</h3>
+                        <p>Check out these excellent tools and guides.</p>
+                        <div class="newsletter-item">📚 Grid Generator Tool</div>
+                        <div class="newsletter-item">🎓 Advanced Techniques Course</div>
+                        <div class="newsletter-item">💻 Code Snippets Repository</div>
+                        <div class="newsletter-item">🎨 Design System Templates</div>
+                    </div>
+
+                    <div class="newsletter-section">
+                        <h3>Community Spotlight</h3>
+                        <p>Featuring amazing work from our community.</p>
+                        <div class="newsletter-item">🏆 Portfolio of the Month</div>
+                        <div class="newsletter-item">⭐ Trending Projects</div>
+                        <div class="newsletter-item">🚀 Success Stories</div>
+                        <div class="newsletter-item">💬 Developer Q&A</div>
+                    </div>
+
+                    <div class="newsletter-section">
+                        <h3>Quick Tips</h3>
+                        <p>Practical advice for better grid layouts.</p>
+                        <div class="newsletter-item">🎯 Use CSS variables for gaps</div>
+                        <div class="newsletter-item">📐 Test responsively always</div>
+                        <div class="newsletter-item">🔍 Check browser support</div>
+                        <div class="newsletter-item">✅ Validate your markup</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Use Case:</strong> Multi-section newsletters benefit from wider column gaps to separate topics, and moderate row gaps to maintain visual continuity.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSS Grid Gap Spacing Practical Examples | Master gap spacing for better layouts</p>
+    </footer>
+</body>
+</html>

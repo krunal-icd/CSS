@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Rows & Columns - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .example-section {
+            margin: 40px 0;
+        }
+
+        .example-header {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-header h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .example-header p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .code-section {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .demo-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .demo-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        /* ============ EXAMPLE 1: Website Layout ============ */
+        .website-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 80px 1fr 60px;
+            gap: 15px;
+            min-height: 500px;
+            grid-template-areas:
+                "header header"
+                "sidebar main"
+                "footer footer";
+        }
+
+        .website-header {
+            grid-area: header;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .website-sidebar {
+            grid-area: sidebar;
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+        }
+
+        .website-main {
+            grid-area: main;
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .website-footer {
+            grid-area: footer;
+            grid-column: 1 / -1;
+            background: #333;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+        }
+
+        .menu-item {
+            padding: 10px 0;
+            color: #667eea;
+            font-size: 0.95em;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .menu-item:hover {
+            color: #764ba2;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .content-paragraph {
+            margin-bottom: 15px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* ============ EXAMPLE 2: Asymmetric Dashboard ============ */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr 300px;
+            grid-template-rows: 80px auto 1fr 60px;
+            gap: 15px;
+            min-height: 600px;
+        }
+
+        .dash-header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dash-left-nav {
+            grid-column: 1;
+            grid-row: 2 / 4;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .dash-stats {
+            grid-column: 2 / 4;
+            grid-row: 2;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-top: 4px solid #667eea;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dash-main {
+            grid-column: 2;
+            grid-row: 3;
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .dash-right-panel {
+            grid-column: 3;
+            grid-row: 3;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .dash-footer {
+            grid-column: 1 / -1;
+            grid-row: 4;
+            background: #333;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.9em;
+        }
+
+        .nav-link {
+            padding: 10px 0;
+            color: #667eea;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #764ba2;
+        }
+
+        /* ============ EXAMPLE 3: Magazine with Spanning ============ */
+        .magazine-layout {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, auto);
+            gap: 20px;
+            grid-auto-rows: minmax(150px, auto);
+        }
+
+        .featured-article {
+            grid-column: 1 / 3;
+            grid-row: 1 / 3;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .featured-article h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .featured-article p {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .article-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .article-content {
+            padding: 15px;
+            flex-grow: 1;
+        }
+
+        .article-content h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .article-content p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .article-meta {
+            color: #999;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+
+        .side-section {
+            grid-column: 3 / 5;
+            grid-row: 1;
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+        }
+
+        .side-section h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .side-item {
+            padding: 8px 0;
+            color: #666;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.95em;
+        }
+
+        /* ============ EXAMPLE 4: Flexible Product Grid ============ */
+        .product-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            grid-auto-rows: minmax(250px, auto);
+        }
+
+        .product-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .product-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .product-details {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            flex-grow: 1;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .product-price {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .btn-cart {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s ease;
+        }
+
+        .btn-cart:hover {
+            background: #764ba2;
+        }
+
+        /* ============ EXAMPLE 5: Photo Grid with Spanning ============ */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            grid-auto-rows: 150px;
+        }
+
+        .photo-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-item.span-2 {
+            grid-column: span 2;
+        }
+
+        .photo-item.span-2-row {
+            grid-row: span 2;
+        }
+
+        /* ============ EXAMPLE 6: Form Layout ============ */
+        .form-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-submit {
+            grid-column: 1 / -1;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: #764ba2;
+        }
+
+        /* ============ EXAMPLE 7: Timeline Layout ============ */
+        .timeline-layout {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 20px;
+        }
+
+        .timeline-date {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-content h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* ============ EXAMPLE 8: Asymmetric Hero + Content ============ */
+        .hero-content-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr;
+            gap: 25px;
+            min-height: 400px;
+        }
+
+        .hero-section {
+            grid-column: 1;
+            grid-row: 1 / 3;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-section h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .hero-section p {
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        .content-top {
+            grid-column: 2;
+            grid-row: 1;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .content-bottom {
+            grid-column: 2;
+            grid-row: 2;
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .content-top h3,
+        .content-bottom h3 {
+            color: #667eea;
+            margin-bottom: 12px;
+        }
+
+        .content-top p,
+        .content-bottom p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* ============ Responsive ============ */
+        @media (max-width: 1024px) {
+            .website-layout {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "header"
+                    "main"
+                    "sidebar"
+                    "footer";
+            }
+
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto 1fr 1fr auto;
+            }
+
+            .dash-left-nav {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            .dash-stats {
+                grid-column: 1;
+                grid-row: 3;
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .dash-main {
+                grid-column: 1;
+                grid-row: 4;
+            }
+
+            .dash-right-panel {
+                grid-column: 1;
+                grid-row: 5;
+            }
+
+            .magazine-layout {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .featured-article {
+                grid-column: 1 / 3;
+                grid-row: 1;
+            }
+
+            .side-section {
+                grid-column: 1 / 3;
+                grid-row: 2;
+            }
+
+            .hero-content-layout {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+
+            .hero-section {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .content-top {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            .content-bottom {
+                grid-column: 1;
+                grid-row: 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .dash-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .form-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CSS Grid: Rows & Columns Practical Examples</h1>
+        <p>Real-world implementations using grid-template-columns and grid-template-rows</p>
+    </header>
+
+    <div class="container">
+        <!-- EXAMPLE 1: Website Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>1. Classic Website Layout</h2>
+                <p>Header, sidebar, main content, and footer layout with fixed sidebar width</p>
+            </div>
+
+            <div class="code-section"><code>
+.website-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 80px 1fr 60px;
+    gap: 15px;
+    grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Website Layout</div>
+                <div class="website-layout">
+                    <div class="website-header">🌐 My Website</div>
+                    <div class="website-sidebar">
+                        <div class="menu-item">Home</div>
+                        <div class="menu-item">About</div>
+                        <div class="menu-item">Services</div>
+                        <div class="menu-item">Portfolio</div>
+                        <div class="menu-item">Contact</div>
+                    </div>
+                    <div class="website-main">
+                        <div class="content-paragraph"><strong>Welcome!</strong> This is the main content area. The layout uses a fixed 250px sidebar and flexible main content area.</div>
+                        <div class="content-paragraph">The header spans both columns and is 80px tall. The footer also spans the full width and is 60px tall.</div>
+                        <div class="content-paragraph">Resize your browser to see how the layout adapts responsively on smaller screens.</div>
+                    </div>
+                    <div class="website-footer">© 2024 My Website. All rights reserved.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 2: Asymmetric Dashboard -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>2. Asymmetric Dashboard Layout</h2>
+                <p>Complex dashboard with different column widths and strategic spanning</p>
+            </div>
+
+            <div class="code-section"><code>
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr 300px;
+    grid-template-rows: 80px auto 1fr 60px;
+    gap: 15px;
+}
+
+.dash-left-nav { grid-column: 1; grid-row: 2 / 4; }
+.dash-stats { grid-column: 2 / 4; grid-row: 2; }
+.dash-main { grid-column: 2; grid-row: 3; }
+.dash-right-panel { grid-column: 3; grid-row: 3; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Asymmetric Dashboard</div>
+                <div class="dashboard-layout">
+                    <div class="dash-header">📊 Analytics Dashboard <span>Welcome Admin</span></div>
+                    
+                    <div class="dash-left-nav">
+                        <div class="nav-link">Overview</div>
+                        <div class="nav-link">Analytics</div>
+                        <div class="nav-link">Reports</div>
+                        <div class="nav-link">Settings</div>
+                    </div>
+
+                    <div class="dash-stats">
+                        <div class="stat-box">
+                            <div class="stat-label">Total Users</div>
+                            <div class="stat-value">12,453</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Revenue</div>
+                            <div class="stat-value">$45.2K</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Conversions</div>
+                            <div class="stat-value">3.24%</div>
+                        </div>
+                    </div>
+
+                    <div class="dash-main">
+                        <h3 style="color: #667eea; margin-bottom: 10px;">📈 Main Analytics Chart</h3>
+                        <p style="color: #666;">This area displays your main content - charts, tables, or reports</p>
+                    </div>
+
+                    <div class="dash-right-panel">
+                        <h3 style="color: #667eea; margin-bottom: 10px;">📋 Quick Actions</h3>
+                        <div style="color: #666; font-size: 0.9em;">
+                            <div style="padding: 8px 0; border-bottom: 1px solid #e0e0e0;">• Generate Report</div>
+                            <div style="padding: 8px 0; border-bottom: 1px solid #e0e0e0;">• Export Data</div>
+                            <div style="padding: 8px 0; border-bottom: 1px solid #e0e0e0;">• Schedule Backup</div>
+                            <div style="padding: 8px 0;">• View Logs</div>
+                        </div>
+                    </div>
+
+                    <div class="dash-footer">Dashboard • Last updated: 2 minutes ago</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 3: Magazine Layout with Spanning -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>3. Magazine Layout with Column/Row Spanning</h2>
+                <p>Featured article spans multiple columns and rows, with article cards filling the grid</p>
+            </div>
+
+            <div class="code-section"><code>
+.magazine-layout {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    grid-auto-rows: minmax(150px, auto);
+}
+
+.featured-article {
+    grid-column: 1 / 3;  /* Spans 2 columns */
+    grid-row: 1 / 3;     /* Spans 2 rows */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Magazine Layout</div>
+                <div class="magazine-layout">
+                    <div class="featured-article">
+                        <h3>Breaking News: CSS Grid Revolution</h3>
+                        <p>Discover why modern developers prefer CSS Grid for building responsive layouts efficiently</p>
+                    </div>
+
+                    <div class="side-section">
+                        <h3>Trending Topics</h3>
+                        <div class="side-item">🔥 Web Design Trends 2024</div>
+                        <div class="side-item">⚡ Performance Tips</div>
+                        <div class="side-item">🎨 Color Theory</div>
+                        <div class="side-item">📱 Mobile First</div>
+                    </div>
+
+                    <div class="article-card">
+                        <div class="article-image">Article 1</div>
+                        <div class="article-content">
+                            <h4>Grid Fundamentals</h4>
+                            <p>Master the basics of CSS Grid layout system</p>
+                            <div class="article-meta">5 min read</div>
+                        </div>
+                    </div>
+
+                    <div class="article-card">
+                        <div class="article-image">Article 2</div>
+                        <div class="article-content">
+                            <h4>Responsive Design</h4>
+                            <p>Build layouts that work on all devices</p>
+                            <div class="article-meta">7 min read</div>
+                        </div>
+                    </div>
+
+                    <div class="article-card">
+                        <div class="article-image">Article 3</div>
+                        <div class="article-content">
+                            <h4>Advanced Techniques</h4>
+                            <p>Take your Grid skills to the next level</p>
+                            <div class="article-meta">10 min read</div>
+                        </div>
+                    </div>
+
+                    <div class="article-card">
+                        <div class="article-image">Article 4</div>
+                        <div class="article-content">
+                            <h4>Grid Best Practices</h4>
+                            <p>Learn patterns used by professional developers</p>
+                            <div class="article-meta">8 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 4: Product Grid with auto-fit -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>4. Responsive Product Grid</h2>
+                <p>Uses auto-fit and minmax() for responsive product cards</p>
+            </div>
+
+            <div class="code-section"><code>
+.product-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    grid-auto-rows: minmax(250px, auto);
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Product Grid (resize browser to see columns adapt)</div>
+                <div class="product-showcase">
+                    <div class="product-item">
+                        <div class="product-image">Product A</div>
+                        <div class="product-details">
+                            <div class="product-name">Wireless Headphones</div>
+                            <div class="product-description">High-quality audio with noise cancellation</div>
+                            <div class="product-footer">
+                                <span class="product-price">$299</span>
+                                <button class="btn-cart">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-item">
+                        <div class="product-image">Product B</div>
+                        <div class="product-details">
+                            <div class="product-name">Smart Watch</div>
+                            <div class="product-description">Track fitness and receive notifications</div>
+                            <div class="product-footer">
+                                <span class="product-price">$199</span>
+                                <button class="btn-cart">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-item">
+                        <div class="product-image">Product C</div>
+                        <div class="product-details">
+                            <div class="product-name">Portable Speaker</div>
+                            <div class="product-description">Crystal clear sound with 12-hour battery</div>
+                            <div class="product-footer">
+                                <span class="product-price">$149</span>
+                                <button class="btn-cart">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-item">
+                        <div class="product-image">Product D</div>
+                        <div class="product-details">
+                            <div class="product-name">4K Webcam</div>
+                            <div class="product-description">Professional streaming quality</div>
+                            <div class="product-footer">
+                                <span class="product-price">$249</span>
+                                <button class="btn-cart">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-item">
+                        <div class="product-image">Product E</div>
+                        <div class="product-details">
+                            <div class="product-name">USB-C Hub</div>
+                            <div class="product-description">7-in-1 multiport adapter</div>
+                            <div class="product-footer">
+                                <span class="product-price">$89</span>
+                                <button class="btn-cart">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-item">
+                        <div class="product-image">Product F</div>
+                        <div class="product-details">
+                            <div class="product-name">Phone Stand</div>
+                            <div class="product-description">Adjustable for all phone sizes</div>
+                            <div class="product-footer">
+                                <span class="product-price">$29</span>
+                                <button class="btn-cart">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 5: Photo Gallery Grid -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>5. Photo Gallery with Spanning</h2>
+                <p>Dynamic grid with some items spanning multiple cells</p>
+            </div>
+
+            <div class="code-section"><code>
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    grid-auto-rows: 150px;
+}
+
+.photo-item.span-2 {
+    grid-column: span 2;
+}
+
+.photo-item.span-2-row {
+    grid-row: span 2;
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Photo Gallery</div>
+                <div class="photo-grid">
+                    <div class="photo-item">Photo 1</div>
+                    <div class="photo-item span-2">Photo 2 (wide)</div>
+                    <div class="photo-item">Photo 3</div>
+                    <div class="photo-item span-2-row">Photo 4 (tall)</div>
+                    <div class="photo-item">Photo 5</div>
+                    <div class="photo-item">Photo 6</div>
+                    <div class="photo-item">Photo 7</div>
+                    <div class="photo-item">Photo 8</div>
+                    <div class="photo-item">Photo 9</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 6: Contact Form -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>6. Contact Form with Grid</h2>
+                <p>Two-column form layout with full-width fields for certain inputs</p>
+            </div>
+
+            <div class="code-section"><code>
+.form-layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;  /* Spans all columns */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Contact Form</div>
+                <form class="form-layout">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" placeholder="John" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" placeholder="Doe" readonly>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="john@example.com" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" placeholder="(555) 123-4567" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" placeholder="Your Company" readonly>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Message</label>
+                        <textarea placeholder="Your message here..." readonly></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 7: Timeline -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>7. Timeline Layout</h2>
+                <p>Two-column timeline with dates and events</p>
+            </div>
+
+            <div class="code-section"><code>
+.timeline-layout {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Timeline</div>
+                <div class="timeline-layout">
+                    <div class="timeline-date">Jan 2024</div>
+                    <div class="timeline-content">
+                        <div>
+                            <h4>Project Started</h4>
+                            <p>Initial planning and requirement gathering phase completed</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-date">Mar 2024</div>
+                    <div class="timeline-content">
+                        <div>
+                            <h4>Alpha Release</h4>
+                            <p>First version released for internal testing and feedback</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-date">May 2024</div>
+                    <div class="timeline-content">
+                        <div>
+                            <h4>Beta Launch</h4>
+                            <p>Public beta version available for early adopters</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-date">Jul 2024</div>
+                    <div class="timeline-content">
+                        <div>
+                            <h4>v1.0 Release</h4>
+                            <p>Official public release with full feature set</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXAMPLE 8: Hero + Content Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>8. Hero Section + Asymmetric Content</h2>
+                <p>Hero section spans multiple rows while content areas sit beside it</p>
+            </div>
+
+            <div class="code-section"><code>
+.hero-content-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 25px;
+}
+
+.hero-section {
+    grid-column: 1;
+    grid-row: 1 / 3;  /* Spans 2 rows */
+}
+
+.content-top {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.content-bottom {
+    grid-column: 2;
+    grid-row: 2;
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Hero + Content Layout</div>
+                <div class="hero-content-layout">
+                    <div class="hero-section">
+                        <h2>Welcome to Our Platform</h2>
+                        <p>Build amazing layouts with CSS Grid. This hero section spans 2 rows while content panels sit beside it on the right.</p>
+                    </div>
+
+                    <div class="content-top">
+                        <h3>Quick Features</h3>
+                        <p>✨ Easy to use</p>
+                        <p>⚡ Lightning fast</p>
+                        <p>🔒 Secure and reliable</p>
+                    </div>
+
+                    <div class="content-bottom">
+                        <h3>Getting Started</h3>
+                        <p>Start building your layouts today. Our CSS Grid guide provides everything you need to master modern web layouts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSS Grid Rows & Columns Practical Examples | Master grid-template-columns and grid-template-rows</p>
+    </footer>
+</body>
+</html>

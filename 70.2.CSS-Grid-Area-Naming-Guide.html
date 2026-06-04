@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Area Naming - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .example-section {
+            margin: 40px 0;
+        }
+
+        .example-header {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-header h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .example-header p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .code-section {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .demo-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .demo-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .info-note {
+            background: #e3f2fd;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .info-note strong {
+            color: #667eea;
+        }
+
+        /* ============ EXAMPLE 1: Blog Layout ============ */
+        .blog-layout {
+            display: grid;
+            grid-template-columns: 1fr 250px;
+            grid-template-rows: 80px 1fr 60px;
+            gap: 20px;
+            min-height: 500px;
+            grid-template-areas:
+                "blog-header blog-header"
+                "blog-posts blog-sidebar"
+                "blog-footer blog-footer";
+        }
+
+        .blog-header {
+            grid-area: blog-header;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .blog-posts {
+            grid-area: blog-posts;
+        }
+
+        .blog-post {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-post h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .blog-post p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .blog-sidebar {
+            grid-area: blog-sidebar;
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            height: fit-content;
+        }
+
+        .blog-sidebar h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: 8px 0;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 1px solid #e0e0e0;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar-link:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-link:hover {
+            color: #764ba2;
+        }
+
+        .blog-footer {
+            grid-area: blog-footer;
+            background: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        /* ============ EXAMPLE 2: E-Commerce Product Page ============ */
+        .product-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr 250px;
+            grid-template-rows: 80px auto 1fr 60px;
+            gap: 20px;
+            min-height: 600px;
+            grid-template-areas:
+                "product-header product-header product-header"
+                "product-filters product-details product-reviews"
+                "product-filters product-gallery product-reviews"
+                "product-footer product-footer product-footer";
+        }
+
+        .product-header {
+            grid-area: product-header;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .product-filters {
+            grid-area: product-filters;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+        }
+
+        .filter-group h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .filter-item {
+            display: block;
+            padding: 5px 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .product-details {
+            grid-area: product-details;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-details h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            color: #667eea;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .product-gallery {
+            grid-area: product-gallery;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .product-reviews {
+            grid-area: product-reviews;
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .product-reviews h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .review-item {
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .product-footer {
+            grid-area: product-footer;
+            background: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        /* ============ EXAMPLE 3: SaaS Dashboard ============ */
+        .saas-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr 1fr;
+            grid-template-rows: 80px auto auto 1fr 60px;
+            gap: 20px;
+            min-height: 700px;
+            grid-template-areas:
+                "saas-nav saas-header saas-header"
+                "saas-nav saas-stats saas-stats"
+                "saas-nav saas-charts saas-charts"
+                "saas-nav saas-content saas-content"
+                "saas-footer saas-footer saas-footer";
+        }
+
+        .saas-nav {
+            grid-area: saas-nav;
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            height: fit-content;
+            border-left: 4px solid #667eea;
+        }
+
+        .nav-item {
+            padding: 12px 0;
+            color: #667eea;
+            font-weight: bold;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item:last-child {
+            border-bottom: none;
+        }
+
+        .nav-item:hover {
+            color: #764ba2;
+        }
+
+        .saas-header {
+            grid-area: saas-header;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .saas-stats {
+            grid-area: saas-stats;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-top: 4px solid #667eea;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+
+        .saas-charts {
+            grid-area: saas-charts;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .chart {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-weight: bold;
+            min-height: 200px;
+        }
+
+        .saas-content {
+            grid-area: saas-content;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .saas-footer {
+            grid-area: saas-footer;
+            background: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        /* ============ EXAMPLE 4: Portfolio Website ============ */
+        .portfolio-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 80px auto 1fr 60px;
+            gap: 20px;
+            min-height: 600px;
+            grid-template-areas:
+                "portfolio-header portfolio-header portfolio-header"
+                "portfolio-hero portfolio-hero portfolio-hero"
+                "portfolio-work portfolio-work portfolio-work"
+                "portfolio-footer portfolio-footer portfolio-footer";
+        }
+
+        .portfolio-header {
+            grid-area: portfolio-header;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .portfolio-hero {
+            grid-area: portfolio-hero;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .portfolio-hero h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .portfolio-work {
+            grid-area: portfolio-work;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .work-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .work-item:hover {
+            transform: translateY(-8px);
+        }
+
+        .work-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .work-info {
+            padding: 15px;
+        }
+
+        .work-info h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .work-info p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .portfolio-footer {
+            grid-area: portfolio-footer;
+            background: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        /* ============ EXAMPLE 5: News Website ============ */
+        .news-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 80px auto 1fr 60px;
+            gap: 20px;
+            min-height: 600px;
+            grid-template-areas:
+                "news-header news-header"
+                "news-featured news-featured"
+                "news-articles news-sidebar"
+                "news-footer news-footer";
+        }
+
+        .news-header {
+            grid-area: news-header;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .news-featured {
+            grid-area: news-featured;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .news-featured h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .news-articles {
+            grid-area: news-articles;
+        }
+
+        .article-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .article-item:hover {
+            transform: translateX(5px);
+        }
+
+        .article-item h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .article-meta {
+            color: #999;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .article-excerpt {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .news-sidebar {
+            grid-area: news-sidebar;
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            height: fit-content;
+        }
+
+        .news-sidebar h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .trending-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-footer {
+            grid-area: news-footer;
+            background: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        /* ============ EXAMPLE 6: Admin Panel ============ */
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 80px 1fr 60px;
+            gap: 20px;
+            min-height: 600px;
+            grid-template-areas:
+                "admin-header admin-header"
+                "admin-sidebar admin-main"
+                "admin-footer admin-footer";
+        }
+
+        .admin-header {
+            grid-area: admin-header;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .admin-sidebar {
+            grid-area: admin-sidebar;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .menu-section {
+            margin-bottom: 20px;
+        }
+
+        .menu-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .menu-link {
+            display: block;
+            padding: 8px 0;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .menu-link:hover {
+            color: #667eea;
+            padding-left: 5px;
+        }
+
+        .admin-main {
+            grid-area: admin-main;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-footer {
+            grid-area: admin-footer;
+            background: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        /* ============ Responsive ============ */
+        @media (max-width: 1024px) {
+            .blog-layout,
+            .product-layout,
+            .news-layout,
+            .admin-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-posts,
+            .blog-sidebar,
+            .product-details,
+            .product-gallery,
+            .product-reviews,
+            .news-articles,
+            .news-sidebar,
+            .admin-sidebar,
+            .admin-main {
+                grid-column: 1;
+            }
+
+            .blog-layout,
+            .admin-layout {
+                grid-template-areas:
+                    "header"
+                    "content"
+                    "sidebar"
+                    "footer";
+            }
+
+            .product-layout {
+                grid-template-areas:
+                    "product-header"
+                    "product-filters"
+                    "product-details"
+                    "product-gallery"
+                    "product-reviews"
+                    "product-footer";
+            }
+
+            .saas-layout {
+                grid-template-areas:
+                    "saas-nav"
+                    "saas-header"
+                    "saas-stats"
+                    "saas-charts"
+                    "saas-content"
+                    "saas-footer";
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-work {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .news-layout {
+                grid-template-areas:
+                    "news-header"
+                    "news-featured"
+                    "news-articles"
+                    "news-sidebar"
+                    "news-footer";
+            }
+        }
+
+        @media (max-width: 768px) {
+            .saas-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .saas-charts {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-work {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CSS Grid Area Naming - Practical Examples</h1>
+        <p>Real-world implementations using semantic named areas</p>
+    </header>
+
+    <div class="container">
+        <!-- EXAMPLE 1: Blog Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>1. Blog Layout with Grid Areas</h2>
+                <p>Two-column blog with header, posts, sidebar, and footer using grid-template-areas</p>
+            </div>
+
+            <div class="code-section"><code>
+.blog-layout {
+    grid-template-columns: 1fr 250px;
+    grid-template-rows: 80px 1fr 60px;
+    grid-template-areas:
+        "blog-header blog-header"
+        "blog-posts blog-sidebar"
+        "blog-footer blog-footer";
+}
+
+.blog-header { grid-area: blog-header; }
+.blog-posts { grid-area: blog-posts; }
+.blog-sidebar { grid-area: blog-sidebar; }
+.blog-footer { grid-area: blog-footer; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Blog Layout</div>
+                <div class="blog-layout">
+                    <div class="blog-header">📰 Tech Blog</div>
+                    <div class="blog-posts">
+                        <div class="blog-post">
+                            <h3>CSS Grid Mastery</h3>
+                            <p>Learn how to create powerful layouts with semantic grid areas...</p>
+                        </div>
+                        <div class="blog-post">
+                            <h3>Responsive Design</h3>
+                            <p>Build websites that adapt beautifully to all screen sizes...</p>
+                        </div>
+                    </div>
+                    <div class="blog-sidebar">
+                        <h4>📚 Resources</h4>
+                        <a href="#" class="sidebar-link">Latest Posts</a>
+                        <a href="#" class="sidebar-link">Popular</a>
+                        <a href="#" class="sidebar-link">Categories</a>
+                        <a href="#" class="sidebar-link">Archives</a>
+                    </div>
+                    <div class="blog-footer">© 2024 Tech Blog</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Blog uses 2-column layout where header and footer span full width, posts take main area, sidebar maintains fixed width.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 2: E-Commerce Product Page -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>2. E-Commerce Product Page</h2>
+                <p>Product page with filters, details, gallery, and reviews using named areas</p>
+            </div>
+
+            <div class="code-section"><code>
+.product-layout {
+    grid-template-columns: 300px 1fr 250px;
+    grid-template-areas:
+        "product-header product-header product-header"
+        "product-filters product-details product-reviews"
+        "product-filters product-gallery product-reviews"
+        "product-footer product-footer product-footer";
+}
+
+.product-filters { grid-area: product-filters; }
+.product-details { grid-area: product-details; }
+.product-gallery { grid-area: product-gallery; }
+.product-reviews { grid-area: product-reviews; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: E-Commerce Product Page</div>
+                <div class="product-layout">
+                    <div class="product-header">🛍️ Product Store</div>
+                    <div class="product-filters">
+                        <div class="filter-group">
+                            <h4>Price</h4>
+                            <span class="filter-item">$0 - $100</span>
+                            <span class="filter-item">$100 - $500</span>
+                            <span class="filter-item">$500+</span>
+                        </div>
+                        <div class="filter-group">
+                            <h4>Category</h4>
+                            <span class="filter-item">Electronics</span>
+                            <span class="filter-item">Accessories</span>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <h2>Premium Product</h2>
+                        <p>High-quality item with excellent features and support.</p>
+                        <div class="price">$299</div>
+                        <button style="background: #667eea; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Add to Cart</button>
+                    </div>
+                    <div class="product-gallery">📸 Product Gallery</div>
+                    <div class="product-reviews">
+                        <h4>⭐ Reviews</h4>
+                        <div class="review-item">Excellent product! Highly recommended.</div>
+                        <div class="review-item">Great quality and fast shipping.</div>
+                        <div class="review-item">Perfect purchase!</div>
+                    </div>
+                    <div class="product-footer">© 2024 Shop</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Product layout uses 3 columns with full-width header and footer. Filters span multiple rows for tall sidebar effect.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 3: SaaS Dashboard -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>3. SaaS Dashboard</h2>
+                <p>Complex dashboard with navigation, header, stats, charts, and content areas</p>
+            </div>
+
+            <div class="code-section"><code>
+.saas-layout {
+    grid-template-columns: 200px 1fr 1fr;
+    grid-template-areas:
+        "saas-nav saas-header saas-header"
+        "saas-nav saas-stats saas-stats"
+        "saas-nav saas-charts saas-charts"
+        "saas-nav saas-content saas-content"
+        "saas-footer saas-footer saas-footer";
+}
+
+.saas-nav { grid-area: saas-nav; }
+.saas-stats { grid-area: saas-stats; }
+.saas-charts { grid-area: saas-charts; }
+.saas-content { grid-area: saas-content; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: SaaS Dashboard</div>
+                <div class="saas-layout">
+                    <div class="saas-nav">
+                        <div class="nav-item">📊 Overview</div>
+                        <div class="nav-item">📈 Analytics</div>
+                        <div class="nav-item">⚙️ Settings</div>
+                        <div class="nav-item">👥 Team</div>
+                    </div>
+                    <div class="saas-header">📊 Dashboard - May 2024</div>
+                    <div class="saas-stats">
+                        <div class="stat-box">
+                            <div class="stat-label">Users</div>
+                            <div class="stat-value">12.4K</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Revenue</div>
+                            <div class="stat-value">$45K</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Growth</div>
+                            <div class="stat-value">18%</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Sessions</div>
+                            <div class="stat-value">8.9K</div>
+                        </div>
+                    </div>
+                    <div class="saas-charts">
+                        <div class="chart">📈 Revenue Chart</div>
+                        <div class="chart">📊 User Chart</div>
+                    </div>
+                    <div class="saas-content">Main content area with detailed analytics and reports...</div>
+                    <div class="saas-footer">© 2024 Dashboard</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Dashboard uses persistent left navigation with full-width sections. Complex area structure supports multiple content types.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 4: Portfolio Website -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>4. Portfolio Website</h2>
+                <p>Portfolio with hero section and work grid using semantic named areas</p>
+            </div>
+
+            <div class="code-section"><code>
+.portfolio-layout {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+        "portfolio-header portfolio-header portfolio-header"
+        "portfolio-hero portfolio-hero portfolio-hero"
+        "portfolio-work portfolio-work portfolio-work"
+        "portfolio-footer portfolio-footer portfolio-footer";
+}
+
+.portfolio-work { grid-area: portfolio-work; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Portfolio Website</div>
+                <div class="portfolio-layout">
+                    <div class="portfolio-header">👨‍💼 Portfolio</div>
+                    <div class="portfolio-hero">
+                        <h2>Welcome to My Portfolio</h2>
+                        <p>Showcasing my best work and projects</p>
+                    </div>
+                    <div class="portfolio-work">
+                        <div class="work-item">
+                            <div class="work-image">Project 1</div>
+                            <div class="work-info">
+                                <h4>Web Design</h4>
+                                <p>Beautiful responsive website design</p>
+                            </div>
+                        </div>
+                        <div class="work-item">
+                            <div class="work-image">Project 2</div>
+                            <div class="work-info">
+                                <h4>App Development</h4>
+                                <p>Mobile app with modern UI</p>
+                            </div>
+                        </div>
+                        <div class="work-item">
+                            <div class="work-image">Project 3</div>
+                            <div class="work-info">
+                                <h4>Branding</h4>
+                                <p>Complete brand identity</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-footer">© 2024 Portfolio</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Portfolio uses full-width header and hero sections with work items arranged in responsive grid below.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 5: News Website -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>5. News Website</h2>
+                <p>News site with featured article, articles list, and sidebar using grid areas</p>
+            </div>
+
+            <div class="code-section"><code>
+.news-layout {
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+        "news-header news-header"
+        "news-featured news-featured"
+        "news-articles news-sidebar"
+        "news-footer news-footer";
+}
+
+.news-articles { grid-area: news-articles; }
+.news-sidebar { grid-area: news-sidebar; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: News Website</div>
+                <div class="news-layout">
+                    <div class="news-header">📰 News Daily</div>
+                    <div class="news-featured">
+                        <h2>Breaking: Major Update Released</h2>
+                        <p>New features and improvements now available...</p>
+                    </div>
+                    <div class="news-articles">
+                        <div class="article-item">
+                            <h4>Tech Innovation</h4>
+                            <div class="article-meta">May 18, 2024 • By Author</div>
+                            <div class="article-excerpt">Latest developments in technology and innovation...</div>
+                        </div>
+                        <div class="article-item">
+                            <h4>Market Trends</h4>
+                            <div class="article-meta">May 17, 2024 • By Author</div>
+                            <div class="article-excerpt">Analysis of current market trends and forecasts...</div>
+                        </div>
+                    </div>
+                    <div class="news-sidebar">
+                        <h4>🔥 Trending</h4>
+                        <div class="trending-item">• Technology News</div>
+                        <div class="trending-item">• Market Analysis</div>
+                        <div class="trending-item">• Breaking News</div>
+                        <div class="trending-item">• Opinion</div>
+                    </div>
+                    <div class="news-footer">© 2024 News Daily</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> News layout uses featured full-width section with main content and sidebar below, maintaining professional structure.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 6: Admin Panel -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>6. Admin Control Panel</h2>
+                <p>Admin interface with persistent navigation sidebar and main content area</p>
+            </div>
+
+            <div class="code-section"><code>
+.admin-layout {
+    grid-template-columns: 250px 1fr;
+    grid-template-areas:
+        "admin-header admin-header"
+        "admin-sidebar admin-main"
+        "admin-footer admin-footer";
+}
+
+.admin-sidebar { grid-area: admin-sidebar; }
+.admin-main { grid-area: admin-main; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Admin Panel</div>
+                <div class="admin-layout">
+                    <div class="admin-header">🔧 Admin Panel</div>
+                    <div class="admin-sidebar">
+                        <div class="menu-section">
+                            <div class="menu-title">Content</div>
+                            <div class="menu-link">📝 Pages</div>
+                            <div class="menu-link">📰 Posts</div>
+                            <div class="menu-link">📸 Media</div>
+                        </div>
+                        <div class="menu-section">
+                            <div class="menu-title">System</div>
+                            <div class="menu-link">👥 Users</div>
+                            <div class="menu-link">⚙️ Settings</div>
+                            <div class="menu-link">📊 Analytics</div>
+                        </div>
+                    </div>
+                    <div class="admin-main">
+                        <h3>Dashboard Overview</h3>
+                        <p>Welcome to the admin panel. Use the menu on the left to navigate between different sections.</p>
+                    </div>
+                    <div class="admin-footer">Admin Panel © 2024</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Admin panel uses sticky sidebar navigation with full-width header and footer for professional admin interface design.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSS Grid Area Naming Practical Examples | Master semantic grid areas for flexible layouts</p>
+    </footer>
+</body>
+</html>

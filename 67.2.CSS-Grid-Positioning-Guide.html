@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Item Positioning - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .example-section {
+            margin: 40px 0;
+        }
+
+        .example-header {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-header h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .example-header p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .code-section {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .demo-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .demo-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .info-note {
+            background: #e3f2fd;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .info-note strong {
+            color: #667eea;
+        }
+
+        /* ============ EXAMPLE 1: Magazine Layout ============ */
+        .magazine-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 200px 1fr auto;
+            gap: 20px;
+            min-height: 500px;
+        }
+
+        .featured-article {
+            grid-column: 1;
+            grid-row: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .featured-article h3 {
+            font-size: 1.6em;
+            margin-bottom: 10px;
+        }
+
+        .featured-article p {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+
+        .sidebar {
+            grid-column: 2;
+            grid-row: 1 / 3;
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .article-grid {
+            grid-column: 1;
+            grid-row: 2;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .article-content {
+            padding: 12px;
+        }
+
+        .article-title {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 6px;
+            font-size: 0.95em;
+        }
+
+        .article-excerpt {
+            color: #666;
+            font-size: 0.85em;
+        }
+
+        .sidebar-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            color: #667eea;
+            font-size: 0.95em;
+        }
+
+        .sidebar-item:last-child {
+            border-bottom: none;
+        }
+
+        /* ============ EXAMPLE 2: Hero with Full-Width ============ */
+        .hero-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 250px 1fr;
+            gap: 20px;
+        }
+
+        .hero {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.05em;
+            opacity: 0.9;
+        }
+
+        .hero-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-content h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        /* ============ EXAMPLE 3: Asymmetric Grid ============ */
+        .asymmetric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 150px 150px 150px;
+            gap: 15px;
+        }
+
+        .featured-box {
+            grid-column: 1 / 3;
+            grid-row: 1 / 3;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-box h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .featured-box p {
+            opacity: 0.9;
+        }
+
+        .small-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* ============ EXAMPLE 4: Dashboard with Positioned Items ============ */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 80px auto 1fr auto;
+            gap: 20px;
+            min-height: 600px;
+        }
+
+        .dash-header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dash-stats {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #667eea;
+            text-align: center;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+
+        .chart-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-weight: bold;
+        }
+
+        .chart-main {
+            grid-column: 1 / 3;
+            grid-row: 3;
+        }
+
+        .chart-side {
+            grid-column: 3 / 5;
+            grid-row: 3;
+        }
+
+        .dash-footer {
+            grid-column: 1 / -1;
+            background: #333;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        /* ============ EXAMPLE 5: Centered Items with justify-self/align-self ============ */
+        .alignment-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 150px);
+            gap: 20px;
+        }
+
+        .align-box {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .align-start {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            justify-self: start;
+            align-self: start;
+            padding: 20px;
+        }
+
+        .align-center {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            justify-self: center;
+            align-self: center;
+            padding: 20px;
+        }
+
+        .align-end {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            justify-self: end;
+            align-self: end;
+            padding: 20px;
+        }
+
+        .align-stretch {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            justify-self: stretch;
+            align-self: stretch;
+        }
+
+        .align-mixed {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            justify-self: center;
+            align-self: end;
+            padding: 20px;
+        }
+
+        /* ============ EXAMPLE 6: Named Grid Areas ============ */
+        .named-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr 250px;
+            grid-template-rows: 80px 1fr 60px;
+            gap: 15px;
+            min-height: 400px;
+            grid-template-areas:
+                "header header header"
+                "sidebar main rightbar"
+                "footer footer footer";
+        }
+
+        .named-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .named-header {
+            grid-area: header;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .named-sidebar {
+            grid-area: sidebar;
+            background: #f0f0f0;
+            border-left: 4px solid #667eea;
+        }
+
+        .named-main {
+            grid-area: main;
+            background: white;
+        }
+
+        .named-rightbar {
+            grid-area: rightbar;
+            background: #f9f9f9;
+            border-left: 1px solid #e0e0e0;
+        }
+
+        .named-footer {
+            grid-area: footer;
+            background: #333;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ============ EXAMPLE 7: Overlapping Items ============ */
+        .overlap-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 100px);
+            gap: 20px;
+            position: relative;
+        }
+
+        .overlap-item {
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .overlap-1 {
+            grid-column: 1 / 3;
+            grid-row: 1 / 3;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 1;
+        }
+
+        .overlap-2 {
+            grid-column: 2 / 4;
+            grid-row: 2 / 4;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            z-index: 2;
+        }
+
+        /* ============ EXAMPLE 8: Masonry-like Layout ============ */
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 120px);
+            gap: 15px;
+            grid-auto-flow: dense;
+        }
+
+        .masonry-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .masonry-item.wide {
+            grid-column: span 2;
+        }
+
+        .masonry-item.tall {
+            grid-row: span 2;
+        }
+
+        .masonry-item.big {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        /* ============ EXAMPLE 9: Responsive Grid Repositioning ============ */
+        .responsive-pos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .responsive-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-full {
+            grid-column: 1 / -1;
+        }
+
+        /* ============ EXAMPLE 10: Nested Grids with Positioning ============ */
+        .outer-pos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .outer-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .outer-item h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .inner-pos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .inner-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .inner-featured {
+            grid-column: span 2;
+        }
+
+        /* ============ Responsive ============ */
+        @media (max-width: 1024px) {
+            .magazine-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-article {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .sidebar {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            .article-grid {
+                grid-column: 1;
+                grid-row: 3;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .chart-main {
+                grid-column: 1 / 3;
+            }
+
+            .chart-side {
+                grid-column: 1 / 3;
+            }
+
+            .asymmetric-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .featured-box {
+                grid-column: 1 / 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .magazine-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .alignment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .named-grid {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "header"
+                    "sidebar"
+                    "main"
+                    "rightbar"
+                    "footer";
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dash-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chart-main,
+            .chart-side {
+                grid-column: 1;
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CSS Grid Item Positioning - Practical Examples</h1>
+        <p>Real-world implementations showing different positioning techniques</p>
+    </header>
+
+    <div class="container">
+        <!-- EXAMPLE 1: Magazine Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>1. Magazine Layout with Positioned Items</h2>
+                <p>Featured article positioned with grid-row and grid-column, sidebar spans multiple rows</p>
+            </div>
+
+            <div class="code-section"><code>
+.featured-article {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.sidebar {
+    grid-column: 2;
+    grid-row: 1 / 3;  /* Spans 2 rows */
+}
+
+.article-grid {
+    grid-column: 1;
+    grid-row: 2;
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Magazine Layout</div>
+                <div class="magazine-grid">
+                    <div class="featured-article">
+                        <h3>Breaking News</h3>
+                        <p>CSS Grid positioning gives you complete control over item placement</p>
+                    </div>
+
+                    <div class="sidebar">
+                        <div class="sidebar-item">📰 Trending Now</div>
+                        <div class="sidebar-item">⚡ Hot Topics</div>
+                        <div class="sidebar-item">🔥 Featured</div>
+                        <div class="sidebar-item">💡 Insights</div>
+                    </div>
+
+                    <div class="article-grid">
+                        <div class="article-card">
+                            <div class="article-image">Article 1</div>
+                            <div class="article-content">
+                                <div class="article-title">Grid Fundamentals</div>
+                                <div class="article-excerpt">Learn the basics</div>
+                            </div>
+                        </div>
+                        <div class="article-card">
+                            <div class="article-image">Article 2</div>
+                            <div class="article-content">
+                                <div class="article-title">Positioning Guide</div>
+                                <div class="article-excerpt">Master placement</div>
+                            </div>
+                        </div>
+                        <div class="article-card">
+                            <div class="article-image">Article 3</div>
+                            <div class="article-content">
+                                <div class="article-title">Advanced Tips</div>
+                                <div class="article-excerpt">Level up skills</div>
+                            </div>
+                        </div>
+                        <div class="article-card">
+                            <div class="article-image">Article 4</div>
+                            <div class="article-content">
+                                <div class="article-title">Best Practices</div>
+                                <div class="article-excerpt">Pro techniques</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Using grid-row: 1 / 3 spans the sidebar across two rows. Featured article uses grid-row: 1 to position only in first row.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 2: Hero with Full-Width -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>2. Hero Section with Full-Width Item</h2>
+                <p>Hero spans all columns using grid-column: 1 / -1 for responsive full-width coverage</p>
+            </div>
+
+            <div class="code-section"><code>
+.hero {
+    grid-column: 1 / -1;  /* Spans all columns */
+    grid-row: 1;
+}
+
+.hero-content {
+    grid-row: 2;
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Hero with Full-Width Layout</div>
+                <div class="hero-layout">
+                    <div class="hero">
+                        <h2>Welcome to Grid Positioning</h2>
+                        <p>Master precise item placement with grid-column: 1 / -1</p>
+                    </div>
+
+                    <div class="hero-content">
+                        <h3>Feature 1</h3>
+                        <p>Flexible and responsive</p>
+                    </div>
+
+                    <div class="hero-content">
+                        <h3>Feature 2</h3>
+                        <p>Easy to maintain</p>
+                    </div>
+
+                    <div class="hero-content">
+                        <h3>Feature 3</h3>
+                        <p>Semantic markup</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> The -1 refers to the last grid line. Using 1 / -1 automatically spans all columns, even if the number changes.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 3: Asymmetric Grid -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>3. Asymmetric Layout with Featured Item</h2>
+                <p>Featured box spans 2x2 cells using grid-column and grid-row span values</p>
+            </div>
+
+            <div class="code-section"><code>
+.featured-box {
+    grid-column: 1 / 3;    /* Columns 1-2 */
+    grid-row: 1 / 3;       /* Rows 1-2 */
+}
+
+.small-box {
+    /* Auto-placed in remaining cells */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Asymmetric Layout</div>
+                <div class="asymmetric-grid">
+                    <div class="featured-box">
+                        <h3>Featured Content</h3>
+                        <p>Spans 2 columns × 2 rows for emphasis</p>
+                    </div>
+
+                    <div class="small-box">1</div>
+                    <div class="small-box">2</div>
+                    <div class="small-box">3</div>
+                    <div class="small-box">4</div>
+                    <div class="small-box">5</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Large featured item positioned explicitly, smaller items fill remaining space automatically following grid flow.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 4: Dashboard -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>4. Dashboard Layout with Strategic Positioning</h2>
+                <p>Complex dashboard with header, stats, charts positioned using grid-column and grid-row</p>
+            </div>
+
+            <div class="code-section"><code>
+.dash-header {
+    grid-column: 1 / -1;   /* Full width */
+}
+
+.dash-stats {
+    grid-column: 1 / -1;   /* Full width */
+}
+
+.chart-main {
+    grid-column: 1 / 3;    /* 2 columns */
+    grid-row: 3;
+}
+
+.chart-side {
+    grid-column: 3 / 5;    /* 2 columns */
+    grid-row: 3;
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Dashboard Layout</div>
+                <div class="dashboard-grid">
+                    <div class="dash-header">📊 Analytics Dashboard</div>
+
+                    <div class="dash-stats">
+                        <div class="stat-card">
+                            <div class="stat-label">Users</div>
+                            <div class="stat-value">12.4K</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Revenue</div>
+                            <div class="stat-value">$45K</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Conversions</div>
+                            <div class="stat-value">3.24%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Sessions</div>
+                            <div class="stat-value">8.9K</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-box chart-main">📈 Main Chart</div>
+                    <div class="chart-box chart-side">📊 Side Chart</div>
+
+                    <div class="dash-footer">Dashboard • Last updated 2 min ago</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Strategic use of grid-column positioning creates a professional dashboard layout with full-width header, stats bar, and two-chart layout.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 5: Alignment Examples -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>5. Item Alignment with justify-self & align-self</h2>
+                <p>Demonstrating how justify-self and align-self position items within their cells</p>
+            </div>
+
+            <div class="code-section"><code>
+.align-start {
+    justify-self: start;   /* Left */
+    align-self: start;     /* Top */
+}
+
+.align-center {
+    justify-self: center;  /* Center horizontally */
+    align-self: center;    /* Center vertically */
+}
+
+.align-end {
+    justify-self: end;     /* Right */
+    align-self: end;       /* Bottom */
+}
+
+.align-stretch {
+    justify-self: stretch; /* Fill width */
+    align-self: stretch;   /* Fill height */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Item Alignment Options</div>
+                <div class="alignment-grid">
+                    <div class="align-box align-start">Start / Start</div>
+                    <div class="align-box align-center">Center / Center</div>
+                    <div class="align-box align-end">End / End</div>
+                    <div class="align-box align-stretch">Stretch / Stretch</div>
+                    <div class="align-box align-mixed">Center / End</div>
+                    <div class="align-box">Default (Stretch)</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> justify-self controls horizontal alignment (start/center/end/stretch), align-self controls vertical alignment. These work independently of grid positioning.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 6: Named Grid Areas -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>6. Named Grid Areas Layout</h2>
+                <p>Semantic layout using grid-area with grid-template-areas for readable positioning</p>
+            </div>
+
+            <div class="code-section"><code>
+.named-grid {
+    grid-template-areas:
+        "header header header"
+        "sidebar main rightbar"
+        "footer footer footer";
+}
+
+.named-header { grid-area: header; }
+.named-sidebar { grid-area: sidebar; }
+.named-main { grid-area: main; }
+.named-rightbar { grid-area: rightbar; }
+.named-footer { grid-area: footer; }
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Named Grid Areas</div>
+                <div class="named-grid">
+                    <div class="named-header">Header</div>
+                    <div class="named-sidebar">Sidebar</div>
+                    <div class="named-main">Main Content</div>
+                    <div class="named-rightbar">Right Panel</div>
+                    <div class="named-footer">Footer</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Named areas make layouts self-documenting. You can visualize the entire layout structure directly in the CSS grid-template-areas string.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 7: Overlapping Items -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>7. Overlapping Items with z-index</h2>
+                <p>Items overlap using positioning, stacking order controlled with z-index</p>
+            </div>
+
+            <div class="code-section"><code>
+.overlap-1 {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+    z-index: 1;
+}
+
+.overlap-2 {
+    grid-column: 2 / 4;
+    grid-row: 2 / 4;
+    z-index: 2;  /* Appears on top */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Overlapping Grid Items</div>
+                <div class="overlap-grid">
+                    <div class="overlap-item overlap-1">Item 1<br>(z-index: 1)</div>
+                    <div class="overlap-item overlap-2">Item 2<br>(z-index: 2 - on top)</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Items can deliberately overlap using positioning. z-index controls stacking order. Higher values appear on top.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 8: Masonry Layout -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>8. Masonry-like Layout with grid-auto-flow: dense</h2>
+                <p>Items with different sizes fill spaces efficiently using dense auto-flow</p>
+            </div>
+
+            <div class="code-section"><code>
+.masonry-grid {
+    grid-auto-flow: dense;
+}
+
+.masonry-item.wide {
+    grid-column: span 2;
+}
+
+.masonry-item.tall {
+    grid-row: span 2;
+}
+
+.masonry-item.big {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Masonry Layout</div>
+                <div class="masonry-grid">
+                    <div class="masonry-item">1</div>
+                    <div class="masonry-item wide">2 (wide)</div>
+                    <div class="masonry-item tall">3 (tall)</div>
+                    <div class="masonry-item">4</div>
+                    <div class="masonry-item big">5 (big)</div>
+                    <div class="masonry-item">6</div>
+                    <div class="masonry-item">7</div>
+                    <div class="masonry-item">8</div>
+                    <div class="masonry-item">9</div>
+                    <div class="masonry-item">10</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> grid-auto-flow: dense fills all gaps intelligently, creating Pinterest-like masonry layouts where items fit into available spaces.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 9: Responsive Repositioning -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>9. Responsive Grid Repositioning</h2>
+                <p>Items change positioning at breakpoints using media queries</p>
+            </div>
+
+            <div class="code-section"><code>
+.responsive-pos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.item-full {
+    grid-column: 1 / -1;  /* Full width on all sizes */
+}
+
+@media (max-width: 768px) {
+    .responsive-pos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Responsive Positioning (resize browser)</div>
+                <div class="responsive-pos-grid">
+                    <div class="responsive-item item-full">Full Width Header</div>
+                    <div class="responsive-item">Sidebar / Left</div>
+                    <div class="responsive-item">Main / Right</div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Use media queries to adjust grid-column and grid-row values for different screen sizes. grid-column: 1 / -1 always spans full width regardless of column count.
+            </div>
+        </div>
+
+        <!-- EXAMPLE 10: Nested Grids with Positioning -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>10. Nested Grids with Item Positioning</h2>
+                <p>Parent grid positions major sections, child grids position their own content</p>
+            </div>
+
+            <div class="code-section"><code>
+.outer-pos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.inner-pos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.inner-featured {
+    grid-column: span 2;  /* Only within inner grid */
+}
+            </code></div>
+
+            <div class="demo-box">
+                <div class="demo-title">Demo: Nested Grids</div>
+                <div class="outer-pos-grid">
+                    <div class="outer-item">
+                        <h3>Section 1</h3>
+                        <div class="inner-pos-grid">
+                            <div class="inner-item">Item 1</div>
+                            <div class="inner-item">Item 2</div>
+                            <div class="inner-item">Item 3</div>
+                            <div class="inner-item inner-featured">Featured (spans 2)</div>
+                            <div class="inner-item">Item 5</div>
+                        </div>
+                    </div>
+
+                    <div class="outer-item">
+                        <h3>Section 2</h3>
+                        <div class="inner-pos-grid">
+                            <div class="inner-item">Item 1</div>
+                            <div class="inner-item">Item 2</div>
+                            <div class="inner-item">Item 3</div>
+                            <div class="inner-item">Item 4</div>
+                            <div class="inner-item inner-featured">Featured (spans 2)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                <strong>Technique:</strong> Nested grids have independent positioning. Outer grid's grid-column doesn't affect inner grid's positioning—each grid manages its own items' placement.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSS Grid Item Positioning Practical Examples | Master precise item placement in grids</p>
+    </footer>
+</body>
+</html>
