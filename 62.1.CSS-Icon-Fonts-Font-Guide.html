@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Icon Fonts - Complete Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-left: 4px solid #764ba2;
+            padding-left: 15px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .intro {
+            font-size: 1.1em;
+            color: #555;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 25px;
+        }
+
+        .reference-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .reference-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .reference-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .reference-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .reference-table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            border: 1px solid #333;
+        }
+
+        .syntax { color: #569cd6; font-weight: bold; }
+        .selector { color: #9cdcfe; }
+        .property { color: #9cdcfe; }
+        .value { color: #ce9178; }
+        .keyword { color: #569cd6; }
+        .comment { color: #6a9955; }
+        .unit { color: #b5cea8; }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .demo-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border: 2px solid #667eea;
+            padding: 25px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .demo-card:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .demo-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .icon-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .icon-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .icon-item i {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .icon-item span {
+            font-size: 0.8em;
+            color: #666;
+            text-align: center;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .feature-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .do-dont-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .do-box, .dont-box {
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .do-box {
+            background: rgba(76, 175, 80, 0.05);
+            border-left-color: #4caf50;
+        }
+
+        .do-box h4 {
+            color: #4caf50;
+            margin-bottom: 10px;
+        }
+
+        .dont-box {
+            background: rgba(244, 67, 54, 0.05);
+            border-left-color: #f44336;
+        }
+
+        .dont-box h4 {
+            color: #f44336;
+            margin-bottom: 10px;
+        }
+
+        .browser-support {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .browser-item {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #667eea;
+        }
+
+        .browser-item strong {
+            display: block;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .support-yes {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .support-partial {
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        .support-no {
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        .note-box {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .note-box strong {
+            color: #ff9800;
+        }
+
+        .use-case {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #764ba2;
+        }
+
+        .use-case strong {
+            color: #764ba2;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .syntax-info {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+
+        .syntax-info code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 12px;
+        }
+
+        .library-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .library-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border: 2px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .library-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .library-card p {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .library-card .icons-count {
+            color: #764ba2;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .do-dont-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Icon Fonts</h1>
+            <p>Complete Guide to Using Icon Font Libraries for Scalable, Lightweight Icons</p>
+        </header>
+
+        <div class="section">
+            <h2>What are Icon Fonts?</h2>
+            <div class="intro">
+                Icon fonts are web fonts that contain icons and symbols instead of text characters. They allow you to use scalable vector icons that can be styled with CSS, offering a lightweight alternative to image-based icons with the benefit of perfect scaling, color customization, and animation support.
+            </div>
+
+            <h3>Key Characteristics:</h3>
+            <ul class="feature-list">
+                <li>Vector-based icons that scale to any size without quality loss</li>
+                <li>Single HTTP request for entire icon set (efficient)</li>
+                <li>Easily customizable with CSS (color, size, shadow, animation)</li>
+                <li>Lightweight compared to PNG/SVG image sets</li>
+                <li>Support for all modern and legacy browsers</li>
+                <li>Can be styled with text properties (font-size, font-weight, color)</li>
+                <li>Animatable with CSS transitions and animations</li>
+                <li>Accessible with proper ARIA labels and semantic HTML</li>
+                <li>Popular libraries: Font Awesome, Material Icons, Ionicons, Feather Icons</li>
+                <li>Can be self-hosted or used from CDN</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Icon Font Libraries</h2>
+
+            <div class="library-comparison">
+                <div class="library-card">
+                    <h4>Font Awesome</h4>
+                    <p>Most popular icon font library with extensive icon set and active community.</p>
+                    <p class="icons-count">7,000+ icons</p>
+                    <p style="font-size: 0.85em;">Pro features, CDN available, multiple formats</p>
+                </div>
+
+                <div class="library-card">
+                    <h4>Material Icons</h4>
+                    <p>Google's design system icons following Material Design principles.</p>
+                    <p class="icons-count">3,500+ icons</p>
+                    <p style="font-size: 0.85em;">Consistent design, excellent documentation</p>
+                </div>
+
+                <div class="library-card">
+                    <h4>Ionicons</h4>
+                    <p>Beautiful icons designed for Ionic framework and web applications.</p>
+                    <p class="icons-count">1,400+ icons</p>
+                    <p style="font-size: 0.85em;">Modern design, lightweight, active updates</p>
+                </div>
+
+                <div class="library-card">
+                    <h4>Feather Icons</h4>
+                    <p>Minimal, clean SVG icon set with consistent design.</p>
+                    <p class="icons-count">290+ icons</p>
+                    <p style="font-size: 0.85em;">Lightweight, customizable strokes, open source</p>
+                </div>
+
+                <div class="library-card">
+                    <h4>Bootstrap Icons</h4>
+                    <p>Official icon library for Bootstrap framework.</p>
+                    <p class="icons-count">2,000+ icons</p>
+                    <p style="font-size: 0.85em;">Bootstrap-compatible, SVG based</p>
+                </div>
+
+                <div class="library-card">
+                    <h4>Line Awesome</h4>
+                    <p>Fork of Font Awesome with continuous updates and improvements.</p>
+                    <p class="icons-count">1,500+ icons</p>
+                    <p style="font-size: 0.85em;">Open source, modern design</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Syntax and Implementation</h2>
+
+            <div class="syntax-info">
+                <h3>Font Awesome (Most Popular)</h3>
+                <div class="code-block">
+<span class="comment">/* HTML: Using icon element */</span>
+&lt;<span class="keyword">i</span> <span class="property">class</span>=<span class="value">"fas fa-heart"</span>&gt;&lt;/<span class="keyword">i</span>&gt;
+&lt;<span class="keyword">i</span> <span class="property">class</span>=<span class="value">"fas fa-star"</span>&gt;&lt;/<span class="keyword">i</span>&gt;
+&lt;<span class="keyword">i</span> <span class="property">class</span>=<span class="value">"fas fa-search"</span>&gt;&lt;/<span class="keyword">i</span>&gt;
+
+<span class="comment">/* Or with span */</span>
+&lt;<span class="keyword">span</span> <span class="property">class</span>=<span class="value">"fas fa-heart"</span>&gt;&lt;/<span class="keyword">span</span>&gt;
+                </div>
+            </div>
+
+            <h3>Including Icon Font Libraries</h3>
+            <div class="code-block">
+<span class="comment">/* Option 1: CDN Link in HTML Head */</span>
+&lt;<span class="keyword">link</span> <span class="property">rel</span>=<span class="value">"stylesheet"</span> 
+      <span class="property">href</span>=<span class="value">"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"</span>&gt;
+
+<span class="comment">/* Option 2: @import in CSS */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'</span>);
+
+<span class="comment">/* Option 3: npm Package */</span>
+npm install @fortawesome/fontawesome-free
+
+<span class="comment">/* Material Icons from Google */</span>
+&lt;<span class="keyword">link</span> <span class="property">href</span>=<span class="value">"https://fonts.googleapis.com/icon?family=Material+Icons"</span> <span class="property">rel</span>=<span class="value">"stylesheet"</span>&gt;
+                </div>
+        </div>
+
+        <div class="section">
+            <h2>Basic Icon Font Techniques</h2>
+
+            <h3>1. Icon Display Methods</h3>
+            <div class="code-block">
+<span class="comment">/* Display icon only */</span>
+<span class="selector">i.fa-heart</span> {
+    <span class="property">font-size</span>: <span class="value">24px</span>;
+}
+
+<span class="comment">/* Icon with text */</span>
+&lt;<span class="keyword">button</span>&gt;
+    &lt;<span class="keyword">i</span> <span class="property">class</span>=<span class="value">"fas fa-download"</span>&gt;&lt;/<span class="keyword">i</span>&gt;
+    Download
+&lt;/<span class="keyword">button</span>&gt;
+
+<span class="comment">/* Icon before text using ::before */</span>
+<span class="selector">.download-btn::before</span> {
+    <span class="property">font-family</span>: <span class="value">'Font Awesome 6 Free'</span>;
+    <span class="property">font-weight</span>: <span class="value">900</span>;
+    <span class="property">content</span>: <span class="value">"\f019"</span>; <span class="comment">/* Download icon */</span>
+    <span class="property">margin-right</span>: <span class="value">8px</span>;
+}
+            </div>
+
+            <h3>2. Icon Sizing</h3>
+            <div class="code-block">
+<span class="comment">/* Using font-size */</span>
+<span class="selector">.icon-small</span> { <span class="property">font-size</span>: <span class="value">16px</span>; }
+<span class="selector">.icon-medium</span> { <span class="property">font-size</span>: <span class="value">24px</span>; }
+<span class="selector">.icon-large</span> { <span class="property">font-size</span>: <span class="value">32px</span>; }
+<span class="selector">.icon-xl</span> { <span class="property">font-size</span>: <span class="value">48px</span>; }
+
+<span class="comment">/* Using Font Awesome size classes */</span>
+&lt;<span class="keyword">i</span> <span class="property">class</span>=<span class="value">"fas fa-heart fa-2x"</span>&gt;&lt;/<span class="keyword">i</span>&gt;  <span class="comment">/* 2x size */</span>
+&lt;<span class="keyword">i</span> <span class="property">class</span>=<span class="value">"fas fa-star fa-3x"</span>&gt;&lt;/<span class="keyword">i</span>&gt;   <span class="comment">/* 3x size */</span>
+                </div>
+
+            <h3>3. Icon Coloring</h3>
+            <div class="code-block">
+<span class="comment">/* Using color property */</span>
+<span class="selector">.icon-blue</span> { <span class="property">color</span>: <span class="value">#2196f3</span>; }
+<span class="selector">.icon-red</span> { <span class="property">color</span>: <span class="value">#f44336</span>; }
+<span class="selector">.icon-green</span> { <span class="property">color</span>: <span class="value">#4caf50</span>; }
+
+<span class="comment">/* Gradient color */</span>
+<span class="selector">.icon-gradient</span> {
+    <span class="property">background</span>: <span class="value">linear-gradient(135deg, #667eea 0%, #764ba2 100%)</span>;
+    <span class="property">-webkit-background-clip</span>: <span class="value">text</span>;
+    <span class="property">-webkit-text-fill-color</span>: <span class="value">transparent</span>;
+    <span class="property">background-clip</span>: <span class="value">text</span>;
+}
+            </div>
+
+            <h3>4. Icon Animations</h3>
+            <div class="code-block">
+<span class="comment">/* Spinning icon */</span>
+<span class="keyword">@keyframes</span> <span class="selector">spin</span> {
+    <span class="keyword">from</span> { <span class="property">transform</span>: <span class="value">rotate(0deg)</span>; }
+    <span class="keyword">to</span> { <span class="property">transform</span>: <span class="value">rotate(360deg)</span>; }
+}
+
+<span class="selector">.icon-spin</span> {
+    <span class="property">animation</span>: <span class="value">spin 2s linear infinite</span>;
+}
+
+<span class="comment">/* Pulse animation */</span>
+<span class="keyword">@keyframes</span> <span class="selector">pulse</span> {
+    <span class="keyword">0%</span>, <span class="keyword">100%</span> { <span class="property">opacity</span>: <span class="value">1</span>; }
+    <span class="keyword">50%</span> { <span class="property">opacity</span>: <span class="value">0.5</span>; }
+}
+
+<span class="selector">.icon-pulse</span> {
+    <span class="property">animation</span>: <span class="value">pulse 1.5s ease-in-out infinite</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Font Awesome Examples</h2>
+
+            <h3>Popular Font Awesome Icons</h3>
+            <div class="icon-showcase">
+                <div class="icon-item">
+                    <i class="fas fa-heart"></i>
+                    <span>Heart</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-star"></i>
+                    <span>Star</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-search"></i>
+                    <span>Search</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-user"></i>
+                    <span>User</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-trash"></i>
+                    <span>Delete</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-download"></i>
+                    <span>Download</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-upload"></i>
+                    <span>Upload</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-edit"></i>
+                    <span>Edit</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-plus"></i>
+                    <span>Add</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-minus"></i>
+                    <span>Remove</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-check"></i>
+                    <span>Check</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-times"></i>
+                    <span>Close</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>Next</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-bell"></i>
+                    <span>Notify</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Material Icons</h2>
+
+            <h3>Material Icons Implementation</h3>
+            <div class="code-block">
+<span class="comment">/* Material Icons HTML */</span>
+&lt;<span class="keyword">link</span> <span class="property">href</span>=<span class="value">"https://fonts.googleapis.com/icon?family=Material+Icons"</span> <span class="property">rel</span>=<span class="value">"stylesheet"</span>&gt;
+
+<span class="comment">/* Usage in HTML */</span>
+&lt;<span class="keyword">span</span> <span class="property">class</span>=<span class="value">"material-icons"</span>&gt;favorite&lt;/<span class="keyword">span</span>&gt;
+&lt;<span class="keyword">span</span> <span class="property">class</span>=<span class="value">"material-icons"</span>&gt;settings&lt;/<span class="keyword">span</span>&gt;
+&lt;<span class="keyword">span</span> <span class="property">class</span>=<span class="value">"material-icons"</span>&gt;search&lt;/<span class="keyword">span</span>&gt;
+
+<span class="comment">/* Material Icons CSS */</span>
+<span class="selector">.material-icons</span> {
+    <span class="property">font-family</span>: <span class="value">'Material Icons'</span>;
+    <span class="property">font-weight</span>: <span class="value">normal</span>;
+    <span class="property">font-style</span>: <span class="value">normal</span>;
+    <span class="property">font-size</span>: <span class="value">24px</span>;
+    <span class="property">display</span>: <span class="value">inline-block</span>;
+    <span class="property">line-height</span>: <span class="value">1</span>;
+    <span class="property">text-transform</span>: <span class="value">none</span>;
+    <span class="property">letter-spacing</span>: <span class="value">normal</span>;
+    <span class="property">word-wrap</span>: <span class="value">normal</span>;
+    <span class="property">white-space</span>: <span class="value">nowrap</span>;
+    <span class="property">direction</span>: <span class="value">ltr</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Comparison: Icon Fonts vs Other Methods</h2>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Scalability</th>
+                        <th>File Size</th>
+                        <th>Performance</th>
+                        <th>Styling</th>
+                        <th>Accessibility</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Icon Fonts</strong></td>
+                        <td>Perfect (vector)</td>
+                        <td>Small (~50KB)</td>
+                        <td>Excellent</td>
+                        <td>Full CSS support</td>
+                        <td>Good (needs ARIA)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SVG Inline</strong></td>
+                        <td>Perfect (vector)</td>
+                        <td>Large (per icon)</td>
+                        <td>Good</td>
+                        <td>Full CSS support</td>
+                        <td>Excellent</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PNG/JPG Images</strong></td>
+                        <td>Poor (pixelated at large sizes)</td>
+                        <td>Large (multiple sizes)</td>
+                        <td>Good</td>
+                        <td>Limited</td>
+                        <td>Good (with alt text)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CSS Sprites</strong></td>
+                        <td>Poor (limited sizes)</td>
+                        <td>Medium</td>
+                        <td>Excellent (single request)</td>
+                        <td>Limited</td>
+                        <td>Limited</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data URI</strong></td>
+                        <td>Good (if SVG)</td>
+                        <td>Medium</td>
+                        <td>Good</td>
+                        <td>Limited</td>
+                        <td>Good</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Advanced Techniques</h2>
+
+            <h3>1. Custom Icon Font Creation</h3>
+            <div class="code-block">
+<span class="comment">/* Using IcoMoon or Fontello to create custom fonts */</span>
+
+<span class="comment">/* @font-face declaration */</span>
+<span class="keyword">@font-face</span> {
+    <span class="property">font-family</span>: <span class="value">'custom-icons'</span>;
+    <span class="property">src</span>: <span class="url">url</span>(<span class="value">'fonts/custom-icons.eot'</span>);
+    <span class="property">src</span>: <span class="url">url</span>(<span class="value">'fonts/custom-icons.eot?#iefix'</span>) <span class="keyword">format</span>(<span class="value">'embedded-opentype'</span>),
+         <span class="url">url</span>(<span class="value">'fonts/custom-icons.woff2'</span>) <span class="keyword">format</span>(<span class="value">'woff2'</span>),
+         <span class="url">url</span>(<span class="value">'fonts/custom-icons.woff'</span>) <span class="keyword">format</span>(<span class="value">'woff'</span>),
+         <span class="url">url</span>(<span class="value">'fonts/custom-icons.ttf'</span>) <span class="keyword">format</span>(<span class="value">'truetype'</span>);
+    <span class="property">font-weight</span>: <span class="value">normal</span>;
+    <span class="property">font-style</span>: <span class="value">normal</span>;
+}
+
+<span class="selector">.icon</span> {
+    <span class="property">font-family</span>: <span class="value">'custom-icons'</span>;
+}
+            </div>
+
+            <h3>2. Icon Button with Hover Effect</h3>
+            <div class="code-block">
+<span class="selector">.icon-button</span> {
+    <span class="property">background</span>: <span class="value">#667eea</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">border</span>: <span class="value">none</span>;
+    <span class="property">padding</span>: <span class="value">12px 16px</span>;
+    <span class="property">border-radius</span>: <span class="value">6px</span>;
+    <span class="property">cursor</span>: <span class="value">pointer</span>;
+    <span class="property">transition</span>: <span class="value">all 0.3s ease</span>;
+    <span class="property">font-size</span>: <span class="value">18px</span>;
+}
+
+<span class="selector">.icon-button:hover</span> {
+    <span class="property">background</span>: <span class="value">#764ba2</span>;
+    <span class="property">transform</span>: <span class="value">translateY(-2px)</span>;
+    <span class="property">box-shadow</span>: <span class="value">0 4px 12px rgba(102, 126, 234, 0.4)</span>;
+}
+
+<span class="selector">.icon-button:active</span> {
+    <span class="property">transform</span>: <span class="value">translateY(0)</span>;
+}
+            </div>
+
+            <h3>3. Icon Badge with Counter</h3>
+            <div class="code-block">
+<span class="selector">.icon-badge</span> {
+    <span class="property">position</span>: <span class="value">relative</span>;
+    <span class="property">display</span>: <span class="value">inline-block</span>;
+}
+
+<span class="selector">.icon-badge::after</span> {
+    <span class="property">content</span>: <span class="value">attr(data-count)</span>;
+    <span class="property">position</span>: <span class="value">absolute</span>;
+    <span class="property">top</span>: <span class="value">-8px</span>;
+    <span class="property">right</span>: <span class="value">-8px</span>;
+    <span class="property">background</span>: <span class="value">#f44336</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">font-size</span>: <span class="value">12px</span>;
+    <span class="property">padding</span>: <span class="value">2px 6px</span>;
+    <span class="property">border-radius</span>: <span class="value">12px</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Best Practices</h2>
+
+            <div class="do-dont-grid">
+                <div class="do-box">
+                    <h4>✓ DO</h4>
+                    <ul class="feature-list">
+                        <li>Use semantic HTML (button, link elements)</li>
+                        <li>Add ARIA labels for screen readers</li>
+                        <li>Provide fallback text for icons</li>
+                        <li>Use appropriate icon libraries</li>
+                        <li>Test icons at different sizes</li>
+                        <li>Optimize font files (woff2 format)</li>
+                        <li>Cache icon fonts aggressively</li>
+                        <li>Use CDN for better performance</li>
+                    </ul>
+                </div>
+
+                <div class="dont-box">
+                    <h4>✗ DON'T</h4>
+                    <ul class="feature-list">
+                        <li>Use icons without proper labels</li>
+                        <li>Overload with too many icon libraries</li>
+                        <li>Ignore accessibility requirements</li>
+                        <li>Use icons for critical functionality only</li>
+                        <li>Forget to optimize font delivery</li>
+                        <li>Mix multiple incompatible icon fonts</li>
+                        <li>Ignore browser compatibility</li>
+                        <li>Use very small icons (hard to read)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Accessibility Considerations</h2>
+
+            <h3>ARIA Labels for Icons</h3>
+            <div class="code-block">
+<span class="comment">/* Icon with aria-label */</span>
+&lt;<span class="keyword">button</span> <span class="property">aria-label</span>=<span class="value">"Delete item"</span>&gt;
+    &lt;<span class="keyword">i</span> <span class="property">class</span>=<span class="value">"fas fa-trash"</span> <span class="property">aria-hidden</span>=<span class="value">"true"</span>&gt;&lt;/<span class="keyword">i</span>&gt;
+&lt;/<span class="keyword">button</span>&gt;
+
+<span class="comment">/* Icon with text label */</span>
+&lt;<span class="keyword">button</span>&gt;
+    &lt;<span class="keyword">i</span> <span class="property">class</span>=<span class="value">"fas fa-heart"</span> <span class="property">aria-hidden</span>=<span class="value">"true"</span>&gt;&lt;/<span class="keyword">i</span>&gt;
+    <span class="keyword">Like</span>
+&lt;/<span class="keyword">button</span>&gt;
+
+<span class="comment">/* Icon with title */</span>
+&lt;<span class="keyword">i</span> <span class="property">class</span>=<span class="value">"fas fa-info-circle"</span> 
+   <span class="property">title</span>=<span class="value">"More information"</span>&gt;&lt;/<span class="keyword">i</span>&gt;
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Browser Support</h2>
+
+            <div class="browser-support">
+                <div class="browser-item">
+                    <strong>Chrome</strong>
+                    <span class="support-yes">All versions</span>
+                </div>
+                <div class="browser-item">
+                    <strong>Firefox</strong>
+                    <span class="support-yes">All versions</span>
+                </div>
+                <div class="browser-item">
+                    <strong>Safari</strong>
+                    <span class="support-yes">All versions</span>
+                </div>
+                <div class="browser-item">
+                    <strong>Edge</strong>
+                    <span class="support-yes">All versions</span>
+                </div>
+                <div class="browser-item">
+                    <strong>IE 8+</strong>
+                    <span class="support-yes">Supported</span>
+                </div>
+                <div class="browser-item">
+                    <strong>Mobile</strong>
+                    <span class="support-yes">Excellent</span>
+                </div>
+            </div>
+
+            <div class="note-box">
+                <strong>✅ Excellent Support:</strong> Icon fonts work across all browsers with exceptional compatibility, making them ideal for projects requiring legacy browser support.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Real-World Use Cases</h2>
+
+            <div class="use-case">
+                <strong>Navigation Menus</strong>
+                <p>Use icons alongside menu labels for visual clarity and faster navigation recognition.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>Social Media Links</strong>
+                <p>Display social media platform icons that link to profiles with consistent styling.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>UI Components</strong>
+                <p>Icon buttons for actions like delete, edit, search, download within tables and forms.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>Loading States</strong>
+                <p>Animated spinner icons to indicate loading progress or ongoing operations.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>Status Indicators</strong>
+                <p>Icons to show success, warning, error, or information states in notifications and alerts.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>E-commerce</strong>
+                <p>Product category icons, shopping cart, wishlist, and shipping method indicators.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Property Guide | Icon Fonts Complete Reference</p>
+            <p>Comprehensive guide for using icon fonts for scalable, accessible web icons</p>
+        </footer>
+    </div>
+</body>
+</html>

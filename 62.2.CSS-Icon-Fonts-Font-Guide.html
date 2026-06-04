@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Icon Fonts Practical Examples</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            border-left: 4px solid #764ba2;
+            padding-left: 15px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .example-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border: 2px solid #667eea;
+            padding: 25px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .example-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .example-label {
+            color: #764ba2;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+            border: 1px solid #333;
+        }
+
+        .syntax { color: #569cd6; font-weight: bold; }
+        .selector { color: #9cdcfe; }
+        .property { color: #9cdcfe; }
+        .value { color: #ce9178; }
+        .keyword { color: #569cd6; }
+        .comment { color: #6a9955; }
+
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .demo-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin: 15px 0;
+        }
+
+        .icon-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            margin: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .icon-button:active {
+            transform: translateY(0);
+        }
+
+        .icon-small {
+            font-size: 16px;
+        }
+
+        .icon-medium {
+            font-size: 24px;
+        }
+
+        .icon-large {
+            font-size: 32px;
+        }
+
+        .icon-xl {
+            font-size: 48px;
+        }
+
+        .icon-spin {
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .icon-pulse {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .icon-bounce {
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .color-blue { color: #2196f3; }
+        .color-red { color: #f44336; }
+        .color-green { color: #4caf50; }
+        .color-orange { color: #ff9800; }
+
+        .icon-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .icon-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .icon-item i {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .icon-item span {
+            font-size: 0.8em;
+            color: #666;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f0f0;
+            border-radius: 50%;
+            color: #667eea;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .navbar {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .navbar-links a {
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            color: #667eea;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+
+        .status-error {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+        }
+
+        .status-warning {
+            background: rgba(255, 152, 0, 0.1);
+            color: #ff9800;
+        }
+
+        .status-info {
+            background: rgba(33, 150, 243, 0.1);
+            color: #2196f3;
+        }
+
+        .card-item {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .card-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: none;
+            color: #667eea;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 8px;
+        }
+
+        .action-btn:hover {
+            color: #764ba2;
+            transform: scale(1.2);
+        }
+
+        .full-width-example {
+            margin: 30px 0;
+        }
+
+        .note-box {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .note-box strong {
+            color: #ff9800;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navbar-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Icon Fonts Practical Examples</h1>
+            <p>Real-World Applications and Interactive Demonstrations</p>
+        </header>
+
+        <div class="section">
+            <h2>1. Icon Sizes and Styling</h2>
+            <p>Different sizes and styling options for icon fonts:</p>
+            
+            <div class="demo-preview">
+                <div class="example-label">Small (16px)</div>
+                <i class="fas fa-heart icon-small"></i>
+                <i class="fas fa-star icon-small"></i>
+                <i class="fas fa-search icon-small"></i>
+
+                <div class="example-label" style="margin-top: 15px;">Medium (24px)</div>
+                <i class="fas fa-heart icon-medium"></i>
+                <i class="fas fa-star icon-medium"></i>
+                <i class="fas fa-search icon-medium"></i>
+
+                <div class="example-label" style="margin-top: 15px;">Large (32px)</div>
+                <i class="fas fa-heart icon-large"></i>
+                <i class="fas fa-star icon-large"></i>
+                <i class="fas fa-search icon-large"></i>
+
+                <div class="example-label" style="margin-top: 15px;">Extra Large (48px)</div>
+                <i class="fas fa-heart icon-xl"></i>
+                <i class="fas fa-star icon-xl"></i>
+                <i class="fas fa-search icon-xl"></i>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.icon-small</span> { <span class="property">font-size</span>: <span class="value">16px</span>; }
+<span class="selector">.icon-medium</span> { <span class="property">font-size</span>: <span class="value">24px</span>; }
+<span class="selector">.icon-large</span> { <span class="property">font-size</span>: <span class="value">32px</span>; }
+<span class="selector">.icon-xl</span> { <span class="property">font-size</span>: <span class="value">48px</span>; }
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Icon Buttons</h2>
+            <p>Interactive icon buttons with hover effects:</p>
+            
+            <div class="demo-preview">
+                <button class="icon-button">
+                    <i class="fas fa-download"></i>
+                    Download
+                </button>
+                <button class="icon-button">
+                    <i class="fas fa-upload"></i>
+                    Upload
+                </button>
+                <button class="icon-button">
+                    <i class="fas fa-trash"></i>
+                    Delete
+                </button>
+                <button class="icon-button">
+                    <i class="fas fa-edit"></i>
+                    Edit
+                </button>
+                <button class="icon-button">
+                    <i class="fas fa-share"></i>
+                    Share
+                </button>
+                <button class="icon-button">
+                    <i class="fas fa-print"></i>
+                    Print
+                </button>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.icon-button</span> {
+    <span class="property">background</span>: <span class="keyword">linear-gradient</span>(<span class="value">135deg, #667eea 0%, #764ba2 100%</span>);
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">border</span>: <span class="value">none</span>;
+    <span class="property">padding</span>: <span class="value">12px 16px</span>;
+    <span class="property">border-radius</span>: <span class="value">6px</span>;
+    <span class="property">cursor</span>: <span class="value">pointer</span>;
+    <span class="property">transition</span>: <span class="value">all 0.3s ease</span>;
+    <span class="property">display</span>: <span class="value">inline-flex</span>;
+    <span class="property">align-items</span>: <span class="value">center</span>;
+    <span class="property">gap</span>: <span class="value">8px</span>;
+}
+
+<span class="selector">.icon-button:hover</span> {
+    <span class="property">transform</span>: <span class="value">translateY(-2px)</span>;
+    <span class="property">box-shadow</span>: <span class="value">0 4px 12px rgba(102, 126, 234, 0.4)</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Icon Colors</h2>
+            <p>Different color variations for different contexts:</p>
+            
+            <div class="demo-preview">
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div>
+                        <div class="example-label">Blue</div>
+                        <i class="fas fa-star icon-large color-blue"></i>
+                    </div>
+                    <div>
+                        <div class="example-label">Red</div>
+                        <i class="fas fa-heart icon-large color-red"></i>
+                    </div>
+                    <div>
+                        <div class="example-label">Green</div>
+                        <i class="fas fa-check icon-large color-green"></i>
+                    </div>
+                    <div>
+                        <div class="example-label">Orange</div>
+                        <i class="fas fa-warning icon-large color-orange"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.color-blue</span> { <span class="property">color</span>: <span class="value">#2196f3</span>; }
+<span class="selector">.color-red</span> { <span class="property">color</span>: <span class="value">#f44336</span>; }
+<span class="selector">.color-green</span> { <span class="property">color</span>: <span class="value">#4caf50</span>; }
+<span class="selector">.color-orange</span> { <span class="property">color</span>: <span class="value">#ff9800</span>; }
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Animated Icons</h2>
+            <p>Icons with animation effects (spinning, pulsing, bouncing):</p>
+            
+            <div class="demo-preview">
+                <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+                    <div style="text-align: center;">
+                        <div class="example-label">Spinning</div>
+                        <i class="fas fa-spinner icon-large icon-spin"></i>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="example-label">Pulsing</div>
+                        <i class="fas fa-circle icon-large icon-pulse color-red"></i>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="example-label">Bouncing</div>
+                        <i class="fas fa-arrow-down icon-large icon-bounce color-green"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="keyword">@keyframes</span> <span class="selector">spin</span> {
+    <span class="keyword">from</span> { <span class="property">transform</span>: <span class="value">rotate(0deg)</span>; }
+    <span class="keyword">to</span> { <span class="property">transform</span>: <span class="value">rotate(360deg)</span>; }
+}
+
+<span class="selector">.icon-spin</span> {
+    <span class="property">animation</span>: <span class="value">spin 2s linear infinite</span>;
+}
+
+<span class="keyword">@keyframes</span> <span class="selector">pulse</span> {
+    <span class="keyword">0%, 100%</span> { <span class="property">opacity</span>: <span class="value">1</span>; }
+    <span class="keyword">50%</span> { <span class="property">opacity</span>: <span class="value">0.5</span>; }
+}
+
+<span class="selector">.icon-pulse</span> {
+    <span class="property">animation</span>: <span class="value">pulse 1.5s ease-in-out infinite</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Social Media Links</h2>
+            <p>Circular icon links for social media profiles:</p>
+            
+            <div class="demo-preview">
+                <div class="social-links">
+                    <a href="#" class="social-icon" title="Facebook" aria-label="Visit our Facebook page">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon" title="Twitter" aria-label="Visit our Twitter page">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon" title="Instagram" aria-label="Visit our Instagram page">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon" title="LinkedIn" aria-label="Visit our LinkedIn page">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-icon" title="GitHub" aria-label="Visit our GitHub page">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.social-icon</span> {
+    <span class="property">width</span>: <span class="value">48px</span>;
+    <span class="property">height</span>: <span class="value">48px</span>;
+    <span class="property">display</span>: <span class="value">flex</span>;
+    <span class="property">align-items</span>: <span class="value">center</span>;
+    <span class="property">justify-content</span>: <span class="value">center</span>;
+    <span class="property">background</span>: <span class="value">#f0f0f0</span>;
+    <span class="property">border-radius</span>: <span class="value">50%</span>;
+    <span class="property">color</span>: <span class="value">#667eea</span>;
+    <span class="property">font-size</span>: <span class="value">20px</span>;
+    <span class="property">transition</span>: <span class="value">all 0.3s ease</span>;
+    <span class="property">text-decoration</span>: <span class="value">none</span>;
+}
+
+<span class="selector">.social-icon:hover</span> {
+    <span class="property">background</span>: <span class="value">#667eea</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">transform</span>: <span class="value">translateY(-5px)</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. Navigation Bar with Icons</h2>
+            <p>Navigation menu with icon labels:</p>
+            
+            <div class="demo-preview">
+                <nav class="navbar">
+                    <div class="navbar-brand">
+                        <i class="fas fa-rocket"></i> MyApp
+                    </div>
+                    <ul class="navbar-links">
+                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-search"></i> Search</a></li>
+                        <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+                        <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.navbar</span> {
+    <span class="property">background</span>: <span class="value">white</span>;
+    <span class="property">padding</span>: <span class="value">15px 30px</span>;
+    <span class="property">border-radius</span>: <span class="value">8px</span>;
+    <span class="property">display</span>: <span class="value">flex</span>;
+    <span class="property">justify-content</span>: <span class="value">space-between</span>;
+    <span class="property">align-items</span>: <span class="value">center</span>;
+    <span class="property">box-shadow</span>: <span class="value">0 2px 8px rgba(0, 0, 0, 0.1)</span>;
+}
+
+<span class="selector">.navbar-links a</span> {
+    <span class="property">display</span>: <span class="value">flex</span>;
+    <span class="property">align-items</span>: <span class="value">center</span>;
+    <span class="property">gap</span>: <span class="value">8px</span>;
+    <span class="property">transition</span>: <span class="value">color 0.3s ease</span>;
+}
+
+<span class="selector">.navbar-links a:hover</span> {
+    <span class="property">color</span>: <span class="value">#667eea</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>7. Status Badges</h2>
+            <p>Status indicators with icons:</p>
+            
+            <div class="demo-preview">
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <span class="status-badge status-success">
+                        <i class="fas fa-check-circle"></i>
+                        Success
+                    </span>
+                    <span class="status-badge status-error">
+                        <i class="fas fa-times-circle"></i>
+                        Error
+                    </span>
+                    <span class="status-badge status-warning">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Warning
+                    </span>
+                    <span class="status-badge status-info">
+                        <i class="fas fa-info-circle"></i>
+                        Info
+                    </span>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.status-badge</span> {
+    <span class="property">display</span>: <span class="value">inline-flex</span>;
+    <span class="property">align-items</span>: <span class="value">center</span>;
+    <span class="property">gap</span>: <span class="value">8px</span>;
+    <span class="property">padding</span>: <span class="value">8px 12px</span>;
+    <span class="property">border-radius</span>: <span class="value">6px</span>;
+    <span class="property">font-size</span>: <span class="value">14px</span>;
+    <span class="property">font-weight</span>: <span class="value">600</span>;
+}
+
+<span class="selector">.status-success</span> {
+    <span class="property">background</span>: <span class="value">rgba(76, 175, 80, 0.1)</span>;
+    <span class="property">color</span>: <span class="value">#4caf50</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>8. Icon List Items</h2>
+            <p>List items with action icons:</p>
+            
+            <div class="demo-preview">
+                <div class="card-item">
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 5px;">Project Alpha</div>
+                        <div style="color: #666; font-size: 0.9em;">Started 2 days ago</div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="action-btn" title="Edit" aria-label="Edit project">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn" title="Share" aria-label="Share project">
+                            <i class="fas fa-share"></i>
+                        </button>
+                        <button class="action-btn" title="Delete" aria-label="Delete project">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-item">
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 5px;">Project Beta</div>
+                        <div style="color: #666; font-size: 0.9em;">Started 1 week ago</div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="action-btn" title="Edit" aria-label="Edit project">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn" title="Share" aria-label="Share project">
+                            <i class="fas fa-share"></i>
+                        </button>
+                        <button class="action-btn" title="Delete" aria-label="Delete project">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-item">
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 5px;">Project Gamma</div>
+                        <div style="color: #666; font-size: 0.9em;">Started 3 weeks ago</div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="action-btn" title="Edit" aria-label="Edit project">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn" title="Share" aria-label="Share project">
+                            <i class="fas fa-share"></i>
+                        </button>
+                        <button class="action-btn" title="Delete" aria-label="Delete project">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.action-btn</span> {
+    <span class="property">background</span>: <span class="value">transparent</span>;
+    <span class="property">border</span>: <span class="value">none</span>;
+    <span class="property">color</span>: <span class="value">#667eea</span>;
+    <span class="property">font-size</span>: <span class="value">18px</span>;
+    <span class="property">cursor</span>: <span class="value">pointer</span>;
+    <span class="property">transition</span>: <span class="value">all 0.3s ease</span>;
+    <span class="property">padding</span>: <span class="value">8px</span>;
+}
+
+<span class="selector">.action-btn:hover</span> {
+    <span class="property">color</span>: <span class="value">#764ba2</span>;
+    <span class="property">transform</span>: <span class="value">scale(1.2)</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>9. Icon Categories</h2>
+            <p>Display common icon groups:</p>
+            
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>Navigation Icons</h4>
+                    <div class="icon-showcase">
+                        <div class="icon-item">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Back</span>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>Next</span>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-bars"></i>
+                            <span>Menu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>Action Icons</h4>
+                    <div class="icon-showcase">
+                        <div class="icon-item">
+                            <i class="fas fa-plus"></i>
+                            <span>Add</span>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-edit"></i>
+                            <span>Edit</span>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-trash"></i>
+                            <span>Delete</span>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-save"></i>
+                            <span>Save</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>Status Icons</h4>
+                    <div class="icon-showcase">
+                        <div class="icon-item">
+                            <i class="fas fa-check color-green"></i>
+                            <span>Success</span>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-times color-red"></i>
+                            <span>Error</span>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-exclamation color-orange"></i>
+                            <span>Warning</span>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-info color-blue"></i>
+                            <span>Info</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>Media Icons</h4>
+                    <div class="icon-showcase">
+                        <div class="icon-item">
+                            <i class="fas fa-image"></i>
+                            <span>Image</span>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-play"></i>
+                            <span>Video</span>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-file"></i>
+                            <span>File</span>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-download"></i>
+                            <span>Download</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>10. Icon with Text Combinations</h2>
+            <p>Different ways to combine icons with text:</p>
+            
+            <div class="demo-preview">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="text-align: center; padding: 15px;">
+                        <div><i class="fas fa-envelope icon-large" style="color: #667eea;"></i></div>
+                        <div style="margin-top: 10px; font-weight: 600;">Contact Us</div>
+                    </div>
+
+                    <div style="text-align: center; padding: 15px;">
+                        <div><i class="fas fa-phone icon-large" style="color: #764ba2;"></i></div>
+                        <div style="margin-top: 10px; font-weight: 600;">Call Support</div>
+                    </div>
+
+                    <div style="text-align: center; padding: 15px;">
+                        <div><i class="fas fa-map-marker icon-large" style="color: #4caf50;"></i></div>
+                        <div style="margin-top: 10px; font-weight: 600;">Find Locations</div>
+                    </div>
+
+                    <div style="text-align: center; padding: 15px;">
+                        <div><i class="fas fa-clock icon-large" style="color: #ff9800;"></i></div>
+                        <div style="margin-top: 10px; font-weight: 600;">Open Hours</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="comment">/* Icon above text */</span>
+&lt;<span class="keyword">div</span> <span class="property">style</span>=<span class="value">"text-align: center;"</span>&gt;
+    &lt;<span class="keyword">div</span>&gt;&lt;<span class="keyword">i</span> <span class="property">class</span>=<span class="value">"fas fa-envelope icon-large"</span>&gt;&lt;/<span class="keyword">i</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+    &lt;<span class="keyword">div</span> <span class="property">style</span>=<span class="value">"margin-top: 10px; font-weight: 600;"</span>&gt;Contact Us&lt;/<span class="keyword">div</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>11. Loading States</h2>
+            <p>Common loading and processing indicators:</p>
+            
+            <div class="demo-preview">
+                <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+                    <div style="text-align: center;">
+                        <div class="example-label">Processing</div>
+                        <i class="fas fa-spinner icon-large icon-spin"></i>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="example-label">Uploading</div>
+                        <i class="fas fa-upload icon-large icon-pulse color-blue"></i>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="example-label">Downloading</div>
+                        <i class="fas fa-download icon-large icon-pulse color-green"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>12. Accessibility Best Practices</h2>
+            <p>Icons with proper accessibility considerations:</p>
+            
+            <div class="code-block">
+<span class="comment">/* Icon with aria-label for screen readers */</span>
+&lt;<span class="keyword">button</span> <span class="property">aria-label</span>=<span class="value">"Delete item"</span>&gt;
+    &lt;<span class="keyword">i</span> <span class="property">class</span>=<span class="value">"fas fa-trash"</span> <span class="property">aria-hidden</span>=<span class="value">"true"</span>&gt;&lt;/<span class="keyword">i</span>&gt;
+&lt;/<span class="keyword">button</span>&gt;
+
+<span class="comment">/* Icon with text label */</span>
+&lt;<span class="keyword">button</span>&gt;
+    &lt;<span class="keyword">i</span> <span class="property">class</span>=<span class="value">"fas fa-heart"</span> <span class="property">aria-hidden</span>=<span class="value">"true"</span>&gt;&lt;/<span class="keyword">i</span>&gt;
+    Like
+&lt;/<span class="keyword">button</span>&gt;
+
+<span class="comment">/* Icon with title attribute */</span>
+&lt;<span class="keyword">i</span> <span class="property">class</span>=<span class="value">"fas fa-info-circle"</span> 
+   <span class="property">title</span>=<span class="value">"More information"</span>&gt;&lt;/<span class="keyword">i</span>&gt;
+            </div>
+
+            <div class="note-box">
+                <strong>♿ Accessibility Note:</strong> Always provide aria-label or text context for icon-only buttons. Use aria-hidden="true" on decorative icons to prevent screen reader announcement.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Key Takeaways</h2>
+            <ul class="feature-list">
+                <li>Use icon fonts for scalable, lightweight icon solutions</li>
+                <li>Style icons with CSS like regular text (color, size, shadow)</li>
+                <li>Combine icons with text for better user understanding</li>
+                <li>Animate icons for visual feedback and attention</li>
+                <li>Always include accessibility labels (aria-label or text)</li>
+                <li>Use appropriate icon libraries for your design system</li>
+                <li>Test icons at different sizes across devices</li>
+                <li>Cache icon font files for better performance</li>
+                <li>Consider using SVG icons for complex illustrations</li>
+                <li>Maintain consistent icon sizes and spacing</li>
+                <li>Use semantic HTML with proper ARIA attributes</li>
+                <li>Provide fallback text for critical functionality</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Property Guide | Icon Fonts Practical Examples</p>
+            <p>Real-world applications and interactive demonstrations for icon font styling</p>
+        </footer>
+    </div>
+</body>
+</html>

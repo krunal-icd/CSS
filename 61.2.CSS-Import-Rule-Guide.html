@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS @import Rule Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            border-left: 4px solid #764ba2;
+            padding-left: 15px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .example-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border: 2px solid #667eea;
+            padding: 25px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .example-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .example-label {
+            color: #764ba2;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+            border: 1px solid #333;
+        }
+
+        .syntax { color: #569cd6; font-weight: bold; }
+        .selector { color: #9cdcfe; }
+        .property { color: #9cdcfe; }
+        .value { color: #ce9178; }
+        .keyword { color: #569cd6; }
+        .comment { color: #6a9955; }
+        .url { color: #ce9178; }
+        .tag { color: #569cd6; }
+        .attr { color: #9cdcfe; }
+
+        .file-structure {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.8;
+        }
+
+        .file-structure-item {
+            padding: 5px 0;
+        }
+
+        .folder { color: #9cdcfe; font-weight: bold; }
+        .file { color: #ce9178; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .demo-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border: 2px dashed #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .demo-heading {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .note-box {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .note-box strong {
+            color: #ff9800;
+        }
+
+        .tabs {
+            display: flex;
+            margin: 20px 0;
+            border-bottom: 2px solid #667eea;
+            gap: 10px;
+        }
+
+        .tab-button {
+            background: transparent;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            color: #667eea;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            border-bottom-color: #764ba2;
+            color: #764ba2;
+        }
+
+        .tab-button:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .full-width-example {
+            margin: 30px 0;
+        }
+
+        .directory-tree {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.8;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS @import Rule Practical Examples</h1>
+            <p>Real-World Applications and File Organization Patterns</p>
+        </header>
+
+        <div class="section">
+            <h2>1. Basic Multi-File Organization</h2>
+            <p>Organize CSS into logical modules with @import at the entry point:</p>
+            
+            <div class="example-card full-width-example">
+                <h4>Main CSS File Structure</h4>
+                <div class="code-block">
+<span class="comment">/* styles/main.css - Entry point */</span>
+
+<span class="comment">/* Import in order of specificity/dependency */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./variables.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./reset.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./typography.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./layout.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./utilities.css"</span>);
+
+<span class="comment">/* Additional custom styles */</span>
+<span class="selector">body</span> {
+    <span class="property">background-color</span>: <span class="value">var(--bg-color)</span>;
+}
+                </div>
+            </div>
+
+            <h3>Project Structure</h3>
+            <div class="directory-tree">
+styles/
+├── main.css ..................... (entry point)
+├── variables.css ................ (CSS custom properties)
+├── reset.css .................... (CSS reset/normalize)
+├── typography.css ............... (font & text styles)
+├── layout.css ................... (grid & flexbox)
+├── components.css ............... (UI components)
+└── utilities.css ................ (helper classes)
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Component-Based Architecture</h2>
+            <p>Import component-specific stylesheets for scalability:</p>
+            
+            <div class="example-card full-width-example">
+                <h4>Components Folder Organization</h4>
+                <div class="code-block">
+<span class="comment">/* styles/main.css */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./base/reset.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./base/typography.css"</span>);
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components/buttons.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components/forms.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components/cards.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components/navigation.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components/modals.css"</span>);
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./layouts/grid.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./layouts/flexbox.css"</span>);
+                </div>
+            </div>
+
+            <div class="directory-tree">
+styles/
+├── main.css
+├── base/
+│   ├── reset.css
+│   ├── typography.css
+│   └── variables.css
+├── components/
+│   ├── buttons.css
+│   ├── forms.css
+│   ├── cards.css
+│   ├── navigation.css
+│   └── modals.css
+└── layouts/
+    ├── grid.css
+    └── flexbox.css
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Media Query-Based Imports</h2>
+            <p>Conditionally load stylesheets based on device or screen size:</p>
+            
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>Responsive Layout</h4>
+                    <div class="code-block">
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"desktop.css"</span>)
+    (<span class="property">min-width</span>: <span class="value">1024px</span>);
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"tablet.css"</span>)
+    (<span class="property">min-width</span>: <span class="value">768px</span>) <span class="keyword">and</span>
+    (<span class="property">max-width</span>: <span class="value">1023px</span>);
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"mobile.css"</span>)
+    (<span class="property">max-width</span>: <span class="value">767px</span>);
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>Media Type Imports</h4>
+                    <div class="code-block">
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"screen.css"</span>)
+    <span class="keyword">screen</span>;
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"print.css"</span>)
+    <span class="keyword">print</span>;
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"handheld.css"</span>)
+    <span class="keyword">handheld</span>;
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>Feature Detection</h4>
+                    <div class="code-block">
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"dark.css"</span>)
+    (<span class="property">prefers-color-scheme</span>: <span class="keyword">dark</span>);
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"light.css"</span>)
+    (<span class="property">prefers-color-scheme</span>: <span class="keyword">light</span>);
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"high-contrast.css"</span>)
+    (<span class="property">prefers-contrast</span>: <span class="keyword">more</span>);
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Importing Fonts from CDN</h2>
+            <p>Import Google Fonts or other font libraries directly within CSS:</p>
+            
+            <div class="example-card full-width-example">
+                <h4>Font Imports from Google Fonts</h4>
+                <div class="code-block">
+<span class="comment">/* styles/main.css */</span>
+
+<span class="comment">/* Import multiple fonts with different weights */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'</span>);
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap'</span>);
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'</span>);
+
+<span class="comment">/* Use imported fonts */</span>
+<span class="selector">body</span> {
+    <span class="property">font-family</span>: <span class="value">'Roboto', sans-serif</span>;
+}
+
+<span class="selector">h1</span>, <span class="selector">h2</span>, <span class="selector">h3</span> {
+    <span class="property">font-family</span>: <span class="value">'Playfair Display', serif</span>;
+}
+
+<span class="selector">button</span> {
+    <span class="property">font-family</span>: <span class="value">'Inter', sans-serif</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. CSS Framework Integration</h2>
+            <p>Import framework stylesheets as base layer before custom components:</p>
+            
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>Bootstrap Integration</h4>
+                    <div class="code-block">
+<span class="comment">/* main.css */</span>
+
+<span class="comment">/* Bootstrap framework */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'</span>);
+
+<span class="comment">/* Custom overrides */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./overrides.css"</span>);
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components.css"</span>);
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>Tailwind + Custom</h4>
+                    <div class="code-block">
+<span class="comment">/* main.css */</span>
+
+<span class="comment">/* Tailwind base styles */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">'https://cdn.tailwindcss.com'</span>);
+
+<span class="comment">/* Custom components */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./custom-components.css"</span>);
+
+<span class="comment">/* Theme customization */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./theme.css"</span>);
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>Icon Libraries</h4>
+                    <div class="code-block">
+<span class="comment">/* main.css */</span>
+
+<span class="comment">/* Font Awesome */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'</span>);
+
+<span class="comment">/* Material Icons */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">'https://fonts.googleapis.com/icon?family=Material+Icons'</span>);
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./local-styles.css"</span>);
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. Theme Management with Conditional Imports</h2>
+            <p>Switch between themes using media queries and @import:</p>
+            
+            <div class="example-card full-width-example">
+                <h4>Light and Dark Theme Imports</h4>
+                <div class="code-block">
+<span class="comment">/* styles/main.css */</span>
+
+<span class="comment">/* Core styles always loaded */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./base.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components.css"</span>);
+
+<span class="comment">/* Theme-specific imports */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./theme-light.css"</span>)
+    (<span class="property">prefers-color-scheme</span>: <span class="keyword">light</span>);
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./theme-dark.css"</span>)
+    (<span class="property">prefers-color-scheme</span>: <span class="keyword">dark</span>);
+
+<span class="comment">/* Accessibility-focused imports */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./high-contrast.css"</span>)
+    (<span class="property">prefers-contrast</span>: <span class="keyword">more</span>);
+                </div>
+            </div>
+
+            <div class="note-box">
+                <strong>💡 Pro Tip:</strong> Modern approach uses CSS custom properties instead of separate imports. Keep base styles in one file and use variables for theming.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>7. CSS Layers Organization</h2>
+            <p>Use @import with @layer for explicit cascade control (modern browsers):</p>
+            
+            <div class="example-card full-width-example">
+                <h4>Layer-Based Architecture</h4>
+                <div class="code-block">
+<span class="comment">/* main.css - Define layer order */</span>
+<span class="keyword">@layer</span> reset, base, layout, components, utilities, overrides;
+
+<span class="comment">/* Import into specific layers */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./normalize.css"</span>) <span class="keyword">layer</span>(<span class="value">reset</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./base.css"</span>) <span class="keyword">layer</span>(<span class="value">base</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./grid.css"</span>) <span class="keyword">layer</span>(<span class="value">layout</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./buttons.css"</span>) <span class="keyword">layer</span>(<span class="value">components</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./utilities.css"</span>) <span class="keyword">layer</span>(<span class="value">utilities</span>);
+
+<span class="comment">/* High specificity overrides go last */</span>
+<span class="keyword">@layer</span> overrides {
+    <span class="selector">button.primary</span> {
+        <span class="property">background</span>: <span class="value">blue</span> <span class="keyword">!important</span>;
+    }
+}
+                </div>
+            </div>
+
+            <p style="margin-top: 15px; font-size: 0.95em; color: #666;">
+                <strong>Note:</strong> CSS Layers allow explicit control over cascade priority, reducing need for specificity wars. Browser support: Chrome 99+, Firefox 97+, Safari 16+.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>8. Print Stylesheet Organization</h2>
+            <p>Keep print-specific styles separate and import conditionally:</p>
+            
+            <div class="example-card full-width-example">
+                <h4>Print Media Import</h4>
+                <div class="code-block">
+<span class="comment">/* styles/main.css */</span>
+
+<span class="comment">/* Screen styles */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./screen.css"</span>) <span class="keyword">screen</span>;
+
+<span class="comment">/* Print-specific styles */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./print.css"</span>) <span class="keyword">print</span>;
+
+<span class="comment">/* Alternative: Responsive media query */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./print-optimized.css"</span>)
+    (<span class="property">prefers-color-scheme</span>: <span class="keyword">light</span>) <span class="keyword">print</span>;
+                </div>
+            </div>
+
+            <h4 style="margin-top: 20px;">Sample Print Stylesheet</h4>
+            <div class="code-block">
+<span class="comment">/* styles/print.css */</span>
+
+<span class="selector">body</span> {
+    <span class="property">background</span>: <span class="value">white</span>;
+    <span class="property">color</span>: <span class="value">black</span>;
+    <span class="property">font-size</span>: <span class="value">12pt</span>;
+}
+
+<span class="selector">header</span>, <span class="selector">nav</span>, <span class="selector">footer</span> {
+    <span class="property">display</span>: <span class="value">none</span>;
+}
+
+<span class="selector">a</span> {
+    <span class="property">color</span>: <span class="value">black</span>;
+    <span class="property">text-decoration</span>: <span class="value">underline</span>;
+}
+
+<span class="selector">a:after</span> {
+    <span class="property">content</span>: <span class="value">" ("</span> <span class="keyword">attr</span>(<span class="value">href</span>) <span class="value">")"</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>9. Relative Path Examples</h2>
+            <p>Different import scenarios with relative and absolute paths:</p>
+            
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>Same Directory Import</h4>
+                    <div class="code-block">
+<span class="comment">/* styles/main.css */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./reset.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./typography.css"</span>);
+
+<span class="comment">/* Alternative */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"reset.css"</span>);
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>Subfolder Import</h4>
+                    <div class="code-block">
+<span class="comment">/* From styles/main.css 
+   to styles/base/reset.css */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./base/reset.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components/buttons.css"</span>);
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>Parent Directory</h4>
+                    <div class="code-block">
+<span class="comment">/* From styles/components/buttons.css 
+   to styles/base/variables.css */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"../base/variables.css"</span>);
+
+<span class="comment">/* To root-level stylesheet */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"../../shared.css"</span>);
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>10. Performance Comparison</h2>
+            <p>Understanding @import vs &lt;link&gt; and modern bundling:</p>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Syntax</th>
+                        <th>Parallel Loading</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>@import (CSS)</strong></td>
+                        <td><code>@import "file.css";</code></td>
+                        <td>❌ Sequential</td>
+                        <td>Modular CSS organization</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&lt;link&gt; tag</strong></td>
+                        <td><code>&lt;link rel="stylesheet" href="file.css"&gt;</code></td>
+                        <td>✅ Parallel</td>
+                        <td>Production sites (better performance)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bundle/Minify</strong></td>
+                        <td><code>webpack, vite, parcel</code></td>
+                        <td>✅ Single file</td>
+                        <td>Large applications (best practice)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CSS Modules</strong></td>
+                        <td><code>import styles from 'file.css'</code></td>
+                        <td>✅ Scoped + bundled</td>
+                        <td>Component-based apps</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="example-card" style="margin-top: 20px;">
+                <h4>Development vs Production</h4>
+                <div class="code-block">
+<span class="comment">/* Development: Use @import for organization */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./base.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components.css"</span>);
+
+<span class="comment">/* Production: Build tool concatenates into one file */</span>
+<span class="comment">/* Result: styles.min.css (all CSS bundled) */</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>11. Avoiding Common Mistakes</h2>
+            <p>Learn from common @import issues:</p>
+            
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>❌ @import After Rules</h4>
+                    <div class="code-block">
+<span class="selector">body</span> {
+    <span class="property">margin</span>: <span class="value">0</span>;
+}
+
+<span class="comment">/* This import is IGNORED! */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"reset.css"</span>);
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>✅ @import at Top</h4>
+                    <div class="code-block">
+<span class="comment">/* ✓ Move @import to beginning */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"reset.css"</span>);
+
+<span class="selector">body</span> {
+    <span class="property">margin</span>: <span class="value">0</span>;
+}
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>❌ Wrong File Path</h4>
+                    <div class="code-block">
+<span class="comment">/* styles/main.css */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"components/buttons.css"</span>);
+
+<span class="comment">/* File not found! Path is wrong */</span>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>✅ Correct Relative Path</h4>
+                    <div class="code-block">
+<span class="comment">/* styles/main.css */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components/buttons.css"</span>);
+
+<span class="comment">/* or with ./ prefix for clarity */</span>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>❌ Circular Dependencies</h4>
+                    <div class="code-block">
+<span class="comment">/* main.css imports utils */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"utilities.css"</span>);
+
+<span class="comment">/* utilities.css imports main 
+   (Circular!) */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"main.css"</span>);
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>✅ Linear Dependencies</h4>
+                    <div class="code-block">
+<span class="comment">/* Plan hierarchy: no cycles */</span>
+<span class="comment">/* main.css */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"base.css"</span>);
+
+<span class="comment">/* base.css - standalone */</span>
+<span class="comment">/* utilities.css - standalone */</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>12. Real-World Project Example</h2>
+            <p>Complete project structure with organized imports:</p>
+            
+            <div class="example-card full-width-example">
+                <h4>Complete Project Setup</h4>
+                <div class="directory-tree">
+project/
+├── index.html
+├── styles/
+│   ├── main.css ..................... (entry point)
+│   ├── base/
+│   │   ├── variables.css ............ (CSS custom properties)
+│   │   ├── reset.css ............... (CSS reset)
+│   │   ├── typography.css .......... (fonts & text)
+│   │   └── colors.css ............. (color palette)
+│   ├── layout/
+│   │   ├── grid.css ............... (grid system)
+│   │   ├── flexbox.css ............ (flexbox utilities)
+│   │   └── responsive.css ......... (media queries)
+│   ├── components/
+│   │   ├── buttons.css ............ (button styles)
+│   │   ├── forms.css ............. (form elements)
+│   │   ├── cards.css ............. (card component)
+│   │   ├── navigation.css ......... (navbar)
+│   │   └── modals.css ............ (modal dialogs)
+│   ├── utilities/
+│   │   ├── spacing.css ........... (margin/padding)
+│   │   ├── visibility.css ........ (display utilities)
+│   │   └── effects.css .......... (shadows, transitions)
+│   └── themes/
+│       ├── light.css ........... (light theme)
+│       └── dark.css ........... (dark theme)
+                </div>
+
+                <h4 style="margin-top: 20px;">Main.css Implementation</h4>
+                <div class="code-block">
+<span class="comment">/* styles/main.css - Master stylesheet */</span>
+
+<span class="comment">/* ===== BASE LAYER ===== */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap'</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./base/variables.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./base/reset.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./base/typography.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./base/colors.css"</span>);
+
+<span class="comment">/* ===== LAYOUT LAYER ===== */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./layout/grid.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./layout/flexbox.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./layout/responsive.css"</span>);
+
+<span class="comment">/* ===== COMPONENTS LAYER ===== */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components/buttons.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components/forms.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components/cards.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components/navigation.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./components/modals.css"</span>);
+
+<span class="comment">/* ===== UTILITIES LAYER ===== */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./utilities/spacing.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./utilities/visibility.css"</span>);
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./utilities/effects.css"</span>);
+
+<span class="comment">/* ===== THEME LAYER ===== */</span>
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./themes/light.css"</span>)
+    (<span class="property">prefers-color-scheme</span>: <span class="keyword">light</span>);
+
+<span class="keyword">@import</span> <span class="url">url</span>(<span class="value">"./themes/dark.css"</span>)
+    (<span class="property">prefers-color-scheme</span>: <span class="keyword">dark</span>);
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Key Takeaways</h2>
+            <ul class="feature-list">
+                <li>Use @import for organizing CSS into logical modules</li>
+                <li>Place all @import rules at the top of your stylesheet</li>
+                <li>Use relative paths for flexibility and portability</li>
+                <li>Organize files by functionality (base, components, utilities)</li>
+                <li>Conditional imports with media queries reduce unused CSS</li>
+                <li>Consider build tools for production optimization</li>
+                <li>Use &lt;link&gt; tags for better parallel loading performance</li>
+                <li>CSS Layers provide modern cascade control</li>
+                <li>Keep imports linear - avoid circular dependencies</li>
+                <li>Document your file structure for team collaboration</li>
+                <li>Test paths after file reorganization</li>
+                <li>Consider bundling for production deployment</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Property Guide | @import Rule Practical Examples</p>
+            <p>Real-world applications and file organization patterns for CSS architecture</p>
+        </footer>
+    </div>
+</body>
+</html>

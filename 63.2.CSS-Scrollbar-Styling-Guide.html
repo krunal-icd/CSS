@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Scrollbar Styling Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            border-left: 4px solid #764ba2;
+            padding-left: 15px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .example-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border: 2px solid #667eea;
+            padding: 25px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .example-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .example-label {
+            color: #764ba2;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+            border: 1px solid #333;
+        }
+
+        .syntax { color: #569cd6; font-weight: bold; }
+        .selector { color: #9cdcfe; }
+        .property { color: #9cdcfe; }
+        .value { color: #ce9178; }
+        .keyword { color: #569cd6; }
+        .comment { color: #6a9955; }
+        .pseudo { color: #9cdcfe; }
+
+        .demo-scrollbar-box {
+            height: 200px;
+            padding: 15px;
+            border: 2px solid;
+            border-radius: 8px;
+            overflow-y: scroll;
+            background: white;
+            margin: 15px 0;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .note-box {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .note-box strong {
+            color: #ff9800;
+        }
+
+        .full-width-example {
+            margin: 30px 0;
+        }
+
+        /* Example 1: Blue Brand Scrollbar */
+        .scrollbar-blue::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        .scrollbar-blue::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .scrollbar-blue::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .scrollbar-blue::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        .scrollbar-blue {
+            scrollbar-color: #667eea #f1f1f1;
+            scrollbar-width: thin;
+        }
+
+        /* Example 2: Gradient Scrollbar */
+        .scrollbar-gradient::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .scrollbar-gradient::-webkit-scrollbar-track {
+            background: #f0f0f0;
+        }
+
+        .scrollbar-gradient::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+
+        .scrollbar-gradient {
+            scrollbar-color: #667eea #f0f0f0;
+        }
+
+        /* Example 3: Thin Minimal Scrollbar */
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: #764ba2;
+            border-radius: 3px;
+        }
+
+        .scrollbar-thin {
+            scrollbar-color: #764ba2 transparent;
+            scrollbar-width: thin;
+        }
+
+        /* Example 4: Dark Mode Scrollbar */
+        .scrollbar-dark::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        .scrollbar-dark::-webkit-scrollbar-track {
+            background: #2c3e50;
+        }
+
+        .scrollbar-dark::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 6px;
+        }
+
+        .scrollbar-dark::-webkit-scrollbar-thumb:hover {
+            background: #9cdcfe;
+        }
+
+        .scrollbar-dark {
+            background: #1e1e1e;
+            color: #ecf0f1;
+            scrollbar-color: #667eea #2c3e50;
+        }
+
+        /* Example 5: Green Success Scrollbar */
+        .scrollbar-success::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .scrollbar-success::-webkit-scrollbar-track {
+            background: #f1f8f6;
+        }
+
+        .scrollbar-success::-webkit-scrollbar-thumb {
+            background: #4caf50;
+            border-radius: 5px;
+        }
+
+        .scrollbar-success::-webkit-scrollbar-thumb:hover {
+            background: #45a049;
+        }
+
+        .scrollbar-success {
+            scrollbar-color: #4caf50 #f1f8f6;
+        }
+
+        /* Example 6: Red Error Scrollbar */
+        .scrollbar-error::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .scrollbar-error::-webkit-scrollbar-track {
+            background: #fef5f5;
+        }
+
+        .scrollbar-error::-webkit-scrollbar-thumb {
+            background: #f44336;
+            border-radius: 5px;
+        }
+
+        .scrollbar-error {
+            scrollbar-color: #f44336 #fef5f5;
+        }
+
+        /* Example 7: Orange Warning Scrollbar */
+        .scrollbar-warning::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .scrollbar-warning::-webkit-scrollbar-track {
+            background: #fef8f0;
+        }
+
+        .scrollbar-warning::-webkit-scrollbar-thumb {
+            background: #ff9800;
+            border-radius: 5px;
+        }
+
+        .scrollbar-warning {
+            scrollbar-color: #ff9800 #fef8f0;
+        }
+
+        /* Example 8: Bordered Scrollbar */
+        .scrollbar-bordered::-webkit-scrollbar {
+            width: 14px;
+        }
+
+        .scrollbar-bordered::-webkit-scrollbar-track {
+            background: white;
+            border: 1px solid #ddd;
+        }
+
+        .scrollbar-bordered::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border: 2px solid white;
+            border-radius: 7px;
+        }
+
+        .scrollbar-bordered {
+            scrollbar-color: #667eea white;
+        }
+
+        /* Example 9: Transparent Track Scrollbar */
+        .scrollbar-transparent::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollbar-transparent::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scrollbar-transparent::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 4px;
+        }
+
+        .scrollbar-transparent::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.8);
+        }
+
+        .scrollbar-transparent {
+            scrollbar-color: rgba(102, 126, 234, 0.5) transparent;
+        }
+
+        /* Example 10: Wide Thick Scrollbar */
+        .scrollbar-thick::-webkit-scrollbar {
+            width: 16px;
+        }
+
+        .scrollbar-thick::-webkit-scrollbar-track {
+            background: #ecf0f1;
+        }
+
+        .scrollbar-thick::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 8px;
+        }
+
+        .scrollbar-thick {
+            scrollbar-color: #667eea #ecf0f1;
+        }
+
+        /* Example 11: Code Editor Dark */
+        .scrollbar-editor::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .scrollbar-editor::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+
+        .scrollbar-editor::-webkit-scrollbar-thumb {
+            background: #464647;
+            border-radius: 5px;
+        }
+
+        .scrollbar-editor::-webkit-scrollbar-thumb:hover {
+            background: #5a5a5a;
+        }
+
+        .scrollbar-editor {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Courier New', monospace;
+            scrollbar-color: #464647 #1e1e1e;
+        }
+
+        /* Example 12: Chat Interface */
+        .scrollbar-chat::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollbar-chat::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+
+        .scrollbar-chat::-webkit-scrollbar-thumb {
+            background: #b0bec5;
+            border-radius: 3px;
+        }
+
+        .scrollbar-chat {
+            scrollbar-color: #b0bec5 #f5f5f5;
+        }
+
+        .message {
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+
+        .message.sent {
+            background: #667eea;
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.received {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Scrollbar Styling Practical Examples</h1>
+            <p>Real-World Applications and Interactive Demonstrations</p>
+        </header>
+
+        <div class="section">
+            <h2>1. Blue Brand Scrollbar</h2>
+            <p>Standard brand color scrollbar with hover effects:</p>
+            
+            <div class="demo-scrollbar-box scrollbar-blue" style="border-color: #667eea;">
+                <strong>Scroll down to see the custom scrollbar</strong>
+                <p style="margin-top: 15px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+            </div>
+
+            <div class="code-block">
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar</span> {
+    <span class="property">width</span>: <span class="value">12px</span>;
+}
+
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar-track</span> {
+    <span class="property">background</span>: <span class="value">#f1f1f1</span>;
+    <span class="property">border-radius</span>: <span class="value">10px</span>;
+}
+
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar-thumb</span> {
+    <span class="property">background</span>: <span class="value">#667eea</span>;
+    <span class="property">border-radius</span>: <span class="value">10px</span>;
+}
+
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar-thumb:hover</span> {
+    <span class="property">background</span>: <span class="value">#764ba2</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Gradient Scrollbar</h2>
+            <p>Eye-catching gradient scrollbar thumb:</p>
+            
+            <div class="demo-scrollbar-box scrollbar-gradient" style="border-color: #667eea;">
+                <strong>Gradient Scrollbar</strong>
+                <p style="margin-top: 15px;">This scrollbar features a gradient that transitions from purple to magenta. Scroll to see the full effect.</p>
+                <p>Gradients work great for creating visual interest while maintaining functionality.</p>
+                <p>The gradient provides a subtle enhancement to the user interface.</p>
+                <p>Notice how the gradient changes as you scroll through the content.</p>
+                <p>This technique works particularly well with brand colors and modern designs.</p>
+            </div>
+
+            <div class="code-block">
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar-thumb</span> {
+    <span class="property">background</span>: <span class="keyword">linear-gradient</span>(<span class="value">180deg, #667eea 0%, #764ba2 100%</span>);
+    <span class="property">border-radius</span>: <span class="value">10px</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Thin Minimal Scrollbar</h2>
+            <p>Minimalist thin scrollbar design:</p>
+            
+            <div class="demo-scrollbar-box scrollbar-thin" style="border-color: #764ba2;">
+                <strong>Minimal Scrollbar</strong>
+                <p style="margin-top: 15px;">This scrollbar is thin and subtle, perfect for minimalist interfaces.</p>
+                <p>Width is only 6px, making it less obtrusive on the screen.</p>
+                <p>The transparent track allows content to show through.</p>
+                <p>Scroll to see the thin purple thumb in action.</p>
+                <p>Great for applications that prioritize content visibility over scrollbar prominence.</p>
+            </div>
+
+            <div class="code-block">
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar</span> {
+    <span class="property">width</span>: <span class="value">6px</span>;
+}
+
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar-track</span> {
+    <span class="property">background</span>: <span class="value">transparent</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Dark Mode Scrollbar</h2>
+            <p>Scrollbar styled for dark mode interfaces:</p>
+            
+            <div class="demo-scrollbar-box scrollbar-dark">
+                <strong>Dark Mode Scrollbar</strong>
+                <p style="margin-top: 15px;">Perfect for dark interfaces and code editors.</p>
+                <p>Dark background with contrasting blue scrollbar thumb.</p>
+                <p>Maintains good visibility and usability in low-light environments.</p>
+                <p>The hover effect brightens the scrollbar for better feedback.</p>
+                <p>Scroll through this dark theme example to see the custom scrollbar.</p>
+            </div>
+
+            <div class="code-block">
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar</span> {
+    <span class="property">width</span>: <span class="value">12px</span>;
+}
+
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar-track</span> {
+    <span class="property">background</span>: <span class="value">#2c3e50</span>;
+}
+
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar-thumb</span> {
+    <span class="property">background</span>: <span class="value">#667eea</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Status Color Scrollbars</h2>
+            <p>Different scrollbars for different status contexts:</p>
+            
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>✓ Success (Green)</h4>
+                    <div class="demo-scrollbar-box scrollbar-success" style="border-color: #4caf50; height: 150px;">
+                        <p>Success scrollbar theme for positive feedback and completion states.</p>
+                        <p>Scroll to see the green scrollbar thumb.</p>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>✗ Error (Red)</h4>
+                    <div class="demo-scrollbar-box scrollbar-error" style="border-color: #f44336; height: 150px;">
+                        <p>Error scrollbar theme for alerts and error states.</p>
+                        <p>Scroll to see the red scrollbar thumb.</p>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4>⚠ Warning (Orange)</h4>
+                    <div class="demo-scrollbar-box scrollbar-warning" style="border-color: #ff9800; height: 150px;">
+                        <p>Warning scrollbar theme for cautions and attention states.</p>
+                        <p>Scroll to see the orange scrollbar thumb.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. Bordered Scrollbar</h2>
+            <p>Scrollbar with visible border for defined edges:</p>
+            
+            <div class="demo-scrollbar-box scrollbar-bordered" style="border-color: #667eea;">
+                <strong>Bordered Scrollbar</strong>
+                <p style="margin-top: 15px;">This scrollbar features a border between the thumb and track.</p>
+                <p>The border creates clear visual separation and definition.</p>
+                <p>Useful for interfaces that need more prominent scrollbar visuals.</p>
+                <p>The white border around the thumb provides nice contrast.</p>
+                <p>Scroll to see the bordered scrollbar design in action.</p>
+            </div>
+
+            <div class="code-block">
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar-thumb</span> {
+    <span class="property">background</span>: <span class="value">#667eea</span>;
+    <span class="property">border</span>: <span class="value">2px solid white</span>;
+    <span class="property">border-radius</span>: <span class="value">7px</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>7. Transparent Track Scrollbar</h2>
+            <p>Subtle scrollbar with transparent track:</p>
+            
+            <div class="demo-scrollbar-box scrollbar-transparent" style="border-color: #667eea;">
+                <strong>Transparent Track Scrollbar</strong>
+                <p style="margin-top: 15px;">Transparent track allows content visibility through the scrollbar area.</p>
+                <p>The thumb uses semi-transparent color with opacity changes on hover.</p>
+                <p>Perfect for interfaces where you want minimal visual intrusion.</p>
+                <p>Hover over the scrollbar to see the opacity change effect.</p>
+                <p>Scroll to experience this minimal, elegant scrollbar style.</p>
+            </div>
+
+            <div class="code-block">
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar-thumb</span> {
+    <span class="property">background</span>: <span class="keyword">rgba</span>(<span class="value">102, 126, 234, 0.5</span>);
+    <span class="property">border-radius</span>: <span class="value">4px</span>;
+}
+
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar-thumb:hover</span> {
+    <span class="property">background</span>: <span class="keyword">rgba</span>(<span class="value">102, 126, 234, 0.8</span>);
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>8. Wide Thick Scrollbar</h2>
+            <p>Large, prominent scrollbar design:</p>
+            
+            <div class="demo-scrollbar-box scrollbar-thick" style="border-color: #667eea;">
+                <strong>Thick Scrollbar</strong>
+                <p style="margin-top: 15px;">This scrollbar is 16px wide, making it prominent and easy to interact with.</p>
+                <p>Great for touch interfaces or applications requiring accessibility.</p>
+                <p>The thicker scrollbar provides better visual feedback during scrolling.</p>
+                <p>Larger scrollbars are easier to grab and control precisely.</p>
+                <p>Scroll to see this wide, thick scrollbar design in action.</p>
+            </div>
+
+            <div class="code-block">
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar</span> {
+    <span class="property">width</span>: <span class="value">16px</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>9. Code Editor Scrollbar</h2>
+            <p>Dark code editor inspired scrollbar:</p>
+            
+            <div class="demo-scrollbar-box scrollbar-editor">
+<span class="comment">// Code editor scrollbar example</span>
+<span class="keyword">const</span> greeting = <span class="value">"Hello, World!"</span>;
+console.<span class="keyword">log</span>(greeting);
+
+<span class="keyword">function</span> factorial(n) {
+    <span class="keyword">if</span> (n === <span class="value">0</span>) <span class="keyword">return</span> <span class="value">1</span>;
+    <span class="keyword">return</span> n * factorial(n - <span class="value">1</span>);
+}
+
+<span class="comment">// More code continues below</span>
+<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="value">0</span>; i &lt; <span class="value">10</span>; i++) {
+    console.<span class="keyword">log</span>(i);
+}
+            </div>
+
+            <div class="code-block">
+<span class="selector">.scrollbar-editor</span> {
+    <span class="property">background</span>: <span class="value">#1e1e1e</span>;
+    <span class="property">color</span>: <span class="value">#d4d4d4</span>;
+}
+
+<span class="selector">.scrollbar-editor</span><span class="pseudo">::-webkit-scrollbar</span> {
+    <span class="property">width</span>: <span class="value">10px</span>;
+}
+
+<span class="selector">.scrollbar-editor</span><span class="pseudo">::-webkit-scrollbar-track</span> {
+    <span class="property">background</span>: <span class="value">#1e1e1e</span>;
+}
+
+<span class="selector">.scrollbar-editor</span><span class="pseudo">::-webkit-scrollbar-thumb</span> {
+    <span class="property">background</span>: <span class="value">#464647</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>10. Chat Interface Scrollbar</h2>
+            <p>Minimal scrollbar for chat message windows:</p>
+            
+            <div class="demo-scrollbar-box scrollbar-chat" style="border-color: #b0bec5;">
+                <div class="message received">
+                    <strong>Friend:</strong> Hey! How are you?
+                </div>
+                <div class="message sent">
+                    <strong>You:</strong> I'm doing great, thanks for asking!
+                </div>
+                <div class="message received">
+                    <strong>Friend:</strong> That's awesome! Want to grab coffee later?
+                </div>
+                <div class="message sent">
+                    <strong>You:</strong> Sure! What time works for you?
+                </div>
+                <div class="message received">
+                    <strong>Friend:</strong> How about 3 PM at the cafe?
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.scrollbar-chat</span><span class="pseudo">::-webkit-scrollbar</span> {
+    <span class="property">width</span>: <span class="value">6px</span>;
+}
+
+<span class="selector">.scrollbar-chat</span><span class="pseudo">::-webkit-scrollbar-track</span> {
+    <span class="property">background</span>: <span class="value">#f5f5f5</span>;
+}
+
+<span class="selector">.scrollbar-chat</span><span class="pseudo">::-webkit-scrollbar-thumb</span> {
+    <span class="property">background</span>: <span class="value">#b0bec5</span>;
+    <span class="property">border-radius</span>: <span class="value">3px</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>11. Cross-Browser Implementation</h2>
+            <p>Complete example supporting both Webkit and Firefox:</p>
+            
+            <div class="code-block">
+<span class="comment">/* Complete cross-browser scrollbar styling */</span>
+<span class="selector">element</span> {
+    <span class="comment">/* Firefox CSS Scrollbars */</span>
+    <span class="property">scrollbar-color</span>: <span class="value">#667eea #f1f1f1</span>;
+    <span class="property">scrollbar-width</span>: <span class="value">thin</span>;
+}
+
+<span class="comment">/* Webkit browsers (Chrome, Safari, Edge) */</span>
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar</span> {
+    <span class="property">width</span>: <span class="value">12px</span>;
+}
+
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar-track</span> {
+    <span class="property">background</span>: <span class="value">#f1f1f1</span>;
+    <span class="property">border-radius</span>: <span class="value">10px</span>;
+}
+
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar-thumb</span> {
+    <span class="property">background</span>: <span class="value">#667eea</span>;
+    <span class="property">border-radius</span>: <span class="value">10px</span>;
+}
+
+<span class="selector">element</span><span class="pseudo">::-webkit-scrollbar-thumb:hover</span> {
+    <span class="property">background</span>: <span class="value">#764ba2</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>12. Accessibility Best Practices</h2>
+            <p>Accessible scrollbar styling guidelines:</p>
+            
+            <div class="feature-list">
+                <li><strong>Sufficient contrast:</strong> Use colors with good WCAG contrast ratios</li>
+                <li><strong>Visible state:</strong> Ensure scrollbar is always visible when needed</li>
+                <li><strong>Adequate size:</strong> Keep scrollbar width at least 8-12px for easy interaction</li>
+                <li><strong>Clear hover:</strong> Provide obvious visual feedback on hover/active states</li>
+                <li><strong>Color + content:</strong> Don't rely solely on color for status indication</li>
+                <li><strong>Dark mode support:</strong> Test scrollbars in light and dark themes</li>
+                <li><strong>Mobile consideration:</strong> Remember mobile browsers may not support custom scrollbars</li>
+                <li><strong>Default fallback:</strong> Ensure interface works with system default scrollbars</li>
+            </div>
+
+            <div class="note-box">
+                <strong>♿ Accessibility Reminder:</strong> Always test your scrollbar colors for sufficient contrast. Use WCAG contrast checker tools to verify your color combinations meet accessibility standards.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Key Takeaways</h2>
+            <ul class="feature-list">
+                <li>Use scrollbar styling to reinforce brand identity</li>
+                <li>Maintain sufficient color contrast for accessibility</li>
+                <li>Implement both webkit and Firefox scrollbar properties</li>
+                <li>Test scrollbars on different browsers and devices</li>
+                <li>Provide hover states for better user feedback</li>
+                <li>Consider dark mode and light mode variants</li>
+                <li>Keep scrollbar width between 8-16px for usability</li>
+                <li>Use gradients carefully to maintain visibility</li>
+                <li>Mobile browsers have limited scrollbar customization support</li>
+                <li>Combine with content overflow to create seamless experiences</li>
+                <li>Test with system contrast settings enabled</li>
+                <li>Document scrollbar styling in design system documentation</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Property Guide | Scrollbar Styling Practical Examples</p>
+            <p>Real-world applications and interactive demonstrations for scrollbar customization</p>
+        </footer>
+    </div>
+</body>
+</html>
