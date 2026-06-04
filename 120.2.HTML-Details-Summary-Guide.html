@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Details & Summary - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .example-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .example-content {
+            padding: 30px;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Example 1: Product Details */
+        .product-details {
+            margin: 20px 0;
+        }
+
+        .product-details details {
+            margin-bottom: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        .product-details details:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+        }
+
+        .product-details summary {
+            padding: 16px;
+            cursor: pointer;
+            background: #f9f9f9;
+            font-weight: 600;
+            color: #2c3e50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .product-details summary:hover {
+            background: #f0f2ff;
+            color: #667eea;
+        }
+
+        .product-details details[open] > summary {
+            background: #f0f2ff;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .product-content {
+            padding: 20px;
+            background: white;
+        }
+
+        .product-spec {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .spec-value {
+            color: #667eea;
+        }
+
+        /* Example 2: FAQ */
+        .faq-section {
+            margin: 20px 0;
+        }
+
+        .faq-item details {
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-item summary {
+            padding: 16px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .faq-item summary::before {
+            content: '▶';
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item details[open] > summary::before {
+            transform: rotate(90deg);
+        }
+
+        .faq-answer {
+            padding: 20px;
+            background: white;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* Example 3: Settings */
+        .settings-group details {
+            margin-bottom: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .settings-group summary {
+            padding: 16px;
+            cursor: pointer;
+            background: #f0f2ff;
+            color: #667eea;
+            font-weight: 600;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .settings-content {
+            padding: 20px;
+            background: white;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 28px;
+            background: #e0e0e0;
+            border-radius: 14px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #667eea;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            left: 24px;
+        }
+
+        /* Example 4: Documentation */
+        .docs-section details {
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            padding: 0;
+            background: white;
+            border-radius: 0;
+            border: none;
+            border-left: 4px solid #667eea;
+        }
+
+        .docs-section summary {
+            padding: 16px;
+            cursor: pointer;
+            background: white;
+            font-weight: 600;
+            color: #2c3e50;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .docs-section summary:hover {
+            background: #f9f9f9;
+        }
+
+        .docs-content {
+            padding: 20px;
+            background: #f9f9f9;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+
+        .code-snippet {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+
+        /* Example 5: Pricing Tiers */
+        .pricing-tier details {
+            margin-bottom: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .pricing-tier summary {
+            padding: 16px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pricing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .pricing-name {
+            font-size: 1.1em;
+        }
+
+        .pricing-price {
+            font-size: 1.3em;
+        }
+
+        .pricing-details {
+            padding: 20px;
+            background: white;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        /* Example 6: Troubleshooting */
+        .troubleshoot-item details {
+            margin-bottom: 15px;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .troubleshoot-item summary {
+            padding: 16px;
+            cursor: pointer;
+            background: #fff3cd;
+            color: #856404;
+            font-weight: 600;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .troubleshoot-content {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #ffc107;
+        }
+
+        .solution-step {
+            margin: 15px 0;
+            padding: 12px;
+            background: #f9f9f9;
+            border-left: 3px solid #27ae60;
+            border-radius: 4px;
+        }
+
+        /* Example 7: Course Curriculum */
+        .curriculum-module details {
+            margin-bottom: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .curriculum-module summary {
+            padding: 16px;
+            cursor: pointer;
+            background: #f0f2ff;
+            color: #667eea;
+            font-weight: 600;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .module-info {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+        .lessons-list {
+            padding: 20px;
+            background: white;
+            list-style: none;
+        }
+
+        .lesson-item {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .lesson-item:last-child {
+            border-bottom: none;
+        }
+
+        .lesson-icon {
+            font-size: 1.2em;
+        }
+
+        .lesson-info {
+            flex: 1;
+        }
+
+        .lesson-title {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .lesson-duration {
+            font-size: 0.85em;
+            color: #7f8c8d;
+        }
+
+        /* Example 8: Nested Details */
+        .nested-details details {
+            margin: 15px 0;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 0;
+        }
+
+        .nested-details summary {
+            padding: 12px;
+            cursor: pointer;
+            background: #f9f9f9;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        .nested-content {
+            padding: 15px;
+            background: white;
+        }
+
+        .nested-details details details {
+            margin-left: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .example-content {
+                padding: 20px;
+            }
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #e3f2fd;
+            color: #1976d2;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .completed-badge {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Details & Summary - Practical Examples</h1>
+        <p class="subtitle">Real-world use cases and implementations</p>
+
+        <div class="examples-grid">
+            <!-- Example 1: Product Details -->
+            <div class="example-card">
+                <div class="example-header">1️⃣ Product Details</div>
+                <div class="example-content">
+                    <p class="description">E-commerce product specifications in expandable sections.</p>
+                    <div class="product-details">
+                        <details>
+                            <summary>📋 Specifications</summary>
+                            <div class="product-content">
+                                <div class="product-spec">
+                                    <span class="spec-label">Brand:</span>
+                                    <span class="spec-value">TechPro</span>
+                                </div>
+                                <div class="product-spec">
+                                    <span class="spec-label">Model:</span>
+                                    <span class="spec-value">X-2000</span>
+                                </div>
+                                <div class="product-spec">
+                                    <span class="spec-label">Weight:</span>
+                                    <span class="spec-value">250g</span>
+                                </div>
+                                <div class="product-spec">
+                                    <span class="spec-label">Warranty:</span>
+                                    <span class="spec-value">2 Years</span>
+                                </div>
+                            </div>
+                        </details>
+                        <details>
+                            <summary>📦 Shipping Info</summary>
+                            <div class="product-content">
+                                <div class="product-spec">
+                                    <span class="spec-label">Shipping:</span>
+                                    <span class="spec-value">Free (2-3 days)</span>
+                                </div>
+                                <div class="product-spec">
+                                    <span class="spec-label">Returns:</span>
+                                    <span class="spec-value">30-day guarantee</span>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 2: FAQ Section -->
+            <div class="example-card">
+                <div class="example-header">2️⃣ FAQ Section</div>
+                <div class="example-content">
+                    <p class="description">Frequently asked questions with custom styling.</p>
+                    <div class="faq-section">
+                        <div class="faq-item">
+                            <details>
+                                <summary>How do I reset my password?</summary>
+                                <div class="faq-answer">
+                                    Click "Forgot Password" on the login page, enter your email, and follow the instructions sent to your inbox.
+                                </div>
+                            </details>
+                        </div>
+                        <div class="faq-item">
+                            <details>
+                                <summary>What payment methods are accepted?</summary>
+                                <div class="faq-answer">
+                                    We accept credit cards, debit cards, PayPal, and bank transfers for orders over $100.
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3: Settings Panel -->
+            <div class="example-card">
+                <div class="example-header">3️⃣ Settings Panel</div>
+                <div class="example-content">
+                    <p class="description">Grouped user preferences with toggles.</p>
+                    <div class="settings-group">
+                        <details open>
+                            <summary>
+                                <span>🔔 Notifications</span>
+                            </summary>
+                            <div class="settings-content">
+                                <div class="setting-item">
+                                    <span class="setting-label">Email Alerts</span>
+                                    <button class="toggle-switch active" onclick="toggleButton(this)"></button>
+                                </div>
+                                <div class="setting-item">
+                                    <span class="setting-label">Push Notifications</span>
+                                    <button class="toggle-switch" onclick="toggleButton(this)"></button>
+                                </div>
+                            </div>
+                        </details>
+                        <details>
+                            <summary>
+                                <span>🔒 Privacy</span>
+                            </summary>
+                            <div class="settings-content">
+                                <div class="setting-item">
+                                    <span class="setting-label">Profile Public</span>
+                                    <button class="toggle-switch" onclick="toggleButton(this)"></button>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4: Documentation -->
+            <div class="example-card">
+                <div class="example-header">4️⃣ API Documentation</div>
+                <div class="example-content">
+                    <p class="description">Code documentation with expandable sections.</p>
+                    <div class="docs-section">
+                        <details>
+                            <summary>📖 GET /api/users</summary>
+                            <div class="docs-content">
+                                <p><strong>Description:</strong> Retrieve list of users</p>
+                                <p><strong>Parameters:</strong></p>
+                                <div class="code-snippet">
+limit: number (default: 10)<br>
+offset: number (default: 0)
+                                </div>
+                            </div>
+                        </details>
+                        <details>
+                            <summary>📖 POST /api/users</summary>
+                            <div class="docs-content">
+                                <p><strong>Description:</strong> Create a new user</p>
+                                <p><strong>Body:</strong></p>
+                                <div class="code-snippet">
+{
+  name: string,<br>
+  email: string,<br>
+  role: string<br>
+}
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 5: Pricing Tiers -->
+            <div class="example-card">
+                <div class="example-header">5️⃣ Pricing Tiers</div>
+                <div class="example-content">
+                    <p class="description">Expandable pricing plans with features.</p>
+                    <div class="pricing-tier">
+                        <details>
+                            <summary>
+                                <div class="pricing-header">
+                                    <span class="pricing-name">💳 Pro Plan</span>
+                                    <span class="pricing-price">$29/mo</span>
+                                </div>
+                            </summary>
+                            <div class="pricing-details">
+                                <ul class="feature-list">
+                                    <li>Up to 100 projects</li>
+                                    <li>Priority support</li>
+                                    <li>Advanced analytics</li>
+                                    <li>API access</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 6: Troubleshooting -->
+            <div class="example-card">
+                <div class="example-header">6️⃣ Troubleshooting</div>
+                <div class="example-content">
+                    <p class="description">Common issues and solutions.</p>
+                    <div class="troubleshoot-item">
+                        <details>
+                            <summary>🔧 Page loads slowly</summary>
+                            <div class="troubleshoot-content">
+                                <div class="solution-step">
+                                    <strong>Step 1:</strong> Clear browser cache and cookies
+                                </div>
+                                <div class="solution-step">
+                                    <strong>Step 2:</strong> Disable browser extensions
+                                </div>
+                                <div class="solution-step">
+                                    <strong>Step 3:</strong> Check internet connection speed
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 7: Course Curriculum -->
+            <div class="example-card">
+                <div class="example-header">7️⃣ Course Curriculum</div>
+                <div class="example-content">
+                    <p class="description">Learning modules with lesson lists.</p>
+                    <div class="curriculum-module">
+                        <details>
+                            <summary>
+                                <div style="flex: 1;">
+                                    <div>📚 Module 1: Basics</div>
+                                    <div class="module-info">3 lessons • 45 min</div>
+                                </div>
+                                <span class="status-badge completed-badge">Completed</span>
+                            </summary>
+                            <ul class="lessons-list">
+                                <li class="lesson-item">
+                                    <span class="lesson-icon">✓</span>
+                                    <div class="lesson-info">
+                                        <div class="lesson-title">Introduction</div>
+                                        <div class="lesson-duration">15 min</div>
+                                    </div>
+                                </li>
+                                <li class="lesson-item">
+                                    <span class="lesson-icon">✓</span>
+                                    <div class="lesson-info">
+                                        <div class="lesson-title">Getting Started</div>
+                                        <div class="lesson-duration">20 min</div>
+                                    </div>
+                                </li>
+                                <li class="lesson-item">
+                                    <span class="lesson-icon">✓</span>
+                                    <div class="lesson-info">
+                                        <div class="lesson-title">Best Practices</div>
+                                        <div class="lesson-duration">10 min</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 8: File Tree Structure -->
+            <div class="example-card">
+                <div class="example-header">8️⃣ File Tree</div>
+                <div class="example-content">
+                    <p class="description">Nested file structure exploration.</p>
+                    <div class="nested-details">
+                        <details open>
+                            <summary>📁 src/</summary>
+                            <div class="nested-content">
+                                <details>
+                                    <summary>📁 components/</summary>
+                                    <div class="nested-content">
+                                        <div style="padding: 8px; color: #555;">Button.jsx</div>
+                                        <div style="padding: 8px; color: #555;">Card.jsx</div>
+                                        <div style="padding: 8px; color: #555;">Modal.jsx</div>
+                                    </div>
+                                </details>
+                                <details>
+                                    <summary>📁 pages/</summary>
+                                    <div class="nested-content">
+                                        <div style="padding: 8px; color: #555;">Home.jsx</div>
+                                        <div style="padding: 8px; color: #555;">About.jsx</div>
+                                    </div>
+                                </details>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 9: Terms & Conditions -->
+            <div class="example-card">
+                <div class="example-header">9️⃣ Terms & Conditions</div>
+                <div class="example-content">
+                    <p class="description">Long legal document in sections.</p>
+                    <div class="product-details">
+                        <details>
+                            <summary>📄 Section 1: Definitions</summary>
+                            <div class="product-content">
+                                <p style="line-height: 1.8;">
+                                    "Service" means the website and all related services provided. "User" means any person accessing the Service...
+                                </p>
+                            </div>
+                        </details>
+                        <details>
+                            <summary>📄 Section 2: User Responsibilities</summary>
+                            <div class="product-content">
+                                <p style="line-height: 1.8;">
+                                    Users agree to use the Service only for lawful purposes and in a way that does not infringe upon the rights of others...
+                                </p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 10: Feature Comparison -->
+            <div class="example-card">
+                <div class="example-header">🔟 Feature Comparison</div>
+                <div class="example-content">
+                    <p class="description">Compare features across plans.</p>
+                    <div class="product-details">
+                        <details>
+                            <summary>💾 Storage & Data</summary>
+                            <div class="product-content">
+                                <div class="product-spec">
+                                    <span class="spec-label">Free Plan:</span>
+                                    <span class="spec-value">5 GB</span>
+                                </div>
+                                <div class="product-spec">
+                                    <span class="spec-label">Pro Plan:</span>
+                                    <span class="spec-value">100 GB</span>
+                                </div>
+                                <div class="product-spec">
+                                    <span class="spec-label">Enterprise:</span>
+                                    <span class="spec-value">Unlimited</span>
+                                </div>
+                            </div>
+                        </details>
+                        <details>
+                            <summary>👥 Team & Collaboration</summary>
+                            <div class="product-content">
+                                <div class="product-spec">
+                                    <span class="spec-label">Free Plan:</span>
+                                    <span class="spec-value">1 user</span>
+                                </div>
+                                <div class="product-spec">
+                                    <span class="spec-label">Pro Plan:</span>
+                                    <span class="spec-value">10 users</span>
+                                </div>
+                                <div class="product-spec">
+                                    <span class="spec-label">Enterprise:</span>
+                                    <span class="spec-value">Unlimited users</span>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleButton(btn) {
+            btn.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

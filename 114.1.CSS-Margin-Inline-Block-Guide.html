@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Margin-Inline & Margin-Block Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .tutorial-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .tutorial-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .tutorial-section h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            margin-right: 8px;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 18px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            border-left: 4px solid #667eea;
+        }
+
+        .code-block code {
+            display: block;
+        }
+
+        .keyword { color: #f472b6; }
+        .property { color: #60a5fa; }
+        .value { color: #34d399; }
+        .comment { color: #6b7280; }
+
+        .example-box {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .example-box h4 {
+            color: #1f2937;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .example-box p {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .demo-element {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .demo-visual {
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1e40af;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #991b1b;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #166534;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: #1f2937;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .property-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            border-left: 3px solid #667eea;
+        }
+
+        .property-item strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+
+        .property-item code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            color: #667eea;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .property-item p {
+            font-size: 0.85em;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .use-case-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .use-case-item h4 {
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .use-case-item p {
+            font-size: 0.85em;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        footer {
+            background: #f3f4f6;
+            padding: 25px;
+            text-align: center;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .syntax-breakdown {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .syntax-breakdown strong {
+            color: #1f2937;
+            display: block;
+            margin: 8px 0 4px 0;
+        }
+
+        .syntax-breakdown code {
+            background: #fff7ed;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #92400e;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            color: #4b5563;
+        }
+
+        ul li, ol li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        li strong {
+            color: #1f2937;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .comparison-item.good {
+            border-left: 4px solid #22c55e;
+        }
+
+        .comparison-item.bad {
+            border-left: 4px solid #ef4444;
+        }
+
+        .comparison-item strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .axis-diagram {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .axis-visual {
+            display: inline-block;
+            width: 150px;
+            height: 150px;
+            border: 2px solid #667eea;
+            position: relative;
+            background: linear-gradient(135deg, #f0f0f0 50%, #fff 50%);
+        }
+
+        .axis-label {
+            position: absolute;
+            font-size: 0.75em;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .axis-inline {
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .axis-block {
+            left: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        @media (max-width: 1200px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .use-case-grid,
+            .property-grid,
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📦 CSS Margin-Inline & Margin-Block</h1>
+            <p>Logical Properties for Direction-Aware Spacing</p>
+            <p class="subtitle">Master inline and block axis margins for better internationalization and layout control</p>
+        </header>
+
+        <div class="content">
+            <!-- Margin-Inline & Margin-Block Basics -->
+            <div class="tutorial-section">
+                <h2>
+                    <span class="badge">LOGICAL</span>
+                    What are Logical Properties?
+                </h2>
+                <p>Logical properties define spacing based on content flow direction rather than physical directions (left/right/top/bottom).</p>
+
+                <h3>Two Axes Explained</h3>
+                <ul>
+                    <li><strong>Inline axis:</strong> Direction text flows (left-right in English, right-left in Arabic)</li>
+                    <li><strong>Block axis:</strong> Direction paragraphs stack (top-bottom in all languages)</li>
+                </ul>
+
+                <h3>Why Logical Properties?</h3>
+                <ul>
+                    <li><strong>Internationalization:</strong> Single CSS works for all text directions</li>
+                    <li><strong>Maintainability:</strong> Easier to understand spacing intent</li>
+                    <li><strong>Future-proof:</strong> Works with vertical writing modes</li>
+                    <li><strong>Cleaner code:</strong> Less direction-specific overrides</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>ℹ️ Key Concept:</strong> Instead of left/right/top/bottom, think inline-start/inline-end/block-start/block-end.
+                </div>
+            </div>
+
+            <!-- Understanding Axes -->
+            <div class="tutorial-section">
+                <h2>📐 Understanding the Axes</h2>
+                <p>Visualize how inline and block axes work in different writing modes:</p>
+
+                <h3>English (Horizontal LTR)</h3>
+                <div class="axis-diagram">
+                    <div class="axis-visual">
+                        <div class="axis-label axis-inline">inline →</div>
+                        <div class="axis-label axis-block">↓ block</div>
+                    </div>
+                    <p style="margin-top: 15px; color: #666; font-size: 0.9em;">Inline: left to right | Block: top to bottom</p>
+                </div>
+
+                <h3>Arabic (Horizontal RTL)</h3>
+                <div class="axis-diagram">
+                    <div class="axis-visual">
+                        <div class="axis-label axis-inline">← inline</div>
+                        <div class="axis-label axis-block">↓ block</div>
+                    </div>
+                    <p style="margin-top: 15px; color: #666; font-size: 0.9em;">Inline: right to left | Block: still top to bottom</p>
+                </div>
+
+                <div class="success-box">
+                    <strong>✨ Advantage:</strong> Same CSS works for both languages! No need for separate stylesheets.
+                </div>
+            </div>
+
+            <!-- Margin-Inline Properties -->
+            <div class="tutorial-section">
+                <h2>↔️ Margin-Inline Properties</h2>
+                <p>Control spacing on the inline axis (left-right in English, right-left in Arabic).</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block">
+                    <code><span class="keyword">element</span> {<br/>
+&nbsp;&nbsp;<span class="property">margin-inline</span>: <span class="value">value</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin-inline-start</span>: <span class="value">value</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin-inline-end</span>: <span class="value">value</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Values & Examples</h3>
+                <ul>
+                    <li><strong>margin-inline:</strong> Sets both start and end</li>
+                    <li><strong>margin-inline-start:</strong> Left in LTR, right in RTL</li>
+                    <li><strong>margin-inline-end:</strong> Right in LTR, left in RTL</li>
+                </ul>
+
+                <h3>Example</h3>
+                <div class="code-block">
+                    <code><span class="keyword">.card</span> {<br/>
+&nbsp;&nbsp;<span class="comment">/* English: left & right margin */</span><br/>
+&nbsp;&nbsp;<span class="property">margin-inline</span>: <span class="value">20px</span>;<br/>
+}<br/><br/>
+<span class="comment">/* Automatically adapts to RTL! */</span></code>
+                </div>
+
+                <div class="demo-visual">
+                    <div class="demo-element" style="margin-inline: 30px;">
+                        Element with margin-inline: 30px
+                    </div>
+                </div>
+            </div>
+
+            <!-- Margin-Block Properties -->
+            <div class="tutorial-section">
+                <h2>⬍ Margin-Block Properties</h2>
+                <p>Control spacing on the block axis (top-bottom in most writing modes).</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block">
+                    <code><span class="keyword">element</span> {<br/>
+&nbsp;&nbsp;<span class="property">margin-block</span>: <span class="value">value</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin-block-start</span>: <span class="value">value</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin-block-end</span>: <span class="value">value</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Values & Examples</h3>
+                <ul>
+                    <li><strong>margin-block:</strong> Sets both start and end</li>
+                    <li><strong>margin-block-start:</strong> Top margin</li>
+                    <li><strong>margin-block-end:</strong> Bottom margin</li>
+                </ul>
+
+                <h3>Example</h3>
+                <div class="code-block">
+                    <code><span class="keyword">h1</span> {<br/>
+&nbsp;&nbsp;<span class="comment">/* Top & bottom margin */</span><br/>
+&nbsp;&nbsp;<span class="property">margin-block</span>: <span class="value">1em 0.5em</span>;<br/>
+}</code>
+                </div>
+
+                <div class="demo-visual">
+                    <div class="demo-element" style="margin-block: 30px 15px;">
+                        Element with margin-block: 30px 15px
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison: Physical vs Logical -->
+            <div class="tutorial-section full-width">
+                <h2>🔄 Physical vs Logical Properties</h2>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Use Case</th>
+                            <th>Physical (Old Way)</th>
+                            <th>Logical (New Way)</th>
+                            <th>Benefit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Horizontal spacing</strong></td>
+                            <td>margin-left, margin-right</td>
+                            <td>margin-inline-start, margin-inline-end</td>
+                            <td>Works with all text directions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vertical spacing</strong></td>
+                            <td>margin-top, margin-bottom</td>
+                            <td>margin-block-start, margin-block-end</td>
+                            <td>Works with vertical text</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Symmetric horizontal</strong></td>
+                            <td>margin: 0 20px</td>
+                            <td>margin-inline: 20px</td>
+                            <td>Clearer intent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Both axes</strong></td>
+                            <td>margin: 10px 20px</td>
+                            <td>margin-block: 10px; margin-inline: 20px;</td>
+                            <td>More readable</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <strong>ℹ️ Note:</strong> Physical properties (margin-left, etc.) still work. Logical properties are an alternative approach.
+                </div>
+            </div>
+
+            <!-- Shorthand Values -->
+            <div class="tutorial-section full-width">
+                <h2>📋 Shorthand Value Patterns</h2>
+
+                <div class="property-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                    <div class="property-item">
+                        <strong>Single Value</strong>
+                        <code>margin-inline: 20px</code>
+                        <p>Applies to both start and end (symmetric)</p>
+                    </div>
+
+                    <div class="property-item">
+                        <strong>Two Values</strong>
+                        <code>margin-inline: 10px 20px</code>
+                        <p>First: start, Second: end</p>
+                    </div>
+
+                    <div class="property-item">
+                        <strong>With Block</strong>
+                        <code>margin: 10px; margin-inline: 20px</code>
+                        <p>Override specific axis</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practical Examples -->
+            <div class="tutorial-section full-width">
+                <h2>🎨 Practical Examples</h2>
+
+                <h3>Example 1: Centered Card with Logical Margins</h3>
+                <div class="example-box">
+                    <h4>Using margin-inline for centering</h4>
+                    <div class="code-block">
+                        <code><span class="keyword">.card</span> {<br/>
+&nbsp;&nbsp;<span class="property">width</span>: <span class="value">400px</span>;<br/>
+&nbsp;&nbsp;<span class="comment">/* Center horizontally in all text directions */</span><br/>
+&nbsp;&nbsp;<span class="property">margin-inline</span>: <span class="value">auto</span>;<br/>
+&nbsp;&nbsp;<span class="comment">/* Vertical spacing */</span><br/>
+&nbsp;&nbsp;<span class="property">margin-block</span>: <span class="value">2em</span>;<br/>
+}</code>
+                    </div>
+                </div>
+
+                <h3>Example 2: Typography with Logical Margins</h3>
+                <div class="example-box">
+                    <h4>Paragraph spacing independent of direction</h4>
+                    <div class="code-block">
+                        <code><span class="keyword">p</span> {<br/>
+&nbsp;&nbsp;<span class="property">margin-block-start</span>: <span class="value">1em</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin-block-end</span>: <span class="value">1em</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin-inline</span>: <span class="value">0</span>;<br/>
+}</code>
+                    </div>
+                </div>
+
+                <h3>Example 3: Bilateral List with Logical Margins</h3>
+                <div class="example-box">
+                    <h4>List that works in LTR and RTL</h4>
+                    <div class="code-block">
+                        <code><span class="keyword">li</span> {<br/>
+&nbsp;&nbsp;<span class="comment">/* Indent in flow direction */</span><br/>
+&nbsp;&nbsp;<span class="property">margin-inline-start</span>: <span class="value">2em</span>;<br/>
+&nbsp;&nbsp;<span class="comment">/* Space between items */</span><br/>
+&nbsp;&nbsp;<span class="property">margin-block-end</span>: <span class="value">0.5em</span>;<br/>
+}</code>
+                    </div>
+                </div>
+
+                <h3>Example 4: Responsive Margins with Logical Properties</h3>
+                <div class="example-box">
+                    <h4>Mobile-first with logical values</h4>
+                    <div class="code-block">
+                        <code><span class="keyword">section</span> {<br/>
+&nbsp;&nbsp;<span class="property">margin-inline</span>: <span class="value">1em</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin-block</span>: <span class="value">1.5em</span>;<br/>
+}<br/><br/>
+<span class="at-rule">@media</span> (<span class="property">min-width</span>: <span class="value">768px</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">section</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">margin-inline</span>: <span class="value">3em</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">margin-block</span>: <span class="value">2em</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browser Support -->
+            <div class="tutorial-section">
+                <h2>✅ Browser Support</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                            <th>Support Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>margin-inline</strong></td>
+                            <td>✅ 87+</td>
+                            <td>✅ 66+</td>
+                            <td>✅ 14.1+</td>
+                            <td>✅ 87+</td>
+                            <td>Excellent (93%+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>margin-block</strong></td>
+                            <td>✅ 87+</td>
+                            <td>✅ 66+</td>
+                            <td>✅ 14.1+</td>
+                            <td>✅ 87+</td>
+                            <td>Excellent (93%+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>margin-inline-start/end</strong></td>
+                            <td>✅ 69+</td>
+                            <td>✅ 41+</td>
+                            <td>✅ 12.1+</td>
+                            <td>✅ 79+</td>
+                            <td>Universal (99%+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>margin-block-start/end</strong></td>
+                            <td>✅ 69+</td>
+                            <td>✅ 41+</td>
+                            <td>✅ 12.1+</td>
+                            <td>✅ 79+</td>
+                            <td>Universal (99%+)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="success-box">
+                    <strong>✨ Great Support:</strong> Logical margin properties have excellent browser support. Safe for production use today!
+                </div>
+            </div>
+
+            <!-- Real-World Use Cases -->
+            <div class="tutorial-section full-width">
+                <h2>💼 Real-World Use Cases</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <h4>🌍 International Websites</h4>
+                        <p>Single CSS for multiple language versions. No RTL-specific overrides needed.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📱 Responsive Cards</h4>
+                        <p>Cards with logical margins adapt to any container width automatically.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📚 Reading Layouts</h4>
+                        <p>Articles and blog posts with direction-agnostic spacing.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🗂️ Lists & Navigation</h4>
+                        <p>Navigation items that indent in flow direction naturally.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🎨 Design Systems</h4>
+                        <p>Component libraries that work globally without direction overrides.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📝 Forms & Inputs</h4>
+                        <p>Forms that automatically adapt labels and spacing to text direction.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Complete Property Reference -->
+            <div class="tutorial-section full-width">
+                <h2>🔧 Complete Property Reference</h2>
+
+                <div class="property-grid">
+                    <div class="property-item">
+                        <strong>margin-inline</strong>
+                        <code>10px | 10px 20px | auto</code>
+                        <p>Shorthand for margin-inline-start and margin-inline-end</p>
+                    </div>
+
+                    <div class="property-item">
+                        <strong>margin-inline-start</strong>
+                        <code>10px | auto</code>
+                        <p>Margin at the start of inline axis (left in LTR, right in RTL)</p>
+                    </div>
+
+                    <div class="property-item">
+                        <strong>margin-inline-end</strong>
+                        <code>10px | auto</code>
+                        <p>Margin at the end of inline axis (right in LTR, left in RTL)</p>
+                    </div>
+
+                    <div class="property-item">
+                        <strong>margin-block</strong>
+                        <code>10px | 10px 20px | auto</code>
+                        <p>Shorthand for margin-block-start and margin-block-end</p>
+                    </div>
+
+                    <div class="property-item">
+                        <strong>margin-block-start</strong>
+                        <code>10px | auto</code>
+                        <p>Margin at the start of block axis (top in standard)</p>
+                    </div>
+
+                    <div class="property-item">
+                        <strong>margin-block-end</strong>
+                        <code>10px | auto</code>
+                        <p>Margin at the end of block axis (bottom in standard)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="tutorial-section full-width">
+                <h2>🏆 Best Practices & Tips</h2>
+
+                <div class="grid-2">
+                    <div>
+                        <h3>✅ Do:</h3>
+                        <ul>
+                            <li><strong>Use for new projects:</strong> Future-proof your CSS</li>
+                            <li><strong>Combine with padding:</strong> Use logical padding too</li>
+                            <li><strong>Use in design systems:</strong> Make components multilingual</li>
+                            <li><strong>Migrate gradually:</strong> Mix physical and logical</li>
+                            <li><strong>Document intent:</strong> Comment why you're using logical</li>
+                            <li><strong>Test with RTL:</strong> Verify behavior in both directions</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>❌ Don't:</h3>
+                        <ul>
+                            <li><strong>Mix directions inconsistently:</strong> Keep it uniform</li>
+                            <li><strong>Forget about physical properties:</strong> Sometimes still needed</li>
+                            <li><strong>Ignore browser support:</strong> Check your target browsers</li>
+                            <li><strong>Assume all developers know:</strong> Document clearly</li>
+                            <li><strong>Use alone in legacy projects:</strong> Combine with physical</li>
+                            <li><strong>Forget mobile testing:</strong> Test on all devices</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Important:</strong> Physical properties (margin-left, etc.) still work and are still valid. Use logical properties for new code, but don't break legacy implementations.
+                </div>
+            </div>
+
+            <!-- Migration Guide -->
+            <div class="tutorial-section full-width">
+                <h2>🔄 Migration from Physical to Logical</h2>
+
+                <div class="comparison-grid">
+                    <div class="comparison-item bad">
+                        <strong>❌ Physical Properties</strong>
+                        <div class="code-block">
+<code><span class="keyword">.element</span> {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}</code>
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9em;">Works only in LTR, needs RTL override</p>
+                    </div>
+
+                    <div class="comparison-item good">
+                        <strong>✅ Logical Properties</strong>
+                        <div class="code-block">
+<code><span class="keyword">.element</span> {
+  margin-inline: 20px;
+  margin-block: 10px;
+}</code>
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9em;">Works in any direction automatically</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 20px; color: #333;">Mapping Guide:</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Physical</th>
+                            <th>Logical (LTR)</th>
+                            <th>Logical (RTL)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>margin-left</strong></td>
+                            <td>margin-inline-start</td>
+                            <td>margin-inline-end</td>
+                        </tr>
+                        <tr>
+                            <td><strong>margin-right</strong></td>
+                            <td>margin-inline-end</td>
+                            <td>margin-inline-start</td>
+                        </tr>
+                        <tr>
+                            <td><strong>margin-top</strong></td>
+                            <td colspan="2">margin-block-start</td>
+                        </tr>
+                        <tr>
+                            <td><strong>margin-bottom</strong></td>
+                            <td colspan="2">margin-block-end</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Implementation Checklist -->
+            <div class="tutorial-section full-width">
+                <h2>📋 Implementation Checklist</h2>
+                <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #e5e7eb;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Planning</strong></h4>
+                            <ul style="list-style: none; margin: 0; color: #666;">
+                                <li style="padding: 5px 0;">☐ Identify components to update</li>
+                                <li style="padding: 5px 0;">☐ Check browser support needs</li>
+                                <li style="padding: 5px 0;">☐ Plan migration strategy</li>
+                                <li style="padding: 5px 0;">☐ Set team guidelines</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Implementation</strong></h4>
+                            <ul style="list-style: none; margin: 0; color: #666;">
+                                <li style="padding: 5px 0;">☐ Replace physical margins</li>
+                                <li style="padding: 5px 0;">☐ Update typography rules</li>
+                                <li style="padding: 5px 0;">☐ Test in all browsers</li>
+                                <li style="padding: 5px 0;">☐ Verify RTL support</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Testing</strong></h4>
+                            <ul style="list-style: none; margin: 0; color: #666;">
+                                <li style="padding: 5px 0;">☐ Test LTR layouts</li>
+                                <li style="padding: 5px 0;">☐ Test RTL layouts</li>
+                                <li style="padding: 5px 0;">☐ Mobile responsive</li>
+                                <li style="padding: 5px 0;">☐ Cross-browser</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Documentation</strong></h4>
+                            <ul style="list-style: none; margin: 0; color: #666;">
+                                <li style="padding: 5px 0;">☐ Document conventions</li>
+                                <li style="padding: 5px 0;">☐ Update style guide</li>
+                                <li style="padding: 5px 0;">☐ Train team members</li>
+                                <li style="padding: 5px 0;">☐ Share best practices</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>CSS Margin-Inline & Margin-Block Tutorial</strong></p>
+            <p>Master logical properties for direction-aware, international-friendly CSS</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Browser Support: Excellent (93-99%) | Production Ready ✅</p>
+        </footer>
+    </div>
+</body>
+</html>

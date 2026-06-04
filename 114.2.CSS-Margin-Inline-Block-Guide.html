@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Margin-Inline & Margin-Block - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .demo-section {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-section h2 {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .demo-section p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        /* ===== DEMO 1: Blog Post ===== */
+        .blog-post {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .blog-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+
+        .blog-header h3 {
+            font-size: 1.5em;
+            margin-block: 0 10px;
+        }
+
+        .blog-meta {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-block: 0;
+        }
+
+        .blog-content {
+            padding: 30px;
+        }
+
+        .blog-content h4 {
+            color: #333;
+            margin-block: 1.5em 0.5em;
+            font-size: 1.2em;
+        }
+
+        .blog-content p {
+            color: #666;
+            line-height: 1.7;
+            margin-block: 1em;
+        }
+
+        .blog-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-block: 2em;
+        }
+
+        .blog-tag {
+            background: #f0f0f0;
+            color: #667eea;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        /* ===== DEMO 2: Card Grid ===== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.1em;
+            color: #333;
+            font-weight: 600;
+            margin-block: 0 10px;
+        }
+
+        .card-description {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+            margin-block: 10px;
+        }
+
+        .card-footer {
+            margin-block: 15px 0;
+            padding-block-start: 15px;
+            border-block-start: 1px solid #e5e7eb;
+        }
+
+        .card-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .card-button:hover {
+            background: #764ba2;
+        }
+
+        /* ===== DEMO 3: Article Layout ===== */
+        .article-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .article-main {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-main h3 {
+            color: #333;
+            font-size: 1.8em;
+            margin-block: 0 20px;
+        }
+
+        .article-main p {
+            color: #666;
+            line-height: 1.8;
+            margin-block: 1.2em;
+        }
+
+        .article-main ul {
+            margin-inline-start: 20px;
+            margin-block: 1.5em;
+        }
+
+        .article-main li {
+            color: #666;
+            margin-block: 0.5em;
+            line-height: 1.6;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .sidebar-widget {
+            margin-block: 0 20px;
+            padding-block: 0 20px;
+            border-block-end: 1px solid #e5e7eb;
+        }
+
+        .sidebar-widget:last-child {
+            border-block-end: none;
+            margin-block-end: 0;
+            padding-block-end: 0;
+        }
+
+        .sidebar-title {
+            font-size: 1em;
+            color: #333;
+            font-weight: 600;
+            margin-block: 0 10px;
+        }
+
+        .sidebar-content {
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .sidebar-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-list li {
+            padding-block: 6px;
+            padding-inline-start: 0;
+        }
+
+        .sidebar-list li:before {
+            content: "→ ";
+            color: #667eea;
+            margin-inline-end: 8px;
+        }
+
+        /* ===== DEMO 4: Product Page ===== */
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .product-info h3 {
+            color: #333;
+            font-size: 1.8em;
+            margin-block: 0 10px;
+        }
+
+        .product-rating {
+            color: #667eea;
+            font-size: 0.95em;
+            margin-block: 0 15px;
+        }
+
+        .product-price {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: 700;
+            margin-block: 15px;
+        }
+
+        .product-description {
+            color: #666;
+            line-height: 1.7;
+            margin-block: 1.5em;
+        }
+
+        .product-specs {
+            margin-block: 2em;
+        }
+
+        .product-specs h4 {
+            color: #333;
+            font-weight: 600;
+            margin-block: 0 10px;
+        }
+
+        .product-specs ul {
+            margin-inline-start: 20px;
+            margin-block: 1em;
+        }
+
+        .product-specs li {
+            color: #666;
+            margin-block: 0.5em;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-block: 2em;
+        }
+
+        .product-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        .product-btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .product-btn-primary:hover {
+            background: #764ba2;
+        }
+
+        .product-btn-secondary {
+            background: #f0f0f0;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .product-btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* ===== DEMO 5: List & Navigation ===== */
+        .navigation-demo {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            padding-block: 12px;
+            padding-inline: 15px;
+            margin-block: 5px;
+            background: #f9fafb;
+            border-radius: 6px;
+            color: #333;
+            border-inline-start: 3px solid #667eea;
+            transition: background 0.3s;
+        }
+
+        .nav-item:hover {
+            background: #f0f0f0;
+        }
+
+        .nav-item strong {
+            color: #667eea;
+        }
+
+        /* ===== DEMO 6: Form ===== */
+        .form-demo {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+        }
+
+        .form-demo h3 {
+            color: #333;
+            margin-block: 0 25px;
+        }
+
+        .form-group {
+            margin-block: 1.5em;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-block-end: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            margin-block-start: 1.5em;
+            transition: background 0.3s;
+        }
+
+        .form-submit:hover {
+            background: #764ba2;
+        }
+
+        /* ===== Info Boxes ===== */
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            color: #1e40af;
+            font-size: 0.95em;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            color: #166534;
+            font-size: 0.95em;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        footer {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            margin-top: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .direction-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .direction-btn {
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .direction-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .article-layout,
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* RTL Support */
+        [dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+        }
+
+        [dir="rtl"] .nav-item {
+            border-inline-start: none;
+            border-inline-end: 3px solid #667eea;
+        }
+
+        [dir="rtl"] .sidebar-list li:before {
+            content: "← ";
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📦 CSS Margin-Inline & Margin-Block - Practical Examples</h1>
+            <p>Real-world implementations with LTR and RTL support</p>
+        </header>
+
+        <div class="direction-toggle">
+            <button class="direction-btn active" onclick="setDirection('ltr')">English (LTR)</button>
+            <button class="direction-btn" onclick="setDirection('rtl')">العربية (RTL)</button>
+        </div>
+
+        <!-- DEMO 1: Blog Post with Logical Margins -->
+        <div class="demo-section" dir="ltr" id="demo1">
+            <h2>📝 Example 1: Blog Post</h2>
+            <p>A blog post using logical margins that adapts to any text direction:</p>
+
+            <div class="blog-post">
+                <div class="blog-header">
+                    <h3>The Future of Web Design</h3>
+                    <p class="blog-meta">Published on May 19, 2026 • 5 min read</p>
+                </div>
+                <div class="blog-content">
+                    <h4>Introduction</h4>
+                    <p>Web design is evolving rapidly. From responsive design to component-based architectures, the landscape continues to shift. Modern CSS features like logical properties are making it easier to build truly global applications.</p>
+
+                    <h4>Key Trends</h4>
+                    <p>The use of logical properties like margin-inline and margin-block is becoming standard practice in professional CSS development. These properties ensure that your styles automatically adapt to different writing modes and text directions.</p>
+
+                    <div class="blog-tags">
+                        <span class="blog-tag">CSS</span>
+                        <span class="blog-tag">Web Design</span>
+                        <span class="blog-tag">Best Practices</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>✨ Notice:</strong> All spacing uses logical properties (margin-block, margin-inline). Click the RTL button to see it adapt automatically!
+            </div>
+        </div>
+
+        <!-- DEMO 2: Card Grid -->
+        <div class="demo-section" dir="ltr" id="demo2">
+            <h2>🎴 Example 2: Responsive Card Grid</h2>
+            <p>Cards using logical margins for consistent spacing in any direction:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-image">Product 1</div>
+                    <div class="card-content">
+                        <h3 class="card-title">Premium Headphones</h3>
+                        <p class="card-description">High-quality wireless audio with noise cancellation technology for immersive listening.</p>
+                        <div class="card-footer">
+                            <button class="card-button">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">Product 2</div>
+                    <div class="card-content">
+                        <h3 class="card-title">Wireless Charger</h3>
+                        <p class="card-description">Fast charging technology that keeps your devices powered throughout the day.</p>
+                        <div class="card-footer">
+                            <button class="card-button">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">Product 3</div>
+                    <div class="card-content">
+                        <h3 class="card-title">Smart Watch</h3>
+                        <p class="card-description">Stay connected with all-day battery life and comprehensive health tracking features.</p>
+                        <div class="card-footer">
+                            <button class="card-button">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<code>.card-title {
+  margin-block: 0 10px;
+}
+
+.card-description {
+  margin-block: 10px;
+}
+
+.card-footer {
+  margin-block: 15px 0;
+  padding-block-start: 15px;
+  border-block-start: 1px solid #e5e7eb;
+}</code>
+            </div>
+        </div>
+
+        <!-- DEMO 3: Article with Sidebar -->
+        <div class="demo-section" dir="ltr" id="demo3">
+            <h2>📰 Example 3: Article Layout with Sidebar</h2>
+            <p>Main content and sidebar using logical margins for consistent spacing:</p>
+
+            <div class="article-layout">
+                <div class="article-main">
+                    <h3>Understanding Logical Properties</h3>
+                    <p>Logical properties represent a paradigm shift in how we think about CSS spacing and positioning. Instead of relying on physical directions (left, right, top, bottom), logical properties use the flow of content as their reference.</p>
+
+                    <h4 style="margin-block: 1.5em 0.5em;">Key Benefits:</h4>
+                    <ul>
+                        <li><strong>International Support:</strong> Single CSS works for LTR and RTL languages</li>
+                        <li><strong>Vertical Writing:</strong> Adapts to vertical text modes automatically</li>
+                        <li><strong>Cleaner Code:</strong> Less override complexity in multilingual projects</li>
+                        <li><strong>Future-Proof:</strong> Aligns with modern web standards</li>
+                    </ul>
+
+                    <p>By adopting logical properties in your projects today, you're building a more sustainable and globally-friendly codebase for tomorrow.</p>
+                </div>
+
+                <div class="sidebar">
+                    <div class="sidebar-widget">
+                        <h4 class="sidebar-title">Related Articles</h4>
+                        <ul class="sidebar-list">
+                            <li><strong>CSS Grid Mastery</strong></li>
+                            <li><strong>Flexbox Essentials</strong></li>
+                            <li><strong>Modern Layout Techniques</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h4 class="sidebar-title">Categories</h4>
+                        <div class="sidebar-content">
+                            CSS, Web Design, Best Practices, Responsive Design
+                        </div>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h4 class="sidebar-title">Author</h4>
+                        <div class="sidebar-content">
+                            Sarah Chen is a web design expert and advocate for accessible, inclusive web development practices.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DEMO 4: Product Page -->
+        <div class="demo-section" dir="ltr" id="demo4">
+            <h2>🛍️ Example 4: Product Page</h2>
+            <p>E-commerce product layout with logical margins for international compatibility:</p>
+
+            <div class="product-grid">
+                <div class="product-image">Premium Product</div>
+                <div class="product-info">
+                    <h3>Premium Wireless Headphones</h3>
+                    <p class="product-rating">★★★★★ (2,543 reviews)</p>
+                    <p class="product-price">$199.99</p>
+
+                    <p class="product-description">Experience crystal-clear sound with our premium wireless headphones. Featuring active noise cancellation, 30-hour battery life, and premium comfort padding.</p>
+
+                    <div class="product-specs">
+                        <h4>Key Specifications</h4>
+                        <ul>
+                            <li>Active Noise Cancellation (ANC)</li>
+                            <li>30-hour battery life</li>
+                            <li>Bluetooth 5.0 connectivity</li>
+                            <li>Premium memory foam ear cups</li>
+                            <li>Foldable design with carrying case</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-actions">
+                        <button class="product-btn product-btn-primary">Add to Cart</button>
+                        <button class="product-btn product-btn-secondary">Save for Later</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<code>.product-specs h4 {
+  margin-block: 0 10px;
+}
+
+.product-specs li {
+  margin-block: 0.5em;
+}
+
+.product-actions {
+  display: flex;
+  gap: 15px;
+  margin-block: 2em;
+}</code>
+            </div>
+        </div>
+
+        <!-- DEMO 5: Navigation Lists -->
+        <div class="demo-section" dir="ltr" id="demo5">
+            <h2>🗂️ Example 5: Navigation with Logical Margins</h2>
+            <p>Navigation lists using logical margins for consistent spacing:</p>
+
+            <div class="navigation-demo">
+                <ul class="nav-list">
+                    <li class="nav-item"><strong>Home</strong> - Main dashboard</li>
+                    <li class="nav-item"><strong>Products</strong> - Browse all products</li>
+                    <li class="nav-item"><strong>Services</strong> - Our offerings</li>
+                    <li class="nav-item"><strong>About Us</strong> - Company information</li>
+                    <li class="nav-item"><strong>Contact</strong> - Get in touch</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>ℹ️ RTL Behavior:</strong> When switched to RTL, the left border automatically becomes a right border thanks to the logical border-inline-start property!
+            </div>
+        </div>
+
+        <!-- DEMO 6: Form -->
+        <div class="demo-section" dir="ltr" id="demo6">
+            <h2>📋 Example 6: Form with Logical Spacing</h2>
+            <p>Contact form using logical margins for flexible direction support:</p>
+
+            <div class="form-demo">
+                <h3>Contact Us</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" placeholder="Your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="your@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" placeholder="How can we help?">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="5" placeholder="Your message..."></textarea>
+                    </div>
+
+                    <button type="submit" class="form-submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Key Takeaways -->
+        <div class="demo-section">
+            <h2>🎯 Key Takeaways</h2>
+
+            <h3 style="margin-block: 1em 0.5em;">Logical Margin Properties Used:</h3>
+            <ul style="margin-inline-start: 20px; color: #666;">
+                <li><strong>margin-block:</strong> Vertical spacing (top/bottom)</li>
+                <li><strong>margin-inline:</strong> Horizontal spacing (left/right in LTR)</li>
+                <li><strong>padding-block-start/end:</strong> Top/bottom padding</li>
+                <li><strong>border-block-start/end:</strong> Top/bottom borders</li>
+                <li><strong>border-inline-start/end:</strong> Directional borders</li>
+            </ul>
+
+            <h3 style="margin-block: 1.5em 0.5em;">Why This Matters:</h3>
+            <ul style="margin-inline-start: 20px; color: #666;">
+                <li><strong>Same CSS, Multiple Languages:</strong> No need for separate stylesheets for LTR/RTL</li>
+                <li><strong>Automatic Adaptation:</strong> All spacing flips automatically when direction changes</li>
+                <li><strong>Future-Proof:</strong> Works with vertical writing modes</li>
+                <li><strong>Better Semantics:</strong> Code expresses intent more clearly</li>
+                <li><strong>Maintainability:</strong> Easier for global teams to understand</li>
+            </ul>
+
+            <div class="success-box">
+                <strong>✨ Try It Out:</strong> Switch between LTR and RTL above to see how the same CSS automatically adapts! No media queries, no overrides—just logical properties doing their job.
+            </div>
+        </div>
+
+        <!-- Implementation Tips -->
+        <div class="demo-section">
+            <h2>💡 Implementation Tips</h2>
+
+            <h3 style="margin-block: 1em 0.5em;">Getting Started:</h3>
+            <ol style="margin-inline-start: 20px; color: #666;">
+                <li><strong>Start with new projects:</strong> Easier than retrofitting existing code</li>
+                <li><strong>Use margin-inline for horizontal spacing:</strong> Replaces margin-left/right</li>
+                <li><strong>Use margin-block for vertical spacing:</strong> Replaces margin-top/bottom</li>
+                <li><strong>Combine with logical padding:</strong> For consistency throughout</li>
+                <li><strong>Test in both LTR and RTL:</strong> Verify it works correctly</li>
+            </ol>
+
+            <h3 style="margin-block: 1.5em 0.5em;">Browser Support:</h3>
+            <p style="color: #666;">All major modern browsers support these properties (93%+ global support). Safe for production use!</p>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>CSS Margin-Inline & Margin-Block - Practical Examples</strong></p>
+        <p>Master logical properties for truly international CSS</p>
+        <p style="margin-top: 15px; font-size: 0.9em; color: #999;">Try switching between LTR and RTL directions above!</p>
+    </footer>
+
+    <script>
+        function setDirection(direction) {
+            // Update all demo sections
+            document.querySelectorAll('[id^="demo"]').forEach(el => {
+                el.setAttribute('dir', direction);
+            });
+
+            // Update active button
+            document.querySelectorAll('.direction-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update document
+            document.documentElement.setAttribute('dir', direction);
+        }
+    </script>
+</body>
+</html>

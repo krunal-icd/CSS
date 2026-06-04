@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Border-Inline & Border-Block Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .demo-box {
+            background: #f9f9f9;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .demo-label {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .demo-content {
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            flex-direction: column;
+        }
+
+        .element {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .interactive-demo {
+            background: #f9f9f9;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .slider-group {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slider-group label {
+            min-width: 200px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: #764ba2;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+        }
+
+        .value-display {
+            min-width: 80px;
+            text-align: right;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .live-preview {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .preview-element {
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .direction-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .direction-box {
+            background: #f9f9f9;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .direction-box h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .axis-diagram {
+            background: white;
+            border: 2px dashed #667eea;
+            padding: 30px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            line-height: 2;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .tip strong {
+            color: #ff6b6b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table th {
+            background: #667eea;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .style-selector {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .style-btn {
+            padding: 8px 16px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .style-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .style-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .color-selector {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .color-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .color-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .color-btn.active {
+            border-color: #333;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .example-item {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .example-item h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .example-preview {
+            padding: 20px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background: #f5f5f5;
+        }
+
+        .rtl-demo {
+            direction: rtl;
+            text-align: right;
+        }
+
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .direction-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .slider-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .slider-group label {
+                margin-bottom: 10px;
+            }
+        }
+
+        .border-visual {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .notation {
+            background: #f0f2ff;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 CSS Border-Inline & Border-Block Tutorial</h1>
+
+        <!-- Introduction -->
+        <div class="section">
+            <h2>📚 Introduction</h2>
+            <p class="description">
+                <strong>Border-inline</strong> and <strong>border-block</strong> are logical CSS properties that apply borders based on the element's writing direction, rather than physical sides (left, right, top, bottom).
+            </p>
+            <div class="tip">
+                <strong>💡 Key Concept:</strong> These properties are writing-direction aware, making them perfect for creating truly international websites!
+            </div>
+        </div>
+
+        <!-- Definitions -->
+        <div class="section">
+            <h2>🎯 Understanding Border Properties</h2>
+
+            <h3>Border-Inline</h3>
+            <p class="description">
+                Applies borders to the inline axis (horizontal in LTR, affects left and right sides in English).
+            </p>
+            <div class="code-block">
+border-inline: 2px solid #667eea;  /* Left & Right borders in LTR */
+            </div>
+
+            <h3>Border-Block</h3>
+            <p class="description">
+                Applies borders to the block axis (vertical, affects top and bottom sides).
+            </p>
+            <div class="code-block">
+border-block: 2px solid #667eea;   /* Top & Bottom borders */
+            </div>
+
+            <h3>Border-Inline-Start & Border-Inline-End</h3>
+            <p class="description">
+                Control borders at the start and end of the inline axis independently.
+            </p>
+            <div class="code-block">
+border-inline-start: 4px solid red;    /* Left in LTR, Right in RTL */
+border-inline-end: 4px solid blue;     /* Right in LTR, Left in RTL */
+            </div>
+
+            <h3>Border-Block-Start & Border-Block-End</h3>
+            <p class="description">
+                Control borders at the start and end of the block axis independently.
+            </p>
+            <div class="code-block">
+border-block-start: 3px solid green;   /* Top border */
+border-block-end: 3px solid orange;    /* Bottom border */
+            </div>
+        </div>
+
+        <!-- Visual Comparison -->
+        <div class="section">
+            <h2>🔄 Visual Comparison</h2>
+
+            <div class="comparison">
+                <div class="demo-box">
+                    <div class="demo-label">border-inline: 4px solid</div>
+                    <div class="demo-content">
+                        <div class="element" style="border-inline: 4px solid #667eea;">
+                            Content
+                        </div>
+                        <p style="margin-top: 15px; color: #999; font-size: 0.9em;">← Left & Right →</p>
+                    </div>
+                </div>
+
+                <div class="demo-box">
+                    <div class="demo-label">border-block: 4px solid</div>
+                    <div class="demo-content">
+                        <div class="element" style="border-block: 4px solid #667eea;">
+                            Content
+                        </div>
+                        <p style="margin-top: 15px; color: #999; font-size: 0.9em;">↑ Top & Bottom ↓</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison">
+                <div class="demo-box">
+                    <div class="demo-label">Combined: Both Axes</div>
+                    <div class="demo-content">
+                        <div class="element" style="border-inline: 4px solid #667eea; border-block: 4px solid #764ba2;">
+                            All Sides
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-box">
+                    <div class="demo-label">Directional: Start & End</div>
+                    <div class="demo-content">
+                        <div class="element" style="border-inline-start: 6px solid #667eea; border-inline-end: 6px solid #764ba2;">
+                            Different Colors
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Demo -->
+        <div class="section">
+            <h2>🎮 Interactive Border Demo</h2>
+
+            <div class="interactive-demo">
+                <h3>Border Width</h3>
+                <div class="slider-group">
+                    <label for="inlineWidth">border-inline width:</label>
+                    <input type="range" id="inlineWidth" min="0" max="10" value="2">
+                    <span class="value-display"><span id="inlineWidthValue">2</span>px</span>
+                </div>
+
+                <div class="slider-group">
+                    <label for="blockWidth">border-block width:</label>
+                    <input type="range" id="blockWidth" min="0" max="10" value="2">
+                    <span class="value-display"><span id="blockWidthValue">2</span>px</span>
+                </div>
+
+                <h3 style="margin-top: 30px;">Border Style</h3>
+                <div class="style-selector">
+                    <button class="style-btn active" data-style="solid">solid</button>
+                    <button class="style-btn" data-style="dashed">dashed</button>
+                    <button class="style-btn" data-style="dotted">dotted</button>
+                    <button class="style-btn" data-style="double">double</button>
+                </div>
+
+                <h3 style="margin-top: 30px;">Border Color</h3>
+                <div class="color-selector">
+                    <button class="color-btn active" data-color="#667eea" style="background: #667eea;" title="Purple"></button>
+                    <button class="color-btn" data-color="#e74c3c" style="background: #e74c3c;" title="Red"></button>
+                    <button class="color-btn" data-color="#27ae60" style="background: #27ae60;" title="Green"></button>
+                    <button class="color-btn" data-color="#f39c12" style="background: #f39c12;" title="Orange"></button>
+                    <button class="color-btn" data-color="#3498db" style="background: #3498db;" title="Blue"></button>
+                </div>
+
+                <div class="live-preview">
+                    <div class="preview-element" id="previewElement" style="border-inline: 2px solid #667eea; border-block: 2px solid #667eea;">
+                        Interactive Border Preview
+                    </div>
+                </div>
+
+                <div class="code-block" style="margin-top: 20px;">
+                    <span id="codeDisplay">border-inline: 2px solid #667eea;<br>border-block: 2px solid #667eea;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shorthand vs Longhand -->
+        <div class="section">
+            <h2>📝 Syntax: Shorthand vs Longhand</h2>
+
+            <h3>Shorthand (Equal values on both sides)</h3>
+            <div class="code-block">
+/* Single value - applies to both sides */
+border-inline: 2px solid blue;
+border-block: 3px dashed red;
+            </div>
+
+            <h3>Two Values (Different start/end)</h3>
+            <div class="code-block">
+/* border-inline: start-value end-value */
+border-inline: 2px solid 4px solid;  /* Left 2px, Right 4px */
+/* Note: Both must include color and style */
+            </div>
+
+            <h3>Longhand (Maximum Control)</h3>
+            <div class="code-block">
+border-inline-start: 2px solid red;
+border-inline-end: 4px dashed blue;
+border-block-start: 3px dotted green;
+border-block-end: 3px double orange;
+            </div>
+
+            <h3>Combined Shorthand</h3>
+            <div class="code-block">
+/* All sides */
+border: 2px solid black;
+
+/* With logical properties */
+border: none;
+border-block-start: 2px solid blue;
+border-inline: 1px dashed red;
+            </div>
+        </div>
+
+        <!-- Real Examples -->
+        <div class="section">
+            <h2>💼 Real-World Examples</h2>
+
+            <div class="example-grid">
+                <div class="example-item">
+                    <h4>Left Accent Border</h4>
+                    <div class="example-preview" style="border-inline-start: 4px solid #667eea; padding-left: 15px;">
+                        Important note with left border
+                    </div>
+                    <div class="code-block" style="font-size: 0.85em;">
+border-inline-start: 4px solid;
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <h4>Card with Top Border</h4>
+                    <div class="example-preview" style="border-block-start: 3px solid #667eea;">
+                        Card content here
+                    </div>
+                    <div class="code-block" style="font-size: 0.85em;">
+border-block-start: 3px solid;
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <h4>Full Border Box</h4>
+                    <div class="example-preview" style="border-inline: 2px solid #667eea; border-block: 2px solid #667eea;">
+                        Complete border
+                    </div>
+                    <div class="code-block" style="font-size: 0.85em;">
+border-inline: 2px solid;
+border-block: 2px solid;
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <h4>Quote Block</h4>
+                    <div class="example-preview" style="border-inline-start: 4px solid #667eea; padding-left: 15px; text-align: left; font-style: italic;">
+                        "Logical properties make code more maintainable"
+                    </div>
+                    <div class="code-block" style="font-size: 0.85em;">
+border-inline-start: 4px solid;
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <h4>Multi-Color Borders</h4>
+                    <div class="example-preview" style="border-inline-start: 3px solid #667eea; border-inline-end: 3px solid #764ba2;">
+                        Gradient effect
+                    </div>
+                    <div class="code-block" style="font-size: 0.85em;">
+border-inline-start: 3px solid;
+border-inline-end: 3px solid;
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <h4>Double Border</h4>
+                    <div class="example-preview" style="border-inline: 1px solid #667eea; border-block: 2px double #667eea;">
+                        Mixed styles
+                    </div>
+                    <div class="code-block" style="font-size: 0.85em;">
+border-inline: 1px solid;
+border-block: 2px double;
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Border Styles Reference -->
+        <div class="section">
+            <h2>🎨 Border Styles Reference</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Style</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>solid</strong></td>
+                        <td>Solid line</td>
+                        <td><div style="border-bottom: 3px solid #667eea; width: 100%;"></div></td>
+                    </tr>
+                    <tr>
+                        <td><strong>dashed</strong></td>
+                        <td>Dashed line</td>
+                        <td><div style="border-bottom: 3px dashed #667eea; width: 100%;"></div></td>
+                    </tr>
+                    <tr>
+                        <td><strong>dotted</strong></td>
+                        <td>Dotted line</td>
+                        <td><div style="border-bottom: 3px dotted #667eea; width: 100%;"></div></td>
+                    </tr>
+                    <tr>
+                        <td><strong>double</strong></td>
+                        <td>Double line</td>
+                        <td><div style="border-bottom: 3px double #667eea; width: 100%;"></div></td>
+                    </tr>
+                    <tr>
+                        <td><strong>groove</strong></td>
+                        <td>Grooved effect</td>
+                        <td><div style="border-bottom: 3px groove #667eea; width: 100%;"></div></td>
+                    </tr>
+                    <tr>
+                        <td><strong>ridge</strong></td>
+                        <td>Ridge effect</td>
+                        <td><div style="border-bottom: 3px ridge #667eea; width: 100%;"></div></td>
+                    </tr>
+                    <tr>
+                        <td><strong>inset</strong></td>
+                        <td>Inset effect</td>
+                        <td><div style="border-bottom: 3px inset #667eea; width: 100%;"></div></td>
+                    </tr>
+                    <tr>
+                        <td><strong>outset</strong></td>
+                        <td>Outset effect</td>
+                        <td><div style="border-bottom: 3px outset #667eea; width: 100%;"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Browser Support -->
+        <div class="section">
+            <h2>✅ Browser Support & Use Cases</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Browser</th>
+                        <th>Support</th>
+                        <th>Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chrome/Edge</td>
+                        <td>✅ Full</td>
+                        <td>v87+</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td>✅ Full</td>
+                        <td>v66+</td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>✅ Full</td>
+                        <td>v14.1+</td>
+                    </tr>
+                    <tr>
+                        <td>iOS Safari</td>
+                        <td>✅ Full</td>
+                        <td>v14.5+</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 30px;">Key Use Cases</h3>
+            <ul style="margin-left: 20px; line-height: 2.2;">
+                <li>📍 <strong>Quote Blocks:</strong> Left or start border accent</li>
+                <li>🎴 <strong>Card Components:</strong> Top or block-start border for emphasis</li>
+                <li>🔔 <strong>Notifications:</strong> Left border to indicate status</li>
+                <li>🌍 <strong>Multilingual Sites:</strong> RTL-compatible borders automatically</li>
+                <li>📱 <strong>Responsive Design:</strong> Works with media queries seamlessly</li>
+                <li>🏷️ <strong>Tags & Labels:</strong> Borders that adapt to writing direction</li>
+            </ul>
+        </div>
+
+        <!-- RTL Support -->
+        <div class="section">
+            <h2>🌍 RTL (Right-to-Left) Support</h2>
+
+            <p class="description">
+                One of the biggest advantages of logical border properties is automatic RTL language support!
+            </p>
+
+            <h3>LTR Example (English)</h3>
+            <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 15px 0; border-inline-start: 4px solid #667eea; padding-inline-start: 20px;">
+                <strong>English text</strong><br>
+                Border appears on the left side
+            </div>
+
+            <h3>RTL Example (Arabic)</h3>
+            <div class="rtl-demo" style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 15px 0; border-inline-start: 4px solid #667eea; padding-inline-start: 20px;">
+                <strong>النص العربي</strong><br>
+                الحد يظهر على الجانب الأيمن
+            </div>
+
+            <div class="code-block" style="margin-top: 20px;">
+/* Same CSS for both LTR and RTL! */<br>
+.quote {<br>
+&nbsp;&nbsp;border-inline-start: 4px solid #667eea;<br>
+&nbsp;&nbsp;padding-inline-start: 20px;<br>
+}<br>
+<br>
+/* Automatically adapts to writing direction */
+            </div>
+        </div>
+
+        <!-- Best Practices -->
+        <div class="section">
+            <h2>⚡ Best Practices & Tips</h2>
+
+            <div class="tip">
+                <strong>✨ Consistency:</strong> Use logical properties throughout your project for better maintainability
+            </div>
+
+            <div class="tip">
+                <strong>🎯 Clarity:</strong> Combine with comments explaining which axis you're targeting
+            </div>
+
+            <div class="tip">
+                <strong>🌍 Internationalization:</strong> Use logical properties for any component that might be translated
+            </div>
+
+            <div class="tip">
+                <strong>📱 Responsive:</strong> Combine with CSS custom properties for flexible border systems
+            </div>
+
+            <h3 style="margin-top: 30px;">Example: Border System with Variables</h3>
+            <div class="code-block">
+:root {
+&nbsp;&nbsp;--border-accent: 4px solid #667eea;
+&nbsp;&nbsp;--border-subtle: 1px solid #e0e0e0;
+&nbsp;&nbsp;--border-highlight: 3px double #764ba2;
+}
+
+.card {
+&nbsp;&nbsp;border-block-start: var(--border-accent);
+&nbsp;&nbsp;border-inline: var(--border-subtle);
+}
+
+.quote-block {
+&nbsp;&nbsp;border-inline-start: var(--border-accent);
+}
+            </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="section">
+            <h2>🔀 Logical vs Physical Properties</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Physical Property</th>
+                        <th>Logical Property</th>
+                        <th>Advantage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>border-left</td>
+                        <td>border-inline-start</td>
+                        <td>Flips automatically in RTL mode</td>
+                    </tr>
+                    <tr>
+                        <td>border-right</td>
+                        <td>border-inline-end</td>
+                        <td>Flips automatically in RTL mode</td>
+                    </tr>
+                    <tr>
+                        <td>border-top</td>
+                        <td>border-block-start</td>
+                        <td>Works with vertical writing modes</td>
+                    </tr>
+                    <tr>
+                        <td>border-bottom</td>
+                        <td>border-block-end</td>
+                        <td>Works with vertical writing modes</td>
+                    </tr>
+                    <tr>
+                        <td>border</td>
+                        <td>border-inline + border-block</td>
+                        <td>More precise directional control</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Interactive Demo
+        const inlineWidthSlider = document.getElementById('inlineWidth');
+        const blockWidthSlider = document.getElementById('blockWidth');
+        const inlineWidthValue = document.getElementById('inlineWidthValue');
+        const blockWidthValue = document.getElementById('blockWidthValue');
+        const previewElement = document.getElementById('previewElement');
+        const codeDisplay = document.getElementById('codeDisplay');
+
+        let currentStyle = 'solid';
+        let currentColor = '#667eea';
+
+        // Style buttons
+        document.querySelectorAll('.style-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentStyle = this.dataset.style;
+                updatePreview();
+            });
+        });
+
+        // Color buttons
+        document.querySelectorAll('.color-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentColor = this.dataset.color;
+                updatePreview();
+            });
+        });
+
+        function updatePreview() {
+            const inlineWidth = inlineWidthSlider.value;
+            const blockWidth = blockWidthSlider.value;
+
+            inlineWidthValue.textContent = inlineWidth;
+            blockWidthValue.textContent = blockWidth;
+
+            const inlineStyle = `${inlineWidth}px ${currentStyle} ${currentColor}`;
+            const blockStyle = `${blockWidth}px ${currentStyle} ${currentColor}`;
+
+            previewElement.style.borderInline = inlineStyle;
+            previewElement.style.borderBlock = blockStyle;
+
+            codeDisplay.innerHTML = `border-inline: ${inlineStyle};<br>border-block: ${blockStyle};`;
+        }
+
+        inlineWidthSlider.addEventListener('input', updatePreview);
+        blockWidthSlider.addEventListener('input', updatePreview);
+
+        // Initialize
+        updatePreview();
+    </script>
+</body>
+</html>

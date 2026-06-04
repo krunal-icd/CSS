@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS if() Function - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .example-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-section h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .example-description {
+            color: #666;
+            font-size: 1em;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .example-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 900px) {
+            .example-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-section {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+            line-height: 1.5;
+        }
+
+        .code-section .keyword {
+            color: #f472b6;
+        }
+
+        .code-section .property {
+            color: #60a5fa;
+        }
+
+        .code-section .value {
+            color: #34d399;
+        }
+
+        .code-section .comment {
+            color: #6b7280;
+        }
+
+        .code-section .function {
+            color: #fbbf24;
+        }
+
+        .demo-area {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            gap: 20px;
+        }
+
+        .demo-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            width: 100%;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            border-radius: 6px;
+            color: #1e40af;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 6px;
+            color: #991b1b;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            border-radius: 6px;
+            color: #166534;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-item.bad {
+            border-left-color: #ef4444;
+        }
+
+        .comparison-item.good {
+            border-left-color: #22c55e;
+        }
+
+        .comparison-item h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .comparison-item code {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: block;
+            font-size: 0.85em;
+            color: #667eea;
+            overflow-x: auto;
+            margin-top: 8px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.4;
+        }
+
+        .key-benefit {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .key-benefit::before {
+            content: "✓";
+            color: #22c55e;
+            font-weight: bold;
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .key-benefit p {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        /* Example 1: Responsive Typography */
+        .responsive-heading {
+            /* Fallback for browsers without if() */
+            font-size: 2rem;
+            /* Future: if() version would be:
+            font-size: if(viewport-width > 768px, 2.5rem, 1.5rem); */
+        }
+
+        @media (max-width: 768px) {
+            .responsive-heading {
+                font-size: 1.5rem;
+            }
+        }
+
+        .responsive-paragraph {
+            font-size: 1rem;
+            line-height: 1.6;
+            /* Future if() would automatically adjust based on viewport */
+        }
+
+        @media (max-width: 768px) {
+            .responsive-paragraph {
+                line-height: 1.5;
+            }
+        }
+
+        /* Example 2: Color Gamut Demo */
+        .color-demo {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            margin: 10px auto;
+        }
+
+        .color-demo.srgb {
+            /* Current: sRGB fallback */
+            background: rgb(255, 102, 0);
+        }
+
+        .color-demo.p3 {
+            /* Future: if(color-gamut: p3) would deliver this to capable displays */
+            background: linear-gradient(135deg, #ff6600 0%, #ff8833 100%);
+        }
+
+        /* Example 3: Accessibility - Reduced Motion */
+        .animated-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+
+        .animated-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Respect prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            .animated-card {
+                transition: none;
+            }
+
+            .animated-card:hover {
+                transform: none;
+            }
+        }
+
+        /* Future: if() would handle this directly:
+        transform: if(prefers-reduced-motion, translateY(0), translateY(-5px));
+        transition-duration: if(prefers-reduced-motion, 0s, 0.3s); */
+
+        /* Example 4: Contrast-Aware Styling */
+        .contrast-box {
+            padding: 20px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border: 1px solid #e5e7eb;
+            color: #666;
+        }
+
+        @media (prefers-contrast: more) {
+            .contrast-box {
+                background: white;
+                border: 2px solid #000;
+                color: #000;
+                font-weight: 500;
+            }
+        }
+
+        /* Example 5: Spacing Based on Screen Size */
+        .spacing-demo {
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .spacing-demo {
+                padding: 1rem;
+                gap: 1rem;
+            }
+        }
+
+        .spacing-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Example 6: Container-Level Responsiveness */
+        .component-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .component-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .component-card p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .feature-card h4 {
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9em;
+        }
+
+        /* Example 7: Dark Mode Conditional */
+        .theme-demo {
+            padding: 20px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #667eea;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .theme-demo {
+                background: #1f2937;
+                color: #f3f4f6;
+                border-color: #a78bfa;
+            }
+        }
+
+        .browser-notice {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            padding: 20px;
+            border-radius: 8px;
+            color: #92400e;
+            font-weight: 500;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .comparison-before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .comparison-before-after {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .example-section {
+                padding: 25px;
+            }
+
+            .example-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .implementation-checklist {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .checklist-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checklist-item label {
+            color: #333;
+            cursor: pointer;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSS if() Function - Practical Examples</h1>
+            <p>Real-world patterns and implementation strategies for experimental conditional CSS</p>
+        </div>
+
+        <div class="browser-notice">
+            ⚠️ <strong>Experimental Feature:</strong> CSS if() has &lt;1% browser support. Examples show current approaches with future if() equivalents.
+        </div>
+
+        <!-- Example 1: Responsive Typography -->
+        <section class="example-section">
+            <h2>Example 1: Responsive Typography Without Media Queries</h2>
+            <p class="example-description">
+                Currently we use media queries. With CSS if(), typography would respond smoothly to viewport changes 
+                with a single declaration.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="comment">/* Current Approach (Works Today) */</span><br>
+                    <span class="keyword">h1</span> {<br>
+                    &nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">1.5rem</span>;<br>
+                    &nbsp;&nbsp;<span class="property">line-height</span>: <span class="value">1.2</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">@media</span> (<span class="value">min-width: 768px</span>) {<br>
+                    &nbsp;&nbsp;<span class="keyword">h1</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">2.5rem</span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">line-height</span>: <span class="value">1.3</span>;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+
+                <div class="code-section">
+                    <span class="comment">/* Future with CSS if() */</span><br>
+                    <span class="keyword">h1</span> {<br>
+                    &nbsp;&nbsp;<span class="property">font-size</span>: <span class="function">if</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">viewport-width > 768px</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">2.5rem</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">1.5rem</span><br>
+                    &nbsp;&nbsp;);<br>
+                    &nbsp;&nbsp;<span class="property">line-height</span>: <span class="function">if</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">viewport-width > 768px</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">1.3</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">1.2</span><br>
+                    &nbsp;&nbsp;);<br>
+                    }
+                </div>
+            </div>
+
+            <div class="demo-area">
+                <h3 class="responsive-heading">Responsive Heading</h3>
+                <p class="responsive-paragraph">This text scales based on viewport size. Resize your browser to see the effect.</p>
+            </div>
+
+            <div class="success-box">
+                <strong>Comparison:</strong> With media queries, you need multiple rule blocks. 
+                With if(), each property is self-contained and immediately clear about its responsive behavior.
+            </div>
+        </section>
+
+        <!-- Example 2: Color Gamut Detection -->
+        <section class="example-section">
+            <h2>Example 2: Display Capability Detection</h2>
+            <p class="example-description">
+                Different displays support different color spaces. CSS if() can deliver the perfect colors 
+                to each device without JavaScript detection.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="comment">/* Current: JavaScript Detection */</span><br>
+                    <span class="keyword">const</span> <span class="value">supportsP3</span> = <br>
+                    &nbsp;&nbsp;<span class="value">matchMedia</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">"(color-gamut: p3)"</span><br>
+                    &nbsp;&nbsp;).<span class="value">matches</span>;<br>
+                    <br>
+                    <span class="keyword">if</span> (<span class="value">supportsP3</span>) {<br>
+                    &nbsp;&nbsp;<span class="value">element</span>.<span class="property">style</span>.<span class="value">color</span> =<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">"color(display-p3 1 0.5 0)"</span>;<br>
+                    } <span class="keyword">else</span> {<br>
+                    &nbsp;&nbsp;<span class="value">element</span>.<span class="property">style</span>.<span class="value">color</span> =<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">"rgb(255, 128, 0)"</span>;<br>
+                    }
+                </div>
+
+                <div class="code-section">
+                    <span class="comment">/* Future: Pure CSS */</span><br>
+                    <span class="keyword">.accent</span> {<br>
+                    &nbsp;&nbsp;<span class="property">color</span>: <span class="function">if</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">color-gamut: p3</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">color(display-p3 1 0.5 0)</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">rgb(255, 128, 0)</span><br>
+                    &nbsp;&nbsp;);<br>
+                    }
+                </div>
+            </div>
+
+            <div class="demo-area">
+                <div class="color-demo srgb">sRGB Color</div>
+                <p style="color: #666; font-size: 0.9em;">Current browsers see this</p>
+                <div class="color-demo p3" style="margin-top: 20px;">Future: P3 Enhanced</div>
+                <p style="color: #666; font-size: 0.9em;">Capable displays would see richer colors</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>No JavaScript Overhead:</strong> CSS handles feature detection automatically without runtime checks.</p>
+            </div>
+        </section>
+
+        <!-- Example 3: Accessibility - Motion -->
+        <section class="example-section">
+            <h2>Example 3: Respecting User Motion Preferences</h2>
+            <p class="example-description">
+                Users with motion sensitivity can prefer reduced motion. CSS if() makes it easy to disable 
+                animations while keeping visual polish for others.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="comment">/* Current Approach */</span><br>
+                    <span class="keyword">.card</span> {<br>
+                    &nbsp;&nbsp;<span class="property">transition</span>: <span class="value">all 0.3s ease</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">.card:hover</span> {<br>
+                    &nbsp;&nbsp;<span class="property">transform</span>: <span class="value">translateY(-5px)</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">@media</span> (<span class="value">prefers-reduced-motion: reduce</span>) {<br>
+                    &nbsp;&nbsp;<span class="keyword">.card</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">transition</span>: <span class="value">none</span>;<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;<span class="keyword">.card:hover</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">transform</span>: <span class="value">none</span>;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+
+                <div class="code-section">
+                    <span class="comment">/* Future with CSS if() */</span><br>
+                    <span class="keyword">.card</span> {<br>
+                    &nbsp;&nbsp;<span class="property">transition-duration</span>: <span class="function">if</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">prefers-reduced-motion</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">0s</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">0.3s</span><br>
+                    &nbsp;&nbsp;);<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">.card:hover</span> {<br>
+                    &nbsp;&nbsp;<span class="property">transform</span>: <span class="function">if</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">prefers-reduced-motion</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">none</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">translateY(-5px)</span><br>
+                    &nbsp;&nbsp;);<br>
+                    }
+                </div>
+            </div>
+
+            <div class="demo-area">
+                <div class="animated-card">
+                    <h3>Hover Me</h3>
+                    <p>Card with smooth animation. Respects your motion preferences.</p>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>Accessibility Win:</strong> If() makes accessibility the default, not a special case. 
+                Each property clearly states its behavior for different preferences.
+            </div>
+        </section>
+
+        <!-- Example 4: Contrast Awareness -->
+        <section class="example-section">
+            <h2>Example 4: High Contrast Mode Support</h2>
+            <p class="example-description">
+                Some users need higher contrast for readability. CSS if() with prefers-contrast 
+                ensures accessible experiences automatically.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="comment">/* Current Approach */</span><br>
+                    <span class="keyword">.info-box</span> {<br>
+                    &nbsp;&nbsp;<span class="property">background</span>: <span class="value">#f8f9fa</span>;<br>
+                    &nbsp;&nbsp;<span class="property">border</span>: <span class="value">1px solid #e5e7eb</span>;<br>
+                    &nbsp;&nbsp;<span class="property">color</span>: <span class="value">#666</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">@media</span> (<span class="value">prefers-contrast: more</span>) {<br>
+                    &nbsp;&nbsp;<span class="keyword">.info-box</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">background</span>: <span class="value">white</span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">border</span>: <span class="value">2px solid black</span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">color</span>: <span class="value">black</span>;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+
+                <div class="code-section">
+                    <span class="comment">/* Future with CSS if() */</span><br>
+                    <span class="keyword">.info-box</span> {<br>
+                    &nbsp;&nbsp;<span class="property">background</span>: <span class="function">if</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">prefers-contrast: more</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">white</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">#f8f9fa</span><br>
+                    &nbsp;&nbsp;);<br>
+                    &nbsp;&nbsp;<span class="property">border</span>: <span class="function">if</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">prefers-contrast: more</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">2px solid black</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">1px solid #e5e7eb</span><br>
+                    &nbsp;&nbsp;);<br>
+                    }
+                </div>
+            </div>
+
+            <div class="demo-area">
+                <div class="contrast-box">
+                    <h3>Information Box</h3>
+                    <p>This box automatically adapts contrast based on your system preferences. 
+                    Enable "High Contrast" in your accessibility settings to see the change.</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>How to Test:</strong> On Windows: Settings → Ease of Access → High Contrast. 
+                On macOS: System Preferences → Accessibility → Display → Increase Contrast.
+            </div>
+        </section>
+
+        <!-- Example 5: Smart Spacing -->
+        <section class="example-section">
+            <h2>Example 5: Adaptive Spacing Based on Screen Size</h2>
+            <p class="example-description">
+                Spacing is crucial for responsive design. CSS if() makes it easy to scale padding and 
+                margins alongside viewport changes.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="comment">/* Current: Multiple Rules */</span><br>
+                    <span class="keyword">.section</span> {<br>
+                    &nbsp;&nbsp;<span class="property">padding</span>: <span class="value">1rem</span>;<br>
+                    &nbsp;&nbsp;<span class="property">gap</span>: <span class="value">1rem</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">@media</span> (<span class="value">min-width: 768px</span>) {<br>
+                    &nbsp;&nbsp;<span class="keyword">.section</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">padding</span>: <span class="value">2rem</span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">gap</span>: <span class="value">2rem</span>;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">@media</span> (<span class="value">min-width: 1024px</span>) {<br>
+                    &nbsp;&nbsp;<span class="keyword">.section</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">padding</span>: <span class="value">3rem</span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">gap</span>: <span class="value">3rem</span>;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+
+                <div class="code-section">
+                    <span class="comment">/* Future with CSS if() */</span><br>
+                    <span class="keyword">.section</span> {<br>
+                    &nbsp;&nbsp;<span class="property">padding</span>: <span class="function">if</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">viewport-width > 1024px</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">3rem</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">if</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="value">viewport-width > 768px</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="value">2rem</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="value">1rem</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;)<br>
+                    &nbsp;&nbsp;);<br>
+                    }
+                </div>
+            </div>
+
+            <div class="demo-area" style="padding: 0;">
+                <div class="spacing-demo" style="display: flex; flex-direction: column; width: 100%; padding: 2rem;">
+                    <div class="spacing-item">Spacing Item 1</div>
+                    <div class="spacing-item">Spacing Item 2</div>
+                    <div class="spacing-item">Spacing Item 3</div>
+                </div>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Cleaner Code:</strong> Instead of repeating the selector across multiple media queries, 
+                each property is defined once with its responsive variants.</p>
+            </div>
+        </section>
+
+        <!-- Example 6: Component-Level Responsiveness -->
+        <section class="example-section">
+            <h2>Example 6: Component Layout Switching</h2>
+            <p class="example-description">
+                CSS if() works perfectly with container queries for truly responsive components 
+                that adapt to their container, not the viewport.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="comment">/* Component responds to its container */</span><br>
+                    <span class="keyword">.card</span> {<br>
+                    &nbsp;&nbsp;<span class="property">display</span>: <span class="function">if</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">container-width > 500px</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">grid</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">flex</span><br>
+                    &nbsp;&nbsp;);<br>
+                    &nbsp;&nbsp;<span class="property">grid-template-columns</span>: <span class="function">if</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">container-width > 500px</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">1fr 1fr</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">1fr</span><br>
+                    &nbsp;&nbsp;);<br>
+                    }
+                </div>
+
+                <div class="demo-area">
+                    <div class="feature-grid" style="width: 100%;">
+                        <div class="feature-card">
+                            <h4>Feature 1</h4>
+                            <p>Responsive grid adapts to available space</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Feature 2</h4>
+                            <p>Works at component level</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Feature 3</h4>
+                            <p>Resize viewport to see changes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>Container Query Power:</strong> Components become truly reusable. 
+                The same component works in sidebars, full-width sections, or card layouts.
+            </div>
+        </section>
+
+        <!-- Example 7: Theme Switching -->
+        <section class="example-section">
+            <h2>Example 7: Automatic Dark Mode with Color Scheme Detection</h2>
+            <p class="example-description">
+                Respect user's preferred color scheme and let if() handle theme switching automatically.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="comment">/* Automatic theme adaptation */</span><br>
+                    <span class="keyword">:root</span> {<br>
+                    &nbsp;&nbsp;<span class="property">--bg-primary</span>: <span class="function">if</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">prefers-color-scheme: dark</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">#1f2937</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">#ffffff</span><br>
+                    &nbsp;&nbsp;);<br>
+                    &nbsp;&nbsp;<span class="property">--text-primary</span>: <span class="function">if</span>(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">prefers-color-scheme: dark</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">#f3f4f6</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="value">#333333</span><br>
+                    &nbsp;&nbsp;);<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">body</span> {<br>
+                    &nbsp;&nbsp;<span class="property">background</span>: <span class="value">var(--bg-primary)</span>;<br>
+                    &nbsp;&nbsp;<span class="property">color</span>: <span class="value">var(--text-primary)</span>;<br>
+                    }
+                </div>
+
+                <div class="demo-area">
+                    <div class="theme-demo">
+                        <h3>Theme Demo</h3>
+                        <p>This box automatically adapts to your system theme preference. 
+                        Enable dark mode in your system settings to see the change.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>How to Test:</strong> Windows: Settings → Personalization → Colors → Dark/Light. 
+                macOS: System Preferences → General → Appearance.
+            </div>
+        </section>
+
+        <!-- Implementation Strategy -->
+        <section class="example-section">
+            <h2>Implementation Strategy for 2026</h2>
+            <p class="example-description">
+                Since CSS if() is still experimental, use a progressive enhancement strategy that provides 
+                excellent experiences in all browsers.
+            </p>
+
+            <div class="comparison-before-after">
+                <div class="comparison-item bad">
+                    <h4>❌ Don't: Rely Only on if()</h4>
+                    <code>/* Breaks in 99% of browsers */
+.title {
+  font-size: if(viewport-width > 768px, 
+    2rem, 1rem);
+}</code>
+                </div>
+                <div class="comparison-item good">
+                    <h4>✅ Do: Progressive Enhancement</h4>
+                    <code>/* Works everywhere */
+.title {
+  font-size: 1rem; /* fallback */
+}
+@media (min-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+}
+/* if() for enhanced experience */</code>
+                </div>
+            </div>
+
+            <h3>Recommended Approach</h3>
+            <div class="implementation-checklist">
+                <div class="checklist-item">
+                    <input type="checkbox" checked disabled id="step1">
+                    <label for="step1"><strong>Step 1:</strong> Start with media queries (works everywhere)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" checked disabled id="step2">
+                    <label for="step2"><strong>Step 2:</strong> Test in Chrome Canary with experimental flags enabled</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" checked disabled id="step3">
+                    <label for="step3"><strong>Step 3:</strong> Add if() as progressive enhancement for supporting browsers</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" checked disabled id="step4">
+                    <label for="step4"><strong>Step 4:</strong> Use @supports to detect if() support</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" checked disabled id="step5">
+                    <label for="step5"><strong>Step 5:</strong> Monitor browser adoption and gradually shift when support improves</label>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>Future Timeline:</strong> CSS if() browser support is expected to gradually increase through 2026-2027. 
+                Start experimenting now for future-ready code, but maintain media query fallbacks for production.
+            </div>
+        </section>
+
+        <!-- Key Takeaways -->
+        <section class="example-section">
+            <h2>Key Takeaways</h2>
+
+            <div class="key-benefit">
+                <p><strong>More Concise:</strong> Responsive logic fits inline with properties instead of separate media query blocks.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Self-Documenting:</strong> Each property clearly shows its responsive behavior without hunting through media queries.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>No JavaScript Needed:</strong> Feature detection and conditional logic stay in CSS.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Future-Oriented:</strong> Using if() today prepares code for tomorrow's browser capabilities.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Progressive Enhancement:</strong> Works alongside media queries for universal compatibility.</p>
+            </div>
+
+            <div class="success-box" style="margin-top: 20px;">
+                <strong>Pro Tip:</strong> Start experimenting with CSS if() in personal projects and Codepen examples today. 
+                When browser support reaches 80%+ in 2027, migration to production will be straightforward.
+            </div>
+        </section>
+
+        <footer>
+            <p>CSS if() represents the future of conditional styling. Experiment today, deploy tomorrow. 🚀</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.example-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

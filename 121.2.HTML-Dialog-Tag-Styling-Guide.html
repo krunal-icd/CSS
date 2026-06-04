@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Dialog Tag - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .example-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .example-content {
+            padding: 30px;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .code-section {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+        }
+
+        .demo-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .demo-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .demo-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Dialog Styling Base */
+        dialog {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            padding: 0;
+            animation: slideIn 0.3s ease;
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Dialog Components */
+        .dialog-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .dialog-title {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .dialog-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dialog-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .dialog-content {
+            padding: 30px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .dialog-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            background: #f9f9f9;
+        }
+
+        .btn-primary {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+        }
+
+        .btn-secondary {
+            padding: 10px 20px;
+            background: #e0e0e0;
+            color: #333;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        /* Example 1: E-commerce Checkout */
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .product-price {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .total-row {
+            padding: 15px 0;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+            border-top: 2px solid #e0e0e0;
+            margin-top: 10px;
+        }
+
+        /* Example 2: Login Form */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Example 3: Video Modal */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #000;
+            margin-bottom: 15px;
+        }
+
+        .video-container iframe,
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+        }
+
+        /* Example 4: Image Gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .gallery-item {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Example 5: Settings Panel */
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .setting-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 28px;
+            background: #e0e0e0;
+            border-radius: 14px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #667eea;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            left: 24px;
+        }
+
+        /* Example 6: Feedback Form */
+        .rating-container {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .star-btn {
+            background: none;
+            border: none;
+            font-size: 2em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            color: #ddd;
+        }
+
+        .star-btn:hover,
+        .star-btn.active {
+            color: #ffc107;
+            transform: scale(1.2);
+        }
+
+        /* Example 7: Share Modal */
+        .share-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .share-btn {
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 2em;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .share-btn:hover {
+            border-color: #667eea;
+            background: #f0f2ff;
+            transform: translateY(-5px);
+        }
+
+        /* Example 8: Notification */
+        .notification-item {
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .notification-item.success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+
+        .notification-item.warning {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+
+        .notification-item.error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        /* Example 9: File Upload */
+        .upload-area {
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            background: #f0f2ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: #764ba2;
+            background: #e8ebff;
+        }
+
+        .upload-area.dragover {
+            border-color: #764ba2;
+            background: #e8ebff;
+        }
+
+        /* Example 10: Profile Card */
+        .profile-card {
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5em;
+        }
+
+        .profile-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .profile-email {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #28a745;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            dialog {
+                max-width: 90vw;
+            }
+
+            .share-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .image-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .status-message {
+            padding: 15px;
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            border-radius: 4px;
+            margin-top: 20px;
+            color: #155724;
+            display: none;
+        }
+
+        .status-message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 HTML Dialog Tag - Practical Examples</h1>
+        <p class="subtitle">Real-world use cases and implementations</p>
+
+        <div class="examples-grid">
+            <!-- Example 1: E-commerce Checkout -->
+            <div class="example-card">
+                <div class="example-header">1️⃣ E-commerce Checkout</div>
+                <div class="example-content">
+                    <p class="description">Shopping cart modal for quick checkout confirmation.</p>
+                    <button class="demo-btn" onclick="document.getElementById('checkoutDialog').showModal()">
+                        View Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Example 2: Login Form -->
+            <div class="example-card">
+                <div class="example-header">2️⃣ Login Form Modal</div>
+                <div class="example-content">
+                    <p class="description">User authentication modal with form validation.</p>
+                    <button class="demo-btn" onclick="document.getElementById('loginDialog').showModal()">
+                        Login
+                    </button>
+                </div>
+            </div>
+
+            <!-- Example 3: Video Modal -->
+            <div class="example-card">
+                <div class="example-header">3️⃣ Video Modal</div>
+                <div class="example-content">
+                    <p class="description">Responsive video player in a dialog.</p>
+                    <button class="demo-btn" onclick="document.getElementById('videoDialog').showModal()">
+                        Watch Video
+                    </button>
+                </div>
+            </div>
+
+            <!-- Example 4: Image Gallery -->
+            <div class="example-card">
+                <div class="example-header">4️⃣ Image Gallery</div>
+                <div class="example-content">
+                    <p class="description">Lightbox-style image gallery modal.</p>
+                    <button class="demo-btn" onclick="document.getElementById('galleryDialog').showModal()">
+                        View Gallery
+                    </button>
+                </div>
+            </div>
+
+            <!-- Example 5: Settings Panel -->
+            <div class="example-card">
+                <div class="example-header">5️⃣ Settings Panel</div>
+                <div class="example-content">
+                    <p class="description">User preferences and configuration options.</p>
+                    <button class="demo-btn" onclick="document.getElementById('settingsDialog').showModal()">
+                        Settings
+                    </button>
+                </div>
+            </div>
+
+            <!-- Example 6: Feedback Form -->
+            <div class="example-card">
+                <div class="example-header">6️⃣ Feedback Form</div>
+                <div class="example-content">
+                    <p class="description">User feedback collection with rating system.</p>
+                    <button class="demo-btn" onclick="document.getElementById('feedbackDialog').showModal()">
+                        Send Feedback
+                    </button>
+                </div>
+            </div>
+
+            <!-- Example 7: Share Modal -->
+            <div class="example-card">
+                <div class="example-header">7️⃣ Share Modal</div>
+                <div class="example-content">
+                    <p class="description">Social sharing options dialog.</p>
+                    <button class="demo-btn" onclick="document.getElementById('shareDialog').showModal()">
+                        Share This
+                    </button>
+                </div>
+            </div>
+
+            <!-- Example 8: Notifications -->
+            <div class="example-card">
+                <div class="example-header">8️⃣ Notification Center</div>
+                <div class="example-content">
+                    <p class="description">Centralized notification management.</p>
+                    <button class="demo-btn" onclick="document.getElementById('notificationDialog').showModal()">
+                        Notifications
+                    </button>
+                </div>
+            </div>
+
+            <!-- Example 9: File Upload -->
+            <div class="example-card">
+                <div class="example-header">9️⃣ File Upload</div>
+                <div class="example-content">
+                    <p class="description">Drag-and-drop file upload modal.</p>
+                    <button class="demo-btn" onclick="document.getElementById('uploadDialog').showModal()">
+                        Upload Files
+                    </button>
+                </div>
+            </div>
+
+            <!-- Example 10: Profile Card -->
+            <div class="example-card">
+                <div class="example-header">🔟 Profile Card</div>
+                <div class="example-content">
+                    <p class="description">User profile modal with details and actions.</p>
+                    <button class="demo-btn" onclick="document.getElementById('profileDialog').showModal()">
+                        View Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialog 1: Checkout -->
+    <dialog id="checkoutDialog">
+        <div class="dialog-header">
+            <span class="dialog-title">🛒 Shopping Cart</span>
+            <button class="dialog-close" onclick="this.closest('dialog').close()">×</button>
+        </div>
+        <div class="dialog-content">
+            <div class="product-item">
+                <span class="product-name">Wireless Headphones</span>
+                <span class="product-price">$79.99</span>
+            </div>
+            <div class="product-item">
+                <span class="product-name">USB-C Cable</span>
+                <span class="product-price">$12.99</span>
+            </div>
+            <div class="product-item">
+                <span class="product-name">Phone Case</span>
+                <span class="product-price">$24.99</span>
+            </div>
+            <div class="total-row">Total: $117.97</div>
+        </div>
+        <div class="dialog-footer">
+            <button class="btn-secondary" onclick="this.closest('dialog').close()">Continue Shopping</button>
+            <button class="btn-primary" onclick="checkoutComplete()">Checkout</button>
+        </div>
+    </dialog>
+
+    <!-- Dialog 2: Login -->
+    <dialog id="loginDialog">
+        <div class="dialog-header">
+            <span class="dialog-title">🔐 Login</span>
+            <button class="dialog-close" onclick="this.closest('dialog').close()">×</button>
+        </div>
+        <div class="dialog-content">
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" placeholder="Enter password">
+            </div>
+            <div style="text-align: center; color: #667eea; cursor: pointer; font-size: 0.9em;">
+                Forgot password?
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <button class="btn-secondary" onclick="this.closest('dialog').close()">Cancel</button>
+            <button class="btn-primary" onclick="loginSubmit()">Sign In</button>
+        </div>
+    </dialog>
+
+    <!-- Dialog 3: Video -->
+    <dialog id="videoDialog">
+        <div class="dialog-header">
+            <span class="dialog-title">🎥 Video Tutorial</span>
+            <button class="dialog-close" onclick="this.closest('dialog').close()">×</button>
+        </div>
+        <div class="dialog-content">
+            <div class="video-container">
+                <div class="video-placeholder">▶️</div>
+            </div>
+            <p>Watch this tutorial to learn the basics. Duration: 5 minutes</p>
+        </div>
+        <div class="dialog-footer">
+            <button class="btn-secondary" onclick="this.closest('dialog').close()">Close</button>
+        </div>
+    </dialog>
+
+    <!-- Dialog 4: Gallery -->
+    <dialog id="galleryDialog">
+        <div class="dialog-header">
+            <span class="dialog-title">🖼️ Image Gallery</span>
+            <button class="dialog-close" onclick="this.closest('dialog').close()">×</button>
+        </div>
+        <div class="dialog-content">
+            <div class="image-gallery">
+                <div class="gallery-item">🏔️</div>
+                <div class="gallery-item">🌊</div>
+                <div class="gallery-item">🌅</div>
+                <div class="gallery-item">🌲</div>
+                <div class="gallery-item">🦋</div>
+                <div class="gallery-item">🌸</div>
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <button class="btn-secondary" onclick="this.closest('dialog').close()">Close</button>
+        </div>
+    </dialog>
+
+    <!-- Dialog 5: Settings -->
+    <dialog id="settingsDialog">
+        <div class="dialog-header">
+            <span class="dialog-title">⚙️ Settings</span>
+            <button class="dialog-close" onclick="this.closest('dialog').close()">×</button>
+        </div>
+        <div class="dialog-content">
+            <div class="setting-item">
+                <span class="setting-label">Dark Mode</span>
+                <button class="toggle-switch" onclick="toggleSwitch(this)"></button>
+            </div>
+            <div class="setting-item">
+                <span class="setting-label">Notifications</span>
+                <button class="toggle-switch active" onclick="toggleSwitch(this)"></button>
+            </div>
+            <div class="setting-item">
+                <span class="setting-label">Email Updates</span>
+                <button class="toggle-switch" onclick="toggleSwitch(this)"></button>
+            </div>
+            <div class="setting-item">
+                <span class="setting-label">Analytics</span>
+                <button class="toggle-switch active" onclick="toggleSwitch(this)"></button>
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <button class="btn-secondary" onclick="this.closest('dialog').close()">Cancel</button>
+            <button class="btn-primary" onclick="saveSettings()">Save</button>
+        </div>
+    </dialog>
+
+    <!-- Dialog 6: Feedback -->
+    <dialog id="feedbackDialog">
+        <div class="dialog-header">
+            <span class="dialog-title">⭐ Send Feedback</span>
+            <button class="dialog-close" onclick="this.closest('dialog').close()">×</button>
+        </div>
+        <div class="dialog-content">
+            <p style="margin-bottom: 15px;">How was your experience?</p>
+            <div class="rating-container" id="ratingContainer">
+                <button class="star-btn" onclick="setRating(1, this)">⭐</button>
+                <button class="star-btn" onclick="setRating(2, this)">⭐</button>
+                <button class="star-btn" onclick="setRating(3, this)">⭐</button>
+                <button class="star-btn" onclick="setRating(4, this)">⭐</button>
+                <button class="star-btn" onclick="setRating(5, this)">⭐</button>
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                <label class="form-label">Comments</label>
+                <textarea class="form-input" placeholder="Share your thoughts..." style="resize: vertical; min-height: 100px;"></textarea>
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <button class="btn-secondary" onclick="this.closest('dialog').close()">Cancel</button>
+            <button class="btn-primary" onclick="submitFeedback()">Submit</button>
+        </div>
+    </dialog>
+
+    <!-- Dialog 7: Share -->
+    <dialog id="shareDialog">
+        <div class="dialog-header">
+            <span class="dialog-title">📤 Share</span>
+            <button class="dialog-close" onclick="this.closest('dialog').close()">×</button>
+        </div>
+        <div class="dialog-content">
+            <p style="margin-bottom: 20px;">Share this with your friends:</p>
+            <div class="share-options">
+                <button class="share-btn" title="Facebook">f</button>
+                <button class="share-btn" title="Twitter">𝕏</button>
+                <button class="share-btn" title="LinkedIn">in</button>
+                <button class="share-btn" title="Email">✉️</button>
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <button class="btn-secondary" onclick="this.closest('dialog').close()">Close</button>
+        </div>
+    </dialog>
+
+    <!-- Dialog 8: Notifications -->
+    <dialog id="notificationDialog">
+        <div class="dialog-header">
+            <span class="dialog-title">🔔 Notifications (3)</span>
+            <button class="dialog-close" onclick="this.closest('dialog').close()">×</button>
+        </div>
+        <div class="dialog-content">
+            <div class="notification-item success">
+                <strong>Order Confirmed</strong>
+                <p style="font-size: 0.9em; margin-top: 5px;">Your order #12345 has been confirmed.</p>
+            </div>
+            <div class="notification-item warning">
+                <strong>Low Stock Alert</strong>
+                <p style="font-size: 0.9em; margin-top: 5px;">Only 3 items left in stock!</p>
+            </div>
+            <div class="notification-item error">
+                <strong>Payment Failed</strong>
+                <p style="font-size: 0.9em; margin-top: 5px;">Your payment could not be processed.</p>
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <button class="btn-secondary" onclick="clearNotifications()">Clear All</button>
+            <button class="btn-secondary" onclick="this.closest('dialog').close()">Close</button>
+        </div>
+    </dialog>
+
+    <!-- Dialog 9: Upload -->
+    <dialog id="uploadDialog">
+        <div class="dialog-header">
+            <span class="dialog-title">📁 Upload Files</span>
+            <button class="dialog-close" onclick="this.closest('dialog').close()">×</button>
+        </div>
+        <div class="dialog-content">
+            <div class="upload-area" id="uploadArea" ondrop="handleDrop(event)" ondragover="handleDragOver(event)">
+                <p style="font-size: 2em; margin-bottom: 10px;">📤</p>
+                <p><strong>Drag files here or click to browse</strong></p>
+                <p style="font-size: 0.9em; color: #7f8c8d; margin-top: 10px;">PNG, JPG, GIF up to 10MB</p>
+            </div>
+            <input type="file" id="fileInput" style="display: none;" multiple>
+        </div>
+        <div class="dialog-footer">
+            <button class="btn-secondary" onclick="this.closest('dialog').close()">Cancel</button>
+            <button class="btn-primary" onclick="uploadFiles()">Upload</button>
+        </div>
+    </dialog>
+
+    <!-- Dialog 10: Profile -->
+    <dialog id="profileDialog">
+        <div class="dialog-header">
+            <span class="dialog-title">👤 User Profile</span>
+            <button class="dialog-close" onclick="this.closest('dialog').close()">×</button>
+        </div>
+        <div class="dialog-content">
+            <div class="profile-card">
+                <div class="profile-avatar">👨‍💼</div>
+                <div class="profile-name">John Doe</div>
+                <div class="profile-email">john.doe@example.com</div>
+                <div style="margin-bottom: 20px;">
+                    <span class="status-badge">Premium Member</span>
+                </div>
+                <div style="text-align: left; background: #f9f9f9; padding: 15px; border-radius: 8px; line-height: 2;">
+                    <p><strong>Member Since:</strong> Jan 15, 2022</p>
+                    <p><strong>Purchases:</strong> 42</p>
+                    <p><strong>Rewards Points:</strong> 1,250</p>
+                </div>
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <button class="btn-secondary" onclick="this.closest('dialog').close()">Close</button>
+            <button class="btn-primary" onclick="editProfile()">Edit Profile</button>
+        </div>
+    </dialog>
+
+    <script>
+        function checkoutComplete() {
+            alert('Thank you for your purchase! 🎉');
+            document.getElementById('checkoutDialog').close();
+        }
+
+        function loginSubmit() {
+            alert('Login successful! ✅');
+            document.getElementById('loginDialog').close();
+        }
+
+        function toggleSwitch(btn) {
+            btn.classList.toggle('active');
+        }
+
+        function saveSettings() {
+            alert('Settings saved! ⚙️');
+            document.getElementById('settingsDialog').close();
+        }
+
+        function setRating(rating, btn) {
+            const container = document.getElementById('ratingContainer');
+            container.querySelectorAll('.star-btn').forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        function submitFeedback() {
+            alert('Thank you for your feedback! 🙏');
+            document.getElementById('feedbackDialog').close();
+        }
+
+        function clearNotifications() {
+            alert('Notifications cleared! ✓');
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            document.getElementById('uploadArea').classList.add('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            document.getElementById('uploadArea').classList.remove('dragover');
+            alert('Files ready to upload! 📂');
+        }
+
+        function uploadFiles() {
+            alert('Files uploaded successfully! ✅');
+            document.getElementById('uploadDialog').close();
+        }
+
+        function editProfile() {
+            alert('Profile editing coming soon! 👤');
+        }
+    </script>
+</body>
+</html>

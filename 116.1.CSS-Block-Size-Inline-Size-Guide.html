@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Block-Size & Inline-Size Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .tutorial-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .tutorial-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .tutorial-section h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 18px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            border-left: 4px solid #667eea;
+        }
+
+        .code-block code {
+            display: block;
+        }
+
+        .keyword { color: #f472b6; }
+        .property { color: #60a5fa; }
+        .value { color: #34d399; }
+        .comment { color: #6b7280; }
+
+        .example-box {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .example-box h4 {
+            color: #1f2937;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .example-box p {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .demo-visual {
+            background: linear-gradient(135deg, #f0f0f0, #fafafa);
+            border: 2px dashed #ccc;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+        }
+
+        .demo-element {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1e40af;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #991b1b;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #166534;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: #1f2937;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .property-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            border-left: 3px solid #667eea;
+        }
+
+        .property-item strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+
+        .property-item code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            color: #667eea;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .property-item p {
+            font-size: 0.85em;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .use-case-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .use-case-item h4 {
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .use-case-item p {
+            font-size: 0.85em;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        footer {
+            background: #f3f4f6;
+            padding: 25px;
+            text-align: center;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .syntax-breakdown {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .syntax-breakdown strong {
+            color: #1f2937;
+            display: block;
+            margin: 8px 0 4px 0;
+        }
+
+        .syntax-breakdown code {
+            background: #fff7ed;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #92400e;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            color: #4b5563;
+        }
+
+        ul li, ol li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        li strong {
+            color: #1f2937;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .comparison-item.good {
+            border-left: 4px solid #22c55e;
+        }
+
+        .comparison-item.bad {
+            border-left: 4px solid #ef4444;
+        }
+
+        .comparison-item strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .axis-diagram {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .axis-visual {
+            display: inline-block;
+            width: 120px;
+            height: 120px;
+            border: 2px solid #667eea;
+            position: relative;
+            background: linear-gradient(135deg, #f0f0f0 50%, #fff 50%);
+            margin: 10px 0;
+        }
+
+        .axis-label {
+            position: absolute;
+            font-size: 0.75em;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .size-comparison {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .size-box {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .size-label {
+            font-size: 0.9em;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .size-demo {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        @media (max-width: 1200px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .use-case-grid,
+            .property-grid,
+            .comparison-grid,
+            .size-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📏 CSS Block-Size & Inline-Size</h1>
+            <p>Logical Dimensions for Writing Mode Agnostic CSS</p>
+            <p class="subtitle">Master direction-aware width and height properties</p>
+        </header>
+
+        <div class="content">
+            <!-- Block-Size & Inline-Size Basics -->
+            <div class="tutorial-section">
+                <h2>
+                    <span class="badge">LOGICAL</span>
+                    What are Logical Dimensions?
+                </h2>
+                <p>Logical properties for width and height that adapt to text direction and writing mode instead of physical screen dimensions.</p>
+
+                <h3>Key Concepts</h3>
+                <ul>
+                    <li><strong>inline-size:</strong> Width in LTR, height in vertical modes</li>
+                    <li><strong>block-size:</strong> Height in LTR, width in vertical modes</li>
+                    <li><strong>Direction-aware:</strong> Automatically adapts to writing mode</li>
+                    <li><strong>Future-proof:</strong> Works with vertical, RTL, and mixed text</li>
+                </ul>
+
+                <h3>Why Use Logical Sizing?</h3>
+                <ul>
+                    <li><strong>Global compatibility:</strong> Single CSS for all languages</li>
+                    <li><strong>Vertical text support:</strong> Works with Japanese, Chinese vertical</li>
+                    <li><strong>RTL languages:</strong> Automatic adaptation without overrides</li>
+                    <li><strong>Semantic clarity:</strong> Intent is clearer in code</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>ℹ️ Key Difference:</strong> width/height are physical, inline-size/block-size are logical and adapt to context.
+                </div>
+            </div>
+
+            <!-- Understanding the Dimensions -->
+            <div class="tutorial-section">
+                <h2>📐 Understanding the Dimensions</h2>
+                <p>Visualize how inline and block sizes work:</p>
+
+                <h3>In English (Horizontal LTR)</h3>
+                <div class="axis-diagram">
+                    <p style="color: #667eea; font-weight: 600; margin-bottom: 10px;">LTR Horizontal Text</p>
+                    <div class="axis-visual" style="width: 150px; height: 100px;">
+                        <div class="axis-label" style="top: -25px; left: 50%; transform: translateX(-50%);">inline-size (width)</div>
+                        <div class="axis-label" style="left: -60px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl;">block-size (height)</div>
+                    </div>
+                    <p style="margin-top: 15px; color: #666; font-size: 0.9em;">inline-size = width | block-size = height</p>
+                </div>
+
+                <h3>In Vertical Mode (Japanese)</h3>
+                <div class="axis-diagram">
+                    <p style="color: #667eea; font-weight: 600; margin-bottom: 10px;">Vertical Text</p>
+                    <div class="axis-visual" style="width: 100px; height: 150px;">
+                        <div class="axis-label" style="top: -25px; left: 50%; transform: translateX(-50%);">inline-size (height)</div>
+                        <div class="axis-label" style="left: -60px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl;">block-size (width)</div>
+                    </div>
+                    <p style="margin-top: 15px; color: #666; font-size: 0.9em;">inline-size = height | block-size = width (flipped!)</p>
+                </div>
+
+                <div class="success-box">
+                    <strong>✨ Power of Logical:</strong> Same CSS value works for both horizontal and vertical text automatically!
+                </div>
+            </div>
+
+            <!-- Inline-Size Properties -->
+            <div class="tutorial-section">
+                <h2>↔️ Inline-Size Properties</h2>
+                <p>Control the inline dimension (width in horizontal text, height in vertical).</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block">
+                    <code><span class="keyword">element</span> {<br/>
+&nbsp;&nbsp;<span class="property">inline-size</span>: <span class="value">value</span>;<br/>
+&nbsp;&nbsp;<span class="property">min-inline-size</span>: <span class="value">value</span>;<br/>
+&nbsp;&nbsp;<span class="property">max-inline-size</span>: <span class="value">value</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Properties Explained</h3>
+                <ul>
+                    <li><strong>inline-size:</strong> Sets dimension along inline axis</li>
+                    <li><strong>min-inline-size:</strong> Minimum inline dimension</li>
+                    <li><strong>max-inline-size:</strong> Maximum inline dimension</li>
+                </ul>
+
+                <h3>Examples</h3>
+                <div class="code-block">
+                    <code><span class="keyword">.container</span> {<br/>
+&nbsp;&nbsp;<span class="property">inline-size</span>: <span class="value">500px</span>;<br/>
+}<br/><br/>
+<span class="keyword">.card</span> {<br/>
+&nbsp;&nbsp;<span class="property">inline-size</span>: <span class="value">100%</span>;<br/>
+&nbsp;&nbsp;<span class="property">max-inline-size</span>: <span class="value">400px</span>;<br/>
+}</code>
+                </div>
+
+                <div class="demo-visual">
+                    <div class="demo-element" style="inline-size: 250px;">
+                        Element with inline-size: 250px
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block-Size Properties -->
+            <div class="tutorial-section">
+                <h2>⬍ Block-Size Properties</h2>
+                <p>Control the block dimension (height in horizontal text, width in vertical).</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block">
+                    <code><span class="keyword">element</span> {<br/>
+&nbsp;&nbsp;<span class="property">block-size</span>: <span class="value">value</span>;<br/>
+&nbsp;&nbsp;<span class="property">min-block-size</span>: <span class="value">value</span>;<br/>
+&nbsp;&nbsp;<span class="property">max-block-size</span>: <span class="value">value</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Properties Explained</h3>
+                <ul>
+                    <li><strong>block-size:</strong> Sets dimension along block axis</li>
+                    <li><strong>min-block-size:</strong> Minimum block dimension</li>
+                    <li><strong>max-block-size:</strong> Maximum block dimension</li>
+                </ul>
+
+                <h3>Examples</h3>
+                <div class="code-block">
+                    <code><span class="keyword">section</span> {<br/>
+&nbsp;&nbsp;<span class="property">block-size</span>: <span class="value">300px</span>;<br/>
+}<br/><br/>
+<span class="keyword">.hero</span> {<br/>
+&nbsp;&nbsp;<span class="property">block-size</span>: <span class="value">100vh</span>;<br/>
+&nbsp;&nbsp;<span class="property">min-block-size</span>: <span class="value">400px</span>;<br/>
+}</code>
+                </div>
+
+                <div class="demo-visual">
+                    <div class="demo-element" style="block-size: 120px;">
+                        Element with block-size: 120px
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison: Physical vs Logical Sizing -->
+            <div class="tutorial-section full-width">
+                <h2>🔄 Physical vs Logical Sizing</h2>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Context</th>
+                            <th>Physical</th>
+                            <th>Logical</th>
+                            <th>Benefit of Logical</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Horizontal text width</strong></td>
+                            <td>width: 500px</td>
+                            <td>inline-size: 500px</td>
+                            <td>Works in RTL too</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Horizontal text height</strong></td>
+                            <td>height: 300px</td>
+                            <td>block-size: 300px</td>
+                            <td>Works in any mode</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Constrain width</strong></td>
+                            <td>max-width: 800px</td>
+                            <td>max-inline-size: 800px</td>
+                            <td>Respects writing mode</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Min container size</strong></td>
+                            <td>min-height: 200px</td>
+                            <td>min-block-size: 200px</td>
+                            <td>Universal application</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vertical text</strong></td>
+                            <td>width & height swap</td>
+                            <td>inline-size & block-size auto-adapt</td>
+                            <td>No manual changes needed</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <strong>ℹ️ Note:</strong> Physical properties (width, height) still work. Logical properties are an alternative approach.
+                </div>
+            </div>
+
+            <!-- Size Property Relationships -->
+            <div class="tutorial-section full-width">
+                <h2>🔗 Size Property Relationships</h2>
+
+                <div class="size-comparison">
+                    <div class="size-box">
+                        <div class="size-label">Physical Width</div>
+                        <div class="size-demo" style="width: 100px;">
+                            width: 100px
+                        </div>
+                        <p style="margin-top: 8px; font-size: 0.85em; color: #666;">Fixed horizontal</p>
+                    </div>
+
+                    <div class="size-box">
+                        <div class="size-label">Logical Inline-Size</div>
+                        <div class="size-demo" style="inline-size: 100px;">
+                            inline-size: 100px
+                        </div>
+                        <p style="margin-top: 8px; font-size: 0.85em; color: #666;">Flow direction</p>
+                    </div>
+
+                    <div class="size-box">
+                        <div class="size-label">Physical Height</div>
+                        <div class="size-demo" style="block-size: 80px;">
+                            height: 80px
+                        </div>
+                        <p style="margin-top: 8px; font-size: 0.85em; color: #666;">Fixed vertical</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practical Examples -->
+            <div class="tutorial-section full-width">
+                <h2>🎨 Practical Examples</h2>
+
+                <h3>Example 1: Responsive Container</h3>
+                <div class="example-box">
+                    <h4>Using logical sizes for flexible containers</h4>
+                    <div class="code-block">
+                        <code><span class="keyword">.container</span> {<br/>
+&nbsp;&nbsp;<span class="property">inline-size</span>: <span class="value">100%</span>;<br/>
+&nbsp;&nbsp;<span class="property">max-inline-size</span>: <span class="value">1200px</span>;<br/>
+&nbsp;&nbsp;<span class="property">block-size</span>: <span class="value">auto</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin-inline</span>: <span class="value">auto</span>;<br/>
+}</code>
+                    </div>
+                </div>
+
+                <h3>Example 2: Aspect Ratio with Logical Sizing</h3>
+                <div class="example-box">
+                    <h4>Images that maintain aspect ratio in any writing mode</h4>
+                    <div class="code-block">
+                        <code><span class="keyword">img</span> {<br/>
+&nbsp;&nbsp;<span class="property">inline-size</span>: <span class="value">100%</span>;<br/>
+&nbsp;&nbsp;<span class="property">aspect-ratio</span>: <span class="value">16 / 9</span>;<br/>
+&nbsp;&nbsp;<span class="property">block-size</span>: <span class="value">auto</span>;<br/>
+}</code>
+                    </div>
+                </div>
+
+                <h3>Example 3: Square Elements</h3>
+                <div class="example-box">
+                    <h4>Creating perfect squares with logical properties</h4>
+                    <div class="code-block">
+                        <code><span class="keyword">.square</span> {<br/>
+&nbsp;&nbsp;<span class="property">inline-size</span>: <span class="value">200px</span>;<br/>
+&nbsp;&nbsp;<span class="property">block-size</span>: <span class="value">200px</span>;<br/>
+}</code>
+                    </div>
+                </div>
+
+                <h3>Example 4: Min/Max Constraints</h3>
+                <div class="example-box">
+                    <h4>Flexible sizing with logical constraints</h4>
+                    <div class="code-block">
+                        <code><span class="keyword">.flexible</span> {<br/>
+&nbsp;&nbsp;<span class="property">inline-size</span>: <span class="value">50%</span>;<br/>
+&nbsp;&nbsp;<span class="property">min-inline-size</span>: <span class="value">300px</span>;<br/>
+&nbsp;&nbsp;<span class="property">max-inline-size</span>: <span class="value">900px</span>;<br/>
+&nbsp;&nbsp;<span class="property">block-size</span>: <span class="value">auto</span>;<br/>
+}</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browser Support -->
+            <div class="tutorial-section">
+                <h2>✅ Browser Support</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                            <th>Support Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>inline-size</strong></td>
+                            <td>✅ 78+</td>
+                            <td>✅ 41+</td>
+                            <td>✅ 14+</td>
+                            <td>✅ 79+</td>
+                            <td>Universal (99%+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>block-size</strong></td>
+                            <td>✅ 78+</td>
+                            <td>✅ 41+</td>
+                            <td>✅ 14+</td>
+                            <td>✅ 79+</td>
+                            <td>Universal (99%+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>min/max variants</strong></td>
+                            <td>✅ 78+</td>
+                            <td>✅ 41+</td>
+                            <td>✅ 14+</td>
+                            <td>✅ 79+</td>
+                            <td>Universal (99%+)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="success-box">
+                    <strong>✨ Excellent Support:</strong> Logical sizing properties have universal browser support. Safe for production use today!
+                </div>
+            </div>
+
+            <!-- Real-World Use Cases -->
+            <div class="tutorial-section full-width">
+                <h2>💼 Real-World Use Cases</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <h4>🌍 International Websites</h4>
+                        <p>Single CSS sizing for LTR and RTL without duplication or overrides.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📦 Component Libraries</h4>
+                        <p>Reusable components that automatically adapt to any writing mode.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🎯 Responsive Design</h4>
+                        <p>Fluid layouts that work in horizontal and vertical text contexts.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🗣️ Multilingual Apps</h4>
+                        <p>Applications supporting Japanese, Arabic, Chinese vertical, and more.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📐 Grid Systems</h4>
+                        <p>Flexible grids that adapt based on content flow, not screen axes.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🎨 Design Systems</h4>
+                        <p>Global design systems that work across all languages and cultures.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Complete Property Reference -->
+            <div class="tutorial-section full-width">
+                <h2>🔧 Complete Property Reference</h2>
+
+                <div class="property-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                    <div class="property-item">
+                        <strong>inline-size</strong>
+                        <code>width | 200px | 50%</code>
+                        <p>Sets the inline dimension (width in LTR, height in vertical)</p>
+                    </div>
+
+                    <div class="property-item">
+                        <strong>min-inline-size</strong>
+                        <code>100px | auto</code>
+                        <p>Minimum inline dimension constraint</p>
+                    </div>
+
+                    <div class="property-item">
+                        <strong>max-inline-size</strong>
+                        <code>800px | 100%</code>
+                        <p>Maximum inline dimension constraint</p>
+                    </div>
+
+                    <div class="property-item">
+                        <strong>block-size</strong>
+                        <code>height | 300px | auto</code>
+                        <p>Sets the block dimension (height in LTR, width in vertical)</p>
+                    </div>
+
+                    <div class="property-item">
+                        <strong>min-block-size</strong>
+                        <code>200px | auto</code>
+                        <p>Minimum block dimension constraint</p>
+                    </div>
+
+                    <div class="property-item">
+                        <strong>max-block-size</strong>
+                        <code>600px | 100vh</code>
+                        <p>Maximum block dimension constraint</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="tutorial-section full-width">
+                <h2>🏆 Best Practices & Tips</h2>
+
+                <div class="grid-2">
+                    <div>
+                        <h3>✅ Do:</h3>
+                        <ul>
+                            <li><strong>Use for new projects:</strong> Build with logical properties</li>
+                            <li><strong>Combine with logical margins:</strong> Consistent approach</li>
+                            <li><strong>Test in multiple writing modes:</strong> Verify behavior</li>
+                            <li><strong>Use with aspect-ratio:</strong> Great combination</li>
+                            <li><strong>Document your approach:</strong> Help team understand</li>
+                            <li><strong>Migrate gradually:</strong> Mix physical and logical</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>❌ Don't:</h3>
+                        <ul>
+                            <li><strong>Mix both approaches:</strong> Keep consistent</li>
+                            <li><strong>Forget aspect-ratio:</strong> Often works better together</li>
+                            <li><strong>Assume old browser support:</strong> Check your target</li>
+                            <li><strong>Use in isolation:</strong> Combine with logical margins</li>
+                            <li><strong>Skip mobile testing:</strong> Test all devices</li>
+                            <li><strong>Forget vertical text:</strong> Test Japanese/Chinese vertical</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Important:</strong> Physical properties (width, height) still work and are still valid. Use logical for new code, but don't break existing implementations.
+                </div>
+            </div>
+
+            <!-- Common Replacements -->
+            <div class="tutorial-section full-width">
+                <h2>🔄 Physical to Logical Replacement Guide</h2>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Physical Property</th>
+                            <th>Logical Equivalent</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>width</strong></td>
+                            <td>inline-size</td>
+                            <td>Controls inline dimension</td>
+                        </tr>
+                        <tr>
+                            <td><strong>height</strong></td>
+                            <td>block-size</td>
+                            <td>Controls block dimension</td>
+                        </tr>
+                        <tr>
+                            <td><strong>min-width</strong></td>
+                            <td>min-inline-size</td>
+                            <td>Minimum inline size</td>
+                        </tr>
+                        <tr>
+                            <td><strong>max-width</strong></td>
+                            <td>max-inline-size</td>
+                            <td>Maximum inline size</td>
+                        </tr>
+                        <tr>
+                            <td><strong>min-height</strong></td>
+                            <td>min-block-size</td>
+                            <td>Minimum block size</td>
+                        </tr>
+                        <tr>
+                            <td><strong>max-height</strong></td>
+                            <td>max-block-size</td>
+                            <td>Maximum block size</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Implementation Checklist -->
+            <div class="tutorial-section full-width">
+                <h2>📋 Implementation Checklist</h2>
+                <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #e5e7eb;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Planning</strong></h4>
+                            <ul style="list-style: none; margin: 0; color: #666;">
+                                <li style="padding: 5px 0;">☐ Audit current sizing properties</li>
+                                <li style="padding: 5px 0;">☐ Check browser support requirements</li>
+                                <li style="padding: 5px 0;">☐ Plan migration strategy</li>
+                                <li style="padding: 5px 0;">☐ Set team guidelines</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Implementation</strong></h4>
+                            <ul style="list-style: none; margin: 0; color: #666;">
+                                <li style="padding: 5px 0;">☐ Replace width/height properties</li>
+                                <li style="padding: 5px 0;">☐ Use min/max logical variants</li>
+                                <li style="padding: 5px 0;">☐ Combine with aspect-ratio</li>
+                                <li style="padding: 5px 0;">☐ Test all writing modes</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Testing</strong></h4>
+                            <ul style="list-style: none; margin: 0; color: #666;">
+                                <li style="padding: 5px 0;">☐ Test horizontal text</li>
+                                <li style="padding: 5px 0;">☐ Test vertical text</li>
+                                <li style="padding: 5px 0;">☐ Test RTL languages</li>
+                                <li style="padding: 5px 0;">☐ Cross-browser testing</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Documentation</strong></h4>
+                            <ul style="list-style: none; margin: 0; color: #666;">
+                                <li style="padding: 5px 0;">☐ Document sizing conventions</li>
+                                <li style="padding: 5px 0;">☐ Update style guide</li>
+                                <li style="padding: 5px 0;">☐ Train team members</li>
+                                <li style="padding: 5px 0;">☐ Create examples</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>CSS Block-Size & Inline-Size Tutorial</strong></p>
+            <p>Master logical dimensions for writing mode agnostic CSS</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Browser Support: Universal (99%+) | Production Ready ✅</p>
+        </footer>
+    </div>
+</body>
+</html>

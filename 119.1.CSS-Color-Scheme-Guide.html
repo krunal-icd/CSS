@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS color-scheme Property - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .tutorial-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .tutorial-section h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .tutorial-section h3 {
+            font-size: 1.4em;
+            color: #444;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section-description {
+            color: #666;
+            font-size: 1em;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 1000px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+            line-height: 1.5;
+        }
+
+        .code-block .keyword {
+            color: #f472b6;
+        }
+
+        .code-block .property {
+            color: #60a5fa;
+        }
+
+        .code-block .value {
+            color: #34d399;
+        }
+
+        .code-block .comment {
+            color: #6b7280;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            border-radius: 6px;
+            color: #1e40af;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 6px;
+            color: #991b1b;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            border-radius: 6px;
+            color: #166534;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: #f3f4f6;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .comparison-table td {
+            color: #666;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .browser-support {
+            background: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .browser-support-header {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+        }
+
+        .browser-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .browser-item:last-child {
+            border-bottom: none;
+        }
+
+        .browser-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .browser-version {
+            background: #22c55e;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .key-benefit {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .key-benefit::before {
+            content: "✓";
+            color: #22c55e;
+            font-weight: bold;
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .key-benefit p {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .pitfall {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #fef2f2;
+            border-radius: 8px;
+            border-left: 4px solid #ef4444;
+        }
+
+        .pitfall::before {
+            content: "⚠";
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .pitfall p {
+            color: #991b1b;
+            line-height: 1.5;
+        }
+
+        .use-case {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .use-case h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .use-case p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-item.bad {
+            border-left-color: #ef4444;
+        }
+
+        .comparison-item.good {
+            border-left-color: #22c55e;
+        }
+
+        .comparison-item h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .comparison-item code {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: block;
+            font-size: 0.85em;
+            color: #667eea;
+            overflow-x: auto;
+            margin-top: 8px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.4;
+        }
+
+        .syntax-breakdown {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .syntax-part {
+            margin-bottom: 15px;
+            padding: 12px;
+            background: white;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .syntax-part strong {
+            color: #667eea;
+        }
+
+        .syntax-part code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #667eea;
+        }
+
+        .theme-demo {
+            padding: 20px;
+            border-radius: 8px;
+            background: white;
+            color: #333;
+            border: 2px solid #667eea;
+            margin-bottom: 15px;
+        }
+
+        .theme-demo.dark {
+            background: #1f2937;
+            color: #f3f4f6;
+            border-color: #a78bfa;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .tutorial-section {
+                padding: 25px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .demo-item {
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .color-scheme-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .scheme-button {
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .scheme-button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .scheme-button.active {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS color-scheme Property</h1>
+            <p>Master light/dark theme declaration and browser-native theme support</p>
+        </header>
+
+        <!-- What is color-scheme -->
+        <section class="tutorial-section">
+            <h2>What is the color-scheme Property?</h2>
+            <p class="section-description">
+                The CSS <code>color-scheme</code> property tells the browser which color schemes (light and/or dark) your website supports. 
+                This enables automatic browser UI theming, form styling, scrollbar colors, and media query matching for <code>prefers-color-scheme</code>. 
+                It's the foundation of modern dark mode support in CSS.
+            </p>
+
+            <div class="success-box">
+                <strong>Core Function:</strong> Declare theme support to the browser, enabling automatic application of system-appropriate colors 
+                to form elements, scrollbars, and native components.
+            </div>
+
+            <h3>Key Capabilities</h3>
+            <div class="key-benefit">
+                <p><strong>Browser Theme Matching:</strong> Browser UI (scrollbars, inputs, buttons) automatically adapts to declared schemes.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>System Preference Detection:</strong> Works with <code>prefers-color-scheme</code> media queries for responsive theming.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Form Styling Automation:</strong> Form inputs and elements receive native styling matching your color scheme.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Meta Tag Support:</strong> Can be declared in HTML meta tags for immediate browser awareness.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Zero JavaScript:</strong> Pure CSS declaration — no runtime overhead or JavaScript dependency.</p>
+            </div>
+        </section>
+
+        <!-- Basic Syntax -->
+        <section class="tutorial-section">
+            <h2>Basic Syntax & Values</h2>
+            <p class="section-description">
+                The <code>color-scheme</code> property accepts keyword values specifying supported color modes.
+            </p>
+
+            <h3>Syntax</h3>
+            <div class="code-block">
+<span class="property">color-scheme</span>: <span class="value">light</span> | <span class="value">dark</span> | <span class="value">light dark</span> | <span class="value">only light</span>;
+            </div>
+
+            <h3>Value Breakdown</h3>
+            <div class="syntax-breakdown">
+                <div class="syntax-part">
+                    <strong>light:</strong> Website supports light mode only.
+                    <code>color-scheme: light;</code>
+                </div>
+
+                <div class="syntax-part">
+                    <strong>dark:</strong> Website supports dark mode only.
+                    <code>color-scheme: dark;</code>
+                </div>
+
+                <div class="syntax-part">
+                    <strong>light dark:</strong> Website supports both light and dark modes (preferred order matters).
+                    <code>color-scheme: light dark;</code>
+                </div>
+
+                <div class="syntax-part">
+                    <strong>only light:</strong> Forces light mode, ignoring system preference.
+                    <code>color-scheme: only light;</code>
+                </div>
+
+                <div class="syntax-part">
+                    <strong>only dark:</strong> Forces dark mode, ignoring system preference.
+                    <code>color-scheme: only dark;</code>
+                </div>
+            </div>
+
+            <h3>Common Usage Patterns</h3>
+            <div class="code-block">
+<span class="comment">/* 1. Support both themes (light preferred) */</span><br>
+<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">light dark</span>;<br>
+}<br>
+<br>
+<span class="comment">/* 2. Support both themes (dark preferred) */</span><br>
+<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">dark light</span>;<br>
+}<br>
+<br>
+<span class="comment">/* 3. Light mode only */</span><br>
+<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">light</span>;<br>
+}<br>
+<br>
+<span class="comment">/* 4. Force light mode (ignore system preference) */</span><br>
+<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">only light</span>;<br>
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Order Matters:</strong> When specifying multiple schemes like <code>light dark</code>, the first value 
+                is the default preference if the user has no system preference set.
+            </div>
+        </section>
+
+        <!-- HTML Meta Tag -->
+        <section class="tutorial-section">
+            <h2>HTML Meta Tag Declaration</h2>
+            <p class="section-description">
+                Beyond CSS, you can declare <code>color-scheme</code> in HTML's meta tag for immediate browser awareness 
+                before CSS loads.
+            </p>
+
+            <h3>Meta Tag Syntax</h3>
+            <div class="code-block">
+<span class="comment">&lt;!-- In HTML head --&gt;</span><br>
+<span class="keyword">&lt;meta</span> <span class="property">name</span>=<span class="value">"color-scheme"</span> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">content</span>=<span class="value">"light dark"</span><span class="keyword">&gt;</span>
+            </div>
+
+            <h3>Best Practice: Use Both</h3>
+            <div class="code-block">
+<span class="comment">&lt;!-- In HTML head (for immediate browser awareness) --&gt;</span><br>
+<span class="keyword">&lt;meta</span> <span class="property">name</span>=<span class="value">"color-scheme"</span> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">content</span>=<span class="value">"light dark"</span><span class="keyword">&gt;</span><br>
+<br>
+<span class="comment">/* In CSS (for consistency and override capability) */</span><br>
+<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">light dark</span>;<br>
+}
+            </div>
+
+            <div class="success-box">
+                <strong>Pro Tip:</strong> Use HTML meta tag for universal browser support and immediate effect, 
+                then declare in CSS for override capability and better organization.
+            </div>
+        </section>
+
+        <!-- Prefers Color Scheme -->
+        <section class="tutorial-section">
+            <h2>Integration with prefers-color-scheme Media Query</h2>
+            <p class="section-description">
+                <code>color-scheme</code> works hand-in-hand with the <code>prefers-color-scheme</code> media query 
+                to create adaptive, theme-aware websites.
+            </p>
+
+            <h3>How They Work Together</h3>
+            <div class="content-grid">
+                <div>
+                    <h4 style="margin-bottom: 15px;">color-scheme (Declaration)</h4>
+                    <div class="code-block">
+<span class="comment">/* Tells browser what we support */</span><br>
+<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">light dark</span>;<br>
+}
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 15px;">prefers-color-scheme (Detection)</h4>
+                    <div class="code-block">
+<span class="comment">/* Detects user preference */</span><br>
+<span class="keyword">@media</span> (<span class="value">prefers-color-scheme: dark</span>) {<br>
+&nbsp;&nbsp;<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--bg</span>: <span class="value">#1a1a1a</span>;<br>
+&nbsp;&nbsp;}<br>
+}
+                    </div>
+                </div>
+            </div>
+
+            <h3>Complete Example</h3>
+            <div class="code-block">
+<span class="comment">/* 1. Declare supported schemes */</span><br>
+<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">light dark</span>;<br>
+&nbsp;&nbsp;<span class="property">--bg-primary</span>: <span class="value">white</span>;<br>
+&nbsp;&nbsp;<span class="property">--text-primary</span>: <span class="value">black</span>;<br>
+&nbsp;&nbsp;<span class="property">--border</span>: <span class="value">#e5e7eb</span>;<br>
+}<br>
+<br>
+<span class="comment">/* 2. Define dark mode colors */</span><br>
+<span class="keyword">@media</span> (<span class="value">prefers-color-scheme: dark</span>) {<br>
+&nbsp;&nbsp;<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--bg-primary</span>: <span class="value">#1f2937</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--text-primary</span>: <span class="value">#f3f4f6</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--border</span>: <span class="value">#374151</span>;<br>
+&nbsp;&nbsp;}<br>
+}<br>
+<br>
+<span class="comment">/* 3. Use variables throughout */</span><br>
+<span class="keyword">body</span> {<br>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">var(--bg-primary)</span>;<br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">var(--text-primary)</span>;<br>
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Automatic Behavior:</strong> When you declare <code>color-scheme: light dark</code>, 
+                browsers automatically know to style form elements, scrollbars, and native components appropriately for each theme.
+            </div>
+        </section>
+
+        <!-- Browser Effects -->
+        <section class="tutorial-section">
+            <h2>What color-scheme Actually Changes</h2>
+            <p class="section-description">
+                The <code>color-scheme</code> property influences multiple browser and system components automatically.
+            </p>
+
+            <h3>Affected Elements</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Component</th>
+                    <th>Light Mode</th>
+                    <th>Dark Mode</th>
+                </tr>
+                <tr>
+                    <td><strong>Form Inputs</strong></td>
+                    <td>Light background, dark text</td>
+                    <td>Dark background, light text</td>
+                </tr>
+                <tr>
+                    <td><strong>Scrollbars</strong></td>
+                    <td>Light track, dark thumb</td>
+                    <td>Dark track, light thumb</td>
+                </tr>
+                <tr>
+                    <td><strong>Select Dropdowns</strong></td>
+                    <td>Light styling</td>
+                    <td>Dark styling</td>
+                </tr>
+                <tr>
+                    <td><strong>Buttons</strong></td>
+                    <td>Light appearance</td>
+                    <td>Dark appearance</td>
+                </tr>
+                <tr>
+                    <td><strong>Text Fields</strong></td>
+                    <td>Light background</td>
+                    <td>Dark background</td>
+                </tr>
+                <tr>
+                    <td><strong>Browser UI</strong></td>
+                    <td>Light UI elements</td>
+                    <td>Dark UI elements</td>
+                </tr>
+            </table>
+
+            <div class="success-box">
+                <strong>Automatic Styling:</strong> You don't need to manually style form elements. 
+                The browser handles native theming when you declare <code>color-scheme</code>.
+            </div>
+        </section>
+
+        <!-- Practical Patterns -->
+        <section class="tutorial-section">
+            <h2>Practical Implementation Patterns</h2>
+
+            <h3>Pattern 1: Dual Theme Support (Recommended)</h3>
+            <div class="code-block">
+<span class="comment">/* HTML head */</span><br>
+<span class="keyword">&lt;meta</span> <span class="property">name</span>=<span class="value">"color-scheme"</span> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">content</span>=<span class="value">"light dark"</span><span class="keyword">&gt;</span><br>
+<br>
+<span class="comment">/* CSS */</span><br>
+<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">light dark</span>;<br>
+&nbsp;&nbsp;<span class="comment">/* Light mode defaults */</span><br>
+&nbsp;&nbsp;<span class="property">--background</span>: <span class="value">white</span>;<br>
+&nbsp;&nbsp;<span class="property">--foreground</span>: <span class="value">black</span>;<br>
+}<br>
+<br>
+<span class="keyword">@media</span> (<span class="value">prefers-color-scheme: dark</span>) {<br>
+&nbsp;&nbsp;<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--background</span>: <span class="value">#121212</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--foreground</span>: <span class="value">#ffffff</span>;<br>
+&nbsp;&nbsp;}<br>
+}
+            </div>
+
+            <h3>Pattern 2: Light Mode Only</h3>
+            <div class="code-block">
+<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">light</span>;<br>
+}
+            </div>
+
+            <h3>Pattern 3: Dark Mode Preferred</h3>
+            <div class="code-block">
+<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">dark light</span>;<br>
+&nbsp;&nbsp;<span class="comment">/* Dark is default preference */</span><br>
+}
+            </div>
+
+            <h3>Pattern 4: With CSS Custom Properties</h3>
+            <div class="code-block">
+<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">light dark</span>;<br>
+&nbsp;&nbsp;<span class="property">--primary</span>: <span class="value">#667eea</span>;<br>
+&nbsp;&nbsp;<span class="property">--bg</span>: <span class="value">#ffffff</span>;<br>
+&nbsp;&nbsp;<span class="property">--text</span>: <span class="value">#000000</span>;<br>
+&nbsp;&nbsp;<span class="property">--border</span>: <span class="value">#e5e7eb</span>;<br>
+}<br>
+<br>
+<span class="keyword">@media</span> (<span class="value">prefers-color-scheme: dark</span>) {<br>
+&nbsp;&nbsp;<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--bg</span>: <span class="value">#1a1a1a</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--text</span>: <span class="value">#ffffff</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--border</span>: <span class="value">#374151</span>;<br>
+&nbsp;&nbsp;}<br>
+}
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="tutorial-section">
+            <h2>Browser Support</h2>
+            <p class="section-description">
+                The CSS <code>color-scheme</code> property has excellent modern browser support.
+            </p>
+
+            <div class="browser-support">
+                <div class="browser-support-header">Browser Support for color-scheme</div>
+                <div class="browser-item">
+                    <span class="browser-name">Chrome / Edge</span>
+                    <span class="browser-version">76+</span>
+                </div>
+                <div class="browser-item">
+                    <span class="browser-name">Firefox</span>
+                    <span class="browser-version">67+</span>
+                </div>
+                <div class="browser-item">
+                    <span class="browser-name">Safari</span>
+                    <span class="browser-version">12.1+</span>
+                </div>
+                <div class="browser-item">
+                    <span class="browser-name">Opera</span>
+                    <span class="browser-version">63+</span>
+                </div>
+                <div class="browser-item">
+                    <span class="browser-name">Mobile Safari</span>
+                    <span class="browser-version">13+</span>
+                </div>
+            </div>
+
+            <p class="section-description" style="margin-top: 20px;">
+                <strong>Global Support: ~97%</strong> — CSS <code>color-scheme</code> is supported in virtually all modern browsers, 
+                making it safe for production use today.
+            </p>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="tutorial-section">
+            <h2>Best Practices & Tips</h2>
+
+            <div class="key-benefit">
+                <p><strong>Use Both Meta Tag and CSS:</strong> Meta tag for immediate effect, CSS for organization and override capability.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Declare Early:</strong> Place color-scheme declaration near the top of your HTML/CSS for fastest application.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Define CSS Variables First:</strong> Establish all color variables in light mode, then override in dark mode media query.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Support Both Themes:</strong> Use <code>light dark</code> to support both, respecting user preference.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Test Form Elements:</strong> Verify that inputs, buttons, and selects render correctly in both themes.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Consider Contrast Ratios:</strong> Ensure colors meet WCAG AA standards (4.5:1 for text) in both themes.</p>
+            </div>
+
+            <h3>Common Pitfalls to Avoid</h3>
+
+            <div class="pitfall">
+                <p><strong>Forgetting the Meta Tag:</strong> Without HTML meta tag, users see light mode until CSS loads.</p>
+            </div>
+
+            <div class="pitfall">
+                <p><strong>Using Only CSS:</strong> CSS takes time to load. Meta tag provides instant browser awareness.</p>
+            </div>
+
+            <div class="pitfall">
+                <p><strong>Forcing One Theme:</strong> Avoid <code>only light</code> or <code>only dark</code> unless necessary. 
+                Respect user preference.</p>
+            </div>
+
+            <div class="pitfall">
+                <p><strong>Ignoring System Preference:</strong> Not declaring <code>color-scheme</code> means users see browser defaults, 
+                not your intended theme.</p>
+            </div>
+
+            <div class="pitfall">
+                <p><strong>Inconsistent Variable Names:</strong> Use semantic names like <code>--bg-primary</code>, not <code>--dark-bg</code> 
+                (which implies hardcoding).</p>
+            </div>
+        </section>
+
+        <!-- Complete Example -->
+        <section class="tutorial-section">
+            <h2>Complete Working Example</h2>
+            <p class="section-description">
+                Here's a production-ready implementation combining HTML and CSS.
+            </p>
+
+            <h3>Full Implementation</h3>
+            <div class="code-block">
+<span class="comment">&lt;!-- HTML head --&gt;</span><br>
+<span class="keyword">&lt;meta</span> <span class="property">name</span>=<span class="value">"color-scheme"</span> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">content</span>=<span class="value">"light dark"</span><span class="keyword">&gt;</span><br>
+<br>
+<span class="comment">/* CSS */</span><br>
+<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">light dark</span>;<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;<span class="comment">/* Light mode (default) */</span><br>
+&nbsp;&nbsp;<span class="property">--color-bg-primary</span>: <span class="value">white</span>;<br>
+&nbsp;&nbsp;<span class="property">--color-bg-secondary</span>: <span class="value">#f8f9fa</span>;<br>
+&nbsp;&nbsp;<span class="property">--color-text-primary</span>: <span class="value">#1a1a1a</span>;<br>
+&nbsp;&nbsp;<span class="property">--color-text-secondary</span>: <span class="value">#666666</span>;<br>
+&nbsp;&nbsp;<span class="property">--color-border</span>: <span class="value">#e5e7eb</span>;<br>
+&nbsp;&nbsp;<span class="property">--color-accent</span>: <span class="value">#667eea</span>;<br>
+}<br>
+<br>
+<span class="keyword">@media</span> (<span class="value">prefers-color-scheme: dark</span>) {<br>
+&nbsp;&nbsp;<span class="keyword">:root</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--color-bg-primary</span>: <span class="value">#1a1a1a</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--color-bg-secondary</span>: <span class="value">#2d2d2d</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--color-text-primary</span>: <span class="value">#ffffff</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--color-text-secondary</span>: <span class="value">#b0b0b0</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--color-border</span>: <span class="value">#374151</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--color-accent</span>: <span class="value">#a78bfa</span>;<br>
+&nbsp;&nbsp;}<br>
+}<br>
+<br>
+<span class="keyword">body</span> {<br>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">var(--color-bg-primary)</span>;<br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">var(--color-text-primary)</span>;<br>
+}
+            </div>
+        </section>
+
+        <!-- Comparison: With and Without -->
+        <section class="tutorial-section">
+            <h2>Comparison: With vs Without color-scheme</h2>
+
+            <div class="comparison-grid">
+                <div class="comparison-item bad">
+                    <h4>❌ Without color-scheme</h4>
+                    <code>/* No declaration */
+/* Browser uses defaults */
+/* Form elements don't theme */
+/* Scrollbars don't adapt */
+/* User preference ignored */</code>
+                </div>
+                <div class="comparison-item good">
+                    <h4>✅ With color-scheme</h4>
+                    <code>color-scheme: light dark;
+/* Browser aware */
+/* Form auto-styled */
+/* Scrollbars adapt */
+/* User preference respected */</code>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>Result:</strong> With <code>color-scheme</code>, your website automatically integrates 
+                with system theme preferences, providing professional dark/light mode experiences.
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="tutorial-section">
+            <h2>Quick Reference & Cheat Sheet</h2>
+
+            <h3>Essential Patterns</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Pattern</th>
+                    <th>Use Case</th>
+                    <th>Code</th>
+                </tr>
+                <tr>
+                    <td><strong>Both Themes</strong></td>
+                    <td>Most websites</td>
+                    <td>color-scheme: light dark;</td>
+                </tr>
+                <tr>
+                    <td><strong>Light Only</strong></td>
+                    <td>Specialized apps</td>
+                    <td>color-scheme: light;</td>
+                </tr>
+                <tr>
+                    <td><strong>Dark Only</strong></td>
+                    <td>Dark-mode-only sites</td>
+                    <td>color-scheme: dark;</td>
+                </tr>
+                <tr>
+                    <td><strong>Dark Preferred</strong></td>
+                    <td>Dark-first design</td>
+                    <td>color-scheme: dark light;</td>
+                </tr>
+                <tr>
+                    <td><strong>Force Light</strong></td>
+                    <td>Override system</td>
+                    <td>color-scheme: only light;</td>
+                </tr>
+            </table>
+
+            <h3>prefers-color-scheme Media Query</h3>
+            <div class="code-block">
+<span class="comment">/* Detect light mode */</span><br>
+<span class="keyword">@media</span> (<span class="value">prefers-color-scheme: light</span>) { }<br>
+<br>
+<span class="comment">/* Detect dark mode */</span><br>
+<span class="keyword">@media</span> (<span class="value">prefers-color-scheme: dark</span>) { }<br>
+<br>
+<span class="comment">/* With other conditions */</span><br>
+<span class="keyword">@media</span> (<span class="value">prefers-color-scheme: dark</span>) <span class="keyword">and</span> (<span class="value">prefers-reduced-motion: no-preference</span>) { }
+            </div>
+        </section>
+
+        <!-- Implementation Checklist -->
+        <section class="tutorial-section">
+            <h2>Implementation Checklist</h2>
+
+            <div style="display: grid; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                    <input type="checkbox" checked disabled>
+                    <label style="color: #333; cursor: default;">✓ Add meta tag to HTML head: <code>name="color-scheme" content="light dark"</code></label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                    <input type="checkbox" checked disabled>
+                    <label style="color: #333; cursor: default;">✓ Declare color-scheme in :root CSS</label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                    <input type="checkbox" checked disabled>
+                    <label style="color: #333; cursor: default;">✓ Define light mode CSS variables as defaults</label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                    <input type="checkbox" checked disabled>
+                    <label style="color: #333; cursor: default;">✓ Create @media (prefers-color-scheme: dark) block</label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                    <input type="checkbox" checked disabled>
+                    <label style="color: #333; cursor: default;">✓ Override variables for dark mode</label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                    <input type="checkbox" checked disabled>
+                    <label style="color: #333; cursor: default;">✓ Test form elements in both themes</label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                    <input type="checkbox" checked disabled>
+                    <label style="color: #333; cursor: default;">✓ Verify color contrast ratios (WCAG AA 4.5:1)</label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                    <input type="checkbox" checked disabled>
+                    <label style="color: #333; cursor: default;">✓ Test on actual devices with dark/light system settings</label>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Master color-scheme for professional dark/light mode support. 🌙☀️</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add scroll animation to sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.tutorial-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

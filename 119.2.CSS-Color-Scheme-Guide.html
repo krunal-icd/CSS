@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>CSS color-scheme - Practical Examples</title>
+    <style>
+        /* 1. ROOT DECLARATION - Declare supported schemes immediately */
+        :root {
+            color-scheme: light dark;
+            
+            /* Light mode (default) */
+            --color-bg-primary: #ffffff;
+            --color-bg-secondary: #f8f9fa;
+            --color-text-primary: #1a1a1a;
+            --color-text-secondary: #666666;
+            --color-border: #e5e7eb;
+            --color-accent: #667eea;
+            --color-accent-light: #f0f4ff;
+            --color-success: #22c55e;
+            --color-warning: #eab308;
+            --color-error: #ef4444;
+            --color-info: #3b82f6;
+            --shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 2. DARK MODE OVERRIDES */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg-primary: #1a1a1a;
+                --color-bg-secondary: #2d2d2d;
+                --color-text-primary: #ffffff;
+                --color-text-secondary: #b0b0b0;
+                --color-border: #374151;
+                --color-accent: #a78bfa;
+                --color-accent-light: #3f2565;
+                --color-success: #16a34a;
+                --color-warning: #ca8a04;
+                --color-error: #dc2626;
+                --color-info: #1e40af;
+                --shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--color-accent) 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .example-section {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .example-section h2 {
+            font-size: 1.8em;
+            color: var(--color-text-primary);
+            margin-bottom: 10px;
+            border-bottom: 3px solid var(--color-accent);
+            padding-bottom: 15px;
+        }
+
+        .example-description {
+            color: var(--color-text-secondary);
+            font-size: 1em;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .example-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 900px) {
+            .example-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-section {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-left: 4px solid var(--color-accent);
+            line-height: 1.5;
+        }
+
+        .code-section .keyword {
+            color: #f472b6;
+        }
+
+        .code-section .property {
+            color: #60a5fa;
+        }
+
+        .code-section .value {
+            color: #34d399;
+        }
+
+        .code-section .comment {
+            color: #6b7280;
+        }
+
+        .demo-area {
+            background: var(--color-bg-primary);
+            padding: 30px;
+            border-radius: 8px;
+            border: 2px dashed var(--color-accent);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .info-box {
+            background: var(--color-info);
+            background: linear-gradient(135deg, var(--color-info) 0%, rgba(30, 64, 175, 0.8) 100%);
+            border-left: 4px solid var(--color-info);
+            padding: 15px;
+            border-radius: 6px;
+            color: white;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .success-box {
+            background: var(--color-accent-light);
+            border-left: 4px solid var(--color-accent);
+            padding: 15px;
+            border-radius: 6px;
+            color: var(--color-text-primary);
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-item {
+            background: var(--color-bg-primary);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .comparison-item.bad {
+            border-left-color: var(--color-error);
+        }
+
+        .comparison-item.good {
+            border-left-color: var(--color-success);
+        }
+
+        .comparison-item h4 {
+            color: var(--color-text-primary);
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .comparison-item code {
+            background: var(--color-bg-secondary);
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: block;
+            font-size: 0.85em;
+            color: var(--color-accent);
+            overflow-x: auto;
+            margin-top: 8px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.4;
+        }
+
+        .key-benefit {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: var(--color-bg-primary);
+            border-radius: 8px;
+            border-left: 4px solid var(--color-success);
+        }
+
+        .key-benefit::before {
+            content: "✓";
+            color: var(--color-success);
+            font-weight: bold;
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .key-benefit p {
+            color: var(--color-text-primary);
+            line-height: 1.5;
+        }
+
+        /* Example Components */
+        .card {
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow);
+            border-color: var(--color-accent);
+        }
+
+        .card h3 {
+            color: var(--color-text-primary);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .card p {
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .button {
+            background: var(--color-accent);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .button.secondary {
+            background: var(--color-bg-secondary);
+            color: var(--color-text-primary);
+            border: 2px solid var(--color-border);
+        }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .input-field label {
+            color: var(--color-text-primary);
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .input-field input,
+        .input-field textarea,
+        .input-field select {
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border);
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .input-field input:focus,
+        .input-field textarea:focus,
+        .input-field select:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px var(--color-accent-light);
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .alert.success {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+            border-left-color: var(--color-success);
+            color: var(--color-text-primary);
+        }
+
+        .alert.warning {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.1), rgba(234, 179, 8, 0.05));
+            border-left-color: var(--color-warning);
+            color: var(--color-text-primary);
+        }
+
+        .alert.error {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+            border-left-color: var(--color-error);
+            color: var(--color-text-primary);
+        }
+
+        .alert.info {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+            border-left-color: var(--color-info);
+            color: var(--color-text-primary);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card {
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--color-accent);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-card h4 {
+            color: var(--color-text-primary);
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: var(--color-text-secondary);
+            font-size: 0.9em;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--color-text-secondary);
+            margin-top: 60px;
+            padding: 20px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .example-section {
+                padding: 25px;
+            }
+
+            .example-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--color-accent);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            .theme-toggle {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CSS color-scheme - Practical Examples</h1>
+            <p>Real-world implementations of light/dark theme support with color-scheme</p>
+        </div>
+
+        <!-- Example 1: Basic Theme Declaration -->
+        <section class="example-section">
+            <h2>Example 1: Basic Theme Declaration with Variables</h2>
+            <p class="example-description">
+                The foundation: declare color-scheme and define CSS variables for both themes. 
+                The browser automatically adapts form elements and native components.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="comment">/* HTML head */</span><br>
+                    <span class="keyword">&lt;meta</span> <span class="property">name</span>=<span class="value">"color-scheme"</span> <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">content</span>=<span class="value">"light dark"</span><span class="keyword">&gt;</span><br>
+                    <br>
+                    <span class="comment">/* CSS - Define variables */</span><br>
+                    <span class="keyword">:root</span> {<br>
+                    &nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">light dark</span>;<br>
+                    &nbsp;&nbsp;<span class="property">--color-bg-primary</span>: <span class="value">white</span>;<br>
+                    &nbsp;&nbsp;<span class="property">--color-text-primary</span>: <span class="value">black</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">@media</span> (<span class="value">prefers-color-scheme: dark</span>) {<br>
+                    &nbsp;&nbsp;<span class="keyword">:root</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--color-bg-primary</span>: <span class="value">#1a1a1a</span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">--color-text-primary</span>: <span class="value">white</span>;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+
+                <div class="demo-area">
+                    <h3 style="color: var(--color-text-primary);">Theme Adapts Automatically</h3>
+                    <p style="color: var(--color-text-secondary); margin-bottom: 15px;">
+                        All text colors are using CSS variables. Try switching your system theme to see the change.
+                    </p>
+                    <p style="font-size: 0.9em; color: var(--color-text-secondary);">
+                        Current: <strong style="color: var(--color-accent);">Auto (Respects System Preference)</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>Result:</strong> When you switch your system theme (Windows/Mac settings), this entire page 
+                automatically updates colors without any page reload.
+            </div>
+        </section>
+
+        <!-- Example 2: Form Elements Auto-Theming -->
+        <section class="example-section">
+            <h2>Example 2: Form Elements with Browser Auto-Theming</h2>
+            <p class="example-description">
+                Declare color-scheme and the browser automatically styles form inputs, buttons, and selects 
+                to match your theme. No extra CSS needed!
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="comment">/* Just declare color-scheme */</span><br>
+                    <span class="keyword">:root</span> {<br>
+                    &nbsp;&nbsp;<span class="property">color-scheme</span>: <span class="value">light dark</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="comment">/* Forms auto-style! */</span><br>
+                    <span class="keyword">input</span>, <span class="keyword">button</span>, <span class="keyword">select</span> {<br>
+                    &nbsp;&nbsp;<span class="comment">/* Browser handles theming */</span><br>
+                    &nbsp;&nbsp;<span class="comment">/* in light/dark automatically */</span><br>
+                    }
+                </div>
+
+                <div class="demo-area">
+                    <form style="width: 100%;">
+                        <div class="input-field">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" placeholder="Enter your name" value="Auto-Themed Input">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="your@email.com" value="user@example.com">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="theme">Theme</label>
+                            <select id="theme">
+                                <option>Light Mode</option>
+                                <option>Dark Mode</option>
+                                <option>Auto (System Preference)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field">
+                            <label for="message">Message</label>
+                            <textarea id="message" placeholder="Type here..." rows="3">These form elements adapt to system theme automatically!</textarea>
+                        </div>
+
+                        <button type="button" class="button">Submit</button>
+                        <button type="button" class="button secondary">Cancel</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Magic Moment:</strong> Notice how form inputs, dropdowns, and textareas match your system theme. 
+                The browser handles this automatically when you declare color-scheme!
+            </div>
+        </section>
+
+        <!-- Example 3: Cards and Components -->
+        <section class="example-section">
+            <h2>Example 3: Card Components with Theme Variables</h2>
+            <p class="example-description">
+                Build reusable components using CSS variables. They automatically adapt to the current theme.
+            </p>
+
+            <div class="demo-area" style="border: none; background: transparent; padding: 0;">
+                <div class="card">
+                    <h3>Component 1: Product Card</h3>
+                    <p>This card uses CSS variables for colors. In light mode, it has a light background. 
+                    In dark mode, it automatically switches to a dark background.</p>
+                    <button class="button">Learn More</button>
+                </div>
+
+                <div class="card">
+                    <h3>Component 2: Feature Card</h3>
+                    <p>Same component, same CSS, different appearance based on system theme. 
+                    This is the power of color-scheme + CSS variables.</p>
+                    <button class="button">Explore</button>
+                </div>
+
+                <div class="card">
+                    <h3>Component 3: Info Card</h3>
+                    <p>All text, borders, and backgrounds adapt automatically. 
+                    Your users see appropriate colors for their theme preference.</p>
+                    <button class="button">Discover</button>
+                </div>
+            </div>
+
+            <div class="code-section" style="margin-top: 20px;">
+                <span class="comment">/* One component definition */</span><br>
+                <span class="keyword">.card</span> {<br>
+                &nbsp;&nbsp;<span class="property">background</span>: <span class="value">var(--color-bg-primary)</span>;<br>
+                &nbsp;&nbsp;<span class="property">color</span>: <span class="value">var(--color-text-primary)</span>;<br>
+                &nbsp;&nbsp;<span class="property">border</span>: <span class="value">1px solid var(--color-border)</span>;<br>
+                &nbsp;&nbsp;<span class="property">padding</span>: <span class="value">20px</span>;<br>
+                &nbsp;&nbsp;<span class="property">border-radius</span>: <span class="value">8px</span>;<br>
+                }<br>
+                <br>
+                <span class="comment">/* Works in both light and dark! */</span>
+            </div>
+
+            <div class="success-box">
+                <strong>Component Reusability:</strong> Write components once using CSS variables, 
+                deploy globally with automatic theme support.
+            </div>
+        </section>
+
+        <!-- Example 4: Alert Messages -->
+        <section class="example-section">
+            <h2>Example 4: Alert Components with Theme-Aware Colors</h2>
+            <p class="example-description">
+                Status alerts that adapt colors to the current theme while maintaining readability 
+                and semantic meaning.
+            </p>
+
+            <div class="demo-area" style="border: none; background: transparent; padding: 0; gap: 10px;">
+                <div class="alert success">
+                    <span>✓</span>
+                    <div>
+                        <strong>Success!</strong> Your changes have been saved successfully. 
+                        The page will refresh automatically in a few seconds.
+                    </div>
+                </div>
+
+                <div class="alert warning">
+                    <span>⚠</span>
+                    <div>
+                        <strong>Warning:</strong> This action cannot be undone. 
+                        Please make sure you want to proceed before continuing.
+                    </div>
+                </div>
+
+                <div class="alert error">
+                    <span>✕</span>
+                    <div>
+                        <strong>Error:</strong> Something went wrong while processing your request. 
+                        Please try again later.
+                    </div>
+                </div>
+
+                <div class="alert info">
+                    <span>ℹ</span>
+                    <div>
+                        <strong>Info:</strong> New features are available. 
+                        Check the updates section to learn more.
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-section" style="margin-top: 20px;">
+                <span class="comment">/* Alert styles use theme variables */</span><br>
+                <span class="keyword">.alert.success</span> {<br>
+                &nbsp;&nbsp;<span class="property">background</span>: <span class="value">linear-gradient(..., var(--color-success))</span>;<br>
+                &nbsp;&nbsp;<span class="property">border-left-color</span>: <span class="value">var(--color-success)</span>;<br>
+                &nbsp;&nbsp;<span class="property">color</span>: <span class="value">var(--color-text-primary)</span>;<br>
+                }<br>
+                <br>
+                <span class="comment">/* Automatically adapts when prefers-color-scheme changes */</span>
+            </div>
+        </section>
+
+        <!-- Example 5: Feature Grid -->
+        <section class="example-section">
+            <h2>Example 5: Feature Grid with Responsive Theme</h2>
+            <p class="example-description">
+                Complex layouts that maintain consistency across themes while adapting all visual properties.
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4 style="color: var(--color-accent);">🎨</h4>
+                    <h4>Theme Support</h4>
+                    <p>Automatic light and dark mode support with color-scheme</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4 style="color: var(--color-accent);">⚡</h4>
+                    <h4>Zero JavaScript</h4>
+                    <p>Pure CSS theme detection and switching</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4 style="color: var(--color-accent);">📱</h4>
+                    <h4>Responsive</h4>
+                    <p>Works on all devices and screen sizes</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4 style="color: var(--color-accent);">♿</h4>
+                    <h4>Accessible</h4>
+                    <p>Respects user accessibility preferences</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4 style="color: var(--color-accent);">🚀</h4>
+                    <h4>Future-Ready</h4>
+                    <p>Built for modern CSS features</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4 style="color: var(--color-accent);">💡</h4>
+                    <h4>User Choice</h4>
+                    <p>System preference automatically honored</p>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>Layout Consistency:</strong> The feature grid adapts its colors while maintaining 
+                the exact same layout and structure in both themes.
+            </div>
+        </section>
+
+        <!-- Example 6: Before and After -->
+        <section class="example-section">
+            <h2>Example 6: Comparison - With vs Without color-scheme</h2>
+            <p class="example-description">
+                See the difference proper color-scheme declaration makes.
+            </p>
+
+            <div class="comparison-grid">
+                <div class="comparison-item bad">
+                    <h4>❌ Without color-scheme</h4>
+                    <code>/* No declaration */
+:root {
+  --bg: white;
+  --text: black;
+}
+/* Forms default */
+/* Scrollbars default */
+/* User pref ignored */</code>
+                </div>
+                <div class="comparison-item good">
+                    <h4>✅ With color-scheme</h4>
+                    <code>color-scheme: light dark;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a1a;
+    --text: white;
+  }
+}
+/* All themed! */</code>
+                </div>
+            </div>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h4>Without color-scheme Results:</h4>
+                    <p style="margin-top: 10px;">
+                        ✗ Form inputs stay light in dark mode<br>
+                        ✗ Scrollbars don't adapt<br>
+                        ✗ Browser UI mismatches<br>
+                        ✗ Poor user experience<br>
+                        ✗ System preference ignored
+                    </p>
+                </div>
+                <div class="comparison-item good">
+                    <h4>With color-scheme Results:</h4>
+                    <p style="margin-top: 10px;">
+                        ✓ Form inputs themed automatically<br>
+                        ✓ Scrollbars match theme<br>
+                        ✓ Browser UI integrates<br>
+                        ✓ Professional appearance<br>
+                        ✓ User preference respected
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example 7: Real Application -->
+        <section class="example-section">
+            <h2>Example 7: Real Application - Dashboard</h2>
+            <p class="example-description">
+                A complete dashboard interface showing how color-scheme makes professional dark/light modes easy.
+            </p>
+
+            <div class="card" style="margin-bottom: 0;">
+                <h3>📊 Dashboard Example</h3>
+                <p style="margin-bottom: 15px;">This entire page is a working example of color-scheme in action. 
+                All colors automatically adapt to your system theme preference.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                    <div style="background: var(--color-accent-light); padding: 15px; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 1.5em; color: var(--color-accent); margin-bottom: 5px;">📈</div>
+                        <div style="color: var(--color-text-primary); font-weight: 600;">Revenue</div>
+                        <div style="color: var(--color-text-secondary); font-size: 0.9em;">$15,234</div>
+                    </div>
+
+                    <div style="background: var(--color-accent-light); padding: 15px; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 1.5em; color: var(--color-accent); margin-bottom: 5px;">👥</div>
+                        <div style="color: var(--color-text-primary); font-weight: 600;">Users</div>
+                        <div style="color: var(--color-text-secondary); font-size: 0.9em;">2,847</div>
+                    </div>
+
+                    <div style="background: var(--color-accent-light); padding: 15px; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 1.5em; color: var(--color-accent); margin-bottom: 5px;">✓</div>
+                        <div style="color: var(--color-text-primary); font-weight: 600;">Conversion</div>
+                        <div style="color: var(--color-text-secondary); font-size: 0.9em;">12.4%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Checklist -->
+        <section class="example-section">
+            <h2>Quick Implementation Checklist</h2>
+
+            <div style="display: grid; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: var(--color-bg-primary); border-radius: 6px; border: 1px solid var(--color-border);">
+                    <input type="checkbox" checked disabled>
+                    <label>✓ Add meta tag: <code>&lt;meta name="color-scheme" content="light dark"&gt;</code></label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: var(--color-bg-primary); border-radius: 6px; border: 1px solid var(--color-border);">
+                    <input type="checkbox" checked disabled>
+                    <label>✓ Declare in CSS: <code>color-scheme: light dark;</code> in :root</label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: var(--color-bg-primary); border-radius: 6px; border: 1px solid var(--color-border);">
+                    <input type="checkbox" checked disabled>
+                    <label>✓ Define light mode variables as defaults</label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: var(--color-bg-primary); border-radius: 6px; border: 1px solid var(--color-border);">
+                    <input type="checkbox" checked disabled>
+                    <label>✓ Add @media (prefers-color-scheme: dark) block</label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: var(--color-bg-primary); border-radius: 6px; border: 1px solid var(--color-border);">
+                    <input type="checkbox" checked disabled>
+                    <label>✓ Override variables for dark mode</label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: var(--color-bg-primary); border-radius: 6px; border: 1px solid var(--color-border);">
+                    <input type="checkbox" checked disabled>
+                    <label>✓ Test form elements in both themes</label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: var(--color-bg-primary); border-radius: 6px; border: 1px solid var(--color-border);">
+                    <input type="checkbox" checked disabled>
+                    <label>✓ Verify contrast ratios (WCAG AA 4.5:1)</label>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: var(--color-bg-primary); border-radius: 6px; border: 1px solid var(--color-border);">
+                    <input type="checkbox" checked disabled>
+                    <label>✓ Test on real devices with OS theme settings</label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Takeaways -->
+        <section class="example-section">
+            <h2>Key Takeaways</h2>
+
+            <div class="key-benefit">
+                <p><strong>Minimal Setup:</strong> Just declare color-scheme and define CSS variables. 
+                Browser handles the rest.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Automatic Form Theming:</strong> Inputs, buttons, selects automatically style 
+                appropriately for light/dark mode.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Zero JavaScript:</strong> Pure CSS solution with no runtime overhead.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>User Preference Respected:</strong> System theme preference automatically detected 
+                and applied.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Component Reusability:</strong> Build once, theme everywhere with CSS variables.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Professional UX:</strong> Your website matches the user's OS theme for cohesive experience.</p>
+            </div>
+
+            <div class="success-box" style="margin-top: 20px;">
+                <strong>Pro Tip:</strong> This entire page is a working example. 
+                Switch your system theme (Windows/Mac dark mode) to see color-scheme in action!
+            </div>
+        </section>
+
+        <footer>
+            <p>Master color-scheme for professional dark/light mode support. 🌙☀️</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">This page automatically adapts to your system theme preference!</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.example-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

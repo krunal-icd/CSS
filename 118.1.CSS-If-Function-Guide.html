@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS if() Function - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .tutorial-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .tutorial-section h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .tutorial-section h3 {
+            font-size: 1.4em;
+            color: #444;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section-description {
+            color: #666;
+            font-size: 1em;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 1000px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+            line-height: 1.5;
+        }
+
+        .code-block .keyword {
+            color: #f472b6;
+        }
+
+        .code-block .property {
+            color: #60a5fa;
+        }
+
+        .code-block .value {
+            color: #34d399;
+        }
+
+        .code-block .comment {
+            color: #6b7280;
+        }
+
+        .code-block .function {
+            color: #fbbf24;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            border-radius: 6px;
+            color: #1e40af;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 6px;
+            color: #991b1b;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            border-radius: 6px;
+            color: #166534;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: #f3f4f6;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .comparison-table td {
+            color: #666;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .demo-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+        }
+
+        .demo-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+            margin-bottom: 20px;
+        }
+
+        .browser-support {
+            background: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .browser-support-header {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+        }
+
+        .browser-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .browser-item:last-child {
+            border-bottom: none;
+        }
+
+        .browser-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .browser-version {
+            background: #ef4444;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .browser-version.partial {
+            background: #eab308;
+        }
+
+        .key-benefit {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .key-benefit::before {
+            content: "✓";
+            color: #22c55e;
+            font-weight: bold;
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .key-benefit p {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .pitfall {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #fef2f2;
+            border-radius: 8px;
+            border-left: 4px solid #ef4444;
+        }
+
+        .pitfall::before {
+            content: "⚠";
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .pitfall p {
+            color: #991b1b;
+            line-height: 1.5;
+        }
+
+        .use-case {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .use-case h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .use-case p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-item.bad {
+            border-left-color: #ef4444;
+        }
+
+        .comparison-item.good {
+            border-left-color: #22c55e;
+        }
+
+        .comparison-item h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .comparison-item code {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: block;
+            font-size: 0.85em;
+            color: #667eea;
+            overflow-x: auto;
+            margin-top: 8px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.4;
+        }
+
+        .syntax-breakdown {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .syntax-part {
+            margin-bottom: 15px;
+            padding: 12px;
+            background: white;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .syntax-part strong {
+            color: #667eea;
+        }
+
+        .syntax-part code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #667eea;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .tutorial-section {
+                padding: 25px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .coming-soon {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            padding: 20px;
+            border-radius: 8px;
+            color: #92400e;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS if() Function</h1>
+            <p>Conditional CSS values based on expressions and comparisons</p>
+        </header>
+
+        <!-- Introduction -->
+        <section class="tutorial-section">
+            <h2>What is the CSS if() Function?</h2>
+            <p class="section-description">
+                The CSS <code>if()</code> function (part of CSS Values and Units Level 4) allows you to write conditional logic 
+                directly in CSS values. It evaluates a condition and returns one of two values based on whether the condition is 
+                true or false. This brings programming-like logic to CSS without needing JavaScript.
+            </p>
+
+            <div class="warning-box">
+                <strong>⚠️ Status: EXPERIMENTAL</strong> — The <code>if()</code> function is still in early specification stages. 
+                Browser support is limited. For production use, consider CSS custom properties with JavaScript or JavaScript-based solutions.
+            </div>
+
+            <h3>Key Capabilities</h3>
+            <div class="key-benefit">
+                <p><strong>Conditional Values:</strong> Return different CSS values based on conditions.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Expression Evaluation:</strong> Evaluate mathematical and logical expressions in CSS.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Responsive Design:</strong> Create truly responsive values without media queries.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>No JavaScript Needed:</strong> Pure CSS conditional logic without runtime overhead.</p>
+            </div>
+        </section>
+
+        <!-- Basic Syntax -->
+        <section class="tutorial-section">
+            <h2>Basic Syntax & Structure</h2>
+            <p class="section-description">
+                The <code>if()</code> function follows a simple ternary-like syntax similar to JavaScript.
+            </p>
+
+            <h3>Syntax</h3>
+            <div class="code-block">
+<span class="function">if</span>(<span class="value">condition</span>, <span class="value">true-value</span>, <span class="value">false-value</span>)
+            </div>
+
+            <h3>Detailed Breakdown</h3>
+            <div class="syntax-breakdown">
+                <div class="syntax-part">
+                    <strong>condition:</strong> A boolean expression that evaluates to true or false.
+                    <code>Examples: width > 800px, color-contrast > 4.5, color-gamut: p3</code>
+                </div>
+
+                <div class="syntax-part">
+                    <strong>true-value:</strong> The CSS value to use if the condition evaluates to true.
+                    <code>Example: 2rem, blue, flex, etc.</code>
+                </div>
+
+                <div class="syntax-part">
+                    <strong>false-value:</strong> The CSS value to use if the condition evaluates to false.
+                    <code>Example: 1rem, red, block, etc.</code>
+                </div>
+            </div>
+
+            <h3>Simple Example</h3>
+            <div class="code-block">
+<span class="comment">/* Set font size based on viewport width */</span><br>
+<span class="property">font-size</span>: <span class="function">if</span>(<span class="value">viewport-width > 768px</span>, <span class="value">1.5rem</span>, <span class="value">1rem</span>);<br>
+<br>
+<span class="comment">/* Set display based on color gamut */</span><br>
+<span class="property">display</span>: <span class="function">if</span>(<span class="value">color-gamut: p3</span>, <span class="value">grid</span>, <span class="value">flex</span>);
+            </div>
+
+            <div class="info-box">
+                <strong>Important:</strong> The <code>if()</code> function returns a single value, not multiple declarations. 
+                It's designed to work with properties that accept multiple value types.
+            </div>
+        </section>
+
+        <!-- Condition Types -->
+        <section class="tutorial-section">
+            <h2>Types of Conditions</h2>
+            <p class="section-description">
+                The CSS <code>if()</code> function supports various condition types for different scenarios.
+            </p>
+
+            <h3>1. Viewport-Based Conditions</h3>
+            <div class="content-grid">
+                <div class="code-block">
+<span class="comment">/* Width comparisons */</span><br>
+<span class="property">font-size</span>: <span class="function">if</span>(<span class="value">viewport-width > 1024px</span>, <br>
+&nbsp;&nbsp;<span class="value">2rem</span>, <span class="value">1.5rem</span>);<br>
+<br>
+<span class="comment">/* Height comparisons */</span><br>
+<span class="property">height</span>: <span class="function">if</span>(<span class="value">viewport-height > 600px</span>, <br>
+&nbsp;&nbsp;<span class="value">100vh</span>, <span class="value">auto</span>);<br>
+<br>
+<span class="comment">/* Aspect ratio */</span><br>
+<span class="property">display</span>: <span class="function">if</span>(<span class="value">viewport-aspect-ratio > 2</span>, <br>
+&nbsp;&nbsp;<span class="value">flex</span>, <span class="value">block</span>);
+                </div>
+                <div class="info-box" style="align-self: start;">
+                    <strong>Viewport Conditions:</strong> Compare viewport dimensions and aspect ratio for responsive design.
+                </div>
+            </div>
+
+            <h3>2. Color Capability Conditions</h3>
+            <div class="content-grid">
+                <div class="code-block">
+<span class="comment">/* Color gamut detection */</span><br>
+<span class="property">color</span>: <span class="function">if</span>(<span class="value">color-gamut: p3</span>, <br>
+&nbsp;&nbsp;<span class="value">color(display-p3 1 0 0)</span>, <br>
+&nbsp;&nbsp;<span class="value">red</span>);<br>
+<br>
+<span class="comment">/* Dynamic range support */</span><br>
+<span class="property">--highlight</span>: <span class="function">if</span>(<span class="value">dynamic-range: high</span>, <br>
+&nbsp;&nbsp;<span class="value">luminance(400)</span>, <br>
+&nbsp;&nbsp;<span class="value">white</span>);
+                </div>
+                <div class="success-box" style="align-self: start;">
+                    <strong>Color Conditions:</strong> Optimize colors for different display capabilities (HDR, wide gamut).
+                </div>
+            </div>
+
+            <h3>3. User Preference Conditions</h3>
+            <div class="content-grid">
+                <div class="code-block">
+<span class="comment">/* Contrast preference */</span><br>
+<span class="property">border</span>: <span class="function">if</span>(<span class="value">prefers-contrast > 1</span>, <br>
+&nbsp;&nbsp;<span class="value">2px solid black</span>, <br>
+&nbsp;&nbsp;<span class="value">1px solid gray</span>);<br>
+<br>
+<span class="comment">/* Motion preferences */</span><br>
+<span class="property">animation-duration</span>: <span class="function">if</span>(<span class="value">prefers-reduced-motion</span>, <br>
+&nbsp;&nbsp;<span class="value">0s</span>, <span class="value">0.3s</span>);
+                </div>
+                <div class="info-box" style="align-self: start;">
+                    <strong>Accessibility Conditions:</strong> Respect user preferences for contrast, motion, and other accessibility settings.
+                </div>
+            </div>
+
+            <h3>4. Container Query Conditions</h3>
+            <div class="code-block">
+<span class="comment">/* Component-level responsive logic */</span><br>
+<span class="property">font-size</span>: <span class="function">if</span>(<span class="value">container-query-width > 500px</span>, <br>
+&nbsp;&nbsp;<span class="value">1.5rem</span>, <span class="value">1rem</span>);<br>
+<br>
+<span class="comment">/* Combining conditions */</span><br>
+<span class="property">display</span>: <span class="function">if</span>(<span class="value">container-query-width > 500px AND prefers-contrast > 1</span>, <br>
+&nbsp;&nbsp;<span class="value">grid</span>, <span class="value">flex</span>);
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="tutorial-section">
+            <h2>Practical Examples</h2>
+
+            <h3>Example 1: Responsive Typography Without Media Queries</h3>
+            <p class="section-description">
+                Use <code>if()</code> to scale typography based on viewport width elegantly.
+            </p>
+
+            <div class="content-grid">
+                <div class="code-block">
+<span class="property">font-size</span>: <span class="function">if</span>(<span class="value">viewport-width > 768px</span>, <br>
+&nbsp;&nbsp;<span class="value">2rem</span>, <span class="value">1.5rem</span>);<br>
+<br>
+<span class="property">line-height</span>: <span class="function">if</span>(<span class="value">viewport-width > 1024px</span>, <br>
+&nbsp;&nbsp;<span class="value">1.8</span>, <span class="value">1.5</span>);<br>
+<br>
+<span class="property">max-width</span>: <span class="function">if</span>(<span class="value">viewport-width > 1200px</span>, <br>
+&nbsp;&nbsp;<span class="value">1200px</span>, <br>
+&nbsp;&nbsp;<span class="value">100%</span>);
+                </div>
+                <div class="demo-container">
+                    <p style="font-size: max(1.5rem, min(2rem, 100vw));">
+                        Responsive Typography
+                    </p>
+                    <p style="color: #666; font-size: 0.9em;">
+                        Font size adapts based on viewport width
+                    </p>
+                </div>
+            </div>
+
+            <h3>Example 2: Color Gamut Detection</h3>
+            <p class="section-description">
+                Deliver vibrant colors to capable displays, fallback to sRGB for older devices.
+            </p>
+
+            <div class="code-block">
+<span class="comment">/* Use P3 colors on capable displays */</span><br>
+<span class="property">--accent</span>: <span class="function">if</span>(<span class="value">color-gamut: p3</span>, <br>
+&nbsp;&nbsp;<span class="value">color(display-p3 1 0.5 0)</span>, <br>
+&nbsp;&nbsp;<span class="value">rgb(255, 128, 0)</span>);<br>
+<br>
+<span class="selector">.button</span> {<br>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">var(--accent)</span>;<br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">white</span>;<br>
+}
+            </div>
+
+            <div class="success-box">
+                <strong>Benefit:</strong> Display-wide color support detected automatically. 
+                Users with HDR displays get superior color accuracy.
+            </div>
+
+            <h3>Example 3: Accessibility-Aware Animations</h3>
+            <p class="section-description">
+                Respect user motion preferences while maintaining visual polish.
+            </p>
+
+            <div class="code-block">
+<span class="property">animation-duration</span>: <span class="function">if</span>(<span class="value">prefers-reduced-motion</span>, <br>
+&nbsp;&nbsp;<span class="value">0s</span>, <br>
+&nbsp;&nbsp;<span class="value">0.3s</span>);<br>
+<br>
+<span class="property">animation-timing-function</span>: <span class="function">if</span>(<span class="value">prefers-reduced-motion</span>, <br>
+&nbsp;&nbsp;<span class="value">linear</span>, <br>
+&nbsp;&nbsp;<span class="value">ease-out</span>);
+            </div>
+
+            <div class="info-box">
+                <strong>Accessibility First:</strong> Users who prefer reduced motion see no animation delay. 
+                Animations are crisp and immediate.
+            </div>
+
+            <h3>Example 4: Dynamic Spacing Based on Screen Space</h3>
+            <p class="section-description">
+                Optimize spacing for available screen real estate.
+            </p>
+
+            <div class="code-block">
+<span class="selector">.container</span> {<br>
+&nbsp;&nbsp;<span class="property">padding</span>: <span class="function">if</span>(<span class="value">viewport-width > 768px</span>, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="value">2rem</span>, <span class="value">1rem</span>);<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;<span class="property">gap</span>: <span class="function">if</span>(<span class="value">viewport-width > 1024px</span>, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="value">2rem</span>, <span class="value">1rem</span>);<br>
+}
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="tutorial-section">
+            <h2>Browser Support Status</h2>
+            <p class="section-description">
+                The CSS <code>if()</code> function is still experimental and not widely supported. Check current browser compatibility before using in production.
+            </p>
+
+            <div class="browser-support">
+                <div class="browser-support-header">Current Browser Support (May 2026)</div>
+                <div class="browser-item">
+                    <span class="browser-name">Chrome / Edge</span>
+                    <span class="browser-version partial">Behind Flag</span>
+                </div>
+                <div class="browser-item">
+                    <span class="browser-name">Firefox</span>
+                    <span class="browser-version">Not Supported</span>
+                </div>
+                <div class="browser-item">
+                    <span class="browser-name">Safari</span>
+                    <span class="browser-version">Not Supported</span>
+                </div>
+                <div class="browser-item">
+                    <span class="browser-name">Opera</span>
+                    <span class="browser-version">Not Supported</span>
+                </div>
+            </div>
+
+            <p class="section-description" style="margin-top: 20px;">
+                <strong>Global Support: &lt;1%</strong> — The CSS <code>if()</code> function is highly experimental. 
+                Use with caution and provide fallbacks for production.
+            </p>
+
+            <div class="warning-box">
+                <strong>Recommendation:</strong> Use <code>if()</code> for:
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>Experimental projects and prototypes</li>
+                    <li>Progressive enhancement scenarios</li>
+                    <li>Future-ready code that will support it</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Comparison with Alternatives -->
+        <section class="tutorial-section">
+            <h2>Comparison with Alternative Approaches</h2>
+            <p class="section-description">
+                How does CSS <code>if()</code> compare to existing CSS and JavaScript solutions?
+            </p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Approach</th>
+                    <th>Browser Support</th>
+                    <th>Complexity</th>
+                    <th>Performance</th>
+                    <th>Best For</th>
+                </tr>
+                <tr>
+                    <td><strong>Media Queries</strong></td>
+                    <td>Excellent (99%+)</td>
+                    <td>Low</td>
+                    <td>Excellent</td>
+                    <td>Viewport-based responsive design</td>
+                </tr>
+                <tr>
+                    <td><strong>CSS if()</strong></td>
+                    <td>Poor (&lt;1%)</td>
+                    <td>Very Low</td>
+                    <td>Excellent</td>
+                    <td>Future: Universal conditionals</td>
+                </tr>
+                <tr>
+                    <td><strong>CSS Custom Properties + JS</strong></td>
+                    <td>Good (95%+)</td>
+                    <td>Medium</td>
+                    <td>Good</td>
+                    <td>Complex logic, real-time updates</td>
+                </tr>
+                <tr>
+                    <td><strong>Container Queries</strong></td>
+                    <td>Good (75%+)</td>
+                    <td>Low</td>
+                    <td>Excellent</td>
+                    <td>Component-level responsive design</td>
+                </tr>
+                <tr>
+                    <td><strong>JavaScript Class Manipulation</strong></td>
+                    <td>Excellent (100%)</td>
+                    <td>Medium-High</td>
+                    <td>Good</td>
+                    <td>Complex conditions, dynamic behavior</td>
+                </tr>
+            </table>
+
+            <h3>When to Use Each Approach</h3>
+
+            <div class="use-case">
+                <h4>✓ Use Media Queries When:</h4>
+                <p>Need to support older browsers, building production websites today</p>
+            </div>
+
+            <div class="use-case">
+                <h4>✓ Use Container Queries When:</h4>
+                <p>Building component libraries with responsive components independent of viewport</p>
+            </div>
+
+            <div class="use-case">
+                <h4>✓ Use CSS if() When:</h4>
+                <p>Browser support improves; prototyping future-ready code; experimenting with new CSS features</p>
+            </div>
+
+            <div class="use-case">
+                <h4>✓ Use CSS Custom Properties + JS When:</h4>
+                <p>Need complex conditions or real-time updates based on user interaction or data</p>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="tutorial-section">
+            <h2>Best Practices & Guidelines</h2>
+
+            <div class="key-benefit">
+                <p><strong>Provide Fallbacks:</strong> Always include a fallback for browsers that don't support <code>if()</code>.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Use with Progressive Enhancement:</strong> Treat <code>if()</code> as an enhancement, not a requirement.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Keep Conditions Simple:</strong> Use straightforward conditions that are easy to understand and maintain.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Test Thoroughly:</strong> Test across browsers and devices, especially when relying on feature detection.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Combine with Other Features:</strong> Use <code>if()</code> alongside media queries, container queries, and custom properties.</p>
+            </div>
+
+            <h3>Common Pitfalls to Avoid</h3>
+
+            <div class="pitfall">
+                <p><strong>Assuming Universal Support:</strong> Don't use <code>if()</code> expecting all users to see correct styling.</p>
+            </div>
+
+            <div class="pitfall">
+                <p><strong>Complex Nested Conditions:</strong> Avoid deeply nested <code>if()</code> functions — they reduce readability.</p>
+            </div>
+
+            <div class="pitfall">
+                <p><strong>Replacing All Media Queries:</strong> Media queries have better browser support and clearer syntax for most cases.</p>
+            </div>
+
+            <div class="pitfall">
+                <p><strong>Performance Assumptions:</strong> While performant, don't assume negligible overhead from complex conditions.</p>
+            </div>
+        </section>
+
+        <!-- Future of if() -->
+        <section class="tutorial-section">
+            <h2>The Future of CSS Conditional Logic</h2>
+            <p class="section-description">
+                CSS <code>if()</code> represents the future of conditional styling, but the path forward is still evolving.
+            </p>
+
+            <h3>Related & Emerging Features</h3>
+
+            <div class="use-case">
+                <h4>CSS Queries (Proposed)</h4>
+                <p>Extended conditional logic that might eventually replace or complement <code>if()</code> for more complex scenarios.</p>
+            </div>
+
+            <div class="use-case">
+                <h4>Container Queries (Current)</h4>
+                <p>Already here and widely supported. Excellent for component-level responsive design.</p>
+            </div>
+
+            <div class="use-case">
+                <h4>@supports (Current)</h4>
+                <p>Feature detection at the rule level. Can be combined with <code>if()</code> for robust fallbacks.</p>
+            </div>
+
+            <h3>What's Coming Next</h3>
+            <div class="info-box">
+                <strong>Expected Improvements:</strong>
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>Broader browser adoption expected 2026-2027</li>
+                    <li>More condition types as specs stabilize</li>
+                    <li>Better integration with other CSS features</li>
+                    <li>Improved developer tooling and debugging</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="tutorial-section">
+            <h2>Quick Reference & Syntax</h2>
+
+            <h3>Common Patterns</h3>
+            <div class="code-block">
+<span class="comment">/* Basic conditional */</span><br>
+<span class="property">font-size</span>: <span class="function">if</span>(<span class="value">viewport-width > 768px</span>, <span class="value">2rem</span>, <span class="value">1rem</span>);<br>
+<br>
+<span class="comment">/* Color capability */</span><br>
+<span class="property">color</span>: <span class="function">if</span>(<span class="value">color-gamut: p3</span>, <span class="value">color(display-p3 1 0 0)</span>, <span class="value">red</span>);<br>
+<br>
+<span class="comment">/* Accessibility */</span><br>
+<span class="property">animation-duration</span>: <span class="function">if</span>(<span class="value">prefers-reduced-motion</span>, <span class="value">0s</span>, <span class="value">0.3s</span>);<br>
+<br>
+<span class="comment">/* Multiple conditions */</span><br>
+<span class="property">display</span>: <span class="function">if</span>(<span class="value">viewport-width > 768px AND prefers-contrast > 1</span>, <span class="value">grid</span>, <span class="value">flex</span>);
+            </div>
+
+            <h3>Condition Keywords</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Condition Type</th>
+                    <th>Examples</th>
+                </tr>
+                <tr>
+                    <td><strong>Viewport</strong></td>
+                    <td>viewport-width, viewport-height, viewport-aspect-ratio</td>
+                </tr>
+                <tr>
+                    <td><strong>Color</strong></td>
+                    <td>color-gamut, dynamic-range</td>
+                </tr>
+                <tr>
+                    <td><strong>User Preference</strong></td>
+                    <td>prefers-reduced-motion, prefers-contrast, prefers-color-scheme</td>
+                </tr>
+                <tr>
+                    <td><strong>Container Query</strong></td>
+                    <td>container-query-width, container-query-height</td>
+                </tr>
+                <tr>
+                    <td><strong>Operators</strong></td>
+                    <td>&gt;, &lt;, ===, !=, AND, OR</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Production Readiness -->
+        <section class="tutorial-section">
+            <h2>Production Readiness & Recommendations</h2>
+
+            <div class="comparison-grid">
+                <div class="comparison-item bad">
+                    <h4>❌ NOT Ready for Production</h4>
+                    <code>Your primary responsive design logic relies solely on CSS if()</code>
+                </div>
+                <div class="comparison-item good">
+                    <h4>✅ Safe for Experimentation</h4>
+                    <code>Use if() as progressive enhancement alongside media queries</code>
+                </div>
+            </div>
+
+            <h3>Recommended Strategy</h3>
+            <div class="code-block">
+<span class="comment">/* 2026 Production Approach */</span><br>
+<br>
+<span class="comment">/* 1. Primary: Media queries (works everywhere) */</span><br>
+<span class="keyword">@media</span> (<span class="value">min-width: 768px</span>) {<br>
+&nbsp;&nbsp;<span class="selector">h1</span> { <span class="property">font-size</span>: <span class="value">2rem</span>; }<br>
+}<br>
+<br>
+<span class="comment">/* 2. Enhancement: CSS if() for newer browsers */</span><br>
+<span class="selector">h1</span> {<br>
+&nbsp;&nbsp;<span class="property">font-size</span>: <span class="function">if</span>(<span class="value">viewport-width > 768px</span>, <span class="value">2rem</span>, <span class="value">1rem</span>);<br>
+}
+            </div>
+
+            <div class="success-box">
+                <strong>Best Practice:</strong> Use media queries as your primary responsive design tool. 
+                Use CSS <code>if()</code> for specific features where browser support allows it to work as a bonus enhancement.
+            </div>
+        </section>
+
+        <footer>
+            <p>CSS if() represents the future of conditional styling. Stay tuned for broader adoption! 🚀</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add scroll animation to sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.tutorial-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

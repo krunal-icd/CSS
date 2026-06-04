@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Block-Size & Inline-Size - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .mode-toggle {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: inline-block;
+            cursor: pointer;
+            font-weight: 600;
+            color: #667eea;
+            border: 2px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .mode-toggle:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .example-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .example-description {
+            color: #666;
+            font-size: 1em;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .example-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 900px) {
+            .example-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-section {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+        }
+
+        .code-section .keyword {
+            color: #f472b6;
+        }
+
+        .code-section .property {
+            color: #60a5fa;
+        }
+
+        .code-section .value {
+            color: #34d399;
+        }
+
+        .code-section .comment {
+            color: #6b7280;
+        }
+
+        .demo-area {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+
+        /* Example 1: Card Sizing */
+        .card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card.horizontal {
+            inline-size: 300px;
+            block-size: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card.vertical {
+            inline-size: 150px;
+            block-size: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Example 2: Responsive Container */
+        .responsive-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .responsive-box.small {
+            inline-size: 100%;
+            block-size: 80px;
+        }
+
+        .responsive-box.medium {
+            inline-size: 100%;
+            block-size: 120px;
+        }
+
+        .responsive-box.large {
+            inline-size: 100%;
+            block-size: 200px;
+        }
+
+        /* Example 3: Grid Items */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .grid-item {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 600;
+            min-block-size: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Example 4: Aspect Ratio with Logical Properties */
+        .aspect-ratio-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .aspect-box {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            min-block-size: 200px;
+            aspect-ratio: 1 / 1;
+        }
+
+        .aspect-box.wide {
+            aspect-ratio: 16 / 9;
+        }
+
+        .aspect-box.tall {
+            aspect-ratio: 9 / 16;
+        }
+
+        /* Example 5: Flexible Component */
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .component {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .component:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .component-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            min-block-size: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .component-body {
+            padding: 20px;
+            min-block-size: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .component-body p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .component-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+        }
+
+        .component-button:hover {
+            background: #764ba2;
+            transform: translateX(5px);
+        }
+
+        /* Example 6: Media Query with Writing Mode */
+        .writing-mode-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .writing-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 600;
+            color: #333;
+            min-block-size: 150px;
+            min-inline-size: 150px;
+        }
+
+        .writing-box.vertical-rl {
+            writing-mode: vertical-rl;
+        }
+
+        .writing-box.vertical-lr {
+            writing-mode: vertical-lr;
+        }
+
+        /* Utility Classes */
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            border-radius: 6px;
+            color: #1e40af;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 6px;
+            color: #991b1b;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            border-radius: 6px;
+            color: #166534;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-item.bad {
+            border-left-color: #ef4444;
+        }
+
+        .comparison-item.good {
+            border-left-color: #22c55e;
+        }
+
+        .comparison-item h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .comparison-item code {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: block;
+            font-size: 0.85em;
+            color: #667eea;
+            overflow-x: auto;
+            margin-top: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .key-benefit {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .key-benefit::before {
+            content: "✓";
+            color: #22c55e;
+            font-weight: bold;
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .key-benefit p {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .example-content {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-area {
+                min-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Block-Size & Inline-Size</h1>
+            <p>Practical Examples & Real-World Implementations</p>
+            <button class="mode-toggle" onclick="toggleWritingMode()">
+                Switch Writing Mode
+            </button>
+        </header>
+
+        <!-- Example 1: Card Sizing -->
+        <section class="example-section">
+            <h2 class="example-title">Example 1: Card Sizing with Logical Properties</h2>
+            <p class="example-description">
+                Cards that adapt their dimensions based on logical properties instead of physical width/height. 
+                These cards maintain consistent sizing regardless of writing mode.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="comment">/* Horizontal Card */</span><br>
+                    <span class="keyword">.card.horizontal</span> {<br>
+                    &nbsp;&nbsp;<span class="property">inline-size</span>: <span class="value">300px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">block-size</span>: <span class="value">150px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">display</span>: <span class="value">flex</span>;<br>
+                    &nbsp;&nbsp;<span class="property">align-items</span>: <span class="value">center</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="comment">/* Vertical Card */</span><br>
+                    <span class="keyword">.card.vertical</span> {<br>
+                    &nbsp;&nbsp;<span class="property">inline-size</span>: <span class="value">150px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">block-size</span>: <span class="value">300px</span>;<br>
+                    }
+                </div>
+
+                <div class="demo-area">
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 100%;">
+                        <div class="card horizontal">
+                            <div>
+                                <h3>Horizontal</h3>
+                                <p>Wide card</p>
+                            </div>
+                        </div>
+                        <div class="card vertical">
+                            <div>
+                                <h3>Vertical</h3>
+                                <p>Tall card</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Key Insight:</strong> inline-size determines width in horizontal text, but switches to height in vertical text. 
+                block-size does the opposite, making your CSS truly direction-aware.
+            </div>
+        </section>
+
+        <!-- Example 2: Responsive Container Sizing -->
+        <section class="example-section">
+            <h2 class="example-title">Example 2: Responsive Container Sizing</h2>
+            <p class="example-description">
+                Containers that use block-size to create flexible layouts that adapt to content flow direction.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="keyword">.responsive-box</span> {<br>
+                    &nbsp;&nbsp;<span class="property">inline-size</span>: <span class="value">100%</span>;<br>
+                    &nbsp;&nbsp;<span class="property">block-size</span>: <span class="value">auto</span>;<br>
+                    &nbsp;&nbsp;<span class="property">padding</span>: <span class="value">20px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">display</span>: <span class="value">flex</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="comment">/* Variations */</span><br>
+                    <span class="keyword">.responsive-box.small</span> {<br>
+                    &nbsp;&nbsp;<span class="property">block-size</span>: <span class="value">80px</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">.responsive-box.large</span> {<br>
+                    &nbsp;&nbsp;<span class="property">block-size</span>: <span class="value">200px</span>;<br>
+                    }
+                </div>
+
+                <div class="demo-area" style="flex-direction: column; justify-content: space-around;">
+                    <div class="responsive-box small">Small (80px block-size)</div>
+                    <div class="responsive-box medium">Medium (120px block-size)</div>
+                    <div class="responsive-box large">Large (200px block-size)</div>
+                </div>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Benefit:</strong> Set inline-size: 100% once, it respects parent's flow direction automatically.</p>
+            </div>
+        </section>
+
+        <!-- Example 3: Grid with Logical Sizing -->
+        <section class="example-section">
+            <h2 class="example-title">Example 3: Grid Items with min-block-size</h2>
+            <p class="example-description">
+                Grid layouts using min-block-size to ensure consistent minimum heights that adapt to writing mode.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="keyword">.grid-container</span> {<br>
+                    &nbsp;&nbsp;<span class="property">display</span>: <span class="value">grid</span>;<br>
+                    &nbsp;&nbsp;<span class="property">grid-template-columns</span>: <span class="value">repeat(auto-fit, minmax(150px, 1fr))</span>;<br>
+                    &nbsp;&nbsp;<span class="property">gap</span>: <span class="value">15px</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">.grid-item</span> {<br>
+                    &nbsp;&nbsp;<span class="property">min-block-size</span>: <span class="value">120px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">display</span>: <span class="value">flex</span>;<br>
+                    &nbsp;&nbsp;<span class="property">align-items</span>: <span class="value">center</span>;<br>
+                    }</br>
+                </div>
+
+                <div class="demo-area" style="width: 100%;">
+                    <div class="grid-container" style="width: 100%;">
+                        <div class="grid-item">Item 1</div>
+                        <div class="grid-item">Item 2</div>
+                        <div class="grid-item">Item 3</div>
+                        <div class="grid-item">Item 4</div>
+                        <div class="grid-item">Item 5</div>
+                        <div class="grid-item">Item 6</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>Best Practice:</strong> Use min-block-size instead of min-height for layouts that need to work with any writing mode.
+            </div>
+        </section>
+
+        <!-- Example 4: Aspect Ratio with Logical Properties -->
+        <section class="example-section">
+            <h2 class="example-title">Example 4: Aspect Ratio with Logical Sizing</h2>
+            <p class="example-description">
+                Combining aspect-ratio with logical sizing for flexible component dimensions.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="keyword">.aspect-box</span> {<br>
+                    &nbsp;&nbsp;<span class="property">min-block-size</span>: <span class="value">200px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">aspect-ratio</span>: <span class="value">1 / 1</span>;<br>
+                    &nbsp;&nbsp;<span class="property">display</span>: <span class="value">flex</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">.aspect-box.wide</span> {<br>
+                    &nbsp;&nbsp;<span class="property">aspect-ratio</span>: <span class="value">16 / 9</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">.aspect-box.tall</span> {<br>
+                    &nbsp;&nbsp;<span class="property">aspect-ratio</span>: <span class="value">9 / 16</span>;<br>
+                    }
+                </div>
+
+                <div class="demo-area" style="width: 100%;">
+                    <div class="aspect-ratio-container" style="width: 100%;">
+                        <div class="aspect-box">1:1 Square</div>
+                        <div class="aspect-box wide">16:9 Wide</div>
+                        <div class="aspect-box tall">9:16 Tall</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Powerful Combo:</strong> min-block-size + aspect-ratio ensures responsive sizing that maintains proportions.</p>
+            </div>
+        </section>
+
+        <!-- Example 5: Flexible Component Architecture -->
+        <section class="example-section">
+            <h2 class="example-title">Example 5: Flexible Component Architecture</h2>
+            <p class="example-description">
+                Building reusable components using logical properties for consistent sizing across different contexts.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="keyword">.component</span> {<br>
+                    &nbsp;&nbsp;<span class="property">border-radius</span>: <span class="value">8px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">overflow</span>: <span class="value">hidden</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">.component-header</span> {<br>
+                    &nbsp;&nbsp;<span class="property">min-block-size</span>: <span class="value">50px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">display</span>: <span class="value">flex</span>;<br>
+                    &nbsp;&nbsp;<span class="property">align-items</span>: <span class="value">center</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="keyword">.component-body</span> {<br>
+                    &nbsp;&nbsp;<span class="property">min-block-size</span>: <span class="value">150px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">padding-inline</span>: <span class="value">20px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">padding-block</span>: <span class="value">20px</span>;<br>
+                    }
+                </div>
+
+                <div class="demo-area" style="width: 100%;">
+                    <div class="component-grid" style="width: 100%;">
+                        <div class="component">
+                            <div class="component-header">Feature</div>
+                            <div class="component-body">
+                                <p>Logical sizing makes components reusable across all writing modes and directions.</p>
+                                <button class="component-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="component">
+                            <div class="component-header">Responsive</div>
+                            <div class="component-body">
+                                <p>Components automatically adapt to different content flow directions seamlessly.</p>
+                                <button class="component-button">Explore</button>
+                            </div>
+                        </div>
+                        <div class="component">
+                            <div class="component-header">Global</div>
+                            <div class="component-body">
+                                <p>Write CSS once, deploy globally with automatic support for any language or script.</p>
+                                <button class="component-button">Discover</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-grid">
+                <div class="comparison-item bad">
+                    <h4>❌ Without Logical Properties</h4>
+                    <code>width: 100%;<br>height: auto;<br>padding: 20px;<br>/* Limited to LTR */</code>
+                </div>
+                <div class="comparison-item good">
+                    <h4>✅ With Logical Properties</h4>
+                    <code>inline-size: 100%;<br>block-size: auto;<br>padding-inline: 20px;<br>/* Works anywhere */</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example 6: Writing Mode Adaptation -->
+        <section class="example-section">
+            <h2 class="example-title">Example 6: Writing Mode Adaptation</h2>
+            <p class="example-description">
+                The same CSS works perfectly with different writing modes. Logical properties automatically adapt.
+            </p>
+
+            <div class="example-content">
+                <div class="code-section">
+                    <span class="comment">/* Same CSS for all writing modes */</span><br>
+                    <span class="keyword">.writing-box</span> {<br>
+                    &nbsp;&nbsp;<span class="property">min-block-size</span>: <span class="value">150px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">min-inline-size</span>: <span class="value">150px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">padding-inline</span>: <span class="value">20px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">padding-block</span>: <span class="value">20px</span>;<br>
+                    }<br>
+                    <br>
+                    <span class="comment">/* Change writing mode */</span><br>
+                    <span class="keyword">.vertical-rl</span> {<br>
+                    &nbsp;&nbsp;<span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;<br>
+                    }
+                </div>
+
+                <div class="demo-area" style="width: 100%;">
+                    <div class="writing-mode-demo">
+                        <div class="writing-box">Horizontal (LTR)</div>
+                        <div class="writing-box vertical-rl">Vertical (RL)</div>
+                        <div class="writing-box vertical-lr">Vertical (LR)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Magic Moment:</strong> No CSS changes needed! The same .writing-box styles adapt automatically to each writing mode.
+            </div>
+        </section>
+
+        <!-- Key Takeaways -->
+        <section class="example-section">
+            <h2 class="example-title">Key Takeaways</h2>
+
+            <div class="key-benefit">
+                <p><strong>Physical vs Logical:</strong> width/height are fixed to screen axes. inline-size/block-size follow text flow.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Minimum Sizing:</strong> min-block-size and min-inline-size replace min-height and min-width with direction awareness.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Component Reusability:</strong> Write components once with logical properties, they work globally in any language/script.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Writing Mode Support:</strong> Horizontal, vertical-rl, vertical-lr — same CSS, different layouts automatically.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Future-Proof:</strong> 99%+ browser support means you can use logical properties today with zero fallback concerns.</p>
+            </div>
+
+            <div class="success-box" style="margin-top: 30px;">
+                <strong>Pro Tip:</strong> Pair logical sizing with logical margins (margin-inline, margin-block) and padding (padding-inline, padding-block) 
+                for a completely direction-aware design system.
+            </div>
+        </section>
+
+        <!-- Implementation Checklist -->
+        <section class="example-section">
+            <h2 class="example-title">Implementation Checklist</h2>
+
+            <div style="display: grid; gap: 15px;">
+                <div class="comparison-item">
+                    <h4>✓ Replace all width/height with inline-size/block-size</h4>
+                    <code>inline-size: 300px; block-size: 200px;</code>
+                </div>
+
+                <div class="comparison-item">
+                    <h4>✓ Use min-block-size for minimum heights</h4>
+                    <code>min-block-size: 150px; /* replaces min-height */</code>
+                </div>
+
+                <div class="comparison-item">
+                    <h4>✓ Use min-inline-size for minimum widths</h4>
+                    <code>min-inline-size: 200px; /* replaces min-width */</code>
+                </div>
+
+                <div class="comparison-item">
+                    <h4>✓ Combine with writing-mode for vertical text</h4>
+                    <code>writing-mode: vertical-rl; /* dimensions auto-flip */</code>
+                </div>
+
+                <div class="comparison-item">
+                    <h4>✓ Test with container queries for responsive behavior</h4>
+                    <code>@container (min-block-size: 500px) { /* styles */ }</code>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>CSS Logical Properties enable truly global design systems. Build once, deploy everywhere. 🌍</p>
+        </footer>
+    </div>
+
+    <script>
+        let currentWritingMode = 'horizontal';
+        const writingModes = ['horizontal', 'vertical-rl', 'vertical-lr'];
+        let modeIndex = 0;
+
+        function toggleWritingMode() {
+            modeIndex = (modeIndex + 1) % writingModes.length;
+            currentWritingMode = writingModes[modeIndex];
+
+            const writingBoxes = document.querySelectorAll('.writing-box');
+            writingBoxes.forEach(box => {
+                box.style.writingMode = currentWritingMode === 'horizontal' ? 'horizontal-tb' : currentWritingMode;
+            });
+
+            const modeNames = {
+                'horizontal': 'Horizontal (LTR)',
+                'vertical-rl': 'Vertical (Right-to-Left)',
+                'vertical-lr': 'Vertical (Left-to-Right)'
+            };
+
+            const button = document.querySelector('.mode-toggle');
+            button.textContent = `Switch Writing Mode (Currently: ${modeNames[currentWritingMode]})`;
+        }
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.example-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

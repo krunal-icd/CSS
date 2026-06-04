@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Cascade Layers - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .tutorial-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .tutorial-section h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .tutorial-section h3 {
+            font-size: 1.4em;
+            color: #444;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section-description {
+            color: #666;
+            font-size: 1em;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 1000px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+            line-height: 1.5;
+        }
+
+        .code-block .keyword {
+            color: #f472b6;
+        }
+
+        .code-block .property {
+            color: #60a5fa;
+        }
+
+        .code-block .value {
+            color: #34d399;
+        }
+
+        .code-block .comment {
+            color: #6b7280;
+        }
+
+        .code-block .selector {
+            color: #fbbf24;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            border-radius: 6px;
+            color: #1e40af;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 6px;
+            color: #991b1b;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            border-radius: 6px;
+            color: #166534;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: #f3f4f6;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .comparison-table td {
+            color: #666;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .cascade-diagram {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .cascade-level {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cascade-level.override {
+            border-left-color: #ef4444;
+        }
+
+        .cascade-level.high {
+            border-left-color: #22c55e;
+        }
+
+        .cascade-level .number {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .cascade-level .label {
+            flex: 1;
+        }
+
+        .cascade-level .description {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .demo-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .demo-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+            margin-bottom: 20px;
+        }
+
+        .browser-support {
+            background: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .browser-support-header {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+        }
+
+        .browser-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .browser-item:last-child {
+            border-bottom: none;
+        }
+
+        .browser-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .browser-version {
+            background: #22c55e;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .key-benefit {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .key-benefit::before {
+            content: "✓";
+            color: #22c55e;
+            font-weight: bold;
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .key-benefit p {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .pitfall {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #fef2f2;
+            border-radius: 8px;
+            border-left: 4px solid #ef4444;
+        }
+
+        .pitfall::before {
+            content: "⚠";
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .pitfall p {
+            color: #991b1b;
+            line-height: 1.5;
+        }
+
+        .layer-order-demo {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .layer-item {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .layer-name {
+            background: #667eea;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .layer-content {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .use-case {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .use-case h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .use-case p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-item.bad {
+            border-left-color: #ef4444;
+        }
+
+        .comparison-item.good {
+            border-left-color: #22c55e;
+        }
+
+        .comparison-item h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .comparison-item code {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: block;
+            font-size: 0.85em;
+            color: #667eea;
+            overflow-x: auto;
+            margin-top: 8px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.4;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .tutorial-section {
+                padding: 25px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Cascade Layers (@layer)</h1>
+            <p>Master specificity management and CSS organization with cascade layers</p>
+        </header>
+
+        <!-- What are Cascade Layers -->
+        <section class="tutorial-section">
+            <h2>What are CSS Cascade Layers?</h2>
+            <p class="section-description">
+                CSS Cascade Layers (@layer) provide a way to organize and manage the cascade of CSS rules without relying on 
+                specificity wars. They let you explicitly control which styles take precedence, creating predictable and maintainable 
+                CSS architectures. Layers establish an order of precedence independent of selector specificity.
+            </p>
+
+            <div class="info-box">
+                <strong>Key Concept:</strong> Cascade Layers separate CSS organization from CSS specificity. With layers, 
+                you control precedence through layer order, not by writing more specific selectors.
+            </div>
+
+            <h3>The Problem They Solve</h3>
+            <p class="section-description">
+                Without cascade layers, CSS organization relies on specificity. This creates:
+            </p>
+
+            <div class="comparison-grid">
+                <div class="comparison-item bad">
+                    <h4>❌ Without Cascade Layers</h4>
+                    <code>/* specificity wars */
+.btn { color: blue; }
+.nav .btn { color: red; }
+.nav .active .btn { color: green; }
+#header .nav .btn { color: yellow; }
+!important everywhere ❌</code>
+                </div>
+                <div class="comparison-item good">
+                    <h4>✅ With Cascade Layers</h4>
+                    <code>@layer reset, base, theme, utilities;
+@layer theme {
+  .btn { color: blue; }
+}
+@layer utilities {
+  .btn-red { color: red; }
+}</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Basic Syntax -->
+        <section class="tutorial-section">
+            <h2>Basic Syntax & Declaration</h2>
+            <p class="section-description">
+                Cascade layers have three main ways to be declared and used in CSS.
+            </p>
+
+            <h3>1. Named Layer Declaration</h3>
+            <div class="content-grid">
+                <div class="code-block">
+                    <span class="comment">/* Declare layer order first */</span><br>
+                    <span class="keyword">@layer</span> <span class="value">reset, base, theme, utilities</span>;<br>
+                    <br>
+                    <span class="comment">/* Then add styles to layers */</span><br>
+                    <span class="keyword">@layer</span> <span class="value">base</span> {<br>
+                    &nbsp;&nbsp;<span class="selector">body</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">margin</span>: <span class="value">0</span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">padding</span>: <span class="value">0</span>;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+                <div class="info-box" style="align-self: start;">
+                    <strong>Declaring Order:</strong> The first @layer statement establishes precedence. Layers listed first have 
+                    LOWER precedence. Layers listed last override earlier layers.
+                </div>
+            </div>
+
+            <h3>2. Inline Layer Assignment</h3>
+            <div class="content-grid">
+                <div class="code-block">
+                    <span class="comment">/* Add rules directly to layer */</span><br>
+                    <span class="keyword">@layer</span> <span class="value">utilities</span> {<br>
+                    &nbsp;&nbsp;<span class="selector">.flex</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">flex</span>;<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;<span class="selector">.grid</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">grid</span>;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+                <div class="success-box" style="align-self: start;">
+                    <strong>Pattern:</strong> Group related styles into semantic layers like utilities, components, layout, theme.
+                </div>
+            </div>
+
+            <h3>3. Multiple Layer Blocks</h3>
+            <div class="code-block">
+                <span class="keyword">@layer</span> <span class="value">base</span> {<br>
+                &nbsp;&nbsp;<span class="selector">h1</span> { <span class="property">font-size</span>: <span class="value">2em</span>; }<br>
+                }<br>
+                <br>
+                <span class="keyword">@layer</span> <span class="value">base</span> {<br>
+                &nbsp;&nbsp;<span class="comment">/* Adds to same 'base' layer */</span><br>
+                &nbsp;&nbsp;<span class="selector">h2</span> { <span class="property">font-size</span>: <span class="value">1.5em</span>; }<br>
+                }
+            </div>
+
+            <div class="success-box">
+                <strong>Best Practice:</strong> Declare layer order once at the top of your stylesheet, then add rules to each layer as needed.
+            </div>
+        </section>
+
+        <!-- Cascade Hierarchy -->
+        <section class="tutorial-section">
+            <h2>Complete Cascade Hierarchy</h2>
+            <p class="section-description">
+                CSS cascade layers fit into the broader CSS cascade. Understanding the full hierarchy is essential.
+            </p>
+
+            <div class="cascade-diagram">
+                <div class="cascade-level" style="order: 1;">
+                    <div class="number">1</div>
+                    <div class="label">
+                        <strong>Importance: !important (Reversed)</strong>
+                        <div class="description">!important declarations in author styles (LOWEST within !important)</div>
+                    </div>
+                </div>
+
+                <div class="cascade-level" style="order: 2;">
+                    <div class="number">2</div>
+                    <div class="label">
+                        <strong>Author Layer Order</strong>
+                        <div class="description">First declared layers override last declared layers (within !important)</div>
+                    </div>
+                </div>
+
+                <div class="cascade-level" style="order: 3;">
+                    <div class="number">3</div>
+                    <div class="label">
+                        <strong>Unlayered Author Styles</strong>
+                        <div class="description">Styles not in any @layer override all layered author styles</div>
+                    </div>
+                </div>
+
+                <div class="cascade-level high" style="order: 4;">
+                    <div class="number">4</div>
+                    <div class="label">
+                        <strong>Inline Styles (style="")</strong>
+                        <div class="description">Inline attribute styles override all author rules</div>
+                    </div>
+                </div>
+
+                <div class="cascade-level override" style="order: 5;">
+                    <div class="number">5</div>
+                    <div class="label">
+                        <strong>!important (Reversed Cascade)</strong>
+                        <div class="description">!important reverses precedence — earlier layers override later layers</div>
+                    </div>
+                </div>
+
+                <div class="cascade-level override" style="order: 6;">
+                    <div class="number">6</div>
+                    <div class="label">
+                        <strong>!important Inline</strong>
+                        <div class="description">Inline !important (HIGHEST precedence)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>Critical Understanding:</strong> The cascade hierarchy for layers is REVERSED when !important is involved. 
+                First layers win with !important, but later layers win without !important.
+            </div>
+        </section>
+
+        <!-- Layer Ordering -->
+        <section class="tutorial-section">
+            <h2>Layer Ordering & Precedence</h2>
+            <p class="section-description">
+                The order of layer declaration determines which styles win. This follows the "last one wins" principle, 
+                EXCEPT when !important is used.
+            </p>
+
+            <h3>Without !important (Later Layers Win)</h3>
+            <div class="layer-order-demo">
+                <div class="layer-item">
+                    <div class="layer-name">Layer 1</div>
+                    <div class="layer-content">@layer reset { color: black; }</div>
+                </div>
+                <div class="layer-item">
+                    <div class="layer-name">Layer 2</div>
+                    <div class="layer-content">@layer base { color: blue; }</div>
+                </div>
+                <div class="layer-item">
+                    <div class="layer-name">Layer 3</div>
+                    <div class="layer-content">@layer theme { color: red; } ← WINS</div>
+                </div>
+            </div>
+
+            <h3>With !important (First Layers Win)</h3>
+            <div class="layer-order-demo">
+                <div class="layer-item">
+                    <div class="layer-name">Layer 1</div>
+                    <div class="layer-content">@layer reset { color: black !important; } ← WINS</div>
+                </div>
+                <div class="layer-item">
+                    <div class="layer-name">Layer 2</div>
+                    <div class="layer-content">@layer base { color: blue !important; }</div>
+                </div>
+                <div class="layer-item">
+                    <div class="layer-name">Layer 3</div>
+                    <div class="layer-content">@layer theme { color: red !important; }</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Design Pattern:</strong> Use !important in reset/override layers to ensure they take precedence despite being declared first.
+            </div>
+        </section>
+
+        <!-- Practical Architecture -->
+        <section class="tutorial-section">
+            <h2>Recommended Layer Architecture</h2>
+            <p class="section-description">
+                A well-organized cascade layer structure provides the foundation for scalable CSS.
+            </p>
+
+            <div class="code-block">
+                <span class="comment">/* 1. Declare layer order */</span><br>
+                <span class="keyword">@layer</span> <span class="value">reset, base, layout, components, utilities, overrides</span>;<br>
+                <br>
+                <span class="comment">/* 2. Reset - Browser defaults */</span><br>
+                <span class="keyword">@layer</span> <span class="value">reset</span> {<br>
+                &nbsp;&nbsp;<span class="selector">*</span> { <span class="property">margin</span>: <span class="value">0</span>; <span class="property">padding</span>: <span class="value">0</span>; }<br>
+                &nbsp;&nbsp;<span class="selector">body</span> { <span class="property">font-family</span>: <span class="value">system-ui</span>; }<br>
+                }<br>
+                <br>
+                <span class="comment">/* 3. Base - Typography, colors, basic styles */</span><br>
+                <span class="keyword">@layer</span> <span class="value">base</span> {<br>
+                &nbsp;&nbsp;<span class="selector">h1</span> { <span class="property">font-size</span>: <span class="value">2em</span>; }<br>
+                &nbsp;&nbsp;<span class="selector">a</span> { <span class="property">color</span>: <span class="value">blue</span>; }<br>
+                }<br>
+                <br>
+                <span class="comment">/* 4. Layout - Grid, flex, positioning */</span><br>
+                <span class="keyword">@layer</span> <span class="value">layout</span> {<br>
+                &nbsp;&nbsp;<span class="selector">.container</span> { <span class="property">max-width</span>: <span class="value">1200px</span>; }<br>
+                &nbsp;&nbsp;<span class="selector">.grid</span> { <span class="property">display</span>: <span class="value">grid</span>; }<br>
+                }<br>
+                <br>
+                <span class="comment">/* 5. Components - Buttons, cards, modals */</span><br>
+                <span class="keyword">@layer</span> <span class="value">components</span> {<br>
+                &nbsp;&nbsp;<span class="selector">.btn</span> { <span class="property">padding</span>: <span class="value">10px 20px</span>; }<br>
+                &nbsp;&nbsp;<span class="selector">.card</span> { <span class="property">border-radius</span>: <span class="value">8px</span>; }<br>
+                }<br>
+                <br>
+                <span class="comment">/* 6. Utilities - Single-purpose classes */</span><br>
+                <span class="keyword">@layer</span> <span class="value">utilities</span> {<br>
+                &nbsp;&nbsp;<span class="selector">.text-center</span> { <span class="property">text-align</span>: <span class="value">center</span>; }<br>
+                &nbsp;&nbsp;<span class="selector">.m-4</span> { <span class="property">margin</span>: <span class="value">1rem</span>; }<br>
+                }<br>
+                <br>
+                <span class="comment">/* 7. Overrides - Exception handling */</span><br>
+                <span class="keyword">@layer</span> <span class="value">overrides</span> {<br>
+                &nbsp;&nbsp;<span class="selector">.hidden</span> { <span class="property">display</span>: <span class="value">none !important</span>; }<br>
+                }
+            </div>
+
+            <h3>Layer Purpose Reference</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Layer</th>
+                    <th>Purpose</th>
+                    <th>Specificity</th>
+                    <th>Examples</th>
+                </tr>
+                <tr>
+                    <td><strong>reset</strong></td>
+                    <td>Remove browser defaults</td>
+                    <td>Low</td>
+                    <td>* { margin: 0; }, body { font-family: ... }</td>
+                </tr>
+                <tr>
+                    <td><strong>base</strong></td>
+                    <td>Global typography & colors</td>
+                    <td>Low</td>
+                    <td>h1, h2, a, p styling</td>
+                </tr>
+                <tr>
+                    <td><strong>layout</strong></td>
+                    <td>Page structure & sections</td>
+                    <td>Medium</td>
+                    <td>.container, .header, .grid</td>
+                </tr>
+                <tr>
+                    <td><strong>components</strong></td>
+                    <td>Reusable UI components</td>
+                    <td>Medium</td>
+                    <td>.btn, .card, .modal</td>
+                </tr>
+                <tr>
+                    <td><strong>utilities</strong></td>
+                    <td>Single-purpose helpers</td>
+                    <td>Low</td>
+                    <td>.flex, .grid, .m-4</td>
+                </tr>
+                <tr>
+                    <td><strong>overrides</strong></td>
+                    <td>Exception handling</td>
+                    <td>N/A</td>
+                    <td>.hidden, .disabled</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Real-World Examples -->
+        <section class="tutorial-section">
+            <h2>Real-World Examples</h2>
+
+            <h3>Example 1: Third-Party Library Integration</h3>
+            <p class="section-description">
+                Cascade layers solve the common problem of third-party CSS conflicting with your styles.
+            </p>
+
+            <div class="code-block">
+                <span class="keyword">@layer</span> <span class="value">vendor, my-styles</span>;<br>
+                <br>
+                <span class="comment">/* Third-party library in vendor layer */</span><br>
+                <span class="keyword">@layer</span> <span class="value">vendor</span> {<br>
+                &nbsp;&nbsp;<span class="selector">.btn</span> { <span class="property">background</span>: <span class="value">gray</span>; }<br>
+                &nbsp;&nbsp;<span class="selector">.alert</span> { <span class="property">color</span>: <span class="value">red</span>; }<br>
+                }<br>
+                <br>
+                <span class="comment">/* Your overrides */</span><br>
+                <span class="keyword">@layer</span> <span class="value">my-styles</span> {<br>
+                &nbsp;&nbsp;<span class="selector">.btn</span> { <span class="property">background</span>: <span class="value">blue</span>; } <span class="comment">← Wins</span><br>
+                }
+            </div>
+
+            <div class="success-box">
+                <strong>Benefit:</strong> Your styles override vendor styles WITHOUT needing higher specificity or !important.
+            </div>
+
+            <h3>Example 2: Theme Variants</h3>
+            <p class="section-description">
+                Use cascade layers to manage light/dark theme variations cleanly.
+            </p>
+
+            <div class="code-block">
+                <span class="keyword">@layer</span> <span class="value">base, light-theme, dark-theme</span>;<br>
+                <br>
+                <span class="keyword">@layer</span> <span class="value">base</span> {<br>
+                &nbsp;&nbsp;<span class="selector">:root</span> { <span class="property">--bg</span>: <span class="value">white</span>; }<br>
+                &nbsp;&nbsp;<span class="selector">body</span> { <span class="property">background</span>: <span class="value">var(--bg)</span>; }<br>
+                }<br>
+                <br>
+                <span class="keyword">@layer</span> <span class="value">dark-theme</span> {<br>
+                &nbsp;&nbsp;<span class="selector">@media</span> <span class="value">(prefers-color-scheme: dark)</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="selector">:root</span> { <span class="property">--bg</span>: <span class="value">#1a1a1a</span>; }<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+
+            <h3>Example 3: Media Query Layers</h3>
+            <p class="section-description">
+                Layers work with media queries for responsive design organization.
+            </p>
+
+            <div class="code-block">
+                <span class="keyword">@layer</span> <span class="value">components</span> {<br>
+                &nbsp;&nbsp;<span class="selector">.card</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">flex</span>;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="property">gap</span>: <span class="value">20px</span>;<br>
+                &nbsp;&nbsp;}<br>
+                <br>
+                &nbsp;&nbsp;<span class="keyword">@media</span> <span class="value">(max-width: 600px)</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="selector">.card</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">flex-direction</span>: <span class="value">column</span>;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="tutorial-section">
+            <h2>Browser Support</h2>
+            <p class="section-description">
+                Cascade Layers are well-supported in modern browsers. Check your target audience.
+            </p>
+
+            <div class="browser-support">
+                <div class="browser-support-header">Browser Support for @layer</div>
+                <div class="browser-item">
+                    <span class="browser-name">Chrome / Edge</span>
+                    <span class="browser-version">99+</span>
+                </div>
+                <div class="browser-item">
+                    <span class="browser-name">Firefox</span>
+                    <span class="browser-version">97+</span>
+                </div>
+                <div class="browser-item">
+                    <span class="browser-name">Safari</span>
+                    <span class="browser-version">15.4+</span>
+                </div>
+                <div class="browser-item">
+                    <span class="browser-name">Opera</span>
+                    <span class="browser-version">85+</span>
+                </div>
+                <div class="browser-item">
+                    <span class="browser-name">iOS Safari</span>
+                    <span class="browser-version">15.4+</span>
+                </div>
+            </div>
+
+            <p class="section-description" style="margin-top: 20px;">
+                <strong>Global Support: ~94%</strong> — CSS Cascade Layers are supported in virtually all modern browsers, 
+                making them safe for production use.
+            </p>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="tutorial-section">
+            <h2>Best Practices & Tips</h2>
+
+            <div class="key-benefit">
+                <p><strong>Name layers semantically:</strong> Use meaningful names like 'reset', 'base', 'components' that clearly indicate their purpose.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Declare order once:</strong> Put your @layer statement at the very top of your stylesheet to establish precedence.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Avoid deep nesting:</strong> Keep cascade layers relatively flat. 5-7 layers is typically sufficient.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Use unlayered for overrides:</strong> Put emergency overrides OUTSIDE any layer to ensure they win.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Combine with CSS custom properties:</strong> Use --variables in lower layers, customize in higher layers.</p>
+            </div>
+
+            <div class="key-benefit">
+                <p><strong>Document your layer architecture:</strong> Comment your @layer declarations to explain the intent of each layer.</p>
+            </div>
+
+            <h3>Common Pitfalls to Avoid</h3>
+
+            <div class="pitfall">
+                <p><strong>Relying too much on !important:</strong> If you find yourself using !important frequently, your layer structure needs review.</p>
+            </div>
+
+            <div class="pitfall">
+                <p><strong>Declaring layers in different files:</strong> When possible, maintain consistent layer ordering across your entire project.</p>
+            </div>
+
+            <div class="pitfall">
+                <p><strong>Mixing layered and unlayered styles:</strong> Unlayered styles override ALL layered styles. Use this sparingly.</p>
+            </div>
+
+            <div class="pitfall">
+                <p><strong>Over-engineering with too many layers:</strong> Simplicity wins. Start with 4-5 layers and expand only if needed.</p>
+            </div>
+        </section>
+
+        <!-- Migration Guide -->
+        <section class="tutorial-section">
+            <h2>Migration Guide: Moving from Specificity to Layers</h2>
+            <p class="section-description">
+                If you have existing CSS using specificity wars, here's how to migrate to cascade layers.
+            </p>
+
+            <h3>Step 1: Audit Current CSS</h3>
+            <div class="use-case">
+                <h4>Identify specificity problems:</h4>
+                <p>Look for multiple declarations of the same property, nested selectors, repeated classes, and !important usage.</p>
+            </div>
+
+            <h3>Step 2: Define Your Layer Strategy</h3>
+            <div class="use-case">
+                <h4>Plan layer structure:</h4>
+                <p>Decide how many layers you need and name them semantically. A typical structure: reset, base, layout, components, utilities, overrides.</p>
+            </div>
+
+            <h3>Step 3: Move Styles to Layers</h3>
+            <div class="code-block">
+                <span class="comment">/* Before: Specificity chaos */</span><br>
+                <span class="selector">.btn</span> { <span class="property">color</span>: <span class="value">blue</span>; }<br>
+                <span class="selector">.nav</span> <span class="selector">.btn</span> { <span class="property">color</span>: <span class="value">white</span>; }<br>
+                <span class="selector">.nav.active</span> <span class="selector">.btn</span> { <span class="property">color</span>: <span class="value">yellow !important</span>; }<br>
+                <br>
+                <span class="comment">/* After: Clear layers */</span><br>
+                <span class="keyword">@layer</span> <span class="value">components, utilities, overrides</span>;<br>
+                <span class="keyword">@layer</span> <span class="value">components</span> {<br>
+                &nbsp;&nbsp;<span class="selector">.btn</span> { <span class="property">color</span>: <span class="value">blue</span>; }<br>
+                &nbsp;&nbsp;<span class="selector">.nav</span> <span class="selector">.btn</span> { <span class="property">color</span>: <span class="value">white</span>; }<br>
+                }<br>
+                <span class="keyword">@layer</span> <span class="value">overrides</span> {<br>
+                &nbsp;&nbsp;<span class="selector">.nav.active</span> <span class="selector">.btn</span> { <span class="property">color</span>: <span class="value">yellow</span>; }<br>
+                }
+            </div>
+
+            <h3>Step 4: Remove Specificity Hacks</h3>
+            <p class="section-description">
+                Once in layers, you can simplify selectors and remove !important declarations that were only needed for specificity control.
+            </p>
+
+            <div class="success-box">
+                <strong>Result:</strong> CSS becomes more maintainable, readable, and predictable. No more specificity wars.
+            </div>
+        </section>
+
+        <!-- Advanced Patterns -->
+        <section class="tutorial-section">
+            <h2>Advanced Patterns</h2>
+
+            <h3>Nested Layers (Subgroups)</h3>
+            <p class="section-description">
+                You can create layers within layers for more granular organization.
+            </p>
+
+            <div class="code-block">
+                <span class="keyword">@layer</span> <span class="value">components.interactive, components.static</span>;<br>
+                <br>
+                <span class="keyword">@layer</span> <span class="value">components.interactive</span> {<br>
+                &nbsp;&nbsp;<span class="selector">.btn</span> { <span class="property">cursor</span>: <span class="value">pointer</span>; }<br>
+                &nbsp;&nbsp;<span class="selector">.btn:hover</span> { <span class="property">opacity</span>: <span class="value">0.8</span>; }<br>
+                }<br>
+                <br>
+                <span class="keyword">@layer</span> <span class="value">components.static</span> {<br>
+                &nbsp;&nbsp;<span class="selector">.badge</span> { <span class="property">padding</span>: <span class="value">4px 8px</span>; }<br>
+                }
+            </div>
+
+            <h3>Conditional Layers with @supports</h3>
+            <p class="section-description">
+                Use @supports to conditionally apply layers based on feature detection.
+            </p>
+
+            <div class="code-block">
+                <span class="keyword">@layer</span> <span class="value">modern, fallback</span>;<br>
+                <br>
+                <span class="keyword">@layer</span> <span class="value">modern</span> {<br>
+                &nbsp;&nbsp;<span class="keyword">@supports</span> (<span class="property">display</span>: <span class="value">grid</span>) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="selector">.layout</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">grid</span>;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">grid-template-columns</span>: <span class="value">repeat(auto-fit, minmax(250px, 1fr))</span>;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="tutorial-section">
+            <h2>Quick Reference & Cheat Sheet</h2>
+
+            <h3>Essential Syntax</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Pattern</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>Declare order</td>
+                    <td>Establish layer precedence</td>
+                    <td>@layer reset, base, utilities;</td>
+                </tr>
+                <tr>
+                    <td>Add to layer</td>
+                    <td>Add rules to a layer</td>
+                    <td>@layer base { body { margin: 0; } }</td>
+                </tr>
+                <tr>
+                    <td>Append to layer</td>
+                    <td>Add more rules later</td>
+                    <td>@layer base { h1 { font-size: 2em; } }</td>
+                </tr>
+                <tr>
+                    <td>Nested layers</td>
+                    <td>Organize within layers</td>
+                    <td>@layer components.buttons</td>
+                </tr>
+                <tr>
+                    <td>Unlayered override</td>
+                    <td>Rules outside layers override all layers</td>
+                    <td>.critical { color: red; } (no @layer)</td>
+                </tr>
+            </table>
+
+            <h3>Precedence Rules</h3>
+            <ul style="margin-left: 20px; color: #666; line-height: 1.8;">
+                <li>✓ Later declared layers override earlier ones (no !important)</li>
+                <li>✓ Earlier layers override later ones (with !important) — reversed cascade</li>
+                <li>✓ Unlayered styles override ALL layered styles</li>
+                <li>✓ Inline styles override layers</li>
+                <li>✓ Specificity doesn't matter within a layer — first one wins</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>Master cascade layers for scalable, maintainable CSS architecture. 🚀</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add scroll animation to sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.tutorial-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

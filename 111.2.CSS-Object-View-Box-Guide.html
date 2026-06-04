@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Object-View-Box - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .demo-section {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-section h2 {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .demo-section p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        /* ===== DEMO 1: Image Gallery ===== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 240px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            overflow: hidden;
+        }
+
+        /* Different crop styles */
+        .crop-centered {
+            object-view-box: inset(15%);
+            object-fit: cover;
+        }
+
+        .crop-top {
+            object-view-box: inset(5% 20% 25% 20%);
+            object-fit: cover;
+        }
+
+        .crop-bottom {
+            object-view-box: inset(25% 20% 5% 20%);
+            object-fit: cover;
+        }
+
+        .crop-portrait {
+            object-view-box: inset(10% 30% 10% 30%);
+            object-fit: cover;
+        }
+
+        .crop-landscape {
+            object-view-box: inset(20% 5% 20% 5%);
+            object-fit: cover;
+        }
+
+        .crop-extreme {
+            object-view-box: inset(30% 30% 30% 30%);
+            object-fit: cover;
+        }
+
+        .gallery-info {
+            padding: 15px;
+        }
+
+        .gallery-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+
+        .gallery-info p {
+            font-size: 0.85em;
+            color: #999;
+        }
+
+        .gallery-info code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            color: #667eea;
+        }
+
+        /* ===== DEMO 2: Responsive Profile Cards ===== */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-view-box: inset(10% 15% 20% 15%);
+        }
+
+        .profile-info {
+            padding: 20px;
+        }
+
+        .profile-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        /* ===== DEMO 3: Hero Section ===== */
+        .hero-section {
+            position: relative;
+            height: 400px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-image-container {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            overflow: hidden;
+        }
+
+        .hero-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-view-box: inset(10% 15% 20% 15%);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 40px;
+            color: white;
+        }
+
+        .hero-overlay h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .hero-overlay p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+
+        .hero-overlay a {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .hero-overlay a:hover {
+            background: #764ba2;
+        }
+
+        /* ===== DEMO 4: Product Grid ===== */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-view-box: inset(20% 10%);
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-info h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .product-info p {
+            font-size: 0.85em;
+            color: #999;
+        }
+
+        .product-price {
+            color: #667eea;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* ===== DEMO 5: Comparison ===== */
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .comparison-item h3 {
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .comparison-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .comparison-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .comparison-code {
+            background: #f3f4f6;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: #667eea;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+        }
+
+        /* ===== DEMO 6: Responsive Behavior ===== */
+        .responsive-demo {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px dashed #e5e7eb;
+        }
+
+        .responsive-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .responsive-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-view-box: inset(10%);
+        }
+
+        @media (max-width: 768px) {
+            .responsive-image img {
+                object-view-box: inset(20%);
+            }
+
+            .comparison-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-overlay {
+                padding-left: 20px;
+            }
+
+            .hero-overlay h2 {
+                font-size: 1.8em;
+            }
+
+            .hero-overlay p {
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .responsive-image img {
+                object-view-box: inset(30%);
+            }
+
+            .hero-overlay {
+                padding-left: 15px;
+            }
+
+            .hero-overlay h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        /* ===== Info Boxes ===== */
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            color: #1e40af;
+            font-size: 0.95em;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            color: #991b1b;
+            font-size: 0.95em;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            color: #166534;
+            font-size: 0.95em;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .code-block code {
+            display: block;
+        }
+
+        footer {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            margin-top: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-box .number {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .stat-box .label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🖼️ CSS Object-View-Box - Practical Examples</h1>
+            <p>Real-world implementations of image and media cropping</p>
+        </header>
+
+        <!-- DEMO 1: Image Gallery with Various Crops -->
+        <div class="demo-section">
+            <h2>📸 Example 1: Image Gallery with Different Crops</h2>
+            <p>Showcase different crop styles using the same placeholder for each image:</p>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-image crop-centered">Centered Crop</div>
+                    <div class="gallery-info">
+                        <h3>Centered Crop</h3>
+                        <p><code>inset(15%)</code></p>
+                        <p>15% crop from all sides, focuses on center</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="gallery-image crop-top">Top Focus</div>
+                    <div class="gallery-info">
+                        <h3>Top Focus</h3>
+                        <p><code>inset(5% 20% 25% 20%)</code></p>
+                        <p>Shows more of top, less bottom</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="gallery-image crop-bottom">Bottom Focus</div>
+                    <div class="gallery-info">
+                        <h3>Bottom Focus</h3>
+                        <p><code>inset(25% 20% 5% 20%)</code></p>
+                        <p>Shows more of bottom, less top</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="gallery-image crop-portrait">Portrait Crop</div>
+                    <div class="gallery-info">
+                        <h3>Portrait Crop</h3>
+                        <p><code>inset(10% 30% 10% 30%)</code></p>
+                        <p>Tall and narrow focus area</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="gallery-image crop-landscape">Landscape Crop</div>
+                    <div class="gallery-info">
+                        <h3>Landscape Crop</h3>
+                        <p><code>inset(20% 5% 20% 5%)</code></p>
+                        <p>Wide and short focus area</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="gallery-image crop-extreme">Extreme Crop</div>
+                    <div class="gallery-info">
+                        <h3>Extreme Crop</h3>
+                        <p><code>inset(30% 30% 30% 30%)</code></p>
+                        <p>Focus on tiny center area</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>ℹ️ Tip:</strong> Each gallery item uses the same placeholder gradient, but different crop values create unique focal points. In production, each image would have its own unique content.
+            </div>
+        </div>
+
+        <!-- DEMO 2: Profile Cards -->
+        <div class="demo-section">
+            <h2>👤 Example 2: Profile Card Avatar Cropping</h2>
+            <p>Crop profile images to focus on faces while maintaining consistent aspect ratios:</p>
+
+            <div class="profile-grid">
+                <div class="profile-card">
+                    <div class="profile-avatar">👤 Person 1</div>
+                    <div class="profile-info">
+                        <h3>Sarah Johnson</h3>
+                        <p>Product Designer</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-avatar">👤 Person 2</div>
+                    <div class="profile-info">
+                        <h3>Michael Chen</h3>
+                        <p>Lead Developer</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-avatar">👤 Person 3</div>
+                    <div class="profile-info">
+                        <h3>Emma Davis</h3>
+                        <p>Marketing Manager</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-avatar">👤 Person 4</div>
+                    <div class="profile-info">
+                        <h3>James Wilson</h3>
+                        <p>UX Researcher</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<code>.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-view-box: inset(10% 15% 20% 15%);
+}</code>
+            </div>
+
+            <div class="success-box">
+                <strong>✨ Result:</strong> All profile images are consistently cropped to show just the face, creating a cohesive profile card layout regardless of original image dimensions.
+            </div>
+        </div>
+
+        <!-- DEMO 3: Hero Section -->
+        <div class="demo-section">
+            <h2>🌅 Example 3: Hero Section with Crop Focus</h2>
+            <p>Create an impressive hero section with precisely cropped background image:</p>
+
+            <div class="hero-section">
+                <div class="hero-image-container">
+                    🖼️ Hero Background Image
+                </div>
+                <div class="hero-overlay">
+                    <h2>Your Amazing Product</h2>
+                    <p>Discover how our solution transforms the way you work</p>
+                    <a href="#">Get Started Today</a>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>ℹ️ How it works:</strong> The background image uses object-view-box to crop and focus on the most interesting part, while the overlay text remains perfectly readable on top.
+            </div>
+        </div>
+
+        <!-- DEMO 4: Product Grid -->
+        <div class="demo-section">
+            <h2>🛍️ Example 4: Product Grid with Uniform Crops</h2>
+            <p>Create a consistent product gallery by cropping all product images to the same focal point:</p>
+
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image">Product 1</div>
+                    <div class="product-info">
+                        <h4>Premium Headphones</h4>
+                        <p>High-quality audio experience</p>
+                        <div class="product-price">$199.99</div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">Product 2</div>
+                    <div class="product-info">
+                        <h4>Wireless Charger</h4>
+                        <p>Fast charging technology</p>
+                        <div class="product-price">$49.99</div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">Product 3</div>
+                    <div class="product-info">
+                        <h4>Smart Watch</h4>
+                        <p>Stay connected always</p>
+                        <div class="product-price">$299.99</div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">Product 4</div>
+                    <div class="product-info">
+                        <h4>Phone Stand</h4>
+                        <p>Adjustable mount</p>
+                        <div class="product-price">$24.99</div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">Product 5</div>
+                    <div class="product-info">
+                        <h4>USB Cable</h4>
+                        <p>Durable & reliable</p>
+                        <div class="product-price">$9.99</div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">Product 6</div>
+                    <div class="product-info">
+                        <h4>Protective Case</h4>
+                        <p>Maximum protection</p>
+                        <div class="product-price">$29.99</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<code>.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-view-box: inset(20% 10%);
+}</code>
+            </div>
+
+            <div class="success-box">
+                <strong>✨ Benefit:</strong> All products display with consistent crop and framing, creating a professional, uniform gallery appearance.
+            </div>
+        </div>
+
+        <!-- DEMO 5: Before & After Comparison -->
+        <div class="demo-section">
+            <h2>⚖️ Example 5: With vs Without Cropping</h2>
+            <p>Compare how object-view-box transforms image presentation:</p>
+
+            <div class="comparison-container">
+                <div class="comparison-item">
+                    <h3>❌ Without Crop</h3>
+                    <div class="comparison-image">
+                        Full View
+                    </div>
+                    <div class="comparison-code">
+                        object-view-box: inset(0)
+                    </div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">Shows entire image, may include unwanted areas</p>
+                </div>
+
+                <div class="comparison-item">
+                    <h3>✅ With Crop</h3>
+                    <div class="comparison-image" style="background: linear-gradient(135deg, #22c55e 0%, #166534 100%);">
+                        Cropped View
+                    </div>
+                    <div class="comparison-code">
+                        object-view-box: inset(15%)
+                    </div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">Focused view with 15% crop from all sides</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>ℹ️ Note:</strong> The cropped version maintains object-fit: cover to ensure the image fills its container while displaying only the cropped region.
+            </div>
+        </div>
+
+        <!-- DEMO 6: Responsive Cropping -->
+        <div class="demo-section">
+            <h2>📱 Example 6: Responsive Cropping</h2>
+            <p>Adjust crop values based on viewport size for optimal display on all devices:</p>
+
+            <div class="responsive-demo">
+                <h3 style="margin-bottom: 15px; color: #333;">Resize your browser to see different crop values</h3>
+                <div class="responsive-image">
+                    Responsive Image
+                </div>
+                <div class="info-box">
+                    <strong>Desktop (>768px):</strong> object-view-box: inset(10%)<br/>
+                    <strong>Tablet (≤768px):</strong> object-view-box: inset(20%)<br/>
+                    <strong>Mobile (≤480px):</strong> object-view-box: inset(30%)
+                </div>
+            </div>
+
+            <div class="code-block">
+<code>/* Desktop */
+img { object-view-box: inset(10%); }
+
+/* Tablet */
+@media (max-width: 768px) {
+  img { object-view-box: inset(20%); }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  img { object-view-box: inset(30%); }
+}</code>
+            </div>
+
+            <div class="success-box">
+                <strong>✨ Advantage:</strong> Responsive cropping ensures images remain well-composed and focused on mobile devices while showing more context on larger screens.
+            </div>
+        </div>
+
+        <!-- Key Takeaways -->
+        <div class="demo-section">
+            <h2>🎯 Key Takeaways & Best Practices</h2>
+
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="number">6</div>
+                    <div class="label">Practical Examples</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">95%+</div>
+                    <div class="label">CSS Support</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">0</div>
+                    <div class="label">JavaScript Needed</div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 20px; color: #333;">When to Use Object-View-Box:</h3>
+            <ul style="margin-left: 20px; color: #666; line-height: 1.8;">
+                <li><strong>Gallery thumbnails:</strong> Crop various aspect ratio images to consistent squares</li>
+                <li><strong>Profile avatars:</strong> Focus on faces in user profile images</li>
+                <li><strong>Hero sections:</strong> Extract the most interesting part of background images</li>
+                <li><strong>Product grids:</strong> Create uniform product display regardless of source images</li>
+                <li><strong>Responsive designs:</strong> Adjust crops based on viewport size</li>
+                <li><strong>Art direction:</strong> Show different versions of same image for different contexts</li>
+            </ul>
+
+            <h3 style="margin-top: 20px; color: #333;">Best Practices:</h3>
+            <ul style="margin-left: 20px; color: #666; line-height: 1.8;">
+                <li><strong>Always combine with object-fit:</strong> Typically use object-fit: cover</li>
+                <li><strong>Use percentages:</strong> More flexible than fixed pixel values</li>
+                <li><strong>Test in target browsers:</strong> Check browser support before production</li>
+                <li><strong>Start small:</strong> Begin with 10-15% crops before trying extreme values</li>
+                <li><strong>Consider mobile:</strong> Adjust crops for different viewport sizes</li>
+                <li><strong>Maintain aspect ratios:</strong> Avoid distortion by pairing with proper sizing</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>⚠️ Browser Support Note:</strong> While browser support is improving (Chrome 111+, Firefox 121+), always check current support and provide fallbacks for production websites.
+            </div>
+        </div>
+
+        <!-- Implementation Summary -->
+        <div class="demo-section">
+            <h2>💡 Quick Implementation Guide</h2>
+
+            <h3 style="color: #333;">Step 1: Set Container Dimensions</h3>
+            <div class="code-block">
+<code>img {
+  width: 300px;
+  height: 300px;
+}</code>
+            </div>
+
+            <h3 style="color: #333; margin-top: 15px;">Step 2: Add Object-Fit</h3>
+            <div class="code-block">
+<code>img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}</code>
+            </div>
+
+            <h3 style="color: #333; margin-top: 15px;">Step 3: Apply Object-View-Box</h3>
+            <div class="code-block">
+<code>img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  object-view-box: inset(15%);
+}</code>
+            </div>
+
+            <h3 style="color: #333; margin-top: 15px;">Step 4: Optional - Make Responsive</h3>
+            <div class="code-block">
+<code>@media (max-width: 768px) {
+  img {
+    object-view-box: inset(25%);
+  }
+}</code>
+            </div>
+
+            <div class="success-box">
+                <strong>✨ Done!</strong> Your images are now cropped with precise control using pure CSS.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>CSS Object-View-Box - Practical Examples</strong></p>
+        <p>Master image and media cropping with real-world implementations</p>
+        <p style="margin-top: 15px; font-size: 0.9em; color: #999;">Perfect for galleries, profiles, hero sections, and responsive design</p>
+    </footer>
+</body>
+</html>
