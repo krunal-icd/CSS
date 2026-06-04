@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Backface-Visibility Property - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+        }
+
+        p, li {
+            font-size: 1em;
+            margin-bottom: 12px;
+            color: #555;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .syntax-block {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+
+        .keyword { color: #ff79c6; }
+        .string { color: #f1fa8c; }
+        .property { color: #8be9fd; }
+        .value { color: #50fa7b; }
+        .comment { color: #6272a4; }
+
+        .demo-section {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .demo-title {
+            color: #667eea;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        /* 3D Transform Setup */
+        .perspective-container {
+            perspective: 1000px;
+            display: flex;
+            gap: 30px;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .flip-card {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+
+        .flip-card:hover {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 8px;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        /* Demonstration: backface-visibility: visible */
+        .card-visible {
+            width: 180px;
+            height: 180px;
+            background: #e8f4f8;
+            border: 2px solid #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotateY(180deg);
+            transform-style: preserve-3d;
+            backface-visibility: visible;
+            font-weight: bold;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        /* Demonstration: backface-visibility: hidden */
+        .card-hidden {
+            width: 180px;
+            height: 180px;
+            background: #f4e8f8;
+            border: 2px solid #764ba2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotateY(180deg);
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            font-weight: bold;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .browser-support {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .browser-support h4 {
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+
+        .support-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .support-item {
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid #4CAF50;
+        }
+
+        .support-item.partial {
+            border-left-color: #ff9800;
+        }
+
+        .support-item.no {
+            border-left-color: #f44336;
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .property-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .property-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .property-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 5px;
+        }
+
+        .tag.important {
+            background: #f44336;
+        }
+
+        .tag.note {
+            background: #2196F3;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        .interactive-demo {
+            background: white;
+            padding: 20px;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .interactive-demo button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+
+        .interactive-demo button:hover {
+            background: #764ba2;
+        }
+
+        .highlight {
+            background: #fff9e6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .warning {
+            background: #ffe0e0;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .success {
+            background: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .perspective-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .support-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Backface-Visibility</h1>
+            <p>A Complete Guide to Controlling Element Visibility in 3D Transforms</p>
+        </header>
+
+        <div class="content">
+            <!-- Definition Section -->
+            <section>
+                <h2>What is Backface-Visibility?</h2>
+                <p>The <span class="highlight">backface-visibility</span> property in CSS determines whether the back face of an element is visible when it's rotated toward the viewer. When working with 3D transforms in CSS, elements can be rotated in 3D space, and this property controls whether the reversed/back side of the element shows or is hidden.</p>
+                
+                <div class="success">
+                    <strong>Key Point:</strong> Backface-visibility is essential for creating realistic 3D effects like flip cards, rotating boxes, and animations where you want to hide the "back" of elements during 3D transformations.
+                </div>
+            </section>
+
+            <!-- Syntax Section -->
+            <section>
+                <h2>Syntax & Values</h2>
+                
+                <div class="syntax-block">
+backface-visibility: visible | hidden | initial | inherit;
+                </div>
+
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag">visible</span></td>
+                            <td>The back face of the element is visible (default). Shows a mirror image of the front when rotated.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">hidden</span></td>
+                            <td>The back face is hidden. The element becomes transparent when rotated to show its back side.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">initial</span></td>
+                            <td>Sets the property to its default value (visible).</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">inherit</span></td>
+                            <td>Inherits the backface-visibility value from the parent element.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Basic Examples -->
+            <section>
+                <h2>Basic Usage Examples</h2>
+
+                <h3>1. Backface-Visibility: Visible (Default)</h3>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">width</span>: <span class="value">200px</span>;
+  <span class="property">height</span>: <span class="value">200px</span>;
+  <span class="property">background</span>: <span class="value">blue</span>;
+  <span class="property">transform</span>: <span class="value">rotateY(180deg)</span>;
+  <span class="property">backface-visibility</span>: <span class="value">visible</span>; <span class="comment">/* Shows reversed text/image */</span>
+}
+                </div>
+
+                <h3>2. Backface-Visibility: Hidden</h3>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">width</span>: <span class="value">200px</span>;
+  <span class="property">height</span>: <span class="value">200px</span>;
+  <span class="property">background</span>: <span class="value">blue</span>;
+  <span class="property">transform</span>: <span class="value">rotateY(180deg)</span>;
+  <span class="property">backface-visibility</span>: <span class="value">hidden</span>; <span class="comment">/* Element disappears */</span>
+}
+                </div>
+            </section>
+
+            <!-- Live Demonstration -->
+            <section>
+                <h2>Interactive Demonstrations</h2>
+
+                <div class="demo-section">
+                    <div class="demo-title">Demo 1: Backface-Visibility: Visible vs Hidden</div>
+                    <div class="comparison-grid">
+                        <div>
+                            <h4 style="color: #667eea; margin-bottom: 15px;">backface-visibility: visible</h4>
+                            <div class="card-visible">Element Rotated 180°</div>
+                            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">You see a mirror/reversed version of the element</p>
+                        </div>
+                        <div>
+                            <h4 style="color: #764ba2; margin-bottom: 15px;">backface-visibility: hidden</h4>
+                            <div class="card-hidden">Element Rotated 180°</div>
+                            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">The element is completely invisible</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <div class="demo-title">Demo 2: Interactive Flip Card (Click to Flip)</div>
+                    <div class="perspective-container">
+                        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">Front Side</div>
+                                <div class="flip-card-back">Back Side</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="text-align: center; margin-top: 15px; color: #666;">👆 Click the card to see it flip. Uses backface-visibility: hidden on both sides.</p>
+                </div>
+            </section>
+
+            <!-- Practical Use Cases -->
+            <section>
+                <h2>Practical Use Cases</h2>
+
+                <h3>1. Flip Card Animation</h3>
+                <p>Perfect for creating card-flip animations where users click or hover to reveal information:</p>
+                <div class="code-example">
+<span class="keyword">.flip-container</span> {
+  <span class="property">perspective</span>: <span class="value">1000px</span>;
+}
+
+<span class="keyword">.flipper</span> {
+  <span class="property">transform-style</span>: <span class="value">preserve-3d</span>;
+  <span class="property">transition</span>: <span class="value">transform 0.6s</span>;
+}
+
+<span class="keyword">.flipper:hover</span> {
+  <span class="property">transform</span>: <span class="value">rotateY(180deg)</span>;
+}
+
+<span class="keyword">.front, .back</span> {
+  <span class="property">backface-visibility</span>: <span class="value">hidden</span>;
+  <span class="property">position</span>: <span class="value">absolute</span>;
+}
+
+<span class="keyword">.back</span> {
+  <span class="property">transform</span>: <span class="value">rotateY(180deg)</span>;
+}
+                </div>
+
+                <h3>2. 3D Gallery</h3>
+                <p>Display images in a 3D rotating gallery where back faces are hidden:</p>
+                <div class="code-example">
+<span class="keyword">.gallery-item</span> {
+  <span class="property">width</span>: <span class="value">300px</span>;
+  <span class="property">height</span>: <span class="value">300px</span>;
+  <span class="property">transform-style</span>: <span class="value">preserve-3d</span>;
+  <span class="property">backface-visibility</span>: <span class="value">hidden</span>;
+  <span class="property">animation</span>: <span class="value">rotate 10s infinite linear</span>;
+}
+
+<span class="keyword">@keyframes rotate</span> {
+  <span class="property">from</span> { <span class="property">transform</span>: <span class="value">rotateY(0)</span>; }
+  <span class="property">to</span> { <span class="property">transform</span>: <span class="value">rotateY(360deg)</span>; }
+}
+                </div>
+
+                <h3>3. Login/Sign-up Toggle</h3>
+                <p>Switch between login and signup forms with a smooth 3D flip animation:</p>
+                <div class="code-example">
+<span class="keyword">.auth-card</span> {
+  <span class="property">transform-style</span>: <span class="value">preserve-3d</span>;
+  <span class="property">transition</span>: <span class="value">transform 0.6s</span>;
+}
+
+<span class="keyword">.login-form, .signup-form</span> {
+  <span class="property">backface-visibility</span>: <span class="value">hidden</span>;
+  <span class="property">position</span>: <span class="value">absolute</span>;
+}
+
+<span class="keyword">.signup-form</span> {
+  <span class="property">transform</span>: <span class="value">rotateY(180deg)</span>;
+}
+
+<span class="keyword">.auth-card.show-signup</span> {
+  <span class="property">transform</span>: <span class="value">rotateY(180deg)</span>;
+}
+                </div>
+
+                <h3>4. Product Showcase</h3>
+                <p>Display product information that flips to show different details:</p>
+                <div class="code-example">
+<span class="keyword">.product-card</span> {
+  <span class="property">transform-style</span>: <span class="value">preserve-3d</span>;
+  <span class="property">cursor</span>: <span class="value">pointer</span>;
+}
+
+<span class="keyword">.product-card:hover</span> {
+  <span class="property">transform</span>: <span class="value">rotateY(180deg)</span>;
+}
+
+<span class="keyword">.product-image, .product-details</span> {
+  <span class="property">backface-visibility</span>: <span class="value">hidden</span>;
+}
+
+<span class="keyword">.product-details</span> {
+  <span class="property">transform</span>: <span class="value">rotateY(180deg)</span>;
+}
+                </div>
+            </section>
+
+            <!-- Important Properties -->
+            <section>
+                <h2>Related CSS Properties</h2>
+
+                <h3>1. Transform-Style</h3>
+                <p>Must be set to <span class="highlight">preserve-3d</span> for backface-visibility to work properly with child elements.</p>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">transform-style</span>: <span class="value">preserve-3d</span>; <span class="comment">/* Enable 3D space */</span>
+}
+                </div>
+
+                <h3>2. Perspective</h3>
+                <p>Creates depth and makes 3D transforms more realistic.</p>
+                <div class="code-example">
+<span class="keyword">.container</span> {
+  <span class="property">perspective</span>: <span class="value">1000px</span>; <span class="comment">/* Lower values = more dramatic effect */</span>
+}
+                </div>
+
+                <h3>3. Transform</h3>
+                <p>Applies 3D rotations that interact with backface-visibility.</p>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">transform</span>: <span class="value">rotateX(45deg) rotateY(90deg) rotateZ(180deg)</span>;
+}
+                </div>
+
+                <h3>4. Transition</h3>
+                <p>Smooth animations when backface-visibility changes through transforms.</p>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">transition</span>: <span class="value">transform 0.6s ease-in-out</span>;
+}
+                </div>
+            </section>
+
+            <!-- Browser Support -->
+            <section>
+                <h2>Browser Support</h2>
+                <div class="browser-support">
+                    <h4>Compatibility Status</h4>
+                    <div class="support-list">
+                        <div class="support-item">Chrome: 36+</div>
+                        <div class="support-item">Firefox: 16+</div>
+                        <div class="support-item">Safari: 9+</div>
+                        <div class="support-item">Edge: 12+</div>
+                        <div class="support-item">Opera: 23+</div>
+                        <div class="support-item partial">IE: Not Supported</div>
+                        <div class="support-item">iOS Safari: 9+</div>
+                        <div class="support-item">Android: 4.4.4+</div>
+                    </div>
+                </div>
+
+                <h3>Vendor Prefixes</h3>
+                <p>Modern browsers don't require prefixes, but for older versions you might need:</p>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">-webkit-backface-visibility</span>: <span class="value">hidden</span>;
+  <span class="property">-moz-backface-visibility</span>: <span class="value">hidden</span>;
+  <span class="property">backface-visibility</span>: <span class="value">hidden</span>;
+}
+                </div>
+            </section>
+
+            <!-- Common Patterns -->
+            <section>
+                <h2>Common Patterns & Best Practices</h2>
+
+                <h3>Pattern 1: Complete Flip Card Template</h3>
+                <div class="code-example">
+<span class="comment">/* HTML */</span>
+&lt;<span class="keyword">div</span> <span class="property">class</span>=<span class="string">"flip-container"</span>&gt;
+  &lt;<span class="keyword">div</span> <span class="property">class</span>=<span class="string">"flipper"</span>&gt;
+    &lt;<span class="keyword">div</span> <span class="property">class</span>=<span class="string">"front"</span>&gt;Front&lt;/<span class="keyword">div</span>&gt;
+    &lt;<span class="keyword">div</span> <span class="property">class</span>=<span class="string">"back"</span>&gt;Back&lt;/<span class="keyword">div</span>&gt;
+  &lt;/<span class="keyword">div</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;
+
+<span class="comment">/* CSS */</span>
+<span class="keyword">.flip-container</span> {
+  perspective: <span class="value">1000px</span>;
+  width: <span class="value">200px</span>;
+  height: <span class="value">200px</span>;
+}
+
+<span class="keyword">.flipper</span> {
+  position: <span class="value">relative</span>;
+  width: <span class="value">100%</span>;
+  height: <span class="value">100%</span>;
+  transform-style: <span class="value">preserve-3d</span>;
+  transition: <span class="value">transform 0.6s</span>;
+}
+
+<span class="keyword">.flip-container:hover .flipper</span> {
+  transform: <span class="value">rotateY(180deg)</span>;
+}
+
+<span class="keyword">.front, .back</span> {
+  position: <span class="value">absolute</span>;
+  width: <span class="value">100%</span>;
+  height: <span class="value">100%</span>;
+  backface-visibility: <span class="value">hidden</span>;
+  display: <span class="value">flex</span>;
+  align-items: <span class="value">center</span>;
+  justify-content: <span class="value">center</span>;
+}
+
+<span class="keyword">.back</span> {
+  transform: <span class="value">rotateY(180deg)</span>;
+}
+                </div>
+
+                <h3>Pattern 2: Performance Optimization</h3>
+                <div class="success">
+                    <strong>Performance Tips:</strong>
+                    <ul>
+                        <li>Use <span class="highlight">transform: translateZ(0)</span> to enable GPU acceleration</li>
+                        <li>Apply backface-visibility only when needed, not globally</li>
+                        <li>Combine with <span class="highlight">will-change: transform</span> for frequently animated elements</li>
+                        <li>Use <span class="highlight">contain: layout style paint</span> to isolate rendering costs</li>
+                    </ul>
+                </div>
+
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">backface-visibility</span>: <span class="value">hidden</span>;
+  <span class="property">transform</span>: <span class="value">translateZ(0)</span>; <span class="comment">/* GPU acceleration */</span>
+  <span class="property">will-change</span>: <span class="value">transform</span>;
+}
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section>
+                <h2>Common Issues & Troubleshooting</h2>
+
+                <h3>Issue 1: Backface-visibility Not Working</h3>
+                <div class="warning">
+                    <strong>Problem:</strong> The property doesn't seem to have any effect.<br><br>
+                    <strong>Solution:</strong> Ensure <span class="highlight">transform-style: preserve-3d</span> is set on the parent element.
+                </div>
+
+                <h3>Issue 2: Text Appears Reversed on Rotation</h3>
+                <div class="warning">
+                    <strong>Problem:</strong> When using <span class="highlight">backface-visibility: visible</span>, text appears mirrored.<br><br>
+                    <strong>Solution:</strong> This is intentional behavior. Use <span class="highlight">backface-visibility: hidden</span> to hide the back face instead.
+                </div>
+
+                <h3>Issue 3: Performance Lag on Mobile</h3>
+                <div class="warning">
+                    <strong>Problem:</strong> Animations are choppy or slow.<br><br>
+                    <strong>Solutions:</strong>
+                    <ul>
+                        <li>Add <span class="highlight">transform: translateZ(0)</span></li>
+                        <li>Use <span class="highlight">will-change: transform</span></li>
+                        <li>Reduce the number of elements with 3D transforms</li>
+                        <li>Limit animation duration and easing complexity</li>
+                    </ul>
+                </div>
+
+                <h3>Issue 4: IE/Older Browser Compatibility</h3>
+                <div class="warning">
+                    <strong>Problem:</strong> 3D transforms not working in older browsers.<br><br>
+                    <strong>Solution:</strong> Use feature detection or graceful degradation:
+                </div>
+                <div class="code-example">
+<span class="keyword">@supports</span> (<span class="property">transform-style</span>: <span class="value">preserve-3d</span>) {
+  <span class="comment">/* Use 3D transforms only in supporting browsers */</span>
+  <span class="keyword">.flip-card</span> {
+    <span class="property">backface-visibility</span>: <span class="value">hidden</span>;
+  }
+}
+                </div>
+            </section>
+
+            <!-- Advanced Techniques -->
+            <section>
+                <h2>Advanced Techniques</h2>
+
+                <h3>1. Multiple Axis Rotation</h3>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">transform</span>: <span class="value">rotateX(45deg) rotateY(45deg)</span>;
+  <span class="property">backface-visibility</span>: <span class="value">hidden</span>;
+  <span class="property">transform-style</span>: <span class="value">preserve-3d</span>;
+}
+                </div>
+
+                <h3>2. Cube Animation</h3>
+                <div class="code-example">
+<span class="keyword">.cube-face</span> {
+  <span class="property">position</span>: <span class="value">absolute</span>;
+  <span class="property">width</span>: <span class="value">200px</span>;
+  <span class="property">height</span>: <span class="value">200px</span>;
+  <span class="property">backface-visibility</span>: <span class="value">hidden</span>;
+}
+
+<span class="keyword">.cube-face-front</span> {
+  <span class="property">transform</span>: <span class="value">translateZ(100px)</span>;
+}
+
+<span class="keyword">.cube-face-back</span> {
+  <span class="property">transform</span>: <span class="value">rotateY(180deg) translateZ(100px)</span>;
+}
+                </div>
+
+                <h3>3. Conditional Rendering with JavaScript</h3>
+                <div class="code-example">
+<span class="comment">// Toggle flip on button click</span>
+<span class="keyword">document</span>.<span class="property">querySelector</span>(<span class="string">'.flip-button'</span>).<span class="property">addEventListener</span>(<span class="string">'click'</span>, () =&gt; {
+  <span class="keyword">const</span> card = <span class="keyword">document</span>.<span class="property">querySelector</span>(<span class="string">'.flip-card'</span>);
+  card.<span class="property">classList</span>.<span class="property">toggle</span>(<span class="string">'flipped'</span>);
+});
+                </div>
+            </section>
+
+            <!-- Summary Table -->
+            <section>
+                <h2>Quick Reference Table</h2>
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Property Name</strong></td>
+                            <td>backface-visibility</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Initial Value</strong></td>
+                            <td>visible</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Inherited</strong></td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Applies To</strong></td>
+                            <td>All elements</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3D Context Required</strong></td>
+                            <td>Yes (transform-style: preserve-3d)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Animation Support</strong></td>
+                            <td>No (discrete values only)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mobile Support</strong></td>
+                            <td>Good (Modern browsers)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Performance Impact</strong></td>
+                            <td>Low (GPU accelerated)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Conclusion -->
+            <section>
+                <h2>Conclusion</h2>
+                <p>The <span class="highlight">backface-visibility</span> property is a powerful tool for creating immersive 3D web experiences. Whether you're building flip cards, rotating galleries, or interactive product showcases, understanding how to use this property effectively is essential.</p>
+                
+                <div class="success">
+                    <strong>Key Takeaways:</strong>
+                    <ul>
+                        <li>Use <span class="highlight">backface-visibility: hidden</span> to hide back faces during 3D rotations</li>
+                        <li>Always pair it with <span class="highlight">transform-style: preserve-3d</span></li>
+                        <li>Combine with <span class="highlight">perspective</span> for realistic depth</li>
+                        <li>Add <span class="highlight">translateZ(0)</span> for better performance on mobile</li>
+                        <li>Modern browser support is excellent (96%+ coverage)</li>
+                        <li>Great for creating engaging flip card and product showcase animations</li>
+                    </ul>
+                </div>
+
+                <p style="margin-top: 20px; color: #666;">With these tools and techniques, you can create stunning 3D effects that enhance user engagement and create memorable interactions on your web applications.</p>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 CSS Backface-Visibility Complete Guide | Built with HTML & CSS</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Last Updated: May 2024</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

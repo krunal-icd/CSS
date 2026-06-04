@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Perspective Properties: Practical Examples</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.5s ease;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.3em;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .code-block-html {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: var(--spacing-lg);
+            margin: var(--spacing-md) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .example-showcase {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+
+        .example-description {
+            color: var(--text-light);
+            font-size: 0.95em;
+            margin-bottom: var(--spacing-md);
+            font-style: italic;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .note-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        /* Example 1: Different Perspective Values */
+        .perspective-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .perspective-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 220px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            padding: var(--spacing-md);
+            border: 2px solid var(--border-color);
+        }
+
+        .perspective-box {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.6s ease;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .p500 { perspective: 500px; }
+        .p500 .perspective-box { transform: rotateY(45deg) rotateX(30deg); }
+
+        .p1000 { perspective: 1000px; }
+        .p1000 .perspective-box { transform: rotateY(45deg) rotateX(30deg); }
+
+        .p1500 { perspective: 1500px; }
+        .p1500 .perspective-box { transform: rotateY(45deg) rotateX(30deg); }
+
+        .p2000 { perspective: 2000px; }
+        .p2000 .perspective-box { transform: rotateY(45deg) rotateX(30deg); }
+
+        /* Example 2: Perspective Origin */
+        .origin-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .origin-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 220px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            padding: var(--spacing-md);
+            border: 2px solid var(--border-color);
+        }
+
+        .origin-box {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.6s ease;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .o-center { perspective: 1000px; perspective-origin: center; }
+        .o-center .origin-box { transform: rotateX(45deg); }
+
+        .o-top { perspective: 1000px; perspective-origin: top; }
+        .o-top .origin-box { transform: rotateX(45deg); }
+
+        .o-left { perspective: 1000px; perspective-origin: left; }
+        .o-left .origin-box { transform: rotateY(45deg); }
+
+        .o-corner { perspective: 1000px; perspective-origin: top left; }
+        .o-corner .origin-box { transform: rotateX(45deg) rotateY(45deg); }
+
+        /* Example 3: Flip Card */
+        .flip-card {
+            perspective: 1000px;
+            width: 200px;
+            height: 250px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.2em;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--accent-color), #f5576c);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        /* Example 4: 3D Gallery */
+        .gallery-3d {
+            perspective: 1200px;
+            display: flex;
+            gap: var(--spacing-lg);
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .gallery-item {
+            width: 140px;
+            height: 140px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover {
+            transform: rotateY(-15deg) scale(1.05);
+        }
+
+        /* Example 5: Tilted Cards */
+        .tilted-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            perspective: 1000px;
+        }
+
+        .tilted-card {
+            background: white;
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            perspective: 1000px;
+        }
+
+        .tilted-card:hover {
+            transform: rotateX(-8deg) rotateY(8deg);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+        }
+
+        .card-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .card-text {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+
+        /* Example 6: Dynamic Perspective */
+        .dynamic-container {
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            margin: var(--spacing-lg) 0;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border: 2px dashed var(--border-color);
+        }
+
+        .dynamic-element {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2em;
+            transition: transform 0.1s linear;
+        }
+
+        /* Example 7: Book Stack */
+        .book-stack {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            margin: var(--spacing-lg) 0;
+            gap: var(--spacing-md);
+            perspective: 1000px;
+        }
+
+        .book {
+            width: 100px;
+            height: 140px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .book:nth-child(1) { transform: rotateY(-20deg) rotateZ(-5deg); }
+        .book:nth-child(2) { transform: rotateY(0deg) scale(1.05); }
+        .book:nth-child(3) { transform: rotateY(20deg) rotateZ(5deg); }
+
+        .book-stack:hover .book:nth-child(1) { transform: rotateY(-40deg) rotateZ(-10deg); }
+        .book-stack:hover .book:nth-child(2) { transform: rotateY(0deg) scale(1.1) translateZ(30px); }
+        .book-stack:hover .book:nth-child(3) { transform: rotateY(40deg) rotateZ(10deg); }
+
+        /* Example 8: Depth Stack */
+        .depth-stack {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            margin: var(--spacing-lg) 0;
+            perspective: 1000px;
+            gap: var(--spacing-lg);
+        }
+
+        .depth-item {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .depth-1 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: translateZ(0px);
+        }
+
+        .depth-2 {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            transform: translateZ(-30px);
+        }
+
+        .depth-3 {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            transform: translateZ(-60px);
+        }
+
+        .depth-stack:hover .depth-1 { transform: translateZ(60px) scale(1.05); }
+        .depth-stack:hover .depth-2 { transform: translateZ(30px) scale(1.05); }
+        .depth-stack:hover .depth-3 { transform: translateZ(0px) scale(1.05); }
+
+        /* Example 9: Carousel */
+        .carousel-3d {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            margin: var(--spacing-lg) 0;
+            perspective: 1000px;
+            gap: var(--spacing-lg);
+        }
+
+        .carousel-card {
+            width: 120px;
+            height: 140px;
+            border-radius: 12px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-card.featured {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transform: scale(1.1) rotateY(0deg);
+        }
+
+        .carousel-card.side {
+            background: var(--bg-light);
+            color: var(--text-color);
+            transform: scale(0.85) rotateY(45deg);
+            opacity: 0.6;
+        }
+
+        /* Example 10: Multiple Perspectives */
+        .multi-perspective {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .multi-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            padding: var(--spacing-md);
+            border: 2px solid var(--border-color);
+        }
+
+        .multi-element {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.6s ease;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .multi-item:nth-child(1) { perspective: 500px; }
+        .multi-item:nth-child(1) .multi-element { transform: rotateX(45deg); }
+
+        .multi-item:nth-child(2) { perspective: 1000px; }
+        .multi-item:nth-child(2) .multi-element { transform: rotateX(45deg); }
+
+        .multi-item:nth-child(3) { perspective: 1500px; }
+        .multi-item:nth-child(3) .multi-element { transform: rotateX(45deg); }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border-radius: 12px;
+            margin-top: var(--spacing-lg);
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            body {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Perspective Properties: Practical Examples</h1>
+            <p>Real-world implementations of CSS perspective. Discover 10 practical patterns for creating stunning 3D effects with proper perspective setup.</p>
+        </header>
+
+        <!-- Example 1: Perspective Values Comparison -->
+        <section class="section">
+            <h2>Example 1: Perspective Values Comparison</h2>
+            <p class="example-description">See how different perspective values create different levels of 3D distortion. Hover to see the effect with same transform.</p>
+
+            <div class="perspective-comparison">
+                <div class="perspective-item p500">
+                    <div class="perspective-box">500px</div>
+                    <p style="font-size: 0.85em; color: var(--text-light);">Very Dramatic</p>
+                </div>
+                <div class="perspective-item p1000">
+                    <div class="perspective-box">1000px</div>
+                    <p style="font-size: 0.85em; color: var(--text-light);">Standard</p>
+                </div>
+                <div class="perspective-item p1500">
+                    <div class="perspective-box">1500px</div>
+                    <p style="font-size: 0.85em; color: var(--text-light);">Subtle</p>
+                </div>
+                <div class="perspective-item p2000">
+                    <div class="perspective-box">2000px</div>
+                    <p style="font-size: 0.85em; color: var(--text-light);">Very Subtle</p>
+                </div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.dramatic { perspective: 500px; }
+.standard { perspective: 1000px; }
+.subtle { perspective: 1500px; }
+.very-subtle { perspective: 2000px; }
+
+.box { transform: rotateY(45deg) rotateX(30deg); }
+            </div>
+
+            <div class="info-box">
+                <strong>Takeaway:</strong> Lower perspective values create more dramatic distortion. Choose based on your design goals.
+            </div>
+        </section>
+
+        <!-- Example 2: Perspective Origin -->
+        <section class="section">
+            <h2>Example 2: Perspective Origin (Vanishing Point)</h2>
+            <p class="example-description">Change the viewer's apparent position using perspective-origin. Each container has different vanishing point.</p>
+
+            <div class="origin-comparison">
+                <div class="origin-item o-center">
+                    <div class="origin-box">Center</div>
+                    <p style="font-size: 0.85em; color: var(--text-light);">Viewer at center</p>
+                </div>
+                <div class="origin-item o-top">
+                    <div class="origin-box">Top</div>
+                    <p style="font-size: 0.85em; color: var(--text-light);">Viewer above</p>
+                </div>
+                <div class="origin-item o-left">
+                    <div class="origin-box">Left</div>
+                    <p style="font-size: 0.85em; color: var(--text-light);">Viewer left</p>
+                </div>
+                <div class="origin-item o-corner">
+                    <div class="origin-box">Corner</div>
+                    <p style="font-size: 0.85em; color: var(--text-light);">Viewer top-left</p>
+                </div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.center { perspective-origin: center; }
+.top { perspective-origin: top; }
+.left { perspective-origin: left; }
+.corner { perspective-origin: top left; }
+
+.element { transform: rotateX(45deg); }
+            </div>
+
+            <div class="note-box">
+                <strong>Effect:</strong> Changing perspective-origin shifts where the viewer appears to be positioned, affecting how rotated elements distort.
+            </div>
+        </section>
+
+        <!-- Example 3: Flip Card -->
+        <section class="section">
+            <h2>Example 3: Flip Card with Perspective</h2>
+            <p class="example-description">Classic flip card animation - hover to reveal the back side.</p>
+
+            <div class="example-showcase">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Front 👀</div>
+                        <div class="flip-card-back">Back 🎉</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.flip-card {
+    perspective: 1000px;
+    width: 200px;
+    height: 250px;
+}
+
+.flip-card-inner {
+    position: relative;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    backface-visibility: hidden;
+}
+
+.flip-card-back {
+    transform: rotateY(180deg);
+}
+            </div>
+        </section>
+
+        <!-- Example 4: 3D Gallery -->
+        <section class="section">
+            <h2>Example 4: 3D Gallery</h2>
+            <p class="example-description">Gallery items appear to rotate and scale in 3D space on hover.</p>
+
+            <div class="gallery-3d">
+                <div class="gallery-item">1</div>
+                <div class="gallery-item">2</div>
+                <div class="gallery-item">3</div>
+                <div class="gallery-item">4</div>
+                <div class="gallery-item">5</div>
+                <div class="gallery-item">6</div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.gallery-3d {
+    perspective: 1200px;
+    display: flex;
+    gap: 2rem;
+}
+
+.gallery-item {
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.gallery-item:hover {
+    transform: rotateY(-15deg) scale(1.05);
+}
+            </div>
+        </section>
+
+        <!-- Example 5: Tilted Cards -->
+        <section class="section">
+            <h2>Example 5: Tilted Cards</h2>
+            <p class="example-description">Cards tilt toward viewer on hover with perspective effect.</p>
+
+            <div class="tilted-cards">
+                <div class="tilted-card">
+                    <div class="card-title">Card 1</div>
+                    <div class="card-text">Hover to see tilt effect</div>
+                </div>
+                <div class="tilted-card">
+                    <div class="card-title">Card 2</div>
+                    <div class="card-text">Tilts in 3D space</div>
+                </div>
+                <div class="tilted-card">
+                    <div class="card-title">Card 3</div>
+                    <div class="card-text">Professional effect</div>
+                </div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.tilted-cards {
+    perspective: 1000px;
+}
+
+.tilted-card {
+    perspective: 1000px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.tilted-card:hover {
+    transform: rotateX(-8deg) rotateY(8deg);
+    box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+}
+            </div>
+        </section>
+
+        <!-- Example 6: Dynamic Perspective -->
+        <section class="section">
+            <h2>Example 6: Dynamic Perspective Element</h2>
+            <p class="example-description">Element in perspective container. Hover to see 3D effect.</p>
+
+            <div class="dynamic-container">
+                <div class="dynamic-element" onmousemove="rotateDynamic(event)" onmouseleave="resetDynamic()">
+                    Move Mouse
+                </div>
+            </div>
+
+            <h3>HTML & CSS</h3>
+            <div class="code-block-html">
+&lt;div class="dynamic-container"&gt;
+    &lt;div class="dynamic-element"&gt;Move Mouse&lt;/div&gt;
+&lt;/div&gt;
+            </div>
+
+            <div class="code-block">
+.dynamic-container {
+    perspective: 1000px;
+}
+
+.dynamic-element {
+    transition: transform 0.1s linear;
+}
+
+/* JavaScript: responsive rotation based on mouse */
+            </div>
+
+            <script>
+                function rotateDynamic(e) {
+                    const element = e.currentTarget.querySelector('.dynamic-element');
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+                    
+                    element.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                }
+
+                function resetDynamic() {
+                    const element = document.querySelector('.dynamic-element');
+                    element.style.transform = '';
+                }
+            </script>
+        </section>
+
+        <!-- Example 7: Book Stack -->
+        <section class="section">
+            <h2>Example 7: 3D Book Stack</h2>
+            <p class="example-description">Books arranged in 3D perspective with fan-like arrangement. Hover to see expanded view.</p>
+
+            <div class="book-stack">
+                <div class="book">1</div>
+                <div class="book">2</div>
+                <div class="book">3</div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.book-stack {
+    perspective: 1000px;
+    display: flex;
+    gap: 1rem;
+}
+
+.book {
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.book:nth-child(1) { transform: rotateY(-20deg) rotateZ(-5deg); }
+.book:nth-child(2) { transform: rotateY(0deg) scale(1.05); }
+.book:nth-child(3) { transform: rotateY(20deg) rotateZ(5deg); }
+
+.book-stack:hover .book:nth-child(1) { transform: rotateY(-40deg) rotateZ(-10deg); }
+.book-stack:hover .book:nth-child(2) { transform: scale(1.1) translateZ(30px); }
+.book-stack:hover .book:nth-child(3) { transform: rotateY(40deg) rotateZ(10deg); }
+            </div>
+        </section>
+
+        <!-- Example 8: Depth Stack -->
+        <section class="section">
+            <h2>Example 8: Depth Layers with translateZ</h2>
+            <p class="example-description">Layers at different depths create parallax. Hover to bring them forward.</p>
+
+            <div class="depth-stack">
+                <div class="depth-item depth-1">Front</div>
+                <div class="depth-item depth-2">Mid</div>
+                <div class="depth-item depth-3">Back</div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.depth-stack {
+    perspective: 1000px;
+}
+
+.depth-1 { transform: translateZ(0px); }
+.depth-2 { transform: translateZ(-30px); }
+.depth-3 { transform: translateZ(-60px); }
+
+.depth-stack:hover .depth-1 { transform: translateZ(60px) scale(1.05); }
+.depth-stack:hover .depth-2 { transform: translateZ(30px) scale(1.05); }
+.depth-stack:hover .depth-3 { transform: translateZ(0px) scale(1.05); }
+            </div>
+
+            <div class="info-box">
+                <strong>Technique:</strong> translateZ values with perspective create depth layering. Lower values appear further away.
+            </div>
+        </section>
+
+        <!-- Example 9: Carousel -->
+        <section class="section">
+            <h2>Example 9: 3D Carousel</h2>
+            <p class="example-description">Carousel with center featured item and side items with rotation.</p>
+
+            <div class="carousel-3d">
+                <div class="carousel-card side">L</div>
+                <div class="carousel-card featured">Featured</div>
+                <div class="carousel-card side">R</div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.carousel-3d {
+    perspective: 1000px;
+    display: flex;
+    gap: 2rem;
+}
+
+.carousel-card.featured {
+    transform: scale(1.1) rotateY(0deg);
+}
+
+.carousel-card.side {
+    transform: scale(0.85) rotateY(45deg);
+    opacity: 0.6;
+}
+            </div>
+        </section>
+
+        <!-- Example 10: Multiple Perspectives -->
+        <section class="section">
+            <h2>Example 10: Multiple Perspective Values</h2>
+            <p class="example-description">Three different perspective values on the same transform to compare effects.</p>
+
+            <div class="multi-perspective">
+                <div class="multi-item">
+                    <div class="multi-element">500px</div>
+                    <p style="font-size: 0.85em; color: var(--text-light);">Dramatic</p>
+                </div>
+                <div class="multi-item">
+                    <div class="multi-element">1000px</div>
+                    <p style="font-size: 0.85em; color: var(--text-light);">Standard</p>
+                </div>
+                <div class="multi-item">
+                    <div class="multi-element">1500px</div>
+                    <p style="font-size: 0.85em; color: var(--text-light);">Subtle</p>
+                </div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.multi-item:nth-child(1) { perspective: 500px; }
+.multi-item:nth-child(2) { perspective: 1000px; }
+.multi-item:nth-child(3) { perspective: 1500px; }
+
+.multi-element {
+    transform: rotateX(45deg);
+    transition: transform 0.6s ease;
+}
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="section">
+            <h2>Best Practices Summary</h2>
+
+            <table style="width: 100%; margin: 2rem 0; border-collapse: collapse;">
+                <thead style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white;">
+                    <tr>
+                        <th style="padding: 1rem; text-align: left;">Pattern</th>
+                        <th style="padding: 1rem; text-align: left;">Perspective Value</th>
+                        <th style="padding: 1rem; text-align: left;">Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;"><strong>Dramatic</strong></td>
+                        <td style="padding: 1rem;"><code>500px</code></td>
+                        <td style="padding: 1rem;">Stylized, extreme 3D effects</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;"><strong>Standard</strong></td>
+                        <td style="padding: 1rem;"><code>1000px</code></td>
+                        <td style="padding: 1rem;">Most 3D effects (recommended)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;"><strong>Subtle</strong></td>
+                        <td style="padding: 1rem;"><code>1500px</code></td>
+                        <td style="padding: 1rem;">Gentle, natural effects</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem;"><strong>Minimal</strong></td>
+                        <td style="padding: 1rem;"><code>2000px+</code></td>
+                        <td style="padding: 1rem;">Barely noticeable 3D</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Key Tips</h3>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li>✓ <strong>Start with 1000px</strong> - adjust based on effect intensity</li>
+                <li>✓ <strong>Apply to container</strong> - affects all 3D children consistently</li>
+                <li>✓ <strong>Combine with transform-style: preserve-3d</strong> - maintains 3D space</li>
+                <li>✓ <strong>Use perspective-origin</strong> - control viewer's apparent position</li>
+                <li>✓ <strong>Test across devices</strong> - performance varies by platform</li>
+                <li>✓ <strong>Profile performance</strong> - complex 3D scenes can cause jank</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>CSS Perspective Properties: Practical Examples • Part of the CSS Learning Suite</p>
+            <p>Browser Support: Chrome 12+, Firefox 10+, Safari 4+, Edge 12+</p>
+            <p>Create • Experiment • Master CSS Perspective</p>
+        </footer>
+    </div>
+</body>
+</html>

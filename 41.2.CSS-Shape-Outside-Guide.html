@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS shape-outside: Practical Examples</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.5s ease;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.3em;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .example-showcase {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+            border: 2px solid var(--border-color);
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: var(--spacing-lg);
+            margin: var(--spacing-md) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .code-block-html {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .note-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        /* Example 1: Article with Circular Profile */
+        .example-1 {
+            display: flow-root;
+        }
+
+        .profile-circle {
+            float: left;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            shape-outside: circle(50%);
+            shape-margin: 15px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        /* Example 2: Sidebar with Polygon Shape */
+        .example-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        .sidebar-shape {
+            float: left;
+            width: 150px;
+            height: 200px;
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+            shape-outside: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            shape-margin: 10px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Example 3: Testimonial with Quote Shape */
+        .example-3 {
+            display: flow-root;
+        }
+
+        .quote-mark {
+            float: left;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            shape-outside: circle(50%);
+            shape-margin: 12px;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+            font-weight: bold;
+            opacity: 0.8;
+        }
+
+        /* Example 4: Product Card with Elliptical Shape */
+        .example-4 {
+            display: flow-root;
+        }
+
+        .product-shape {
+            float: left;
+            width: 180px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            shape-outside: ellipse(90px 60px);
+            shape-margin: 15px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+        }
+
+        /* Example 5: Features Section with Triangle */
+        .example-5 {
+            display: flow-root;
+        }
+
+        .triangle-shape {
+            float: left;
+            width: 140px;
+            height: 140px;
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            shape-outside: polygon(50% 0%, 100% 100%, 0% 100%);
+            background: linear-gradient(135deg, #fa709a, #fee140);
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Example 6: Blog Card with Star Shape */
+        .example-6 {
+            display: flow-root;
+        }
+
+        .star-shape {
+            float: left;
+            width: 130px;
+            height: 130px;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            shape-outside: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            shape-margin: 10px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Example 7: News Article with Inset Shape */
+        .example-7 {
+            display: flow-root;
+        }
+
+        .inset-shape {
+            float: left;
+            width: 160px;
+            height: 160px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            shape-outside: border-box;
+            shape-margin: 15px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+        }
+
+        /* Example 8: Author Bio with Pentagon */
+        .example-8 {
+            display: flow-root;
+        }
+
+        .pentagon-shape {
+            float: left;
+            width: 140px;
+            height: 140px;
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            shape-outside: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            shape-margin: 10px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+        }
+
+        /* Example 9: Testimonial with Rounded Polygon */
+        .example-9 {
+            display: flow-root;
+        }
+
+        .rounded-polygon {
+            float: left;
+            width: 150px;
+            height: 150px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #f5af19, #f12711);
+            shape-outside: border-box;
+            shape-margin: 15px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Example 10: Case Study with Diamond */
+        .example-10 {
+            display: flow-root;
+        }
+
+        .diamond-shape {
+            float: left;
+            width: 130px;
+            height: 130px;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            shape-outside: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            shape-margin: 10px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+
+        .example-text {
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        .example-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .example-description {
+            color: var(--text-light);
+            font-size: 0.95em;
+            margin-bottom: var(--spacing-md);
+            font-style: italic;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border-radius: 12px;
+            margin-top: var(--spacing-lg);
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .profile-circle,
+            .sidebar-shape,
+            .quote-mark,
+            .product-shape,
+            .triangle-shape,
+            .star-shape,
+            .inset-shape,
+            .pentagon-shape,
+            .rounded-polygon,
+            .diamond-shape {
+                float: none;
+                margin-bottom: var(--spacing-md);
+                margin-right: 0;
+                shape-outside: none;
+            }
+
+            body {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS shape-outside: Practical Examples</h1>
+            <p>Real-world implementations of CSS shape-outside property. Discover 10 practical patterns for creating sophisticated text wrapping layouts with non-rectangular shapes.</p>
+        </header>
+
+        <!-- Example 1: Article with Circular Profile -->
+        <section class="section">
+            <h2>Example 1: Article with Circular Profile</h2>
+            <p class="example-description">Perfect for blog posts, author bios, and feature articles. The circular profile photo creates elegant text wrapping.</p>
+
+            <div class="example-showcase example-1">
+                <div class="profile-circle">J</div>
+                <div class="example-text">
+                    <p class="example-title">John Smith - Senior Developer</p>
+                    <p>Join us as we explore the fascinating world of CSS shapes and advanced layout techniques. This comprehensive guide demonstrates how to leverage modern CSS properties to create stunning visual designs. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+            </div>
+
+            <h3>HTML Structure</h3>
+            <div class="code-block-html">
+&lt;article class="article"&gt;
+    &lt;div class="profile-circle"&gt;J&lt;/div&gt;
+    &lt;div class="article-content"&gt;
+        &lt;p&gt;Article text flows around the circular profile...&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/article&gt;
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.profile-circle {
+    float: left;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    shape-outside: circle(50%);
+    shape-margin: 15px;
+    margin-right: 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Pro Tip:</strong> The <code>shape-margin: 15px</code> adds breathing room between the profile and text, improving readability. Adjust based on your design needs.
+            </div>
+        </section>
+
+        <!-- Example 2: Sidebar with Polygon Shape -->
+        <section class="section">
+            <h2>Example 2: Sidebar with Polygon Shape</h2>
+            <p class="example-description">Create dynamic sidebars with polygon shapes. The angled design adds visual interest and modern aesthetics.</p>
+
+            <div class="example-showcase example-2">
+                <div class="sidebar-shape"></div>
+                <div class="example-text">
+                    <p class="example-title">Featured News</p>
+                    <p>The sidebar uses a custom polygon shape to create an angled, modern appearance. Text flows naturally around the diagonal edge. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. This polygon shape demonstrates the power of <code>shape-outside</code> for creating non-rectangular layouts.</p>
+                    <p style="margin-top: var(--spacing-md);">The angled design creates visual hierarchy and draws attention to the content. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                </div>
+            </div>
+
+            <h3>HTML & CSS</h3>
+            <div class="code-block-html">
+/* HTML */
+&lt;div class="sidebar-shape"&gt;&lt;/div&gt;
+&lt;article&gt;Content flows around the angled sidebar...&lt;/article&gt;
+            </div>
+
+            <div class="code-block">
+.sidebar-shape {
+    float: left;
+    width: 150px;
+    height: 200px;
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+    shape-outside: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    shape-margin: 10px;
+    margin-right: 20px;
+}
+            </div>
+        </section>
+
+        <!-- Example 3: Testimonial with Quote Shape -->
+        <section class="section">
+            <h2>Example 3: Testimonial with Quote Shape</h2>
+            <p class="example-description">Use circular quote marks or testimonial indicators with elegant text wrapping for customer reviews and testimonials.</p>
+
+            <div class="example-showcase example-3">
+                <div class="quote-mark">"</div>
+                <div class="example-text">
+                    <p class="example-title">Customer Testimonial</p>
+                    <p>This service has transformed how we approach web design. The attention to detail and understanding of CSS shapes is exceptional. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Highly recommended!</p>
+                    <p style="margin-top: var(--spacing-md); font-weight: 600;">— Sarah Johnson, Design Director</p>
+                </div>
+            </div>
+
+            <h3>CSS Implementation</h3>
+            <div class="code-block">
+.quote-mark {
+    float: left;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    shape-outside: circle(50%);
+    shape-margin: 12px;
+    margin-right: 20px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3em;
+    color: white;
+}
+            </div>
+
+            <div class="note-box">
+                <strong>Note:</strong> The quote mark uses both <code>clip-path</code> (for visual appearance) and <code>shape-outside</code> (for text wrapping) to ensure consistent circular wrapping.
+            </div>
+        </section>
+
+        <!-- Example 4: Product Card with Elliptical Shape -->
+        <section class="section">
+            <h2>Example 4: Product Card with Elliptical Shape</h2>
+            <p class="example-description">Showcase products with elliptical shapes that create elegant horizontal wrapping patterns.</p>
+
+            <div class="example-showcase example-4">
+                <div class="product-shape">🛍️</div>
+                <div class="example-text">
+                    <p class="example-title">Premium Product Line</p>
+                    <p>Introducing our latest collection featuring innovative designs and exceptional quality. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. The elliptical shape creates a unique text flow that emphasizes the product presentation.</p>
+                    <p style="margin-top: var(--spacing-md);">Perfect for e-commerce product descriptions, portfolios, and showcases. Available in multiple sizes and colors.</p>
+                </div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.product-shape {
+    float: left;
+    width: 180px;
+    height: 120px;
+    border-radius: 50%;
+    shape-outside: ellipse(90px 60px);
+    shape-margin: 15px;
+    margin-right: 20px;
+    background: linear-gradient(135deg, #43e97b, #38f9d7);
+}
+            </div>
+        </section>
+
+        <!-- Example 5: Features Section with Triangle -->
+        <section class="section">
+            <h2>Example 5: Features Section with Triangle</h2>
+            <p class="example-description">Triangular shapes create dynamic, directional text flow that guides the reader's eye through content.</p>
+
+            <div class="example-showcase example-5">
+                <div class="triangle-shape"></div>
+                <div class="example-text">
+                    <p class="example-title">Key Features</p>
+                    <p><strong>Performance:</strong> Optimized for speed and efficiency across all devices. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <p style="margin-top: var(--spacing-sm);"><strong>Flexibility:</strong> Works seamlessly with modern CSS frameworks. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p style="margin-top: var(--spacing-sm);"><strong>Accessibility:</strong> Built with accessibility standards in mind. Ut enim ad minim veniam.</p>
+                </div>
+            </div>
+
+            <h3>Polygon Points Explanation</h3>
+            <div class="code-block">
+/* Triangle polygon points: base, top-right, top-left */
+shape-outside: polygon(50% 0%, 100% 100%, 0% 100%);
+clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+
+/* Creates a triangle pointing upward */
+/* 50% 0% = top center */
+/* 100% 100% = bottom right */
+/* 0% 100% = bottom left */
+            </div>
+        </section>
+
+        <!-- Example 6: Blog Card with Star Shape -->
+        <section class="section">
+            <h2>Example 6: Blog Card with Star Shape</h2>
+            <p class="example-description">Star shapes create eye-catching layouts perfect for featured content, highlights, and special announcements.</p>
+
+            <div class="example-showcase example-6">
+                <div class="star-shape"></div>
+                <div class="example-text">
+                    <p class="example-title">★ Featured Article</p>
+                    <p>Discover the latest insights and best practices in modern web design. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. The star shape immediately draws attention and indicates featured content.</p>
+                </div>
+            </div>
+
+            <h3>Star Polygon Coordinates</h3>
+            <div class="code-block">
+/* 10-point star shape */
+shape-outside: polygon(
+    50% 0%,      /* top point */
+    61% 35%,
+    98% 35%,     /* right point */
+    68% 57%,
+    79% 91%,     /* bottom-right */
+    50% 70%,
+    21% 91%,     /* bottom-left */
+    32% 57%,
+    2% 35%,      /* left point */
+    39% 35%
+);
+            </div>
+        </section>
+
+        <!-- Example 7: News Article with Inset Shape -->
+        <section class="section">
+            <h2>Example 7: News Article with Inset Shape</h2>
+            <p class="example-description">Use inset shapes for clean, professional layouts with controlled text wrapping around rounded rectangles.</p>
+
+            <div class="example-showcase example-7">
+                <div class="inset-shape">📰</div>
+                <div class="example-text">
+                    <p class="example-title">Breaking News</p>
+                    <p>Latest updates and developments in the technology industry. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. The inset shape creates a professional, contained appearance.</p>
+                    <p style="margin-top: var(--spacing-md);">Perfect for news articles, blog posts, and editorial layouts. Provides clean, predictable text wrapping.</p>
+                </div>
+            </div>
+
+            <h3>CSS Implementation</h3>
+            <div class="code-block">
+.inset-shape {
+    float: left;
+    width: 160px;
+    height: 160px;
+    border-radius: 12px;
+    shape-outside: border-box;
+    shape-margin: 15px;
+    margin-right: 20px;
+    background: linear-gradient(135deg, #ff6b6b, #feca57);
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Tip:</strong> <code>shape-outside: border-box</code> with <code>border-radius</code> creates natural rounded rectangle wrapping without complex polygon calculations.
+            </div>
+        </section>
+
+        <!-- Example 8: Author Bio with Pentagon -->
+        <section class="section">
+            <h2>Example 8: Author Bio with Pentagon</h2>
+            <p class="example-description">Pentagon shapes add sophistication and visual interest to author bios and contributor profiles.</p>
+
+            <div class="example-showcase example-8">
+                <div class="pentagon-shape">👤</div>
+                <div class="example-text">
+                    <p class="example-title">About the Author</p>
+                    <p>Jane Doe is a passionate developer and designer with over 15 years of experience. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Specializing in CSS, responsive design, and accessibility.</p>
+                </div>
+            </div>
+
+            <h3>Pentagon Polygon Points</h3>
+            <div class="code-block">
+/* 5-point pentagon (star-like) */
+shape-outside: polygon(
+    50% 0%,      /* top */
+    100% 38%,    /* top-right */
+    82% 100%,    /* bottom-right */
+    18% 100%,    /* bottom-left */
+    0% 38%       /* top-left */
+);
+            </div>
+        </section>
+
+        <!-- Example 9: Testimonial with Rounded Polygon -->
+        <section class="section">
+            <h2>Example 9: Testimonial with Rounded Polygon</h2>
+            <p class="example-description">Rounded rectangles with border-radius combined with shape-outside create smooth, professional wrapping patterns.</p>
+
+            <div class="example-showcase example-9">
+                <div class="rounded-polygon">⭐⭐⭐⭐⭐</div>
+                <div class="example-text">
+                    <p class="example-title">5-Star Rating</p>
+                    <p>Excellent service and outstanding results! The team goes above and beyond to deliver quality work. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Highly recommended for all your web design needs.</p>
+                </div>
+            </div>
+
+            <h3>Rounded Rectangle CSS</h3>
+            <div class="code-block">
+.rounded-polygon {
+    float: left;
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+    shape-outside: border-box;
+    shape-margin: 15px;
+    margin-right: 20px;
+}
+
+/* border-radius + shape-outside creates smooth rounded wrapping */
+            </div>
+        </section>
+
+        <!-- Example 10: Case Study with Diamond -->
+        <section class="section">
+            <h2>Example 10: Case Study with Diamond</h2>
+            <p class="example-description">Diamond shapes create visual interest and work well for case studies, success stories, and detailed content sections.</p>
+
+            <div class="example-showcase example-10">
+                <div class="diamond-shape"></div>
+                <div class="example-text">
+                    <p class="example-title">Case Study: Success Story</p>
+                    <p>How our solution helped a client increase productivity by 300%. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. The diamond shape creates an engaging visual element that complements the narrative.</p>
+                    <p style="margin-top: var(--spacing-md);">Results: improved performance, reduced costs, and enhanced user satisfaction.</p>
+                </div>
+            </div>
+
+            <h3>Diamond Polygon Coordinates</h3>
+            <div class="code-block">
+/* Diamond/rhombus shape (4-point polygon) */
+shape-outside: polygon(
+    50% 0%,      /* top point */
+    100% 50%,    /* right point */
+    50% 100%,    /* bottom point */
+    0% 50%       /* left point */
+);
+clip-path: polygon(
+    50% 0%,
+    100% 50%,
+    50% 100%,
+    0% 50%
+);
+            </div>
+
+            <div class="note-box">
+                <strong>Best Practice:</strong> Always match your <code>shape-outside</code> and <code>clip-path</code> values to ensure the visual appearance matches the text wrapping behavior.
+            </div>
+        </section>
+
+        <!-- Best Practices Section -->
+        <section class="section">
+            <h2>Best Practices for shape-outside</h2>
+
+            <h3>✓ Do</h3>
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li><strong>Always float:</strong> <code>shape-outside</code> only works on floated elements. Use <code>float: left</code> or <code>float: right</code></li>
+                <li><strong>Match shapes:</strong> Use identical <code>shape-outside</code> and <code>clip-path</code> values for consistent visuals</li>
+                <li><strong>Add margins:</strong> Use <code>shape-margin</code> (10-20px) to improve text readability around shapes</li>
+                <li><strong>Use percentages:</strong> Use percentage-based values for responsive, device-independent shapes</li>
+                <li><strong>Test accessibility:</strong> Ensure text remains readable and flows logically for screen readers</li>
+                <li><strong>Provide fallbacks:</strong> Browsers without support will wrap around bounding box—ensure content is still usable</li>
+            </ul>
+
+            <h3>✗ Don't</h3>
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li><strong>Forget float:</strong> <code>shape-outside</code> without float has zero effect</li>
+                <li><strong>Create confusing flows:</strong> Avoid shapes that make text hard to follow</li>
+                <li><strong>Use overly complex polygons:</strong> 20+ points can impact performance</li>
+                <li><strong>Sacrifice readability:</strong> Never let design override content clarity</li>
+                <li><strong>Ignore mobile:</strong> Test your shapes on all device sizes</li>
+                <li><strong>Forget shape-margin:</strong> Text too close to shapes reduces readability</li>
+            </ul>
+        </section>
+
+        <!-- Responsive Considerations -->
+        <section class="section">
+            <h2>Responsive Design Patterns</h2>
+
+            <h3>Mobile-Friendly Shape Implementation</h3>
+            <div class="code-block">
+/* Desktop: shapes with text wrapping */
+@media (min-width: 768px) {
+    .profile-circle {
+        float: left;
+        shape-outside: circle(50%);
+        width: 120px;
+        height: 120px;
+    }
+}
+
+/* Mobile: remove shape floating for full-width layout */
+@media (max-width: 767px) {
+    .profile-circle {
+        float: none;
+        shape-outside: none;
+        width: 100%;
+        max-width: 200px;
+        margin-bottom: 20px;
+    }
+}
+            </div>
+
+            <h3>Fluid Shape Sizing</h3>
+            <div class="code-block">
+/* Responsive shapes using CSS variables */
+.responsive-shape {
+    float: left;
+    width: clamp(80px, 20vw, 150px);
+    height: clamp(80px, 20vw, 150px);
+    shape-outside: circle(50%);
+    shape-margin: clamp(8px, 2vw, 20px);
+    margin-right: clamp(10px, 3vw, 30px);
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Responsive Tip:</strong> Use <code>clamp()</code> with <code>vw</code> units for truly fluid shapes that scale smoothly across all device sizes while respecting min/max boundaries.
+            </div>
+        </section>
+
+        <!-- Performance Tips -->
+        <section class="section">
+            <h2>Performance Optimization</h2>
+
+            <h3>Optimize Shape Complexity</h3>
+            <table style="width: 100%; margin: var(--spacing-lg) 0;">
+                <thead style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white;">
+                    <tr>
+                        <th style="padding: var(--spacing-md); text-align: left;">Shape Type</th>
+                        <th style="padding: var(--spacing-md); text-align: left;">Performance</th>
+                        <th style="padding: var(--spacing-md); text-align: left;">Use Cases</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: var(--spacing-md);"><strong>circle()</strong></td>
+                        <td style="padding: var(--spacing-md);">⚡ Excellent</td>
+                        <td style="padding: var(--spacing-md);">Profiles, testimonials, icons</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: var(--spacing-md);"><strong>ellipse()</strong></td>
+                        <td style="padding: var(--spacing-md);">⚡ Excellent</td>
+                        <td style="padding: var(--spacing-md);">Product showcases, horizontal layouts</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: var(--spacing-md);"><strong>polygon() - 4-10 points</strong></td>
+                        <td style="padding: var(--spacing-md);">✓ Good</td>
+                        <td style="padding: var(--spacing-md);">Triangles, stars, diamonds</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: var(--spacing-md);"><strong>polygon() - 20+ points</strong></td>
+                        <td style="padding: var(--spacing-md);">⚠ Use Sparingly</td>
+                        <td style="padding: var(--spacing-md);">Complex custom shapes (test first)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>CSS Containment for Shapes</h3>
+            <div class="code-block">
+/* Improve performance with CSS containment */
+.shape-element {
+    float: left;
+    shape-outside: circle(50%);
+    
+    /* Isolate this element for layout calculations */
+    contain: layout style paint;
+}
+            </div>
+        </section>
+
+        <!-- Use Case Summary -->
+        <section class="section">
+            <h2>Summary of 10 Practical Examples</h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-lg); margin: var(--spacing-lg) 0;">
+                <div style="background: var(--bg-light); padding: var(--spacing-lg); border-radius: 8px;">
+                    <p style="font-weight: 600; color: var(--primary-color); margin-bottom: var(--spacing-sm);">Example 1: Circular Profile</p>
+                    <p style="font-size: 0.9em; color: var(--text-light);">Blog posts, author bios, testimonials</p>
+                </div>
+                <div style="background: var(--bg-light); padding: var(--spacing-lg); border-radius: 8px;">
+                    <p style="font-weight: 600; color: var(--primary-color); margin-bottom: var(--spacing-sm);">Example 2: Polygon Sidebar</p>
+                    <p style="font-size: 0.9em; color: var(--text-light);">Modern sidebars, angled layouts</p>
+                </div>
+                <div style="background: var(--bg-light); padding: var(--spacing-lg); border-radius: 8px;">
+                    <p style="font-weight: 600; color: var(--primary-color); margin-bottom: var(--spacing-sm);">Example 3: Quote Mark</p>
+                    <p style="font-size: 0.9em; color: var(--text-light);">Testimonials, quotes, reviews</p>
+                </div>
+                <div style="background: var(--bg-light); padding: var(--spacing-lg); border-radius: 8px;">
+                    <p style="font-weight: 600; color: var(--primary-color); margin-bottom: var(--spacing-sm);">Example 4: Ellipse Product</p>
+                    <p style="font-size: 0.9em; color: var(--text-light);">E-commerce, product descriptions</p>
+                </div>
+                <div style="background: var(--bg-light); padding: var(--spacing-lg); border-radius: 8px;">
+                    <p style="font-weight: 600; color: var(--primary-color); margin-bottom: var(--spacing-sm);">Example 5: Triangle Features</p>
+                    <p style="font-size: 0.9em; color: var(--text-light);">Feature highlights, key points</p>
+                </div>
+                <div style="background: var(--bg-light); padding: var(--spacing-lg); border-radius: 8px;">
+                    <p style="font-weight: 600; color: var(--primary-color); margin-bottom: var(--spacing-sm);">Example 6: Star Featured</p>
+                    <p style="font-size: 0.9em; color: var(--text-light);">Featured content, highlights</p>
+                </div>
+                <div style="background: var(--bg-light); padding: var(--spacing-lg); border-radius: 8px;">
+                    <p style="font-weight: 600; color: var(--primary-color); margin-bottom: var(--spacing-sm);">Example 7: Inset News</p>
+                    <p style="font-size: 0.9em; color: var(--text-light);">News articles, professional layouts</p>
+                </div>
+                <div style="background: var(--bg-light); padding: var(--spacing-lg); border-radius: 8px;">
+                    <p style="font-weight: 600; color: var(--primary-color); margin-bottom: var(--spacing-sm);">Example 8: Pentagon Bio</p>
+                    <p style="font-size: 0.9em; color: var(--text-light);">Author bios, contributor profiles</p>
+                </div>
+                <div style="background: var(--bg-light); padding: var(--spacing-lg); border-radius: 8px;">
+                    <p style="font-weight: 600; color: var(--primary-color); margin-bottom: var(--spacing-sm);">Example 9: Rounded Rating</p>
+                    <p style="font-size: 0.9em; color: var(--text-light);">Reviews, testimonials, ratings</p>
+                </div>
+                <div style="background: var(--bg-light); padding: var(--spacing-lg); border-radius: 8px;">
+                    <p style="font-weight: 600; color: var(--primary-color); margin-bottom: var(--spacing-sm);">Example 10: Diamond Case Study</p>
+                    <p style="font-size: 0.9em; color: var(--text-light);">Case studies, success stories</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="section">
+            <h2>Getting Started with shape-outside</h2>
+
+            <p style="color: var(--text-light); margin: var(--spacing-lg) 0; line-height: 1.8;">The CSS <code>shape-outside</code> property opens endless possibilities for creative, sophisticated layouts. Start with simple circular shapes, then explore ellipses, polygons, and custom shapes as you grow more comfortable. Remember to always include <code>float: left/right</code>, match your <code>clip-path</code> values, and test across devices for the best results.</p>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li>✓ Experiment with different shape types in your projects</li>
+                <li>✓ Combine with animations and hover effects for dynamic layouts</li>
+                <li>✓ Test on real devices and browsers to ensure compatibility</li>
+                <li>✓ Always prioritize readability and accessibility</li>
+                <li>✓ Use responsive techniques to adapt shapes on mobile devices</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>CSS shape-outside: Practical Examples • Part of the CSS Learning Suite</p>
+            <p>Browser Support: Chrome 37+, Firefox 62+, Safari 10.1+, Edge 79+</p>
+            <p>Create • Experiment • Master CSS Shapes</p>
+        </footer>
+    </div>
+</body>
+</html>

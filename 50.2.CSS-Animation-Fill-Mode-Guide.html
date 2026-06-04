@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animation-Fill-Mode - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .card-header h2 {
+            font-size: 1.4em;
+            margin-bottom: 5px;
+        }
+
+        .card-header p {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .demo-area {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            overflow-x: auto;
+            line-height: 1.4;
+            margin: 15px 0;
+        }
+
+        .control-panel {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+
+        button.small {
+            font-size: 0.8em;
+            padding: 6px 12px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .status-indicator.idle {
+            background: #ccc;
+        }
+
+        .status-indicator.running {
+            background: #4CAF50;
+            animation: blink 0.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* ========== EXAMPLE 1: forwards - Button Click ========== */
+        .button-demo {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .button-demo.animated {
+            animation: buttonBounce 0.6s ease-out 1 forwards;
+        }
+
+        @keyframes buttonBounce {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            }
+            50% {
+                transform: scale(1.08);
+                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+            }
+            100% {
+                transform: scale(1.05);
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            }
+        }
+
+        /* ========== EXAMPLE 2: forwards - Slide In Menu ========== */
+        .slide-menu {
+            width: 150px;
+            height: 100px;
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin: 0 auto;
+        }
+
+        .slide-menu.animate {
+            animation: slideInLeft 0.6s ease-out 1 forwards;
+        }
+
+        @keyframes slideInLeft {
+            0% {
+                transform: translateX(-200px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* ========== EXAMPLE 3: backwards - Fade Content ========== */
+        .fade-content {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin: 0 auto;
+        }
+
+        .fade-content.animate {
+            animation: fadeInBackwards 1s ease-in 2s 1 backwards;
+        }
+
+        @keyframes fadeInBackwards {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* ========== EXAMPLE 4: both - Modal Entrance ========== */
+        .modal-demo {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin: 0 auto;
+            transform: scale(0.8);
+            opacity: 0.3;
+        }
+
+        .modal-demo.animate {
+            animation: modalScaleIn 0.5s ease-out 1s 1 both;
+        }
+
+        @keyframes modalScaleIn {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* ========== EXAMPLE 5: none - Infinite Spinner ========== */
+        .spinner-demo {
+            width: 80px;
+            height: 80px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+
+        .spinner-demo.animate {
+            animation: spin 1s linear infinite none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ========== EXAMPLE 6: forwards - Reveal Text ========== */
+        .reveal-text {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+            opacity: 0;
+            margin: 0 auto;
+        }
+
+        .reveal-text.animate {
+            animation: textReveal 1s ease-in-out 0.5s 1 forwards;
+        }
+
+        @keyframes textReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== EXAMPLE 7: both - Sequential List ========== */
+        .list-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 0 auto;
+            width: 180px;
+        }
+
+        .list-item {
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border-radius: 4px;
+            text-align: center;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .list-item.animate {
+            animation: listItemFade 0.5s ease-out both;
+        }
+
+        .list-item:nth-child(1).animate { animation-delay: 0s; }
+        .list-item:nth-child(2).animate { animation-delay: 0.15s; }
+        .list-item:nth-child(3).animate { animation-delay: 0.3s; }
+
+        @keyframes listItemFade {
+            0% {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ========== EXAMPLE 8: forwards - Growing Box ========== */
+        .growing-box {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            border-radius: 8px;
+            margin: 0 auto;
+        }
+
+        .growing-box.animate {
+            animation: grow 1.5s ease-out 0.5s 1 forwards;
+        }
+
+        @keyframes grow {
+            0% {
+                width: 80px;
+                height: 80px;
+            }
+            100% {
+                width: 140px;
+                height: 140px;
+            }
+        }
+
+        /* ========== EXAMPLE 9: backwards - Hidden Until Start ========== */
+        .hidden-until {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            border-radius: 8px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        .hidden-until.animate {
+            animation: appear 0.8s ease-out 2s 1 backwards;
+        }
+
+        @keyframes appear {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ========== EXAMPLE 10: none - Infinite Pulse ========== */
+        .pulse-box {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            margin: 0 auto;
+        }
+
+        .pulse-box.animate {
+            animation: pulse 1.5s ease-in-out infinite none;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.15);
+                opacity: 0.7;
+            }
+        }
+
+        /* ========== EXAMPLE 11: both - Staggered Bars ========== */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 8px;
+            height: 120px;
+            margin: 0 auto;
+        }
+
+        .bar {
+            width: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 3px;
+            height: 20px;
+        }
+
+        .bar.animate {
+            animation: barGrow 0.6s ease-out both;
+        }
+
+        .bar:nth-child(1).animate { animation-delay: 0s; }
+        .bar:nth-child(2).animate { animation-delay: 0.15s; }
+        .bar:nth-child(3).animate { animation-delay: 0.3s; }
+        .bar:nth-child(4).animate { animation-delay: 0.45s; }
+
+        @keyframes barGrow {
+            0% {
+                height: 20px;
+            }
+            100% {
+                height: 100px;
+            }
+        }
+
+        /* ========== EXAMPLE 12: forwards - Color Transform ========== */
+        .color-box {
+            width: 120px;
+            height: 120px;
+            background: #667eea;
+            border-radius: 8px;
+            margin: 0 auto;
+        }
+
+        .color-box.animate {
+            animation: colorShift 2s ease-in-out 1s 1 forwards;
+        }
+
+        @keyframes colorShift {
+            0% {
+                background: #667eea;
+            }
+            50% {
+                background: #764ba2;
+            }
+            100% {
+                background: #f5576c;
+            }
+        }
+
+        .info-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 15px;
+            text-align: center;
+            padding: 12px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .description {
+            font-size: 0.95em;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .info-badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .demo-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Animation-Fill-Mode</h1>
+            <p>12 Practical Interactive Examples</p>
+        </header>
+
+        <div class="examples-grid">
+            <!-- ========== EXAMPLE 1: forwards - Button Click ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>1. Button Click Effect</h2>
+                    <p>forwards fill-mode</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">fill-mode: forwards</div>
+                    <div class="description">Button scales and stays enlarged briefly, then resets. Stays in final animated state until page reloads.</div>
+                    <div class="demo-area">
+                        <button class="button-demo" onclick="this.classList.add('animated'); setTimeout(() => this.classList.remove('animated'), 600);">Click Me!</button>
+                    </div>
+                    <div class="code-block">animation: buttonBounce 0.6s ease-out 1 forwards;
+
+@keyframes buttonBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1.05); }
+}</div>
+                    <div class="info-text">Click the button multiple times to see the effect. Animation maintains final state.</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 2: forwards - Slide In Menu ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>2. Slide-In Menu</h2>
+                    <p>forwards fill-mode</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">fill-mode: forwards</div>
+                    <div class="description">Menu slides in from left and stays in final position. Perfect for navigation reveals.</div>
+                    <div class="demo-area">
+                        <div class="slide-menu">Menu</div>
+                    </div>
+                    <div class="control-panel">
+                        <button class="small" onclick="const menu = document.querySelector('.slide-menu'); menu.classList.remove('animate'); setTimeout(() => menu.classList.add('animate'), 10);">Replay</button>
+                    </div>
+                    <div class="code-block">animation: slideInLeft 0.6s ease-out 1 forwards;
+
+@keyframes slideInLeft {
+  0% { 
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+  100% { 
+    transform: translateX(0);
+    opacity: 1;
+  }
+}</div>
+                    <div class="info-text">Menu slides in and stays visible permanently.</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 3: backwards - Fade Content ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>3. Fade with Delay</h2>
+                    <p>backwards fill-mode</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">fill-mode: backwards</div>
+                    <div class="description">Content starts invisible (0% opacity), fades in after 2s delay. Visible during delay thanks to backwards.</div>
+                    <div class="demo-area">
+                        <div class="fade-content">Content</div>
+                    </div>
+                    <div class="control-panel">
+                        <button class="small" onclick="const box = document.querySelector('.fade-content'); box.classList.remove('animate'); setTimeout(() => box.classList.add('animate'), 10);">Replay</button>
+                    </div>
+                    <div class="code-block">animation: fadeInBackwards 1s ease-in 2s 1 backwards;
+
+@keyframes fadeInBackwards {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}</div>
+                    <div class="info-text">Watch the delay: backwards keeps opacity at 0% during the 2s wait.</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 4: both - Modal Entrance ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>4. Modal Popup</h2>
+                    <p>both fill-mode</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">fill-mode: both</div>
+                    <div class="description">Modal starts small, scales up after 1s delay, and stays enlarged. Uses both for full control.</div>
+                    <div class="demo-area">
+                        <div class="modal-demo">Modal</div>
+                    </div>
+                    <div class="control-panel">
+                        <button class="small" onclick="const modal = document.querySelector('.modal-demo'); modal.classList.remove('animate'); setTimeout(() => modal.classList.add('animate'), 10);">Replay</button>
+                    </div>
+                    <div class="code-block">animation: modalScaleIn 0.5s ease-out 1s 1 both;
+
+@keyframes modalScaleIn {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}</div>
+                    <div class="info-text">Modal stays small during 1s delay, then scales up and stays enlarged.</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 5: none - Infinite Spinner ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>5. Loading Spinner</h2>
+                    <p>none fill-mode (infinite)</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">fill-mode: none</div>
+                    <div class="description">Spinner rotates infinitely. None fill-mode allows continuous looping without state persistence.</div>
+                    <div class="demo-area">
+                        <div class="spinner-demo animate"></div>
+                    </div>
+                    <div class="code-block">animation: spin 1s linear infinite none;
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}</div>
+                    <div class="info-text">Runs infinitely. None is perfect for continuous animations.</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 6: forwards - Reveal Text ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>6. Text Reveal</h2>
+                    <p>forwards fill-mode</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">fill-mode: forwards</div>
+                    <div class="description">Text fades in and slides up, then stays visible permanently. Great for page load effects.</div>
+                    <div class="demo-area">
+                        <div class="reveal-text">Hello!</div>
+                    </div>
+                    <div class="control-panel">
+                        <button class="small" onclick="const text = document.querySelector('.reveal-text'); text.classList.remove('animate'); setTimeout(() => text.classList.add('animate'), 10);">Replay</button>
+                    </div>
+                    <div class="code-block">animation: textReveal 1s ease-in-out 0.5s 1 forwards;
+
+@keyframes textReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}</div>
+                    <div class="info-text">Text reveals with delay and remains visible.</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 7: both - Sequential List ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>7. Sequential List Items</h2>
+                    <p>both fill-mode (staggered)</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">fill-mode: both + animation-delay</div>
+                    <div class="description">List items appear one by one with staggered delays. Both ensures each item stays visible.</div>
+                    <div class="demo-area">
+                        <div class="list-items">
+                            <div class="list-item animate">Item 1</div>
+                            <div class="list-item animate">Item 2</div>
+                            <div class="list-item animate">Item 3</div>
+                        </div>
+                    </div>
+                    <div class="control-panel">
+                        <button class="small" onclick="document.querySelectorAll('.list-item').forEach(item => item.classList.remove('animate')); setTimeout(() => document.querySelectorAll('.list-item').forEach(item => item.classList.add('animate')), 10);">Replay</button>
+                    </div>
+                    <div class="code-block">animation: listItemFade 0.5s ease-out both;
+
+.list-item:nth-child(1).animate { animation-delay: 0s; }
+.list-item:nth-child(2).animate { animation-delay: 0.15s; }
+.list-item:nth-child(3).animate { animation-delay: 0.3s; }</div>
+                    <div class="info-text">Each item fades in with delay and stays visible.</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 8: forwards - Growing Box ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>8. Growing Box</h2>
+                    <p>forwards fill-mode</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">fill-mode: forwards</div>
+                    <div class="description">Box grows larger smoothly and remains at final size. Great for progressive reveals.</div>
+                    <div class="demo-area">
+                        <div class="growing-box"></div>
+                    </div>
+                    <div class="control-panel">
+                        <button class="small" onclick="const box = document.querySelector('.growing-box'); box.classList.remove('animate'); setTimeout(() => box.classList.add('animate'), 10);">Replay</button>
+                    </div>
+                    <div class="code-block">animation: grow 1.5s ease-out 0.5s 1 forwards;
+
+@keyframes grow {
+  0% { width: 80px; height: 80px; }
+  100% { width: 140px; height: 140px; }
+}</div>
+                    <div class="info-text">Box grows and stays enlarged.</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 9: backwards - Hidden Until Start ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>9. Hidden Until Animation</h2>
+                    <p>backwards fill-mode</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">fill-mode: backwards</div>
+                    <div class="description">Element stays hidden during 2s delay, then appears. Backwards prevents early visibility.</div>
+                    <div class="demo-area">
+                        <div class="hidden-until"></div>
+                    </div>
+                    <div class="control-panel">
+                        <button class="small" onclick="const box = document.querySelector('.hidden-until'); box.classList.remove('animate'); setTimeout(() => box.classList.add('animate'), 10);">Replay</button>
+                    </div>
+                    <div class="code-block">animation: appear 0.8s ease-out 2s 1 backwards;
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}</div>
+                    <div class="info-text">Element stays hidden for 2s delay, then appears.</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 10: none - Infinite Pulse ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>10. Infinite Pulse</h2>
+                    <p>none fill-mode (infinite)</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">fill-mode: none</div>
+                    <div class="description">Box pulses continuously. None fill-mode perfect for infinite repeating animations.</div>
+                    <div class="demo-area">
+                        <div class="pulse-box animate"></div>
+                    </div>
+                    <div class="code-block">animation: pulse 1.5s ease-in-out infinite none;
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.7;
+  }
+}</div>
+                    <div class="info-text">Continuous pulse animation. None allows infinite looping.</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 11: both - Staggered Bars ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>11. Bar Chart Animation</h2>
+                    <p>both fill-mode (staggered)</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">fill-mode: both + nth-child delays</div>
+                    <div class="description">Bars grow sequentially with staggered delays. Both ensures they stay at final height.</div>
+                    <div class="demo-area">
+                        <div class="bar-chart">
+                            <div class="bar animate"></div>
+                            <div class="bar animate"></div>
+                            <div class="bar animate"></div>
+                            <div class="bar animate"></div>
+                        </div>
+                    </div>
+                    <div class="control-panel">
+                        <button class="small" onclick="document.querySelectorAll('.bar').forEach(bar => bar.classList.remove('animate')); setTimeout(() => document.querySelectorAll('.bar').forEach(bar => bar.classList.add('animate')), 10);">Replay</button>
+                    </div>
+                    <div class="code-block">animation: barGrow 0.6s ease-out both;
+
+.bar:nth-child(n).animate { animation-delay: n*0.15s; }
+
+@keyframes barGrow {
+  0% { height: 20px; }
+  100% { height: 100px; }
+}</div>
+                    <div class="info-text">Each bar grows with delay and stays at final height.</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 12: forwards - Color Transform ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>12. Color Transition</h2>
+                    <p>forwards fill-mode</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">fill-mode: forwards</div>
+                    <div class="description">Box transitions through colors and stops at final color. Great for status indicators.</div>
+                    <div class="demo-area">
+                        <div class="color-box"></div>
+                    </div>
+                    <div class="control-panel">
+                        <button class="small" onclick="const box = document.querySelector('.color-box'); box.classList.remove('animate'); setTimeout(() => box.classList.add('animate'), 10);">Replay</button>
+                    </div>
+                    <div class="code-block">animation: colorShift 2s ease-in-out 1s 1 forwards;
+
+@keyframes colorShift {
+  0% { background: #667eea; }
+  50% { background: #764ba2; }
+  100% { background: #f5576c; }
+}</div>
+                    <div class="info-text">Box changes color and stays at final color (pink).</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <h2>Quick Reference Guide</h2>
+            <p style="margin: 15px 0;">
+                <strong>fill-mode: none</strong> → No persistence (use for infinite)<br>
+                <strong>fill-mode: forwards</strong> → Stays in final state (most common)<br>
+                <strong>fill-mode: backwards</strong> → Applies first frame before animation<br>
+                <strong>fill-mode: both</strong> → Full control before and after
+            </p>
+            <p style="margin: 15px 0; font-size: 0.95em;">
+                ✓ Use <strong>forwards</strong> for one-time animations<br>
+                ✓ Use <strong>none</strong> for infinite/looping<br>
+                ✓ Use <strong>both</strong> with animation-delay for precision<br>
+                ✓ Use <strong>backwards</strong> with delays to prevent initial jumps
+            </p>
+            <p>&copy; 2024 CSS Animation-Fill-Mode Practical Examples</p>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start slide menu animation
+            setTimeout(() => document.querySelector('.slide-menu').classList.add('animate'), 500);
+            
+            // Start fade content animation
+            setTimeout(() => document.querySelector('.fade-content').classList.add('animate'), 500);
+            
+            // Start modal animation
+            setTimeout(() => document.querySelector('.modal-demo').classList.add('animate'), 500);
+            
+            // Start reveal text animation
+            setTimeout(() => document.querySelector('.reveal-text').classList.add('animate'), 500);
+            
+            // Start list items animation
+            setTimeout(() => {
+                document.querySelectorAll('.list-item').forEach(item => item.classList.add('animate'));
+            }, 500);
+            
+            // Start growing box animation
+            setTimeout(() => document.querySelector('.growing-box').classList.add('animate'), 500);
+            
+            // Start hidden until animation
+            setTimeout(() => document.querySelector('.hidden-until').classList.add('animate'), 500);
+        });
+    </script>
+</body>
+</html>

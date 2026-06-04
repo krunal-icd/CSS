@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Backface-Visibility - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .example-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+        }
+
+        .example-header h2 {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        .example-header p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .example-content {
+            padding: 20px;
+        }
+
+        .demo-area {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+
+        /* ============ EXAMPLE 1: Flip Card ============ */
+        .flip-card {
+            width: 200px;
+            height: 250px;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            margin: 0 auto;
+        }
+
+        .flip-card:hover {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front h3 { margin-bottom: 10px; }
+        .flip-card-front p { font-size: 0.9em; opacity: 0.9; }
+
+        /* ============ EXAMPLE 2: Product Card ============ */
+        .product-flip {
+            perspective: 1000px;
+            cursor: pointer;
+            width: 200px;
+            height: 250px;
+            margin: 0 auto;
+        }
+
+        .product-flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .product-flip:hover .product-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .product-image, .product-details {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .product-image {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            color: white;
+            font-size: 4em;
+        }
+
+        .product-details {
+            background: linear-gradient(135deg, #fa709a, #fee140);
+            color: white;
+            transform: rotateY(180deg);
+            flex-direction: column;
+        }
+
+        .product-details h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .product-details p {
+            font-size: 0.85em;
+        }
+
+        /* ============ EXAMPLE 3: Login/Signup Toggle ============ */
+        .auth-container {
+            perspective: 1000px;
+            width: 280px;
+            margin: 0 auto;
+        }
+
+        .auth-inner {
+            position: relative;
+            width: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .auth-inner.show-signup {
+            transform: rotateY(180deg);
+        }
+
+        .auth-form {
+            position: absolute;
+            width: 100%;
+            backface-visibility: hidden;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-form h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .auth-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .auth-form button {
+            width: 100%;
+            padding: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 10px;
+            transition: background 0.3s;
+        }
+
+        .auth-form button:hover {
+            background: #764ba2;
+        }
+
+        .auth-form .toggle-btn {
+            background: #f5f5f5;
+            color: #667eea;
+            font-size: 0.9em;
+            padding: 8px;
+        }
+
+        .auth-form .toggle-btn:hover {
+            background: #e0e0e0;
+            color: #764ba2;
+        }
+
+        .signup-form {
+            transform: rotateY(180deg);
+        }
+
+        /* ============ EXAMPLE 4: Rotating Cube ============ */
+        .cube-container {
+            perspective: 1000px;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 10s infinite linear;
+        }
+
+        @keyframes rotateCube {
+            0% { transform: rotateX(0deg) rotateY(0deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            opacity: 0.9;
+            backface-visibility: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cube-face-1 { background: #FF6B6B; transform: translateZ(75px); }
+        .cube-face-2 { background: #4ECDC4; transform: rotateY(90deg) translateZ(75px); }
+        .cube-face-3 { background: #45B7D1; transform: rotateY(180deg) translateZ(75px); }
+        .cube-face-4 { background: #FFA07A; transform: rotateY(270deg) translateZ(75px); }
+        .cube-face-5 { background: #98D8C8; transform: rotateX(90deg) translateZ(75px); }
+        .cube-face-6 { background: #F7DC6F; transform: rotateX(270deg) translateZ(75px); }
+
+        /* ============ EXAMPLE 5: Image Gallery ============ */
+        .gallery-item {
+            width: 180px;
+            height: 180px;
+            cursor: pointer;
+            perspective: 1000px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .gallery-flip {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover .gallery-flip {
+            transform: rotateY(180deg);
+        }
+
+        .gallery-front, .gallery-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .gallery-front {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+        }
+
+        .gallery-back {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            transform: rotateY(180deg);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .gallery-back h4 {
+            font-size: 1em;
+            margin-bottom: 8px;
+        }
+
+        .gallery-back p {
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+
+        /* ============ EXAMPLE 6: Menu Flip ============ */
+        .menu-flip {
+            width: 220px;
+            height: 220px;
+            cursor: pointer;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .menu-flip-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .menu-flip:hover .menu-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .menu-front, .menu-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .menu-front {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+        }
+
+        .menu-back {
+            background: linear-gradient(135deg, #fa709a, #fee140);
+            color: white;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .menu-back h3 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .menu-back ul {
+            list-style: none;
+            font-size: 0.9em;
+        }
+
+        .menu-back li {
+            padding: 5px 0;
+        }
+
+        /* ============ EXAMPLE 7: Double Flip Animation ============ */
+        .double-flip {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .double-flip-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .double-flip:hover .double-flip-inner {
+            transform: rotateX(180deg) rotateY(180deg);
+        }
+
+        .double-flip-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .double-flip-face-1 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .double-flip-face-2 {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            transform: rotateX(180deg) rotateY(180deg);
+        }
+
+        /* ============ EXAMPLE 8: Toggle Switch ============ */
+        .toggle-container {
+            perspective: 1000px;
+            width: 200px;
+            margin: 0 auto;
+        }
+
+        .toggle-flip {
+            width: 100%;
+            height: 80px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.4s;
+            cursor: pointer;
+        }
+
+        .toggle-container.active .toggle-flip {
+            transform: rotateY(180deg);
+        }
+
+        .toggle-option {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 8px;
+            font-size: 1.1em;
+            color: white;
+        }
+
+        .toggle-option-1 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .toggle-option-2 {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            transform: rotateY(180deg);
+        }
+
+        /* ============ EXAMPLE 9: Rotating Cards ============ */
+        .rotating-cards-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .rotating-card {
+            width: 150px;
+            height: 150px;
+            perspective: 1000px;
+        }
+
+        .rotating-card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: infiniteFlip 4s ease-in-out infinite;
+        }
+
+        @keyframes infiniteFlip {
+            0%, 100% { transform: rotateY(0deg); }
+            50% { transform: rotateY(180deg); }
+        }
+
+        .rotating-card-1 .rotating-card-inner { animation-delay: 0s; }
+        .rotating-card-2 .rotating-card-inner { animation-delay: 0.5s; }
+        .rotating-card-3 .rotating-card-inner { animation-delay: 1s; }
+
+        .rotating-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            color: white;
+            font-size: 1.5em;
+        }
+
+        .rotating-face-front { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .rotating-face-back { background: linear-gradient(135deg, #f093fb, #f5576c); transform: rotateY(180deg); }
+
+        /* ============ EXAMPLE 10: Flip on Click ============ */
+        .click-flip {
+            width: 200px;
+            height: 250px;
+            perspective: 1000px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .click-flip-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .click-flip-inner.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .click-flip-side {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .click-flip-front {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .click-flip-back {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .click-flip-front h3, .click-flip-back h3 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .code-section {
+            margin-top: 20px;
+        }
+
+        .code-section h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #667eea;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-top: 12px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+        }
+
+        @media (max-width: 768px) {
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Backface-Visibility</h1>
+            <p>10 Practical Interactive Examples</p>
+        </header>
+
+        <div class="examples-grid">
+            <!-- ============ EXAMPLE 1: Flip Card ============ -->
+            <div class="example-card">
+                <div class="example-header">
+                    <h2>1. Simple Flip Card</h2>
+                    <p>Hover to flip</p>
+                </div>
+                <div class="example-content">
+                    <div class="demo-area">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <h3>Frontend</h3>
+                                    <p>Hover Me</p>
+                                </div>
+                                <div class="flip-card-back">
+                                    <h3>Backend</h3>
+                                    <p>I'm flipped!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-section">
+                        <h4>Key CSS Properties:</h4>
+                        <div class="code-block">backface-visibility: hidden;
+transform-style: preserve-3d;
+transform: rotateY(180deg);</div>
+                    </div>
+                    <div class="info-box">Both front and back faces use backface-visibility: hidden to show only the facing side.</div>
+                </div>
+            </div>
+
+            <!-- ============ EXAMPLE 2: Product Card ============ -->
+            <div class="example-card">
+                <div class="example-header">
+                    <h2>2. Product Showcase</h2>
+                    <p>Image to details flip</p>
+                </div>
+                <div class="example-content">
+                    <div class="demo-area">
+                        <div class="product-flip">
+                            <div class="product-flip-inner">
+                                <div class="product-image">📱</div>
+                                <div class="product-details">
+                                    <h4>Premium Phone</h4>
+                                    <p>$999</p>
+                                    <p>Best specs</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-section">
+                        <h4>Use Case:</h4>
+                        <div class="code-block">E-commerce product cards
+Image → Product details
+Efficient space usage</div>
+                    </div>
+                    <div class="info-box">Hover over the card to see product details on the back.</div>
+                </div>
+            </div>
+
+            <!-- ============ EXAMPLE 3: Login/Signup Toggle ============ -->
+            <div class="example-card">
+                <div class="example-header">
+                    <h2>3. Auth Form Toggle</h2>
+                    <p>Click button to switch</p>
+                </div>
+                <div class="example-content">
+                    <div class="demo-area">
+                        <div class="auth-container">
+                            <div class="auth-inner">
+                                <div class="auth-form">
+                                    <h3>Login</h3>
+                                    <input type="email" placeholder="Email" readonly>
+                                    <input type="password" placeholder="Password" readonly>
+                                    <button onclick="toggleAuth()">Login</button>
+                                    <button class="toggle-btn" onclick="toggleAuth()">Need account? Sign up</button>
+                                </div>
+                                <div class="auth-form signup-form">
+                                    <h3>Sign Up</h3>
+                                    <input type="text" placeholder="Full Name" readonly>
+                                    <input type="email" placeholder="Email" readonly>
+                                    <input type="password" placeholder="Password" readonly>
+                                    <button onclick="toggleAuth()">Sign Up</button>
+                                    <button class="toggle-btn" onclick="toggleAuth()">Have account? Login</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-section">
+                        <h4>JavaScript Trigger:</h4>
+                        <div class="code-block">document.querySelector('.auth-inner')
+  .classList.toggle('show-signup');</div>
+                    </div>
+                    <div class="info-box">Perfect for switching between login and signup without page reload.</div>
+                </div>
+            </div>
+
+            <!-- ============ EXAMPLE 4: Rotating Cube ============ -->
+            <div class="example-card">
+                <div class="example-header">
+                    <h2>4. 3D Rotating Cube</h2>
+                    <p>Auto-rotating animation</p>
+                </div>
+                <div class="example-content">
+                    <div class="demo-area">
+                        <div class="cube-container">
+                            <div class="cube">
+                                <div class="cube-face cube-face-1">Front</div>
+                                <div class="cube-face cube-face-2">Right</div>
+                                <div class="cube-face cube-face-3">Back</div>
+                                <div class="cube-face cube-face-4">Left</div>
+                                <div class="cube-face cube-face-5">Top</div>
+                                <div class="cube-face cube-face-6">Bottom</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-section">
+                        <h4>Animation:</h4>
+                        <div class="code-block">animation: rotateCube 10s infinite;
+transform: rotateX(360deg) 
+           rotateY(360deg);</div>
+                    </div>
+                    <div class="info-box">Each face uses backface-visibility to hide when rotated away from view.</div>
+                </div>
+            </div>
+
+            <!-- ============ EXAMPLE 5: Image Gallery ============ -->
+            <div class="example-card">
+                <div class="example-header">
+                    <h2>5. Image Gallery Item</h2>
+                    <p>Hover to see description</p>
+                </div>
+                <div class="example-content">
+                    <div class="demo-area">
+                        <div class="gallery-item">
+                            <div class="gallery-flip">
+                                <div class="gallery-front">🖼️</div>
+                                <div class="gallery-back">
+                                    <h4>Modern Art</h4>
+                                    <p>Beautiful abstract design</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-section">
+                        <h4>Use Case:</h4>
+                        <div class="code-block">Photo galleries
+Portfolio items
+Image descriptions
+Hover tooltips</div>
+                    </div>
+                    <div class="info-box">Hover over the image to flip and see the description.</div>
+                </div>
+            </div>
+
+            <!-- ============ EXAMPLE 6: Menu Flip ============ -->
+            <div class="example-card">
+                <div class="example-header">
+                    <h2>6. Menu Flip Animation</h2>
+                    <p>Icon to menu flip</p>
+                </div>
+                <div class="example-content">
+                    <div class="demo-area">
+                        <div class="menu-flip">
+                            <div class="menu-flip-inner">
+                                <div class="menu-front">☰</div>
+                                <div class="menu-back">
+                                    <h3>Menu</h3>
+                                    <ul>
+                                        <li>Home</li>
+                                        <li>About</li>
+                                        <li>Contact</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-section">
+                        <h4>Use Case:</h4>
+                        <div class="code-block">Mobile navigation menus
+Compact menu displays
+Space-saving design</div>
+                    </div>
+                    <div class="info-box">Hover to reveal the menu options with a smooth flip animation.</div>
+                </div>
+            </div>
+
+            <!-- ============ EXAMPLE 7: Double Flip ============ -->
+            <div class="example-card">
+                <div class="example-header">
+                    <h2>7. Double Axis Flip</h2>
+                    <p>Flip X and Y axes</p>
+                </div>
+                <div class="example-content">
+                    <div class="demo-area">
+                        <div class="double-flip">
+                            <div class="double-flip-inner">
+                                <div class="double-flip-face double-flip-face-1">Front</div>
+                                <div class="double-flip-face double-flip-face-2">Flipped</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-section">
+                        <h4>Transform:</h4>
+                        <div class="code-block">transform: rotateX(180deg) 
+           rotateY(180deg);</div>
+                    </div>
+                    <div class="info-box">Combines rotation on multiple axes for complex 3D effects.</div>
+                </div>
+            </div>
+
+            <!-- ============ EXAMPLE 8: Toggle Switch ============ -->
+            <div class="example-card">
+                <div class="example-header">
+                    <h2>8. Toggle Switch</h2>
+                    <p>Click to toggle option</p>
+                </div>
+                <div class="example-content">
+                    <div class="demo-area">
+                        <div class="toggle-container" onclick="this.classList.toggle('active')">
+                            <div class="toggle-flip">
+                                <div class="toggle-option toggle-option-1">ON</div>
+                                <div class="toggle-option toggle-option-2">OFF</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-section">
+                        <h4>Use Case:</h4>
+                        <div class="code-block">Feature toggles
+Settings switches
+Status indicators
+Light/Dark mode</div>
+                    </div>
+                    <div class="info-box">Click to toggle between ON and OFF states with flip animation.</div>
+                </div>
+            </div>
+
+            <!-- ============ EXAMPLE 9: Rotating Cards ============ -->
+            <div class="example-card">
+                <div class="example-header">
+                    <h2>9. Auto-Flipping Cards</h2>
+                    <p>Continuous flip loop</p>
+                </div>
+                <div class="example-content">
+                    <div class="demo-area">
+                        <div class="rotating-cards-container">
+                            <div class="rotating-card rotating-card-1">
+                                <div class="rotating-card-inner">
+                                    <div class="rotating-face rotating-face-front">1</div>
+                                    <div class="rotating-face rotating-face-back">A</div>
+                                </div>
+                            </div>
+                            <div class="rotating-card rotating-card-2">
+                                <div class="rotating-card-inner">
+                                    <div class="rotating-face rotating-face-front">2</div>
+                                    <div class="rotating-face rotating-face-back">B</div>
+                                </div>
+                            </div>
+                            <div class="rotating-card rotating-card-3">
+                                <div class="rotating-card-inner">
+                                    <div class="rotating-face rotating-face-front">3</div>
+                                    <div class="rotating-face rotating-face-back">C</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-section">
+                        <h4>Animation:</h4>
+                        <div class="code-block">@keyframes infiniteFlip {
+  0%, 100% { transform: rotateY(0deg); }
+  50% { transform: rotateY(180deg); }
+}</div>
+                    </div>
+                    <div class="info-box">Multiple cards with staggered animation delays for visual interest.</div>
+                </div>
+            </div>
+
+            <!-- ============ EXAMPLE 10: Click to Flip ============ -->
+            <div class="example-card">
+                <div class="example-header">
+                    <h2>10. Click-Controlled Flip</h2>
+                    <p>Click to reveal answer</p>
+                </div>
+                <div class="example-content">
+                    <div class="demo-area">
+                        <div class="click-flip" onclick="this.querySelector('.click-flip-inner').classList.toggle('flipped')">
+                            <div class="click-flip-inner">
+                                <div class="click-flip-side click-flip-front">
+                                    <h3>Question</h3>
+                                    <p>What is 2 + 2?</p>
+                                </div>
+                                <div class="click-flip-side click-flip-back">
+                                    <h3>Answer</h3>
+                                    <p>The answer is 4!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-section">
+                        <h4>Use Case:</h4>
+                        <div class="code-block">Flashcard apps
+Q&A platforms
+Educational content
+Quiz interfaces</div>
+                    </div>
+                    <div class="info-box">Click the card to toggle between question and answer.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Combined Code Example -->
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); margin-bottom: 50px;">
+            <h2 style="color: #667eea; margin-bottom: 20px;">Complete Example: Basic Flip Card</h2>
+            
+            <h3 style="color: #764ba2; margin: 20px 0 10px;">HTML Structure</h3>
+            <div class="code-block">&lt;div class="flip-card"&gt;
+  &lt;div class="flip-card-inner"&gt;
+    &lt;div class="flip-card-front"&gt;Front&lt;/div&gt;
+    &lt;div class="flip-card-back"&gt;Back&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</div>
+
+            <h3 style="color: #764ba2; margin: 20px 0 10px;">CSS Implementation</h3>
+            <div class="code-block">.flip-card {
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flip-card-front {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.flip-card-back {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+  transform: rotateY(180deg);
+}</div>
+
+            <h3 style="color: #764ba2; margin: 20px 0 10px;">JavaScript (Optional)</h3>
+            <div class="code-block">// Click to toggle flip
+document.querySelector('.flip-card').addEventListener('click', function() {
+  this.querySelector('.flip-card-inner')
+      .classList.toggle('flipped');
+});
+
+// Add this CSS for click-based flip:
+// .flipped { transform: rotateY(180deg); }</div>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>Key Points:</strong><br>
+                ✓ backface-visibility: hidden hides the back of each element<br>
+                ✓ transform-style: preserve-3d enables 3D transformation space<br>
+                ✓ The back side is pre-rotated 180deg so it shows when parent rotates<br>
+                ✓ Transition smooths the flip animation<br>
+                ✓ perspective creates depth effect
+            </div>
+        </div>
+
+        <!-- Tips & Tricks -->
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); margin-bottom: 50px;">
+            <h2 style="color: #667eea; margin-bottom: 20px;">💡 Tips & Tricks</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;">🚀 Performance</h4>
+                    <p>Add <code>transform: translateZ(0)</code> for GPU acceleration on mobile devices.</p>
+                </div>
+
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;">🎯 Smooth Animation</h4>
+                    <p>Use <code>transition: transform 0.6s ease-in-out</code> for natural-feeling flips.</p>
+                </div>
+
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;">🎨 Visual Feedback</h4>
+                    <p>Change cursor to pointer and add hover effects to indicate interactivity.</p>
+                </div>
+
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;">📱 Mobile Support</h4>
+                    <p>Use touch events for mobile: replace :hover with click handlers.</p>
+                </div>
+
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;">🔄 Browser Prefixes</h4>
+                    <p>Add -webkit- and -moz- prefixes for older browser compatibility.</p>
+                </div>
+
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;">⚡ Animation Delay</h4>
+                    <p>Use <code>animation-delay</code> to stagger multiple flipping elements.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 CSS Backface-Visibility Practical Examples</p>
+            <p>All examples demonstrate real-world use cases of the backface-visibility property</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleAuth() {
+            document.querySelector('.auth-inner').classList.toggle('show-signup');
+        }
+    </script>
+</body>
+</html>

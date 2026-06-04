@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animation - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .card-header h2 {
+            font-size: 1.4em;
+            margin-bottom: 5px;
+        }
+
+        .card-header p {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .demo-area {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            line-height: 1.5;
+            margin: 15px 0;
+        }
+
+        /* ========== EXAMPLE 1: Loading Spinner ========== */
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ========== EXAMPLE 2: Pulsing Button ========== */
+        .pulse-button {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            animation: buttonPulse 1.5s ease-in-out infinite;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 4px 25px rgba(102, 126, 234, 0.8);
+                transform: scale(1.05);
+            }
+        }
+
+        /* ========== EXAMPLE 3: Bouncing Ball ========== */
+        .bouncing-ball {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            animation: bounce 1.5s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-100px);
+            }
+        }
+
+        /* ========== EXAMPLE 4: Sliding Text ========== */
+        .sliding-text {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+            animation: slideLeft 4s ease-in-out infinite;
+        }
+
+        @keyframes slideLeft {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(100px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* ========== EXAMPLE 5: Fading Text ========== */
+        .fading-text {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+            animation: fadeInOut 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* ========== EXAMPLE 6: Rotating Icon ========== */
+        .rotating-icon {
+            font-size: 3em;
+            animation: rotateIcon 2s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes rotateIcon {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ========== EXAMPLE 7: Scaling Animation ========== */
+        .scaling-box {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            border-radius: 8px;
+            animation: scaleUpDown 2s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes scaleUpDown {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        /* ========== EXAMPLE 8: Rainbow Colors ========== */
+        .rainbow-box {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            animation: rainbowColors 5s ease infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes rainbowColors {
+            0% { background: #FF6B6B; }
+            20% { background: #FFA07A; }
+            40% { background: #FFD93D; }
+            60% { background: #6BCB77; }
+            80% { background: #4D96FF; }
+            100% { background: #9D84B7; }
+        }
+
+        /* ========== EXAMPLE 9: Floating Animation ========== */
+        .floating-card {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 150px;
+            text-align: center;
+            animation: floating 3s ease-in-out infinite;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
+
+        /* ========== EXAMPLE 10: Shake Animation ========== */
+        .shake-box {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            animation: shake 0.5s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* ========== EXAMPLE 11: Typing Animation ========== */
+        .typing-text {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            border-right: 3px solid #667eea;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 4s steps(20, end) infinite, blink 0.75s step-end infinite;
+            width: 250px;
+        }
+
+        @keyframes typing {
+            0% { width: 0; }
+            100% { width: 250px; }
+        }
+
+        @keyframes blink {
+            0%, 49%, 100% { border-right-color: #667eea; }
+            50%, 99% { border-right-color: transparent; }
+        }
+
+        /* ========== EXAMPLE 12: Wave Animation ========== */
+        .wave-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            height: 80px;
+        }
+
+        .wave-bar {
+            width: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 4px;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+
+        .wave-bar:nth-child(1) { animation-delay: 0s; }
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes wave {
+            0%, 100% { height: 20px; }
+            50% { height: 80px; }
+        }
+
+        /* ========== EXAMPLE 13: Strobe/Flash Animation ========== */
+        .strobe-box {
+            width: 100px;
+            height: 100px;
+            background: #667eea;
+            border-radius: 8px;
+            animation: strobe 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes strobe {
+            0%, 49%, 100% { opacity: 1; }
+            50%, 99% { opacity: 0.2; }
+        }
+
+        /* ========== EXAMPLE 14: 3D Flip ========== */
+        .flip-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .flip-box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: flip 2s ease-in-out infinite;
+        }
+
+        .flip-front, .flip-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 2em;
+            color: white;
+        }
+
+        .flip-front {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .flip-back {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            transform: rotateY(180deg);
+        }
+
+        @keyframes flip {
+            0%, 100% { transform: rotateY(0deg); }
+            50% { transform: rotateY(180deg); }
+        }
+
+        /* ========== EXAMPLE 15: Zigzag Path ========== */
+        .zigzag-box {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            border-radius: 8px;
+            animation: zigzag 3s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes zigzag {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(80px, 0); }
+            50% { transform: translate(80px, 80px); }
+            75% { transform: translate(0, 80px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* ========== EXAMPLE 16: Delayed Cascade ========== */
+        .cascade-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            height: 120px;
+        }
+
+        .cascade-item {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 5px;
+            animation: cascadeDown 1s ease-in-out infinite;
+        }
+
+        .cascade-item:nth-child(1) { animation-delay: 0s; }
+        .cascade-item:nth-child(2) { animation-delay: 0.15s; }
+        .cascade-item:nth-child(3) { animation-delay: 0.3s; }
+        .cascade-item:nth-child(4) { animation-delay: 0.45s; }
+
+        @keyframes cascadeDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(60px); }
+        }
+
+        /* ========== EXAMPLE 17: Glow Effect ========== */
+        .glow-box {
+            width: 100px;
+            height: 100px;
+            background: #667eea;
+            border-radius: 8px;
+            animation: glow 2s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 5px #667eea;
+            }
+            50% {
+                box-shadow: 0 0 30px #667eea, 0 0 50px #764ba2;
+            }
+        }
+
+        /* ========== EXAMPLE 18: Expanding Ring ========== */
+        .ring-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+        }
+
+        .ring-center {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ring {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 2px solid #667eea;
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+            animation: expandRing 1.5s ease-out infinite;
+        }
+
+        .ring:nth-child(2) { animation-delay: 0.3s; }
+        .ring:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes expandRing {
+            0% {
+                transform: scale(0.3);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+
+        .description {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .info-badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+            background: white;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-area {
+                min-height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Animation Property</h1>
+            <p>18 Practical Interactive Examples</p>
+        </header>
+
+        <div class="examples-grid">
+            <!-- ========== EXAMPLE 1: Loading Spinner ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>1. Loading Spinner</h2>
+                    <p>Classic rotating loader</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: animation, @keyframes</div>
+                    <div class="description">Perfect for loading states and progress indicators. Uses simple rotation with linear timing.</div>
+                    <div class="demo-area">
+                        <div class="spinner"></div>
+                    </div>
+                    <div class="code-block">@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 2: Pulsing Button ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>2. Pulsing Button</h2>
+                    <p>Call-to-action animation</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: transform, box-shadow</div>
+                    <div class="description">Draws attention to interactive elements with scale and shadow effects. Great for CTAs.</div>
+                    <div class="demo-area">
+                        <button class="pulse-button">Click Me!</button>
+                    </div>
+                    <div class="code-block">@keyframes buttonPulse {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(..., 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 4px 25px rgba(..., 0.8);
+    transform: scale(1.05);
+  }
+}</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 3: Bouncing Ball ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>3. Bouncing Ball</h2>
+                    <p>Physics-like bouncing motion</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: translateY easing</div>
+                    <div class="description">Simulates a ball bouncing with ease-in-out timing. Use for playful UI feedback.</div>
+                    <div class="demo-area">
+                        <div class="bouncing-ball"></div>
+                    </div>
+                    <div class="code-block">@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-100px); }
+}
+
+.bouncing-ball {
+  animation: bounce 1.5s ease-in-out infinite;
+}</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 4: Sliding Text ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>4. Sliding Text</h2>
+                    <p>Back and forth text movement</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: translateX</div>
+                    <div class="description">Text slides left and right smoothly. Perfect for headlines or status messages.</div>
+                    <div class="demo-area">
+                        <div class="sliding-text">Slide Me!</div>
+                    </div>
+                    <div class="code-block">@keyframes slideLeft {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(100px); }
+  100% { transform: translateX(0); }
+}
+
+animation: slideLeft 4s ease-in-out infinite;</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 5: Fading Text ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>5. Fading In & Out</h2>
+                    <p>Opacity-based fade animation</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: opacity</div>
+                    <div class="description">Text fades in and out continuously. Great for emphasis or blinking effects.</div>
+                    <div class="demo-area">
+                        <div class="fading-text">Fade Me!</div>
+                    </div>
+                    <div class="code-block">@keyframes fadeInOut {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+animation: fadeInOut 2s ease-in-out infinite;</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 6: Rotating Icon ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>6. Rotating Icon</h2>
+                    <p>360-degree rotation</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: rotate</div>
+                    <div class="description">Perfect for spinning icons, loading states, or refresh buttons.</div>
+                    <div class="demo-area">
+                        <div class="rotating-icon">⚙️</div>
+                    </div>
+                    <div class="code-block">@keyframes rotateIcon {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+animation: rotateIcon 2s linear infinite;</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 7: Scaling Animation ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>7. Scaling Up & Down</h2>
+                    <p>Growing and shrinking effect</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: scale</div>
+                    <div class="description">Box grows and shrinks smoothly. Great for hover effects or attention grabbing.</div>
+                    <div class="demo-area">
+                        <div class="scaling-box"></div>
+                    </div>
+                    <div class="code-block">@keyframes scaleUpDown {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+animation: scaleUpDown 2s ease-in-out infinite;</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 8: Rainbow Colors ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>8. Rainbow Colors</h2>
+                    <p>Color cycling animation</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: background-color</div>
+                    <div class="description">Box cycles through vibrant colors. Creates a playful, eye-catching effect.</div>
+                    <div class="demo-area">
+                        <div class="rainbow-box"></div>
+                    </div>
+                    <div class="code-block">@keyframes rainbowColors {
+  0% { background: #FF6B6B; }
+  20% { background: #FFA07A; }
+  40% { background: #FFD93D; }
+  60% { background: #6BCB77; }
+  80% { background: #4D96FF; }
+  100% { background: #9D84B7; }
+}</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 9: Floating Animation ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>9. Floating Card</h2>
+                    <p>Smooth up and down motion</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: translateY</div>
+                    <div class="description">Card gently floats up and down. Perfect for hero sections and featured content.</div>
+                    <div class="demo-area">
+                        <div class="floating-card">
+                            <div>🎈</div>
+                            <div>Floating</div>
+                        </div>
+                    </div>
+                    <div class="code-block">@keyframes floating {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-30px); }
+}
+
+animation: floating 3s ease-in-out infinite;</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 10: Shake Animation ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>10. Shake Effect</h2>
+                    <p>Side-to-side vibration</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: translateX</div>
+                    <div class="description">Box shakes vigorously. Great for error alerts or emphasis.</div>
+                    <div class="demo-area">
+                        <div class="shake-box"></div>
+                    </div>
+                    <div class="code-block">@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+animation: shake 0.5s ease-in-out infinite;</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 11: Typing Animation ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>11. Typing Effect</h2>
+                    <p>Typewriter-like text reveal</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: steps(), width</div>
+                    <div class="description">Text appears one character at a time with blinking cursor. Great for intros.</div>
+                    <div class="demo-area">
+                        <div class="typing-text">Hello World!</div>
+                    </div>
+                    <div class="code-block">@keyframes typing {
+  0% { width: 0; }
+  100% { width: 250px; }
+}
+
+animation: typing 4s steps(20, end) infinite,
+           blink 0.75s step-end infinite;</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 12: Wave Animation ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>12. Wave Bars</h2>
+                    <p>Music-like wave effect</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: animation-delay staggering</div>
+                    <div class="description">Bars move up and down in sequence. Perfect for audio players and loaders.</div>
+                    <div class="demo-area">
+                        <div class="wave-container">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                    </div>
+                    <div class="code-block">.wave-bar:nth-child(1) { animation-delay: 0s; }
+.wave-bar:nth-child(2) { animation-delay: 0.1s; }
+/* ... and so on */
+
+@keyframes wave {
+  0%, 100% { height: 20px; }
+  50% { height: 80px; }
+}</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 13: Strobe/Flash ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>13. Strobe Flash</h2>
+                    <p>On-off blinking effect</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: opacity steps</div>
+                    <div class="description">Box flashes on and off. Use sparingly for alerts or notifications.</div>
+                    <div class="demo-area">
+                        <div class="strobe-box"></div>
+                    </div>
+                    <div class="code-block">@keyframes strobe {
+  0%, 49%, 100% { opacity: 1; }
+  50%, 99% { opacity: 0.2; }
+}
+
+animation: strobe 1s ease-in-out infinite;</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 14: 3D Flip ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>14. 3D Card Flip</h2>
+                    <p>Rotating card transformation</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: rotateY, perspective</div>
+                    <div class="description">Card flips in 3D space. Combines animation with 3D transforms.</div>
+                    <div class="demo-area">
+                        <div class="flip-container">
+                            <div class="flip-box">
+                                <div class="flip-front">Front</div>
+                                <div class="flip-back">Back</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-block">@keyframes flip {
+  0%, 100% { transform: rotateY(0deg); }
+  50% { transform: rotateY(180deg); }
+}
+
+animation: flip 2s ease-in-out infinite;</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 15: Zigzag Path ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>15. Zigzag Motion</h2>
+                    <p>Complex path animation</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: translate multiple keyframes</div>
+                    <div class="description">Box moves in a zigzag pattern. Shows multi-directional movement.</div>
+                    <div class="demo-area">
+                        <div class="zigzag-box"></div>
+                    </div>
+                    <div class="code-block">@keyframes zigzag {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(80px, 0); }
+  50% { transform: translate(80px, 80px); }
+  75% { transform: translate(0, 80px); }
+  100% { transform: translate(0, 0); }
+}</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 16: Delayed Cascade ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>16. Cascading Items</h2>
+                    <p>Staggered animation sequence</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: animation-delay nth-child</div>
+                    <div class="description">Multiple items bounce with delays. Great for list animations and entrances.</div>
+                    <div class="demo-area">
+                        <div class="cascade-container">
+                            <div class="cascade-item"></div>
+                            <div class="cascade-item"></div>
+                            <div class="cascade-item"></div>
+                            <div class="cascade-item"></div>
+                        </div>
+                    </div>
+                    <div class="code-block">.cascade-item:nth-child(1) { animation-delay: 0s; }
+.cascade-item:nth-child(2) { animation-delay: 0.15s; }
+/* ... staggered delays */
+
+@keyframes cascadeDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(60px); }
+}</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 17: Glow Effect ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>17. Glow Effect</h2>
+                    <p>Animated box shadow</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: box-shadow animation</div>
+                    <div class="description">Box emits pulsing glow. Creates atmospheric and glowing effects.</div>
+                    <div class="demo-area">
+                        <div class="glow-box"></div>
+                    </div>
+                    <div class="code-block">@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px #667eea;
+  }
+  50% {
+    box-shadow: 0 0 30px #667eea, 
+                0 0 50px #764ba2;
+  }
+}
+
+animation: glow 2s ease-in-out infinite;</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 18: Expanding Ring ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>18. Expanding Ring</h2>
+                    <p>Ripple effect animation</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Uses: scale + opacity</div>
+                    <div class="description">Rings expand outward with fading. Perfect for ripple or pulse effects.</div>
+                    <div class="demo-area">
+                        <div class="ring-container">
+                            <div class="ring-center"></div>
+                            <div class="ring"></div>
+                            <div class="ring"></div>
+                            <div class="ring"></div>
+                        </div>
+                    </div>
+                    <div class="code-block">@keyframes expandRing {
+  0% {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.ring:nth-child(n) { animation-delay: n*0.3s; }</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <h2>Key Takeaways</h2>
+            <p style="margin: 15px 0;">✓ Use <strong>transform</strong> and <strong>opacity</strong> for best performance<br>
+            ✓ <strong>animation-delay</strong> creates staggered effects<br>
+            ✓ <strong>@keyframes</strong> defines animation steps<br>
+            ✓ <strong>animation-timing-function</strong> controls speed curves<br>
+            ✓ Combine multiple effects for complex animations</p>
+            <p>&copy; 2024 CSS Animation Practical Examples | 18 Ready-to-Use Patterns</p>
+        </footer>
+    </div>
+</body>
+</html>

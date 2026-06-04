@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animation Property - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 12px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin: 30px 0 15px 0;
+        }
+
+        h4 {
+            color: #667eea;
+            font-size: 1.1em;
+            margin: 18px 0 10px 0;
+        }
+
+        p, li {
+            font-size: 1em;
+            margin-bottom: 12px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        ul, ol {
+            margin-left: 28px;
+            margin-bottom: 20px;
+        }
+
+        .syntax-block {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .keyword { color: #ff79c6; }
+        .string { color: #f1fa8c; }
+        .property { color: #8be9fd; }
+        .value { color: #50fa7b; }
+        .comment { color: #6272a4; }
+        .number { color: #bd93f9; }
+
+        .demo-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 40px;
+            border-radius: 12px;
+            margin: 35px 0;
+            border: 2px solid #e0e0e0;
+            text-align: center;
+        }
+
+        .demo-title {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .property-table th {
+            background: #667eea;
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .property-table td {
+            padding: 15px 18px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .property-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+
+        .tag.important {
+            background: #f44336;
+        }
+
+        .tag.note {
+            background: #2196F3;
+        }
+
+        .tag.success {
+            background: #4CAF50;
+        }
+
+        /* Animation Demos */
+        .animation-demo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Demo 1: Simple Move */
+        .demo-move {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            animation: moveRight 3s infinite alternate;
+        }
+
+        @keyframes moveRight {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(200px); }
+        }
+
+        /* Demo 2: Color Change */
+        .demo-color {
+            background: #667eea;
+            animation: changeColor 4s infinite;
+        }
+
+        @keyframes changeColor {
+            0% { background: #667eea; }
+            25% { background: #764ba2; }
+            50% { background: #f093fb; }
+            75% { background: #f5576c; }
+            100% { background: #667eea; }
+        }
+
+        /* Demo 3: Scale */
+        .demo-scale {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            animation: scaleUp 2s infinite alternate;
+        }
+
+        @keyframes scaleUp {
+            0% { transform: scale(0.8); }
+            100% { transform: scale(1.3); }
+        }
+
+        /* Demo 4: Rotate */
+        .demo-rotate {
+            background: linear-gradient(135deg, #fa709a, #fee140);
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Demo 5: Bounce */
+        .demo-bounce {
+            background: linear-gradient(135deg, #30b0fe, #58107b);
+            animation: bounce 1.5s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-50px); }
+        }
+
+        /* Demo 6: Fade */
+        .demo-fade {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            animation: fadeInOut 3s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Demo 7: Pulse */
+        .demo-pulse {
+            background: #667eea;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+
+        /* Demo 8: Slide */
+        .demo-slide {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            animation: slideIn 2.5s ease-in-out infinite;
+        }
+
+        @keyframes slideIn {
+            0%, 100% { transform: translateX(-150px); }
+            50% { transform: translateX(150px); }
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .demo-item {
+            text-align: center;
+        }
+
+        .demo-item-label {
+            color: #667eea;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 0.95em;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 25px 0;
+        }
+
+        .comparison-card {
+            background: #f5f5f5;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .browser-support {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .browser-support h4 {
+            color: #ffc107;
+            margin-bottom: 18px;
+        }
+
+        .support-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .support-item {
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #4CAF50;
+            font-size: 0.95em;
+        }
+
+        .support-item.partial {
+            border-left-color: #ff9800;
+        }
+
+        .support-item.no {
+            border-left-color: #f44336;
+        }
+
+        .highlight {
+            background: #fff9e6;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .warning {
+            background: #ffe0e0;
+            border-left: 4px solid #f44336;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .success {
+            background: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 25px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        .example-box {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            padding: 15px 20px;
+            background: #f5f5f5;
+            margin-bottom: 12px;
+            border-left: 3px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .timeline-item strong {
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .support-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Animation Property</h1>
+            <p>A Complete Guide to Creating Smooth, Engaging Animations</p>
+        </header>
+
+        <div class="content">
+            <!-- Introduction -->
+            <section>
+                <h2>What is CSS Animation?</h2>
+                <p>The <span class="highlight">animation</span> property in CSS allows you to create smooth, continuous transitions between different states of an element without requiring JavaScript. It's a powerful tool for creating engaging user interfaces and drawing attention to important elements.</p>
+
+                <div class="success">
+                    <strong>Key Advantage:</strong> Animations run on the GPU, making them performance-efficient compared to JavaScript-based animations. They can run independently and don't require JavaScript interaction.
+                </div>
+
+                <p>CSS animations consist of two main components:</p>
+                <ul>
+                    <li><span class="highlight">@keyframes</span> - Defines the animation frames and what changes</li>
+                    <li><span class="highlight">animation</span> - Applies the animation to an element with timing and behavior</li>
+                </ul>
+            </section>
+
+            <!-- Syntax Section -->
+            <section>
+                <h2>Animation Syntax & Properties</h2>
+
+                <h3>Basic Syntax</h3>
+                <div class="syntax-block">
+animation: name duration timing-function delay iteration-count direction fill-mode play-state;
+                </div>
+
+                <h3>Individual Animation Properties</h3>
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Description</th>
+                            <th>Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag">animation-name</span></td>
+                            <td>Name of the @keyframes animation to use</td>
+                            <td>none</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">animation-duration</span></td>
+                            <td>Time for one animation cycle (in seconds or milliseconds)</td>
+                            <td>0s</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">animation-timing-function</span></td>
+                            <td>Speed curve of the animation</td>
+                            <td>ease</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">animation-delay</span></td>
+                            <td>Time before animation starts</td>
+                            <td>0s</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">animation-iteration-count</span></td>
+                            <td>Number of times animation plays</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">animation-direction</span></td>
+                            <td>Direction of animation playback</td>
+                            <td>normal</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">animation-fill-mode</span></td>
+                            <td>Style of element before/after animation</td>
+                            <td>none</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">animation-play-state</span></td>
+                            <td>Pause or play animation</td>
+                            <td>running</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- @keyframes -->
+            <section>
+                <h2>@keyframes Declaration</h2>
+
+                <p>The <span class="highlight">@keyframes</span> rule defines what happens at each stage of the animation.</p>
+
+                <h3>Syntax</h3>
+                <div class="code-example">
+<span class="keyword">@keyframes</span> <span class="property">animationName</span> {
+  <span class="number">0%</span> {
+    <span class="property">property</span>: <span class="value">value</span>;
+  }
+  <span class="number">50%</span> {
+    <span class="property">property</span>: <span class="value">value</span>;
+  }
+  <span class="number">100%</span> {
+    <span class="property">property</span>: <span class="value">value</span>;
+  }
+}
+                </div>
+
+                <h3>Examples</h3>
+
+                <h4>Example 1: Color Transition</h4>
+                <div class="code-example">
+<span class="keyword">@keyframes</span> <span class="property">colorChange</span> {
+  <span class="number">0%</span> {
+    <span class="property">background-color</span>: <span class="value">red</span>;
+  }
+  <span class="number">50%</span> {
+    <span class="property">background-color</span>: <span class="value">yellow</span>;
+  }
+  <span class="number">100%</span> {
+    <span class="property">background-color</span>: <span class="value">blue</span>;
+  }
+}
+                </div>
+
+                <h4>Example 2: Movement</h4>
+                <div class="code-example">
+<span class="keyword">@keyframes</span> <span class="property">slide</span> {
+  <span class="keyword">from</span> {
+    <span class="property">transform</span>: <span class="value">translateX(0)</span>;
+  }
+  <span class="keyword">to</span> {
+    <span class="property">transform</span>: <span class="value">translateX(200px)</span>;
+  }
+}
+                </div>
+
+                <h4>Example 3: Complex Animation</h4>
+                <div class="code-example">
+<span class="keyword">@keyframes</span> <span class="property">complexMove</span> {
+  <span class="number">0%</span> {
+    <span class="property">transform</span>: <span class="value">translateX(0) scale(1)</span>;
+    <span class="property">opacity</span>: <span class="value">1</span>;
+  }
+  <span class="number">50%</span> {
+    <span class="property">transform</span>: <span class="value">translateX(100px) scale(1.2)</span>;
+    <span class="property">opacity</span>: <span class="value">0.7</span>;
+  }
+  <span class="number">100%</span> {
+    <span class="property">transform</span>: <span class="value">translateX(0) scale(1)</span>;
+    <span class="property">opacity</span>: <span class="value">1</span>;
+  }
+}
+                </div>
+
+                <div class="info-box">
+                    <strong>Note:</strong> You can use percentages (0%, 50%, 100%) or keywords (from, to). "from" is equivalent to 0% and "to" is equivalent to 100%.
+                </div>
+            </section>
+
+            <!-- Animation Properties Deep Dive -->
+            <section>
+                <h2>Animation Properties in Detail</h2>
+
+                <h3>1. animation-duration</h3>
+                <p>Specifies how long one animation cycle takes to complete.</p>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">animation-duration</span>: <span class="value">3s</span>; <span class="comment">/* seconds */</span>
+  <span class="comment">/* or */</span>
+  <span class="property">animation-duration</span>: <span class="value">3000ms</span>; <span class="comment">/* milliseconds */</span>
+}
+                </div>
+
+                <h3>2. animation-timing-function</h3>
+                <p>Controls the speed curve of the animation:</p>
+                <div class="example-box">
+                    <strong>Built-in Values:</strong>
+                    <ul>
+                        <li><span class="highlight">ease</span> - Slow start, fast middle, slow end (default)</li>
+                        <li><span class="highlight">linear</span> - Constant speed throughout</li>
+                        <li><span class="highlight">ease-in</span> - Slow start, accelerates</li>
+                        <li><span class="highlight">ease-out</span> - Fast start, decelerates</li>
+                        <li><span class="highlight">ease-in-out</span> - Slow start and end, fast middle</li>
+                        <li><span class="highlight">cubic-bezier(n,n,n,n)</span> - Custom speed curve</li>
+                        <li><span class="highlight">steps(n, direction)</span> - Jump animation (frame-by-frame)</li>
+                    </ul>
+                </div>
+
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">animation-timing-function</span>: <span class="value">linear</span>;
+  <span class="comment">/* or */</span>
+  <span class="property">animation-timing-function</span>: <span class="value">cubic-bezier(0.25, 0.1, 0.25, 1)</span>;
+  <span class="comment">/* or */</span>
+  <span class="property">animation-timing-function</span>: <span class="value">steps(5, end)</span>;
+}
+                </div>
+
+                <h3>3. animation-delay</h3>
+                <p>Specifies a delay before the animation starts.</p>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">animation-delay</span>: <span class="value">2s</span>;
+  <span class="comment">/* Animation waits 2 seconds before starting */</span>
+}
+                </div>
+
+                <h3>4. animation-iteration-count</h3>
+                <p>How many times the animation repeats.</p>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">animation-iteration-count</span>: <span class="value">3</span>; <span class="comment">/* Play 3 times */</span>
+  <span class="comment">/* or */</span>
+  <span class="property">animation-iteration-count</span>: <span class="value">infinite</span>; <span class="comment">/* Loop forever */</span>
+}
+                </div>
+
+                <h3>5. animation-direction</h3>
+                <p>Determines animation playback direction:</p>
+                <div class="example-box">
+                    <ul>
+                        <li><span class="highlight">normal</span> - Forward (default)</li>
+                        <li><span class="highlight">reverse</span> - Backward</li>
+                        <li><span class="highlight">alternate</span> - Forward then backward</li>
+                        <li><span class="highlight">alternate-reverse</span> - Backward then forward</li>
+                    </ul>
+                </div>
+
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">animation-direction</span>: <span class="value">alternate</span>;
+  <span class="property">animation-iteration-count</span>: <span class="value">infinite</span>;
+}
+                </div>
+
+                <h3>6. animation-fill-mode</h3>
+                <p>Specifies how the element looks before and after the animation:</p>
+                <div class="example-box">
+                    <ul>
+                        <li><span class="highlight">none</span> - Default state before/after (default)</li>
+                        <li><span class="highlight">forwards</span> - Keeps final keyframe values after animation</li>
+                        <li><span class="highlight">backwards</span> - Applies first keyframe values before animation starts</li>
+                        <li><span class="highlight">both</span> - Combines forwards and backwards</li>
+                    </ul>
+                </div>
+
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">animation-fill-mode</span>: <span class="value">forwards</span>;
+  <span class="comment">/* Element stays in final state after animation */</span>
+}
+                </div>
+
+                <h3>7. animation-play-state</h3>
+                <p>Control whether animation is playing or paused.</p>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">animation-play-state</span>: <span class="value">paused</span>; <span class="comment">/* or running */</span>
+}
+
+<span class="keyword">div:hover</span> {
+  <span class="property">animation-play-state</span>: <span class="value">running</span>;
+}
+                </div>
+            </section>
+
+            <!-- Live Demonstrations -->
+            <section>
+                <h2>Interactive Animation Demonstrations</h2>
+
+                <div class="demo-section">
+                    <div class="demo-title">Watch These Animations in Action</div>
+                    
+                    <div class="demo-grid">
+                        <div class="demo-item">
+                            <div class="animation-demo demo-move">→</div>
+                            <div class="demo-item-label">Move Right</div>
+                        </div>
+
+                        <div class="demo-item">
+                            <div class="animation-demo demo-color">🎨</div>
+                            <div class="demo-item-label">Color Change</div>
+                        </div>
+
+                        <div class="demo-item">
+                            <div class="animation-demo demo-scale">📏</div>
+                            <div class="demo-item-label">Scale Up</div>
+                        </div>
+
+                        <div class="demo-item">
+                            <div class="animation-demo demo-rotate">↻</div>
+                            <div class="demo-item-label">Rotate</div>
+                        </div>
+
+                        <div class="demo-item">
+                            <div class="animation-demo demo-bounce">⬆️</div>
+                            <div class="demo-item-label">Bounce</div>
+                        </div>
+
+                        <div class="demo-item">
+                            <div class="animation-demo demo-fade">👻</div>
+                            <div class="demo-item-label">Fade In/Out</div>
+                        </div>
+
+                        <div class="demo-item">
+                            <div class="animation-demo demo-pulse">💓</div>
+                            <div class="demo-item-label">Pulse</div>
+                        </div>
+
+                        <div class="demo-item">
+                            <div class="animation-demo demo-slide">↔️</div>
+                            <div class="demo-item-label">Slide</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Complete Examples -->
+            <section>
+                <h2>Complete Practical Examples</h2>
+
+                <h3>Example 1: Loading Spinner</h3>
+                <div class="code-example">
+<span class="comment">/* HTML */</span>
+&lt;<span class="keyword">div</span> <span class="property">class</span>=<span class="string">"spinner"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+
+<span class="comment">/* CSS */</span>
+<span class="keyword">.spinner</span> {
+  <span class="property">width</span>: <span class="value">50px</span>;
+  <span class="property">height</span>: <span class="value">50px</span>;
+  <span class="property">border</span>: <span class="value">5px solid #f3f3f3</span>;
+  <span class="property">border-top</span>: <span class="value">5px solid #667eea</span>;
+  <span class="property">border-radius</span>: <span class="value">50%</span>;
+  <span class="property">animation</span>: <span class="value">spin 1s linear infinite</span>;
+}
+
+<span class="keyword">@keyframes spin</span> {
+  <span class="number">0%</span> { <span class="property">transform</span>: <span class="value">rotate(0deg)</span>; }
+  <span class="number">100%</span> { <span class="property">transform</span>: <span class="value">rotate(360deg)</span>; }
+}
+                </div>
+
+                <h3>Example 2: Button Hover Animation</h3>
+                <div class="code-example">
+<span class="keyword">button</span> {
+  <span class="property">padding</span>: <span class="value">10px 20px</span>;
+  <span class="property">background</span>: <span class="value">#667eea</span>;
+  <span class="property">color</span>: <span class="value">white</span>;
+  <span class="property">border</span>: <span class="value">none</span>;
+  <span class="property">border-radius</span>: <span class="value">5px</span>;
+  <span class="property">transition</span>: <span class="value">transform 0.3s ease</span>;
+}
+
+<span class="keyword">button:hover</span> {
+  <span class="property">animation</span>: <span class="value">pulse 0.5s ease-out</span>;
+}
+
+<span class="keyword">@keyframes pulse</span> {
+  <span class="number">0%</span> { <span class="property">transform</span>: <span class="value">scale(1)</span>; }
+  <span class="number">50%</span> { <span class="property">transform</span>: <span class="value">scale(1.1)</span>; }
+  <span class="number">100%</span> { <span class="property">transform</span>: <span class="value">scale(1)</span>; }
+}
+                </div>
+
+                <h3>Example 3: Slide-in Animation on Page Load</h3>
+                <div class="code-example">
+<span class="keyword">.content</span> {
+  <span class="property">animation</span>: <span class="value">slideIn 0.6s ease-out forwards</span>;
+}
+
+<span class="keyword">@keyframes slideIn</span> {
+  <span class="number">0%</span> {
+    <span class="property">opacity</span>: <span class="value">0</span>;
+    <span class="property">transform</span>: <span class="value">translateY(20px)</span>;
+  }
+  <span class="number">100%</span> {
+    <span class="property">opacity</span>: <span class="value">1</span>;
+    <span class="property">transform</span>: <span class="value">translateY(0)</span>;
+  }
+}
+                </div>
+
+                <h3>Example 4: Delayed Staggered Animation</h3>
+                <div class="code-example">
+<span class="keyword">.item</span> {
+  <span class="property">animation</span>: <span class="value">fadeInUp 0.5s ease-out</span>;
+}
+
+<span class="keyword">.item:nth-child(1)</span> { <span class="property">animation-delay</span>: <span class="value">0.1s</span>; }
+<span class="keyword">.item:nth-child(2)</span> { <span class="property">animation-delay</span>: <span class="value">0.2s</span>; }
+<span class="keyword">.item:nth-child(3)</span> { <span class="property">animation-delay</span>: <span class="value">0.3s</span>; }
+
+<span class="keyword">@keyframes fadeInUp</span> {
+  <span class="number">0%</span> {
+    <span class="property">opacity</span>: <span class="value">0</span>;
+    <span class="property">transform</span>: <span class="value">translateY(30px)</span>;
+  }
+  <span class="number">100%</span> {
+    <span class="property">opacity</span>: <span class="value">1</span>;
+    <span class="property">transform</span>: <span class="value">translateY(0)</span>;
+  }
+}
+                </div>
+
+                <h3>Example 5: Keyframe Percentages</h3>
+                <div class="code-example">
+<span class="keyword">@keyframes complexAnimation</span> {
+  <span class="number">0%</span> { <span class="property">left</span>: <span class="value">0px</span>; <span class="property">top</span>: <span class="value">0px</span>; }
+  <span class="number">25%</span> { <span class="property">left</span>: <span class="value">100px</span>; <span class="property">top</span>: <span class="value">0px</span>; }
+  <span class="number">50%</span> { <span class="property">left</span>: <span class="value">100px</span>; <span class="property">top</span>: <span class="value">100px</span>; }
+  <span class="number">75%</span> { <span class="property">left</span>: <span class="value">0px</span>; <span class="property">top</span>: <span class="value">100px</span>; }
+  <span class="number">100%</span> { <span class="property">left</span>: <span class="value">0px</span>; <span class="property">top</span>: <span class="value">0px</span>; }
+}
+                </div>
+            </section>
+
+            <!-- Timing Functions Comparison -->
+            <section>
+                <h2>Animation Timing Functions Explained</h2>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>ease (Default)</h4>
+                        <p>Starts slow, speeds up in the middle, then slows down at the end. Good for natural-feeling animations.</p>
+                        <p><strong>Cubic-bezier:</strong> (0.25, 0.1, 0.25, 1)</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>linear</h4>
+                        <p>Constant speed throughout the entire animation. Best for continuous spinning or scrolling effects.</p>
+                        <p><strong>Cubic-bezier:</strong> (0, 0, 1, 1)</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>ease-in</h4>
+                        <p>Starts slow and accelerates. Good for objects leaving the viewport.</p>
+                        <p><strong>Cubic-bezier:</strong> (0.42, 0, 1, 1)</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>ease-out</h4>
+                        <p>Starts fast and decelerates. Perfect for objects entering the viewport.</p>
+                        <p><strong>Cubic-bezier:</strong> (0, 0, 0.58, 1)</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>ease-in-out</h4>
+                        <p>Starts slow, fast in middle, slow at end. Similar to ease but more pronounced.</p>
+                        <p><strong>Cubic-bezier:</strong> (0.42, 0, 0.58, 1)</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>steps()</h4>
+                        <p>Creates frame-by-frame animation jumps. Useful for sprite animations and typewriter effects.</p>
+                        <p><strong>Example:</strong> steps(5, end)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Best Practices -->
+            <section>
+                <h2>Best Practices & Performance Tips</h2>
+
+                <h3>✓ Do's</h3>
+                <ul>
+                    <li>Use <span class="highlight">transform</span> and <span class="highlight">opacity</span> for best performance (GPU accelerated)</li>
+                    <li>Keep animations under 3 seconds for better UX</li>
+                    <li>Use <span class="highlight">animation-delay</span> to stagger multiple animations</li>
+                    <li>Test animations on mobile devices</li>
+                    <li>Provide <span class="highlight">prefers-reduced-motion</span> support for accessibility</li>
+                    <li>Use meaningful animation durations (not too fast, not too slow)</li>
+                </ul>
+
+                <h3>✗ Don'ts</h3>
+                <ul>
+                    <li>Avoid animating <span class="highlight">width</span>, <span class="highlight">height</span>, or <span class="highlight">position</span> (causes reflows)</li>
+                    <li>Don't overuse animations - they can distract users</li>
+                    <li>Avoid long animation durations for simple effects</li>
+                    <li>Don't animate too many elements simultaneously</li>
+                    <li>Avoid complex animations with many keyframes</li>
+                    <li>Don't ignore browser compatibility issues</li>
+                </ul>
+
+                <h3>Accessibility - Respecting Reduced Motion Preferences</h3>
+                <div class="code-example">
+<span class="comment">/* Respect user's motion preferences */</span>
+<span class="keyword">@media (prefers-reduced-motion: reduce)</span> {
+  <span class="keyword">*</span> {
+    <span class="property">animation</span>: <span class="value">none !important</span>;
+    <span class="property">transition</span>: <span class="value">none !important</span>;
+  }
+}
+                </div>
+            </section>
+
+            <!-- Browser Support -->
+            <section>
+                <h2>Browser Support</h2>
+                <div class="browser-support">
+                    <h4>CSS Animation Compatibility</h4>
+                    <div class="support-list">
+                        <div class="support-item">Chrome: 43+</div>
+                        <div class="support-item">Firefox: 16+</div>
+                        <div class="support-item">Safari: 9+</div>
+                        <div class="support-item">Edge: 12+</div>
+                        <div class="support-item">Opera: 30+</div>
+                        <div class="support-item partial">IE: 10+</div>
+                        <div class="support-item">iOS Safari: 9+</div>
+                        <div class="support-item">Android: 4.4.4+</div>
+                    </div>
+                </div>
+
+                <h3>Vendor Prefixes (for older browsers)</h3>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">-webkit-animation</span>: <span class="value">spin 2s linear infinite</span>;
+  <span class="property">-moz-animation</span>: <span class="value">spin 2s linear infinite</span>;
+  <span class="property">animation</span>: <span class="value">spin 2s linear infinite</span>;
+}
+
+<span class="keyword">@-webkit-keyframes spin</span> { <span class="comment">/* ... */</span> }
+<span class="keyword">@-moz-keyframes spin</span> { <span class="comment">/* ... */</span> }
+<span class="keyword">@keyframes spin</span> { <span class="comment">/* ... */</span> }
+                </div>
+            </section>
+
+            <!-- Common Patterns -->
+            <section>
+                <h2>Common Animation Patterns</h2>
+
+                <h3>Pattern 1: Infinite Loop</h3>
+                <div class="code-example">
+<span class="keyword">.element</span> {
+  <span class="property">animation</span>: <span class="value">rotate 2s linear infinite</span>;
+}
+                </div>
+
+                <h3>Pattern 2: Hover Trigger</h3>
+                <div class="code-example">
+<span class="keyword">.button</span> {
+  <span class="property">transition</span>: <span class="value">transform 0.3s</span>;
+}
+
+<span class="keyword">.button:hover</span> {
+  <span class="property">animation</span>: <span class="value">bounce 0.6s ease-out</span>;
+}
+                </div>
+
+                <h3>Pattern 3: Sequential Animation</h3>
+                <div class="code-example">
+<span class="keyword">.item</span> {
+  <span class="property">animation</span>: <span class="value">fadeIn 0.5s ease-out</span>;
+  <span class="property">animation-fill-mode</span>: <span class="value">both</span>;
+}
+
+<span class="keyword">.item:nth-child(n)</span> {
+  <span class="property">animation-delay</span>: <span class="value">calc(0.1s * n)</span>;
+}
+                </div>
+
+                <h3>Pattern 4: Animation on Scroll</h3>
+                <div class="code-example">
+<span class="keyword">.animated</span> {
+  <span class="property">opacity</span>: <span class="value">0</span>;
+}
+
+<span class="keyword">.animated.in-view</span> {
+  <span class="property">animation</span>: <span class="value">slideUp 0.6s ease-out forwards</span>;
+}
+
+<span class="comment">/* Use JavaScript to add 'in-view' class on scroll */</span>
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section>
+                <h2>Troubleshooting & Common Issues</h2>
+
+                <h3>Issue 1: Animation Not Working</h3>
+                <div class="warning">
+                    <strong>Problem:</strong> Animation isn't playing at all.<br><br>
+                    <strong>Solutions:</strong>
+                    <ul>
+                        <li>Check that @keyframes is defined with correct name</li>
+                        <li>Verify animation-duration is not 0s</li>
+                        <li>Ensure animation-iteration-count is set (default is 1)</li>
+                        <li>Check browser console for CSS errors</li>
+                    </ul>
+                </div>
+
+                <h3>Issue 2: Animation Stutters</h3>
+                <div class="warning">
+                    <strong>Problem:</strong> Animation plays but feels choppy.<br><br>
+                    <strong>Solutions:</strong>
+                    <ul>
+                        <li>Use only <span class="highlight">transform</span> and <span class="highlight">opacity</span></li>
+                        <li>Avoid animating properties that trigger layout recalculation</li>
+                        <li>Reduce the number of simultaneous animations</li>
+                        <li>Check for heavy JavaScript running simultaneously</li>
+                    </ul>
+                </div>
+
+                <h3>Issue 3: Animation Won't Stop</h3>
+                <div class="warning">
+                    <strong>Problem:</strong> Animation loops infinitely when it shouldn't.<br><br>
+                    <strong>Solutions:</strong>
+                    <ul>
+                        <li>Remove or change <span class="highlight">animation-iteration-count: infinite</span></li>
+                        <li>Set <span class="highlight">animation-iteration-count</span> to specific number</li>
+                        <li>Use JavaScript to control animation-play-state</li>
+                    </ul>
+                </div>
+
+                <h3>Issue 4: Animation Jumps at Start</h3>
+                <div class="warning">
+                    <strong>Problem:</strong> Animation looks jerky when it begins.<br><br>
+                    <strong>Solutions:</strong>
+                    <ul>
+                        <li>Use <span class="highlight">animation-fill-mode: backwards</span></li>
+                        <li>Make sure first keyframe (0%) matches initial state</li>
+                        <li>Add <span class="highlight">animation-delay</span> if needed</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Quick Reference -->
+            <section>
+                <h2>Quick Reference Cheat Sheet</h2>
+
+                <div class="example-box">
+                    <h4>All Animation Properties Together</h4>
+                    <div class="code-example">
+<span class="keyword">element</span> {
+  <span class="property">animation-name</span>: <span class="value">slidein</span>;
+  <span class="property">animation-duration</span>: <span class="value">3s</span>;
+  <span class="property">animation-timing-function</span>: <span class="value">ease-in</span>;
+  <span class="property">animation-delay</span>: <span class="value">1s</span>;
+  <span class="property">animation-iteration-count</span>: <span class="value">3</span>;
+  <span class="property">animation-direction</span>: <span class="value">alternate</span>;
+  <span class="property">animation-fill-mode</span>: <span class="value">forwards</span>;
+  <span class="property">animation-play-state</span>: <span class="value">running</span>;
+}
+
+<span class="comment">/* Shorthand */</span>
+<span class="keyword">element</span> {
+  <span class="property">animation</span>: <span class="value">slidein 3s ease-in 1s 3 alternate forwards running</span>;
+}
+                    </div>
+                </div>
+
+                <div class="timeline">
+                    <h4 style="margin-bottom: 20px;">Animation Execution Timeline</h4>
+                    <div class="timeline-item">
+                        <strong>animation-delay (2s):</strong> Wait 2 seconds
+                    </div>
+                    <div class="timeline-item">
+                        <strong>Start (0%):</strong> Animation begins with first keyframe
+                    </div>
+                    <div class="timeline-item">
+                        <strong>Middle (25-75%):</strong> Animation progresses through keyframes
+                    </div>
+                    <div class="timeline-item">
+                        <strong>End (100%):</strong> Animation completes
+                    </div>
+                    <div class="timeline-item">
+                        <strong>animation-fill-mode:</strong> Determines state after animation
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conclusion -->
+            <section>
+                <h2>Conclusion</h2>
+                <div class="success">
+                    <p><strong>CSS Animations</strong> are a powerful and efficient way to add movement and interactivity to your web applications. By understanding the properties and best practices, you can create smooth, engaging animations that enhance user experience without impacting performance.</p>
+                    <p style="margin-top: 15px;"><strong>Key Takeaways:</strong></p>
+                    <ul>
+                        <li>Use @keyframes to define animation steps</li>
+                        <li>Apply animations with the animation property</li>
+                        <li>Optimize by animating only transform and opacity</li>
+                        <li>Consider accessibility with prefers-reduced-motion</li>
+                        <li>Test across browsers and devices</li>
+                        <li>Use animation-delay for staggered effects</li>
+                        <li>Respect performance and avoid overuse</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 CSS Animation Property Complete Guide</p>
+            <p>Comprehensive reference for creating smooth CSS animations</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Last Updated: May 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

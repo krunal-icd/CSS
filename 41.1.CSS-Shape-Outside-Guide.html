@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS shape-outside Property: Complete Guide</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.5s ease;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.5em;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 0.95em;
+        }
+
+        .property-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-md);
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .property-table td {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .property-table tr:hover {
+            background: var(--bg-light);
+            transition: var(--transition);
+        }
+
+        .code-block {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #222;
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .demo-box {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            transition: all var(--transition);
+        }
+
+        .demo-box:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-2px);
+        }
+
+        .demo-box h4 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.1em;
+        }
+
+        .demo-box p {
+            font-size: 0.9em;
+            color: var(--text-light);
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .note-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .quick-reference {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .quick-ref-item {
+            background: var(--bg-light);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .quick-ref-item strong {
+            color: var(--primary-color);
+        }
+
+        /* Shape demonstrations */
+        .shape-demo {
+            position: relative;
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circle-shape {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            float: left;
+            margin-right: var(--spacing-md);
+            shape-outside: circle(50%);
+        }
+
+        .ellipse-shape {
+            width: 200px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            border-radius: 50%;
+            float: left;
+            margin-right: var(--spacing-md);
+            shape-outside: ellipse(100px 50px);
+        }
+
+        .polygon-shape {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            float: left;
+            margin-right: var(--spacing-md);
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            shape-outside: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        }
+
+        .inset-shape {
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            float: left;
+            margin-right: var(--spacing-md);
+            shape-outside: inset(20px 20px 20px 20px);
+        }
+
+        .margin-box {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            border-radius: 8px;
+            float: left;
+            margin-right: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            shape-outside: margin-box;
+        }
+
+        .shape-demo-text {
+            color: var(--text-color);
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .syntax-example {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+            border: 2px solid var(--border-color);
+        }
+
+        .syntax-example h4 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .syntax-example code {
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border-radius: 12px;
+            margin-top: var(--spacing-lg);
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .property-table {
+                font-size: 0.85em;
+            }
+
+            .property-table th,
+            .property-table td {
+                padding: var(--spacing-sm);
+            }
+
+            body {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS shape-outside Property: Complete Guide</h1>
+            <p>Master text wrapping around non-rectangular shapes with shape-outside. Learn all value types, practical applications, and best practices for creating sophisticated layouts.</p>
+        </header>
+
+        <!-- Overview Section -->
+        <section class="section">
+            <h2>Overview</h2>
+            <p>The <code>shape-outside</code> property defines how text wraps around an element's content box. Instead of wrapping around the rectangular bounding box, content flows around the actual shape of the element.</p>
+
+            <div class="info-box">
+                <strong>Key Point:</strong> <code>shape-outside</code> only affects how surrounding content wraps around the element. The element itself remains unchanged visually—you may need to use <code>clip-path</code> or border-radius to actually see the shape.
+            </div>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Property Name</td>
+                        <td><code>shape-outside</code></td>
+                        <td>Controls text wrapping around element shapes</td>
+                    </tr>
+                    <tr>
+                        <td>Initial Value</td>
+                        <td><code>none</code></td>
+                        <td>No special shape; wraps around bounding box</td>
+                    </tr>
+                    <tr>
+                        <td>Applies To</td>
+                        <td>Floated elements</td>
+                        <td>Only works on floated elements (float: left or right)</td>
+                    </tr>
+                    <tr>
+                        <td>Inherited</td>
+                        <td>No</td>
+                        <td>Not inherited from parent elements</td>
+                    </tr>
+                    <tr>
+                        <td>Browser Support</td>
+                        <td>Modern browsers</td>
+                        <td>Chrome 37+, Firefox 62+, Safari 10.1+, Edge 79+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Syntax Section -->
+        <section class="section">
+            <h2>Syntax</h2>
+
+            <div class="code-block">
+/* Keyword values */
+shape-outside: none;
+
+/* Function values */
+shape-outside: circle(50%);
+shape-outside: ellipse(50% 40%);
+shape-outside: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+shape-outside: inset(10px 20px 30px 40px);
+shape-outside: inset(10px 20px 30px 40px round 5px);
+
+/* Image values */
+shape-outside: url('shape.png');
+
+/* Box values */
+shape-outside: margin-box;
+shape-outside: border-box;
+shape-outside: padding-box;
+shape-outside: content-box;
+
+/* Combinations */
+shape-outside: url('shape.png') 10px 20px;
+            </div>
+
+            <h3>Value Types</h3>
+
+            <div class="quick-reference">
+                <div class="quick-ref-item">
+                    <strong>circle()</strong>
+                    <p>Creates circular wrapping. Syntax: <code>circle(radius at x y)</code></p>
+                </div>
+                <div class="quick-ref-item">
+                    <strong>ellipse()</strong>
+                    <p>Creates elliptical wrapping. Syntax: <code>ellipse(rx ry at x y)</code></p>
+                </div>
+                <div class="quick-ref-item">
+                    <strong>polygon()</strong>
+                    <p>Creates custom polygonal wrapping from coordinate points.</p>
+                </div>
+                <div class="quick-ref-item">
+                    <strong>inset()</strong>
+                    <p>Insets the wrapping shape. Syntax: <code>inset(top right bottom left round radius)</code></p>
+                </div>
+                <div class="quick-ref-item">
+                    <strong>url()</strong>
+                    <p>Uses image alpha channel to define wrapping shape.</p>
+                </div>
+                <div class="quick-ref-item">
+                    <strong>margin-box</strong>
+                    <p>Wraps around the margin box of the element.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shape Functions Section -->
+        <section class="section">
+            <h2>Shape Functions Detailed</h2>
+
+            <h3>1. circle()</h3>
+            <p>Creates a circular shape for text wrapping. Content flows around the circular boundary.</p>
+
+            <div class="code-block">
+shape-outside: circle(radius);
+shape-outside: circle(radius at center-x center-y);
+
+/* Examples */
+shape-outside: circle(50%);
+shape-outside: circle(100px);
+shape-outside: circle(50% at 50% 50%);
+shape-outside: circle(150px at 25% 75%);
+            </div>
+
+            <div class="shape-demo">
+                <div class="circle-shape"></div>
+                <div class="shape-demo-text">
+                    The text flows smoothly around the circular shape. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </div>
+            </div>
+
+            <h3>2. ellipse()</h3>
+            <p>Creates an elliptical shape with different horizontal and vertical radii.</p>
+
+            <div class="code-block">
+shape-outside: ellipse(rx ry);
+shape-outside: ellipse(rx ry at center-x center-y);
+
+/* Examples */
+shape-outside: ellipse(50% 40%);
+shape-outside: ellipse(100px 80px);
+shape-outside: ellipse(150px 100px at 50% 50%);
+            </div>
+
+            <div class="shape-demo">
+                <div class="ellipse-shape"></div>
+                <div class="shape-demo-text">
+                    The text wraps around an elliptical shape. This creates a different visual flow compared to circular wrapping. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </div>
+            </div>
+
+            <h3>3. polygon()</h3>
+            <p>Defines a custom polygonal shape using coordinate points. Creates the most flexible wrapping shapes.</p>
+
+            <div class="code-block">
+shape-outside: polygon(x1% y1%, x2% y2%, x3% y3%, ...);
+
+/* Examples */
+shape-outside: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); /* Rectangle */
+shape-outside: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); /* Star */
+shape-outside: polygon(50% 0%, 100% 100%, 0% 100%); /* Triangle */
+            </div>
+
+            <div class="shape-demo">
+                <div class="polygon-shape"></div>
+                <div class="shape-demo-text">
+                    The text wraps around a custom polygon shape (star in this case). Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </div>
+            </div>
+
+            <h3>4. inset()</h3>
+            <p>Insets the wrapping shape from the element's edges. Useful for creating rounded or padded wrapping areas.</p>
+
+            <div class="code-block">
+shape-outside: inset(top right bottom left);
+shape-outside: inset(top right bottom left round radius);
+
+/* Examples */
+shape-outside: inset(10px);
+shape-outside: inset(10px 20px);
+shape-outside: inset(10px 20px 30px 40px);
+shape-outside: inset(20px round 10px);
+            </div>
+
+            <div class="shape-demo">
+                <div class="inset-shape"></div>
+                <div class="shape-demo-text">
+                    The text wraps around an inset rectangle. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </div>
+            </div>
+
+            <h3>5. Box Values</h3>
+            <p>Define wrapping based on the element's box model edges.</p>
+
+            <div class="code-block">
+shape-outside: margin-box;    /* Outermost edge (includes margin) */
+shape-outside: border-box;    /* Border edge */
+shape-outside: padding-box;   /* Padding edge (default for content-box elements) */
+shape-outside: content-box;   /* Content edge (innermost) */
+            </div>
+
+            <div class="shape-demo">
+                <div class="margin-box"></div>
+                <div class="shape-demo-text">
+                    The text wraps around using the margin-box reference. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </div>
+            </div>
+        </section>
+
+        <!-- Properties That Work With shape-outside -->
+        <section class="section">
+            <h2>Related Properties</h2>
+
+            <h3>shape-margin</h3>
+            <p>Adds space between the shape boundary and wrapping text.</p>
+            <div class="code-block">
+shape-margin: 10px;
+shape-margin: 1em;
+shape-margin: 5%;
+
+/* Pushes text further from the shape edge */
+            </div>
+
+            <h3>shape-image-threshold</h3>
+            <p>When using <code>shape-outside: url()</code>, defines the alpha threshold for determining shape boundaries.</p>
+            <div class="code-block">
+shape-image-threshold: 0.5;      /* Default: considers alpha >= 50% */
+shape-image-threshold: 0.25;     /* More transparent pixels included */
+shape-image-threshold: 0.75;     /* Only more opaque pixels included */
+            </div>
+
+            <h3>float</h3>
+            <p>Required for <code>shape-outside</code> to work. The element must be floated (left or right).</p>
+            <div class="code-block">
+float: left;   /* shape-outside wraps content to the right */
+float: right;  /* shape-outside wraps content to the left */
+            </div>
+
+            <h3>clip-path (Visual Enhancement)</h3>
+            <p>While <code>shape-outside</code> controls wrapping, use <code>clip-path</code> to actually see the shape visually.</p>
+            <div class="code-block">
+/* shape-outside controls wrapping */
+shape-outside: circle(50%);
+
+/* clip-path shows the actual shape */
+clip-path: circle(50%);
+            </div>
+        </section>
+
+        <!-- Practical Usage Section -->
+        <section class="section">
+            <h2>Practical Usage Patterns</h2>
+
+            <h3>Pattern 1: Circular Images with Text Wrapping</h3>
+            <div class="code-block">
+.circular-image {
+    float: left;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    clip-path: circle(50%);
+    shape-outside: circle(50%);
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+            </div>
+
+            <h3>Pattern 2: Custom Polygon Shapes</h3>
+            <div class="code-block">
+.star-element {
+    float: left;
+    width: 150px;
+    height: 150px;
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    shape-outside: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    margin-right: 20px;
+}
+            </div>
+
+            <h3>Pattern 3: Image-Based Shapes</h3>
+            <div class="code-block">
+.image-shape {
+    float: left;
+    width: 200px;
+    height: 200px;
+    background-image: url('shape.png');
+    shape-outside: url('shape.png');
+    shape-image-threshold: 0.5;
+    margin-right: 20px;
+}
+            </div>
+
+            <h3>Pattern 4: Elliptical Text Flow</h3>
+            <div class="code-block">
+.ellipse-element {
+    float: left;
+    width: 250px;
+    height: 150px;
+    shape-outside: ellipse(125px 75px);
+    shape-margin: 10px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    margin-right: 20px;
+}
+            </div>
+
+            <h3>Pattern 5: Margin Box with Rounded Corners</h3>
+            <div class="code-block">
+.rounded-box {
+    float: left;
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    shape-outside: border-box;
+    margin: 20px 30px 20px 0;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+            </div>
+        </section>
+
+        <!-- Best Practices Section -->
+        <section class="section">
+            <h2>Best Practices</h2>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <h4>✓ Coordinate Shapes</h4>
+                    <p>Use matching <code>shape-outside</code> and <code>clip-path</code> values so the wrapping matches the visible shape.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Test Responsively</h4>
+                    <p>Use percentage-based values for shapes to maintain proportions on different screen sizes.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Use shape-margin</h4>
+                    <p>Add breathing room between the shape and text with <code>shape-margin</code> for better readability.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Performance Consideration</h4>
+                    <p>Complex polygons can impact performance. Test with many elements and consider simpler shapes if needed.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Fallback Content</h4>
+                    <p>Browsers without <code>shape-outside</code> support will wrap around the bounding box—ensure content is still readable.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Combine with Float</h4>
+                    <p>Always use <code>float: left</code> or <code>float: right</code>. <code>shape-outside</code> has no effect without floated elements.</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>Important:</strong> <code>shape-outside</code> only works on floated elements. For other positioning methods (flexbox, grid, absolute positioning), the property has no effect. The element MUST be floated for shape-outside to function.
+            </div>
+
+            <div class="note-box">
+                <strong>Accessibility Note:</strong> While <code>shape-outside</code> enhances visual design, ensure text remains readable and flows logically. Test with screen readers to ensure content order makes sense.
+            </div>
+        </section>
+
+        <!-- Browser Support Section -->
+        <section class="section">
+            <h2>Browser Support & Compatibility</h2>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Browser</th>
+                        <th>Version</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chrome</td>
+                        <td>37+</td>
+                        <td>✓ Full Support</td>
+                        <td>Excellent support including shape functions and images</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td>62+</td>
+                        <td>✓ Full Support</td>
+                        <td>Complete implementation of all shape-outside features</td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>10.1+</td>
+                        <td>✓ Full Support</td>
+                        <td>Full CSS Shapes Module Level 1 support</td>
+                    </tr>
+                    <tr>
+                        <td>Edge</td>
+                        <td>79+</td>
+                        <td>✓ Full Support</td>
+                        <td>Chromium-based Edge has full support</td>
+                    </tr>
+                    <tr>
+                        <td>IE 11</td>
+                        <td>N/A</td>
+                        <td>✗ No Support</td>
+                        <td>Use feature detection and fallbacks</td>
+                    </tr>
+                    <tr>
+                        <td>Mobile Browsers</td>
+                        <td>Modern</td>
+                        <td>✓ Full Support</td>
+                        <td>iOS Safari 10.3+, Chrome Mobile 37+</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Feature Detection</h3>
+            <div class="code-block">
+/* CSS Feature Query */
+@supports (shape-outside: circle(50%)) {
+    .shape-element {
+        float: left;
+        shape-outside: circle(50%);
+        clip-path: circle(50%);
+    }
+}
+
+/* JavaScript Detection */
+const supportsShapeOutside = CSS.supports('shape-outside', 'circle(50%)');
+if (supportsShapeOutside) {
+    // Apply shape-outside styles
+    element.classList.add('has-shape');
+}
+            </div>
+        </section>
+
+        <!-- Advanced Examples Section -->
+        <section class="section">
+            <h2>Advanced Examples</h2>
+
+            <h3>Example 1: Combined Shapes and Transforms</h3>
+            <div class="code-block">
+.dynamic-shape {
+    float: left;
+    width: 200px;
+    height: 200px;
+    shape-outside: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    margin-right: 20px;
+    transition: transform 0.3s ease;
+}
+
+.dynamic-shape:hover {
+    transform: rotate(10deg) scale(1.05);
+}
+            </div>
+
+            <h3>Example 2: Multiple Shapes in Grid</h3>
+            <div class="code-block">
+.shape-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.shape-circle {
+    float: left;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    shape-outside: circle(50%);
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.shape-ellipse {
+    float: left;
+    width: 200px;
+    height: 100px;
+    border-radius: 50%;
+    shape-outside: ellipse(100px 50px);
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+}
+            </div>
+
+            <h3>Example 3: Image with Conditional Shapes</h3>
+            <div class="code-block">
+.profile-image {
+    float: left;
+    width: 200px;
+    height: 200px;
+    background-image: url('profile.jpg');
+    background-size: cover;
+    border-radius: 50%;
+    clip-path: circle(50%);
+    shape-outside: circle(50%);
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .profile-image {
+        shape-outside: border-box;
+        border-radius: 8px;
+        clip-path: unset;
+    }
+}
+            </div>
+
+            <h3>Example 4: Shape with Animation</h3>
+            <div class="code-block">
+@keyframes shapeShift {
+    0% {
+        shape-outside: circle(50%);
+        clip-path: circle(50%);
+    }
+    50% {
+        shape-outside: ellipse(60% 40%);
+        clip-path: ellipse(60% 40%);
+    }
+    100% {
+        shape-outside: circle(50%);
+        clip-path: circle(50%);
+    }
+}
+
+.animated-shape {
+    float: left;
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    margin-right: 20px;
+    animation: shapeShift 3s ease-in-out infinite;
+}
+            </div>
+        </section>
+
+        <!-- Common Pitfalls Section -->
+        <section class="section">
+            <h2>Common Pitfalls & Solutions</h2>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <h4>❌ Forgetting float: left/right</h4>
+                    <p><strong>Problem:</strong> <code>shape-outside</code> has no effect without float.</p>
+                    <p><strong>Solution:</strong> Always add <code>float: left</code> or <code>float: right</code> to the element.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>❌ Mismatched Shapes</h4>
+                    <p><strong>Problem:</strong> <code>shape-outside</code> and <code>clip-path</code> don't match visually.</p>
+                    <p><strong>Solution:</strong> Use identical values for both properties for consistent appearance.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>❌ No Visual Indicator</h4>
+                    <p><strong>Problem:</strong> Shape wrapping is invisible without <code>clip-path</code>.</p>
+                    <p><strong>Solution:</strong> Add <code>clip-path</code> with matching shape value to see the effect.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>❌ Text Readability Issues</h4>
+                    <p><strong>Problem:</strong> Text flows too close to shape edges.</p>
+                    <p><strong>Solution:</strong> Use <code>shape-margin: 10px</code> to create breathing room.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>❌ Complex Polygons Performance</h4>
+                    <p><strong>Problem:</strong> Many complex polygons cause rendering lag.</p>
+                    <p><strong>Solution:</strong> Simplify polygon coordinates or use circle/ellipse for better performance.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>❌ Image Shape Transparency</h4>
+                    <p><strong>Problem:</strong> Image-based shapes don't work as expected.</p>
+                    <p><strong>Solution:</strong> Adjust <code>shape-image-threshold</code> value to match your image's alpha channel.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Reference Section -->
+        <section class="section">
+            <h2>Quick Reference Cheat Sheet</h2>
+
+            <div class="quick-reference">
+                <div class="quick-ref-item">
+                    <strong>Basic Circular Shape</strong>
+                    <div class="code-block">
+float: left;
+shape-outside: circle(50%);
+clip-path: circle(50%);
+border-radius: 50%;
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Elliptical Shape</strong>
+                    <div class="code-block">
+float: left;
+shape-outside: ellipse(100px 80px);
+clip-path: ellipse(100px 80px);
+border-radius: 50%;
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Add Margin to Shape</strong>
+                    <div class="code-block">
+shape-outside: circle(50%);
+shape-margin: 15px;
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Polygon Star</strong>
+                    <div class="code-block">
+shape-outside: polygon(
+    50% 0%, 100% 38%, 82% 100%,
+    18% 100%, 0% 38%
+);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Image-Based Shape</strong>
+                    <div class="code-block">
+float: left;
+shape-outside: url('shape.png');
+shape-image-threshold: 0.5;
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Responsive Shapes</strong>
+                    <div class="code-block">
+shape-outside: circle(50%);
+width: 100%;
+max-width: 200px;
+padding-bottom: 100%;
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Tips Section -->
+        <section class="section">
+            <h2>Performance Optimization</h2>
+
+            <h3>Optimization Strategies</h3>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li><strong>Use circles/ellipses over polygons:</strong> Simple shapes calculate faster than complex polygons</li>
+                <li><strong>Limit polygon complexity:</strong> Keep polygons to under 20 points when possible</li>
+                <li><strong>Cache shape calculations:</strong> Browser caches shape calculations; reuse shape values</li>
+                <li><strong>Avoid animating shape-outside:</strong> Frequent shape changes trigger expensive reflows</li>
+                <li><strong>Use CSS containment:</strong> Apply <code>contain: layout style paint</code> to isolated shape elements</li>
+                <li><strong>Defer image-based shapes:</strong> Load images asynchronously to avoid blocking</li>
+                <li><strong>Test on lower-end devices:</strong> Complex shapes can struggle on mobile hardware</li>
+            </ul>
+
+            <h3>CSS Containment for Shapes</h3>
+            <div class="code-block">
+.shape-element {
+    float: left;
+    shape-outside: circle(50%);
+    
+    /* Limit reflow impact to this element only */
+    contain: layout style paint;
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Performance Tip:</strong> Use CSS containment on shape elements to prevent the browser from recalculating layout for the entire page when shapes change. This significantly improves performance with multiple shaped elements.
+            </div>
+        </section>
+
+        <!-- Accessibility Section -->
+        <section class="section">
+            <h2>Accessibility Considerations</h2>
+
+            <h3>Ensure Readability</h3>
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li>Use sufficient <code>shape-margin</code> to prevent text crowding</li>
+                <li>Maintain adequate contrast between text and background</li>
+                <li>Ensure text flows in a logical reading order</li>
+                <li>Test with screen readers—logical content order is critical</li>
+                <li>Avoid shapes that create confusing text flows</li>
+                <li>Provide alt text for image-based shapes</li>
+            </ul>
+
+            <h3>Testing Accessibility</h3>
+            <div class="code-block">
+/* Test with screen readers */
+/* Ensure content order remains logical despite shape wrapping */
+
+.shape-element {
+    float: left;
+    shape-outside: circle(50%);
+    shape-margin: 20px; /* Extra margin for readability */
+    margin-bottom: 20px;
+}
+
+/* Consider providing a text alternative in print media */
+@media print {
+    .shape-element {
+        float: none;
+        shape-outside: none;
+    }
+}
+            </div>
+
+            <div class="warning-box">
+                <strong>Key Point:</strong> Visual shape wrapping shouldn't compromise content accessibility. Always test with assistive technologies and ensure text remains readable.
+            </div>
+        </section>
+
+        <!-- Conclusion Section -->
+        <section class="section">
+            <h2>Summary</h2>
+
+            <p>The <code>shape-outside</code> property is a powerful tool for creating sophisticated, visually interesting layouts where text wraps around non-rectangular shapes. Key takeaways:</p>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li>✓ <code>shape-outside</code> only works on floated elements</li>
+                <li>✓ Use <code>clip-path</code> alongside <code>shape-outside</code> to make shapes visible</li>
+                <li>✓ Combine with <code>shape-margin</code> for better text spacing</li>
+                <li>✓ Support modern browsers with graceful fallbacks for older browsers</li>
+                <li>✓ Prioritize readability and accessibility in your designs</li>
+                <li>✓ Use simple shapes (circles, ellipses) for better performance</li>
+                <li>✓ Test responsive behavior across all device sizes</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Next Steps:</strong> Experiment with shapes in your projects! Start with circles and ellipses, then explore polygons for custom designs. Combine <code>shape-outside</code> with animations and hover effects for dynamic, engaging layouts.
+            </div>
+        </section>
+
+        <footer>
+            <p>CSS shape-outside Property Complete Guide • Created for CSS Learning Suite</p>
+            <p>Browser Support: Chrome 37+, Firefox 62+, Safari 10.1+, Edge 79+</p>
+            <p>Learn • Practice • Master CSS Shapes</p>
+        </footer>
+    </div>
+</body>
+</html>

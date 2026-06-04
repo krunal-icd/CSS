@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 2D Transforms - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .example-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .demo-area {
+            width: 100%;
+            height: 200px;
+            background: #f5f5f5;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .shape {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .label {
+            font-size: 0.9em;
+            color: #666;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* ROTATE Examples */
+        .rotate-45 {
+            transform: rotate(45deg);
+        }
+
+        .rotate-90 {
+            transform: rotate(90deg);
+        }
+
+        .rotate-neg-30 {
+            transform: rotate(-30deg);
+        }
+
+        /* SCALE Examples */
+        .scale-1-5 {
+            transform: scale(1.5);
+        }
+
+        .scale-0-7 {
+            transform: scale(0.7);
+        }
+
+        .scale-xy {
+            transform: scaleX(1.5) scaleY(0.8);
+        }
+
+        /* TRANSLATE Examples */
+        .translate-xy {
+            transform: translate(20px, 30px);
+        }
+
+        .translate-x {
+            transform: translateX(30px);
+        }
+
+        .translate-y {
+            transform: translateY(-25px);
+        }
+
+        /* SKEW Examples */
+        .skew-x {
+            transform: skewX(20deg);
+        }
+
+        .skew-y {
+            transform: skewY(15deg);
+        }
+
+        .skew-xy {
+            transform: skew(20deg, 15deg);
+        }
+
+        /* MATRIX Example */
+        .matrix-demo {
+            transform: matrix(1, 0.5, -0.5, 1, 20, 20);
+        }
+
+        /* TRANSFORM-ORIGIN Examples */
+        .origin-top-left {
+            transform-origin: top left;
+            transform: rotate(45deg);
+        }
+
+        .origin-center {
+            transform-origin: center;
+            transform: rotate(45deg);
+        }
+
+        .origin-bottom-right {
+            transform-origin: bottom right;
+            transform: rotate(45deg);
+        }
+
+        /* Combining Multiple Transforms */
+        .combine-1 {
+            transform: rotate(15deg) scale(1.2) translate(10px, 10px);
+        }
+
+        .combine-2 {
+            transform: skewX(10deg) scale(1.1) translateY(5px);
+        }
+
+        .combine-3 {
+            transform: rotate(-10deg) scaleX(1.3) scaleY(0.9);
+        }
+
+        /* Creating Shapes with Transforms */
+        .diamond {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .parallelogram {
+            width: 100px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: skewX(-20deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .trapezoid {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: perspective(500px) rotateX(20deg) scaleY(1.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+
+        /* Animated Transforms */
+        .animate-rotate {
+            animation: spin 3s linear infinite;
+        }
+
+        .animate-scale {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .animate-translate {
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .animate-skew {
+            animation: wiggle 1s ease-in-out infinite;
+        }
+
+        .animate-combined {
+            animation: complex 3s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: skewX(0deg); }
+            25% { transform: skewX(15deg); }
+            75% { transform: skewX(-15deg); }
+        }
+
+        @keyframes complex {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(20px, 20px) rotate(90deg) scale(1.2); }
+            50% { transform: translate(0, 40px) rotate(180deg) scale(1); }
+            75% { transform: translate(-20px, 20px) rotate(270deg) scale(1.2); }
+            100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+        }
+
+        /* Transitions with Transforms */
+        .transition-box {
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+        }
+
+        .transition-box:hover {
+            transform: rotate(10deg) scale(1.15) translateY(-10px);
+        }
+
+        .transition-box-2 {
+            transition: all 0.8s ease;
+            cursor: pointer;
+        }
+
+        .transition-box-2:hover {
+            transform: skew(-15deg) scale(1.1);
+        }
+
+        .transition-box-3 {
+            transition: transform 0.5s ease-in-out;
+            cursor: pointer;
+        }
+
+        .transition-box-3:hover {
+            transform: rotate(45deg) scale(0.8) translate(30px, -30px);
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            color: #333;
+        }
+
+        .notes {
+            background: #f0f4ff;
+            border: 2px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            color: #333;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .section h2 {
+                font-size: 1.3em;
+            }
+
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS 2D Transforms</h1>
+        <p class="subtitle">Interactive Examples & Demonstrations</p>
+
+        <!-- ROTATE Section -->
+        <div class="section">
+            <h2>🔄 Rotate Transform</h2>
+            <p>Rotates an element around a point (default: center). Value in degrees (deg).</p>
+            
+            <div class="example-grid">
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape rotate-45">45°</div>
+                    </div>
+                    <span class="label">rotate(45deg)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape rotate-90">90°</div>
+                    </div>
+                    <span class="label">rotate(90deg)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape rotate-neg-30">-30°</div>
+                    </div>
+                    <span class="label">rotate(-30deg)</span>
+                </div>
+            </div>
+
+            <div class="code-block">
+.element {
+    transform: rotate(45deg);
+}
+            </div>
+            <div class="notes">
+                <strong>Note:</strong> Positive values rotate clockwise, negative values counter-clockwise. Default origin is center (50%, 50%).
+            </div>
+        </div>
+
+        <!-- SCALE Section -->
+        <div class="section">
+            <h2>📏 Scale Transform</h2>
+            <p>Scales an element. Value 1 = original size, >1 = larger, <1 = smaller.</p>
+            
+            <div class="example-grid">
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape scale-1-5">1.5x</div>
+                    </div>
+                    <span class="label">scale(1.5)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape scale-0-7">0.7x</div>
+                    </div>
+                    <span class="label">scale(0.7)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape scale-xy">scaleX(1.5) scaleY(0.8)</div>
+                    </div>
+                    <span class="label">Separate X & Y</span>
+                </div>
+            </div>
+
+            <div class="code-block">
+.element {
+    transform: scale(1.5);        /* Both X & Y */
+    transform: scaleX(1.5);       /* Only X axis */
+    transform: scaleY(0.8);       /* Only Y axis */
+}
+            </div>
+            <div class="notes">
+                <strong>Note:</strong> Scale doesn't affect document flow. Use scaleX() and scaleY() for independent axis scaling.
+            </div>
+        </div>
+
+        <!-- TRANSLATE Section -->
+        <div class="section">
+            <h2>➡️ Translate Transform</h2>
+            <p>Moves an element along the X and Y axes. Values in px, em, %, etc.</p>
+            
+            <div class="example-grid">
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape translate-xy">XY</div>
+                    </div>
+                    <span class="label">translate(20px, 30px)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape translate-x">X</div>
+                    </div>
+                    <span class="label">translateX(30px)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape translate-y">Y</div>
+                    </div>
+                    <span class="label">translateY(-25px)</span>
+                </div>
+            </div>
+
+            <div class="code-block">
+.element {
+    transform: translate(20px, 30px);  /* Move X & Y */
+    transform: translateX(30px);       /* Move X only */
+    transform: translateY(-25px);      /* Move Y only */
+}
+            </div>
+            <div class="notes">
+                <strong>Note:</strong> Translate is GPU-accelerated. Perfect for animations. Doesn't affect other elements' layout.
+            </div>
+        </div>
+
+        <!-- SKEW Section -->
+        <div class="section">
+            <h2>🔀 Skew Transform</h2>
+            <p>Skews an element along the X and/or Y axes. Values in degrees (deg).</p>
+            
+            <div class="example-grid">
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape skew-x">Skew X</div>
+                    </div>
+                    <span class="label">skewX(20deg)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape skew-y">Skew Y</div>
+                    </div>
+                    <span class="label">skewY(15deg)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape skew-xy">Skew XY</div>
+                    </div>
+                    <span class="label">skew(20deg, 15deg)</span>
+                </div>
+            </div>
+
+            <div class="code-block">
+.element {
+    transform: skew(20deg, 15deg);  /* X & Y */
+    transform: skewX(20deg);        /* X only */
+    transform: skewY(15deg);        /* Y only */
+}
+            </div>
+            <div class="notes">
+                <strong>Note:</strong> Skew distorts the shape. Useful for creating parallelograms and 3D-like effects.
+            </div>
+        </div>
+
+        <!-- MATRIX Section -->
+        <div class="section">
+            <h2>🎛️ Matrix Transform</h2>
+            <p>Advanced function combining all 2D transforms in one: <code>matrix(a, b, c, d, e, f)</code></p>
+            
+            <div class="example-grid">
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape matrix-demo">Matrix</div>
+                    </div>
+                    <span class="label">matrix(1, 0.5, -0.5, 1, 20, 20)</span>
+                </div>
+            </div>
+
+            <div class="code-block">
+.element {
+    transform: matrix(1, 0.5, -0.5, 1, 20, 20);
+}
+/* Parameters: (scaleX, skewY, skewX, scaleY, translateX, translateY) */
+            </div>
+            <div class="notes">
+                <strong>Note:</strong> Matrix is the underlying mathematical representation. Rarely used directly; other functions are more readable.
+            </div>
+        </div>
+
+        <!-- TRANSFORM-ORIGIN Section -->
+        <div class="section">
+            <h2>🎯 Transform Origin</h2>
+            <p>Sets the point around which transforms are applied. Default: center (50%, 50%).</p>
+            
+            <div class="example-grid">
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape origin-top-left">Top Left</div>
+                    </div>
+                    <span class="label">transform-origin: top left</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape origin-center">Center</div>
+                    </div>
+                    <span class="label">transform-origin: center</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape origin-bottom-right">Bottom Right</div>
+                    </div>
+                    <span class="label">transform-origin: bottom right</span>
+                </div>
+            </div>
+
+            <div class="code-block">
+.element {
+    transform-origin: center;        /* Default */
+    transform-origin: top left;
+    transform-origin: 50% 50%;       /* Pixel or percentage */
+    transform-origin: 0px 0px;
+    transform: rotate(45deg);
+}
+            </div>
+            <div class="notes">
+                <strong>Note:</strong> Keywords: top, bottom, left, right, center. Values: pixels, percentages, or a mix (e.g., "20px center").
+            </div>
+        </div>
+
+        <!-- Combining Transforms Section -->
+        <div class="section">
+            <h2>🎨 Combining Multiple Transforms</h2>
+            <p>Apply multiple transforms in one property. Order matters!</p>
+            
+            <div class="example-grid">
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape combine-1">Combo 1</div>
+                    </div>
+                    <span class="label">rotate → scale → translate</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape combine-2">Combo 2</div>
+                    </div>
+                    <span class="label">skewX → scale → translateY</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape combine-3">Combo 3</div>
+                    </div>
+                    <span class="label">rotate → scaleX → scaleY</span>
+                </div>
+            </div>
+
+            <div class="code-block">
+.element {
+    transform: rotate(15deg) scale(1.2) translate(10px, 10px);
+    transform: skewX(10deg) scale(1.1) translateY(5px);
+    transform: rotate(-10deg) scaleX(1.3) scaleY(0.9);
+}
+            </div>
+            <div class="notes">
+                <strong>Note:</strong> Read left-to-right as the execution order. Changing order produces different results (e.g., translate then rotate vs. rotate then translate).
+            </div>
+        </div>
+
+        <!-- Creating Shapes Section -->
+        <div class="section">
+            <h2>✨ Creating Shapes with Transforms</h2>
+            <p>Use transforms to create geometric shapes from rectangles.</p>
+            
+            <div class="example-grid">
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="diamond">Diamond</div>
+                    </div>
+                    <span class="label">rotate(45deg)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="parallelogram">Parallelogram</div>
+                    </div>
+                    <span class="label">skewX(-20deg)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="trapezoid">3D Feel</div>
+                    </div>
+                    <span class="label">Multiple transforms</span>
+                </div>
+            </div>
+
+            <div class="code-block">
+/* Diamond from square */
+.diamond {
+    width: 100px; height: 100px;
+    transform: rotate(45deg);
+}
+
+/* Parallelogram from rectangle */
+.parallelogram {
+    width: 100px; height: 60px;
+    transform: skewX(-20deg);
+}
+            </div>
+            <div class="notes">
+                <strong>Note:</strong> Combine transforms creatively to build custom shapes. These techniques are foundations for complex designs.
+            </div>
+        </div>
+
+        <!-- Animated Transforms Section -->
+        <div class="section">
+            <h2>🎬 Animated 2D Transforms</h2>
+            <p>CSS animations with transform properties for smooth, GPU-accelerated motion.</p>
+            
+            <div class="example-grid">
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape animate-rotate">Spin</div>
+                    </div>
+                    <span class="label">Rotating (3s)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape animate-scale">Pulse</div>
+                    </div>
+                    <span class="label">Scaling (2s)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape animate-translate">Bounce</div>
+                    </div>
+                    <span class="label">Translating (2s)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape animate-skew">Wiggle</div>
+                    </div>
+                    <span class="label">Skewing (1s)</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape animate-combined">Complex</div>
+                    </div>
+                    <span class="label">All combined (3s)</span>
+                </div>
+            </div>
+
+            <div class="code-block">
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.animate-rotate {
+    animation: spin 3s linear infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+}
+            </div>
+            <div class="notes">
+                <strong>Note:</strong> Transforms are GPU-accelerated for smooth 60fps animations. Use on transform properties, not left/top/width/height for best performance.
+            </div>
+        </div>
+
+        <!-- Transitions Section -->
+        <div class="section">
+            <h2>⚡ Transforms with Transitions</h2>
+            <p>Smooth state changes using CSS transitions. <strong>Hover over the boxes</strong> below to see effects!</p>
+            
+            <div class="example-grid">
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape transition-box">Hover</div>
+                    </div>
+                    <span class="label">Rotate + Scale + Translate</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape transition-box-2">Hover</div>
+                    </div>
+                    <span class="label">Skew + Scale</span>
+                </div>
+                <div class="example-box">
+                    <div class="demo-area">
+                        <div class="shape transition-box-3">Hover</div>
+                    </div>
+                    <span class="label">Rotate + Scale + Translate</span>
+                </div>
+            </div>
+
+            <div class="code-block">
+.transition-box {
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.transition-box:hover {
+    transform: rotate(10deg) scale(1.15) translateY(-10px);
+}
+
+.transition-box-2 {
+    transition: all 0.8s ease;
+}
+
+.transition-box-2:hover {
+    transform: skew(-15deg) scale(1.1);
+}
+            </div>
+            <div class="notes">
+                <strong>Note:</strong> Use <code>transition: transform 0.3s ease</code> for smooth animations. Easing functions: ease, ease-in, ease-out, ease-in-out, cubic-bezier(), linear.
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>💡 All examples are interactive and fully responsive. Check the CSS in the browser DevTools to learn more!</p>
+        </div>
+    </div>
+</body>
+</html>

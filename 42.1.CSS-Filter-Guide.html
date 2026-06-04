@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Filter Properties: Complete Guide</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.5s ease;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.5em;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 0.95em;
+        }
+
+        .property-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-md);
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .property-table td {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .property-table tr:hover {
+            background: var(--bg-light);
+            transition: var(--transition);
+        }
+
+        .code-block {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #222;
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .demo-box {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            transition: all var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .demo-box:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-2px);
+        }
+
+        .demo-box h4 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.1em;
+        }
+
+        .demo-box p {
+            font-size: 0.9em;
+            color: var(--text-light);
+        }
+
+        .filter-demo {
+            width: 150px;
+            height: 150px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+            font-weight: bold;
+        }
+
+        .blur-demo {
+            filter: blur(5px);
+        }
+
+        .brightness-demo {
+            filter: brightness(150%);
+        }
+
+        .contrast-demo {
+            filter: contrast(150%);
+        }
+
+        .grayscale-demo {
+            filter: grayscale(100%);
+        }
+
+        .hue-rotate-demo {
+            filter: hue-rotate(45deg);
+        }
+
+        .invert-demo {
+            filter: invert(100%);
+        }
+
+        .opacity-demo {
+            filter: opacity(50%);
+        }
+
+        .saturate-demo {
+            filter: saturate(200%);
+        }
+
+        .sepia-demo {
+            filter: sepia(100%);
+        }
+
+        .drop-shadow-demo {
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .note-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .quick-reference {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .quick-ref-item {
+            background: var(--bg-light);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .quick-ref-item strong {
+            color: var(--primary-color);
+        }
+
+        .syntax-example {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+            border: 2px solid var(--border-color);
+        }
+
+        .syntax-example h4 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .syntax-example code {
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .filter-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .comparison-item {
+            text-align: center;
+        }
+
+        .comparison-item img,
+        .comparison-item .demo-visual {
+            width: 100%;
+            max-width: 200px;
+            border-radius: 8px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .comparison-item p {
+            font-size: 0.9em;
+            color: var(--text-light);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border-radius: 12px;
+            margin-top: var(--spacing-lg);
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .property-table {
+                font-size: 0.85em;
+            }
+
+            .property-table th,
+            .property-table td {
+                padding: var(--spacing-sm);
+            }
+
+            body {
+                padding: var(--spacing-sm);
+            }
+
+            .filter-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Filter Properties: Complete Guide</h1>
+            <p>Master CSS filters for stunning visual effects. Learn all filter functions, syntax, combinations, and best practices for creating professional, polished web designs.</p>
+        </header>
+
+        <!-- Overview Section -->
+        <section class="section">
+            <h2>Overview</h2>
+            <p>CSS filters allow you to apply graphical effects like blur, brightness, contrast, grayscale, hue rotation, inversion, opacity, saturation, sepia, and drop-shadow to elements. The <code>filter</code> property is powerful for visual enhancements without modifying the original element.</p>
+
+            <div class="info-box">
+                <strong>Key Point:</strong> CSS filters are GPU-accelerated and apply visual effects after the element is rendered, providing smooth performance and non-destructive styling.
+            </div>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Property Name</td>
+                        <td><code>filter</code></td>
+                        <td>Applies visual effects to elements</td>
+                    </tr>
+                    <tr>
+                        <td>Initial Value</td>
+                        <td><code>none</code></td>
+                        <td>No filters applied</td>
+                    </tr>
+                    <tr>
+                        <td>Applies To</td>
+                        <td>All elements</td>
+                        <td>Works on any HTML element</td>
+                    </tr>
+                    <tr>
+                        <td>Inherited</td>
+                        <td>No</td>
+                        <td>Not inherited from parent elements</td>
+                    </tr>
+                    <tr>
+                        <td>Animatable</td>
+                        <td>Yes</td>
+                        <td>Can be animated with CSS transitions</td>
+                    </tr>
+                    <tr>
+                        <td>Browser Support</td>
+                        <td>Modern browsers</td>
+                        <td>Chrome 18+, Firefox 35+, Safari 6+, Edge 12+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Syntax Section -->
+        <section class="section">
+            <h2>Syntax & Filter Functions</h2>
+
+            <div class="code-block">
+/* Basic syntax */
+filter: none;
+filter: blur(5px);
+filter: brightness(120%);
+
+/* Multiple filters */
+filter: blur(5px) brightness(120%) contrast(130%);
+
+/* With var() */
+filter: blur(var(--blur-amount));
+            </div>
+
+            <h3>All Filter Functions</h3>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Filter Function</th>
+                        <th>Value Range</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>blur()</code></td>
+                        <td>0px to any value</td>
+                        <td>0px</td>
+                        <td>Blurs the element. Values in pixels.</td>
+                    </tr>
+                    <tr>
+                        <td><code>brightness()</code></td>
+                        <td>0% to 200%+ (0 to 2+)</td>
+                        <td>100% (1)</td>
+                        <td>Adjusts brightness. &lt;100% = darker, &gt;100% = brighter</td>
+                    </tr>
+                    <tr>
+                        <td><code>contrast()</code></td>
+                        <td>0% to 200%+ (0 to 2+)</td>
+                        <td>100% (1)</td>
+                        <td>Adjusts contrast. &lt;100% = lower, &gt;100% = higher</td>
+                    </tr>
+                    <tr>
+                        <td><code>grayscale()</code></td>
+                        <td>0% to 100% (0 to 1)</td>
+                        <td>0%</td>
+                        <td>Converts to grayscale. 100% = fully grayscale</td>
+                    </tr>
+                    <tr>
+                        <td><code>hue-rotate()</code></td>
+                        <td>0deg to 360deg</td>
+                        <td>0deg</td>
+                        <td>Rotates colors on the color wheel</td>
+                    </tr>
+                    <tr>
+                        <td><code>invert()</code></td>
+                        <td>0% to 100% (0 to 1)</td>
+                        <td>0%</td>
+                        <td>Inverts colors. 100% = fully inverted</td>
+                    </tr>
+                    <tr>
+                        <td><code>opacity()</code></td>
+                        <td>0% to 100% (0 to 1)</td>
+                        <td>100% (1)</td>
+                        <td>Adjusts element opacity (similar to CSS opacity)</td>
+                    </tr>
+                    <tr>
+                        <td><code>saturate()</code></td>
+                        <td>0% to 200%+ (0 to 2+)</td>
+                        <td>100% (1)</td>
+                        <td>Adjusts color saturation. &lt;100% = desaturated, &gt;100% = oversaturated</td>
+                    </tr>
+                    <tr>
+                        <td><code>sepia()</code></td>
+                        <td>0% to 100% (0 to 1)</td>
+                        <td>0%</td>
+                        <td>Applies sepia tone. 100% = full sepia</td>
+                    </tr>
+                    <tr>
+                        <td><code>drop-shadow()</code></td>
+                        <td>offset-x offset-y blur-radius color</td>
+                        <td>N/A</td>
+                        <td>Applies drop shadow. Similar to box-shadow but applies to shape.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Individual Filters Section -->
+        <section class="section">
+            <h2>Individual Filter Functions</h2>
+
+            <h3>1. blur()</h3>
+            <p>Blurs the element using a Gaussian blur algorithm. The value specifies the blur radius in pixels.</p>
+
+            <div class="code-block">
+filter: blur(0px);      /* No blur (default) */
+filter: blur(5px);      /* 5 pixel blur */
+filter: blur(10px);     /* 10 pixel blur */
+filter: blur(20px);     /* Heavy blur */
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <div class="filter-demo">A</div>
+                    <h4>blur(0px)</h4>
+                    <p>Original - no blur</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo blur-demo" style="filter: blur(3px);">A</div>
+                    <h4>blur(3px)</h4>
+                    <p>Light blur effect</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo blur-demo" style="filter: blur(8px);">A</div>
+                    <h4>blur(8px)</h4>
+                    <p>Medium blur effect</p>
+                </div>
+            </div>
+
+            <h3>2. brightness()</h3>
+            <p>Adjusts the brightness of an element. Values above 100% brighten the element; values below 100% darken it.</p>
+
+            <div class="code-block">
+filter: brightness(50%);    /* 50% brightness - very dark */
+filter: brightness(100%);   /* Normal brightness (default) */
+filter: brightness(150%);   /* 150% brightness - brighter */
+filter: brightness(200%);   /* 200% brightness - very bright */
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: brightness(50%);">A</div>
+                    <h4>brightness(50%)</h4>
+                    <p>Very dark</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: brightness(100%);">A</div>
+                    <h4>brightness(100%)</h4>
+                    <p>Normal</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: brightness(150%);">A</div>
+                    <h4>brightness(150%)</h4>
+                    <p>Brighter</p>
+                </div>
+            </div>
+
+            <h3>3. contrast()</h3>
+            <p>Adjusts the contrast of an element. Lower values reduce contrast; higher values increase it.</p>
+
+            <div class="code-block">
+filter: contrast(50%);      /* Low contrast - washed out */
+filter: contrast(100%);     /* Normal contrast (default) */
+filter: contrast(150%);     /* Higher contrast - punchier */
+filter: contrast(200%);     /* Very high contrast */
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: contrast(50%);">A</div>
+                    <h4>contrast(50%)</h4>
+                    <p>Low contrast</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: contrast(100%);">A</div>
+                    <h4>contrast(100%)</h4>
+                    <p>Normal</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: contrast(150%);">A</div>
+                    <h4>contrast(150%)</h4>
+                    <p>High contrast</p>
+                </div>
+            </div>
+
+            <h3>4. grayscale()</h3>
+            <p>Converts an element to grayscale (desaturates colors). 100% means fully grayscale.</p>
+
+            <div class="code-block">
+filter: grayscale(0%);      /* No grayscale (default) */
+filter: grayscale(50%);     /* 50% grayscale - partially gray */
+filter: grayscale(100%);    /* Fully grayscale - black and white */
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: grayscale(0%);">A</div>
+                    <h4>grayscale(0%)</h4>
+                    <p>Normal colors</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: grayscale(50%);">A</div>
+                    <h4>grayscale(50%)</h4>
+                    <p>Half grayscale</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: grayscale(100%);">A</div>
+                    <h4>grayscale(100%)</h4>
+                    <p>Full grayscale</p>
+                </div>
+            </div>
+
+            <h3>5. hue-rotate()</h3>
+            <p>Rotates the hue of colors on the color wheel. 360deg returns to the original color.</p>
+
+            <div class="code-block">
+filter: hue-rotate(0deg);       /* No rotation (default) */
+filter: hue-rotate(45deg);      /* 45 degree rotation */
+filter: hue-rotate(90deg);      /* 90 degree rotation */
+filter: hue-rotate(180deg);     /* 180 degree rotation (opposite colors) */
+filter: hue-rotate(360deg);     /* Full rotation (back to original) */
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: hue-rotate(0deg);">A</div>
+                    <h4>hue-rotate(0deg)</h4>
+                    <p>Original</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: hue-rotate(90deg);">A</div>
+                    <h4>hue-rotate(90deg)</h4>
+                    <p>Quarter rotation</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: hue-rotate(180deg);">A</div>
+                    <h4>hue-rotate(180deg)</h4>
+                    <p>Half rotation</p>
+                </div>
+            </div>
+
+            <h3>6. invert()</h3>
+            <p>Inverts the colors of an element. 100% completely inverts all colors.</p>
+
+            <div class="code-block">
+filter: invert(0%);     /* No inversion (default) */
+filter: invert(50%);    /* 50% inversion */
+filter: invert(100%);   /* Full color inversion */
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: invert(0%);">A</div>
+                    <h4>invert(0%)</h4>
+                    <p>Original colors</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: invert(50%);">A</div>
+                    <h4>invert(50%)</h4>
+                    <p>Half inverted</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: invert(100%);">A</div>
+                    <h4>invert(100%)</h4>
+                    <p>Fully inverted</p>
+                </div>
+            </div>
+
+            <h3>7. saturate()</h3>
+            <p>Adjusts the saturation of colors. Below 100% desaturates; above 100% oversaturates.</p>
+
+            <div class="code-block">
+filter: saturate(0%);       /* Fully desaturated (grayscale) */
+filter: saturate(50%);      /* Half saturation - muted */
+filter: saturate(100%);     /* Normal saturation (default) */
+filter: saturate(150%);     /* Oversaturated - vivid */
+filter: saturate(200%);     /* Very oversaturated */
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: saturate(50%);">A</div>
+                    <h4>saturate(50%)</h4>
+                    <p>Desaturated</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: saturate(100%);">A</div>
+                    <h4>saturate(100%)</h4>
+                    <p>Normal</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: saturate(200%);">A</div>
+                    <h4>saturate(200%)</h4>
+                    <p>Oversaturated</p>
+                </div>
+            </div>
+
+            <h3>8. sepia()</h3>
+            <p>Applies a sepia tone effect, giving images a warm, vintage appearance.</p>
+
+            <div class="code-block">
+filter: sepia(0%);      /* No sepia (default) */
+filter: sepia(50%);     /* 50% sepia - slight vintage */
+filter: sepia(100%);    /* Full sepia - strong vintage effect */
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: sepia(0%);">A</div>
+                    <h4>sepia(0%)</h4>
+                    <p>Original</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: sepia(50%);">A</div>
+                    <h4>sepia(50%)</h4>
+                    <p>Partial sepia</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: sepia(100%);">A</div>
+                    <h4>sepia(100%)</h4>
+                    <p>Full sepia</p>
+                </div>
+            </div>
+
+            <h3>9. opacity()</h3>
+            <p>Adjusts the opacity of an element (similar to the CSS <code>opacity</code> property).</p>
+
+            <div class="code-block">
+filter: opacity(0%);    /* Fully transparent */
+filter: opacity(50%);   /* 50% transparent */
+filter: opacity(100%);  /* Fully opaque (default) */
+            </div>
+
+            <h3>10. drop-shadow()</h3>
+            <p>Applies a drop shadow around the element. Similar to <code>box-shadow</code> but applies to the actual shape/transparency.</p>
+
+            <div class="code-block">
+filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
+
+/* Syntax: offset-x offset-y blur-radius color */
+filter: drop-shadow(2px 2px 4px black);
+filter: drop-shadow(0 0 8px #667eea);
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: drop-shadow(0 0 0 black);">A</div>
+                    <h4>No shadow</h4>
+                    <p>Original</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.3));">A</div>
+                    <h4>drop-shadow()</h4>
+                    <p>With shadow</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Combining Filters Section -->
+        <section class="section">
+            <h2>Combining Multiple Filters</h2>
+
+            <p>You can chain multiple filters together to create complex visual effects. Filters are applied left to right.</p>
+
+            <div class="code-block">
+/* Two filters */
+filter: blur(3px) brightness(120%);
+
+/* Three filters */
+filter: grayscale(100%) brightness(80%) contrast(150%);
+
+/* Complex combination */
+filter: blur(2px) brightness(110%) contrast(120%) saturate(150%) drop-shadow(0 0 10px rgba(0,0,0,0.3));
+
+/* With variables */
+filter: blur(var(--blur)) brightness(var(--brightness));
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: blur(3px) brightness(120%);">A</div>
+                    <h4>blur + brightness</h4>
+                    <p>Blurred and bright</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: grayscale(100%) sepia(50%) brightness(90%);">A</div>
+                    <h4>grayscale + sepia</h4>
+                    <p>Vintage effect</p>
+                </div>
+                <div class="demo-box">
+                    <div class="filter-demo" style="filter: saturate(200%) hue-rotate(30deg) brightness(110%);">A</div>
+                    <h4>Multiple effects</h4>
+                    <p>Complex combination</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Performance Note:</strong> Combining many filters can impact performance. Start with simple combinations and test on lower-end devices.
+            </div>
+        </section>
+
+        <!-- Practical Patterns Section -->
+        <section class="section">
+            <h2>Practical Usage Patterns</h2>
+
+            <h3>Pattern 1: Hover Effects on Images</h3>
+            <div class="code-block">
+img {
+    transition: filter 0.3s ease;
+}
+
+img:hover {
+    filter: brightness(120%) contrast(110%);
+}
+            </div>
+
+            <h3>Pattern 2: Dark Mode Toggle</h3>
+            <div class="code-block">
+/* Light mode */
+body {
+    filter: none;
+}
+
+/* Dark mode */
+body.dark-mode {
+    filter: invert(1) hue-rotate(180deg);
+}
+            </div>
+
+            <h3>Pattern 3: Vintage Photo Effect</h3>
+            <div class="code-block">
+.vintage-photo {
+    filter: sepia(50%) saturate(60%) grayscale(30%) brightness(90%);
+}
+            </div>
+
+            <h3>Pattern 4: Focus/Blur Other Elements</h3>
+            <div class="code-block">
+.focused {
+    filter: brightness(100%);
+}
+
+.unfocused {
+    filter: brightness(60%) blur(2px);
+}
+            </div>
+
+            <h3>Pattern 5: Loading Animation</h3>
+            <div class="code-block">
+@keyframes loading {
+    0% { filter: brightness(100%); }
+    50% { filter: brightness(150%); }
+    100% { filter: brightness(100%); }
+}
+
+.loading-element {
+    animation: loading 1.5s ease-in-out infinite;
+}
+            </div>
+
+            <h3>Pattern 6: Color Shift on Hover</h3>
+            <div class="code-block">
+.color-shift {
+    transition: filter 0.3s ease;
+}
+
+.color-shift:hover {
+    filter: hue-rotate(45deg) saturate(150%);
+}
+            </div>
+        </section>
+
+        <!-- Best Practices Section -->
+        <section class="section">
+            <h2>Best Practices</h2>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <h4>✓ Use Sparingly</h4>
+                    <p>Filters enhance design but overuse creates visual noise. Use purposefully for effects that improve UX.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Animate Smoothly</h4>
+                    <p>Use <code>transition: filter 0.3s ease</code> for smooth, professional animations on hover/focus states.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Test Performance</h4>
+                    <p>Complex filters or multiple animations can impact performance. Test on mobile devices and lower-end hardware.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Maintain Accessibility</h4>
+                    <p>Ensure filters don't compromise readability or accessibility. Low contrast filters can be problematic for users with vision impairments.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Provide Fallbacks</h4>
+                    <p>Some older browsers don't support filters. Design experiences that work without filters as well.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ CSS Variables for Control</h4>
+                    <p>Use CSS custom properties for filter values to easily adjust effects globally or with JavaScript.</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>Performance Warning:</strong> Combining multiple filters with animations on many elements can cause jank. Use DevTools to profile and optimize.
+            </div>
+
+            <div class="note-box">
+                <strong>Accessibility Important:</strong> Avoid filters that reduce contrast or make text harder to read. Always test with accessibility tools and real users.
+            </div>
+        </section>
+
+        <!-- Browser Support Section -->
+        <section class="section">
+            <h2>Browser Support & Compatibility</h2>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Browser</th>
+                        <th>Version</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chrome</td>
+                        <td>18+</td>
+                        <td>✓ Full Support</td>
+                        <td>All filter functions supported</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td>35+</td>
+                        <td>✓ Full Support</td>
+                        <td>Complete implementation of all filters</td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>6+</td>
+                        <td>✓ Full Support</td>
+                        <td>Requires -webkit- prefix in older versions</td>
+                    </tr>
+                    <tr>
+                        <td>Edge</td>
+                        <td>12+</td>
+                        <td>✓ Full Support</td>
+                        <td>All modern versions support filters</td>
+                    </tr>
+                    <tr>
+                        <td>IE 11</td>
+                        <td>N/A</td>
+                        <td>✗ No Support</td>
+                        <td>Use @supports for fallbacks</td>
+                    </tr>
+                    <tr>
+                        <td>Mobile Browsers</td>
+                        <td>Modern</td>
+                        <td>✓ Full Support</td>
+                        <td>iOS Safari 6+, Chrome Mobile 18+</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Feature Detection & Fallbacks</h3>
+            <div class="code-block">
+/* CSS Feature Query */
+@supports (filter: blur(1px)) {
+    .element {
+        filter: blur(5px) brightness(120%);
+    }
+}
+
+/* JavaScript Detection */
+const supportsFilter = CSS.supports('filter', 'blur(1px)');
+if (supportsFilter) {
+    element.classList.add('has-filters');
+}
+            </div>
+        </section>
+
+        <!-- Advanced Examples Section -->
+        <section class="section">
+            <h2>Advanced Examples</h2>
+
+            <h3>Example 1: Image Overlay Effects</h3>
+            <div class="code-block">
+.image-card {
+    position: relative;
+}
+
+.image-card img {
+    transition: filter 0.3s ease;
+}
+
+.image-card:hover img {
+    filter: brightness(80%) blur(2px) saturate(150%);
+}
+            </div>
+
+            <h3>Example 2: Animated Filter Chain</h3>
+            <div class="code-block">
+@keyframes filterAnimation {
+    0% {
+        filter: hue-rotate(0deg) brightness(100%) saturate(100%);
+    }
+    25% {
+        filter: hue-rotate(90deg) brightness(110%) saturate(120%);
+    }
+    50% {
+        filter: hue-rotate(180deg) brightness(100%) saturate(100%);
+    }
+    75% {
+        filter: hue-rotate(270deg) brightness(110%) saturate(120%);
+    }
+    100% {
+        filter: hue-rotate(360deg) brightness(100%) saturate(100%);
+    }
+}
+
+.animated-element {
+    animation: filterAnimation 4s ease-in-out infinite;
+}
+            </div>
+
+            <h3>Example 3: Reading Mode Filter</h3>
+            <div class="code-block">
+.reading-mode {
+    filter: saturate(0%) brightness(105%) contrast(110%);
+    background: #f5f5f0;
+}
+
+.reading-mode img {
+    filter: brightness(110%) contrast(120%) grayscale(30%);
+}
+            </div>
+
+            <h3>Example 4: Disabled State Effects</h3>
+            <div class="code-block">
+button:disabled {
+    filter: grayscale(100%) brightness(80%) opacity(60%);
+    cursor: not-allowed;
+}
+            </div>
+
+            <h3>Example 5: Focus Blur for Modal</h3>
+            <div class="code-block">
+body.modal-open > *:not(.modal) {
+    filter: blur(3px) brightness(80%);
+}
+            </div>
+        </section>
+
+        <!-- Quick Reference Section -->
+        <section class="section">
+            <h2>Quick Reference Cheat Sheet</h2>
+
+            <div class="quick-reference">
+                <div class="quick-ref-item">
+                    <strong>Blur Effect</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0;">
+filter: blur(5px);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Brightness Adjustment</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0;">
+filter: brightness(150%);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>High Contrast</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0;">
+filter: contrast(150%);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Grayscale/B&W</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0;">
+filter: grayscale(100%);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Color Shift</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0;">
+filter: hue-rotate(180deg);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Vintage Sepia</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0;">
+filter: sepia(100%);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Drop Shadow</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0;">
+filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3));
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Multiple Filters</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0;">
+filter: blur(2px) brightness(110%) contrast(120%);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Hover Animation</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0;">
+transition: filter 0.3s ease;
+:hover { filter: brightness(120%); }
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Feature Detection</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0;">
+@supports (filter: blur(1px)) { ... }
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Section -->
+        <section class="section">
+            <h2>Performance Considerations</h2>
+
+            <h3>What Impacts Performance</h3>
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li><strong>Blur:</strong> More expensive at higher pixel values. Use blur(5px) not blur(20px)</li>
+                <li><strong>Multiple filters:</strong> Each additional filter adds computation cost</li>
+                <li><strong>Large element sizes:</strong> Filters on full-screen elements cost more than small elements</li>
+                <li><strong>Animations:</strong> Animating filter values causes repaints. Use GPU-accelerated filters when possible</li>
+                <li><strong>Will-change:</strong> Can improve performance but use sparingly</li>
+            </ul>
+
+            <h3>Optimization Tips</h3>
+            <div class="code-block">
+/* Use GPU acceleration */
+.optimized-filter {
+    filter: brightness(120%);
+    will-change: filter;
+    transform: translateZ(0); /* GPU acceleration hint */
+}
+
+/* Limit blur radius */
+.light-blur {
+    filter: blur(3px); /* Not blur(15px) */
+}
+
+/* Use shorthand when possible */
+.efficient {
+    filter: sepia(1); /* Instead of sepia(100%) */
+}
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section class="section">
+            <h2>Summary</h2>
+
+            <p>CSS filters are powerful tools for creating visual effects without modifying underlying elements. Key takeaways:</p>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li>✓ Use filters for hover effects, transitions, and visual enhancements</li>
+                <li>✓ Combine filters for complex effects (blur, brightness, contrast, etc.)</li>
+                <li>✓ Animate filters smoothly with CSS transitions for professional results</li>
+                <li>✓ Test performance on mobile and lower-end devices</li>
+                <li>✓ Provide fallbacks for older browsers with @supports</li>
+                <li>✓ Maintain accessibility—ensure filters don't compromise readability</li>
+                <li>✓ Use CSS variables for filter values to enable dynamic control</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Next Steps:</strong> Experiment with filters on images, buttons, and interactive elements. Combine with transitions and animations for engaging, professional UI effects.
+            </div>
+        </section>
+
+        <footer>
+            <p>CSS Filter Properties Complete Guide • Created for CSS Learning Suite</p>
+            <p>Browser Support: Chrome 18+, Firefox 35+, Safari 6+, Edge 12+</p>
+            <p>Learn • Practice • Master CSS Filters</p>
+        </footer>
+    </div>
+</body>
+</html>

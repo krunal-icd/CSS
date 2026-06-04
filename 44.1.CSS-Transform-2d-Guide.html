@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Transform 2D Properties: Complete Guide</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.5s ease;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.5em;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 0.95em;
+        }
+
+        .property-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-md);
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .property-table td {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .property-table tr:hover {
+            background: var(--bg-light);
+            transition: var(--transition);
+        }
+
+        .code-block {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #222;
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .demo-box {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 280px;
+        }
+
+        .demo-box h4 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.1em;
+        }
+
+        .demo-box p {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .transform-demo {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: var(--spacing-md) auto;
+            transition: all 0.6s ease;
+        }
+
+        .demo-box:hover .transform-demo {
+            transform: translateX(30px);
+        }
+
+        .demo-translate:hover {
+            transform: translate(40px, 20px);
+        }
+
+        .demo-rotate:hover {
+            transform: rotate(45deg);
+        }
+
+        .demo-scale:hover {
+            transform: scale(1.3);
+        }
+
+        .demo-skew-x:hover {
+            transform: skewX(20deg);
+        }
+
+        .demo-skew-y:hover {
+            transform: skewY(20deg);
+        }
+
+        .demo-skew:hover {
+            transform: skew(20deg, 10deg);
+        }
+
+        .demo-multi:hover {
+            transform: translate(30px, -20px) rotate(45deg) scale(0.8);
+        }
+
+        .demo-origin:hover {
+            transform: rotate(45deg);
+        }
+
+        .demo-perspective {
+            perspective: 1000px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .demo-perspective .transform-demo {
+            transform-style: preserve-3d;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .note-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .quick-reference {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .quick-ref-item {
+            background: var(--bg-light);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .quick-ref-item strong {
+            color: var(--primary-color);
+        }
+
+        .syntax-example {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+            border: 2px solid var(--border-color);
+        }
+
+        .syntax-example h4 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .syntax-example code {
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .origin-demo {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            background: var(--bg-light);
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+        }
+
+        .origin-box {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            position: absolute;
+            transition: transform 0.6s ease;
+        }
+
+        .origin-center {
+            top: 45px;
+            left: 45px;
+            transform-origin: center;
+        }
+
+        .origin-top-left {
+            top: 0;
+            left: 0;
+            transform-origin: top left;
+        }
+
+        .origin-bottom-right {
+            bottom: 0;
+            right: 0;
+            transform-origin: bottom right;
+        }
+
+        .demo-box:hover .origin-center {
+            transform: rotate(45deg);
+        }
+
+        .demo-box:hover .origin-top-left {
+            transform: rotate(45deg);
+        }
+
+        .demo-box:hover .origin-bottom-right {
+            transform: rotate(45deg);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border-radius: 12px;
+            margin-top: var(--spacing-lg);
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .property-table {
+                font-size: 0.85em;
+            }
+
+            .property-table th,
+            .property-table td {
+                padding: var(--spacing-sm);
+            }
+
+            body {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Transform 2D Properties: Complete Guide</h1>
+            <p>Master CSS 2D transforms for sophisticated animations. Learn translate, rotate, scale, skew, matrix operations, and transform-origin for creating professional visual effects.</p>
+        </header>
+
+        <!-- Overview Section -->
+        <section class="section">
+            <h2>Overview</h2>
+            <p>CSS 2D transforms allow you to modify elements in 2D space without affecting the document flow. You can translate (move), rotate, scale (resize), skew (distort), and apply matrix transformations to elements.</p>
+
+            <div class="info-box">
+                <strong>Key Point:</strong> CSS transforms are GPU-accelerated, making them far more performant than changing position/size properties. Use transforms for animations whenever possible.
+            </div>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Property Name</td>
+                        <td><code>transform</code></td>
+                        <td>Applies 2D transformations to elements</td>
+                    </tr>
+                    <tr>
+                        <td>Initial Value</td>
+                        <td><code>none</code></td>
+                        <td>No transformation applied</td>
+                    </tr>
+                    <tr>
+                        <td>Applies To</td>
+                        <td>Transformable elements</td>
+                        <td>All elements except inline, inline-table</td>
+                    </tr>
+                    <tr>
+                        <td>Inherited</td>
+                        <td>No</td>
+                        <td>Not inherited from parent elements</td>
+                    </tr>
+                    <tr>
+                        <td>Animatable</td>
+                        <td>Yes</td>
+                        <td>Can be animated with transitions/animations</td>
+                    </tr>
+                    <tr>
+                        <td>Browser Support</td>
+                        <td>Modern browsers</td>
+                        <td>Chrome 26+, Firefox 16+, Safari 9+, Edge 12+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Transform Functions Section -->
+        <section class="section">
+            <h2>2D Transform Functions</h2>
+
+            <p>The <code>transform</code> property accepts multiple transform functions. You can chain multiple functions in a single declaration.</p>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>Syntax</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>translate()</code></td>
+                        <td><code>translate(tx, ty)</code></td>
+                        <td>Moves element by X and Y pixels/percentages</td>
+                    </tr>
+                    <tr>
+                        <td><code>translateX()</code></td>
+                        <td><code>translateX(tx)</code></td>
+                        <td>Moves element horizontally only</td>
+                    </tr>
+                    <tr>
+                        <td><code>translateY()</code></td>
+                        <td><code>translateY(ty)</code></td>
+                        <td>Moves element vertically only</td>
+                    </tr>
+                    <tr>
+                        <td><code>rotate()</code></td>
+                        <td><code>rotate(angle)</code></td>
+                        <td>Rotates element by specified angle (deg, turn, rad)</td>
+                    </tr>
+                    <tr>
+                        <td><code>scale()</code></td>
+                        <td><code>scale(sx, sy)</code></td>
+                        <td>Scales element by X and Y factors</td>
+                    </tr>
+                    <tr>
+                        <td><code>scaleX()</code></td>
+                        <td><code>scaleX(sx)</code></td>
+                        <td>Scales element horizontally only</td>
+                    </tr>
+                    <tr>
+                        <td><code>scaleY()</code></td>
+                        <td><code>scaleY(sy)</code></td>
+                        <td>Scales element vertically only</td>
+                    </tr>
+                    <tr>
+                        <td><code>skew()</code></td>
+                        <td><code>skew(angle-x, angle-y)</code></td>
+                        <td>Skews/distorts element by angles</td>
+                    </tr>
+                    <tr>
+                        <td><code>skewX()</code></td>
+                        <td><code>skewX(angle)</code></td>
+                        <td>Skews element horizontally</td>
+                    </tr>
+                    <tr>
+                        <td><code>skewY()</code></td>
+                        <td><code>skewY(angle)</code></td>
+                        <td>Skews element vertically</td>
+                    </tr>
+                    <tr>
+                        <td><code>matrix()</code></td>
+                        <td><code>matrix(a, b, c, d, e, f)</code></td>
+                        <td>Combines all 2D transformations using matrix math</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- translate() Section -->
+        <section class="section">
+            <h2>translate() - Move Elements</h2>
+
+            <p>Moves an element from its current position by the specified X and Y distances.</p>
+
+            <div class="code-block">
+/* Move 40px right, 20px down */
+transform: translate(40px, 20px);
+
+/* Only horizontal */
+transform: translateX(50px);
+
+/* Only vertical */
+transform: translateY(-30px);
+
+/* Using percentages */
+transform: translate(50%, 50%);
+
+/* Chained with other transforms */
+transform: translate(20px, 10px) rotate(45deg);
+            </div>
+
+            <h3>Practical Patterns</h3>
+
+            <div class="code-block">
+/* Center an element */
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+
+/* Hover effect - move up */
+transition: transform 0.3s ease;
+:hover { transform: translateY(-10px); }
+
+/* Slide animation */
+animation: slide 0.5s ease;
+@keyframes slide {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box demo-translate">
+                    <div class="transform-demo">A</div>
+                    <h4>translate(40px, 20px)</h4>
+                    <p>Hover to see movement</p>
+                </div>
+                <div class="demo-box">
+                    <div class="transform-demo" style="transform: translateX(30px); margin: var(--spacing-md) auto;">B</div>
+                    <h4>translateX(30px)</h4>
+                    <p>Horizontal only</p>
+                </div>
+                <div class="demo-box">
+                    <div class="transform-demo" style="transform: translateY(-30px); margin: var(--spacing-md) auto;">C</div>
+                    <h4>translateY(-30px)</h4>
+                    <p>Vertical only</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Performance Tip:</strong> <code>translate()</code> is GPU-accelerated and doesn't trigger layout recalculation. Use it instead of changing <code>left/top/position</code>.
+            </div>
+        </section>
+
+        <!-- rotate() Section -->
+        <section class="section">
+            <h2>rotate() - Rotate Elements</h2>
+
+            <p>Rotates an element clockwise around its center by the specified angle.</p>
+
+            <div class="code-block">
+/* Rotate 45 degrees clockwise */
+transform: rotate(45deg);
+
+/* Rotate -30 degrees (counter-clockwise) */
+transform: rotate(-30deg);
+
+/* Using turns (360deg = 1turn) */
+transform: rotate(0.5turn);
+
+/* Using radians */
+transform: rotate(1.57rad);
+
+/* Combined with other transforms */
+transform: rotate(45deg) scale(1.2);
+            </div>
+
+            <h3>Angle Units</h3>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Unit</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>deg</code></td>
+                        <td>Degrees (0-360)</td>
+                        <td><code>rotate(45deg)</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>turn</code></td>
+                        <td>Full turns (0-1 = 0-360deg)</td>
+                        <td><code>rotate(0.25turn)</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>rad</code></td>
+                        <td>Radians (0-2π)</td>
+                        <td><code>rotate(0.785rad)</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>grad</code></td>
+                        <td>Gradians (0-400)</td>
+                        <td><code>rotate(100grad)</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="demo-container">
+                <div class="demo-box demo-rotate">
+                    <div class="transform-demo">A</div>
+                    <h4>rotate(45deg)</h4>
+                    <p>Hover to rotate</p>
+                </div>
+                <div class="demo-box">
+                    <div class="transform-demo" style="transform: rotate(-30deg); margin: var(--spacing-md) auto;">B</div>
+                    <h4>rotate(-30deg)</h4>
+                    <p>Counter-clockwise</p>
+                </div>
+                <div class="demo-box">
+                    <div class="transform-demo" style="transform: rotate(90deg); margin: var(--spacing-md) auto;">C</div>
+                    <h4>rotate(90deg)</h4>
+                    <p>Quarter turn</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- scale() Section -->
+        <section class="section">
+            <h2>scale() - Resize Elements</h2>
+
+            <p>Scales an element by multiplying its width and height by the specified factors.</p>
+
+            <div class="code-block">
+/* Scale 1.3x larger (both directions) */
+transform: scale(1.3);
+
+/* Scale differently on X and Y */
+transform: scale(1.5, 0.8);
+
+/* Only horizontal */
+transform: scaleX(2);
+
+/* Only vertical */
+transform: scaleY(0.5);
+
+/* Zoom out */
+transform: scale(0.7);
+
+/* Flip horizontally */
+transform: scaleX(-1);
+            </div>
+
+            <h3>Scale Values</h3>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>1</code></td>
+                        <td>Original size (no change)</td>
+                    </tr>
+                    <tr>
+                        <td><code>0.5</code></td>
+                        <td>Half size (50%)</td>
+                    </tr>
+                    <tr>
+                        <td><code>2</code></td>
+                        <td>Double size (200%)</td>
+                    </tr>
+                    <tr>
+                        <td><code>0</code></td>
+                        <td>Invisible (element collapses)</td>
+                    </tr>
+                    <tr>
+                        <td><code>-1</code></td>
+                        <td>Flipped/mirrored</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="demo-container">
+                <div class="demo-box demo-scale">
+                    <div class="transform-demo">A</div>
+                    <h4>scale(1.3)</h4>
+                    <p>Hover to enlarge</p>
+                </div>
+                <div class="demo-box">
+                    <div class="transform-demo" style="transform: scale(1.5, 0.8); margin: var(--spacing-md) auto;">B</div>
+                    <h4>scale(1.5, 0.8)</h4>
+                    <p>Different X and Y</p>
+                </div>
+                <div class="demo-box">
+                    <div class="transform-demo" style="transform: scaleX(-1); margin: var(--spacing-md) auto;">C</div>
+                    <h4>scaleX(-1)</h4>
+                    <p>Flipped horizontally</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Performance Tip:</strong> <code>scale()</code> is GPU-accelerated and more performant than changing <code>width/height</code> properties.
+            </div>
+        </section>
+
+        <!-- skew() Section -->
+        <section class="section">
+            <h2>skew() - Distort Elements</h2>
+
+            <p>Skews/distorts an element by the specified angles on X and Y axes.</p>
+
+            <div class="code-block">
+/* Skew 20 degrees on X axis */
+transform: skewX(20deg);
+
+/* Skew 20 degrees on Y axis */
+transform: skewY(20deg);
+
+/* Skew both axes */
+transform: skew(20deg, 10deg);
+
+/* Negative angles */
+transform: skew(-15deg, -10deg);
+
+/* Italic effect */
+transform: skewX(-12deg);
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box demo-skew-x">
+                    <div class="transform-demo">A</div>
+                    <h4>skewX(20deg)</h4>
+                    <p>Hover to skew</p>
+                </div>
+                <div class="demo-box demo-skew-y">
+                    <div class="transform-demo">B</div>
+                    <h4>skewY(20deg)</h4>
+                    <p>Hover to skew</p>
+                </div>
+                <div class="demo-box demo-skew">
+                    <div class="transform-demo">C</div>
+                    <h4>skew(20deg, 10deg)</h4>
+                    <p>Both axes</p>
+                </div>
+            </div>
+
+            <div class="note-box">
+                <strong>Note:</strong> <code>skew()</code> is useful for creative effects but can make text harder to read. Use sparingly and test accessibility.
+            </div>
+        </section>
+
+        <!-- transform-origin Section -->
+        <section class="section">
+            <h2>transform-origin - Set Pivot Point</h2>
+
+            <p>Defines the point around which transformations are applied. Default is center (<code>50% 50%</code>).</p>
+
+            <div class="code-block">
+/* Predefined values */
+transform-origin: center;          /* 50% 50% */
+transform-origin: top left;        /* 0% 0% */
+transform-origin: bottom right;    /* 100% 100% */
+transform-origin: top center;      /* 50% 0% */
+
+/* Custom coordinates */
+transform-origin: 20px 40px;       /* pixels */
+transform-origin: 30% 60%;         /* percentages */
+
+/* 3D support (with 3rd value for Z) */
+transform-origin: center center 0;
+
+/* Multiple transforms with different origins */
+transform: rotate(45deg);
+transform-origin: top left;
+            </div>
+
+            <h3>Common Origin Points</h3>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Equivalent</th>
+                        <th>Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>center</code></td>
+                        <td><code>50% 50%</code></td>
+                        <td>Center point (default)</td>
+                    </tr>
+                    <tr>
+                        <td><code>top left</code></td>
+                        <td><code>0% 0%</code></td>
+                        <td>Top-left corner</td>
+                    </tr>
+                    <tr>
+                        <td><code>bottom right</code></td>
+                        <td><code>100% 100%</code></td>
+                        <td>Bottom-right corner</td>
+                    </tr>
+                    <tr>
+                        <td><code>top</code></td>
+                        <td><code>50% 0%</code></td>
+                        <td>Top edge center</td>
+                    </tr>
+                    <tr>
+                        <td><code>bottom</code></td>
+                        <td><code>50% 100%</code></td>
+                        <td>Bottom edge center</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <div class="origin-demo">
+                        <div class="origin-box origin-center"></div>
+                    </div>
+                    <h4>transform-origin: center</h4>
+                    <p>Rotates around center</p>
+                </div>
+                <div class="demo-box">
+                    <div class="origin-demo">
+                        <div class="origin-box origin-top-left"></div>
+                    </div>
+                    <h4>transform-origin: top left</h4>
+                    <p>Rotates around corner</p>
+                </div>
+                <div class="demo-box">
+                    <div class="origin-demo">
+                        <div class="origin-box origin-bottom-right"></div>
+                    </div>
+                    <h4>transform-origin: bottom right</h4>
+                    <p>Rotates around corner</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Combining Transforms Section -->
+        <section class="section">
+            <h2>Combining Multiple Transforms</h2>
+
+            <p>You can chain multiple transform functions in a single declaration. They are applied left to right.</p>
+
+            <div class="code-block">
+/* Translate, rotate, then scale */
+transform: translate(30px, -20px) rotate(45deg) scale(0.8);
+
+/* Order matters! Different order = different result */
+transform: rotate(45deg) scale(1.5);  /* Rotate then scale */
+transform: scale(1.5) rotate(45deg);  /* Scale then rotate */
+
+/* Multiple properties */
+transform: 
+    translateX(20px) 
+    translateY(-10px) 
+    rotate(15deg) 
+    scale(1.1);
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box demo-multi">
+                    <div class="transform-demo">A</div>
+                    <h4>Multiple Transforms</h4>
+                    <p>translate, rotate, scale combined</p>
+                </div>
+                <div class="demo-box">
+                    <div class="transform-demo" style="transform: translateX(30px) scale(1.2); margin: var(--spacing-md) auto;">B</div>
+                    <h4>translate + scale</h4>
+                    <p>Two functions</p>
+                </div>
+                <div class="demo-box">
+                    <div class="transform-demo" style="transform: rotate(45deg) skewX(10deg); margin: var(--spacing-md) auto;">C</div>
+                    <h4>rotate + skew</h4>
+                    <p>Rotation with skew</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>Important:</strong> The order of transforms matters! <code>rotate(45deg) scale(2)</code> produces a different result than <code>scale(2) rotate(45deg)</code> because transforms are applied sequentially.
+            </div>
+        </section>
+
+        <!-- Best Practices Section -->
+        <section class="section">
+            <h2>Best Practices</h2>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <h4>✓ Use GPU-Accelerated</h4>
+                    <p>Prefer transform over position/size changes. Better performance and smoother animations.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Center with Transforms</h4>
+                    <p>Use <code>translate(-50%, -50%)</code> with absolute positioning for perfect centering.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Combine Transforms</h4>
+                    <p>Chain multiple functions in one declaration rather than separate properties.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Animate Smoothly</h4>
+                    <p>Use CSS transitions or animations to transform elements smoothly over time.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Test Order</h4>
+                    <p>Experiment with transform function order—it affects the final result!</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Consider Accessibility</h4>
+                    <p>Extreme skew or rotation can harm readability. Test with real users.</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Performance:</strong> Transforms are GPU-accelerated, making them ideal for animations. Use <code>will-change: transform</code> sparingly for hints to the browser about upcoming changes.
+            </div>
+        </section>
+
+        <!-- Browser Support Section -->
+        <section class="section">
+            <h2>Browser Support & Compatibility</h2>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Browser</th>
+                        <th>Version</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chrome</td>
+                        <td>26+</td>
+                        <td>✓ Full Support</td>
+                        <td>Excellent support and performance</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td>16+</td>
+                        <td>✓ Full Support</td>
+                        <td>Complete implementation</td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>9+</td>
+                        <td>✓ Full Support</td>
+                        <td>Good support, may need -webkit- prefix</td>
+                    </tr>
+                    <tr>
+                        <td>Edge</td>
+                        <td>12+</td>
+                        <td>✓ Full Support</td>
+                        <td>All modern versions supported</td>
+                    </tr>
+                    <tr>
+                        <td>IE 10</td>
+                        <td>N/A</td>
+                        <td>⚠ Partial</td>
+                        <td>Basic transforms; limited timing functions</td>
+                    </tr>
+                    <tr>
+                        <td>IE 9 and below</td>
+                        <td>N/A</td>
+                        <td>✗ No Support</td>
+                        <td>Use CSS filters or fallbacks</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Legacy Prefix Support</h3>
+
+            <div class="code-block">
+/* Standard (modern browsers) */
+transform: rotate(45deg);
+
+/* With prefixes (older browsers) */
+-webkit-transform: rotate(45deg);
+-moz-transform: rotate(45deg);
+-ms-transform: rotate(45deg);
+-o-transform: rotate(45deg);
+transform: rotate(45deg);
+
+/* Feature detection */
+@supports (transform: rotate(45deg)) {
+    .element {
+        transform: rotate(45deg);
+    }
+}
+            </div>
+        </section>
+
+        <!-- Advanced Techniques Section -->
+        <section class="section">
+            <h2>Advanced Techniques</h2>
+
+            <h3>Technique 1: Flip Card Effect</h3>
+
+            <div class="code-block">
+.card {
+    perspective: 1000px;
+}
+
+.card-inner {
+    position: relative;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+            </div>
+
+            <h3>Technique 2: Rotating Loader</h3>
+
+            <div class="code-block">
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.loader {
+    animation: spin 2s linear infinite;
+}
+            </div>
+
+            <h3>Technique 3: Scale on Hover</h3>
+
+            <div class="code-block">
+.button {
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.button:hover {
+    transform: scale(1.1);
+}
+
+.button:active {
+    transform: scale(0.95);
+}
+            </div>
+
+            <h3>Technique 4: Matrix Transform</h3>
+
+            <div class="code-block">
+/* matrix(a, b, c, d, e, f)
+   a = scaleX & skewY
+   b = skewX
+   c = skewY
+   d = scaleY
+   e = translateX
+   f = translateY */
+
+/* Equivalent to: scale(1.5) rotate(45deg) translate(20px, 30px) */
+transform: matrix(1.414, 0.707, -0.707, 1.414, 20, 30);
+
+/* Using matrix generator is easier */
+transform: matrix(1, 0, 0, 1, 50, 100);
+            </div>
+        </section>
+
+        <!-- Quick Reference Section -->
+        <section class="section">
+            <h2>Quick Reference Cheat Sheet</h2>
+
+            <div class="quick-reference">
+                <div class="quick-ref-item">
+                    <strong>Translate</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+transform: translate(40px, 20px);
+transform: translateX(50%);
+transform: translateY(-30px);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Rotate</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+transform: rotate(45deg);
+transform: rotate(-30deg);
+transform: rotate(0.5turn);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Scale</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+transform: scale(1.3);
+transform: scale(1.5, 0.8);
+transform: scaleX(-1);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Skew</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+transform: skew(20deg, 10deg);
+transform: skewX(20deg);
+transform: skewY(-15deg);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Combined</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+transform: translate(30px) rotate(45deg);
+transform: scale(1.2) skew(10deg);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Origin</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+transform-origin: center;
+transform-origin: top left;
+transform-origin: 30% 60%;
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section class="section">
+            <h2>Summary</h2>
+
+            <p>CSS 2D transforms are powerful tools for creating smooth, performant animations. Key takeaways:</p>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li>✓ Use <code>translate()</code> to move elements—GPU-accelerated and performant</li>
+                <li>✓ Use <code>rotate()</code> for spinning/rotating effects</li>
+                <li>✓ Use <code>scale()</code> for zoom effects instead of changing size</li>
+                <li>✓ Use <code>skew()</code> for creative distortion effects</li>
+                <li>✓ Chain multiple transforms in one declaration</li>
+                <li>✓ Use <code>transform-origin</code> to set the pivot point</li>
+                <li>✓ Animate transforms with transitions or animations for smooth effects</li>
+                <li>✓ Transforms are GPU-accelerated—far more performant than position/size changes</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Next Steps:</strong> Combine 2D transforms with transitions for smooth animations. Explore 3D transforms for even more complex effects. Combine with animations for repeating, choreographed movements.
+            </div>
+        </section>
+
+        <footer>
+            <p>CSS Transform 2D Properties Complete Guide • Created for CSS Learning Suite</p>
+            <p>Browser Support: Chrome 26+, Firefox 16+, Safari 9+, Edge 12+</p>
+            <p>Learn • Practice • Master CSS Transforms</p>
+        </footer>
+    </div>
+</body>
+</html>

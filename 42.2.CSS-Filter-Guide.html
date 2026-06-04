@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Filter Properties: Practical Examples</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.5s ease;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.3em;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .code-block-html {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: var(--spacing-lg);
+            margin: var(--spacing-md) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .example-showcase {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+            border: 2px solid var(--border-color);
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+
+        .example-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .example-description {
+            color: var(--text-light);
+            font-size: 0.95em;
+            margin-bottom: var(--spacing-md);
+            font-style: italic;
+        }
+
+        /* Example 1: Image Gallery Hover */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .gallery-item {
+            height: 150px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            font-weight: bold;
+            color: white;
+            transition: filter var(--transition);
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            filter: brightness(120%) contrast(110%);
+        }
+
+        /* Example 2: Card Effects */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            transition: all var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .card.blur-effect:hover {
+            filter: blur(1px) brightness(110%);
+        }
+
+        .card.grayscale-effect:hover {
+            filter: grayscale(0%) saturate(150%);
+        }
+
+        .card.sepia-effect {
+            filter: sepia(30%);
+        }
+
+        .card.sepia-effect:hover {
+            filter: sepia(0%) brightness(110%);
+        }
+
+        .card.shadow-effect:hover {
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Example 3: Button States */
+        .button-demo {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: filter var(--transition);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .btn:hover {
+            filter: brightness(110%) contrast(120%);
+        }
+
+        .btn:active {
+            filter: brightness(90%);
+        }
+
+        .btn:disabled {
+            filter: grayscale(100%) brightness(80%) opacity(60%);
+            cursor: not-allowed;
+        }
+
+        /* Example 4: Image Effects */
+        .image-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .image-effect {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 150px;
+        }
+
+        .image-effect-inner {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: white;
+            font-weight: bold;
+            transition: filter var(--transition);
+        }
+
+        .effect-vintage .image-effect-inner {
+            filter: sepia(50%) saturate(60%) grayscale(30%) brightness(90%);
+        }
+
+        .effect-dramatic .image-effect-inner:hover {
+            filter: brightness(80%) blur(1px) saturate(150%);
+        }
+
+        .effect-cool .image-effect-inner:hover {
+            filter: hue-rotate(180deg) saturate(120%) brightness(110%);
+        }
+
+        .effect-bw .image-effect-inner {
+            filter: grayscale(100%) contrast(120%);
+        }
+
+        .effect-bw .image-effect-inner:hover {
+            filter: grayscale(0%) contrast(100%);
+        }
+
+        /* Example 5: Loading Animation */
+        .loading-demo {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            padding: var(--spacing-lg);
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+
+        @keyframes pulse-brightness {
+            0%, 100% { filter: brightness(100%); }
+            50% { filter: brightness(150%); }
+        }
+
+        @keyframes color-shift {
+            0% { filter: hue-rotate(0deg) brightness(100%); }
+            50% { filter: hue-rotate(180deg) brightness(110%); }
+            100% { filter: hue-rotate(360deg) brightness(100%); }
+        }
+
+        .loading-pulse {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            animation: pulse-brightness 1.5s ease-in-out infinite;
+        }
+
+        .loading-color-shift {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            animation: color-shift 2s ease-in-out infinite;
+        }
+
+        /* Example 6: Focus/Blur Effect */
+        .focus-demo {
+            padding: var(--spacing-lg);
+            background: var(--bg-light);
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .focus-item {
+            height: 100px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: white;
+            cursor: pointer;
+            transition: filter var(--transition);
+        }
+
+        .focus-item:not(.active) {
+            filter: brightness(60%) blur(2px);
+        }
+
+        .focus-item.active {
+            filter: brightness(100%) blur(0px);
+        }
+
+        /* Example 7: Dark Mode Toggle */
+        .dark-mode-demo {
+            padding: var(--spacing-lg);
+            background: var(--bg-light);
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .mode-btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 2px solid var(--primary-color);
+            background: white;
+            color: var(--primary-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all var(--transition);
+        }
+
+        .mode-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .dark-mode-content {
+            padding: var(--spacing-lg);
+            background: white;
+            border-radius: 8px;
+            transition: filter var(--transition);
+        }
+
+        .dark-mode-content.dark {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* Example 8: Disabled States */
+        .disabled-demo {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .icon-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: filter var(--transition);
+        }
+
+        .icon-button:hover {
+            filter: brightness(120%);
+        }
+
+        .icon-button:disabled {
+            filter: grayscale(100%) brightness(60%) opacity(50%);
+            cursor: not-allowed;
+        }
+
+        /* Example 9: Vintage Photo Gallery */
+        .vintage-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .vintage-photo {
+            height: 150px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #8B7355, #D2B48C);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            filter: sepia(60%) saturate(50%) brightness(90%);
+            transition: filter var(--transition);
+            border: 3px solid #8B7355;
+        }
+
+        .vintage-photo:hover {
+            filter: sepia(40%) saturate(100%) brightness(100%);
+        }
+
+        /* Example 10: Interactive Filter Control */
+        .filter-control-demo {
+            padding: var(--spacing-lg);
+            background: var(--bg-light);
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .control-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .control-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .control-input {
+            width: 100%;
+            height: 30px;
+            border-radius: 4px;
+            border: 2px solid var(--primary-color);
+        }
+
+        .filter-preview {
+            width: 100%;
+            height: 150px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+            margin-top: var(--spacing-lg);
+            transition: filter 0.1s ease;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .note-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border-radius: 12px;
+            margin-top: var(--spacing-lg);
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            body {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Filter Properties: Practical Examples</h1>
+            <p>Real-world implementations of CSS filters. Discover 10 practical patterns for creating stunning visual effects with hover states, animations, and interactive controls.</p>
+        </header>
+
+        <!-- Example 1: Image Gallery Hover Effects -->
+        <section class="section">
+            <h2>Example 1: Image Gallery with Hover Effects</h2>
+            <p class="example-description">Interactive gallery where images brighten and contrast increases on hover—perfect for portfolio sites and e-commerce.</p>
+
+            <div class="example-showcase">
+                <div class="gallery">
+                    <div class="gallery-item">🎨</div>
+                    <div class="gallery-item">📸</div>
+                    <div class="gallery-item">🖼️</div>
+                    <div class="gallery-item">🎭</div>
+                    <div class="gallery-item">✨</div>
+                    <div class="gallery-item">🌅</div>
+                </div>
+            </div>
+
+            <h3>HTML Structure</h3>
+            <div class="code-block-html">
+&lt;div class="gallery"&gt;
+    &lt;div class="gallery-item"&gt;🎨&lt;/div&gt;
+    &lt;div class="gallery-item"&gt;📸&lt;/div&gt;
+    &lt;!-- More items --&gt;
+&lt;/div&gt;
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.gallery-item {
+    height: 150px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3em;
+    color: white;
+    transition: filter 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    filter: brightness(120%) contrast(110%);
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Use Case:</strong> Portfolio galleries, product showcases, photo collections. The filter adds interactivity without JavaScript.
+            </div>
+        </section>
+
+        <!-- Example 2: Card Component Effects -->
+        <section class="section">
+            <h2>Example 2: Card Components with Multiple Effects</h2>
+            <p class="example-description">Different filter effects on cards demonstrating blur, grayscale, sepia, and shadow effects on hover.</p>
+
+            <div class="example-showcase">
+                <div class="card-container">
+                    <div class="card blur-effect">
+                        <div class="card-icon">⚡</div>
+                        <h4>Blur Effect</h4>
+                        <p>Hover to see blur animation</p>
+                    </div>
+                    <div class="card grayscale-effect">
+                        <div class="card-icon">🎯</div>
+                        <h4>Grayscale to Color</h4>
+                        <p>Grayscale by default, color on hover</p>
+                    </div>
+                    <div class="card sepia-effect">
+                        <div class="card-icon">📚</div>
+                        <h4>Sepia Vintage</h4>
+                        <p>Sepia tone by default, normal on hover</p>
+                    </div>
+                    <div class="card shadow-effect">
+                        <div class="card-icon">💎</div>
+                        <h4>Drop Shadow</h4>
+                        <p>Shadow appears on hover</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS Code - Multiple Filter Effects</h3>
+            <div class="code-block">
+.card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Blur effect */
+.card.blur-effect:hover {
+    filter: blur(1px) brightness(110%);
+}
+
+/* Grayscale to color */
+.card.grayscale-effect {
+    filter: grayscale(100%);
+}
+
+.card.grayscale-effect:hover {
+    filter: grayscale(0%) saturate(150%);
+}
+
+/* Sepia vintage */
+.card.sepia-effect {
+    filter: sepia(30%);
+}
+
+.card.sepia-effect:hover {
+    filter: sepia(0%) brightness(110%);
+}
+
+/* Drop shadow */
+.card.shadow-effect:hover {
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+}
+            </div>
+
+            <div class="note-box">
+                <strong>Tip:</strong> Different filter combinations work well for different card types. Choose based on your design language.
+            </div>
+        </section>
+
+        <!-- Example 3: Button States -->
+        <section class="section">
+            <h2>Example 3: Interactive Button States</h2>
+            <p class="example-description">Buttons with filter effects for hover, active, and disabled states without adding extra markup.</p>
+
+            <div class="example-showcase">
+                <div class="button-demo">
+                    <button class="btn">Hover Button</button>
+                    <button class="btn">Active Button</button>
+                    <button class="btn" disabled>Disabled Button</button>
+                </div>
+            </div>
+
+            <h3>CSS Button States with Filters</h3>
+            <div class="code-block">
+.btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter 0.3s ease;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.btn:hover {
+    filter: brightness(110%) contrast(120%);
+}
+
+.btn:active {
+    filter: brightness(90%);
+}
+
+.btn:disabled {
+    filter: grayscale(100%) brightness(80%) opacity(60%);
+    cursor: not-allowed;
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Benefit:</strong> Using filters for button states keeps CSS cleaner than managing multiple background colors and hover states.
+            </div>
+        </section>
+
+        <!-- Example 4: Image Effects -->
+        <section class="section">
+            <h2>Example 4: Professional Image Effects</h2>
+            <p class="example-description">Various image filter effects including vintage, dramatic, cool tone, and grayscale variations.</p>
+
+            <div class="example-showcase">
+                <div class="image-demo">
+                    <div class="image-effect effect-vintage">
+                        <div class="image-effect-inner">🎬</div>
+                    </div>
+                    <div class="image-effect effect-dramatic">
+                        <div class="image-effect-inner">🌟</div>
+                    </div>
+                    <div class="image-effect effect-cool">
+                        <div class="image-effect-inner">❄️</div>
+                    </div>
+                    <div class="image-effect effect-bw">
+                        <div class="image-effect-inner">📷</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS Image Effect Patterns</h3>
+            <div class="code-block">
+/* Vintage effect - always applied */
+.effect-vintage .image-effect-inner {
+    filter: sepia(50%) saturate(60%) grayscale(30%) brightness(90%);
+}
+
+/* Dramatic - on hover */
+.effect-dramatic .image-effect-inner:hover {
+    filter: brightness(80%) blur(1px) saturate(150%);
+}
+
+/* Cool tone - hue shift on hover */
+.effect-cool .image-effect-inner:hover {
+    filter: hue-rotate(180deg) saturate(120%) brightness(110%);
+}
+
+/* Grayscale with toggle on hover */
+.effect-bw .image-effect-inner {
+    filter: grayscale(100%) contrast(120%);
+}
+
+.effect-bw .image-effect-inner:hover {
+    filter: grayscale(0%) contrast(100%);
+}
+            </div>
+        </section>
+
+        <!-- Example 5: Loading Animations -->
+        <section class="section">
+            <h2>Example 5: Loading State Animations</h2>
+            <p class="example-description">Animated loading indicators using filter properties with keyframe animations.</p>
+
+            <div class="example-showcase">
+                <div class="loading-demo">
+                    <div class="loading-pulse"></div>
+                    <div class="loading-color-shift"></div>
+                </div>
+            </div>
+
+            <h3>CSS Animation with Filters</h3>
+            <div class="code-block">
+@keyframes pulse-brightness {
+    0%, 100% { filter: brightness(100%); }
+    50% { filter: brightness(150%); }
+}
+
+@keyframes color-shift {
+    0% { filter: hue-rotate(0deg) brightness(100%); }
+    50% { filter: hue-rotate(180deg) brightness(110%); }
+    100% { filter: hue-rotate(360deg) brightness(100%); }
+}
+
+.loading-pulse {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    animation: pulse-brightness 1.5s ease-in-out infinite;
+}
+
+.loading-color-shift {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    animation: color-shift 2s ease-in-out infinite;
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Advantage:</strong> Animation with filters is GPU-accelerated and performs better than animating background colors or transforms.
+            </div>
+        </section>
+
+        <!-- Example 6: Focus/Blur Effect -->
+        <section class="section">
+            <h2>Example 6: Focus/Blur Interactive Effect</h2>
+            <p class="example-description">Click items to focus on one while others blur out—perfect for galleries or comparisons.</p>
+
+            <div class="example-showcase">
+                <p style="margin-bottom: 1rem; color: #666;">Click an item to focus on it (others blur and dim):</p>
+                <div class="focus-demo" id="focusDemo">
+                    <div class="focus-item active" onclick="setFocus(this)">1️⃣</div>
+                    <div class="focus-item" onclick="setFocus(this)">2️⃣</div>
+                    <div class="focus-item" onclick="setFocus(this)">3️⃣</div>
+                    <div class="focus-item" onclick="setFocus(this)">4️⃣</div>
+                </div>
+            </div>
+
+            <h3>HTML & JavaScript</h3>
+            <div class="code-block-html">
+&lt;div class="focus-demo" id="focusDemo"&gt;
+    &lt;div class="focus-item active" onclick="setFocus(this)"&gt;1️⃣&lt;/div&gt;
+    &lt;div class="focus-item" onclick="setFocus(this)"&gt;2️⃣&lt;/div&gt;
+    &lt;!-- More items --&gt;
+&lt;/div&gt;
+            </div>
+
+            <h3>CSS & JavaScript</h3>
+            <div class="code-block">
+/* CSS */
+.focus-item:not(.active) {
+    filter: brightness(60%) blur(2px);
+}
+
+.focus-item.active {
+    filter: brightness(100%) blur(0px);
+}
+
+/* JavaScript */
+function setFocus(element) {
+    document.querySelectorAll('.focus-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    element.classList.add('active');
+}
+            </div>
+
+            <script>
+                function setFocus(element) {
+                    const demo = element.parentElement;
+                    demo.querySelectorAll('.focus-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    element.classList.add('active');
+                }
+            </script>
+        </section>
+
+        <!-- Example 7: Dark Mode Toggle -->
+        <section class="section">
+            <h2>Example 7: Dark Mode with Filters</h2>
+            <p class="example-description">Toggle between light and dark modes using filter inversion—works on entire sections or pages.</p>
+
+            <div class="example-showcase">
+                <div class="dark-mode-demo">
+                    <div class="mode-toggle">
+                        <button class="mode-btn active" onclick="toggleDarkMode(false)">☀️ Light</button>
+                        <button class="mode-btn" onclick="toggleDarkMode(true)">🌙 Dark</button>
+                    </div>
+                    <div class="dark-mode-content" id="darkModeContent">
+                        <h4>Welcome to our Application</h4>
+                        <p>This content switches between light and dark modes using CSS filters. Toggle the buttons above to see the effect.</p>
+                        <p style="margin-top: 1rem;">This approach is quick but note that inverting all colors may not be suitable for images or complex layouts.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS & JavaScript</h3>
+            <div class="code-block">
+/* CSS */
+.dark-mode-content {
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    transition: filter 0.3s ease;
+}
+
+.dark-mode-content.dark {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+/* JavaScript */
+function toggleDarkMode(isDark) {
+    const content = document.getElementById('darkModeContent');
+    const buttons = document.querySelectorAll('.mode-btn');
+    
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    if (isDark) {
+        content.classList.add('dark');
+    } else {
+        content.classList.remove('dark');
+    }
+}
+            </div>
+
+            <script>
+                function toggleDarkMode(isDark) {
+                    const content = document.getElementById('darkModeContent');
+                    const buttons = document.querySelectorAll('.dark-mode-demo .mode-btn');
+                    
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    event.target.classList.add('active');
+                    
+                    if (isDark) {
+                        content.classList.add('dark');
+                    } else {
+                        content.classList.remove('dark');
+                    }
+                }
+            </script>
+
+            <div class="note-box">
+                <strong>Note:</strong> While filter-based dark mode is fast, dedicated dark mode CSS is usually better for production. This works well for quick implementations.
+            </div>
+        </section>
+
+        <!-- Example 8: Disabled States -->
+        <section class="section">
+            <h2>Example 8: Disabled UI States</h2>
+            <p class="example-description">Use filters to visually indicate disabled buttons and controls without custom styling.</p>
+
+            <div class="example-showcase">
+                <div class="disabled-demo">
+                    <button class="icon-button">✅</button>
+                    <button class="icon-button">💬</button>
+                    <button class="icon-button">⚙️</button>
+                    <button class="icon-button" disabled>🔒</button>
+                    <button class="icon-button" disabled>🚫</button>
+                </div>
+            </div>
+
+            <h3>CSS Disabled State</h3>
+            <div class="code-block">
+.icon-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: filter 0.3s ease;
+}
+
+.icon-button:hover {
+    filter: brightness(120%);
+}
+
+.icon-button:disabled {
+    filter: grayscale(100%) brightness(60%) opacity(50%);
+    cursor: not-allowed;
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Tip:</strong> Combining grayscale, brightness, and opacity creates a clear visual indication of disabled state without complex styling.
+            </div>
+        </section>
+
+        <!-- Example 9: Vintage Photo Gallery -->
+        <section class="section">
+            <h2>Example 9: Vintage Photo Gallery</h2>
+            <p class="example-description">Old-photo aesthetic gallery with sepia tone and warm vintage filtering applied consistently.</p>
+
+            <div class="example-showcase">
+                <div class="vintage-gallery">
+                    <div class="vintage-photo">📸</div>
+                    <div class="vintage-photo">🎞️</div>
+                    <div class="vintage-photo">🖼️</div>
+                    <div class="vintage-photo">📷</div>
+                    <div class="vintage-photo">🎬</div>
+                    <div class="vintage-photo">🌅</div>
+                </div>
+            </div>
+
+            <h3>CSS Vintage Filter</h3>
+            <div class="code-block">
+.vintage-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.vintage-photo {
+    height: 150px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #8B7355, #D2B48C);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    filter: sepia(60%) saturate(50%) brightness(90%);
+    transition: filter 0.3s ease;
+    border: 3px solid #8B7355;
+}
+
+.vintage-photo:hover {
+    filter: sepia(40%) saturate(100%) brightness(100%);
+}
+            </div>
+        </section>
+
+        <!-- Example 10: Interactive Filter Control -->
+        <section class="section">
+            <h2>Example 10: Interactive Filter Control Sliders</h2>
+            <p class="example-description">Real-time filter adjustment using range sliders—perfect for image editors or design tools.</p>
+
+            <div class="example-showcase">
+                <div class="filter-control-demo">
+                    <div class="control-group">
+                        <label class="control-label">Brightness: <span id="brightnessValue">100</span>%</label>
+                        <input type="range" class="control-input" id="brightnessSlider" min="0" max="200" value="100" oninput="updateFilter()">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Contrast: <span id="contrastValue">100</span>%</label>
+                        <input type="range" class="control-input" id="contrastSlider" min="0" max="200" value="100" oninput="updateFilter()">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Saturation: <span id="saturationValue">100</span>%</label>
+                        <input type="range" class="control-input" id="saturationSlider" min="0" max="200" value="100" oninput="updateFilter()">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Blur: <span id="blurValue">0</span>px</label>
+                        <input type="range" class="control-input" id="blurSlider" min="0" max="20" value="0" oninput="updateFilter()">
+                    </div>
+                    <div class="filter-preview" id="filterPreview">🎨</div>
+                </div>
+            </div>
+
+            <h3>HTML & JavaScript</h3>
+            <div class="code-block-html">
+&lt;div class="filter-preview" id="filterPreview"&gt;🎨&lt;/div&gt;
+&lt;input type="range" id="brightnessSlider" min="0" max="200" value="100" oninput="updateFilter()"&gt;
+&lt;input type="range" id="contrastSlider" min="0" max="200" value="100" oninput="updateFilter()"&gt;
+&lt;!-- More sliders --&gt;
+            </div>
+
+            <h3>JavaScript Filter Update</h3>
+            <div class="code-block">
+function updateFilter() {
+    const brightness = document.getElementById('brightnessSlider').value;
+    const contrast = document.getElementById('contrastSlider').value;
+    const saturation = document.getElementById('saturationSlider').value;
+    const blur = document.getElementById('blurSlider').value;
+    
+    const filterString = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) blur(${blur}px)`;
+    document.getElementById('filterPreview').style.filter = filterString;
+    
+    document.getElementById('brightnessValue').textContent = brightness;
+    document.getElementById('contrastValue').textContent = contrast;
+    document.getElementById('saturationValue').textContent = saturation;
+    document.getElementById('blurValue').textContent = blur;
+}
+            </div>
+
+            <script>
+                function updateFilter() {
+                    const brightness = document.getElementById('brightnessSlider').value;
+                    const contrast = document.getElementById('contrastSlider').value;
+                    const saturation = document.getElementById('saturationSlider').value;
+                    const blur = document.getElementById('blurSlider').value;
+                    
+                    const filterString = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) blur(${blur}px)`;
+                    document.getElementById('filterPreview').style.filter = filterString;
+                    
+                    document.getElementById('brightnessValue').textContent = brightness;
+                    document.getElementById('contrastValue').textContent = contrast;
+                    document.getElementById('saturationValue').textContent = saturation;
+                    document.getElementById('blurValue').textContent = blur;
+                }
+            </script>
+
+            <div class="info-box">
+                <strong>Use Case:</strong> Image editors, photo filters, real-time effect preview tools. Users can instantly see how filters affect their images.
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="section">
+            <h2>Summary of Practical Patterns</h2>
+
+            <table style="width: 100%; margin: 2rem 0; border-collapse: collapse;">
+                <thead style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white;">
+                    <tr>
+                        <th style="padding: 1rem; text-align: left;">Example</th>
+                        <th style="padding: 1rem; text-align: left;">Use Case</th>
+                        <th style="padding: 1rem; text-align: left;">Key Filters</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Gallery Hover</td>
+                        <td style="padding: 1rem;">Portfolio, product showcase</td>
+                        <td style="padding: 1rem;">brightness, contrast</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Card Effects</td>
+                        <td style="padding: 1rem;">Component interactions</td>
+                        <td style="padding: 1rem;">blur, grayscale, sepia, shadow</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Button States</td>
+                        <td style="padding: 1rem;">UI controls</td>
+                        <td style="padding: 1rem;">brightness, grayscale, opacity</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Image Effects</td>
+                        <td style="padding: 1rem;">Photo filters</td>
+                        <td style="padding: 1rem;">sepia, saturate, hue-rotate</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Loading Animation</td>
+                        <td style="padding: 1rem;">Loading indicators</td>
+                        <td style="padding: 1rem;">brightness, hue-rotate</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Focus/Blur</td>
+                        <td style="padding: 1rem;">Gallery interaction</td>
+                        <td style="padding: 1rem;">blur, brightness</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Dark Mode</td>
+                        <td style="padding: 1rem;">Theme toggle</td>
+                        <td style="padding: 1rem;">invert, hue-rotate</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Disabled States</td>
+                        <td style="padding: 1rem;">UI feedback</td>
+                        <td style="padding: 1rem;">grayscale, brightness, opacity</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Vintage Photos</td>
+                        <td style="padding: 1rem;">Themed galleries</td>
+                        <td style="padding: 1rem;">sepia, saturate, brightness</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem;">Filter Control</td>
+                        <td style="padding: 1rem;">Image editor</td>
+                        <td style="padding: 1rem;">All filters</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <strong>Key Takeaways:</strong>
+                <ul style="margin-top: 1rem; margin-left: 1.5rem;">
+                    <li>✓ Filters work on hover, focus, and active states</li>
+                    <li>✓ Combine filters for complex effects</li>
+                    <li>✓ Animate filters with smooth transitions</li>
+                    <li>✓ Use JavaScript for interactive control</li>
+                    <li>✓ Always provide fallbacks for older browsers</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <p>CSS Filter Properties: Practical Examples • Part of the CSS Learning Suite</p>
+            <p>Browser Support: Chrome 18+, Firefox 35+, Safari 6+, Edge 12+</p>
+            <p>Create • Experiment • Master CSS Filters</p>
+        </footer>
+    </div>
+</body>
+</html>

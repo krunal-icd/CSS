@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Transform 3D Properties: Complete Guide</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.5s ease;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.5em;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 0.95em;
+        }
+
+        .property-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-md);
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .property-table td {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .property-table tr:hover {
+            background: var(--bg-light);
+            transition: var(--transition);
+        }
+
+        .code-block {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #222;
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .demo-box {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 300px;
+            perspective: 1000px;
+        }
+
+        .demo-box h4 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.1em;
+        }
+
+        .demo-box p {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .transform-3d-demo {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: var(--spacing-md) auto;
+            transition: all 0.8s ease;
+        }
+
+        .demo-box:hover .transform-3d-demo {
+            transform: rotateY(45deg);
+        }
+
+        .demo-rotateX:hover {
+            transform: rotateX(45deg);
+        }
+
+        .demo-rotateY:hover {
+            transform: rotateY(45deg);
+        }
+
+        .demo-rotateZ:hover {
+            transform: rotateZ(45deg);
+        }
+
+        .demo-rotate3d:hover {
+            transform: rotate3d(1, 1, 1, 45deg);
+        }
+
+        .demo-perspective-demo {
+            perspective: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .demo-transform-style {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            transition: transform 0.8s ease;
+            transform-style: preserve-3d;
+            margin: 0 auto;
+        }
+
+        .demo-box:hover .demo-transform-style {
+            transform: rotateY(45deg);
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9em;
+            opacity: 0.9;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cube-front {
+            background: rgba(102, 126, 234, 0.8);
+            transform: translateZ(75px);
+        }
+
+        .cube-back {
+            background: rgba(240, 147, 251, 0.8);
+            transform: rotateY(180deg) translateZ(75px);
+        }
+
+        .cube-left {
+            background: rgba(118, 75, 162, 0.8);
+            transform: rotateY(-90deg) translateZ(75px);
+        }
+
+        .cube-right {
+            background: rgba(245, 87, 108, 0.8);
+            transform: rotateY(90deg) translateZ(75px);
+        }
+
+        .cube-top {
+            background: rgba(79, 172, 254, 0.8);
+            transform: rotateX(90deg) translateZ(75px);
+        }
+
+        .cube-bottom {
+            background: rgba(67, 233, 123, 0.8);
+            transform: rotateX(-90deg) translateZ(75px);
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .note-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .quick-reference {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .quick-ref-item {
+            background: var(--bg-light);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .quick-ref-item strong {
+            color: var(--primary-color);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border-radius: 12px;
+            margin-top: var(--spacing-lg);
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .property-table {
+                font-size: 0.85em;
+            }
+
+            .property-table th,
+            .property-table td {
+                padding: var(--spacing-sm);
+            }
+
+            body {
+                padding: var(--spacing-sm);
+            }
+
+            .demo-box {
+                min-height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Transform 3D Properties: Complete Guide</h1>
+            <p>Master CSS 3D transforms for immersive visual effects. Learn rotateX, rotateY, rotateZ, perspective, transform-style, and backface-visibility for creating stunning 3D animations.</p>
+        </header>
+
+        <!-- Overview Section -->
+        <section class="section">
+            <h2>Overview</h2>
+            <p>CSS 3D transforms extend the 2D transform capabilities to create 3D effects in web browsers. You can rotate elements in 3D space, apply perspective, control how child elements render, and hide back faces.</p>
+
+            <div class="info-box">
+                <strong>Key Point:</strong> 3D transforms require a 3D rendering context. Use <code>perspective</code> on parent elements and <code>transform-style: preserve-3d</code> on containers to enable 3D space.
+            </div>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Transform Functions</td>
+                        <td>rotateX, rotateY, rotateZ, rotate3d</td>
+                        <td>3D rotation along axes</td>
+                    </tr>
+                    <tr>
+                        <td>perspective</td>
+                        <td>Length value (pixels)</td>
+                        <td>Defines 3D perspective distance</td>
+                    </tr>
+                    <tr>
+                        <td>transform-style</td>
+                        <td>flat | preserve-3d</td>
+                        <td>Enables 3D rendering for children</td>
+                    </tr>
+                    <tr>
+                        <td>backface-visibility</td>
+                        <td>visible | hidden</td>
+                        <td>Show/hide element back face</td>
+                    </tr>
+                    <tr>
+                        <td>perspective-origin</td>
+                        <td>X Y coordinates</td>
+                        <td>Sets vanishing point position</td>
+                    </tr>
+                    <tr>
+                        <td>Browser Support</td>
+                        <td>Modern browsers</td>
+                        <td>Chrome 12+, Firefox 10+, Safari 4+, Edge 12+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 3D Transform Functions Section -->
+        <section class="section">
+            <h2>3D Transform Functions</h2>
+
+            <p>Extend 2D transforms into 3D space with rotation functions along X, Y, Z axes.</p>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>Syntax</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>rotateX()</code></td>
+                        <td><code>rotateX(angle)</code></td>
+                        <td>Rotates element around X axis (horizontal flip)</td>
+                    </tr>
+                    <tr>
+                        <td><code>rotateY()</code></td>
+                        <td><code>rotateY(angle)</code></td>
+                        <td>Rotates element around Y axis (vertical flip)</td>
+                    </tr>
+                    <tr>
+                        <td><code>rotateZ()</code></td>
+                        <td><code>rotateZ(angle)</code></td>
+                        <td>Rotates element around Z axis (same as 2D rotate)</td>
+                    </tr>
+                    <tr>
+                        <td><code>rotate3d()</code></td>
+                        <td><code>rotate3d(x, y, z, angle)</code></td>
+                        <td>Rotates around custom 3D axis</td>
+                    </tr>
+                    <tr>
+                        <td><code>translateZ()</code></td>
+                        <td><code>translateZ(distance)</code></td>
+                        <td>Moves element toward/away from viewer</td>
+                    </tr>
+                    <tr>
+                        <td><code>translate3d()</code></td>
+                        <td><code>translate3d(tx, ty, tz)</code></td>
+                        <td>Combines X, Y, Z translation</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-block">
+/* 3D Rotations */
+transform: rotateX(45deg);
+transform: rotateY(45deg);
+transform: rotateZ(45deg);
+transform: rotate3d(1, 1, 1, 45deg);
+
+/* 3D Translation */
+transform: translateZ(50px);
+transform: translate3d(20px, 30px, 50px);
+
+/* Combined 3D Transforms */
+transform: rotateX(45deg) rotateY(30deg) translateZ(100px);
+            </div>
+        </section>
+
+        <!-- perspective Property Section -->
+        <section class="section">
+            <h2>perspective - Define 3D Space</h2>
+
+            <p>The <code>perspective</code> property defines how far the 3D objects are from the viewer. Lower values = more dramatic perspective. Default is <code>none</code> (no 3D).</p>
+
+            <div class="code-block">
+/* Perspective on container */
+.container {
+    perspective: 1000px;
+}
+
+/* Or as a function in transform */
+transform: perspective(1000px) rotateY(45deg);
+
+/* Perspective values */
+perspective: 500px;    /* Very dramatic */
+perspective: 1000px;   /* Standard */
+perspective: 2000px;   /* Subtle */
+perspective: none;     /* No 3D effect */
+            </div>
+
+            <h3>Perspective Values Explained</h3>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Effect</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>500px</code></td>
+                        <td>Very dramatic distortion</td>
+                        <td>Extreme 3D effects</td>
+                    </tr>
+                    <tr>
+                        <td><code>1000px</code></td>
+                        <td>Noticeable 3D perspective</td>
+                        <td>Most 3D animations</td>
+                    </tr>
+                    <tr>
+                        <td><code>1500px</code></td>
+                        <td>Subtle perspective</td>
+                        <td>Gentle 3D effects</td>
+                    </tr>
+                    <tr>
+                        <td><code>2000px+</code></td>
+                        <td>Very subtle distortion</td>
+                        <td>Almost 2D appearance</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="demo-container">
+                <div class="demo-box demo-perspective-demo" style="perspective: 500px;">
+                    <div class="transform-3d-demo">A</div>
+                    <h4>perspective: 500px</h4>
+                    <p>Dramatic 3D</p>
+                </div>
+                <div class="demo-box demo-perspective-demo" style="perspective: 1000px;">
+                    <div class="transform-3d-demo">B</div>
+                    <h4>perspective: 1000px</h4>
+                    <p>Standard 3D</p>
+                </div>
+                <div class="demo-box demo-perspective-demo" style="perspective: 2000px;">
+                    <div class="transform-3d-demo">C</div>
+                    <h4>perspective: 2000px</h4>
+                    <p>Subtle 3D</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Tip:</strong> Use 1000px as your default starting value. Adjust up (more subtle) or down (more dramatic) based on your design needs.
+            </div>
+        </section>
+
+        <!-- rotateX, rotateY, rotateZ Section -->
+        <section class="section">
+            <h2>rotateX, rotateY, rotateZ - 3D Rotations</h2>
+
+            <p>Rotate elements around the X, Y, or Z axis in 3D space. Requires <code>perspective</code> on parent to see 3D effect.</p>
+
+            <div class="code-block">
+/* Rotate around X axis (horizontal axis - flips vertically) */
+transform: rotateX(45deg);
+
+/* Rotate around Y axis (vertical axis - flips horizontally) */
+transform: rotateY(45deg);
+
+/* Rotate around Z axis (depth axis - same as 2D rotate) */
+transform: rotateZ(45deg);
+
+/* Combined rotations */
+transform: rotateX(20deg) rotateY(30deg) rotateZ(45deg);
+
+/* Full rotation animation */
+@keyframes spin3d {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box demo-rotateX">
+                    <div class="transform-3d-demo">X</div>
+                    <h4>rotateX(45deg)</h4>
+                    <p>Flip around X axis</p>
+                </div>
+                <div class="demo-box demo-rotateY">
+                    <div class="transform-3d-demo">Y</div>
+                    <h4>rotateY(45deg)</h4>
+                    <p>Flip around Y axis</p>
+                </div>
+                <div class="demo-box demo-rotateZ">
+                    <div class="transform-3d-demo">Z</div>
+                    <h4>rotateZ(45deg)</h4>
+                    <p>2D rotation</p>
+                </div>
+            </div>
+
+            <div class="note-box">
+                <strong>Remember:</strong> rotateZ is the same as 2D rotate(). rotateX and rotateY create true 3D effects that require perspective.
+            </div>
+        </section>
+
+        <!-- transform-style Section -->
+        <section class="section">
+            <h2>transform-style - Preserve 3D Space</h2>
+
+            <p>Controls how child elements are rendered. <code>preserve-3d</code> maintains 3D space for children; <code>flat</code> (default) flattens them.</p>
+
+            <div class="code-block">
+/* Enable 3D rendering for child elements */
+transform-style: preserve-3d;
+
+/* Flatten child elements (default) */
+transform-style: flat;
+
+/* Use case: 3D cube made of child elements */
+.cube {
+    transform-style: preserve-3d;
+    transform: rotateX(20deg) rotateY(30deg);
+}
+
+.cube .face {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
+
+.cube .front { transform: translateZ(50px); }
+.cube .back { transform: rotateY(180deg) translateZ(50px); }
+.cube .right { transform: rotateY(90deg) translateZ(50px); }
+.cube .left { transform: rotateY(-90deg) translateZ(50px); }
+.cube .top { transform: rotateX(90deg) translateZ(50px); }
+.cube .bottom { transform: rotateX(-90deg) translateZ(50px); }
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <div class="demo-transform-style">
+                        <div class="cube-face cube-front">Front</div>
+                        <div class="cube-face cube-back">Back</div>
+                        <div class="cube-face cube-left">Left</div>
+                        <div class="cube-face cube-right">Right</div>
+                        <div class="cube-face cube-top">Top</div>
+                        <div class="cube-face cube-bottom">Bottom</div>
+                    </div>
+                    <h4>transform-style: preserve-3d</h4>
+                    <p>3D cube - hover to rotate</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Key Concept:</strong> Without <code>transform-style: preserve-3d</code>, child transforms are calculated in a flattened 2D space. With it, children maintain their 3D positions.
+            </div>
+        </section>
+
+        <!-- backface-visibility Section -->
+        <section class="section">
+            <h2>backface-visibility - Hide Back Faces</h2>
+
+            <p>Controls whether an element's back face is visible when rotated away from the viewer.</p>
+
+            <div class="code-block">
+/* Show back face (default) */
+backface-visibility: visible;
+
+/* Hide back face */
+backface-visibility: hidden;
+
+/* Use case: Flip card - hide back during reveal */
+.card-front {
+    backface-visibility: hidden;
+}
+
+.card-back {
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+}
+
+.card {
+    perspective: 1000px;
+}
+
+.card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+            </div>
+
+            <h3>Common Use Cases</h3>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li><strong>Flip Cards:</strong> Hide the back of front card and front of back card</li>
+                <li><strong>3D Cubes:</strong> Hide faces not visible from viewer angle</li>
+                <li><strong>Two-Sided Elements:</strong> Display only the correct side based on rotation</li>
+                <li><strong>Performance:</strong> Hiding back faces can improve rendering performance</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Tip:</strong> Use <code>backface-visibility: hidden</code> on both sides of a flipping card to avoid seeing the "back" of the opposite side during animation.
+            </div>
+        </section>
+
+        <!-- perspective-origin Section -->
+        <section class="section">
+            <h2>perspective-origin - Set Vanishing Point</h2>
+
+            <p>Defines the X and Y coordinates where 3D elements appear to vanish (the viewer's eye position).</p>
+
+            <div class="code-block">
+/* Predefined values */
+perspective-origin: center;           /* 50% 50% */
+perspective-origin: top left;         /* 0% 0% */
+perspective-origin: bottom right;     /* 100% 100% */
+
+/* Custom coordinates */
+perspective-origin: 30% 60%;          /* percentages */
+perspective-origin: 100px 50px;       /* pixels */
+
+/* Only X or Y */
+perspective-origin: right;            /* 100% 50% */
+perspective-origin: bottom;           /* 50% 100% */
+            </div>
+
+            <h3>Common perspective-origin Values</h3>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Equivalent</th>
+                        <th>Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>center</code></td>
+                        <td><code>50% 50%</code></td>
+                        <td>Viewer at center (default)</td>
+                    </tr>
+                    <tr>
+                        <td><code>top left</code></td>
+                        <td><code>0% 0%</code></td>
+                        <td>Viewer at top-left corner</td>
+                    </tr>
+                    <tr>
+                        <td><code>bottom right</code></td>
+                        <td><code>100% 100%</code></td>
+                        <td>Viewer at bottom-right corner</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <strong>Effect:</strong> Changing perspective-origin changes where the viewer appears to be positioned, which affects how 3D elements distort.
+            </div>
+        </section>
+
+        <!-- Best Practices Section -->
+        <section class="section">
+            <h2>Best Practices</h2>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <h4>✓ Use perspective on Parent</h4>
+                    <p>Apply perspective to container, not individual elements, for consistent 3D space.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Enable transform-style</h4>
+                    <p>Use <code>transform-style: preserve-3d</code> on elements with 3D children.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Start with 1000px Perspective</h4>
+                    <p>Use 1000px as default, adjust based on effect intensity needed.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Test Performance</h4>
+                    <p>3D transforms can impact performance. Test on mobile and lower-end devices.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Hide Back Faces</h4>
+                    <p>Use <code>backface-visibility: hidden</code> for flip cards and two-sided elements.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Consider Accessibility</h4>
+                    <p>Extreme 3D effects can disorient some users. Provide motion preferences option.</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>Performance Warning:</strong> 3D transforms require GPU acceleration. Complex 3D scenes with many elements can cause jank. Use DevTools to profile.
+            </div>
+        </section>
+
+        <!-- Browser Support Section -->
+        <section class="section">
+            <h2>Browser Support & Compatibility</h2>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Browser</th>
+                        <th>Version</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chrome</td>
+                        <td>12+</td>
+                        <td>✓ Full Support</td>
+                        <td>Excellent 3D support and performance</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td>10+</td>
+                        <td>✓ Full Support</td>
+                        <td>Complete 3D implementation</td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>4+</td>
+                        <td>✓ Full Support</td>
+                        <td>Good support; may need -webkit- prefix</td>
+                    </tr>
+                    <tr>
+                        <td>Edge</td>
+                        <td>12+</td>
+                        <td>✓ Full Support</td>
+                        <td>All modern versions supported</td>
+                    </tr>
+                    <tr>
+                        <td>IE 10</td>
+                        <td>N/A</td>
+                        <td>⚠ Partial</td>
+                        <td>Basic 3D support; some limitations</td>
+                    </tr>
+                    <tr>
+                        <td>IE 9 and below</td>
+                        <td>N/A</td>
+                        <td>✗ No Support</td>
+                        <td>Use fallbacks</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Feature Detection</h3>
+
+            <div class="code-block">
+/* CSS Feature Query */
+@supports (transform: rotateY(45deg)) {
+    .element {
+        perspective: 1000px;
+        transform: rotateY(45deg);
+    }
+}
+
+/* JavaScript Detection */
+const supports3D = CSS.supports('transform', 'rotateY(45deg)');
+if (supports3D) {
+    element.classList.add('has-3d');
+}
+            </div>
+        </section>
+
+        <!-- Advanced Techniques Section -->
+        <section class="section">
+            <h2>Advanced 3D Techniques</h2>
+
+            <h3>Technique 1: 3D Cube</h3>
+
+            <div class="code-block">
+.cube {
+    width: 100px;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.cube-face {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
+
+.front { transform: translateZ(50px); }
+.back { transform: rotateY(180deg) translateZ(50px); }
+.right { transform: rotateY(90deg) translateZ(50px); }
+.left { transform: rotateY(-90deg) translateZ(50px); }
+.top { transform: rotateX(90deg) translateZ(50px); }
+.bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+@keyframes spin3d {
+    from { transform: rotateX(0) rotateY(0deg); }
+    to { transform: rotateX(360deg) rotateY(360deg); }
+}
+            </div>
+
+            <h3>Technique 2: Flip Card</h3>
+
+            <div class="code-block">
+.flip-card {
+    perspective: 1000px;
+    width: 200px;
+    height: 300px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.flip-card-back {
+    transform: rotateY(180deg);
+}
+            </div>
+
+            <h3>Technique 3: 3D Text Effect</h3>
+
+            <div class="code-block">
+.text-3d {
+    perspective: 800px;
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.text-3d:hover {
+    transform: rotateX(20deg) rotateY(30deg);
+}
+            </div>
+
+            <h3>Technique 4: Parallax Depth</h3>
+
+            <div class="code-block">
+.parallax-container {
+    perspective: 1000px;
+}
+
+.parallax-layer-1 { transform: translateZ(0px); }
+.parallax-layer-2 { transform: translateZ(-50px); }
+.parallax-layer-3 { transform: translateZ(-100px); }
+
+/* Layers further back move less during scroll */
+            </div>
+        </section>
+
+        <!-- Quick Reference Section -->
+        <section class="section">
+            <h2>Quick Reference Cheat Sheet</h2>
+
+            <div class="quick-reference">
+                <div class="quick-ref-item">
+                    <strong>3D Rotations</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+transform: rotateX(45deg);
+transform: rotateY(45deg);
+transform: rotateZ(45deg);
+transform: rotate3d(1, 1, 1, 45deg);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Perspective Setup</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+.container {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>3D Translation</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+transform: translateZ(50px);
+transform: translate3d(20px, 30px, 50px);
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Flip Card Setup</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+backface-visibility: hidden;
+.card:hover {
+    transform: rotateY(180deg);
+}
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Vanishing Point</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+perspective-origin: center;
+perspective-origin: top left;
+perspective-origin: 30% 60%;
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>3D Cube Faces</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+.front { transform: translateZ(50px); }
+.back { transform: rotateY(180deg) translateZ(50px); }
+.right { transform: rotateY(90deg) translateZ(50px); }
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section class="section">
+            <h2>Summary</h2>
+
+            <p>CSS 3D transforms create impressive, immersive visual effects. Key takeaways:</p>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li>✓ Use <code>perspective</code> on parent elements to enable 3D space</li>
+                <li>✓ Apply <code>transform-style: preserve-3d</code> to maintain 3D rendering for children</li>
+                <li>✓ Use <code>rotateX</code>, <code>rotateY</code>, <code>rotateZ</code> for 3D rotations</li>
+                <li>✓ Use <code>backface-visibility: hidden</code> for flip cards and two-sided elements</li>
+                <li>✓ Start with 1000px perspective as default; adjust based on needs</li>
+                <li>✓ Combine 2D and 3D transforms for complex effects</li>
+                <li>✓ Test performance on lower-end devices</li>
+                <li>✓ Respect <code>prefers-reduced-motion</code> for accessibility</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Next Steps:</strong> Create 3D cubes, flip cards, and parallax effects. Combine 3D transforms with animations for dynamic, engaging experiences. Experiment with different perspective values and transform-origin positions.
+            </div>
+        </section>
+
+        <footer>
+            <p>CSS Transform 3D Properties Complete Guide • Created for CSS Learning Suite</p>
+            <p>Browser Support: Chrome 12+, Firefox 10+, Safari 4+, Edge 12+</p>
+            <p>Learn • Practice • Master CSS 3D Transforms</p>
+        </footer>
+    </div>
+</body>
+</html>

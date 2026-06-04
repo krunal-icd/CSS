@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animation-Fill-Mode Property - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 12px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin: 30px 0 15px 0;
+        }
+
+        h4 {
+            color: #667eea;
+            font-size: 1.1em;
+            margin: 20px 0 10px 0;
+        }
+
+        p, li {
+            font-size: 1em;
+            margin-bottom: 12px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        ul, ol {
+            margin-left: 28px;
+            margin-bottom: 20px;
+        }
+
+        .syntax-block {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .keyword { color: #ff79c6; }
+        .string { color: #f1fa8c; }
+        .property { color: #8be9fd; }
+        .value { color: #50fa7b; }
+        .comment { color: #6272a4; }
+        .number { color: #bd93f9; }
+
+        .demo-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 40px;
+            border-radius: 12px;
+            margin: 35px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .demo-title {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .property-table th {
+            background: #667eea;
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .property-table td {
+            padding: 15px 18px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .property-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+
+        .tag.important {
+            background: #f44336;
+        }
+
+        .tag.note {
+            background: #2196F3;
+        }
+
+        .tag.success {
+            background: #4CAF50;
+        }
+
+        .highlight {
+            background: #fff9e6;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .warning {
+            background: #ffe0e0;
+            border-left: 4px solid #f44336;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .success {
+            background: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 25px 0;
+        }
+
+        .comparison-card {
+            background: #f5f5f5;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        /* Animation Demos */
+        .demo-box {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9em;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Demo: none fill-mode */
+        .demo-none {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            animation: slideDemo 2s ease-in-out 3s 1 none;
+        }
+
+        /* Demo: forwards fill-mode */
+        .demo-forwards {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            animation: slideDemo 2s ease-in-out 3s 1 forwards;
+        }
+
+        /* Demo: backwards fill-mode */
+        .demo-backwards {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            animation: slideDemo 2s ease-in-out 3s 1 backwards;
+        }
+
+        /* Demo: both fill-mode */
+        .demo-both {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            animation: slideDemo 2s ease-in-out 3s 1 both;
+        }
+
+        @keyframes slideDemo {
+            0% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(150px);
+                opacity: 0.5;
+            }
+        }
+
+        /* State indicators */
+        .state-label {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-top: 10px;
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .demo-item {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .demo-item h4 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .demo-item p {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 8px 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+
+        button.small {
+            font-size: 0.85em;
+            padding: 6px 12px;
+        }
+
+        .browser-support {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .browser-support h4 {
+            color: #ffc107;
+            margin-bottom: 18px;
+        }
+
+        .support-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .support-item {
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #4CAF50;
+            font-size: 0.95em;
+        }
+
+        .support-item.partial {
+            border-left-color: #ff9800;
+        }
+
+        .example-box {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            padding: 15px 20px;
+            background: #f5f5f5;
+            margin-bottom: 12px;
+            border-left: 3px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .timeline-item strong {
+            color: #667eea;
+        }
+
+        .visual-diagram {
+            background: #f9f9f9;
+            border: 2px dashed #667eea;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .diagram-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .diagram-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .state-box {
+            padding: 8px 15px;
+            background: #667eea;
+            color: white;
+            border-radius: 4px;
+            margin: 0 5px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .state-box.inactive {
+            background: #ccc;
+        }
+
+        .arrow {
+            color: #667eea;
+            font-size: 1.2em;
+            margin: 0 10px;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 25px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Animation-Fill-Mode Property</h1>
+            <p>Complete Guide to Element State Before and After Animations</p>
+        </header>
+
+        <div class="content">
+            <!-- Introduction -->
+            <section>
+                <h2>What is Animation-Fill-Mode?</h2>
+                <p>The <span class="highlight">animation-fill-mode</span> property specifies how a CSS animation applies styles to its target element before and after the animation runs. It controls whether the element returns to its original state or maintains the styles from the animation keyframes.</p>
+
+                <div class="success">
+                    <strong>Key Purpose:</strong> Animation-fill-mode determines if your animated element "sticks" to its final state or "resets" after animation completes. This is crucial for creating polished UI interactions.
+                </div>
+
+                <p>Without animation-fill-mode, elements often "snap" back to their original state, creating an unpolished appearance. With it, you can control exactly how the element should behave.</p>
+            </section>
+
+            <!-- Syntax Section -->
+            <section>
+                <h2>Syntax & Property Values</h2>
+
+                <h3>Basic Syntax</h3>
+                <div class="syntax-block">
+animation-fill-mode: none | forwards | backwards | both;
+                </div>
+
+                <h3>All Animation-Fill-Mode Values</h3>
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Before Animation</th>
+                            <th>After Animation</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag">none</span></td>
+                            <td>Original state</td>
+                            <td>Original state</td>
+                            <td>Animation loops infinitely</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">forwards</span></td>
+                            <td>Original state</td>
+                            <td>Final keyframe (100%)</td>
+                            <td>Keep final animation state</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">backwards</span></td>
+                            <td>First keyframe (0%)</td>
+                            <td>Original state</td>
+                            <td>Start from animation first frame</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">both</span></td>
+                            <td>First keyframe (0%)</td>
+                            <td>Final keyframe (100%)</td>
+                            <td>Full animation state handling</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Interactive Demonstrations -->
+            <section>
+                <h2>Interactive Demonstrations</h2>
+                <p>Click "Start Animation" buttons below to see how each fill-mode value works. Notice the element's state before and after the 3-second delay and 2-second animation.</p>
+
+                <div class="demo-section">
+                    <div class="demo-title">🎬 Animation Fill-Mode Comparison (3s delay, 2s animation)</div>
+
+                    <div class="demo-container">
+                        <!-- Demo: none -->
+                        <div class="demo-item">
+                            <h4>fill-mode: none</h4>
+                            <p>No fill applied. Element returns to original state.</p>
+                            <div class="demo-box demo-none" id="demo-none">
+                                <div>none</div>
+                            </div>
+                            <p style="font-size: 0.85em; color: #999;">
+                                <strong>Behavior:</strong><br>
+                                Before: Original<br>
+                                After: Original
+                            </p>
+                        </div>
+
+                        <!-- Demo: forwards -->
+                        <div class="demo-item">
+                            <h4>fill-mode: forwards</h4>
+                            <p>Keeps final animation state after completion.</p>
+                            <div class="demo-box demo-forwards" id="demo-forwards">
+                                <div>forwards</div>
+                            </div>
+                            <p style="font-size: 0.85em; color: #999;">
+                                <strong>Behavior:</strong><br>
+                                Before: Original<br>
+                                After: Animated
+                            </p>
+                        </div>
+
+                        <!-- Demo: backwards -->
+                        <div class="demo-item">
+                            <h4>fill-mode: backwards</h4>
+                            <p>Applies first keyframe before animation starts.</p>
+                            <div class="demo-box demo-backwards" id="demo-backwards">
+                                <div>backwards</div>
+                            </div>
+                            <p style="font-size: 0.85em; color: #999;">
+                                <strong>Behavior:</strong><br>
+                                Before: Animated<br>
+                                After: Original
+                            </p>
+                        </div>
+
+                        <!-- Demo: both -->
+                        <div class="demo-item">
+                            <h4>fill-mode: both</h4>
+                            <p>Applies animation state before and after.</p>
+                            <div class="demo-box demo-both" id="demo-both">
+                                <div>both</div>
+                            </div>
+                            <p style="font-size: 0.85em; color: #999;">
+                                <strong>Behavior:</strong><br>
+                                Before: Animated<br>
+                                After: Animated
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="info-box" style="margin-top: 30px;">
+                        <strong>🔄 How to See the Difference:</strong> The delay (3s) is intentional! During the delay period, you can see how each fill-mode handles the element's appearance. Watch carefully:
+                        <ul style="margin-top: 10px;">
+                            <li><strong>none:</strong> Stays at original position</li>
+                            <li><strong>forwards:</strong> Stays at original position, then sticks after animation</li>
+                            <li><strong>backwards:</strong> Jumps to animated position during delay</li>
+                            <li><strong>both:</strong> Jumps to animated position during delay and stays after</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Deep Dive: Each Value -->
+            <section>
+                <h2>Understanding Each Fill-Mode Value</h2>
+
+                <h3>1. animation-fill-mode: none (Default)</h3>
+                <div class="visual-diagram">
+                    <div class="diagram-label">Timeline: none</div>
+                    <div class="diagram-row">
+                        <span>Before (Delay)</span>
+                        <div class="state-box inactive">Original</div>
+                        <span class="arrow">→</span>
+                        <div class="state-box">Animation</div>
+                        <span class="arrow">→</span>
+                        <div class="state-box inactive">Original</div>
+                        <span>After</span>
+                    </div>
+                </div>
+
+                <p><strong>What it does:</strong> The element stays in its original CSS state before the animation starts. After the animation completes, it immediately returns to the original state.</p>
+
+                <h4>When to use:</h4>
+                <ul>
+                    <li>Infinite animations (loops continuously)</li>
+                    <li>Temporary visual effects like hover animations</li>
+                    <li>Interactive feedback that shouldn't persist</li>
+                </ul>
+
+                <h4>Example:</h4>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">animation</span>: <span class="value">spin 2s linear infinite</span>;
+  <span class="property">animation-fill-mode</span>: <span class="value">none</span>; <span class="comment">/* Default */</span>
+}
+
+<span class="keyword">@keyframes spin</span> {
+  <span class="number">0%</span> { <span class="property">transform</span>: <span class="value">rotate(0deg)</span>; }
+  <span class="number">100%</span> { <span class="property">transform</span>: <span class="value">rotate(360deg)</span>; }
+}
+                </div>
+
+                <hr style="margin: 40px 0; border: none; border-top: 2px solid #e0e0e0;">
+
+                <h3>2. animation-fill-mode: forwards</h3>
+                <div class="visual-diagram">
+                    <div class="diagram-label">Timeline: forwards</div>
+                    <div class="diagram-row">
+                        <span>Before (Delay)</span>
+                        <div class="state-box inactive">Original</div>
+                        <span class="arrow">→</span>
+                        <div class="state-box">Animation</div>
+                        <span class="arrow">→</span>
+                        <div class="state-box">Final State</div>
+                        <span>After</span>
+                    </div>
+                </div>
+
+                <p><strong>What it does:</strong> The element stays in its original state before the animation. After the animation finishes, it <strong>remains in the final keyframe state (100%)</strong>.</p>
+
+                <h4>When to use:</h4>
+                <ul>
+                    <li>Showing information after animation completes</li>
+                    <li>Dropdown menus expanding and staying open</li>
+                    <li>Elements sliding into place and staying there</li>
+                    <li>Most common fill-mode for one-time animations</li>
+                </ul>
+
+                <h4>Example: Slide-in Navigation</h4>
+                <div class="code-example">
+<span class="keyword">.nav-menu</span> {
+  <span class="property">transform</span>: <span class="value">translateX(-100%)</span>;
+  <span class="property">animation</span>: <span class="value">slideIn 0.5s ease-out 1</span>;
+  <span class="property">animation-fill-mode</span>: <span class="value">forwards</span>;
+  <span class="comment">/* Menu stays visible after animation */</span>
+}
+
+<span class="keyword">@keyframes slideIn</span> {
+  <span class="number">0%</span> { <span class="property">transform</span>: <span class="value">translateX(-100%)</span>; }
+  <span class="number">100%</span> { <span class="property">transform</span>: <span class="value">translateX(0)</span>; }
+}
+                </div>
+
+                <hr style="margin: 40px 0; border: none; border-top: 2px solid #e0e0e0;">
+
+                <h3>3. animation-fill-mode: backwards</h3>
+                <div class="visual-diagram">
+                    <div class="diagram-label">Timeline: backwards</div>
+                    <div class="diagram-row">
+                        <span>Before (Delay)</span>
+                        <div class="state-box">First Frame</div>
+                        <span class="arrow">→</span>
+                        <div class="state-box">Animation</div>
+                        <span class="arrow">→</span>
+                        <div class="state-box inactive">Original</div>
+                        <span>After</span>
+                    </div>
+                </div>
+
+                <p><strong>What it does:</strong> The element immediately applies the <strong>first keyframe state (0%)</strong> when defined, even during the delay period. After animation completes, it returns to the original state.</p>
+
+                <h4>When to use:</h4>
+                <ul>
+                    <li>Setting up initial animation state before delay ends</li>
+                    <li>Page load animations with delays</li>
+                    <li>Preparing element for animation visibility</li>
+                    <li>Avoiding "jump" effects during animation startup</li>
+                </ul>
+
+                <h4>Example: Fade In on Page Load</h4>
+                <div class="code-example">
+<span class="keyword">.content</span> {
+  <span class="property">opacity</span>: <span class="value">0</span>;
+  <span class="property">animation</span>: <span class="value">fadeIn 0.6s ease-in</span>;
+  <span class="property">animation-delay</span>: <span class="value">0.3s</span>;
+  <span class="property">animation-fill-mode</span>: <span class="value">backwards</span>;
+}
+
+<span class="keyword">@keyframes fadeIn</span> {
+  <span class="number">0%</span> { <span class="property">opacity</span>: <span class="value">0</span>; }
+  <span class="number">100%</span> { <span class="property">opacity</span>: <span class="value">1</span>; }
+}
+                </div>
+
+                <hr style="margin: 40px 0; border: none; border-top: 2px solid #e0e0e0;">
+
+                <h3>4. animation-fill-mode: both</h3>
+                <div class="visual-diagram">
+                    <div class="diagram-label">Timeline: both</div>
+                    <div class="diagram-row">
+                        <span>Before (Delay)</span>
+                        <div class="state-box">First Frame</div>
+                        <span class="arrow">→</span>
+                        <div class="state-box">Animation</div>
+                        <span class="arrow">→</span>
+                        <div class="state-box">Final State</div>
+                        <span>After</span>
+                    </div>
+                </div>
+
+                <p><strong>What it does:</strong> Combines <span class="highlight">backwards</span> and <span class="highlight">forwards</span>. Applies the first keyframe before animation and remains in the final keyframe state after.</p>
+
+                <h4>When to use:</h4>
+                <ul>
+                    <li>Maximum control over element state at all times</li>
+                    <li>Complex animations requiring full state management</li>
+                    <li>Multi-step sequential animations</li>
+                    <li>Critical user interactions where precision matters</li>
+                </ul>
+
+                <h4>Example: Modal Opening Animation</h4>
+                <div class="code-example">
+<span class="keyword">.modal</span> {
+  <span class="property">opacity</span>: <span class="value">0</span>;
+  <span class="property">transform</span>: <span class="value">scale(0.8)</span>;
+  <span class="property">animation</span>: <span class="value">modalOpen 0.4s ease-out 0.2s</span>;
+  <span class="property">animation-fill-mode</span>: <span class="value">both</span>;
+  <span class="comment">/* Modal appears after delay and stays visible */</span>
+}
+
+<span class="keyword">@keyframes modalOpen</span> {
+  <span class="number">0%</span> {
+    <span class="property">opacity</span>: <span class="value">0</span>;
+    <span class="property">transform</span>: <span class="value">scale(0.8)</span>;
+  }
+  <span class="number">100%</span> {
+    <span class="property">opacity</span>: <span class="value">1</span>;
+    <span class="property">transform</span>: <span class="value">scale(1)</span>;
+  }
+}
+                </div>
+            </section>
+
+            <!-- Practical Comparison -->
+            <section>
+                <h2>Side-by-Side Comparison</h2>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Use forwards for:</h4>
+                        <ul>
+                            <li>✓ Slide-in menus</li>
+                            <li>✓ Reveal animations</li>
+                            <li>✓ Open overlays</li>
+                            <li>✓ Show/hide transitions</li>
+                            <li>✓ Single animations</li>
+                            <li>✓ Most common choice</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>Use both for:</h4>
+                        <ul>
+                            <li>✓ Complex multi-step</li>
+                            <li>✓ Delayed animations</li>
+                            <li>✓ Modal dialogs</li>
+                            <li>✓ Full state control</li>
+                            <li>✓ Choreographed sequences</li>
+                            <li>✓ Maximum precision</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Use backwards for:</h4>
+                        <ul>
+                            <li>✓ Hiding initial state</li>
+                            <li>✓ With animation-delay</li>
+                            <li>✓ Zero initial opacity</li>
+                            <li>✓ Page load effects</li>
+                            <li>✓ Preventing jumps</li>
+                            <li>✓ Less common</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>Use none for:</h4>
+                        <ul>
+                            <li>✓ Infinite loops</li>
+                            <li>✓ Spinners/loaders</li>
+                            <li>✓ Pulse effects</li>
+                            <li>✓ Background animations</li>
+                            <li>✓ Default behavior OK</li>
+                            <li>✓ Most common with infinite</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Real-World Examples -->
+            <section>
+                <h2>Real-World Practical Examples</h2>
+
+                <h3>Example 1: Button Click Feedback (forwards)</h3>
+                <div class="example-box">
+                    <p><strong>Use Case:</strong> Button scales and remains slightly enlarged briefly.</p>
+                </div>
+                <div class="code-example">
+<span class="keyword">button</span> {
+  <span class="property">padding</span>: <span class="value">10px 20px</span>;
+  <span class="property">transition</span>: <span class="value">transform 0.2s</span>;
+}
+
+<span class="keyword">button:active</span> {
+  <span class="property">animation</span>: <span class="value">buttonPress 0.3s ease-out 1 forwards</span>;
+}
+
+<span class="keyword">@keyframes buttonPress</span> {
+  <span class="number">0%</span> { <span class="property">transform</span>: <span class="value">scale(1)</span>; }
+  <span class="number">100%</span> { <span class="property">transform</span>: <span class="value">scale(1.05)</span>; }
+}
+                </div>
+
+                <h3>Example 2: Page Content Reveal (both)</h3>
+                <div class="example-box">
+                    <p><strong>Use Case:</strong> Content fades in from top with delay and stays visible.</p>
+                </div>
+                <div class="code-example">
+<span class="keyword">.page-content</span> {
+  <span class="property">opacity</span>: <span class="value">0</span>;
+  <span class="property">transform</span>: <span class="value">translateY(20px)</span>;
+  <span class="property">animation</span>: <span class="value">contentReveal 0.6s ease-out 0.3s 1 both</span>;
+}
+
+<span class="keyword">@keyframes contentReveal</span> {
+  <span class="number">0%</span> {
+    <span class="property">opacity</span>: <span class="value">0</span>;
+    <span class="property">transform</span>: <span class="value">translateY(20px)</span>;
+  }
+  <span class="number">100%</span> {
+    <span class="property">opacity</span>: <span class="value">1</span>;
+    <span class="property">transform</span>: <span class="value">translateY(0)</span>;
+  }
+}
+                </div>
+
+                <h3>Example 3: Infinite Loading Spinner (none)</h3>
+                <div class="example-box">
+                    <p><strong>Use Case:</strong> Spinner rotates infinitely and never stops.</p>
+                </div>
+                <div class="code-example">
+<span class="keyword">.spinner</span> {
+  <span class="property">width</span>: <span class="value">50px</span>;
+  <span class="property">height</span>: <span class="value">50px</span>;
+  <span class="property">border</span>: <span class="value">5px solid #f3f3f3</span>;
+  <span class="property">border-top</span>: <span class="value">5px solid #667eea</span>;
+  <span class="property">border-radius</span>: <span class="value">50%</span>;
+  <span class="property">animation</span>: <span class="value">spin 1s linear infinite none</span>;
+}
+
+<span class="keyword">@keyframes spin</span> {
+  <span class="number">0%</span> { <span class="property">transform</span>: <span class="value">rotate(0deg)</span>; }
+  <span class="number">100%</span> { <span class="property">transform</span>: <span class="value">rotate(360deg)</span>; }
+}
+                </div>
+
+                <h3>Example 4: Modal Entrance (backwards)</h3>
+                <div class="example-box">
+                    <p><strong>Use Case:</strong> Modal hidden initially during delay, then visible after entering from animation.</p>
+                </div>
+                <div class="code-example">
+<span class="keyword">.modal-overlay</span> {
+  <span class="property">opacity</span>: <span class="value">0</span>;
+  <span class="property">animation</span>: <span class="value">fadeIn 0.3s ease 1 backwards</span>;
+}
+
+<span class="keyword">.modal</span> {
+  <span class="property">transform</span>: <span class="value">scale(0.9)</span>;
+  <span class="property">animation</span>: <span class="value">scaleIn 0.4s ease 0.15s 1 backwards</span>;
+}
+
+<span class="keyword">@keyframes fadeIn</span> {
+  <span class="number">0%</span> { <span class="property">opacity</span>: <span class="value">0</span>; }
+  <span class="number">100%</span> { <span class="property">opacity</span>: <span class="value">1</span>; }
+}
+
+<span class="keyword">@keyframes scaleIn</span> {
+  <span class="number">0%</span> { <span class="property">transform</span>: <span class="value">scale(0.9)</span>; }
+  <span class="number">100%</span> { <span class="property">transform</span>: <span class="value">scale(1)</span>; }
+}
+                </div>
+            </section>
+
+            <!-- Animation-Fill-Mode with animation-delay -->
+            <section>
+                <h2>Animation-Fill-Mode + Animation-Delay</h2>
+
+                <p>The interaction between <span class="highlight">animation-fill-mode</span> and <span class="highlight">animation-delay</span> is crucial for understanding behavior:</p>
+
+                <div class="timeline">
+                    <h4 style="margin-bottom: 20px;">Timeline with Animation-Delay</h4>
+                    <div class="timeline-item">
+                        <strong>Phase 1: Delay Period (before animation starts)</strong><br>
+                        <ul style="margin: 10px 0 0 20px;">
+                            <li><strong>none:</strong> Original CSS state</li>
+                            <li><strong>forwards:</strong> Original CSS state</li>
+                            <li><strong>backwards:</strong> First @keyframe (0%) state</li>
+                            <li><strong>both:</strong> First @keyframe (0%) state</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>Phase 2: Animation Running (during duration)</strong><br>
+                        <ul style="margin: 10px 0 0 20px;">
+                            <li>All values: Element animates through @keyframes</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>Phase 3: After Animation (when completed)</strong><br>
+                        <ul style="margin: 10px 0 0 20px;">
+                            <li><strong>none:</strong> Back to original CSS state</li>
+                            <li><strong>forwards:</strong> Stays in final @keyframe (100%) state</li>
+                            <li><strong>backwards:</strong> Back to original CSS state</li>
+                            <li><strong>both:</strong> Stays in final @keyframe (100%) state</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>Example: Staggered List Animation</h4>
+                <div class="code-example">
+<span class="keyword">.list-item</span> {
+  <span class="property">opacity</span>: <span class="value">0</span>;
+  <span class="property">animation</span>: <span class="value">fadeIn 0.5s ease-out 1 forwards</span>;
+}
+
+<span class="comment">/* Each item staggered by 0.1s */</span>
+<span class="keyword">.list-item:nth-child(1)</span> { <span class="property">animation-delay</span>: <span class="value">0s</span>; }
+<span class="keyword">.list-item:nth-child(2)</span> { <span class="property">animation-delay</span>: <span class="value">0.1s</span>; }
+<span class="keyword">.list-item:nth-child(3)</span> { <span class="property">animation-delay</span>: <span class="value">0.2s</span>; }
+<span class="keyword">.list-item:nth-child(4)</span> { <span class="property">animation-delay</span>: <span class="value">0.3s</span>; }
+
+<span class="keyword">@keyframes fadeIn</span> {
+  <span class="number">0%</span> { <span class="property">opacity</span>: <span class="value">0</span>; <span class="property">transform</span>: <span class="value">translateY(10px)</span>; }
+  <span class="number">100%</span> { <span class="property">opacity</span>: <span class="value">1</span>; <span class="property">transform</span>: <span class="value">translateY(0)</span>; }
+}
+                </div>
+
+                <div class="info-box">
+                    <strong>Pro Tip:</strong> Use <span class="highlight">forwards</span> with <span class="highlight">animation-delay</span> for sequential reveals. The delay won't cause unwanted "snapping" because fill-mode keeps the final state.
+                </div>
+            </section>
+
+            <!-- Browser Support -->
+            <section>
+                <h2>Browser Support</h2>
+                <div class="browser-support">
+                    <h4>CSS Animation-Fill-Mode Compatibility</h4>
+                    <div class="support-list">
+                        <div class="support-item">Chrome: 43+</div>
+                        <div class="support-item">Firefox: 16+</div>
+                        <div class="support-item">Safari: 9+</div>
+                        <div class="support-item">Edge: 12+</div>
+                        <div class="support-item">Opera: 30+</div>
+                        <div class="support-item partial">IE: 10+</div>
+                        <div class="support-item">iOS Safari: 9+</div>
+                        <div class="support-item">Android: 4.4.4+</div>
+                    </div>
+                </div>
+
+                <h3>With Vendor Prefixes (older browsers)</h3>
+                <div class="code-example">
+<span class="keyword">div</span> {
+  <span class="property">-webkit-animation-fill-mode</span>: <span class="value">forwards</span>;
+  <span class="property">-moz-animation-fill-mode</span>: <span class="value">forwards</span>;
+  <span class="property">animation-fill-mode</span>: <span class="value">forwards</span>;
+}
+                </div>
+            </section>
+
+            <!-- Best Practices -->
+            <section>
+                <h2>Best Practices & Tips</h2>
+
+                <div class="success">
+                    <strong>✓ Best Practices:</strong>
+                    <ul>
+                        <li>Default to <span class="highlight">forwards</span> for most one-time animations</li>
+                        <li>Use <span class="highlight">none</span> for infinite/looping animations</li>
+                        <li>Use <span class="highlight">both</span> when you need precise control with delays</li>
+                        <li>Test with <span class="highlight">animation-delay</span> to verify behavior</li>
+                        <li>Consider using animation-fill-mode in animation shorthand</li>
+                        <li>Document your choice for team clarity</li>
+                    </ul>
+                </div>
+
+                <div class="warning">
+                    <strong>⚠ Common Mistakes:</strong>
+                    <ul>
+                        <li>Forgetting fill-mode, element "snaps" back unexpectedly</li>
+                        <li>Using <span class="highlight">forwards</span> with infinite animations (no effect)</li>
+                        <li>Not testing with <span class="highlight">animation-delay</span></li>
+                        <li>Wrong fill-mode causing janky transitions</li>
+                        <li>Mixing fill-mode values between related animations</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Shorthand -->
+            <section>
+                <h2>Animation Shorthand Property</h2>
+
+                <p>You can include fill-mode in the animation shorthand:</p>
+
+                <div class="syntax-block">
+animation: name duration timing-function delay iteration-count direction fill-mode play-state;
+                </div>
+
+                <h4>Examples:</h4>
+                <div class="code-example">
+<span class="comment">/* Full shorthand */</span>
+<span class="keyword">.element</span> {
+  <span class="property">animation</span>: <span class="value">slideIn 0.5s ease-out 0 1 normal forwards running</span>;
+}
+
+<span class="comment">/* Without optional properties */</span>
+<span class="keyword">.element</span> {
+  <span class="property">animation</span>: <span class="value">slideIn 0.5s ease-out 0 1 forwards</span>;
+}
+
+<span class="comment">/* Minimal (using defaults) */</span>
+<span class="keyword">.element</span> {
+  <span class="property">animation</span>: <span class="value">slideIn 0.5s forwards</span>;
+}
+                </div>
+            </section>
+
+            <!-- Conclusion -->
+            <section>
+                <h2>Conclusion</h2>
+                <div class="success">
+                    <p><strong>Animation-fill-mode</strong> is essential for controlling how CSS animations integrate with your page layout and interactivity. By choosing the right value, you create polished, professional animations that feel intentional rather than disruptive.</p>
+                    <p style="margin-top: 15px;"><strong>Quick Decision Guide:</strong></p>
+                    <ul>
+                        <li><strong>One-time animations:</strong> Use <span class="highlight">forwards</span></li>
+                        <li><strong>Infinite animations:</strong> Use <span class="highlight">none</span></li>
+                        <li><strong>With delays:</strong> Use <span class="highlight">both</span> for precision</li>
+                        <li><strong>Complex sequences:</strong> Use <span class="highlight">both</span> for control</li>
+                        <li><strong>Hover effects:</strong> Use <span class="highlight">none</span> (reset on hover end)</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 CSS Animation-Fill-Mode Complete Guide</p>
+            <p>Comprehensive reference for controlling element state with CSS animations</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Last Updated: May 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

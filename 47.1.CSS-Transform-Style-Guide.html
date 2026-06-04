@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Transform-Style Property: Complete Guide</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.5s ease;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.5em;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 0.95em;
+        }
+
+        .property-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-md);
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .property-table td {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .property-table tr:hover {
+            background: var(--bg-light);
+            transition: var(--transition);
+        }
+
+        .code-block {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #222;
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .demo-box {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 300px;
+        }
+
+        .demo-box h4 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.1em;
+        }
+
+        .demo-box p {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .cube-demo {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate3d 8s infinite linear;
+            margin: var(--spacing-md) auto;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            opacity: 0.9;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cube-front { background: rgba(102, 126, 234, 0.8); transform: translateZ(60px); }
+        .cube-back { background: rgba(240, 147, 251, 0.8); transform: rotateY(180deg) translateZ(60px); }
+        .cube-left { background: rgba(118, 75, 162, 0.8); transform: rotateY(-90deg) translateZ(60px); }
+        .cube-right { background: rgba(245, 87, 108, 0.8); transform: rotateY(90deg) translateZ(60px); }
+        .cube-top { background: rgba(79, 172, 254, 0.8); transform: rotateX(90deg) translateZ(60px); }
+        .cube-bottom { background: rgba(67, 233, 123, 0.8); transform: rotateX(-90deg) translateZ(60px); }
+
+        @keyframes rotate3d {
+            from { transform: rotateX(0deg) rotateY(0deg); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        .flat-demo {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            transform-style: flat;
+            animation: rotate3d 8s infinite linear;
+            margin: var(--spacing-md) auto;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .note-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .quick-reference {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .quick-ref-item {
+            background: var(--bg-light);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .quick-ref-item strong {
+            color: var(--primary-color);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border-radius: 12px;
+            margin-top: var(--spacing-lg);
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .property-table {
+                font-size: 0.85em;
+            }
+
+            body {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Transform-Style Property: Complete Guide</h1>
+            <p>Master transform-style for 3D rendering. Learn how preserve-3d and flat control 3D child element rendering.</p>
+        </header>
+
+        <!-- Overview Section -->
+        <section class="section">
+            <h2>Overview</h2>
+            <p>The <code>transform-style</code> property determines whether a 3D-transformed element's children are rendered in 3D space or flattened into the element's plane. It's essential for creating complex 3D structures.</p>
+
+            <div class="info-box">
+                <strong>Key Point:</strong> <code>transform-style</code> controls whether child element transforms are calculated in 3D space or in a flattened 2D plane.
+            </div>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Property Name</td>
+                        <td><code>transform-style</code></td>
+                        <td>Controls 3D rendering for children</td>
+                    </tr>
+                    <tr>
+                        <td>Initial Value</td>
+                        <td><code>flat</code></td>
+                        <td>Children rendered in 2D plane</td>
+                    </tr>
+                    <tr>
+                        <td>Values</td>
+                        <td><code>flat</code> | <code>preserve-3d</code></td>
+                        <td>Two possible values</td>
+                    </tr>
+                    <tr>
+                        <td>Applies To</td>
+                        <td>Block-level & transformed elements</td>
+                        <td>Most elements except inline</td>
+                    </tr>
+                    <tr>
+                        <td>Inherited</td>
+                        <td>No</td>
+                        <td>Must be set explicitly</td>
+                    </tr>
+                    <tr>
+                        <td>Browser Support</td>
+                        <td>Modern browsers</td>
+                        <td>Chrome 12+, Firefox 10+, Safari 4+, Edge 12+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Values Section -->
+        <section class="section">
+            <h2>Transform-Style Values</h2>
+
+            <p>There are two possible values for <code>transform-style</code>, each with different rendering behavior.</p>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Description</th>
+                        <th>Effect on Children</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>flat</code></td>
+                        <td>Default value. Children rendered in 2D plane.</td>
+                        <td>Child transforms calculated in flattened space</td>
+                        <td>Most regular layouts</td>
+                    </tr>
+                    <tr>
+                        <td><code>preserve-3d</code></td>
+                        <td>Children rendered in 3D space.</td>
+                        <td>Child transforms calculated in 3D space</td>
+                        <td>3D structures, cubes, complex animations</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>flat (Default)</h3>
+
+            <div class="code-block">
+/* Default behavior - flattens children to 2D plane */
+transform-style: flat;
+
+/* Children transforms are calculated as if in 2D */
+.parent {
+    transform: rotateX(45deg);
+    transform-style: flat;
+}
+
+.child {
+    /* Transforms calculated in parent's flattened plane */
+    transform: translateZ(50px);
+}
+            </div>
+
+            <h3>preserve-3d</h3>
+
+            <div class="code-block">
+/* Enable 3D rendering for children */
+transform-style: preserve-3d;
+
+/* Children transforms calculated in 3D space */
+.parent {
+    transform: rotateX(45deg);
+    transform-style: preserve-3d;
+}
+
+.child {
+    /* Transforms calculated in 3D space */
+    transform: translateZ(50px);
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Key Difference:</strong> With <code>preserve-3d</code>, child <code>translateZ(50px)</code> moves the child toward the viewer. With <code>flat</code>, the same transform is calculated in the parent's flattened plane.
+            </div>
+        </section>
+
+        <!-- preserve-3d vs flat Section -->
+        <section class="section">
+            <h2>preserve-3d vs flat - Visual Comparison</h2>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <div class="cube-demo" style="perspective: 1000px;">
+                        <div class="cube-face cube-front">Front</div>
+                        <div class="cube-face cube-back">Back</div>
+                        <div class="cube-face cube-left">Left</div>
+                        <div class="cube-face cube-right">Right</div>
+                        <div class="cube-face cube-top">Top</div>
+                        <div class="cube-face cube-bottom">Bottom</div>
+                    </div>
+                    <h4>preserve-3d</h4>
+                    <p>3D cube structure visible - all 6 faces appear</p>
+                </div>
+                <div class="demo-box">
+                    <div class="flat-demo" style="perspective: 1000px;">
+                        <div class="cube-face cube-front">Flat</div>
+                        <div class="cube-face cube-back">Flat</div>
+                        <div class="cube-face cube-left">Flat</div>
+                        <div class="cube-face cube-right">Flat</div>
+                        <div class="cube-face cube-top">Flat</div>
+                        <div class="cube-face cube-bottom">Flat</div>
+                    </div>
+                    <h4>flat</h4>
+                    <p>Children flattened - no 3D depth visible</p>
+                </div>
+            </div>
+
+            <div class="note-box">
+                <strong>Visual Difference:</strong> With <code>preserve-3d</code>, you see all 6 cube faces rotating. With <code>flat</code>, faces overlap and no 3D structure is visible.
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="section">
+            <h2>How Transform-Style Works</h2>
+
+            <h3>The 3D Rendering Stack</h3>
+
+            <div class="code-block">
+/* Establishing 3D context */
+.parent {
+    perspective: 1000px;           /* Defines 3D space */
+    transform-style: preserve-3d;  /* Enables 3D for children */
+    transform: rotateX(20deg);     /* Parent transforms */
+}
+
+.child {
+    /* Transform calculated in 3D coordinate system */
+    transform: translateZ(50px) rotateY(45deg);
+}
+
+/* Without preserve-3d, child transforms are flattened */
+            </div>
+
+            <h3>3D Coordinate System</h3>
+
+            <p>When <code>transform-style: preserve-3d</code> is used, child elements maintain their position in 3D space relative to the parent:</p>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li><strong>X-axis:</strong> Horizontal (left/right)</li>
+                <li><strong>Y-axis:</strong> Vertical (up/down)</li>
+                <li><strong>Z-axis:</strong> Depth (toward/away from viewer)</li>
+                <li><strong>translateZ():</strong> Moves child forward (+) or backward (-) in 3D space</li>
+                <li><strong>rotateX/Y/Z:</strong> Rotates around respective axes in 3D space</li>
+            </ul>
+        </section>
+
+        <!-- Practical Patterns Section -->
+        <section class="section">
+            <h2>Practical Usage Patterns</h2>
+
+            <h3>Pattern 1: 3D Cube Structure</h3>
+
+            <div class="code-block">
+.cube {
+    width: 200px;
+    perspective: 1000px;
+    transform-style: preserve-3d;  /* Enable 3D for faces */
+    transform: rotateX(20deg) rotateY(30deg);
+}
+
+.face {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+}
+
+.front { transform: translateZ(100px); }
+.back { transform: rotateY(180deg) translateZ(100px); }
+.right { transform: rotateY(90deg) translateZ(100px); }
+.left { transform: rotateY(-90deg) translateZ(100px); }
+.top { transform: rotateX(90deg) translateZ(100px); }
+.bottom { transform: rotateX(-90deg) translateZ(100px); }
+            </div>
+
+            <h3>Pattern 2: Layered 3D Elements</h3>
+
+            <div class="code-block">
+.container {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.layer-1 { transform: translateZ(0px); }
+.layer-2 { transform: translateZ(50px); }
+.layer-3 { transform: translateZ(100px); }
+
+/* Layers maintain 3D depth relationship */
+            </div>
+
+            <h3>Pattern 3: Nested 3D Transforms</h3>
+
+            <div class="code-block">
+.outer {
+    transform-style: preserve-3d;
+    transform: rotateX(20deg);
+}
+
+.middle {
+    transform-style: preserve-3d;
+    transform: rotateY(30deg);
+}
+
+.inner {
+    transform: translateZ(50px) rotateZ(45deg);
+}
+
+/* Each level maintains 3D context */
+            </div>
+
+            <h3>Pattern 4: Flip Card with Children</h3>
+
+            <div class="code-block">
+.card {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 0.6s;
+}
+
+.card:hover {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+.card-front .content { transform: translateZ(10px); }
+.card-back .content { transform: rotateY(180deg) translateZ(10px); }
+            </div>
+        </section>
+
+        <!-- Best Practices Section -->
+        <section class="section">
+            <h2>Best Practices</h2>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <h4>✓ Use on Parent Elements</h4>
+                    <p>Apply <code>transform-style: preserve-3d</code> to elements containing 3D children, not leaf elements.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Combine with perspective</h4>
+                    <p>Use <code>perspective</code> property on the outermost container for 3D context.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Use with transform</h4>
+                    <p>Apply <code>transform</code> to the element with <code>transform-style: preserve-3d</code> to position children in 3D space.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Layer Preservation</h4>
+                    <p>Each element maintaining <code>preserve-3d</code> preserves 3D space for its children.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Test Accessibility</h4>
+                    <p>Complex 3D structures can be disorienting. Test with real users.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Performance Aware</h4>
+                    <p>Deep nesting with <code>preserve-3d</code> can impact performance. Profile on lower-end devices.</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>Important:</strong> Not all CSS properties work well with <code>transform-style: preserve-3d</code>. Some properties like <code>overflow: auto</code> create a new stacking context that can flatten 3D children. Test carefully.
+            </div>
+        </section>
+
+        <!-- Browser Support Section -->
+        <section class="section">
+            <h2>Browser Support & Compatibility</h2>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Browser</th>
+                        <th>Version</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chrome</td>
+                        <td>12+</td>
+                        <td>✓ Full Support</td>
+                        <td>Excellent 3D rendering</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td>10+</td>
+                        <td>✓ Full Support</td>
+                        <td>Complete implementation</td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>4+</td>
+                        <td>✓ Full Support</td>
+                        <td>May need -webkit- prefix</td>
+                    </tr>
+                    <tr>
+                        <td>Edge</td>
+                        <td>12+</td>
+                        <td>✓ Full Support</td>
+                        <td>All modern versions</td>
+                    </tr>
+                    <tr>
+                        <td>IE 10</td>
+                        <td>N/A</td>
+                        <td>⚠ Partial</td>
+                        <td>Limited 3D support</td>
+                    </tr>
+                    <tr>
+                        <td>IE 9 and below</td>
+                        <td>N/A</td>
+                        <td>✗ No Support</td>
+                        <td>Use fallbacks</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Feature Detection</h3>
+
+            <div class="code-block">
+/* CSS Feature Query */
+@supports (transform-style: preserve-3d) {
+    .element {
+        transform-style: preserve-3d;
+    }
+}
+
+/* JavaScript Detection */
+const supports3D = CSS.supports('transform-style', 'preserve-3d');
+if (supports3D) {
+    element.classList.add('has-3d-support');
+}
+            </div>
+        </section>
+
+        <!-- Advanced Concepts Section -->
+        <section class="section">
+            <h2>Advanced Concepts</h2>
+
+            <h3>Stacking Contexts and preserve-3d</h3>
+
+            <p>Be aware that certain CSS properties create stacking contexts that can prevent <code>preserve-3d</code> from working as expected:</p>
+
+            <div class="code-block">
+/* These properties create stacking contexts */
+overflow: auto;           /* Causes 3D flattening */
+opacity: 0.5;            /* Creates stacking context */
+filter: blur(5px);       /* Creates stacking context */
+mix-blend-mode: multiply; /* Creates stacking context */
+
+/* Solution: Avoid these on 3D preserve-3d containers */
+            </div>
+
+            <h3>Nested 3D Hierarchies</h3>
+
+            <div class="code-block">
+/* Multiple levels of 3D nesting */
+.level-1 {
+    transform-style: preserve-3d;
+    transform: rotateX(10deg);
+}
+
+.level-2 {
+    transform-style: preserve-3d;
+    transform: rotateY(20deg);
+}
+
+.level-3 {
+    transform-style: preserve-3d;
+    transform: rotateZ(30deg);
+}
+
+.element {
+    transform: translateZ(50px);
+}
+
+/* translateZ at deepest level goes through all 3D contexts */
+            </div>
+
+            <h3>Performance Optimization</h3>
+
+            <div class="code-block">
+/* Use transform-style sparingly on deep hierarchies */
+.optimized {
+    transform-style: preserve-3d;
+    will-change: transform;  /* Hint to browser */
+}
+
+/* Consolidate 3D operations in fewer elements */
+            </div>
+        </section>
+
+        <!-- Quick Reference Section -->
+        <section class="section">
+            <h2>Quick Reference Cheat Sheet</h2>
+
+            <div class="quick-reference">
+                <div class="quick-ref-item">
+                    <strong>Basic 3D Setup</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+.parent {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Default (Flat)</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+transform-style: flat;
+/* Children in 2D plane */
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Preserve 3D</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+transform-style: preserve-3d;
+/* Children in 3D space */
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>3D Cube Pattern</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+.cube {
+    transform-style: preserve-3d;
+    transform: rotateX() rotateY();
+}
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Child in 3D Space</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+.child {
+    transform: translateZ(50px);
+}
+/* Moves toward viewer in parent's 3D space */
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Nested 3D</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+.parent { transform-style: preserve-3d; }
+.child { transform-style: preserve-3d; }
+.grandchild { transform: translateZ(); }
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section class="section">
+            <h2>Summary</h2>
+
+            <p>The <code>transform-style</code> property is fundamental for creating 3D structures in CSS. Key takeaways:</p>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li>✓ Use <code>transform-style: preserve-3d</code> to enable 3D rendering for child elements</li>
+                <li>✓ Default <code>transform-style: flat</code> flattens children into 2D plane</li>
+                <li>✓ Combine with <code>perspective</code> on the outermost container</li>
+                <li>✓ Apply transforms to create 3D structures (cubes, layered effects, etc.)</li>
+                <li>✓ Be aware of stacking context properties that prevent <code>preserve-3d</code> from working</li>
+                <li>✓ Test nested 3D hierarchies carefully for performance</li>
+                <li>✓ Use <code>backface-visibility: hidden</code> with flip cards</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Next Steps:</strong> Create 3D cubes, layered structures, and complex flip cards. Combine with animations for dynamic 3D effects. Experiment with nested 3D hierarchies to master advanced 3D structures.
+            </div>
+        </section>
+
+        <footer>
+            <p>CSS Transform-Style Property Complete Guide • Created for CSS Learning Suite</p>
+            <p>Browser Support: Chrome 12+, Firefox 10+, Safari 4+, Edge 12+</p>
+            <p>Learn • Practice • Master CSS Transform-Style</p>
+        </footer>
+    </div>
+</body>
+</html>

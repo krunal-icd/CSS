@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Transform 2D Properties: Practical Examples</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.5s ease;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.3em;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .code-block-html {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: var(--spacing-lg);
+            margin: var(--spacing-md) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .example-showcase {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+        }
+
+        .example-description {
+            color: var(--text-light);
+            font-size: 0.95em;
+            margin-bottom: var(--spacing-md);
+            font-style: italic;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .note-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        /* Example 1: Hover Lift Effect */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 200px;
+            text-align: center;
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+        }
+
+        /* Example 2: Rotating Icon */
+        .rotating-icon {
+            font-size: 3em;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .rotating-icon:hover {
+            transform: rotate(180deg);
+        }
+
+        /* Example 3: Scale on Hover */
+        .scale-btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .scale-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .scale-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Example 4: Slide Menu */
+        .slide-menu-demo {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .slide-menu {
+            position: absolute;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2em;
+            transition: left 0.4s ease;
+        }
+
+        .slide-menu-demo:hover .slide-menu {
+            left: 0;
+        }
+
+        /* Example 5: Skew Text Effect */
+        .skew-text {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .skew-text:hover {
+            transform: skewX(-10deg);
+        }
+
+        /* Example 6: Flip Card */
+        .flip-card {
+            perspective: 1000px;
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.5em;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--accent-color), #f5576c);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        /* Example 7: Rotating Loader */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #e0e0e0;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Example 8: Scale and Fade */
+        .scale-fade {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .scale-fade:hover {
+            transform: scale(1.15);
+            opacity: 0.8;
+        }
+
+        /* Example 9: Staggered Transform */
+        .stagger-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .stagger-item {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stagger-item:nth-child(1) {
+            transition-delay: 0s;
+        }
+
+        .stagger-item:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+
+        .stagger-item:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+
+        .stagger-item:nth-child(4) {
+            transition-delay: 0.3s;
+        }
+
+        .stagger-container:hover .stagger-item {
+            transform: translateY(-15px) rotate(5deg);
+        }
+
+        /* Example 10: Complex Multi-Transform */
+        .complex-item {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            transition: transform 0.4s ease;
+            cursor: pointer;
+        }
+
+        .complex-item:hover {
+            transform: translate(20px, -20px) rotate(15deg) scale(1.1);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border-radius: 12px;
+            margin-top: var(--spacing-lg);
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .stagger-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            body {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Transform 2D Properties: Practical Examples</h1>
+            <p>Real-world implementations of CSS 2D transforms. Discover 10 practical patterns for creating smooth, performant animations with translate, rotate, scale, and skew effects.</p>
+        </header>
+
+        <!-- Example 1: Hover Lift Effect -->
+        <section class="section">
+            <h2>Example 1: Card Hover Lift Effect</h2>
+            <p class="example-description">Professional card animation that lifts and enhances shadow on hover—perfect for portfolios and product showcases.</p>
+
+            <div class="example-showcase">
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h4>Design</h4>
+                    <p>Hover to lift</p>
+                </div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Technique:</strong> <code>translateY(-10px)</code> moves the card up smoothly. Combining with enhanced box-shadow creates the illusion of elevation.
+            </div>
+        </section>
+
+        <!-- Example 2: Rotating Icon -->
+        <section class="section">
+            <h2>Example 2: Rotating Icon on Hover</h2>
+            <p class="example-description">Icon that rotates 180 degrees on hover—great for interactive buttons and toggles.</p>
+
+            <div class="example-showcase">
+                <div class="rotating-icon">⚙️</div>
+            </div>
+
+            <h3>HTML & CSS</h3>
+            <div class="code-block-html">
+&lt;div class="rotating-icon"&gt;⚙️&lt;/div&gt;
+            </div>
+
+            <div class="code-block">
+.rotating-icon {
+    font-size: 3em;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.rotating-icon:hover {
+    transform: rotate(180deg);
+}
+            </div>
+
+            <div class="note-box">
+                <strong>Tip:</strong> Change duration to 0.6s or higher for slower, more dramatic rotations. Use <code>rotate(360deg)</code> for full spin animation.
+            </div>
+        </section>
+
+        <!-- Example 3: Scale Button Effect -->
+        <section class="section">
+            <h2>Example 3: Scale Button Effect</h2>
+            <p class="example-description">Interactive button that scales up on hover and down on click for tactile feedback.</p>
+
+            <div class="example-showcase">
+                <button class="scale-btn">Click Me</button>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.scale-btn {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.3s ease;
+}
+
+.scale-btn:hover {
+    transform: scale(1.1);
+}
+
+.scale-btn:active {
+    transform: scale(0.95);
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Best Practice:</strong> Scale values above 1 enlarge; below 1 shrink. Use 1.1 for subtle hover and 0.95 for active press feedback.
+            </div>
+        </section>
+
+        <!-- Example 4: Slide-In Menu -->
+        <section class="section">
+            <h2>Example 4: Smooth Slide-In Menu</h2>
+            <p class="example-description">Menu that slides in smoothly from the left on hover—perfect for hidden navigation.</p>
+
+            <div class="example-showcase" style="min-height: auto;">
+                <div class="slide-menu-demo">
+                    <div class="slide-menu">📚 Hover to reveal menu</div>
+                </div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.slide-menu {
+    position: absolute;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: left 0.4s ease;
+}
+
+.slide-menu-demo:hover .slide-menu {
+    left: 0;
+}
+            </div>
+        </section>
+
+        <!-- Example 5: Skew Text Effect -->
+        <section class="section">
+            <h2>Example 5: Skew Text Effect</h2>
+            <p class="example-description">Text that skews on hover for dynamic, eye-catching emphasis.</p>
+
+            <div class="example-showcase">
+                <div class="skew-text">Hover Me!</div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.skew-text {
+    font-size: 2em;
+    font-weight: bold;
+    color: #667eea;
+    transition: transform 0.3s ease;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.skew-text:hover {
+    transform: skewX(-10deg);
+}
+            </div>
+
+            <div class="note-box">
+                <strong>Warning:</strong> Excessive skew can harm readability. Keep skew angles under ±20 degrees for text.
+            </div>
+        </section>
+
+        <!-- Example 6: Flip Card 3D -->
+        <section class="section">
+            <h2>Example 6: Flip Card Effect</h2>
+            <p class="example-description">Card that flips to reveal content on hover—impressive 3D effect with 2D transforms.</p>
+
+            <div class="example-showcase">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Front</div>
+                        <div class="flip-card-back">Back</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>HTML & CSS</h3>
+            <div class="code-block-html">
+&lt;div class="flip-card"&gt;
+    &lt;div class="flip-card-inner"&gt;
+        &lt;div class="flip-card-front"&gt;Front&lt;/div&gt;
+        &lt;div class="flip-card-back"&gt;Back&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+            </div>
+
+            <div class="code-block">
+.flip-card {
+    perspective: 1000px;
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.flip-card-back {
+    transform: rotateY(180deg);
+}
+            </div>
+        </section>
+
+        <!-- Example 7: Rotating Loader -->
+        <section class="section">
+            <h2>Example 7: Rotating Loader Spinner</h2>
+            <p class="example-description">Animated loading spinner using CSS rotation—perfect for loading states.</p>
+
+            <div class="example-showcase">
+                <div class="loader"></div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #e0e0e0;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Tip:</strong> Use <code>linear</code> timing for consistent rotation speed. Adjust animation duration (1s) to control spin speed.
+            </div>
+        </section>
+
+        <!-- Example 8: Scale and Fade -->
+        <section class="section">
+            <h2>Example 8: Scale with Opacity Change</h2>
+            <p class="example-description">Element scales up while fading slightly—creates smooth, elegant hover effects.</p>
+
+            <div class="example-showcase">
+                <div class="scale-fade">Hover Me</div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.scale-fade {
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+}
+
+.scale-fade:hover {
+    transform: scale(1.15);
+    opacity: 0.8;
+}
+            </div>
+        </section>
+
+        <!-- Example 9: Staggered Transforms -->
+        <section class="section">
+            <h2>Example 9: Staggered Transform Animation</h2>
+            <p class="example-description">Multiple elements transforming with delays for choreographed effect. Hover anywhere to trigger.</p>
+
+            <div class="stagger-container">
+                <div class="stagger-item">1</div>
+                <div class="stagger-item">2</div>
+                <div class="stagger-item">3</div>
+                <div class="stagger-item">4</div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.stagger-item {
+    transition: transform 0.3s ease;
+}
+
+.stagger-item:nth-child(1) { transition-delay: 0s; }
+.stagger-item:nth-child(2) { transition-delay: 0.1s; }
+.stagger-item:nth-child(3) { transition-delay: 0.2s; }
+.stagger-item:nth-child(4) { transition-delay: 0.3s; }
+
+.stagger-container:hover .stagger-item {
+    transform: translateY(-15px) rotate(5deg);
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Technique:</strong> Combine <code>transition-delay</code> with <code>nth-child()</code> selectors to create staggered animations without JavaScript.
+            </div>
+        </section>
+
+        <!-- Example 10: Complex Multi-Transform -->
+        <section class="section">
+            <h2>Example 10: Complex Multi-Transform Combination</h2>
+            <p class="example-description">Multiple transforms applied simultaneously for sophisticated effects.</p>
+
+            <div class="example-showcase">
+                <div class="complex-item">Hover</div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.complex-item {
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    transition: transform 0.4s ease;
+    cursor: pointer;
+}
+
+.complex-item:hover {
+    /* Combines: move, rotate, and scale */
+    transform: translate(20px, -20px) rotate(15deg) scale(1.1);
+}
+            </div>
+
+            <div class="note-box">
+                <strong>Important:</strong> Transform order matters! <code>translate() rotate() scale()</code> produces different results than <code>scale() rotate() translate()</code>.
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="section">
+            <h2>Best Practices Summary</h2>
+
+            <table style="width: 100%; margin: 2rem 0; border-collapse: collapse;">
+                <thead style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white;">
+                    <tr>
+                        <th style="padding: 1rem; text-align: left;">Transform Type</th>
+                        <th style="padding: 1rem; text-align: left;">Best Use</th>
+                        <th style="padding: 1rem; text-align: left;">Example Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;"><strong>translate()</strong></td>
+                        <td style="padding: 1rem;">Move elements on hover, slides</td>
+                        <td style="padding: 1rem;"><code>translate(20px, -10px)</code></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;"><strong>rotate()</strong></td>
+                        <td style="padding: 1rem;">Icons, spinners, creative effects</td>
+                        <td style="padding: 1rem;"><code>rotate(45deg)</code>, <code>360deg</code></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;"><strong>scale()</strong></td>
+                        <td style="padding: 1rem;">Zoom, hover effects, buttons</td>
+                        <td style="padding: 1rem;"><code>scale(1.1)</code>, <code>scale(0.95)</code></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;"><strong>skew()</strong></td>
+                        <td style="padding: 1rem;">Creative distortion, italic effects</td>
+                        <td style="padding: 1rem;"><code>skewX(-10deg)</code></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem;"><strong>Combined</strong></td>
+                        <td style="padding: 1rem;">Complex animations</td>
+                        <td style="padding: 1rem;"><code>translate(20px) rotate(15deg) scale(1.1)</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Performance Tips</h3>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li>✓ <strong>GPU-Accelerated:</strong> Transforms are optimized for performance. Use them instead of changing position/size.</li>
+                <li>✓ <strong>Smooth Duration:</strong> Use 0.3s-0.6s for most interactions to feel responsive.</li>
+                <li>✓ <strong>Combine Functions:</strong> Chain transforms in one declaration: <code>translate() rotate() scale()</code></li>
+                <li>✓ <strong>Test Order:</strong> Transform order matters! Experiment with different sequences.</li>
+                <li>✓ <strong>Use will-change Sparingly:</strong> Only for elements that will transform frequently.</li>
+                <li>✓ <strong>Consider Accessibility:</strong> Extreme transforms can disorient users with vestibular disorders.</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>CSS Transform 2D Properties: Practical Examples • Part of the CSS Learning Suite</p>
+            <p>Browser Support: Chrome 26+, Firefox 16+, Safari 9+, Edge 12+</p>
+            <p>Create • Experiment • Master CSS Transforms</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Transform 3D Properties: Practical Examples</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.5s ease;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.3em;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .code-block-html {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: var(--spacing-lg);
+            margin: var(--spacing-md) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .example-showcase {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+
+        .example-description {
+            color: var(--text-light);
+            font-size: 0.95em;
+            margin-bottom: var(--spacing-md);
+            font-style: italic;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .note-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        /* Example 1: Flip Card */
+        .flip-card {
+            perspective: 1000px;
+            width: 200px;
+            height: 250px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.2em;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--accent-color), #f5576c);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        /* Example 2: 3D Cube */
+        .cube-container {
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+        }
+
+        .cube {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate3d 8s infinite linear;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            opacity: 0.9;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.9em;
+        }
+
+        .cube-front { background: rgba(102, 126, 234, 0.8); transform: translateZ(60px); }
+        .cube-back { background: rgba(240, 147, 251, 0.8); transform: rotateY(180deg) translateZ(60px); }
+        .cube-left { background: rgba(118, 75, 162, 0.8); transform: rotateY(-90deg) translateZ(60px); }
+        .cube-right { background: rgba(245, 87, 108, 0.8); transform: rotateY(90deg) translateZ(60px); }
+        .cube-top { background: rgba(79, 172, 254, 0.8); transform: rotateX(90deg) translateZ(60px); }
+        .cube-bottom { background: rgba(67, 233, 123, 0.8); transform: rotateX(-90deg) translateZ(60px); }
+
+        @keyframes rotate3d {
+            from { transform: rotateX(0deg) rotateY(0deg); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        /* Example 3: 3D Button Hover */
+        .btn-3d {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            perspective: 1000px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-3d:hover {
+            transform: rotateX(10deg) rotateY(-10deg);
+        }
+
+        /* Example 4: Text Rotation */
+        .text-3d {
+            perspective: 800px;
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary-color);
+            transition: transform 0.6s ease;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .text-3d:hover {
+            transform: rotateX(20deg) rotateY(30deg);
+        }
+
+        /* Example 5: Parallax Depth */
+        .parallax-container {
+            perspective: 1000px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            min-height: 250px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+        }
+
+        .parallax-layer {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.6s ease;
+        }
+
+        .parallax-layer-1 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: translateZ(0px);
+        }
+
+        .parallax-layer-2 {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            transform: translateZ(-50px);
+        }
+
+        .parallax-layer-3 {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            transform: translateZ(-100px);
+        }
+
+        .parallax-container:hover .parallax-layer {
+            transform: translateZ(100px);
+        }
+
+        /* Example 6: Rotating Icon */
+        .icon-3d {
+            font-size: 3em;
+            cursor: pointer;
+            display: inline-block;
+            perspective: 1000px;
+            transition: transform 0.6s ease;
+        }
+
+        .icon-3d:hover {
+            transform: rotateX(45deg) rotateY(45deg);
+        }
+
+        /* Example 7: Photo Stack */
+        .photo-stack {
+            perspective: 1000px;
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .photo-item {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            transition: transform 0.4s ease;
+            backface-visibility: hidden;
+        }
+
+        .photo-item:nth-child(1) {
+            transform: rotateY(0deg) translateZ(0px);
+            z-index: 3;
+        }
+
+        .photo-item:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            transform: rotateY(25deg) translateZ(-20px);
+            z-index: 2;
+        }
+
+        .photo-item:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            transform: rotateY(50deg) translateZ(-40px);
+            z-index: 1;
+        }
+
+        .photo-stack:hover .photo-item {
+            transform: rotateY(calc(var(--rotate) * 25deg)) translateZ(calc(var(--rotate) * -20px));
+        }
+
+        .photo-item:nth-child(1) { --rotate: 0; }
+        .photo-item:nth-child(2) { --rotate: 1; }
+        .photo-item:nth-child(3) { --rotate: 2; }
+
+        /* Example 8: Tilted Card */
+        .tilted-card {
+            width: 220px;
+            height: 300px;
+            background: white;
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            perspective: 1000px;
+            transition: transform 0.4s ease;
+            cursor: pointer;
+        }
+
+        .tilted-card:hover {
+            transform: rotateX(-10deg) rotateY(10deg) translateZ(20px);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+        }
+
+        .card-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .card-text {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+
+        /* Example 9: Carousel 3D */
+        .carousel-3d {
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 250px;
+            gap: var(--spacing-lg);
+        }
+
+        .carousel-item {
+            width: 150px;
+            height: 150px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            transition: transform 0.4s ease;
+            cursor: pointer;
+        }
+
+        .carousel-item.center {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            transform: scale(1.1) rotateY(0deg);
+            z-index: 2;
+        }
+
+        .carousel-item.side {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            transform: scale(0.8) rotateY(45deg);
+            opacity: 0.6;
+        }
+
+        /* Example 10: Multiple Cube Grid */
+        .cube-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .mini-cube {
+            perspective: 1000px;
+            width: 100%;
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .mini-cube-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+
+        .mini-cube:hover .mini-cube-inner {
+            transform: rotateX(360deg) rotateY(360deg);
+        }
+
+        .mini-cube-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            backface-visibility: hidden;
+        }
+
+        .mini-cube-1 { background: linear-gradient(135deg, #667eea, #764ba2); transform: translateZ(calc(100% / 2)); }
+        .mini-cube-2 { background: linear-gradient(135deg, #f093fb, #f5576c); transform: rotateY(180deg) translateZ(calc(100% / 2)); }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border-radius: 12px;
+            margin-top: var(--spacing-lg);
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .cube-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            body {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Transform 3D Properties: Practical Examples</h1>
+            <p>Real-world implementations of CSS 3D transforms. Discover 10 practical patterns for creating stunning 3D effects with flip cards, cubes, parallax, and more.</p>
+        </header>
+
+        <!-- Example 1: Flip Card -->
+        <section class="section">
+            <h2>Example 1: Flip Card Effect</h2>
+            <p class="example-description">Classic flip card animation - hover to reveal the back side with smooth 3D rotation.</p>
+
+            <div class="example-showcase">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Front 👀</div>
+                        <div class="flip-card-back">Back 🎉</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>HTML & CSS</h3>
+            <div class="code-block-html">
+&lt;div class="flip-card"&gt;
+    &lt;div class="flip-card-inner"&gt;
+        &lt;div class="flip-card-front"&gt;Front&lt;/div&gt;
+        &lt;div class="flip-card-back"&gt;Back&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+            </div>
+
+            <div class="code-block">
+.flip-card {
+    perspective: 1000px;
+    width: 200px;
+    height: 250px;
+    cursor: pointer;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.flip-card-back {
+    transform: rotateY(180deg);
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Key Technique:</strong> <code>backface-visibility: hidden</code> hides each side when rotated away. <code>transform-style: preserve-3d</code> maintains 3D space.
+            </div>
+        </section>
+
+        <!-- Example 2: Rotating 3D Cube -->
+        <section class="section">
+            <h2>Example 2: Rotating 3D Cube</h2>
+            <p class="example-description">Six-sided cube that rotates continuously - each face has different colors and text.</p>
+
+            <div class="example-showcase">
+                <div class="cube-container">
+                    <div class="cube">
+                        <div class="cube-face cube-front">Front</div>
+                        <div class="cube-face cube-back">Back</div>
+                        <div class="cube-face cube-left">Left</div>
+                        <div class="cube-face cube-right">Right</div>
+                        <div class="cube-face cube-top">Top</div>
+                        <div class="cube-face cube-bottom">Bottom</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.cube {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotate3d 8s infinite linear;
+}
+
+.cube-face {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+}
+
+.cube-front { transform: translateZ(60px); }
+.cube-back { transform: rotateY(180deg) translateZ(60px); }
+.cube-left { transform: rotateY(-90deg) translateZ(60px); }
+.cube-right { transform: rotateY(90deg) translateZ(60px); }
+.cube-top { transform: rotateX(90deg) translateZ(60px); }
+.cube-bottom { transform: rotateX(-90deg) translateZ(60px); }
+
+@keyframes rotate3d {
+    from { transform: rotateX(0deg) rotateY(0deg); }
+    to { transform: rotateX(360deg) rotateY(360deg); }
+}
+            </div>
+
+            <div class="note-box">
+                <strong>Math Tip:</strong> For a cube with width W, translateZ distance = W/2 for faces to form a closed cube.
+            </div>
+        </section>
+
+        <!-- Example 3: 3D Button Hover -->
+        <section class="section">
+            <h2>Example 3: 3D Button Hover Effect</h2>
+            <p class="example-description">Button tilts in 3D space on hover for interactive feedback.</p>
+
+            <div class="example-showcase">
+                <button class="btn-3d">Hover Me in 3D</button>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.btn-3d {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    perspective: 1000px;
+    transition: transform 0.3s ease;
+}
+
+.btn-3d:hover {
+    transform: rotateX(10deg) rotateY(-10deg);
+}
+            </div>
+        </section>
+
+        <!-- Example 4: 3D Text Rotation -->
+        <section class="section">
+            <h2>Example 4: 3D Text Rotation</h2>
+            <p class="example-description">Text that rotates in 3D space on hover for dynamic emphasis.</p>
+
+            <div class="example-showcase">
+                <div class="text-3d">3D Text</div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.text-3d {
+    perspective: 800px;
+    font-size: 2em;
+    font-weight: bold;
+    color: #667eea;
+    transition: transform 0.6s ease;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.text-3d:hover {
+    transform: rotateX(20deg) rotateY(30deg);
+}
+            </div>
+        </section>
+
+        <!-- Example 5: Parallax Depth Layers -->
+        <section class="section">
+            <h2>Example 5: Parallax Depth Layers</h2>
+            <p class="example-description">Multiple layers at different depths create parallax effect on hover.</p>
+
+            <div class="parallax-container">
+                <div class="parallax-layer parallax-layer-1">Layer 1</div>
+                <div class="parallax-layer parallax-layer-2">Layer 2</div>
+                <div class="parallax-layer parallax-layer-3">Layer 3</div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.parallax-container {
+    perspective: 1000px;
+    display: flex;
+    gap: 2rem;
+}
+
+.parallax-layer-1 { transform: translateZ(0px); }
+.parallax-layer-2 { transform: translateZ(-50px); }
+.parallax-layer-3 { transform: translateZ(-100px); }
+
+.parallax-container:hover .parallax-layer {
+    transform: translateZ(100px);
+}
+
+/* Layers further back move less */
+            </div>
+
+            <div class="info-box">
+                <strong>Parallax Effect:</strong> Layers with negative translateZ move backward, creating depth. On hover, all move forward by same amount, but percentage difference creates parallax illusion.
+            </div>
+        </section>
+
+        <!-- Example 6: Rotating Icon -->
+        <section class="section">
+            <h2>Example 6: Rotating Icon in 3D</h2>
+            <p class="example-description">Icon rotates in 3D space on hover for eye-catching interactive element.</p>
+
+            <div class="example-showcase">
+                <div class="icon-3d">⚙️</div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.icon-3d {
+    font-size: 3em;
+    cursor: pointer;
+    display: inline-block;
+    perspective: 1000px;
+    transition: transform 0.6s ease;
+}
+
+.icon-3d:hover {
+    transform: rotateX(45deg) rotateY(45deg);
+}
+            </div>
+        </section>
+
+        <!-- Example 7: Photo Stack -->
+        <section class="section">
+            <h2>Example 7: 3D Photo Stack</h2>
+            <p class="example-description">Multiple photos stacked at angles with depth on hover.</p>
+
+            <div class="example-showcase">
+                <div class="photo-stack">
+                    <div class="photo-item">Photo 1</div>
+                    <div class="photo-item">Photo 2</div>
+                    <div class="photo-item">Photo 3</div>
+                </div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.photo-item:nth-child(1) {
+    transform: rotateY(0deg) translateZ(0px);
+    z-index: 3;
+}
+
+.photo-item:nth-child(2) {
+    transform: rotateY(25deg) translateZ(-20px);
+    z-index: 2;
+}
+
+.photo-item:nth-child(3) {
+    transform: rotateY(50deg) translateZ(-40px);
+    z-index: 1;
+}
+
+.photo-stack:hover .photo-item {
+    transform: rotateY(calc(var(--rotate) * 25deg)) translateZ(calc(var(--rotate) * -20px));
+}
+            </div>
+        </section>
+
+        <!-- Example 8: Tilted Card -->
+        <section class="section">
+            <h2>Example 8: Tilted Card on Hover</h2>
+            <p class="example-description">Card tilts in 3D and lifts toward viewer on hover.</p>
+
+            <div class="example-showcase">
+                <div class="tilted-card">
+                    <div class="card-title">Premium Card</div>
+                    <div class="card-text">Hover to see the 3D tilt and lift effect. This card rotates and moves toward you!</div>
+                </div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.tilted-card {
+    width: 220px;
+    height: 300px;
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    perspective: 1000px;
+    transition: transform 0.4s ease;
+    cursor: pointer;
+}
+
+.tilted-card:hover {
+    transform: rotateX(-10deg) rotateY(10deg) translateZ(20px);
+    box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+}
+            </div>
+        </section>
+
+        <!-- Example 9: 3D Carousel -->
+        <section class="section">
+            <h2>Example 9: 3D Carousel</h2>
+            <p class="example-description">Items arranged in 3D space with center item featured.</p>
+
+            <div class="carousel-3d">
+                <div class="carousel-item side">Item 1</div>
+                <div class="carousel-item center">Featured</div>
+                <div class="carousel-item side">Item 2</div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.carousel-3d {
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.carousel-item.center {
+    transform: scale(1.1) rotateY(0deg);
+    z-index: 2;
+}
+
+.carousel-item.side {
+    transform: scale(0.8) rotateY(45deg);
+    opacity: 0.6;
+}
+            </div>
+        </section>
+
+        <!-- Example 10: Cube Grid -->
+        <section class="section">
+            <h2>Example 10: Grid of 3D Cubes</h2>
+            <p class="example-description">Multiple mini-cubes that rotate on hover - great for gallery layouts.</p>
+
+            <div class="cube-grid">
+                <div class="mini-cube">
+                    <div class="mini-cube-inner">
+                        <div class="mini-cube-face mini-cube-1">1</div>
+                        <div class="mini-cube-face mini-cube-2">Back</div>
+                    </div>
+                </div>
+                <div class="mini-cube">
+                    <div class="mini-cube-inner">
+                        <div class="mini-cube-face mini-cube-1">2</div>
+                        <div class="mini-cube-face mini-cube-2">Back</div>
+                    </div>
+                </div>
+                <div class="mini-cube">
+                    <div class="mini-cube-inner">
+                        <div class="mini-cube-face mini-cube-1">3</div>
+                        <div class="mini-cube-face mini-cube-2">Back</div>
+                    </div>
+                </div>
+                <div class="mini-cube">
+                    <div class="mini-cube-inner">
+                        <div class="mini-cube-face mini-cube-1">4</div>
+                        <div class="mini-cube-face mini-cube-2">Back</div>
+                    </div>
+                </div>
+                <div class="mini-cube">
+                    <div class="mini-cube-inner">
+                        <div class="mini-cube-face mini-cube-1">5</div>
+                        <div class="mini-cube-face mini-cube-2">Back</div>
+                    </div>
+                </div>
+                <div class="mini-cube">
+                    <div class="mini-cube-inner">
+                        <div class="mini-cube-face mini-cube-1">6</div>
+                        <div class="mini-cube-face mini-cube-2">Back</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS Code</h3>
+            <div class="code-block">
+.mini-cube {
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.mini-cube-inner {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+}
+
+.mini-cube:hover .mini-cube-inner {
+    transform: rotateX(360deg) rotateY(360deg);
+}
+
+.mini-cube-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="section">
+            <h2>Best Practices Summary</h2>
+
+            <table style="width: 100%; margin: 2rem 0; border-collapse: collapse;">
+                <thead style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white;">
+                    <tr>
+                        <th style="padding: 1rem; text-align: left;">Technique</th>
+                        <th style="padding: 1rem; text-align: left;">Key CSS</th>
+                        <th style="padding: 1rem; text-align: left;">Use Cases</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;"><strong>Flip Card</strong></td>
+                        <td style="padding: 1rem;"><code>rotateY(180deg)</code>, <code>backface-visibility</code></td>
+                        <td style="padding: 1rem;">Product cards, info reveals</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;"><strong>3D Cube</strong></td>
+                        <td style="padding: 1rem;"><code>preserve-3d</code>, <code>translateZ</code></td>
+                        <td style="padding: 1rem;">Galleries, portfolios</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;"><strong>Parallax</strong></td>
+                        <td style="padding: 1rem;"><code>translateZ</code> with depth</td>
+                        <td style="padding: 1rem;">Landing pages, hero sections</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;"><strong>Tilt Effect</strong></td>
+                        <td style="padding: 1rem;"><code>rotateX</code>, <code>rotateY</code></td>
+                        <td style="padding: 1rem;">Cards, interactive elements</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem;"><strong>3D Carousel</strong></td>
+                        <td style="padding: 1rem;"><code>rotateY</code> with <code>scale</code></td>
+                        <td style="padding: 1rem;">Product showcases, galleries</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Performance & Accessibility Tips</h3>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li>✓ <strong>Use perspective: 1000px as default</strong> - adjust for dramatic or subtle effects</li>
+                <li>✓ <strong>Enable transform-style: preserve-3d</strong> on containers with 3D children</li>
+                <li>✓ <strong>Hide back faces with backface-visibility: hidden</strong> for flip cards</li>
+                <li>✓ <strong>Test on mobile</strong> - 3D transforms work but performance varies</li>
+                <li>✓ <strong>Respect prefers-reduced-motion</strong> for accessibility</li>
+                <li>✓ <strong>Combine with transitions</strong> for smooth animations</li>
+                <li>✓ <strong>Profile performance</strong> - complex 3D scenes can impact rendering</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>CSS Transform 3D Properties: Practical Examples • Part of the CSS Learning Suite</p>
+            <p>Browser Support: Chrome 12+, Firefox 10+, Safari 4+, Edge 12+</p>
+            <p>Create • Experiment • Master CSS 3D Transforms</p>
+        </footer>
+    </div>
+</body>
+</html>

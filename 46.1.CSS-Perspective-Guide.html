@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Perspective Properties: Complete Guide</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.5s ease;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.5em;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 0.95em;
+        }
+
+        .property-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-md);
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .property-table td {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .property-table tr:hover {
+            background: var(--bg-light);
+            transition: var(--transition);
+        }
+
+        .code-block {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #222;
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .demo-box {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 280px;
+        }
+
+        .demo-box h4 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.1em;
+        }
+
+        .demo-box p {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .perspective-demo {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: var(--spacing-md) auto;
+            transition: transform 0.8s ease;
+        }
+
+        .demo-box:hover .perspective-demo {
+            transform: rotateX(45deg);
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .note-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .quick-reference {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .quick-ref-item {
+            background: var(--bg-light);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .quick-ref-item strong {
+            color: var(--primary-color);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .comparison-item {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            text-align: center;
+        }
+
+        .comparison-label {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .comparison-value {
+            color: var(--text-color);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border-radius: 12px;
+            margin-top: var(--spacing-lg);
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .property-table {
+                font-size: 0.85em;
+            }
+
+            .property-table th,
+            .property-table td {
+                padding: var(--spacing-sm);
+            }
+
+            body {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Perspective Properties: Complete Guide</h1>
+            <p>Master CSS perspective for 3D rendering. Learn perspective, perspective-origin, and how they work together to create 3D effects.</p>
+        </header>
+
+        <!-- Overview Section -->
+        <section class="section">
+            <h2>Overview</h2>
+            <p>Perspective properties define how 3D elements are rendered in the browser. They create the illusion of depth and distance from the viewer, making 3D transforms appear more realistic and immersive.</p>
+
+            <div class="info-box">
+                <strong>Key Point:</strong> Perspective must be applied to a parent element to affect child elements. It defines the viewer's distance from the 3D space.
+            </div>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>perspective</td>
+                        <td>Length (px) | none</td>
+                        <td>Defines 3D perspective distance</td>
+                    </tr>
+                    <tr>
+                        <td>perspective-origin</td>
+                        <td>X Y coordinates</td>
+                        <td>Sets vanishing point position</td>
+                    </tr>
+                    <tr>
+                        <td>Applies To</td>
+                        <td>Block-level elements</td>
+                        <td>Affects all 3D child transforms</td>
+                    </tr>
+                    <tr>
+                        <td>Inherited</td>
+                        <td>No</td>
+                        <td>Must be set explicitly</td>
+                    </tr>
+                    <tr>
+                        <td>Browser Support</td>
+                        <td>Modern browsers</td>
+                        <td>Chrome 12+, Firefox 10+, Safari 4+, Edge 12+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- perspective Property Section -->
+        <section class="section">
+            <h2>perspective Property</h2>
+
+            <p>The <code>perspective</code> property defines the distance between the viewer and the 3D space. Lower values create more dramatic perspective; higher values create subtler effects.</p>
+
+            <div class="code-block">
+/* Apply perspective to container */
+.container {
+    perspective: 1000px;
+}
+
+/* Different perspective values */
+perspective: 500px;     /* Very dramatic */
+perspective: 800px;     /* Dramatic */
+perspective: 1000px;    /* Standard (recommended) */
+perspective: 1500px;    /* Subtle */
+perspective: 2000px;    /* Very subtle */
+perspective: none;      /* No 3D effect */
+
+/* Perspective with transform function */
+transform: perspective(1000px) rotateY(45deg);
+            </div>
+
+            <h3>Perspective Values Explained</h3>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Effect</th>
+                        <th>Distortion Level</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>500px</code></td>
+                        <td>Extreme distortion</td>
+                        <td>Very High</td>
+                        <td>Dramatic, stylized effects</td>
+                    </tr>
+                    <tr>
+                        <td><code>800px</code></td>
+                        <td>Heavy distortion</td>
+                        <td>High</td>
+                        <td>Noticeable 3D depth</td>
+                    </tr>
+                    <tr>
+                        <td><code>1000px</code></td>
+                        <td>Balanced distortion</td>
+                        <td>Medium</td>
+                        <td>Most 3D effects (default)</td>
+                    </tr>
+                    <tr>
+                        <td><code>1500px</code></td>
+                        <td>Subtle distortion</td>
+                        <td>Low</td>
+                        <td>Gentle 3D effects</td>
+                    </tr>
+                    <tr>
+                        <td><code>2000px+</code></td>
+                        <td>Minimal distortion</td>
+                        <td>Very Low</td>
+                        <td>Almost 2D appearance</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="demo-container">
+                <div class="demo-box" style="perspective: 500px;">
+                    <div class="perspective-demo">A</div>
+                    <h4>500px</h4>
+                    <p>Very dramatic</p>
+                </div>
+                <div class="demo-box" style="perspective: 1000px;">
+                    <div class="perspective-demo">B</div>
+                    <h4>1000px</h4>
+                    <p>Standard (recommended)</p>
+                </div>
+                <div class="demo-box" style="perspective: 2000px;">
+                    <div class="perspective-demo">C</div>
+                    <h4>2000px</h4>
+                    <p>Very subtle</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>Recommendation:</strong> Start with <code>perspective: 1000px</code> as your default. Adjust up for subtler effects or down for more dramatic ones.
+            </div>
+        </section>
+
+        <!-- perspective-origin Property Section -->
+        <section class="section">
+            <h2>perspective-origin Property</h2>
+
+            <p>The <code>perspective-origin</code> property defines the vanishing point—where all parallel lines converge in perspective. It controls the viewer's apparent position.</p>
+
+            <div class="code-block">
+/* Predefined values */
+perspective-origin: center;           /* 50% 50% */
+perspective-origin: top;              /* 50% 0% */
+perspective-origin: bottom;           /* 50% 100% */
+perspective-origin: left;             /* 0% 50% */
+perspective-origin: right;            /* 100% 50% */
+perspective-origin: top left;         /* 0% 0% */
+perspective-origin: top right;        /* 100% 0% */
+perspective-origin: bottom left;      /* 0% 100% */
+perspective-origin: bottom right;     /* 100% 100% */
+
+/* Custom coordinates */
+perspective-origin: 30% 60%;          /* percentages */
+perspective-origin: 100px 50px;       /* pixels */
+perspective-origin: right 100px;      /* mixed */
+            </div>
+
+            <h3>Common perspective-origin Values</h3>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Equivalent</th>
+                        <th>Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>center</code></td>
+                        <td><code>50% 50%</code></td>
+                        <td>Viewer at center (default)</td>
+                    </tr>
+                    <tr>
+                        <td><code>top left</code></td>
+                        <td><code>0% 0%</code></td>
+                        <td>Viewer at top-left corner</td>
+                    </tr>
+                    <tr>
+                        <td><code>top</code></td>
+                        <td><code>50% 0%</code></td>
+                        <td>Viewer above the element</td>
+                    </tr>
+                    <tr>
+                        <td><code>left</code></td>
+                        <td><code>0% 50%</code></td>
+                        <td>Viewer to the left</td>
+                    </tr>
+                    <tr>
+                        <td><code>bottom right</code></td>
+                        <td><code>100% 100%</code></td>
+                        <td>Viewer at bottom-right corner</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note-box">
+                <strong>Visual Effect:</strong> Changing perspective-origin shifts where the viewer appears to be positioned, which affects how rotated elements look. Try different values to see how the vanishing point changes!
+            </div>
+        </section>
+
+        <!-- perspective vs transform function -->
+        <section class="section">
+            <h2>perspective Property vs Transform Function</h2>
+
+            <p>There are two ways to apply perspective in CSS. Each has different use cases.</p>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Syntax</th>
+                        <th>Scope</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Property</strong></td>
+                        <td><code>.container { perspective: 1000px; }</code></td>
+                        <td>Affects all 3D children</td>
+                        <td>Multiple 3D elements sharing perspective</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Function</strong></td>
+                        <td><code>transform: perspective(1000px) rotateY(45deg);</code></td>
+                        <td>Applies to single element</td>
+                        <td>Single element perspective</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Comparison</h3>
+
+            <div class="code-block">
+/* Method 1: Property on container */
+.container {
+    perspective: 1000px;
+}
+
+.child {
+    transform: rotateY(45deg);
+}
+
+/* Method 2: Function on element */
+.element {
+    transform: perspective(1000px) rotateY(45deg);
+}
+
+/* Method 1 applies same perspective to all children */
+/* Method 2 applies perspective only to that element */
+            </div>
+
+            <div class="info-box">
+                <strong>Best Practice:</strong> Use the <code>perspective</code> property when you have multiple 3D elements. Use the <code>transform</code> function for single elements or when you need different perspectives.
+            </div>
+        </section>
+
+        <!-- Best Practices Section -->
+        <section class="section">
+            <h2>Best Practices</h2>
+
+            <div class="demo-container">
+                <div class="demo-box">
+                    <h4>✓ Use Reasonable Values</h4>
+                    <p>Start with 1000px, adjust based on effect intensity. Extreme values (under 300px or over 3000px) usually look unnatural.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Apply to Container</h4>
+                    <p>Apply perspective property to parent, not individual elements. Ensures consistent 3D space for all children.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Consider Viewer Position</h4>
+                    <p>Think about where the viewer is looking from. Adjust perspective-origin to match viewer's expected position.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Test on Different Devices</h4>
+                    <p>Perspective rendering can vary across browsers and devices. Test on multiple platforms for consistency.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Combine with transform-style</h4>
+                    <p>Use <code>transform-style: preserve-3d</code> on children to maintain 3D space through the transform hierarchy.</p>
+                </div>
+
+                <div class="demo-box">
+                    <h4>✓ Performance Awareness</h4>
+                    <p>Complex 3D scenes can impact performance. Use DevTools to profile and optimize if needed.</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>Performance Warning:</strong> Each element with perspective creates a rendering layer. Too many layers can cause jank. Consolidate perspective when possible.
+            </div>
+        </section>
+
+        <!-- Practical Examples Section -->
+        <section class="section">
+            <h2>Practical Usage Patterns</h2>
+
+            <h3>Pattern 1: Flip Card Container</h3>
+
+            <div class="code-block">
+.flip-container {
+    perspective: 1000px;
+    width: 200px;
+    height: 300px;
+}
+
+.flip-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-container:hover .flip-card {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+            </div>
+
+            <h3>Pattern 2: 3D Gallery</h3>
+
+            <div class="code-block">
+.gallery-3d {
+    perspective: 1200px;
+    display: flex;
+    gap: 2rem;
+}
+
+.gallery-item {
+    transform: rotateY(-15deg);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: rotateY(0deg) scale(1.05);
+}
+            </div>
+
+            <h3>Pattern 3: Tilted Cards</h3>
+
+            <div class="code-block">
+.card-grid {
+    perspective: 1000px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.card {
+    perspective-origin: center bottom;
+    transition: transform 0.4s ease;
+}
+
+.card:hover {
+    transform: rotateX(-10deg) rotateY(5deg);
+}
+            </div>
+
+            <h3>Pattern 4: Different Viewer Positions</h3>
+
+            <div class="code-block">
+/* Viewer above */
+.from-top {
+    perspective: 1000px;
+    perspective-origin: center top;
+}
+
+/* Viewer from side */
+.from-left {
+    perspective: 1000px;
+    perspective-origin: left center;
+}
+
+/* Viewer at angle */
+.from-corner {
+    perspective: 1000px;
+    perspective-origin: top left;
+}
+            </div>
+        </section>
+
+        <!-- Browser Support Section -->
+        <section class="section">
+            <h2>Browser Support & Compatibility</h2>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Browser</th>
+                        <th>Version</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chrome</td>
+                        <td>12+</td>
+                        <td>✓ Full Support</td>
+                        <td>Excellent perspective rendering</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td>10+</td>
+                        <td>✓ Full Support</td>
+                        <td>Complete perspective support</td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>4+</td>
+                        <td>✓ Full Support</td>
+                        <td>May need -webkit- prefix</td>
+                    </tr>
+                    <tr>
+                        <td>Edge</td>
+                        <td>12+</td>
+                        <td>✓ Full Support</td>
+                        <td>All modern versions supported</td>
+                    </tr>
+                    <tr>
+                        <td>IE 10</td>
+                        <td>N/A</td>
+                        <td>⚠ Partial</td>
+                        <td>Basic support with limitations</td>
+                    </tr>
+                    <tr>
+                        <td>IE 9 and below</td>
+                        <td>N/A</td>
+                        <td>✗ No Support</td>
+                        <td>Use fallbacks or polyfills</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Feature Detection</h3>
+
+            <div class="code-block">
+/* CSS Feature Query */
+@supports (perspective: 1000px) {
+    .container {
+        perspective: 1000px;
+    }
+}
+
+/* JavaScript Detection */
+const supportsPerspective = CSS.supports('perspective', '1000px');
+if (supportsPerspective) {
+    element.classList.add('has-perspective');
+}
+            </div>
+        </section>
+
+        <!-- Advanced Concepts Section -->
+        <section class="section">
+            <h2>Advanced Concepts</h2>
+
+            <h3>Perspective Stack</h3>
+
+            <p>Each element with perspective creates its own 3D rendering context. Nested perspectives can create complex effects.</p>
+
+            <div class="code-block">
+.outer {
+    perspective: 1000px;
+}
+
+.middle {
+    perspective: 500px;
+    transform: rotateX(20deg);
+}
+
+.inner {
+    transform: rotateY(45deg);
+}
+
+/* Each level has its own perspective */
+            </div>
+
+            <h3>Perspective with transform-style</h3>
+
+            <div class="code-block">
+.container {
+    perspective: 1000px;
+}
+
+.parent {
+    transform-style: preserve-3d;
+    transform: rotateX(10deg);
+}
+
+.child {
+    transform: translateZ(50px);
+}
+
+/* Child translateZ is calculated in 3D space */
+            </div>
+
+            <h3>Dynamic Perspective</h3>
+
+            <div class="code-block">
+/* JavaScript: Change perspective based on mouse position */
+document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth) * 100;
+    const y = (e.clientY / window.innerHeight) * 100;
+    
+    element.style.perspectiveOrigin = `${x}% ${y}%`;
+});
+            </div>
+        </section>
+
+        <!-- Quick Reference Section -->
+        <section class="section">
+            <h2>Quick Reference Cheat Sheet</h2>
+
+            <div class="quick-reference">
+                <div class="quick-ref-item">
+                    <strong>Basic Setup</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+.container {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Perspective Values</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+500px - Dramatic
+1000px - Standard
+1500px - Subtle
+2000px - Very subtle
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Vanishing Points</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+center (default)
+top left
+top right
+bottom left
+bottom right
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Flip Card Pattern</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+perspective: 1000px;
+:hover { transform: rotateY(180deg); }
+backface-visibility: hidden;
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Transform Function</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+transform: perspective(1000px) rotateY(45deg);
+/* For single element */
+                    </div>
+                </div>
+
+                <div class="quick-ref-item">
+                    <strong>Dynamic Origin</strong>
+                    <div class="code-block" style="background: #f5f5f5; margin: 0.5rem 0; font-size: 0.8em;">
+perspective-origin: 30% 60%;
+perspective-origin: top left;
+perspective-origin: center;
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section class="section">
+            <h2>Summary</h2>
+
+            <p>Perspective properties are crucial for creating 3D effects in CSS. Key takeaways:</p>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li>✓ Use <code>perspective</code> property on parent elements to define 3D space</li>
+                <li>✓ Start with <code>perspective: 1000px</code> as default; adjust based on effect intensity</li>
+                <li>✓ Use <code>perspective-origin</code> to control viewer's apparent position</li>
+                <li>✓ Combine with <code>transform-style: preserve-3d</code> for child 3D rendering</li>
+                <li>✓ Use <code>perspective</code> property for multiple 3D elements; use transform function for single elements</li>
+                <li>✓ Test across browsers for consistent rendering</li>
+                <li>✓ Profile performance with complex 3D scenes</li>
+                <li>✓ Consider accessibility and motion preferences</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Next Steps:</strong> Combine perspective with 3D transforms to create flip cards, 3D cubes, tilted galleries, and dynamic parallax effects. Experiment with different perspective values and origins to find the perfect effect for your design.
+            </div>
+        </section>
+
+        <footer>
+            <p>CSS Perspective Properties Complete Guide • Created for CSS Learning Suite</p>
+            <p>Browser Support: Chrome 12+, Firefox 10+, Safari 4+, Edge 12+</p>
+            <p>Learn • Practice • Master CSS Perspective</p>
+        </footer>
+    </div>
+</body>
+</html>

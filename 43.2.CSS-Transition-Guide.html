@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Transition Properties: Practical Examples</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: var(--spacing-lg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-white);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.5s ease;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.3em;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .code-block-html {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: var(--spacing-lg);
+            margin: var(--spacing-md) 0;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .example-showcase {
+            background: var(--bg-light);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+            border: 2px solid var(--border-color);
+        }
+
+        .example-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .example-description {
+            color: var(--text-light);
+            font-size: 0.95em;
+            margin-bottom: var(--spacing-md);
+            font-style: italic;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        .note-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            border-radius: 4px;
+        }
+
+        /* Example 1: Button Hover Effects */
+        .button-demo {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, var(--secondary-color), #f093fb);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Example 2: Card Hover Effects */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-color);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+        }
+
+        /* Example 3: Link Color Transition */
+        .link-demo {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .link {
+            color: var(--primary-color);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            padding-bottom: 2px;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .link:hover {
+            color: var(--secondary-color);
+            border-bottom-color: var(--secondary-color);
+        }
+
+        .link-underline {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-underline::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--secondary-color);
+            bottom: 0;
+            left: -100%;
+            transition: left 0.3s ease;
+        }
+
+        .link-underline:hover::after {
+            left: 0;
+        }
+
+        /* Example 4: Smooth Slide Menu */
+        .menu-demo {
+            margin: var(--spacing-lg) 0;
+        }
+
+        .menu-toggle {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            transition: background 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            background: var(--secondary-color);
+        }
+
+        .menu {
+            background: var(--bg-light);
+            border-radius: 8px;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease;
+        }
+
+        .menu.open {
+            max-height: 300px;
+        }
+
+        .menu-item {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .menu-item:hover {
+            background: white;
+            padding-left: var(--spacing-lg);
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Example 5: Color Transition */
+        .color-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .color-box {
+            height: 120px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .color-box-1 {
+            background: #667eea;
+        }
+
+        .color-box-1:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .color-box-2 {
+            background: #f093fb;
+        }
+
+        .color-box-2:hover {
+            background: #f5576c;
+            transform: scale(1.05);
+        }
+
+        .color-box-3 {
+            background: #4facfe;
+        }
+
+        .color-box-3:hover {
+            background: #00f2fe;
+            transform: scale(1.05);
+        }
+
+        /* Example 6: Staggered Animation */
+        .stagger-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .stagger-item {
+            height: 100px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .stagger-item:nth-child(1) {
+            transition-delay: 0s;
+        }
+
+        .stagger-item:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+
+        .stagger-item:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+
+        .stagger-item:nth-child(4) {
+            transition-delay: 0.3s;
+        }
+
+        .stagger-demo:hover .stagger-item {
+            transform: translateY(-10px);
+        }
+
+        /* Example 7: Fade In/Out */
+        .fade-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .fade-item {
+            padding: var(--spacing-lg);
+            background: var(--bg-light);
+            border-radius: 8px;
+            text-align: center;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+
+        .fade-item:hover {
+            opacity: 1;
+        }
+
+        /* Example 8: Border Transition */
+        .border-demo {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .border-box {
+            width: 150px;
+            height: 150px;
+            border: 3px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .border-box:hover {
+            border-color: var(--primary-color);
+            box-shadow: inset 0 0 10px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Example 9: Size Transition */
+        .size-demo {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .size-box {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .size-box:hover {
+            width: 120px;
+            height: 120px;
+        }
+
+        /* Example 10: Complex Multi-Property */
+        .complex-demo {
+            display: flex;
+            gap: var(--spacing-lg);
+            flex-wrap: wrap;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .complex-card {
+            width: 200px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .complex-header {
+            height: 100px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: all 0.4s ease;
+        }
+
+        .complex-body {
+            padding: var(--spacing-lg);
+            opacity: 1;
+            transition: opacity 0.3s ease 0.1s;
+        }
+
+        .complex-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .complex-card:hover .complex-header {
+            background: linear-gradient(135deg, #764ba2, #f093fb);
+            height: 120px;
+        }
+
+        /* Example Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: var(--bg-white);
+            padding: var(--spacing-lg);
+            text-align: center;
+            border-radius: 12px;
+            margin-top: var(--spacing-lg);
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            body {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Transition Properties: Practical Examples</h1>
+            <p>Real-world implementations of CSS transitions. Discover 10 practical patterns for creating smooth, professional animations with hover effects and state changes.</p>
+        </header>
+
+        <!-- Example 1: Button Hover Effects -->
+        <section class="section">
+            <h2>Example 1: Button Hover Effects</h2>
+            <p class="example-description">Professional button animations with smooth elevation and color transitions on hover.</p>
+
+            <div class="example-showcase">
+                <div class="button-demo">
+                    <button class="btn">Hover Me</button>
+                    <button class="btn">Click Me</button>
+                    <button class="btn">Try Me</button>
+                </div>
+            </div>
+
+            <h3>HTML & CSS</h3>
+            <div class="code-block-html">
+&lt;button class="btn"&gt;Hover Me&lt;/button&gt;
+            </div>
+
+            <div class="code-block">
+.btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #764ba2, #f093fb);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Key Technique:</strong> Combine <code>transform: translateY()</code> for elevation with <code>box-shadow</code> for depth. Use <code>all 0.3s ease</code> for smooth multi-property animation.
+            </div>
+        </section>
+
+        <!-- Example 2: Card Hover Effects -->
+        <section class="section">
+            <h2>Example 2: Card Hover Effects</h2>
+            <p class="example-description">Elegant card animations that lift and shadow on hover—perfect for portfolios and product displays.</p>
+
+            <div class="example-showcase">
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-icon">🎨</div>
+                        <h4>Design</h4>
+                        <p>Beautiful UI designs</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">💻</div>
+                        <h4>Development</h4>
+                        <p>Clean code solutions</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">📱</div>
+                        <h4>Mobile</h4>
+                        <p>Responsive layouts</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS Card Animation</h3>
+            <div class="code-block">
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    border-color: #667eea;
+    box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+}
+            </div>
+        </section>
+
+        <!-- Example 3: Link Color Transition -->
+        <section class="section">
+            <h2>Example 3: Link Color Transitions</h2>
+            <p class="example-description">Smooth color and underline transitions for links with two different effects.</p>
+
+            <div class="example-showcase">
+                <div class="link-demo">
+                    <a href="#" class="link">Simple Link Color Transition</a>
+                    <a href="#" class="link link-underline">Link with Animated Underline</a>
+                    <a href="#" class="link link-underline">Another Link with Underline</a>
+                </div>
+            </div>
+
+            <h3>CSS Link Transitions</h3>
+            <div class="code-block">
+/* Simple color transition */
+.link {
+    color: #667eea;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.link:hover {
+    color: #764ba2;
+    border-bottom-color: #764ba2;
+}
+
+/* Animated underline effect */
+.link-underline::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #764ba2;
+    bottom: 0;
+    left: -100%;
+    transition: left 0.3s ease;
+}
+
+.link-underline:hover::after {
+    left: 0;
+}
+            </div>
+        </section>
+
+        <!-- Example 4: Smooth Slide Menu -->
+        <section class="section">
+            <h2>Example 4: Smooth Slide Menu</h2>
+            <p class="example-description">Accordion-style menu that smoothly expands and collapses using max-height transition.</p>
+
+            <div class="example-showcase">
+                <div class="menu-demo">
+                    <button class="menu-toggle" onclick="toggleMenu(this)">☰ Menu</button>
+                    <div class="menu">
+                        <div class="menu-item">🏠 Home</div>
+                        <div class="menu-item">📚 About</div>
+                        <div class="menu-item">🎨 Services</div>
+                        <div class="menu-item">📞 Contact</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>HTML & CSS</h3>
+            <div class="code-block-html">
+&lt;button class="menu-toggle" onclick="toggleMenu(this)"&gt;☰ Menu&lt;/button&gt;
+&lt;div class="menu"&gt;
+    &lt;div class="menu-item"&gt;Home&lt;/div&gt;
+    &lt;!-- More items --&gt;
+&lt;/div&gt;
+            </div>
+
+            <div class="code-block">
+.menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.menu.open {
+    max-height: 300px;
+}
+
+function toggleMenu(btn) {
+    const menu = btn.nextElementSibling;
+    menu.classList.toggle('open');
+}
+            </div>
+
+            <script>
+                function toggleMenu(btn) {
+                    const menu = btn.nextElementSibling;
+                    menu.classList.toggle('open');
+                    btn.textContent = menu.classList.contains('open') ? '✕ Close' : '☰ Menu';
+                }
+            </script>
+        </section>
+
+        <!-- Example 5: Color Transitions -->
+        <section class="section">
+            <h2>Example 5: Color Transitions</h2>
+            <p class="example-description">Smooth background color transitions combined with scale effects on hover.</p>
+
+            <div class="example-showcase">
+                <div class="color-demo">
+                    <div class="color-box color-box-1">Primary</div>
+                    <div class="color-box color-box-2">Accent</div>
+                    <div class="color-box color-box-3">Cool</div>
+                </div>
+            </div>
+
+            <h3>CSS Color Transition</h3>
+            <div class="code-block">
+.color-box {
+    height: 120px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.color-box-1 {
+    background: #667eea;
+}
+
+.color-box-1:hover {
+    background: #764ba2;
+    transform: scale(1.05);
+}
+            </div>
+        </section>
+
+        <!-- Example 6: Staggered Animations -->
+        <section class="section">
+            <h2>Example 6: Staggered Animations</h2>
+            <p class="example-description">Multiple elements with delayed transitions for choreographed effect. Hover anywhere to trigger.</p>
+
+            <div class="example-showcase">
+                <p style="margin-bottom: 1rem; color: #666; font-size: 0.9em;">Hover the area below to see staggered animation:</p>
+                <div class="stagger-demo">
+                    <div class="stagger-item">1️⃣</div>
+                    <div class="stagger-item">2️⃣</div>
+                    <div class="stagger-item">3️⃣</div>
+                    <div class="stagger-item">4️⃣</div>
+                </div>
+            </div>
+
+            <h3>CSS Staggered Transition</h3>
+            <div class="code-block">
+.stagger-item {
+    transition: all 0.3s ease;
+}
+
+.stagger-item:nth-child(1) { transition-delay: 0s; }
+.stagger-item:nth-child(2) { transition-delay: 0.1s; }
+.stagger-item:nth-child(3) { transition-delay: 0.2s; }
+.stagger-item:nth-child(4) { transition-delay: 0.3s; }
+
+.stagger-demo:hover .stagger-item {
+    transform: translateY(-10px);
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Technique:</strong> Use <code>transition-delay</code> with <code>nth-child()</code> selectors to create wave-like staggered effects without JavaScript.
+            </div>
+        </section>
+
+        <!-- Example 7: Fade In/Out -->
+        <section class="section">
+            <h2>Example 7: Fade In/Out Effects</h2>
+            <p class="example-description">Smooth opacity transitions for revealing/hiding content on interaction.</p>
+
+            <div class="example-showcase">
+                <div class="fade-demo">
+                    <div class="fade-item">
+                        <p>🎯</p>
+                        <p>Hover to fade in</p>
+                    </div>
+                    <div class="fade-item">
+                        <p>💡</p>
+                        <p>Hover to fade in</p>
+                    </div>
+                    <div class="fade-item">
+                        <p>⚡</p>
+                        <p>Hover to fade in</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS Fade Transition</h3>
+            <div class="code-block">
+.fade-item {
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+}
+
+.fade-item:hover {
+    opacity: 1;
+}
+            </div>
+        </section>
+
+        <!-- Example 8: Border Transitions -->
+        <section class="section">
+            <h2>Example 8: Border Transitions</h2>
+            <p class="example-description">Smooth border color and shadow transitions for interactive elements.</p>
+
+            <div class="example-showcase">
+                <div class="border-demo">
+                    <div class="border-box">Hover Me</div>
+                    <div class="border-box">Hover Me</div>
+                    <div class="border-box">Hover Me</div>
+                </div>
+            </div>
+
+            <h3>CSS Border Transition</h3>
+            <div class="code-block">
+.border-box {
+    border: 3px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.border-box:hover {
+    border-color: #667eea;
+    box-shadow: inset 0 0 10px rgba(102, 126, 234, 0.1);
+}
+            </div>
+        </section>
+
+        <!-- Example 9: Size Transitions -->
+        <section class="section">
+            <h2>Example 9: Size Transitions</h2>
+            <p class="example-description">Smooth width and height transitions for expandable elements.</p>
+
+            <div class="example-showcase">
+                <div class="size-demo">
+                    <div class="size-box"></div>
+                    <p style="flex: 1;">← Hover the box to see it grow smoothly</p>
+                </div>
+            </div>
+
+            <h3>CSS Size Transition</h3>
+            <div class="code-block">
+.size-box {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.size-box:hover {
+    width: 120px;
+    height: 120px;
+}
+            </div>
+
+            <div class="note-box">
+                <strong>Performance Note:</strong> Size transitions trigger layout recalculation. For better performance on many elements, consider using <code>transform: scale()</code> instead.
+            </div>
+        </section>
+
+        <!-- Example 10: Complex Multi-Property -->
+        <section class="section">
+            <h2>Example 10: Complex Multi-Property Transitions</h2>
+            <p class="example-description">Multiple properties transitioning with different durations and delays for sophisticated effects.</p>
+
+            <div class="example-showcase">
+                <div class="complex-demo">
+                    <div class="complex-card">
+                        <div class="complex-header"></div>
+                        <div class="complex-body">
+                            <h4>Feature</h4>
+                            <p>Hover to expand and change color</p>
+                        </div>
+                    </div>
+                    <div class="complex-card">
+                        <div class="complex-header"></div>
+                        <div class="complex-body">
+                            <h4>Feature</h4>
+                            <p>Hover to expand and change color</p>
+                        </div>
+                    </div>
+                    <div class="complex-card">
+                        <div class="complex-header"></div>
+                        <div class="complex-body">
+                            <h4>Feature</h4>
+                            <p>Hover to expand and change color</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS Multi-Property Transition</h3>
+            <div class="code-block">
+.complex-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.complex-header {
+    height: 100px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    transition: all 0.4s ease;
+}
+
+.complex-body {
+    opacity: 1;
+    transition: opacity 0.3s ease 0.1s;
+}
+
+.complex-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.complex-card:hover .complex-header {
+    background: linear-gradient(135deg, #764ba2, #f093fb);
+    height: 120px;
+}
+            </div>
+
+            <div class="info-box">
+                <strong>Advanced Technique:</strong> Stagger delays between properties (<code>opacity: 0.3s ease 0.1s</code>) to create complex choreographed animations while keeping the code maintainable.
+            </div>
+        </section>
+
+        <!-- Best Practices Section -->
+        <section class="section">
+            <h2>Best Practices Summary</h2>
+
+            <table style="width: 100%; margin: 2rem 0; border-collapse: collapse;">
+                <thead style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white;">
+                    <tr>
+                        <th style="padding: 1rem; text-align: left;">Scenario</th>
+                        <th style="padding: 1rem; text-align: left;">Recommended Transition</th>
+                        <th style="padding: 1rem; text-align: left;">Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Button hover</td>
+                        <td style="padding: 1rem;"><code>all 0.3s ease</code></td>
+                        <td style="padding: 1rem;">0.3s</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Card lift</td>
+                        <td style="padding: 1rem;"><code>all 0.3s cubic-bezier(0.4, 0, 0.2, 1)</code></td>
+                        <td style="padding: 1rem;">0.3s</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Link underline</td>
+                        <td style="padding: 1rem;"><code>all 0.3s ease</code></td>
+                        <td style="padding: 1rem;">0.3s</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Menu expand</td>
+                        <td style="padding: 1rem;"><code>max-height 0.3s ease</code></td>
+                        <td style="padding: 1rem;">0.3s</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem;">Fade in/out</td>
+                        <td style="padding: 1rem;"><code>opacity 0.3s ease</code></td>
+                        <td style="padding: 1rem;">0.3s</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem;">Staggered items</td>
+                        <td style="padding: 1rem;"><code>all 0.3s ease</code> + delay</td>
+                        <td style="padding: 1rem;">0.3s + 0.1s increments</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Key Takeaways</h3>
+
+            <ul style="line-height: 2; color: var(--text-light); margin: var(--spacing-lg) 0;">
+                <li>✓ <strong>Fast is Better:</strong> Use 0.2s-0.4s for most interactions to feel responsive</li>
+                <li>✓ <strong>Choose Transform Over Position:</strong> Animate <code>transform</code> instead of <code>left/top</code> for better performance</li>
+                <li>✓ <strong>Use ease-in-out Default:</strong> Works well for most animations</li>
+                <li>✓ <strong>Combine Properties:</strong> Multiple properties transitioning together create polished effects</li>
+                <li>✓ <strong>Respect User Preferences:</strong> Always use <code>@media (prefers-reduced-motion: reduce)</code></li>
+                <li>✓ <strong>Delay for Effect:</strong> Small delays (0.1s increments) create professional staggered animations</li>
+                <li>✓ <strong>Test on Real Devices:</strong> Smoothness depends on device capabilities</li>
+            </ul>
+        </section>
+
+        <!-- Accessibility Notice -->
+        <section class="section">
+            <h2>Accessibility: Respecting User Motion Preferences</h2>
+
+            <p>Always respect the <code>prefers-reduced-motion</code> media query for users with vestibular disorders or motion sensitivity:</p>
+
+            <div class="code-block">
+/* Default transitions enabled */
+button {
+    transition: all 0.3s ease;
+}
+
+/* Respect user's motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+            </div>
+
+            <div class="note-box">
+                <strong>Note:</strong> The code above is already included in this page. Users with motion preferences will see minimal transitions.
+            </div>
+        </section>
+
+        <footer>
+            <p>CSS Transition Properties: Practical Examples • Part of the CSS Learning Suite</p>
+            <p>Browser Support: Chrome 26+, Firefox 16+, Safari 9+, Edge 12+</p>
+            <p>Create • Experiment • Master CSS Transitions</p>
+        </footer>
+    </div>
+</body>
+</html>
