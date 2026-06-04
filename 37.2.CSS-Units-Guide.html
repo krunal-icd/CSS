@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Units - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .example-section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .example-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .example-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .example-desc {
+            font-size: 0.95em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .example-content {
+            padding: 30px;
+        }
+
+        .label {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-radius: 4px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1565c0;
+        }
+
+        /* ==================== EXAMPLE 1: SPACING SYSTEM ==================== */
+        .spacing-demo {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .spacing-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .spacing-xs { padding: 0.5rem; }
+        .spacing-sm { padding: 1rem; }
+        .spacing-md { padding: 1.5rem; }
+        .spacing-lg { padding: 2rem; }
+        .spacing-xl { padding: 3rem; }
+
+        /* ==================== EXAMPLE 2: RESPONSIVE LAYOUT ==================== */
+        .layout-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .layout-column {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .layout-column h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .layout-column p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        /* ==================== EXAMPLE 3: COMPONENT SIZING ==================== */
+        .button-demo {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-small {
+            font-size: 0.875rem;
+            padding: 0.5em 1em;
+        }
+
+        .btn-medium {
+            font-size: 1rem;
+            padding: 0.75em 1.5em;
+        }
+
+        .btn-large {
+            font-size: 1.25rem;
+            padding: 1em 2em;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* ==================== EXAMPLE 4: RESPONSIVE TYPOGRAPHY ==================== */
+        .typography-demo {
+            margin: 20px 0;
+        }
+
+        .heading-xl {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .heading-lg {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+
+        .heading-md {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .text-large {
+            font-size: 1.125rem;
+            line-height: 1.6rem;
+            color: #555;
+        }
+
+        .text-normal {
+            font-size: 1rem;
+            line-height: 1.6rem;
+            color: #666;
+        }
+
+        .text-small {
+            font-size: 0.875rem;
+            line-height: 1.5rem;
+            color: #999;
+        }
+
+        /* ==================== EXAMPLE 5: FLEXIBLE GRID ==================== */
+        .grid-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 20px 0;
+        }
+
+        .grid-item {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .grid-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .grid-item h3 {
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        .grid-item p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        /* ==================== EXAMPLE 6: ASPECT RATIO ==================== */
+        .aspect-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 20px 0;
+        }
+
+        .aspect-container {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .aspect-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .aspect-16-9 {
+            aspect-ratio: 16/9;
+        }
+
+        .aspect-1-1 {
+            aspect-ratio: 1;
+        }
+
+        .aspect-4-3 {
+            aspect-ratio: 4/3;
+        }
+
+        .aspect-info {
+            padding: 0.75rem;
+            background: white;
+            text-align: center;
+            font-size: 0.85em;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        /* ==================== EXAMPLE 7: HERO SECTION ==================== */
+        .hero-demo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            padding: 5rem 2rem;
+            text-align: center;
+            color: white;
+            margin: 20px 0;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            background: white;
+            color: #667eea;
+            padding: 0.875rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .hero-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ==================== EXAMPLE 8: CARD COMPONENT ==================== */
+        .card-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-text {
+            font-size: 0.95em;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .card-footer {
+            display: flex;
+            gap: 0.75rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .card-tag {
+            display: inline-block;
+            background: #e8f4f8;
+            color: #1565c0;
+            padding: 0.375rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        /* ==================== EXAMPLE 9: FORM LAYOUT ==================== */
+        .form-demo {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 20px 0;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 0.95em;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-helper {
+            font-size: 0.85em;
+            color: #999;
+            margin-top: 0.375rem;
+        }
+
+        /* ==================== EXAMPLE 10: MEDIA BREAKPOINTS ==================== */
+        .responsive-demo {
+            background: #f8f9fa;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .breakpoint-info {
+            display: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .breakpoint-info.active {
+            display: block;
+        }
+
+        .breakpoint-content {
+            font-size: 0.95em;
+            color: #666;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        /* ==================== TIPS SECTION ==================== */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tip-card {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.95em;
+        }
+
+        .tip-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .tip-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1200px) {
+            .layout-demo {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .layout-demo,
+            .card-demo,
+            .aspect-demo {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .button-demo {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📏 CSS Units</h1>
+        <p class="subtitle">Real-World Practical Examples & Use Cases</p>
+
+        <!-- ==================== EXAMPLE 1: SPACING SYSTEM ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>1. Consistent Spacing System with rem</h2>
+                <p class="example-desc">Build a scalable spacing scale using rem units</p>
+            </div>
+            <div class="example-content">
+                <span class="label">rem units</span>
+                <span class="label">Scalable</span>
+                <span class="label">Maintainable</span>
+
+                <p style="color: #555; margin-bottom: 15px;">
+                    Create a consistent spacing scale by defining rem-based variables. When you change the root font-size, all spacing scales proportionally.
+                </p>
+
+                <div class="spacing-demo">
+                    <div class="spacing-box spacing-xs">Extra Small (0.5rem = 8px)</div>
+                    <div class="spacing-box spacing-sm">Small (1rem = 16px)</div>
+                    <div class="spacing-box spacing-md">Medium (1.5rem = 24px)</div>
+                    <div class="spacing-box spacing-lg">Large (2rem = 32px)</div>
+                    <div class="spacing-box spacing-xl">Extra Large (3rem = 48px)</div>
+                </div>
+
+                <div class="code-block">
+/* Define spacing scale in CSS variables */
+html {
+    font-size: 16px;
+    --spacing-xs: 0.5rem;  /* 8px */
+    --spacing-sm: 1rem;    /* 16px */
+    --spacing-md: 1.5rem;  /* 24px */
+    --spacing-lg: 2rem;    /* 32px */
+    --spacing-xl: 3rem;    /* 48px */
+}
+
+/* Use throughout your project */
+.section {
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.component {
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm);
+}
+
+/* Scale everything on mobile */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px; /* All rem-based spacing scales down */
+    }
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Benefit:</strong> Change one value (root font-size) and your entire spacing system scales. Perfect for responsive design!
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 2: RESPONSIVE LAYOUT ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>2. Responsive Three-Column Layout with %</h2>
+                <p class="example-desc">Flexible columns that adapt to container width</p>
+            </div>
+            <div class="example-content">
+                <span class="label">% units</span>
+                <span class="label">Flexible</span>
+                <span class="label">Container-relative</span>
+
+                <div class="layout-demo">
+                    <div class="layout-column">
+                        <h3>Column 1</h3>
+                        <p>33.33% width - Adapts to parent container size</p>
+                    </div>
+                    <div class="layout-column">
+                        <h3>Column 2</h3>
+                        <p>33.33% width - Responsive to screen size</p>
+                    </div>
+                    <div class="layout-column">
+                        <h3>Column 3</h3>
+                        <p>33.33% width - Maintains proportions</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Three-column layout with percentages */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.column {
+    width: 31%; /* Leave 2% gap space */
+    float: left;
+    margin-right: 2%;
+    margin-bottom: 2rem;
+}
+
+.column:nth-child(3n) {
+    margin-right: 0; /* No margin on last column */
+}
+
+/* Stack on tablets */
+@media (max-width: 900px) {
+    .column {
+        width: 48%;
+        margin-right: 2%;
+    }
+
+    .column:nth-child(2n) {
+        margin-right: 0;
+    }
+}
+
+/* Single column on mobile */
+@media (max-width: 600px) {
+    .column {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Advantage:</strong> Using percentages creates truly flexible layouts that adapt to any container size, not just viewport.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 3: COMPONENT SCALING ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>3. Scalable Components with em</h2>
+                <p class="example-desc">Buttons that scale proportionally with font-size</p>
+            </div>
+            <div class="example-content">
+                <span class="label">em units</span>
+                <span class="label">Component-based</span>
+                <span class="label">Proportional scaling</span>
+
+                <p style="color: #555; margin-bottom: 15px;">
+                    Build components using em so padding, margins, and borders scale proportionally with font-size.
+                </p>
+
+                <div class="button-demo">
+                    <button class="btn btn-small btn-primary">Small</button>
+                    <button class="btn btn-medium btn-primary">Medium</button>
+                    <button class="btn btn-large btn-primary">Large</button>
+                </div>
+
+                <div class="code-block">
+/* Scalable button component using em */
+.btn {
+    border: none;
+    border-radius: 0.375em; /* Proportional to font-size */
+    padding: 0.75em 1.5em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-small {
+    font-size: 0.875rem; /* 14px */
+    /* Padding: 10.5px 21px */
+}
+
+.btn-medium {
+    font-size: 1rem; /* 16px */
+    /* Padding: 12px 24px */
+}
+
+.btn-large {
+    font-size: 1.25rem; /* 20px */
+    /* Padding: 15px 30px */
+}
+
+/* All sizes maintain perfect proportions! */
+                </div>
+
+                <div class="info">
+                    <strong>💡 Magic of em:</strong> The padding adjusts automatically based on font-size, keeping the button perfectly proportioned at any size.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 4: RESPONSIVE TYPOGRAPHY ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>4. Responsive Typography Scale with rem</h2>
+                <p class="example-desc">Font sizes that adapt to viewport</p>
+            </div>
+            <div class="example-content">
+                <span class="label">rem units</span>
+                <span class="label">Typography</span>
+                <span class="label">Consistent scaling</span>
+
+                <div class="typography-demo">
+                    <h1 class="heading-xl">Extra Large Heading (2.5rem)</h1>
+                    <h2 class="heading-lg">Large Heading (2rem)</h2>
+                    <h3 class="heading-md">Medium Heading (1.5rem)</h3>
+                    <p class="text-large">Large paragraph text (1.125rem) - Used for emphasis or important content that needs higher readability.</p>
+                    <p class="text-normal">Normal paragraph text (1rem) - Body text for regular reading. Comfortable at standard viewing distances.</p>
+                    <p class="text-small">Small text (0.875rem) - Captions, metadata, or secondary information that doesn't require primary attention.</p>
+                </div>
+
+                <div class="code-block">
+/* Responsive typography system */
+html {
+    font-size: 16px; /* Desktop base */
+}
+
+h1 { font-size: 2.5rem; line-height: 1.2; }
+h2 { font-size: 2rem; line-height: 1.3; }
+h3 { font-size: 1.5rem; line-height: 1.4; }
+
+p { font-size: 1rem; line-height: 1.6rem; }
+
+.text-large { font-size: 1.125rem; }
+.text-small { font-size: 0.875rem; }
+
+/* Tablet - slightly smaller */
+@media (max-width: 900px) {
+    html { font-size: 15px; }
+}
+
+/* Mobile - even smaller */
+@media (max-width: 600px) {
+    html { font-size: 14px; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Advantage:</strong> Change root font-size in breakpoints, and your entire typography scale adjusts automatically!
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 5: FLEXIBLE GRID ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>5. Auto-Fit Grid Layout with minmax() and rem</h2>
+                <p class="example-desc">Responsive grid that adjusts column count automatically</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Grid + rem</span>
+                <span class="label">Auto-responsive</span>
+                <span class="label">Modern CSS</span>
+
+                <div class="grid-demo">
+                    <div class="grid-item">
+                        <h3>Card 1</h3>
+                        <p>Uses rem for padding and gaps. Grid automatically adjusts columns based on available space.</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Card 2</h3>
+                        <p>Resize your browser to see the grid adapt. On mobile, it becomes single column.</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Card 3</h3>
+                        <p>On tablet, two columns. On desktop, three columns. All automatic!</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Card 4</h3>
+                        <p>Each card maintains consistent sizing through rem units and proportional spacing.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Auto-responsive grid with rem */
+.grid-demo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem; /* Using rem for consistent spacing */
+    margin: 2rem 0;
+}
+
+.grid-item {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+}
+
+/* No media queries needed! Grid handles responsiveness */
+
+/* Optional: Fine-tune for very small screens */
+@media (max-width: 500px) {
+    .grid-demo {
+        grid-template-columns: 1fr;
+    }
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 Modern Approach:</strong> CSS Grid's auto-fit with minmax is incredibly powerful for responsive layouts without media queries!
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 6: ASPECT RATIO ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>6. Maintaining Aspect Ratios</h2>
+                <p class="example-desc">Preserve image and video proportions</p>
+            </div>
+            <div class="example-content">
+                <span class="label">aspect-ratio</span>
+                <span class="label">Modern CSS</span>
+                <span class="label">Responsive images</span>
+
+                <div class="aspect-demo">
+                    <div class="aspect-container">
+                        <div class="aspect-box aspect-16-9">16:9</div>
+                        <div class="aspect-info">16:9 ratio (video)</div>
+                    </div>
+                    <div class="aspect-container">
+                        <div class="aspect-box aspect-1-1">1:1</div>
+                        <div class="aspect-info">1:1 ratio (square)</div>
+                    </div>
+                    <div class="aspect-container">
+                        <div class="aspect-box aspect-4-3">4:3</div>
+                        <div class="aspect-info">4:3 ratio (photo)</div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Maintain aspect ratios */
+
+/* Modern approach - aspect-ratio property */
+.video-container {
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+.square-image {
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+/* Legacy approach - padding-bottom trick */
+.video-legacy {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 ratio */
+}
+
+.video-legacy iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Usage example */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.gallery img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Browser Support:</strong> aspect-ratio is well-supported in modern browsers. Use padding-bottom trick for older browsers.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 7: HERO SECTION ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>7. Hero Section with Viewport Units and rem</h2>
+                <p class="example-desc">Full-screen section with responsive typography</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Viewport units</span>
+                <span class="label">rem sizing</span>
+                <span class="label">Responsive text</span>
+
+                <div class="hero-demo">
+                    <h1 class="hero-title">Welcome to Our Platform</h1>
+                    <p class="hero-subtitle">Discover amazing features that scale beautifully across all devices</p>
+                    <button class="hero-cta">Get Started</button>
+                </div>
+
+                <div class="code-block">
+/* Hero section with viewport and rem units */
+.hero {
+    width: 100vw;
+    height: 100vh;
+    padding: 2rem; /* rem for consistent padding */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 5vw; /* 5% of viewport width */
+    max-width: 90%;
+    margin-bottom: 2rem; /* rem for spacing */
+    line-height: 1.2;
+}
+
+.hero p {
+    font-size: 2vw; /* 2% of viewport width */
+    margin-bottom: 3rem; /* rem for spacing */
+    max-width: 80%;
+}
+
+.hero button {
+    font-size: 1.125rem; /* rem for consistent button size */
+    padding: 0.875rem 2rem;
+    margin-top: 1rem;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem; /* Fixed rem size on small screens */
+    }
+
+    .hero p {
+        font-size: 1.125rem;
+    }
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 Combo Approach:</strong> Mix viewport units for scaling headings with rem for consistent spacing and controls.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 8: CARD COMPONENT ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>8. Reusable Card Component</h2>
+                <p class="example-desc">Professional card layout with consistent rem-based spacing</p>
+            </div>
+            <div class="example-content">
+                <span class="label">rem spacing</span>
+                <span class="label">Reusable</span>
+                <span class="label">Professional</span>
+
+                <div class="card-demo">
+                    <div class="card">
+                        <div class="card-image">📱 Mobile App</div>
+                        <div class="card-content">
+                            <h3 class="card-title">Mobile First</h3>
+                            <p class="card-text">Designed with mobile users in mind. All spacing uses rem for scalability.</p>
+                            <div class="card-footer">
+                                <span class="card-tag">Design</span>
+                                <span class="card-tag">UI</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">🎨 Design</div>
+                        <div class="card-content">
+                            <h3 class="card-title">Beautiful Layouts</h3>
+                            <p class="card-text">Consistent spacing and typography create professional, polished designs.</p>
+                            <div class="card-footer">
+                                <span class="card-tag">CSS</span>
+                                <span class="card-tag">Layout</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">📊 Analytics</div>
+                        <div class="card-content">
+                            <h3 class="card-title">Data Driven</h3>
+                            <p class="card-text">Measure performance and optimize your designs based on user behavior.</p>
+                            <div class="card-footer">
+                                <span class="card-tag">Performance</span>
+                                <span class="card-tag">Data</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Reusable card component with rem */
+.card {
+    background: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-image {
+    width: 100%;
+    height: 11.25rem; /* 180px - 16:9 image ratio */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-content {
+    padding: 1.5rem; /* All padding uses rem */
+}
+
+.card-title {
+    font-size: 1.25rem; /* rem for sizing */
+    margin-bottom: 0.75rem;
+}
+
+.card-text {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.card-footer {
+    display: flex;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.card-tag {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8rem;
+    border-radius: 0.25rem;
+}
+
+/* Scale entire card on mobile */
+@media (max-width: 600px) {
+    .card-image {
+        height: 9rem; /* Smaller on mobile */
+    }
+
+    .card-content {
+        padding: 1rem; /* Reduced padding */
+    }
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Component Reusability:</strong> Using rem throughout makes components scalable and easy to customize globally.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 9: FORM LAYOUT ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>9. Form Layout with Consistent rem Spacing</h2>
+                <p class="example-desc">Professional form with aligned spacing</p>
+            </div>
+            <div class="example-content">
+                <span class="label">rem spacing</span>
+                <span class="label">Form UX</span>
+                <span class="label">Consistent margins</span>
+
+                <form class="form-demo">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" placeholder="John Doe">
+                        <div class="form-helper">Enter your complete name</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" placeholder="your@email.com">
+                        <div class="form-helper">We'll never share your email</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-input" style="resize: vertical; min-height: 6rem; font-family: inherit;" placeholder="Your message..."></textarea>
+                        <div class="form-helper">Maximum 500 characters</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-medium btn-primary" style="width: 100%;">Send Message</button>
+                </form>
+
+                <div class="code-block">
+/* Form layout with rem spacing */
+.form-demo {
+    background: #f8f9fa;
+    border-radius: 0.5rem;
+    padding: 2rem; /* 32px */
+    max-width: 500px;
+    margin: 2rem auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem; /* Consistent spacing between groups */
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem; /* Tight spacing label to input */
+    font-size: 0.95rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem; /* Comfortable touch target */
+    border: 2px solid #ddd;
+    border-radius: 0.375rem;
+    font-size: 1rem; /* Prevents zoom on iOS */
+    transition: all 0.2s ease;
+}
+
+.form-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.1);
+}
+
+.form-helper {
+    font-size: 0.85rem;
+    color: #999;
+    margin-top: 0.375rem;
+}
+
+/* Mobile optimization */
+@media (max-width: 600px) {
+    .form-demo {
+        padding: 1.5rem; /* Reduced padding on mobile */
+    }
+
+    .form-input {
+        font-size: 16px; /* 16px prevents zoom on iOS */
+    }
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 Mobile Friendly:</strong> Keep input font-size at 16px+ on mobile to prevent automatic zoom on iOS Safari.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BEST PRACTICES ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>✨ Best Practices & Quick Reference</h2>
+                <p class="example-desc">Guidelines for choosing and using CSS units</p>
+            </div>
+            <div class="example-content">
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>📐 Use rem for Global</h4>
+                        <p>Set base font-size on html element. Use rem for all spacing, fonts, and sizing. Scales globally with one change.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>🎨 Use em for Components</h4>
+                        <p>Build self-contained components with em. Button padding, border-radius scale with font-size automatically.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>📊 Use % for Layouts</h4>
+                        <p>Use percentages for width and flexible layouts. Creates truly responsive columns and containers.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>🎬 Use vw/vh Sparingly</h4>
+                        <p>Perfect for full-screen heroes and dramatic sections. Avoid on mobile for vh (includes browser chrome).</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>⚡ Minimize px Usage</h4>
+                        <p>Reserve pixels for small fixed sizes like borders and shadows. Avoid for fonts and layouts - breaks responsiveness.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>🔧 Mix Units Strategically</h4>
+                        <p>Combine units for different purposes. rem for spacing, % for layout, em for components, vw for typography scaling.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>📱 Test All Breakpoints</h4>
+                        <p>Test your designs at multiple screen sizes. Ensure rem-based scaling works as expected across devices.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>📖 Document Your System</h4>
+                        <p>Create a style guide with your unit conventions. Helps team members understand when to use each unit.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* CSS UNITS CHEAT SHEET */
+
+/* ========== SPACING SYSTEM ========== */
+html { font-size: 16px; }
+:root {
+    --space-xs: 0.5rem;  /* 8px  */
+    --space-sm: 1rem;    /* 16px */
+    --space-md: 1.5rem;  /* 24px */
+    --space-lg: 2rem;    /* 32px */
+    --space-xl: 3rem;    /* 48px */
+}
+
+/* ========== TYPOGRAPHY ========== */
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+p  { font-size: 1rem; line-height: 1.6rem; }
+
+/* ========== COMPONENTS ========== */
+.btn { padding: 0.75em 1.5em; } /* Uses em for scaling */
+.card { padding: 1.5rem; }      /* Uses rem for consistency */
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    html { font-size: 14px; } /* All rem-based sizes scale */
+}
+
+/* ========== LAYOUT ========== */
+.container { width: 90%; max-width: 1200px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

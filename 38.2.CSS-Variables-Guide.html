@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Variables - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --success: #4caf50;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --dark: #1e3c72;
+            --light: #f8f9fa;
+            --text-dark: #333;
+            --text-light: #666;
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --transition: 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .example-section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .example-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .example-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .example-desc {
+            font-size: 0.95em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .example-content {
+            padding: 30px;
+        }
+
+        .label {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 5px 12px;
+            border-radius: var(--radius-md);
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: var(--light);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--radius-md);
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--radius-md);
+            font-size: 0.95em;
+            color: #1565c0;
+        }
+
+        /* ==================== EXAMPLE 1: COLOR THEMING ==================== */
+        .theme-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+            margin: 20px 0;
+        }
+
+        .color-swatch {
+            padding: var(--space-md);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .color-swatch:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .swatch-primary { background: var(--primary); }
+        .swatch-secondary { background: var(--secondary); }
+        .swatch-success { background: var(--success); }
+        .swatch-danger { background: var(--danger); }
+        .swatch-warning { background: var(--warning); }
+
+        /* ==================== EXAMPLE 2: BUTTON VARIANTS ==================== */
+        .button-demo {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .btn {
+            --btn-bg: var(--primary);
+            --btn-color: white;
+            --btn-padding: var(--space-sm) var(--space-md);
+            --btn-radius: var(--radius-md);
+            --btn-border: 2px solid transparent;
+
+            background: var(--btn-bg);
+            color: var(--btn-color);
+            padding: var(--btn-padding);
+            border-radius: var(--btn-radius);
+            border: var(--btn-border);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all var(--transition);
+            user-select: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary { --btn-bg: var(--primary); }
+        .btn-secondary { --btn-bg: var(--secondary); }
+        .btn-success { --btn-bg: var(--success); }
+        .btn-danger { --btn-bg: var(--danger); }
+        .btn-warning { --btn-bg: var(--warning); --btn-color: white; }
+
+        .btn-outline {
+            --btn-bg: transparent;
+            --btn-color: var(--primary);
+            --btn-border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            --btn-bg: var(--primary);
+            --btn-color: white;
+        }
+
+        .btn-small { --btn-padding: var(--space-xs) var(--space-sm); }
+        .btn-large { --btn-padding: var(--space-md) var(--space-lg); }
+
+        /* ==================== EXAMPLE 3: CARD COMPONENT ==================== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-lg);
+            margin: 20px 0;
+        }
+
+        .card {
+            --card-bg: white;
+            --card-border: #e0e0e0;
+            --card-shadow: var(--shadow);
+            --card-padding: var(--space-lg);
+            --card-radius: var(--radius-lg);
+
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--card-radius);
+            padding: var(--card-padding);
+            box-shadow: var(--card-shadow);
+            transition: all var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--space-md);
+        }
+
+        .card-body {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: var(--space-md);
+        }
+
+        .card-footer {
+            display: flex;
+            gap: var(--space-sm);
+            padding-top: var(--space-md);
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .card.accent-primary { --card-border: var(--primary); }
+        .card.accent-success { --card-border: var(--success); }
+        .card.accent-danger { --card-border: var(--danger); }
+
+        /* ==================== EXAMPLE 4: SPACING SYSTEM ==================== */
+        .spacing-demo {
+            display: grid;
+            gap: var(--space-lg);
+            margin: 20px 0;
+        }
+
+        .spacing-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .space-xs { padding: var(--space-xs); height: 60px; }
+        .space-sm { padding: var(--space-sm); height: 80px; }
+        .space-md { padding: var(--space-md); height: 100px; }
+        .space-lg { padding: var(--space-lg); height: 120px; }
+        .space-xl { padding: var(--space-xl); height: 140px; }
+
+        /* ==================== EXAMPLE 5: FORM LAYOUT ==================== */
+        .form-demo {
+            background: var(--light);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: var(--space-xs);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: var(--space-sm);
+            border: 2px solid #ddd;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-helper {
+            font-size: 0.85em;
+            color: var(--text-light);
+            margin-top: var(--space-xs);
+        }
+
+        /* ==================== EXAMPLE 6: RESPONSIVE LAYOUT ==================== */
+        .responsive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+            margin: 20px 0;
+        }
+
+        .responsive-item {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+        }
+
+        .responsive-item:hover {
+            transform: translateY(-4px);
+        }
+
+        .responsive-item h3 {
+            color: var(--primary);
+            font-size: 1.1em;
+            margin-bottom: var(--space-md);
+        }
+
+        .responsive-item p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* ==================== EXAMPLE 7: ANIMATION ==================== */
+        .animation-demo {
+            display: flex;
+            gap: var(--space-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .animated-box {
+            --anim-color: var(--primary);
+            --anim-size: 60px;
+            --anim-duration: 2s;
+
+            width: var(--anim-size);
+            height: var(--anim-size);
+            background: var(--anim-color);
+            border-radius: var(--radius-md);
+            animation: bounce var(--anim-duration) ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .box-primary { --anim-color: var(--primary); }
+        .box-secondary { --anim-color: var(--secondary); }
+        .box-success { --anim-color: var(--success); }
+
+        /* ==================== EXAMPLE 8: TYPOGRAPHY ==================== */
+        .typography-demo {
+            display: grid;
+            gap: var(--space-lg);
+            margin: 20px 0;
+        }
+
+        .type-item {
+            padding: var(--space-md);
+            background: var(--light);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--primary);
+        }
+
+        .type-h1 { font-size: calc(var(--space-lg) * 2); font-weight: 700; }
+        .type-h2 { font-size: calc(var(--space-lg) * 1.5); font-weight: 700; }
+        .type-h3 { font-size: calc(var(--space-lg) * 1.25); font-weight: 600; }
+        .type-body { font-size: var(--space-sm); line-height: 1.6; }
+        .type-small { font-size: 0.875rem; color: var(--text-light); }
+
+        /* ==================== EXAMPLE 9: COMPONENT CUSTOMIZATION ==================== */
+        .alert {
+            --alert-bg: #e3f2fd;
+            --alert-color: #1565c0;
+            --alert-border: #2196F3;
+
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--alert-border);
+            background: var(--alert-bg);
+            color: var(--alert-color);
+            margin: var(--space-md) 0;
+        }
+
+        .alert-success {
+            --alert-bg: #e8f5e9;
+            --alert-color: #155724;
+            --alert-border: #4caf50;
+        }
+
+        .alert-warning {
+            --alert-bg: #fff3cd;
+            --alert-color: #856404;
+            --alert-border: #ff9800;
+        }
+
+        .alert-danger {
+            --alert-bg: #ffebee;
+            --alert-color: #c62828;
+            --alert-border: #f44336;
+        }
+
+        /* ==================== EXAMPLE 10: BADGE SYSTEM ==================== */
+        .badge-demo {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .badge {
+            --badge-bg: var(--light);
+            --badge-color: var(--text-dark);
+
+            background: var(--badge-bg);
+            color: var(--badge-color);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-lg);
+            font-size: 0.85em;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-primary { --badge-bg: var(--primary); --badge-color: white; }
+        .badge-secondary { --badge-bg: var(--secondary); --badge-color: white; }
+        .badge-success { --badge-bg: var(--success); --badge-color: white; }
+        .badge-danger { --badge-bg: var(--danger); --badge-color: white; }
+        .badge-warning { --badge-bg: var(--warning); --badge-color: white; }
+
+        /* ==================== TIPS SECTION ==================== */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tip-card {
+            background: #f0f7ff;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: var(--radius-md);
+            font-size: 0.95em;
+        }
+
+        .tip-card h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .tip-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .example-header h2 {
+                font-size: 1.3em;
+            }
+
+            :root {
+                --space-md: 1rem;
+                --space-lg: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 CSS Variables</h1>
+        <p class="subtitle">Real-World Practical Examples & Use Cases</p>
+
+        <!-- ==================== EXAMPLE 1: COLOR THEMING ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>1. Color System & Theming</h2>
+                <p class="example-desc">Semantic color variables for consistent design</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Color variables</span>
+                <span class="label">Design tokens</span>
+                <span class="label">Semantic naming</span>
+
+                <p style="margin-bottom: 15px;">
+                    Create a cohesive color palette using CSS variables. Easy to maintain and swap colors globally.
+                </p>
+
+                <div class="theme-demo">
+                    <div class="color-swatch swatch-primary">Primary</div>
+                    <div class="color-swatch swatch-secondary">Secondary</div>
+                    <div class="color-swatch swatch-success">Success</div>
+                    <div class="color-swatch swatch-danger">Danger</div>
+                    <div class="color-swatch swatch-warning">Warning</div>
+                </div>
+
+                <div class="code-block">
+:root {
+    --primary: #667eea;
+    --secondary: #764ba2;
+    --success: #4caf50;
+    --danger: #f44336;
+    --warning: #ff9800;
+}
+
+/* Use throughout design */
+.button { background: var(--primary); }
+.success-badge { background: var(--success); }
+.alert-error { background: var(--danger); }
+
+/* Easy theme switch */
+body.dark-mode {
+    --primary: #bb86fc;
+    --secondary: #03dac6;
+    --success: #81c784;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Benefit:</strong> Change one variable and all components using it update instantly. Perfect for rapid theme iterations.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 2: BUTTON VARIANTS ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>2. Reusable Button Component</h2>
+                <p class="example-desc">Multiple button styles from single component</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Component variables</span>
+                <span class="label">Scalable</span>
+                <span class="label">Maintainable</span>
+
+                <div class="button-demo">
+                    <button class="btn btn-primary">Primary</button>
+                    <button class="btn btn-secondary">Secondary</button>
+                    <button class="btn btn-success">Success</button>
+                    <button class="btn btn-danger">Danger</button>
+                    <button class="btn btn-warning">Warning</button>
+                </div>
+
+                <div class="button-demo">
+                    <button class="btn btn-primary btn-small">Small</button>
+                    <button class="btn btn-primary">Normal</button>
+                    <button class="btn btn-primary btn-large">Large</button>
+                </div>
+
+                <div class="button-demo">
+                    <button class="btn btn-outline">Outline</button>
+                </div>
+
+                <div class="code-block">
+.btn {
+    --btn-bg: var(--primary);
+    --btn-color: white;
+    --btn-padding: var(--space-sm) var(--space-md);
+    --btn-radius: var(--radius-md);
+
+    background: var(--btn-bg);
+    color: var(--btn-color);
+    padding: var(--btn-padding);
+    border-radius: var(--btn-radius);
+    transition: all var(--transition);
+}
+
+/* Variants just change variables */
+.btn-primary { --btn-bg: var(--primary); }
+.btn-danger { --btn-bg: var(--danger); }
+.btn-large { --btn-padding: var(--space-md) var(--space-lg); }
+
+/* Outline style */
+.btn-outline {
+    --btn-bg: transparent;
+    --btn-color: var(--primary);
+    border: 2px solid var(--primary);
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 Power of Variables:</strong> One component, infinite variants. Change variables to get different sizes, colors, and styles without duplicating code.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 3: CARD COMPONENT ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>3. Card Component System</h2>
+                <p class="example-desc">Consistent cards with variable-controlled styling</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Component library</span>
+                <span class="label">Flexible</span>
+                <span class="label">Themeable</span>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-header">✨ Feature One</div>
+                        <div class="card-body">Build sophisticated components with CSS variables for consistent, maintainable designs.</div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" style="flex: 1;">Learn More</button>
+                        </div>
+                    </div>
+
+                    <div class="card accent-success">
+                        <div class="card-header">✅ Feature Two</div>
+                        <div class="card-body">Color accents change dynamically while maintaining consistent structure and spacing.</div>
+                        <div class="card-footer">
+                            <button class="btn btn-success" style="flex: 1;">Get Started</button>
+                        </div>
+                    </div>
+
+                    <div class="card accent-danger">
+                        <div class="card-header">⚠️ Feature Three</div>
+                        <div class="card-body">Use CSS variables for colors, spacing, shadows, and any property that should be consistent.</div>
+                        <div class="card-footer">
+                            <button class="btn btn-danger" style="flex: 1;">Read More</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+.card {
+    --card-bg: white;
+    --card-border: #e0e0e0;
+    --card-shadow: var(--shadow);
+    --card-padding: var(--space-lg);
+    --card-radius: var(--radius-lg);
+
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
+    padding: var(--card-padding);
+    box-shadow: var(--card-shadow);
+}
+
+.card.accent-success {
+    --card-border: var(--success);
+}
+
+.card.dark-mode {
+    --card-bg: #2a2a2a;
+    --card-border: #444;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Scalability:</strong> Every card maintains consistent spacing and styling through variables. Add new variants by just changing variable values.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 4: SPACING SYSTEM ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>4. Unified Spacing Scale</h2>
+                <p class="example-desc">Consistent spacing across entire application</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Spacing variables</span>
+                <span class="label">Consistency</span>
+                <span class="label">Responsive</span>
+
+                <div class="spacing-demo">
+                    <div class="spacing-box space-xs">Extra Small (0.5rem)</div>
+                    <div class="spacing-box space-sm">Small (1rem)</div>
+                    <div class="spacing-box space-md">Medium (1.5rem)</div>
+                    <div class="spacing-box space-lg">Large (2rem)</div>
+                    <div class="spacing-box space-xl">Extra Large (3rem)</div>
+                </div>
+
+                <div class="code-block">
+:root {
+    --space-xs: 0.5rem;  /* 8px */
+    --space-sm: 1rem;    /* 16px */
+    --space-md: 1.5rem;  /* 24px */
+    --space-lg: 2rem;    /* 32px */
+    --space-xl: 3rem;    /* 48px */
+}
+
+/* Use consistently */
+.component {
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
+    gap: var(--space-sm);
+}
+
+/* Responsive spacing */
+@media (max-width: 768px) {
+    :root {
+        --space-md: 1rem;
+        --space-lg: 1.5rem;
+    }
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 Responsive Benefit:</strong> Change spacing scale in one media query and entire layout adapts automatically.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 5: FORM LAYOUT ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>5. Accessible Form Layout</h2>
+                <p class="example-desc">Form with consistent spacing and sizing</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Form layout</span>
+                <span class="label">Accessibility</span>
+                <span class="label">Consistency</span>
+
+                <form class="form-demo">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" placeholder="John Doe">
+                        <div class="form-helper">Enter your complete name</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" placeholder="your@email.com">
+                        <div class="form-helper">We'll never share your email</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-input" placeholder="Your message..." style="resize: vertical; min-height: 6rem; font-family: inherit;"></textarea>
+                        <div class="form-helper">Maximum 500 characters</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                </form>
+
+                <div class="code-block">
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+}
+
+.form-input {
+    width: 100%;
+    padding: var(--space-sm);
+    border: 2px solid #ddd;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: all var(--transition);
+}
+
+.form-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-helper {
+    font-size: 0.85em;
+    color: var(--text-light);
+    margin-top: var(--space-xs);
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Touch-Friendly:</strong> Keep input font-size at 16px+ on mobile to prevent zoom. All spacing uses variables for consistency.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 6: RESPONSIVE GRID ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>6. Auto-Responsive Grid Layout</h2>
+                <p class="example-desc">Grid that adapts automatically without media queries</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Grid layout</span>
+                <span class="label">Auto-responsive</span>
+                <span class="label">Modern CSS</span>
+
+                <div class="responsive-grid">
+                    <div class="responsive-item">
+                        <h3>📱 Mobile First</h3>
+                        <p>Grid adapts automatically to screen size. Uses CSS Grid with auto-fit and minmax for responsive behavior without media queries.</p>
+                    </div>
+                    <div class="responsive-item">
+                        <h3>🎨 Flexible Design</h3>
+                        <p>All spacing controlled by variables. Change gap or padding in :root and entire grid responds globally.</p>
+                    </div>
+                    <div class="responsive-item">
+                        <h3>⚡ Scalable</h3>
+                        <p>Add new items and grid automatically arranges them. Perfect for dynamic content or future expansion.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+.responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+}
+
+.responsive-item {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow);
+    transition: all var(--transition);
+}
+
+/* No media queries needed! */
+/* Grid handles responsiveness automatically */
+                </div>
+
+                <div class="info">
+                    <strong>💡 Modern Approach:</strong> CSS Grid with auto-fit is powerful. Variable spacing ensures consistency even as layout adapts.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 7: ANIMATIONS ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>7. Animation Variables</h2>
+                <p class="example-desc">Control animations with CSS variables</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Animation variables</span>
+                <span class="label">Dynamic control</span>
+                <span class="label">Reusable</span>
+
+                <div class="animation-demo">
+                    <div class="animated-box box-primary"></div>
+                    <div class="animated-box box-secondary"></div>
+                    <div class="animated-box box-success"></div>
+                </div>
+
+                <div class="code-block">
+.animated-box {
+    --anim-color: var(--primary);
+    --anim-size: 60px;
+    --anim-duration: 2s;
+
+    width: var(--anim-size);
+    height: var(--anim-size);
+    background: var(--anim-color);
+    animation: bounce var(--anim-duration) ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Variants with different colors/sizes */
+.box-primary { --anim-color: var(--primary); }
+.box-large { --anim-size: 100px; }
+.box-fast { --anim-duration: 1s; }
+                </div>
+
+                <div class="note">
+                    <strong>💡 Dynamic Animations:</strong> Change animation duration, colors, or size by updating variables. Perfect for responsive animations.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 8: ALERTS ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>8. Alert Component System</h2>
+                <p class="example-desc">Semantic alerts with variable-controlled styling</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Components</span>
+                <span class="label">Semantic</span>
+                <span class="label">Easy variants</span>
+
+                <div class="alert">ℹ️ This is an informational alert with key information.</div>
+                <div class="alert alert-success">✅ Success! Your changes have been saved.</div>
+                <div class="alert alert-warning">⚠️ Warning! Please review this before proceeding.</div>
+                <div class="alert alert-danger">❌ Error! Something went wrong. Please try again.</div>
+
+                <div class="code-block">
+.alert {
+    --alert-bg: #e3f2fd;
+    --alert-color: #1565c0;
+    --alert-border: #2196F3;
+
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--alert-border);
+    background: var(--alert-bg);
+    color: var(--alert-color);
+}
+
+.alert-success {
+    --alert-bg: #e8f5e9;
+    --alert-color: #155724;
+    --alert-border: #4caf50;
+}
+
+.alert-danger {
+    --alert-bg: #ffebee;
+    --alert-color: #c62828;
+    --alert-border: #f44336;
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 Semantic HTML:</strong> Same component with different variables for different message types. Clean, maintainable, accessible.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 9: BADGES ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>9. Badge/Tag System</h2>
+                <p class="example-desc">Quick-to-implement badge styles</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Badges</span>
+                <span class="label">Quick styles</span>
+                <span class="label">Multiple variants</span>
+
+                <div class="badge-demo">
+                    <span class="badge">Default</span>
+                    <span class="badge badge-primary">Primary</span>
+                    <span class="badge badge-secondary">Secondary</span>
+                    <span class="badge badge-success">Success</span>
+                    <span class="badge badge-danger">Danger</span>
+                    <span class="badge badge-warning">Warning</span>
+                </div>
+
+                <div class="code-block">
+.badge {
+    --badge-bg: var(--light);
+    --badge-color: var(--text-dark);
+
+    background: var(--badge-bg);
+    color: var(--badge-color);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-lg);
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+.badge-primary { --badge-bg: var(--primary); --badge-color: white; }
+.badge-success { --badge-bg: var(--success); --badge-color: white; }
+.badge-danger { --badge-bg: var(--danger); --badge-color: white; }
+                </div>
+
+                <div class="note">
+                    <strong>💡 Single Component:</strong> One .badge class with variable-based variants. Easy to add new colors by just defining variables.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BEST PRACTICES ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>✨ Best Practices & Patterns</h2>
+                <p class="example-desc">Guidelines for using CSS variables effectively</p>
+            </div>
+            <div class="example-content">
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>1. Define in :root</h4>
+                        <p>Put global design tokens in :root. Accessible to entire document. Perfect for colors, spacing, shadows.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>2. Use Consistent Naming</h4>
+                        <p>Use kebab-case and semantic names: --primary-color, --space-lg, --shadow-md. Makes code self-documenting.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>3. Component-Level Overrides</h4>
+                        <p>Define component-specific variables in component selector. Override global defaults when needed.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>4. Leverage Calc()</h4>
+                        <p>Combine variables with calc() for responsive sizing: calc(var(--base) * 2) for calculated values.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>5. Theme Switching</h4>
+                        <p>Use class-based themes to switch CSS variable values. Perfect for light/dark/custom themes.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>6. Responsive Variables</h4>
+                        <p>Change variable values in media queries. Single media query can affect entire design system globally.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>7. Provide Fallbacks</h4>
+                        <p>Always use fallback values: var(--color, #333). Helps with progressive enhancement and debugging.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>8. Document Your System</h4>
+                        <p>Create a style guide showing all available variables. Helps team members understand and use them correctly.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* ===== ORGANIZATION PATTERN ===== */
+
+:root {
+    /* Colors */
+    --primary: #667eea;
+    --secondary: #764ba2;
+    
+    /* Spacing */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    
+    /* Typography */
+    --font-family: 'Segoe UI', sans-serif;
+    --font-size-md: 1rem;
+    
+    /* Effects */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --transition: 0.3s ease;
+    
+    /* Border Radius */
+    --radius-md: 0.5rem;
+}
+
+/* Component customization */
+.button {
+    --btn-bg: var(--primary);
+    --btn-padding: var(--space-sm) var(--space-md);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    :root {
+        --space-md: 1rem;
+        --font-size-md: 0.95rem;
+    }
+}
+
+/* Theme switching */
+body.dark-theme {
+    --primary: #bb86fc;
+    --background: #1e1e1e;
+}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

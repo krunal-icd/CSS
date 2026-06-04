@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Cursor Properties - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .section-desc {
+            font-size: 0.95em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .section-content {
+            padding: 30px;
+        }
+
+        .label {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-radius: 4px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .cursor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .cursor-item {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .cursor-item:hover {
+            border-color: #667eea;
+            background: #f0f7ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .cursor-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            font-family: 'Courier New', monospace;
+        }
+
+        .cursor-demo {
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.5em;
+        }
+
+        .cursor-desc {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        /* Cursor Examples */
+        .cursor-auto { cursor: auto; }
+        .cursor-default { cursor: default; }
+        .cursor-pointer { cursor: pointer; }
+        .cursor-wait { cursor: wait; }
+        .cursor-text { cursor: text; }
+        .cursor-move { cursor: move; }
+        .cursor-not-allowed { cursor: not-allowed; }
+        .cursor-help { cursor: help; }
+        .cursor-crosshair { cursor: crosshair; }
+        .cursor-cell { cursor: cell; }
+        .cursor-copy { cursor: copy; }
+        .cursor-alias { cursor: alias; }
+        .cursor-no-drop { cursor: no-drop; }
+        .cursor-grab { cursor: grab; }
+        .cursor-grabbing { cursor: grabbing; }
+        .cursor-all-scroll { cursor: all-scroll; }
+        .cursor-col-resize { cursor: col-resize; }
+        .cursor-row-resize { cursor: row-resize; }
+        .cursor-n-resize { cursor: n-resize; }
+        .cursor-e-resize { cursor: e-resize; }
+        .cursor-s-resize { cursor: s-resize; }
+        .cursor-w-resize { cursor: w-resize; }
+        .cursor-ne-resize { cursor: ne-resize; }
+        .cursor-nw-resize { cursor: nw-resize; }
+        .cursor-se-resize { cursor: se-resize; }
+        .cursor-sw-resize { cursor: sw-resize; }
+        .cursor-ew-resize { cursor: ew-resize; }
+        .cursor-ns-resize { cursor: ns-resize; }
+        .cursor-nesw-resize { cursor: nesw-resize; }
+        .cursor-nwse-resize { cursor: nwse-resize; }
+        .cursor-progress { cursor: progress; }
+        .cursor-zoom-in { cursor: zoom-in; }
+        .cursor-zoom-out { cursor: zoom-out; }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1565c0;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        .table thead {
+            background: #667eea;
+            color: white;
+        }
+
+        .table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .table tbody tr:hover {
+            background: #f0f7ff;
+        }
+
+        .value-cell {
+            font-family: 'Courier New', monospace;
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        .example-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .interactive-demo {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .demo-box {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .demo-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tip-card {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.95em;
+        }
+
+        .tip-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .tip-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .cursor-category {
+            margin-bottom: 30px;
+        }
+
+        .category-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .cursor-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖱️ CSS Cursor Properties</h1>
+        <p class="subtitle">Complete Guide with Interactive Examples</p>
+
+        <!-- ==================== OVERVIEW ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>What is CSS Cursor?</h2>
+                <p class="section-desc">Control the appearance of the mouse cursor with CSS</p>
+            </div>
+            <div class="section-content">
+                <p style="color: #555; font-size: 1em; line-height: 1.8; margin-bottom: 15px;">
+                    The CSS <strong>cursor</strong> property specifies which cursor to display when the mouse pointer is over an element. It's a powerful tool for improving user experience by providing visual feedback about element interactivity and available actions.
+                </p>
+
+                <div class="info">
+                    <strong>💡 Key Point:</strong> The cursor property enhances UX by communicating element behavior. Users expect specific cursors for different actions (pointer for clickable, text for input, not-allowed for disabled, etc.).
+                </div>
+
+                <h3 style="color: #333; margin: 20px 0 15px 0; font-size: 1.2em;">Basic Syntax</h3>
+                <div class="code-block">
+/* Single cursor value */
+element {
+    cursor: pointer;
+}
+
+/* Fallback cursor values */
+element {
+    cursor: url('custom-cursor.png'), auto;
+}
+
+/* Multiple fallbacks */
+element {
+    cursor: url('hand.png') 5 5, url('hand2.png'), pointer;
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== GENERAL CURSORS ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>General Cursors</h2>
+                <p class="section-desc">Basic cursor types for general interaction</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Universal</span>
+                <span class="label">Cross-browser</span>
+
+                <div class="cursor-category">
+                    <div class="category-title">🎯 General Purpose Cursors</div>
+
+                    <div class="cursor-grid">
+                        <div class="cursor-item cursor-auto">
+                            <div class="cursor-name">auto</div>
+                            <div class="cursor-demo">🖱️</div>
+                            <div class="cursor-desc">Browser default based on context</div>
+                        </div>
+
+                        <div class="cursor-item cursor-default">
+                            <div class="cursor-name">default</div>
+                            <div class="cursor-demo">➜</div>
+                            <div class="cursor-desc">Standard arrow pointer</div>
+                        </div>
+
+                        <div class="cursor-item cursor-pointer">
+                            <div class="cursor-name">pointer</div>
+                            <div class="cursor-demo">☞</div>
+                            <div class="cursor-desc">Hand pointing at clickable element</div>
+                        </div>
+
+                        <div class="cursor-item cursor-wait">
+                            <div class="cursor-name">wait</div>
+                            <div class="cursor-demo">⏳</div>
+                            <div class="cursor-desc">Action in progress (hourglass)</div>
+                        </div>
+
+                        <div class="cursor-item cursor-text">
+                            <div class="cursor-name">text</div>
+                            <div class="cursor-demo">I</div>
+                            <div class="cursor-desc">Text selection (I-beam)</div>
+                        </div>
+
+                        <div class="cursor-item cursor-move">
+                            <div class="cursor-name">move</div>
+                            <div class="cursor-demo">⤡</div>
+                            <div class="cursor-desc">Element can be moved</div>
+                        </div>
+
+                        <div class="cursor-item cursor-not-allowed">
+                            <div class="cursor-name">not-allowed</div>
+                            <div class="cursor-demo">⛔</div>
+                            <div class="cursor-desc">Action not permitted</div>
+                        </div>
+
+                        <div class="cursor-item cursor-help">
+                            <div class="cursor-name">help</div>
+                            <div class="cursor-demo">?</div>
+                            <div class="cursor-desc">Help available (question mark)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* General cursors */
+.clickable { cursor: pointer; }
+.loading { cursor: wait; }
+.text-input { cursor: text; }
+.draggable { cursor: move; }
+.disabled { cursor: not-allowed; }
+.help-info { cursor: help; }
+                </div>
+
+                <div class="note">
+                    <strong>💡 Best Practice:</strong> Use <strong>pointer</strong> for clickable elements, <strong>text</strong> for editable text, and <strong>not-allowed</strong> for disabled elements. These set user expectations correctly.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SELECTION CURSORS ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Selection & Interaction Cursors</h2>
+                <p class="section-desc">Cursors for precise selection and interaction</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Selection</span>
+                <span class="label">Interaction</span>
+
+                <div class="cursor-category">
+                    <div class="category-title">🎯 Selection & Interaction</div>
+
+                    <div class="cursor-grid">
+                        <div class="cursor-item cursor-crosshair">
+                            <div class="cursor-name">crosshair</div>
+                            <div class="cursor-demo">+</div>
+                            <div class="cursor-desc">Precise crosshair selection</div>
+                        </div>
+
+                        <div class="cursor-item cursor-cell">
+                            <div class="cursor-name">cell</div>
+                            <div class="cursor-demo">⊞</div>
+                            <div class="cursor-desc">Cell selection in table</div>
+                        </div>
+
+                        <div class="cursor-item cursor-copy">
+                            <div class="cursor-name">copy</div>
+                            <div class="cursor-demo">📋</div>
+                            <div class="cursor-desc">Copy action available</div>
+                        </div>
+
+                        <div class="cursor-item cursor-alias">
+                            <div class="cursor-name">alias</div>
+                            <div class="cursor-demo">◇</div>
+                            <div class="cursor-desc">Alias or shortcut will be created</div>
+                        </div>
+
+                        <div class="cursor-item cursor-no-drop">
+                            <div class="cursor-name">no-drop</div>
+                            <div class="cursor-demo">⊘</div>
+                            <div class="cursor-desc">Cannot be dropped here</div>
+                        </div>
+
+                        <div class="cursor-item cursor-grab">
+                            <div class="cursor-name">grab</div>
+                            <div class="cursor-demo">✋</div>
+                            <div class="cursor-desc">Element can be grabbed (hand open)</div>
+                        </div>
+
+                        <div class="cursor-item cursor-grabbing">
+                            <div class="cursor-name">grabbing</div>
+                            <div class="cursor-demo">✊</div>
+                            <div class="cursor-desc">Element is being grabbed (hand closed)</div>
+                        </div>
+
+                        <div class="cursor-item cursor-all-scroll">
+                            <div class="cursor-name">all-scroll</div>
+                            <div class="cursor-demo">⇕⇔</div>
+                            <div class="cursor-desc">Can scroll in all directions</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Selection & interaction cursors */
+.draw-tool { cursor: crosshair; }
+.table-cell { cursor: cell; }
+.copy-action { cursor: copy; }
+.draggable-item { cursor: grab; }
+.dragging { cursor: grabbing; }
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== RESIZE CURSORS ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Resize Cursors</h2>
+                <p class="section-desc">Cursors for indicating resizable elements and directions</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Resize</span>
+                <span class="label">Direction</span>
+                <span class="label">Edge/Corner</span>
+
+                <div class="cursor-category">
+                    <div class="category-title">↔️ Single Direction Resize</div>
+
+                    <div class="cursor-grid">
+                        <div class="cursor-item cursor-col-resize">
+                            <div class="cursor-name">col-resize</div>
+                            <div class="cursor-demo">⇔</div>
+                            <div class="cursor-desc">Column/width resize</div>
+                        </div>
+
+                        <div class="cursor-item cursor-row-resize">
+                            <div class="cursor-name">row-resize</div>
+                            <div class="cursor-demo">⇕</div>
+                            <div class="cursor-desc">Row/height resize</div>
+                        </div>
+
+                        <div class="cursor-item cursor-n-resize">
+                            <div class="cursor-name">n-resize</div>
+                            <div class="cursor-demo">↑</div>
+                            <div class="cursor-desc">North (top) resize</div>
+                        </div>
+
+                        <div class="cursor-item cursor-e-resize">
+                            <div class="cursor-name">e-resize</div>
+                            <div class="cursor-demo">→</div>
+                            <div class="cursor-desc">East (right) resize</div>
+                        </div>
+
+                        <div class="cursor-item cursor-s-resize">
+                            <div class="cursor-name">s-resize</div>
+                            <div class="cursor-demo">↓</div>
+                            <div class="cursor-desc">South (bottom) resize</div>
+                        </div>
+
+                        <div class="cursor-item cursor-w-resize">
+                            <div class="cursor-name">w-resize</div>
+                            <div class="cursor-demo">←</div>
+                            <div class="cursor-desc">West (left) resize</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cursor-category">
+                    <div class="category-title">↖️ Diagonal Direction Resize</div>
+
+                    <div class="cursor-grid">
+                        <div class="cursor-item cursor-ne-resize">
+                            <div class="cursor-name">ne-resize</div>
+                            <div class="cursor-demo">↗</div>
+                            <div class="cursor-desc">Northeast corner resize</div>
+                        </div>
+
+                        <div class="cursor-item cursor-nw-resize">
+                            <div class="cursor-name">nw-resize</div>
+                            <div class="cursor-demo">↖</div>
+                            <div class="cursor-desc">Northwest corner resize</div>
+                        </div>
+
+                        <div class="cursor-item cursor-se-resize">
+                            <div class="cursor-name">se-resize</div>
+                            <div class="cursor-demo">↘</div>
+                            <div class="cursor-desc">Southeast corner resize</div>
+                        </div>
+
+                        <div class="cursor-item cursor-sw-resize">
+                            <div class="cursor-name">sw-resize</div>
+                            <div class="cursor-demo">↙</div>
+                            <div class="cursor-desc">Southwest corner resize</div>
+                        </div>
+
+                        <div class="cursor-item cursor-ew-resize">
+                            <div class="cursor-name">ew-resize</div>
+                            <div class="cursor-demo">⇔</div>
+                            <div class="cursor-desc">East-West resize (flexible)</div>
+                        </div>
+
+                        <div class="cursor-item cursor-ns-resize">
+                            <div class="cursor-name">ns-resize</div>
+                            <div class="cursor-demo">⇕</div>
+                            <div class="cursor-desc">North-South resize (flexible)</div>
+                        </div>
+
+                        <div class="cursor-item cursor-nesw-resize">
+                            <div class="cursor-name">nesw-resize</div>
+                            <div class="cursor-demo">↗↙</div>
+                            <div class="cursor-desc">Northeast-Southwest diagonal</div>
+                        </div>
+
+                        <div class="cursor-item cursor-nwse-resize">
+                            <div class="cursor-name">nwse-resize</div>
+                            <div class="cursor-demo">↖↘</div>
+                            <div class="cursor-desc">Northwest-Southeast diagonal</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Resize cursors */
+.column-header { cursor: col-resize; }
+.row-header { cursor: row-resize; }
+.resize-corner { cursor: se-resize; }
+.resize-edge { cursor: ew-resize; }
+                </div>
+
+                <div class="note">
+                    <strong>💡 Best Practice:</strong> Use directional resize cursors to indicate which edges/corners users can drag. <strong>col-resize</strong> for column headers, <strong>se-resize</strong> for bottom-right corner, etc.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== ZOOM CURSORS ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Zoom & Progress Cursors</h2>
+                <p class="section-desc">Cursors for zoom actions and progress indication</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Zoom</span>
+                <span class="label">Progress</span>
+
+                <div class="cursor-category">
+                    <div class="category-title">🔍 Zoom & Progress</div>
+
+                    <div class="cursor-grid">
+                        <div class="cursor-item cursor-zoom-in">
+                            <div class="cursor-name">zoom-in</div>
+                            <div class="cursor-demo">🔍+</div>
+                            <div class="cursor-desc">Zoom in available</div>
+                        </div>
+
+                        <div class="cursor-item cursor-zoom-out">
+                            <div class="cursor-name">zoom-out</div>
+                            <div class="cursor-demo">🔍-</div>
+                            <div class="cursor-desc">Zoom out available</div>
+                        </div>
+
+                        <div class="cursor-item cursor-progress">
+                            <div class="cursor-name">progress</div>
+                            <div class="cursor-demo">◐</div>
+                            <div class="cursor-desc">Action in progress with pointer visible</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Zoom & progress cursors */
+.zoomable-image { cursor: zoom-in; }
+.zoomed-image { cursor: zoom-out; }
+.loading-action { cursor: progress; }
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CUSTOM CURSORS ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Custom Cursors</h2>
+                <p class="section-desc">Create your own cursor images with CSS</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Custom</span>
+                <span class="label">URL-based</span>
+                <span class="label">Fallback</span>
+
+                <p style="color: #555; margin-bottom: 15px;">
+                    You can create custom cursors using image files. The cursor property accepts URL values with optional coordinates for the hotspot (click point).
+                </p>
+
+                <div class="code-block">
+/* Basic custom cursor */
+.custom-cursor {
+    cursor: url('hand.png'), pointer;
+}
+
+/* Custom cursor with hotspot coordinates */
+/* url('image.png') x y, fallback */
+.custom-with-hotspot {
+    cursor: url('custom.png') 5 5, auto;
+}
+
+/* Multiple fallbacks */
+.cursor-with-fallbacks {
+    cursor: url('primary.png'), url('secondary.png'), pointer;
+}
+
+/* Supported formats */
+cursor: url('cursor.png'), pointer;
+cursor: url('cursor.svg'), pointer;
+cursor: url('cursor.gif'), pointer;
+cursor: url('cursor.cur'), pointer;
+                </div>
+
+                <div class="info">
+                    <strong>💡 Custom Cursor Guidelines:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px; line-height: 1.8;">
+                        <li><strong>File formats:</strong> PNG, GIF, SVG, CUR, JPG</li>
+                        <li><strong>Recommended size:</strong> 32x32 pixels or smaller</li>
+                        <li><strong>Hotspot coordinates:</strong> (x y) where cursor clicks from</li>
+                        <li><strong>Always include fallback:</strong> Second cursor value for unsupported images</li>
+                        <li><strong>Performance:</strong> Large/animated cursors can impact performance</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+/* Examples with coordinates */
+/* Pointer at position 5,5 (top-left offset) */
+.draw-pen {
+    cursor: url('pen.png') 5 5, auto;
+}
+
+/* Hotspot at center */
+.crosshair-custom {
+    cursor: url('crosshair.svg') 16 16, crosshair;
+}
+
+/* Data URI approach */
+.data-uri-cursor {
+    cursor: url('data:image/svg+xml;utf8,&lt;svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"&gt;...&lt;/svg&gt;') 0 0, auto;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Best Practice:</strong> Always provide a fallback cursor. Many browsers won't load external cursor files, so always include a standard cursor value as a backup.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PRACTICAL EXAMPLES ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🎯 Practical Examples</h2>
+                <p class="section-desc">Real-world use cases and implementations</p>
+            </div>
+            <div class="section-content">
+
+                <!-- Example 1 -->
+                <div class="example-section">
+                    <div class="example-title">1. Interactive Button States</div>
+                    <div class="code-block">
+/* Button states with cursor feedback */
+button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+button:hover:not(:disabled) {
+    background: #667eea;
+    cursor: pointer;
+}
+                    </div>
+                </div>
+
+                <!-- Example 2 -->
+                <div class="example-section">
+                    <div class="example-title">2. Draggable Element</div>
+                    <div class="code-block">
+/* Draggable elements with drag cursor */
+.draggable {
+    cursor: grab;
+    transition: cursor 0.2s;
+}
+
+.draggable:active {
+    cursor: grabbing;
+}
+
+.draggable.being-dragged {
+    opacity: 0.7;
+}
+                    </div>
+                </div>
+
+                <!-- Example 3 -->
+                <div class="example-section">
+                    <div class="example-title">3. Data Grid with Resizable Columns</div>
+                    <div class="code-block">
+/* Grid with resizable columns */
+.column-header {
+    cursor: default;
+}
+
+.column-divider {
+    cursor: col-resize;
+    border-right: 2px solid #ddd;
+    transition: border-color 0.2s;
+}
+
+.column-divider:hover {
+    border-right-color: #667eea;
+}
+                    </div>
+                </div>
+
+                <!-- Example 4 -->
+                <div class="example-section">
+                    <div class="example-title">4. Form Input States</div>
+                    <div class="code-block">
+/* Form inputs with appropriate cursors */
+input[type="text"],
+textarea {
+    cursor: text;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    cursor: pointer;
+}
+
+input:disabled,
+textarea:disabled {
+    cursor: not-allowed;
+    background: #f0f0f0;
+}
+
+input[readonly] {
+    cursor: default;
+}
+                    </div>
+                </div>
+
+                <!-- Example 5 -->
+                <div class="example-section">
+                    <div class="example-title">5. Image Viewer with Zoom</div>
+                    <div class="code-block">
+/* Image viewer with zoom cursors */
+.image-viewer {
+    cursor: zoom-in;
+    user-select: none;
+}
+
+.image-viewer.zoomed {
+    cursor: zoom-out;
+}
+
+.image-viewer.panning {
+    cursor: grabbing;
+}
+                    </div>
+                </div>
+
+                <!-- Example 6 -->
+                <div class="example-section">
+                    <div class="example-title">6. Drawing Canvas</div>
+                    <div class="code-block">
+/* Canvas with drawing tool cursors */
+.canvas {
+    cursor: default;
+}
+
+.canvas.pen-tool {
+    cursor: url('pen-cursor.png') 5 20, auto;
+}
+
+.canvas.eraser-tool {
+    cursor: url('eraser-cursor.png') 5 20, auto;
+}
+
+.canvas.color-picker {
+    cursor: url('pipette-cursor.png') 5 20, auto;
+}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== INTERACTIVE DEMO ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>👆 Interactive Demo</h2>
+                <p class="section-desc">Hover over elements to see different cursors in action</p>
+            </div>
+            <div class="section-content">
+                <div class="interactive-demo">
+                    <p style="margin-bottom: 15px; color: #555;">Try hovering over different elements:</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 20px;">
+                        <div class="demo-box cursor-pointer">
+                            Clickable (pointer)
+                        </div>
+                        <div class="demo-box cursor-text" style="cursor: text;">
+                            Selectable (text)
+                        </div>
+                        <div class="demo-box cursor-move">
+                            Draggable (move)
+                        </div>
+                        <div class="demo-box cursor-not-allowed">
+                            Disabled (not-allowed)
+                        </div>
+                        <div class="demo-box cursor-help">
+                            Help Available (help)
+                        </div>
+                        <div class="demo-box cursor-wait">
+                            Loading (wait)
+                        </div>
+                        <div class="demo-box cursor-grab">
+                            Grab (grab)
+                        </div>
+                        <div class="demo-box cursor-zoom-in">
+                            Zoom In (zoom-in)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BEST PRACTICES ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>✨ Best Practices</h2>
+                <p class="section-desc">Guidelines for using cursor properties effectively</p>
+            </div>
+            <div class="section-content">
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>1. Use Standard Cursors</h4>
+                        <p>Stick to standard cursors like <strong>pointer</strong>, <strong>text</strong>, <strong>not-allowed</strong> for consistency and familiarity.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>2. Pointer for Clickable</h4>
+                        <p>Always use <strong>cursor: pointer</strong> on clickable elements. Users expect this visual feedback.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>3. Indicate Disabled State</h4>
+                        <p>Use <strong>cursor: not-allowed</strong> on disabled form elements to indicate unavailability.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>4. Resize Cursor Alignment</h4>
+                        <p>Match resize cursor direction to actual resize capability (n-resize for top edge, se-resize for corner).</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>5. Custom Cursor Optimization</h4>
+                        <p>Keep custom cursors small (32x32px or less) and always provide a fallback standard cursor.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>6. Context-Appropriate Cursors</h4>
+                        <p>Use cursors that match element functionality. Don't use <strong>pointer</strong> on non-clickable elements.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>7. Loading Indication</h4>
+                        <p>Use <strong>cursor: wait</strong> or <strong>cursor: progress</strong> during async operations.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>8. Test Accessibility</h4>
+                        <p>Some users may not see cursor changes. Always pair cursor changes with other visual feedback.</p>
+                    </div>
+                </div>
+
+                <div class="note">
+                    <strong>💡 Accessibility Note:</strong> Don't rely solely on cursor changes for critical information. Combine cursor properties with other visual indicators, labels, and hover states to ensure accessibility for all users.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BROWSER SUPPORT ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🌐 Browser Support & Compatibility</h2>
+                <p class="section-desc">Cross-browser compatibility for cursor values</p>
+            </div>
+            <div class="section-content">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Cursor Value</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                            <th>IE 11</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="value-cell">pointer</span></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">text</span></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">move</span></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">grab/grabbing</span></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">zoom-in/out</span></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">URL custom</span></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info">
+                    <strong>✅ Modern Browser Support:</strong> Most cursor values are well-supported in all modern browsers (Chrome, Firefox, Safari, Edge). Older browsers (IE 11) lack support for newer values like grab and zoom.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== QUICK REFERENCE ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>📋 Quick Reference Table</h2>
+                <p class="section-desc">All cursor values at a glance</p>
+            </div>
+            <div class="section-content">
+                <table class="table" style="font-size: 0.9em;">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Cursor Values</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>General</strong></td>
+                            <td><span class="value-cell">auto, default, pointer, wait, text, move, help</span></td>
+                            <td>Basic user feedback</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Interaction</strong></td>
+                            <td><span class="value-cell">crosshair, cell, copy, alias, no-drop, grab, grabbing, all-scroll</span></td>
+                            <td>Selection & drag-drop</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Resize</strong></td>
+                            <td><span class="value-cell">col-resize, row-resize, n/e/s/w-resize, ne/nw/se/sw-resize, ew/ns/nesw/nwse-resize</span></td>
+                            <td>Element resizing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zoom/Progress</strong></td>
+                            <td><span class="value-cell">zoom-in, zoom-out, progress</span></td>
+                            <td>Zoom actions & loading</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Custom</strong></td>
+                            <td><span class="value-cell">url('...'), url('...') x y</span></td>
+                            <td>Custom cursor images</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Disabled</strong></td>
+                            <td><span class="value-cell">not-allowed</span></td>
+                            <td>Disabled elements</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

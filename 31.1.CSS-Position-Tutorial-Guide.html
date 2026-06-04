@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Position Guide - Complete Reference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f97316;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --text-primary: var(--neutral-900);
+            --text-secondary: var(--neutral-600);
+            --bg-primary: #ffffff;
+            --bg-secondary: var(--neutral-100);
+            --border-color: var(--neutral-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: var(--neutral-50);
+                --text-secondary: var(--neutral-400);
+                --bg-primary: var(--neutral-900);
+                --bg-secondary: var(--neutral-800);
+                --border-color: var(--neutral-700);
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        nav {
+            background-color: var(--bg-secondary);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 130px;
+            z-index: 99;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section > h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        pre {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+
+        pre code {
+            color: var(--text-primary);
+        }
+
+        :not(pre) > code {
+            background-color: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card h4 {
+            margin-top: 0;
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--neutral-100));
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .feature-box {
+                background: linear-gradient(135deg, var(--neutral-800), var(--neutral-700));
+            }
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+        }
+
+        .toggle-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .toggle-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Demo Containers */
+        .demo-container {
+            background-color: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            position: relative;
+            min-height: 200px;
+        }
+
+        .demo-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Collapsible */
+        .collapsible {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            background-color: var(--border-color);
+        }
+
+        .collapsible.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .content {
+            padding: 15px;
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            margin-bottom: 10px;
+        }
+
+        .content.show {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        /* Position Demos */
+        .position-relative {
+            position: relative;
+            height: 150px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 2px solid var(--primary);
+        }
+
+        .position-absolute {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .position-fixed {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .position-fixed.show {
+            display: block;
+        }
+
+        .position-sticky-demo {
+            position: sticky;
+            top: 180px;
+            background: var(--accent);
+            color: #000;
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .z-index-demo {
+            position: relative;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+
+        .z-box {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+
+        .z-box-1 {
+            background: var(--primary);
+            top: 0;
+            left: 0;
+            z-index: 3;
+        }
+
+        .z-box-2 {
+            background: var(--secondary);
+            top: 50px;
+            left: 50px;
+            z-index: 2;
+        }
+
+        .z-box-3 {
+            background: var(--success);
+            top: 100px;
+            left: 100px;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>CSS Position Guide</h1>
+        <p>Complete reference for positioning elements on the page</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#basics">Basics</a></li>
+            <li><a href="#values">Position Values</a></li>
+            <li><a href="#comparisons">Comparisons</a></li>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#reference">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Basics Section -->
+        <section id="basics">
+            <h2>Understanding CSS Position</h2>
+            
+            <p>The <code>position</code> property defines how an element is positioned in the document. It works with <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>left</code> properties to place elements precisely.</p>
+
+            <div class="feature-box">
+                <strong>Key Concept:</strong> Position determines the positioning method (static, relative, absolute, fixed, sticky) and how offset properties interact with it.
+            </div>
+
+            <h3>Position Context</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Document Flow</th>
+                        <th>Offset Properties</th>
+                        <th>Positioning Context</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>static</code></td>
+                        <td>✅ Normal</td>
+                        <td>❌ Ignored</td>
+                        <td>Document flow</td>
+                    </tr>
+                    <tr>
+                        <td><code>relative</code></td>
+                        <td>✅ Normal</td>
+                        <td>✅ Relative to position</td>
+                        <td>Element's original position</td>
+                    </tr>
+                    <tr>
+                        <td><code>absolute</code></td>
+                        <td>❌ Removed</td>
+                        <td>✅ Applied</td>
+                        <td>Nearest positioned ancestor</td>
+                    </tr>
+                    <tr>
+                        <td><code>fixed</code></td>
+                        <td>❌ Removed</td>
+                        <td>✅ Applied</td>
+                        <td>Viewport</td>
+                    </tr>
+                    <tr>
+                        <td><code>sticky</code></td>
+                        <td>✅ Normal (until triggered)</td>
+                        <td>✅ Applied</td>
+                        <td>Nearest scrolling ancestor</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Z-Index & Stacking</h3>
+            <p>The <code>z-index</code> property controls which positioned elements appear on top. Only works with positioned elements (not static).</p>
+            <ul>
+                <li>Higher z-index = appears on top</li>
+                <li>Lower z-index = appears behind</li>
+                <li>Default is 0</li>
+                <li>Can be negative</li>
+            </ul>
+        </section>
+
+        <!-- Values Section -->
+        <section id="values">
+            <h2>Position Values</h2>
+
+            <h3>1. Static (Default)</h3>
+            <div class="card">
+                <p>Default positioning. Element flows normally in document.</p>
+                <pre><code>position: static;  /* Default - ignores offset properties */
+
+/* Offset properties have no effect */
+top: 10px;     /* Ignored */
+left: 20px;    /* Ignored */</code></pre>
+                <ul>
+                    <li>Element flows normally</li>
+                    <li>Offset properties ignored</li>
+                    <li>No z-index stacking context</li>
+                </ul>
+            </div>
+
+            <h3>2. Relative</h3>
+            <div class="card">
+                <p>Element positioned relative to its normal position. Still takes up space.</p>
+                <div class="demo-container">
+                    <div style="height: 100px; background: rgba(99, 102, 241, 0.2); border: 2px solid var(--primary); border-radius: 6px; position: relative; top: 20px; left: 30px; display: flex; align-items: center; justify-content: center; color: var(--text-primary); font-weight: 600;">
+                        Moved 20px down, 30px right
+                    </div>
+                </div>
+                <pre><code>position: relative;
+top: 20px;      /* Move down from original position */
+left: 30px;     /* Move right from original position */</code></pre>
+                <ul>
+                    <li>Still takes up original space</li>
+                    <li>Offset from normal position</li>
+                    <li>Creates positioning context for children</li>
+                </ul>
+            </div>
+
+            <h3>3. Absolute</h3>
+            <div class="card">
+                <p>Element removed from flow, positioned relative to nearest positioned ancestor.</p>
+                <div class="demo-container">
+                    <div class="position-relative">
+                        <p style="margin: 0; padding: 10px;">Parent (position: relative)</p>
+                        <div class="position-absolute">Absolute Child</div>
+                    </div>
+                </div>
+                <pre><code>position: absolute;
+top: 10px;      /* Distance from positioned parent */
+right: 10px;    /* Distance from positioned parent */</code></pre>
+                <ul>
+                    <li>Removed from document flow</li>
+                    <li>Positioned relative to parent (if parent positioned)</li>
+                    <li>Takes minimal space</li>
+                    <li>Perfect for overlays, modals, tooltips</li>
+                </ul>
+            </div>
+
+            <h3>4. Fixed</h3>
+            <div class="card">
+                <p>Element fixed relative to viewport. Stays in place while scrolling.</p>
+                <pre><code>position: fixed;
+top: 0;         /* Distance from viewport top */
+right: 0;       /* Distance from viewport right */
+z-index: 100;   /* Control stacking order */</code></pre>
+                <ul>
+                    <li>Removed from document flow</li>
+                    <li>Fixed to viewport</li>
+                    <li>Stays in place during scroll</li>
+                    <li>Great for headers, footers, modals</li>
+                </ul>
+            </div>
+
+            <h3>5. Sticky</h3>
+            <div class="card">
+                <p>Element is normal until scrolling, then "sticks" to scroll container.</p>
+                <div class="demo-container">
+                    <div class="position-sticky-demo">
+                        Sticky Element (scroll to see effect)
+                    </div>
+                    <p>This element becomes sticky when you scroll past it. It will "stick" to the top of its containing element.</p>
+                </div>
+                <pre><code>position: sticky;
+top: 0;         /* Distance from scroll container edge */</code></pre>
+                <ul>
+                    <li>Normal until threshold reached</li>
+                    <li>Sticks to specified edge</li>
+                    <li>Great for headers, navigation</li>
+                    <li>Needs scroll container with overflow</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Comparisons Section -->
+        <section id="comparisons">
+            <h2>Comparison Table</h2>
+
+            <h3>Quick Comparison</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Removed from Flow</th>
+                        <th>Takes Space</th>
+                        <th>Uses Offset</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>static</code></td>
+                        <td>❌</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>Default/normal flow</td>
+                    </tr>
+                    <tr>
+                        <td><code>relative</code></td>
+                        <td>❌</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                        <td>Minor adjustments, context</td>
+                    </tr>
+                    <tr>
+                        <td><code>absolute</code></td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>✅</td>
+                        <td>Overlays, precise positioning</td>
+                    </tr>
+                    <tr>
+                        <td><code>fixed</code></td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>✅</td>
+                        <td>Headers, footers, fixed UI</td>
+                    </tr>
+                    <tr>
+                        <td><code>sticky</code></td>
+                        <td>Until triggered</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                        <td>Sticky headers, navigation</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Z-Index Demo</h3>
+            <div class="card">
+                <p>Higher z-index appears on top. Click to see stacking order.</p>
+                <div class="z-index-demo">
+                    <div class="z-box z-box-1">Z: 3 (Top)</div>
+                    <div class="z-box z-box-2">Z: 2 (Middle)</div>
+                    <div class="z-box z-box-3">Z: 1 (Bottom)</div>
+                </div>
+                <pre><code>.z-box-1 { z-index: 3; }  /* Appears on top */
+.z-box-2 { z-index: 2; }  /* In middle */
+.z-box-3 { z-index: 1; }  /* Behind */</code></pre>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section id="examples">
+            <h2>Real-World Examples</h2>
+
+            <div class="card">
+                <h4>Example 1: Sticky Navigation</h4>
+                <pre><code>nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>Example 2: Fixed Header & Footer</h4>
+                <pre><code>header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+body {
+    padding-top: 60px;  /* Account for fixed header */
+    padding-bottom: 60px; /* Account for fixed footer */
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>Example 3: Modal Overlay</h4>
+                <pre><code>.modal-overlay {
+    position: fixed;
+    inset: 0;  /* top: 0; right: 0; bottom: 0; left: 0; */
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>Example 4: Badge on Image</h4>
+                <pre><code>.image-container {
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: red;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 50%;
+    z-index: 10;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>Example 5: Tooltip</h4>
+                <pre><code>.tooltip-container {
+    position: relative;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    z-index: 100;
+    white-space: nowrap;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>Example 6: Absolute Centering</h4>
+                <pre><code>.container {
+    position: relative;
+    height: 300px;
+}
+
+.centered {
+    position: absolute;
+    inset: 0;  /* Fill container */
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    /* Now perfectly centered */
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Reference Section -->
+        <section id="reference">
+            <h2>Quick Reference & Patterns</h2>
+
+            <div class="card">
+                <h4>Offset Properties</h4>
+                <pre><code>/* Use with relative, absolute, fixed, sticky */
+top: 20px;      /* Distance from top */
+right: 30px;    /* Distance from right */
+bottom: 40px;   /* Distance from bottom */
+left: 50px;     /* Distance from left */
+
+/* Shorthand alternatives */
+inset: 10px;    /* All sides: 10px */
+inset: 10px 20px;  /* Vertical 10px, horizontal 20px */</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>Common Patterns</h4>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Sticky Header</button>
+                <div class="content">
+                    <pre><code>header {
+                        position: sticky;
+                        top: 0;
+                        z-index: 100;
+                    }</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Fixed Overlay</button>
+                <div class="content">
+                    <pre><code>.overlay {
+                        position: fixed;
+                        inset: 0;
+                        background: rgba(0, 0, 0, 0.5);
+                        z-index: 999;
+                    }</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Absolute Center</button>
+                <div class="content">
+                    <pre><code>.container {
+                        position: relative;
+                    }
+                    
+                    .child {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Badge Position</button>
+                <div class="content">
+                    <pre><code>.container {
+                        position: relative;
+                    }
+                    
+                    .badge {
+                        position: absolute;
+                        top: -10px;
+                        right: -10px;
+                    }</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Tooltip</button>
+                <div class="content">
+                    <pre><code>.container {
+                        position: relative;
+                    }
+                    
+                    .tooltip {
+                        position: absolute;
+                        bottom: 100%;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        white-space: nowrap;
+                    }</code></pre>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4>Best Practices</h4>
+                <ul>
+                    <li>✅ Use <code>position: sticky</code> for headers/navigation</li>
+                    <li>✅ Use <code>position: fixed</code> for modals/overlays</li>
+                    <li>✅ Use <code>position: absolute</code> for precise positioning</li>
+                    <li>✅ Set parent to <code>position: relative</code> for positioning context</li>
+                    <li>✅ Always set z-index on positioned elements</li>
+                    <li>✅ Use <code>transform: translate()</code> for centering</li>
+                    <li>❌ Don't use position for alignment (use flexbox/grid)</li>
+                    <li>❌ Don't create deeply nested absolute positioning</li>
+                    <li>❌ Don't forget z-index on overlapping elements</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h4>Browser Support</h4>
+                <ul>
+                    <li>✅ <code>position: static</code> - All browsers</li>
+                    <li>✅ <code>position: relative</code> - All browsers</li>
+                    <li>✅ <code>position: absolute</code> - All browsers</li>
+                    <li>✅ <code>position: fixed</code> - All browsers (IE7+)</li>
+                    <li>✅ <code>position: sticky</code> - Modern browsers (IE not supported)</li>
+                    <li>✅ <code>z-index</code> - All browsers</li>
+                    <li>✅ <code>inset</code> - Modern browsers</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h4>Common Mistakes</h4>
+                <ul>
+                    <li>❌ Using absolute without parent positioning context</li>
+                    <li>❌ Forgetting z-index on overlapping elements</li>
+                    <li>❌ Using position when flexbox/grid would work better</li>
+                    <li>❌ Not accounting for fixed element spacing</li>
+                    <li>❌ Using fixed on elements that should scroll with content</li>
+                    <li>✅ Always establish positioning context with parent</li>
+                    <li>✅ Use position for fine-tuning, not for layout</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>CSS Position Guide</strong></p>
+        <p>Master element positioning techniques</p>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary);">
+            Understanding position values and their interactions is crucial for building complex layouts and UI patterns.
+        </p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const btn = document.querySelector('.toggle-btn');
+            const isDark = btn.textContent.includes('Light');
+            btn.textContent = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+
+        function toggleCollapsible(event) {
+            const btn = event.target;
+            const content = btn.nextElementSibling;
+            btn.classList.toggle('active');
+            content.classList.toggle('show');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize theme on page load
+        window.addEventListener('load', function() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const btn = document.querySelector('.toggle-btn');
+            if (prefersDark) {
+                btn.textContent = '☀️ Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS calc() Function - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .section-desc {
+            font-size: 0.95em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .section-content {
+            padding: 30px;
+        }
+
+        .label {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-radius: 4px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1565c0;
+        }
+
+        .warning {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #c62828;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        .table thead {
+            background: #667eea;
+            color: white;
+        }
+
+        .table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .table tbody tr:hover {
+            background: #f0f7ff;
+        }
+
+        .calc-cell {
+            font-family: 'Courier New', monospace;
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .demo-box {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .demo-box:hover {
+            border-color: #667eea;
+            background: #f0f7ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .demo-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .demo-visual {
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .demo-description {
+            font-size: 0.85em;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .comparison-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tip-card {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.95em;
+        }
+
+        .tip-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .tip-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .example-visual {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .example-visual > div {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔢 CSS calc() Function</h1>
+        <p class="subtitle">Complete Guide with Practical Examples</p>
+
+        <!-- ==================== OVERVIEW ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>What is CSS calc()?</h2>
+                <p class="section-desc">Perform mathematical calculations in CSS values</p>
+            </div>
+            <div class="section-content">
+                <p style="color: #555; font-size: 1em; line-height: 1.8; margin-bottom: 15px;">
+                    The CSS <strong>calc()</strong> function allows you to perform mathematical operations (addition, subtraction, multiplication, and division) directly in CSS property values. It enables dynamic sizing, positioning, and other calculations without JavaScript.
+                </p>
+
+                <div class="info">
+                    <strong>💡 Key Benefits:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px; line-height: 1.8;">
+                        <li>Dynamic sizing based on multiple units</li>
+                        <li>Responsive layouts without JavaScript</li>
+                        <li>Mix different units (px, rem, %, vw, etc.)</li>
+                        <li>Cleaner, more maintainable code</li>
+                        <li>Better browser performance</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+/* Basic calc() syntax */
+width: calc(100% - 20px);
+padding: calc(1rem + 5px);
+font-size: calc(1vw + 10px);
+margin: calc(50% - 100px);
+
+/* With CSS variables */
+width: calc(100% - var(--sidebar-width));
+padding: calc(var(--space-base) * 2);
+                </div>
+
+                <div class="note">
+                    <strong>💡 Syntax Rules:</strong> Always include spaces around operators (+, -, *, /). For multiplication and division, spaces are optional but recommended.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SUPPORTED OPERATORS ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Supported Operators</h2>
+                <p class="section-desc">Mathematical operations available in calc()</p>
+            </div>
+            <div class="section-content">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Operator</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="calc-cell">+</span></td>
+                            <td>Addition</td>
+                            <td><span style="font-family: monospace;">calc(100% + 20px)</span></td>
+                            <td>Full width plus 20px</td>
+                        </tr>
+                        <tr>
+                            <td><span class="calc-cell">-</span></td>
+                            <td>Subtraction</td>
+                            <td><span style="font-family: monospace;">calc(100% - 20px)</span></td>
+                            <td>Full width minus 20px</td>
+                        </tr>
+                        <tr>
+                            <td><span class="calc-cell">*</span></td>
+                            <td>Multiplication</td>
+                            <td><span style="font-family: monospace;">calc(10px * 3)</span></td>
+                            <td>30px</td>
+                        </tr>
+                        <tr>
+                            <td><span class="calc-cell">/</span></td>
+                            <td>Division</td>
+                            <td><span style="font-family: monospace;">calc(100% / 3)</span></td>
+                            <td>One-third width</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+/* Addition - combining units */
+width: calc(50% + 10px);
+padding: calc(1rem + 5px);
+
+/* Subtraction - reducing space */
+width: calc(100% - 20px);
+height: calc(100vh - 60px);
+
+/* Multiplication - scaling values */
+margin: calc(10px * 2);
+font-size: calc(1rem * 1.5);
+
+/* Division - creating proportions */
+width: calc(100% / 3);
+column-width: calc(100% / 4);
+
+/* Complex expressions */
+width: calc((100% - 20px) / 3);
+padding: calc(1rem + 5px * 2);
+                </div>
+
+                <div class="warning">
+                    <strong>⚠️ Important:</strong> For multiplication and division, at least one operand must be a number (unitless). You cannot multiply two percentages or divide percentages by percentages.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== UNIT MIXING ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Mixing Units</h2>
+                <p class="section-desc">Combine different CSS units in one calculation</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Units</span>
+                <span class="label">Mixing</span>
+                <span class="label">Flexible</span>
+
+                <p style="color: #555; margin-bottom: 15px;">
+                    One of calc()'s most powerful features is the ability to mix different units in a single calculation.
+                </p>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Combination</th>
+                            <th>Example</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>% + px</td>
+                            <td><span style="font-family: monospace;">calc(100% - 20px)</span></td>
+                            <td>Full width minus fixed padding</td>
+                        </tr>
+                        <tr>
+                            <td>vw + px</td>
+                            <td><span style="font-family: monospace;">calc(100vw - 200px)</span></td>
+                            <td>Full viewport minus sidebar</td>
+                        </tr>
+                        <tr>
+                            <td>rem + px</td>
+                            <td><span style="font-family: monospace;">calc(2rem + 10px)</span></td>
+                            <td>Relative + fixed sizing</td>
+                        </tr>
+                        <tr>
+                            <td>em + %</td>
+                            <td><span style="font-family: monospace;">calc(1em + 50%)</span></td>
+                            <td>Mix relative font and percentage</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="demo-grid">
+                    <div class="demo-box">
+                        <div class="demo-title">% - px</div>
+                        <div class="demo-visual" style="height: 60px;">
+                            <div style="width: calc(100% - 20px); height: 100%; border: 2px dashed #667eea;">100% - 20px</div>
+                        </div>
+                        <div class="demo-description">Subtract fixed pixels from percentage width</div>
+                    </div>
+
+                    <div class="demo-box">
+                        <div class="demo-title">vw - px</div>
+                        <div class="demo-visual" style="height: 60px;">
+                            <div style="width: calc(100vw - 100px); max-width: 100%; height: 100%; border: 2px dashed #667eea;">100vw - 100px</div>
+                        </div>
+                        <div class="demo-description">Full viewport width minus fixed margin</div>
+                    </div>
+
+                    <div class="demo-box">
+                        <div class="demo-title">rem * Number</div>
+                        <div class="demo-visual" style="height: 60px;">
+                            <div style="width: calc(10rem); height: 100%; border: 2px dashed #667eea;">10rem</div>
+                        </div>
+                        <div class="demo-description">Scale rem value by multiplier</div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Common unit combinations */
+
+/* Percentage minus pixels */
+.sidebar { width: calc(100% - 300px); }
+
+/* Viewport minus fixed pixels */
+.fullscreen { height: calc(100vh - 60px); }
+
+/* Relative unit scaled */
+.large-text { font-size: calc(1.5rem + 5px); }
+
+/* CSS variables with units */
+.box { width: calc(var(--base-size) * 2 - 10px); }
+                </div>
+
+                <div class="info">
+                    <strong>💡 Addition/Subtraction Rule:</strong> When adding or subtracting, operands must be compatible (same or convertible units). Multiplication/division are more flexible.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== OPERATOR PRECEDENCE ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Operator Precedence & Nesting</h2>
+                <p class="section-desc">Order of operations and complex calculations</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Order of operations</span>
+                <span class="label">Parentheses</span>
+                <span class="label">Precedence</span>
+
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <h4>Correct Order</h4>
+                        <div class="code-block" style="margin: 10px 0;">
+/* Multiply first, then add */
+width: calc(100% + 10px * 2);
+/* Equals: 100% + 20px */
+
+/* Use parentheses for clarity */
+width: calc((100% + 10px) * 2);
+/* Equals: (100% + 10px) * 2 */
+                        </div>
+                    </div>
+
+                    <div class="comparison-item">
+                        <h4>Operator Precedence</h4>
+                        <div class="code-block" style="margin: 10px 0;">
+/* * and / have higher precedence */
+calc(10px + 5px * 2) = 20px
+calc(10 + 5 * 2) = 20 (not 30)
+
+/* Use parentheses to override */
+calc((10px + 5px) * 2) = 30px
+calc((10 + 5) * 2) = 30
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Complex nested calculations */
+
+/* Responsive padding: 5% + min fixed amount */
+padding: calc(5% + 10px);
+
+/* Three-column layout */
+width: calc((100% - 40px) / 3);
+/* (100% minus gaps) divided by 3 columns */
+
+/* Fluid font size */
+font-size: calc(1rem + 2vw);
+/* Base size plus viewport-relative scaling */
+
+/* Dynamic margin based on multiple factors */
+margin: calc(var(--base) * 2 - 20px + 1vh);
+                </div>
+
+                <div class="note">
+                    <strong>💡 Precedence Rules:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px; line-height: 1.6;">
+                        <li>* and / are evaluated before + and -</li>
+                        <li>Use parentheses to clarify intent</li>
+                        <li>Spaces around + and - are required</li>
+                        <li>Spaces around * and / are optional</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PRACTICAL USE CASES ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🎯 Practical Use Cases</h2>
+                <p class="section-desc">Real-world applications of calc()</p>
+            </div>
+            <div class="section-content">
+
+                <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px; font-size: 1.2em;">1. Responsive Layout with Fixed Sidebar</h3>
+                <div class="code-block">
+/* Sidebar is 300px, content takes remaining space */
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 300px;
+    flex-shrink: 0;
+}
+
+.content {
+    width: calc(100% - 300px);
+    overflow: hidden;
+}
+
+/* Responsive: sidebar collapses on mobile */
+@media (max-width: 768px) {
+    .sidebar { width: 80px; }
+    .content { width: calc(100% - 80px); }
+}
+                </div>
+
+                <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px; font-size: 1.2em;">2. Full-Height Layout with Fixed Header</h3>
+                <div class="code-block">
+header {
+    height: 60px;
+}
+
+main {
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+}
+
+footer {
+    height: 40px;
+}
+
+/* Sticky footer with dynamic content area */
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+    height: calc(100vh - 60px - 40px); /* header - footer */
+}
+                </div>
+
+                <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px; font-size: 1.2em;">3. Three-Column Grid with Gaps</h3>
+                <div class="code-block">
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, calc((100% - 40px) / 3));
+    gap: 20px; /* 3 gaps of 20px each = 40px */
+    padding: 20px;
+}
+
+/* Responsive: 2 columns on tablet, 1 on mobile */
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: repeat(2, calc((100% - 20px) / 2));
+        gap: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+                </div>
+
+                <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px; font-size: 1.2em;">4. Fluid Typography</h3>
+                <div class="code-block">
+/* Font size scales with viewport */
+h1 {
+    font-size: calc(1rem + 2vw);
+    /* Minimum: 1rem, scales with viewport */
+}
+
+.large-text {
+    font-size: calc(1rem + 1.5vw);
+}
+
+.body-text {
+    font-size: calc(0.95rem + 0.5vw);
+}
+
+/* With min/max for clamping */
+h1 {
+    font-size: clamp(1.5rem, calc(1rem + 2vw), 3rem);
+}
+                </div>
+
+                <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px; font-size: 1.2em;">5. Dynamic Padding/Margin</h3>
+                <div class="code-block">
+/* Responsive padding that scales */
+.section {
+    padding: calc(2rem + 5vw);
+    /* Base padding + responsive scaling */
+}
+
+.container {
+    padding: calc(var(--space-base) * 2);
+    margin: calc(var(--space-base) - 10px);
+}
+
+/* Aspect ratio with calc */
+.video-container {
+    width: 100%;
+    padding-bottom: calc(100% * 9 / 16); /* 16:9 ratio */
+    position: relative;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+                </div>
+
+                <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px; font-size: 1.2em;">6. Centered Box with Max Width</h3>
+                <div class="code-block">
+.centered-box {
+    width: calc(100% - 40px);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Responsive margins */
+.card {
+    width: calc(100% - 4rem);
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+@media (max-width: 600px) {
+    .card {
+        width: calc(100% - 2rem);
+    }
+}
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================== WITH CSS VARIABLES ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>calc() with CSS Variables</h2>
+                <p class="section-desc">Powerful combination of features</p>
+            </div>
+            <div class="section-content">
+                <span class="label">CSS Variables</span>
+                <span class="label">Dynamic</span>
+                <span class="label">Maintainable</span>
+
+                <div class="code-block">
+:root {
+    --space-base: 1rem;
+    --space-lg: 2rem;
+    --sidebar-width: 300px;
+    --header-height: 60px;
+}
+
+/* Use with calc() */
+.container {
+    width: calc(100% - var(--sidebar-width));
+}
+
+.main {
+    height: calc(100vh - var(--header-height));
+}
+
+.section {
+    padding: calc(var(--space-base) * 2);
+    margin: calc(var(--space-base) + 10px);
+}
+
+/* Dynamic calculations */
+.grid {
+    grid-template-columns: repeat(3, calc((100% - var(--space-lg) * 2) / 3));
+    gap: var(--space-lg);
+}
+
+/* Update all sizes by changing variables */
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 80px;
+        --space-lg: 1rem;
+    }
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 Best Practice:</strong> Combine calc() with CSS variables for maximum flexibility. Change a variable once and all calculations update automatically.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BROWSER SUPPORT ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🌐 Browser Support</h2>
+                <p class="section-desc">Compatibility across browsers</p>
+            </div>
+            <div class="section-content">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Browser</th>
+                            <th>Support</th>
+                            <th>Version</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Chrome</td>
+                            <td>✅ Full</td>
+                            <td>26+</td>
+                            <td>Excellent support</td>
+                        </tr>
+                        <tr>
+                            <td>Firefox</td>
+                            <td>✅ Full</td>
+                            <td>16+</td>
+                            <td>Excellent support</td>
+                        </tr>
+                        <tr>
+                            <td>Safari</td>
+                            <td>✅ Full</td>
+                            <td>6.1+</td>
+                            <td>Excellent support</td>
+                        </tr>
+                        <tr>
+                            <td>Edge</td>
+                            <td>✅ Full</td>
+                            <td>12+</td>
+                            <td>Excellent support</td>
+                        </tr>
+                        <tr>
+                            <td>Opera</td>
+                            <td>✅ Full</td>
+                            <td>13+</td>
+                            <td>Excellent support</td>
+                        </tr>
+                        <tr>
+                            <td>IE 11</td>
+                            <td>❌ No</td>
+                            <td>-</td>
+                            <td>Use fallback values</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info">
+                    <strong>✅ Modern Browser Support:</strong> calc() is well-supported in all modern browsers. IE11 doesn't support it, so provide fallback values for older browsers.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BEST PRACTICES ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>✨ Best Practices & Tips</h2>
+                <p class="section-desc">Guidelines for using calc() effectively</p>
+            </div>
+            <div class="section-content">
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>1. Always Use Spaces</h4>
+                        <p>Include spaces around + and - operators. Spaces around * and / are optional but recommended for readability.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>2. Mix Compatible Units</h4>
+                        <p>For addition/subtraction, units must be compatible (% and px, em and px, etc.). For multiplication/division, be flexible.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>3. Use Parentheses</h4>
+                        <p>Use parentheses to clarify complex calculations and ensure correct order of operations.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>4. Combine with CSS Variables</h4>
+                        <p>Use calc() with CSS variables for maintainable, dynamic sizing throughout your stylesheet.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>5. Provide Fallbacks</h4>
+                        <p>For IE11 support, provide a fallback value before the calc() declaration.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>6. Test Edge Cases</h4>
+                        <p>Test calculations on different screen sizes and browsers to ensure they work as expected.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>7. Consider Performance</h4>
+                        <p>Simple calculations have minimal performance impact. Complex nested calc() may be slightly slower, but generally negligible.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>8. Avoid Nesting Too Deep</h4>
+                        <p>Keep calculations readable. Very deep nesting makes code hard to understand and maintain.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* ===== BEST PRACTICES EXAMPLE ===== */
+
+:root {
+    --space: 1rem;
+    --gap: 20px;
+}
+
+/* Provide fallback for IE11 */
+.responsive-box {
+    width: 90%;  /* Fallback */
+    width: calc(100% - 20px);
+}
+
+/* Use calc() with variables */
+.section {
+    padding: calc(var(--space) * 2);
+    margin: calc(var(--space) + 10px);
+}
+
+/* Complex calculation with clarity */
+.grid {
+    grid-template-columns: repeat(
+        3,
+        calc((100% - (var(--gap) * 2)) / 3)
+    );
+    gap: var(--gap);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, calc((100% - var(--gap)) / 2));
+    }
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== QUICK REFERENCE ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>📋 Quick Reference</h2>
+                <p class="section-desc">calc() cheat sheet</p>
+            </div>
+            <div class="section-content">
+                <div class="code-block">
+/* ===== BASIC SYNTAX ===== */
+width: calc(100% - 20px);
+padding: calc(1rem + 5px);
+height: calc(100vh - 60px);
+margin: calc(50% - 100px);
+
+/* ===== OPERATORS ===== */
++ Addition:       calc(100% + 20px)
+- Subtraction:    calc(100% - 20px)
+* Multiplication: calc(10px * 3)
+/ Division:       calc(100% / 3)
+
+/* ===== UNIT MIXING ===== */
+% + px:   calc(100% - 20px)
+vw + px:  calc(100vw - 200px)
+rem + px: calc(2rem + 10px)
+em + %:   calc(1em + 50%)
+
+/* ===== WITH VARIABLES ===== */
+width: calc(100% - var(--sidebar-width));
+padding: calc(var(--space-base) * 2);
+height: calc(100vh - var(--header-height));
+
+/* ===== FALLBACKS ===== */
+/* For IE11 compatibility */
+width: 90%;
+width: calc(100% - 20px);
+
+/* ===== COMPLEX EXAMPLES ===== */
+Three columns:  grid-template-columns: repeat(3, calc((100% - 40px) / 3));
+Full height:    height: calc(100vh - 60px - 40px);
+Aspect ratio:   padding-bottom: calc(100% * 9 / 16);
+Responsive:     font-size: calc(1rem + 2vw);
+
+/* ===== ORDER OF OPERATIONS ===== */
+calc(10px + 5px * 2) = 20px  (multiply first)
+calc((10px + 5px) * 2) = 30px (parentheses override)
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

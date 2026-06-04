@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>CSS @property Variables Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border: #e0e0e0;
+            --accent: #667eea;
+            --accent-dark: #764ba2;
+            --success: #28a745;
+            --warning: #ff9800;
+            --danger: #dc3545;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #1e1e1e;
+                --bg-secondary: #2d2d2d;
+                --text-primary: #e0e0e0;
+                --text-secondary: #b0b0b0;
+                --border: #444444;
+                --accent: #bb86fc;
+                --accent-dark: #3dd5f3;
+                --success: #4caf50;
+                --warning: #ffb74d;
+                --danger: #ef5350;
+                --shadow: rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px var(--shadow);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .section h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: var(--accent-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        code {
+            background: var(--bg-primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--danger);
+        }
+
+        pre {
+            background: var(--bg-primary);
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        /* ===== DEMO STYLES ===== */
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .demo-box {
+            padding: 20px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+
+        .demo-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--shadow);
+            border-color: var(--accent);
+        }
+
+        .demo-box h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .demo-box p {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+        }
+
+        /* ===== @property EXAMPLES ===== */
+
+        /* Example 1: Color Property */
+        @property --color-primary {
+            syntax: '<color>';
+            initial-value: #667eea;
+            inherits: false;
+        }
+
+        .color-demo {
+            width: 100%;
+            height: 100px;
+            background: var(--color-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin: 15px 0;
+            transition: --color-primary 1s ease;
+        }
+
+        .color-demo:hover {
+            --color-primary: #764ba2;
+        }
+
+        /* Example 2: Number Property */
+        @property --opacity-value {
+            syntax: '<number>';
+            initial-value: 1;
+            inherits: true;
+        }
+
+        .opacity-demo {
+            width: 100px;
+            height: 100px;
+            background: var(--accent);
+            border-radius: 8px;
+            opacity: var(--opacity-value);
+            transition: --opacity-value 1s ease;
+        }
+
+        .opacity-demo:hover {
+            --opacity-value: 0.5;
+        }
+
+        /* Example 3: Length Property */
+        @property --border-radius-size {
+            syntax: '<length>';
+            initial-value: 8px;
+            inherits: false;
+        }
+
+        .radius-demo {
+            width: 120px;
+            height: 120px;
+            background: var(--accent);
+            border-radius: var(--border-radius-size);
+            transition: --border-radius-size 1s ease;
+            cursor: pointer;
+        }
+
+        .radius-demo:hover {
+            --border-radius-size: 50%;
+        }
+
+        /* Example 4: Animation Property */
+        @property --rotation-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        .rotation-demo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border-radius: 8px;
+            transform: rotate(var(--rotation-angle));
+            margin: 15px 0;
+        }
+
+        @keyframes spin {
+            to {
+                --rotation-angle: 360deg;
+            }
+        }
+
+        .rotation-demo.animated {
+            animation: spin 2s linear infinite;
+        }
+
+        /* Example 5: Gradient Property */
+        @property --gradient-angle {
+            syntax: '<angle>';
+            initial-value: 45deg;
+            inherits: false;
+        }
+
+        .gradient-demo {
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(var(--gradient-angle), var(--accent), var(--accent-dark));
+            border-radius: 8px;
+            transition: --gradient-angle 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin: 15px 0;
+        }
+
+        .gradient-demo:hover {
+            --gradient-angle: 135deg;
+        }
+
+        /* Example 6: Multiple Properties */
+        @property --button-bg {
+            syntax: '<color>';
+            initial-value: #667eea;
+            inherits: false;
+        }
+
+        @property --button-scale {
+            syntax: '<number>';
+            initial-value: 1;
+            inherits: false;
+        }
+
+        .interactive-button {
+            padding: 12px 24px;
+            background: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transform: scale(var(--button-scale));
+            transition: --button-bg 0.3s, --button-scale 0.3s;
+            margin: 10px 5px;
+        }
+
+        .interactive-button:hover {
+            --button-bg: #764ba2;
+            --button-scale: 1.05;
+        }
+
+        /* ===== COMPARISON TABLE ===== */
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: var(--accent);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table tr:hover {
+            background: var(--bg-primary);
+        }
+
+        .yes {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .no {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        /* ===== BROWSER SUPPORT ===== */
+
+        .browser-support {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .browser {
+            background: var(--bg-primary);
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid var(--border);
+        }
+
+        .browser.supported {
+            background: color-mix(in srgb, var(--success) 20%, transparent);
+            border-color: var(--success);
+        }
+
+        .browser.partial {
+            background: color-mix(in srgb, var(--warning) 20%, transparent);
+            border-color: var(--warning);
+        }
+
+        .browser strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .browser small {
+            display: block;
+            opacity: 0.8;
+        }
+
+        /* ===== UTILITY STYLES ===== */
+
+        .note {
+            background: color-mix(in srgb, var(--accent) 20%, transparent);
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background: color-mix(in srgb, var(--warning) 20%, transparent);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .pros {
+            background: color-mix(in srgb, var(--success) 20%, transparent);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .cons {
+            background: color-mix(in srgb, var(--danger) 20%, transparent);
+            border-left: 4px solid var(--danger);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        /* ===== RESPONSIVE ===== */
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9em;
+            border-top: 1px solid var(--border);
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS @property Variables</h1>
+        <p class="subtitle">Complete Guide to CSS Custom Properties with Type Definition</p>
+
+        <!-- ===== SECTION 1: Introduction ===== -->
+        <div class="section">
+            <h2>1. What is @property?</h2>
+            <p>The <code>@property</code> CSS at-rule allows you to register custom CSS properties with a type definition, initial value, and inheritance behavior. This enables type-safe CSS variables with transitions and animations.</p>
+
+            <h3>Key Characteristics:</h3>
+            <ul>
+                <li>Register CSS custom properties with explicit types</li>
+                <li>Define initial values for fallback</li>
+                <li>Control inheritance behavior</li>
+                <li>Enable animations and transitions on properties</li>
+                <li>Type validation for custom properties</li>
+                <li>Modern, powerful CSS capability</li>
+            </ul>
+
+            <h3>Syntax:</h3>
+            <pre>@property --property-name {
+    syntax: '<color>';
+    initial-value: #667eea;
+    inherits: false;
+}</pre>
+
+            <div class="note">
+                <strong>Why @property?</strong> Regular CSS variables cannot be animated. @property enables smooth transitions on color, size, angle, and other values!
+            </div>
+        </div>
+
+        <!-- ===== SECTION 2: Basic Syntax ===== -->
+        <div class="section">
+            <h2>2. @property Syntax & Components</h2>
+
+            <h3>Three Required Components:</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Component</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><code>syntax</code></td>
+                    <td>Type definition for the property</td>
+                    <td><code>syntax: '&lt;color&gt;';</code></td>
+                </tr>
+                <tr>
+                    <td><code>initial-value</code></td>
+                    <td>Default value if not set</td>
+                    <td><code>initial-value: #667eea;</code></td>
+                </tr>
+                <tr>
+                    <td><code>inherits</code></td>
+                    <td>Whether it inherits to children</td>
+                    <td><code>inherits: false;</code></td>
+                </tr>
+            </table>
+
+            <h3>Syntax Types Available:</h3>
+            <pre>/* Color */
+syntax: '<color>';
+
+/* Length */
+syntax: '<length>';
+
+/* Number */
+syntax: '<number>';
+
+/* Percentage */
+syntax: '<percentage>';
+
+/* Angle */
+syntax: '<angle>';
+
+/* Time */
+syntax: '<time>';
+
+/* Resolution */
+syntax: '<resolution>';
+
+/* Custom Ident */
+syntax: '<custom-ident>';
+
+/* Keyword */
+syntax: 'small | medium | large';
+
+/* Combinations */
+syntax: '<length> | <percentage>';
+syntax: '<color>#';</pre>
+        </div>
+
+        <!-- ===== SECTION 3: Interactive Examples ===== -->
+        <div class="section">
+            <h2>3. Live Interactive Examples</h2>
+
+            <h3>Example 1: Animated Color Property</h3>
+            <p>Hover to see smooth color transition:</p>
+            <div class="color-demo">
+                Hover me for color animation
+            </div>
+
+            <h3>CSS Implementation:</h3>
+            <pre>@property --color-primary {
+    syntax: '<color>';
+    initial-value: #667eea;
+    inherits: false;
+}
+
+.color-demo {
+    background: var(--color-primary);
+    transition: --color-primary 1s ease;
+}
+
+.color-demo:hover {
+    --color-primary: #764ba2;
+}</pre>
+
+            <h3>Example 2: Opacity Animation</h3>
+            <p>Hover to fade the element:</p>
+            <div style="display: flex; justify-content: center;">
+                <div class="opacity-demo"></div>
+            </div>
+
+            <h3>Example 3: Radius Shape Morph</h3>
+            <p>Hover to transform from square to circle:</p>
+            <div style="display: flex; justify-content: center;">
+                <div class="radius-demo" title="Hover me"></div>
+            </div>
+
+            <h3>Example 4: Animated Rotation</h3>
+            <p>Rotating element using @property animation:</p>
+            <div style="display: flex; justify-content: center;">
+                <div class="rotation-demo animated"></div>
+            </div>
+
+            <h3>Example 5: Gradient Angle Animation</h3>
+            <p>Hover to rotate the gradient:</p>
+            <div class="gradient-demo">
+                Hover for gradient animation
+            </div>
+        </div>
+
+        <!-- ===== SECTION 4: Practical Examples ===== -->
+        <div class="section">
+            <h2>4. Practical Real-World Examples</h2>
+
+            <h3>Example 1: Interactive Buttons</h3>
+            <p>Buttons with animated properties:</p>
+            <div style="text-align: center; margin: 20px 0;">
+                <button class="interactive-button">Primary Button</button>
+                <button class="interactive-button" style="--button-bg: #28a745;">Success Button</button>
+                <button class="interactive-button" style="--button-bg: #dc3545;">Danger Button</button>
+            </div>
+
+            <h3>CSS Code:</h3>
+            <pre>@property --button-bg {
+    syntax: '<color>';
+    initial-value: #667eea;
+    inherits: false;
+}
+
+@property --button-scale {
+    syntax: '<number>';
+    initial-value: 1;
+    inherits: false;
+}
+
+button {
+    background: var(--button-bg);
+    transform: scale(var(--button-scale));
+    transition: --button-bg 0.3s, --button-scale 0.3s;
+}</pre>
+
+            <h3>Example 2: Progress Indicator</h3>
+            <pre>@property --progress-width {
+    syntax: '<percentage>';
+    initial-value: 0%;
+    inherits: false;
+}
+
+.progress {
+    width: var(--progress-width);
+    transition: --progress-width 1s ease-out;
+}
+
+.progress.loading {
+    --progress-width: 100%;
+}</pre>
+
+            <h3>Example 3: Hover Effects</h3>
+            <pre>@property --shadow-blur {
+    syntax: '<length>';
+    initial-value: 4px;
+    inherits: false;
+}
+
+.card {
+    box-shadow: 0 2px var(--shadow-blur) rgba(0,0,0,0.1);
+    transition: --shadow-blur 0.3s;
+}
+
+.card:hover {
+    --shadow-blur: 20px;
+}</pre>
+
+            <h3>Example 4: Theme Switching</h3>
+            <pre>@property --theme-primary {
+    syntax: '<color>';
+    initial-value: #667eea;
+    inherits: true;
+}
+
+:root {
+    --theme-primary: #667eea;
+}
+
+:root.dark-theme {
+    --theme-primary: #bb86fc;
+}
+
+button {
+    background: var(--theme-primary);
+    transition: --theme-primary 0.3s;
+}</pre>
+
+            <h3>Example 5: Animated Counter</h3>
+            <pre>@property --counter-value {
+    syntax: '<number>';
+    initial-value: 0;
+    inherits: false;
+}
+
+.counter {
+    --counter-value: 0;
+    transition: --counter-value 2s ease-out;
+}
+
+.counter.count-up {
+    --counter-value: 100;
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 5: Syntax Types Deep Dive ===== -->
+        <div class="section">
+            <h2>5. Syntax Types Explained</h2>
+
+            <h3>Color Type:</h3>
+            <pre>@property --accent-color {
+    syntax: '<color>';
+    initial-value: #667eea;
+    inherits: false;
+}
+
+/* Usage */
+.element {
+    background: var(--accent-color);
+    transition: --accent-color 0.3s;
+}</pre>
+
+            <h3>Length Type:</h3>
+            <pre>@property --spacing-size {
+    syntax: '<length>';
+    initial-value: 16px;
+    inherits: false;
+}
+
+.element {
+    margin: var(--spacing-size);
+    padding: var(--spacing-size);
+}</pre>
+
+            <h3>Angle Type:</h3>
+            <pre>@property --rotation-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.element {
+    transform: rotate(var(--rotation-angle));
+    transition: --rotation-angle 1s;
+}</pre>
+
+            <h3>Number Type:</h3>
+            <pre>@property --scale-factor {
+    syntax: '<number>';
+    initial-value: 1;
+    inherits: false;
+}
+
+.element {
+    transform: scale(var(--scale-factor));
+    opacity: var(--scale-factor);
+}</pre>
+
+            <h3>Custom Ident (Keywords):</h3>
+            <pre>@property --size-level {
+    syntax: 'small | medium | large';
+    initial-value: medium;
+    inherits: false;
+}
+
+.element {
+    font-size: calc(var(--size-level) * 16px);
+}</pre>
+
+            <h3>Multiple Types:</h3>
+            <pre>@property --flexible-size {
+    syntax: '<length> | <percentage>';
+    initial-value: 100px;
+    inherits: false;
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 6: Browser Support ===== -->
+        <div class="section">
+            <h2>6. Browser Support</h2>
+
+            <div class="browser-support">
+                <div class="browser supported">
+                    <strong>Chrome</strong><br>78+<br><small>Full support</small>
+                </div>
+                <div class="browser partial">
+                    <strong>Firefox</strong><br>No support<br><small>Under development</small>
+                </div>
+                <div class="browser supported">
+                    <strong>Safari</strong><br>16.4+<br><small>Full support</small>
+                </div>
+                <div class="browser supported">
+                    <strong>Edge</strong><br>79+<br><small>Full support</small>
+                </div>
+            </div>
+
+            <h3>Progressive Enhancement:</h3>
+            <pre>/* Fallback for unsupported browsers */
+.element {
+    background: #667eea;
+}
+
+/* Enhanced with @property */
+@supports (--test: test) {
+    @property --color-primary {
+        syntax: '<color>';
+        initial-value: #667eea;
+        inherits: false;
+    }
+
+    .element {
+        background: var(--color-primary);
+        transition: --color-primary 0.3s;
+    }
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 7: Advanced Techniques ===== -->
+        <div class="section">
+            <h2>7. Advanced Techniques</h2>
+
+            <h3>Technique 1: Cascade of Properties</h3>
+            <pre>@property --primary-color { syntax: '<color>'; initial-value: #667eea; inherits: false; }
+@property --secondary-color { syntax: '<color>'; initial-value: #764ba2; inherits: false; }
+@property --accent-opacity { syntax: '<number>'; initial-value: 1; inherits: false; }
+
+:root {
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --accent-opacity: 1;
+}
+
+.gradient {
+    background: linear-gradient(
+        to right,
+        rgba(var(--primary-color), var(--accent-opacity)),
+        rgba(var(--secondary-color), var(--accent-opacity))
+    );
+}</pre>
+
+            <h3>Technique 2: Complex Animations</h3>
+            <pre>@property --hue-rotate {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes hue-shift {
+    0% { --hue-rotate: 0deg; }
+    50% { --hue-rotate: 180deg; }
+    100% { --hue-rotate: 360deg; }
+}
+
+.element {
+    filter: hue-rotate(var(--hue-rotate));
+    animation: hue-shift 3s infinite;
+}</pre>
+
+            <h3>Technique 3: Responsive Properties</h3>
+            <pre>@property --responsive-size {
+    syntax: '<length>';
+    initial-value: 16px;
+    inherits: false;
+}
+
+:root {
+    --responsive-size: 16px;
+}
+
+@media (min-width: 768px) {
+    :root {
+        --responsive-size: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    :root {
+        --responsive-size: 24px;
+    }
+}</pre>
+
+            <h3>Technique 4: JavaScript Integration</h3>
+            <pre>// Set custom property from JavaScript
+document.documentElement.style.setProperty('--progress-width', '75%');
+
+// Animate between values
+let progress = 0;
+const interval = setInterval(() => {
+    progress += 5;
+    document.documentElement.style.setProperty('--progress-width', progress + '%');
+    if (progress >= 100) clearInterval(interval);
+}, 50);</pre>
+        </div>
+
+        <!-- ===== SECTION 8: Best Practices ===== -->
+        <div class="section">
+            <h2>8. Best Practices & Tips</h2>
+
+            <h3>✓ Do's:</h3>
+            <div class="pros">
+                <ul>
+                    <li>Use @property for animatable properties</li>
+                    <li>Define clear initial values</li>
+                    <li>Use appropriate syntax types</li>
+                    <li>Leverage transitions and animations</li>
+                    <li>Test with @supports</li>
+                    <li>Provide fallback styles</li>
+                    <li>Use descriptive property names</li>
+                </ul>
+            </div>
+
+            <h3>✗ Don'ts:</h3>
+            <div class="cons">
+                <ul>
+                    <li>Don't use without feature detection</li>
+                    <li>Don't forget fallback values</li>
+                    <li>Don't use incorrect syntax types</li>
+                    <li>Don't overcomplicate animations</li>
+                    <li>Don't assume all browsers support it</li>
+                    <li>Don't ignore performance impact</li>
+                </ul>
+            </div>
+
+            <h3>Performance Considerations:</h3>
+            <div class="note">
+                <strong>Performance:</strong> @property animations are GPU-accelerated in modern browsers. Use them liberally, but test on lower-end devices. Complex cascading properties may impact performance.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 9: Quick Reference ===== -->
+        <div class="section">
+            <h2>9. Quick Reference</h2>
+
+            <h3>Complete Template:</h3>
+            <pre>@property --my-property {
+    syntax: '<color>';              /* Type definition */
+    initial-value: #667eea;         /* Fallback value */
+    inherits: false;                /* Inheritance control */
+}</pre>
+
+            <h3>All Syntax Types:</h3>
+            <pre>/* Basic Types */
+syntax: '<color>';
+syntax: '<length>';
+syntax: '<number>';
+syntax: '<percentage>';
+syntax: '<angle>';
+syntax: '<time>';
+syntax: '<resolution>';
+
+/* Advanced */
+syntax: '<custom-ident>';
+syntax: 'small | medium | large';   /* Keywords */
+syntax: '<color>#';                  /* Multiple values */
+syntax: '<length> | <percentage>';   /* Union types */</pre>
+
+            <h3>Common Patterns:</h3>
+            <pre>/* Animated color */
+@property --primary { syntax: '<color>'; initial-value: #667eea; inherits: false; }
+
+/* Animated size */
+@property --size { syntax: '<length>'; initial-value: 100px; inherits: false; }
+
+/* Animated rotation */
+@property --rotation { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+
+/* Animated opacity */
+@property --fade { syntax: '<number>'; initial-value: 1; inherits: false; }</pre>
+
+            <h3>Checklist:</h3>
+            <ul>
+                <li>✓ Define syntax type</li>
+                <li>✓ Set initial-value</li>
+                <li>✓ Define inherits behavior</li>
+                <li>✓ Test browser support</li>
+                <li>✓ Provide fallback styles</li>
+                <li>✓ Test on mobile</li>
+                <li>✓ Validate animations</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>CSS @property Variables Complete Guide | Created for Web Development Learning</p>
+            <p>For more information, visit <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@property">MDN Web Docs</a></p>
+        </footer>
+    </div>
+</body>
+</html>

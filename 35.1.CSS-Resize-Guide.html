@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Resize Properties - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .section-desc {
+            font-size: 0.95em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .section-content {
+            padding: 30px;
+        }
+
+        .label {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-radius: 4px;
+            color: #333;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .demo-box {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .demo-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .demo-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1565c0;
+        }
+
+        .warning {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #c62828;
+        }
+
+        /* ==================== RESIZE NONE ==================== */
+        .resize-none {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #9c27b0;
+            border-radius: 6px;
+            font-size: 0.95em;
+            resize: none;
+            background: #f3e5f5;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100px;
+        }
+
+        /* ==================== RESIZE BOTH ==================== */
+        .resize-both {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #2196F3;
+            border-radius: 6px;
+            font-size: 0.95em;
+            resize: both;
+            background: #e3f2fd;
+            overflow: auto;
+            min-height: 120px;
+            cursor: se-resize;
+        }
+
+        /* ==================== RESIZE HORIZONTAL ==================== */
+        .resize-horizontal {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ff9800;
+            border-radius: 6px;
+            font-size: 0.95em;
+            resize: horizontal;
+            background: #fff3e0;
+            overflow: auto;
+            min-width: 200px;
+            height: 100px;
+            cursor: e-resize;
+        }
+
+        /* ==================== RESIZE VERTICAL ==================== */
+        .resize-vertical {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #4caf50;
+            border-radius: 6px;
+            font-size: 0.95em;
+            resize: vertical;
+            background: #e8f5e9;
+            overflow: auto;
+            height: 100px;
+            cursor: s-resize;
+        }
+
+        /* ==================== RESIZE INITIAL ==================== */
+        .resize-initial {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #f44336;
+            border-radius: 6px;
+            font-size: 0.95em;
+            resize: initial;
+            background: #ffebee;
+            overflow: auto;
+            min-height: 100px;
+        }
+
+        /* ==================== RESIZE INHERIT ==================== */
+        .parent-resize {
+            resize: both;
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #00bcd4;
+            border-radius: 6px;
+            background: #e0f2f1;
+            overflow: auto;
+            min-height: 100px;
+        }
+
+        .child-inherit {
+            resize: inherit;
+            padding: 10px;
+            background: #b2dfdb;
+            border: 1px dashed #00897b;
+            border-radius: 4px;
+            margin-top: 10px;
+            min-height: 60px;
+        }
+
+        /* ==================== PRACTICAL EXAMPLES ==================== */
+        .textarea-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            font-size: 0.95em;
+            resize: vertical;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 120px;
+            max-height: 300px;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .textarea-control:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .resizable-box {
+            width: 100%;
+            min-width: 200px;
+            max-width: 600px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
+            resize: both;
+            overflow: auto;
+            cursor: se-resize;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .resizable-box:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .resizable-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border: 2px solid #2196F3;
+            border-radius: 8px;
+            resize: both;
+            overflow: auto;
+            background: #e3f2fd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+            cursor: se-resize;
+        }
+
+        .resize-container {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 8px;
+            resize: both;
+            overflow: auto;
+            cursor: se-resize;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+        }
+
+        .resize-demo-text {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        .property-table thead {
+            background: #667eea;
+            color: white;
+        }
+
+        .property-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .property-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .property-table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .property-table tbody tr:hover {
+            background: #f0f0f0;
+        }
+
+        .value-cell {
+            font-family: 'Courier New', monospace;
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tip-card {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.95em;
+        }
+
+        .tip-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .tip-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .cursor-info {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .feature-box {
+            background: #eceff1;
+            border: 2px solid #667eea;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+
+        .feature-box strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 CSS Resize Properties</h1>
+        <p class="subtitle">Complete Guide with Interactive Examples</p>
+
+        <!-- ==================== OVERVIEW ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>What is CSS Resize?</h2>
+                <p class="section-desc">The resize property controls whether an element can be resized by the user</p>
+            </div>
+            <div class="section-content">
+                <p style="color: #555; font-size: 1em; line-height: 1.8; margin-bottom: 15px;">
+                    The CSS <strong>resize</strong> property allows users to change the width and/or height of an element. This is commonly used with textareas, input fields, and custom containers. The resize handle appears in the bottom-right corner and can be dragged to resize the element.
+                </p>
+
+                <div class="info">
+                    <strong>💡 Key Point:</strong> The resize property only works on elements that have an <strong>overflow</strong> value other than 'visible'. It's typically used with textareas and pre-formatted text elements.
+                </div>
+
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Description</th>
+                            <th>Browser Support</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="value-cell">resize: none</span></td>
+                            <td>Element cannot be resized (default for most elements)</td>
+                            <td>✓ All modern browsers</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">resize: both</span></td>
+                            <td>Element can be resized both horizontally and vertically</td>
+                            <td>✓ All modern browsers</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">resize: horizontal</span></td>
+                            <td>Element can only be resized horizontally</td>
+                            <td>✓ All modern browsers</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">resize: vertical</span></td>
+                            <td>Element can only be resized vertically</td>
+                            <td>✓ All modern browsers</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">resize: initial</span></td>
+                            <td>Sets to default value (browser dependent)</td>
+                            <td>✓ All modern browsers</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">resize: inherit</span></td>
+                            <td>Inherits from parent element</td>
+                            <td>✓ All modern browsers</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ==================== RESIZE: NONE ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>resize: none</h2>
+                <p class="section-desc">Disables resizing - element has a fixed size</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Fixed Size</span>
+                <span class="label">No Resize Handle</span>
+
+                <p style="color: #555; margin-bottom: 15px;">
+                    Prevents users from resizing the element. The resize handle will not appear. This is useful when you want to maintain a specific element size.
+                </p>
+
+                <div class="demo-box">
+                    <div class="demo-title">Try to resize (you can't!):</div>
+                    <textarea class="resize-none">This textarea cannot be resized. The resize property is set to 'none'. Try to drag the corner - nothing will happen!</textarea>
+                </div>
+
+                <div class="code-block">
+/* Disable resize for textarea */
+textarea {
+    resize: none;
+    width: 100%;
+    height: 100px;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Use Case:</strong> When you need a fixed-size input field or want to prevent layout shifts caused by user resizing. Common in forms where consistency is important.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== RESIZE: BOTH ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>resize: both</h2>
+                <p class="section-desc">Allows resizing in both horizontal and vertical directions</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Both Directions</span>
+                <span class="label">Full Control</span>
+
+                <p style="color: #555; margin-bottom: 15px;">
+                    Allows users to resize the element both horizontally and vertically. The resize handle appears in the bottom-right corner as a diagonal arrow.
+                </p>
+
+                <div class="demo-box">
+                    <div class="demo-title">Try to resize both directions:</div>
+                    <textarea class="resize-both">This textarea can be resized in both directions. Drag from the bottom-right corner to change both width and height. Try it now!</textarea>
+                    <div class="cursor-info">📍 Cursor changes to: <strong>se-resize</strong> (southeast resize)</div>
+                </div>
+
+                <div class="code-block">
+textarea {
+    resize: both;
+    width: 100%;
+    min-height: 120px;
+    overflow: auto;
+}
+                </div>
+
+                <div class="feature-box">
+                    <strong>Requirements:</strong> 
+                    <ul style="margin-top: 8px; margin-left: 20px; line-height: 1.6;">
+                        <li>Element must have <strong>overflow: auto</strong> or <strong>overflow: scroll</strong></li>
+                        <li>Cannot be used on elements with <strong>overflow: visible</strong></li>
+                        <li>Works best on block-level elements like &lt;textarea&gt;, &lt;div&gt;, &lt;pre&gt;</li>
+                    </ul>
+                </div>
+
+                <div class="note">
+                    <strong>💡 Use Case:</strong> Code editors, text boxes, image containers where users need flexible sizing options.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== RESIZE: HORIZONTAL ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>resize: horizontal</h2>
+                <p class="section-desc">Allows resizing only horizontally (width only)</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Width Only</span>
+                <span class="label">Left-Right Drag</span>
+
+                <p style="color: #555; margin-bottom: 15px;">
+                    Allows resizing only in the horizontal direction. Users can change the width but not the height. The resize handle appears on the right edge.
+                </p>
+
+                <div class="demo-box">
+                    <div class="demo-title">Try to resize horizontally:</div>
+                    <textarea class="resize-horizontal">This textarea can only be resized horizontally. Drag from the right edge to make it wider or narrower. Height is fixed!</textarea>
+                    <div class="cursor-info">📍 Cursor changes to: <strong>e-resize</strong> (east resize)</div>
+                </div>
+
+                <div class="code-block">
+textarea {
+    resize: horizontal;
+    width: 100%;
+    height: 100px;
+    overflow: auto;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Use Case:</strong> When you want to control only the width - like data grids or columns that should maintain a fixed height but allow horizontal expansion.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== RESIZE: VERTICAL ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>resize: vertical</h2>
+                <p class="section-desc">Allows resizing only vertically (height only)</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Height Only</span>
+                <span class="label">Up-Down Drag</span>
+
+                <p style="color: #555; margin-bottom: 15px;">
+                    Allows resizing only in the vertical direction. Users can change the height but not the width. The resize handle appears on the bottom edge.
+                </p>
+
+                <div class="demo-box">
+                    <div class="demo-title">Try to resize vertically:</div>
+                    <textarea class="resize-vertical">This textarea can only be resized vertically. Drag from the bottom edge to make it taller or shorter. Width is fixed to 100%!</textarea>
+                    <div class="cursor-info">📍 Cursor changes to: <strong>s-resize</strong> (south resize)</div>
+                </div>
+
+                <div class="code-block">
+textarea {
+    resize: vertical;
+    width: 100%;
+    height: 100px;
+    overflow: auto;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Use Case:</strong> Most common for textareas in forms. Users can expand vertically to see more of their content while maintaining a consistent width.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== RESIZE: INITIAL & INHERIT ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>resize: initial & resize: inherit</h2>
+                <p class="section-desc">Default and inheritance behaviors</p>
+            </div>
+            <div class="section-content">
+                <div class="comparison-grid">
+                    <div>
+                        <div class="demo-box">
+                            <div class="demo-title">resize: initial</div>
+                            <p class="resize-demo-text">Sets to browser default. For textareas, usually allows both directions.</p>
+                            <textarea class="resize-initial">This uses resize: initial - browser's default behavior. Most browsers allow both directions for textareas.</textarea>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="demo-box">
+                            <div class="demo-title">Parent: resize: both | Child: resize: inherit</div>
+                            <p class="resize-demo-text">Child inherits parent's resize behavior.</p>
+                            <div class="parent-resize">
+                                Parent (resize: both)
+                                <div class="child-inherit">Child (resize: inherit) - Inherits resize: both from parent</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* inherit example */
+.parent {
+    resize: both;
+    overflow: auto;
+}
+
+.child {
+    resize: inherit;  /* Inherits 'both' from parent */
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PRACTICAL EXAMPLES ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🎯 Practical Examples</h2>
+                <p class="section-desc">Real-world use cases and implementations</p>
+            </div>
+            <div class="section-content">
+
+                <!-- Example 1: Feedback Form -->
+                <div style="margin-bottom: 35px;">
+                    <h3 style="color: #333; margin-bottom: 15px; font-size: 1.2em;">1. Feedback Form Textarea</h3>
+                    <p style="color: #555; margin-bottom: 15px;">
+                        Allow users to expand the textarea vertically as they type feedback.
+                    </p>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Enter your feedback:</label>
+                    <textarea class="textarea-control" placeholder="Share your thoughts... You can resize this vertically!"></textarea>
+                    <div class="code-block">
+textarea {
+    resize: vertical;
+    min-height: 120px;
+    max-height: 300px;
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #667eea;
+    border-radius: 6px;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #764ba2;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+                    </div>
+                </div>
+
+                <!-- Example 2: Resizable Widget -->
+                <div style="margin-bottom: 35px;">
+                    <h3 style="color: #333; margin-bottom: 15px; font-size: 1.2em;">2. Resizable Widget/Container</h3>
+                    <p style="color: #555; margin-bottom: 15px;">
+                        Dashboard widgets that users can resize to their preference.
+                    </p>
+                    <div class="resizable-box">
+                        <strong>📊 Resizable Widget</strong>
+                        <p style="margin-top: 10px; font-size: 0.9em;">Drag the bottom-right corner to resize this widget. Both width and height can be adjusted.</p>
+                    </div>
+                    <div class="code-block">
+.resizable-box {
+    resize: both;
+    overflow: auto;
+    min-width: 200px;
+    max-width: 600px;
+    padding: 20px;
+    cursor: se-resize;
+}
+                    </div>
+                </div>
+
+                <!-- Example 3: Code Editor Area -->
+                <div style="margin-bottom: 35px;">
+                    <h3 style="color: #333; margin-bottom: 15px; font-size: 1.2em;">3. Code Editor</h3>
+                    <p style="color: #555; margin-bottom: 15px;">
+                        Simulate a code editor that can be resized both ways.
+                    </p>
+                    <div style="border: 2px solid #333; border-radius: 8px; overflow: hidden; background: #1e1e1e;">
+                        <div style="background: #333; color: #fff; padding: 10px; font-weight: 600;">
+                            📝 code.js
+                        </div>
+                        <textarea class="resize-both" style="width: 100%; height: 150px; background: #1e1e1e; color: #d4d4d4; font-family: 'Courier New', monospace; border: none; padding: 15px; resize: both;">function greet(name) {
+    console.log(`Hello, ${name}!`);
+}
+
+greet('Developer');</textarea>
+                    </div>
+                    <div class="code-block">
+/* Code editor */
+.code-editor {
+    resize: both;
+    overflow: auto;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    font-family: 'Courier New', monospace;
+    padding: 15px;
+    border-radius: 6px;
+}
+                    </div>
+                </div>
+
+                <!-- Example 4: Resizable Container -->
+                <div style="margin-bottom: 35px;">
+                    <h3 style="color: #333; margin-bottom: 15px; font-size: 1.2em;">4. Responsive Container</h3>
+                    <p style="color: #555; margin-bottom: 15px;">
+                        Full-size resizable container for flexible layouts.
+                    </p>
+                    <div class="resize-container">
+                        🔄 Drag to Resize<br><small style="font-size: 0.8em; margin-top: 10px;">This container can be resized both horizontally and vertically</small>
+                    </div>
+                    <div class="code-block">
+.resize-container {
+    resize: both;
+    overflow: auto;
+    height: 250px;
+    width: 100%;
+}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BEST PRACTICES ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>✨ Best Practices</h2>
+                <p class="section-desc">Guidelines for implementing resize effectively</p>
+            </div>
+            <div class="section-content">
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>1. Always Set Overflow</h4>
+                        <p>The <strong>resize</strong> property only works when overflow is <strong>auto</strong> or <strong>scroll</strong>. Never use it with <strong>overflow: visible</strong>.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>2. Set Min/Max Dimensions</h4>
+                        <p>Use <strong>min-width/max-width</strong> and <strong>min-height/max-height</strong> to prevent elements from becoming too small or too large.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>3. Provide Visual Feedback</h4>
+                        <p>The cursor changes automatically, but you can also add hover effects or borders to indicate the element is resizable.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>4. Consider Mobile Users</h4>
+                        <p>Resize handles may not work well on touch devices. Consider providing buttons or alternative resize methods for mobile.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>5. Use Vertical for Textareas</h4>
+                        <p>For most textarea elements, <strong>resize: vertical</strong> is the best choice. It allows users to expand content visibility without changing layout.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>6. Disable When Not Needed</h4>
+                        <p>Use <strong>resize: none</strong> for form fields where size should be fixed (like search bars or email inputs).</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>7. Test Resize Behavior</h4>
+                        <p>Test your resizable elements on different browsers and screen sizes to ensure consistent behavior.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>8. Save User Preferences</h4>
+                        <p>Consider using localStorage or a backend to save user-resized dimensions for a better user experience.</p>
+                    </div>
+                </div>
+
+                <div class="feature-box">
+                    <strong>⚙️ Important Requirements:</strong>
+                    <ul style="margin-top: 8px; margin-left: 20px; line-height: 1.8;">
+                        <li>Element must have <strong>overflow: auto</strong> or <strong>overflow: scroll</strong></li>
+                        <li>Cannot be applied to <strong>display: inline</strong> elements</li>
+                        <li>Works best with block or <strong>display: block</strong> elements</li>
+                        <li>Resize handle appears in bottom-right corner</li>
+                        <li>User must drag to manually resize (no JavaScript method)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CURSOR BEHAVIOR ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🖱️ Cursor Behavior</h2>
+                <p class="section-desc">How cursor changes with different resize values</p>
+            </div>
+            <div class="section-content">
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>Resize Value</th>
+                            <th>Cursor Style</th>
+                            <th>Handle Position</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="value-cell">resize: both</span></td>
+                            <td><strong>se-resize</strong></td>
+                            <td>Bottom-right corner</td>
+                            <td>Diagonal arrow, resize in both directions</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">resize: horizontal</span></td>
+                            <td><strong>e-resize</strong></td>
+                            <td>Right edge</td>
+                            <td>Horizontal arrow, resize width only</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">resize: vertical</span></td>
+                            <td><strong>s-resize</strong></td>
+                            <td>Bottom edge</td>
+                            <td>Vertical arrow, resize height only</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">resize: none</span></td>
+                            <td>Default</td>
+                            <td>No handle</td>
+                            <td>No resize handle appears</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info">
+                    <strong>💡 Tip:</strong> You can customize the cursor appearance using the CSS <strong>cursor</strong> property, though browsers typically handle this automatically.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BROWSER SUPPORT ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🌐 Browser Support</h2>
+                <p class="section-desc">Compatibility across modern browsers</p>
+            </div>
+            <div class="section-content">
+                <p style="color: #555; margin-bottom: 15px;">
+                    The <strong>resize</strong> property is well-supported across all modern browsers. It was introduced in CSS 3 and has excellent compatibility.
+                </p>
+
+                <div class="feature-box">
+                    <strong>✓ Full Support:</strong>
+                    <ul style="margin-top: 8px; margin-left: 20px; line-height: 1.8;">
+                        <li>Chrome 1.0+</li>
+                        <li>Firefox 4.0+</li>
+                        <li>Safari 4.0+</li>
+                        <li>Edge 12.0+</li>
+                        <li>Opera 10.5+</li>
+                        <li>All modern mobile browsers</li>
+                    </ul>
+                </div>
+
+                <div class="warning">
+                    <strong>⚠️ Note:</strong> While the resize property is supported by all modern browsers, the behavior on touch devices (mobile, tablets) is limited. Resize handles don't work well with touch - users will need to use alternative methods or responsive design instead.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLES NOT RECOMMENDED ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>❌ Common Mistakes</h2>
+                <p class="section-desc">What NOT to do with resize property</p>
+            </div>
+            <div class="section-content">
+                <div class="tips-grid">
+                    <div class="tip-card" style="border-left-color: #f44336; background: #ffebee;">
+                        <h4 style="color: #c62828;">❌ Using on inline elements</h4>
+                        <p><strong>Mistake:</strong> <code style="background: white; padding: 2px 6px; border-radius: 3px;">span { resize: both; }</code></p>
+                        <p style="margin-top: 8px;"><strong>Fix:</strong> Use block elements like <code style="background: white; padding: 2px 6px; border-radius: 3px;">div</code> or textarea.</p>
+                    </div>
+
+                    <div class="tip-card" style="border-left-color: #f44336; background: #ffebee;">
+                        <h4 style="color: #c62828;">❌ No overflow property</h4>
+                        <p><strong>Mistake:</strong> <code style="background: white; padding: 2px 6px; border-radius: 3px;">div { resize: both; }</code> (no overflow set)</p>
+                        <p style="margin-top: 8px;"><strong>Fix:</strong> Always add <code style="background: white; padding: 2px 6px; border-radius: 3px;">overflow: auto;</code></p>
+                    </div>
+
+                    <div class="tip-card" style="border-left-color: #f44336; background: #ffebee;">
+                        <h4 style="color: #c62828;">❌ No size constraints</h4>
+                        <p><strong>Mistake:</strong> Users can resize elements to 0px or extremely large sizes.</p>
+                        <p style="margin-top: 8px;"><strong>Fix:</strong> Set <code style="background: white; padding: 2px 6px; border-radius: 3px;">min/max-width/height</code></p>
+                    </div>
+
+                    <div class="tip-card" style="border-left-color: #f44336; background: #ffebee;">
+                        <h4 style="color: #c62828;">❌ Overusing resize</h4>
+                        <p><strong>Mistake:</strong> Making everything resizable can confuse users.</p>
+                        <p style="margin-top: 8px;"><strong>Fix:</strong> Use resize only where it adds value (textareas, editors, widgets).</p>
+                    </div>
+
+                    <div class="tip-card" style="border-left-color: #f44336; background: #ffebee;">
+                        <h4 style="color: #c62828;">❌ Ignoring mobile users</h4>
+                        <p><strong>Mistake:</strong> Resizable elements don't work well on touch devices.</p>
+                        <p style="margin-top: 8px;"><strong>Fix:</strong> Provide alternative resize methods or disable on mobile.</p>
+                    </div>
+
+                    <div class="tip-card" style="border-left-color: #f44336; background: #ffebee;">
+                        <h4 style="color: #c62828;">❌ Poor UX without feedback</h4>
+                        <p><strong>Mistake:</strong> No visual indication that elements are resizable.</p>
+                        <p style="margin-top: 8px;"><strong>Fix:</strong> Add borders, hover effects, or tooltips to indicate resize capability.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SUMMARY TABLE ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>📋 Quick Reference</h2>
+                <p class="section-desc">Summary of all resize values</p>
+            </div>
+            <div class="section-content">
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Horizontal</th>
+                            <th>Vertical</th>
+                            <th>Common Use</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="value-cell">none</span></td>
+                            <td>❌ No</td>
+                            <td>❌ No</td>
+                            <td>Fixed-size forms</td>
+                            <td>Search bars, email inputs</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">both</span></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>Flexible containers</td>
+                            <td>Code editors, widgets</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">horizontal</span></td>
+                            <td>✅ Yes</td>
+                            <td>❌ No</td>
+                            <td>Width-only resize</td>
+                            <td>Columns, data grids</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">vertical</span></td>
+                            <td>❌ No</td>
+                            <td>✅ Yes</td>
+                            <td>Height-only resize</td>
+                            <td>Textareas, comments</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">initial</span></td>
+                            <td>Browser default</td>
+                            <td>Browser default</td>
+                            <td>Default behavior</td>
+                            <td>Native textareas</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">inherit</span></td>
+                            <td>From parent</td>
+                            <td>From parent</td>
+                            <td>Inherited behavior</td>
+                            <td>Child elements</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

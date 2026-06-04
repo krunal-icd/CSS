@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Units - Complete Reference Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .section-desc {
+            font-size: 0.95em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .section-content {
+            padding: 30px;
+        }
+
+        .label {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-radius: 4px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1565c0;
+        }
+
+        .warning {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #c62828;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        .table thead {
+            background: #667eea;
+            color: white;
+        }
+
+        .table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .table tbody tr:hover {
+            background: #f0f7ff;
+        }
+
+        .unit-cell {
+            font-family: 'Courier New', monospace;
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .demo-box {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .demo-box:hover {
+            border-color: #667eea;
+            background: #f0f7ff;
+            transform: translateY(-2px);
+        }
+
+        .demo-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .demo-visual {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .demo-description {
+            font-size: 0.85em;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .comparison-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tip-card {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.95em;
+        }
+
+        .tip-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .tip-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .category-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .unit-example {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .responsive-demo {
+            width: 100%;
+            background: #f8f9fa;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .size-demo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .comparison-grid,
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📏 CSS Units</h1>
+        <p class="subtitle">Complete Reference Guide with Practical Examples</p>
+
+        <!-- ==================== OVERVIEW ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Understanding CSS Units</h2>
+                <p class="section-desc">Choose the right unit for your CSS properties</p>
+            </div>
+            <div class="section-content">
+                <p style="color: #555; font-size: 1em; line-height: 1.8; margin-bottom: 15px;">
+                    CSS provides various units to measure distances, sizes, and other properties. Understanding when to use each unit is crucial for creating responsive, scalable, and maintainable stylesheets. Units fall into two main categories: <strong>absolute</strong> (fixed) and <strong>relative</strong> (contextual).
+                </p>
+
+                <div class="info">
+                    <strong>💡 Key Concept:</strong> Absolute units are fixed sizes, while relative units scale based on parent elements, viewport, or root font size. Modern web design favors relative units for responsiveness.
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <h4>📍 Absolute Units</h4>
+                        <p>Fixed, unchanging measurements regardless of context. Use sparingly in web design.</p>
+                        <p style="margin-top: 10px; color: #999; font-size: 0.9em;">px, in, cm, mm, pt, pc</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>↔️ Relative Units</h4>
+                        <p>Scale based on parent, viewport, or root size. Better for responsive design.</p>
+                        <p style="margin-top: 10px; color: #999; font-size: 0.9em;">em, rem, %, vw, vh, vmin, vmax, ch, ex</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== ABSOLUTE UNITS ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Absolute Units (Fixed)</h2>
+                <p class="section-desc">Physical, unchanging measurements</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Fixed Size</span>
+                <span class="label">Physical</span>
+                <span class="label">Not Responsive</span>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Unit</th>
+                            <th>Description</th>
+                            <th>Equivalent</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="unit-cell">px</span></td>
+                            <td>Pixels</td>
+                            <td>1/96 inch</td>
+                            <td>Borders, small fixed sizes</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">pt</span></td>
+                            <td>Points</td>
+                            <td>1/72 inch</td>
+                            <td>Print stylesheets</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">cm</span></td>
+                            <td>Centimeters</td>
+                            <td>1cm = 96px/2.54</td>
+                            <td>Print layouts</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">mm</span></td>
+                            <td>Millimeters</td>
+                            <td>1mm = 96px/25.4</td>
+                            <td>Print layouts</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">in</span></td>
+                            <td>Inches</td>
+                            <td>1in = 96px</td>
+                            <td>Print layouts</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">pc</span></td>
+                            <td>Picas</td>
+                            <td>1pc = 16px</td>
+                            <td>Typography (print)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="category-title">Pixel Examples</div>
+
+                <div class="demo-grid">
+                    <div class="demo-box">
+                        <div class="demo-title">16px</div>
+                        <div class="demo-visual" style="height: 16px;"></div>
+                        <div class="demo-description">Small text</div>
+                    </div>
+
+                    <div class="demo-box">
+                        <div class="demo-title">32px</div>
+                        <div class="demo-visual" style="height: 32px;"></div>
+                        <div class="demo-description">Medium size</div>
+                    </div>
+
+                    <div class="demo-box">
+                        <div class="demo-title">64px</div>
+                        <div class="demo-visual" style="height: 64px;"></div>
+                        <div class="demo-description">Large size</div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Pixel examples */
+body { font-size: 16px; }
+h1 { font-size: 32px; }
+border { border: 2px solid black; }
+padding { padding: 16px; }
+                </div>
+
+                <div class="warning">
+                    <strong>⚠️ Warning:</strong> Avoid using absolute units for font sizes and layouts in responsive designs. They don't adapt to different screen sizes or user preferences.
+                </div>
+
+                <div class="note">
+                    <strong>💡 Good Use:</strong> Pixels are fine for borders, small decorative sizes, and print stylesheets. For responsive design, prefer relative units.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== FONT-RELATIVE UNITS ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Font-Relative Units (em, rem)</h2>
+                <p class="section-desc">Scale based on font size (root or parent)</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Responsive</span>
+                <span class="label">Font-based</span>
+                <span class="label">Scalable</span>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Unit</th>
+                            <th>Relative To</th>
+                            <th>Calculation</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="unit-cell">em</span></td>
+                            <td>Parent element's font-size</td>
+                            <td>1em = parent font-size</td>
+                            <td>Relative sizing, padding, margins</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">rem</span></td>
+                            <td>Root element's font-size (html)</td>
+                            <td>1rem = root font-size</td>
+                            <td>Global spacing, font sizes</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">ex</span></td>
+                            <td>Height of lowercase 'x'</td>
+                            <td>~0.5em typically</td>
+                            <td>Rare, typography-specific</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">ch</span></td>
+                            <td>Width of character '0'</td>
+                            <td>~0.5em typically</td>
+                            <td>Monospace text width</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="category-title">em vs rem Demonstration</div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <h4>em - Parent Relative</h4>
+                        <div class="unit-example">
+parent: 16px<br>
+child: 1.5em = 24px<br>
+grandchild: 1.5em = 36px
+                        </div>
+                        <p style="color: #666; font-size: 0.85em; margin-top: 10px;">
+                            <strong>Compound:</strong> Each level multiplies by parent size
+                        </p>
+                    </div>
+
+                    <div class="comparison-item">
+                        <h4>rem - Root Relative</h4>
+                        <div class="unit-example">
+root: 16px<br>
+1rem = 16px (always)<br>
+1.5rem = 24px (always)<br>
+2rem = 32px (always)
+                        </div>
+                        <p style="color: #666; font-size: 0.85em; margin-top: 10px;">
+                            <strong>Consistent:</strong> Always relative to root only
+                        </p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Font-relative units */
+html {
+    font-size: 16px; /* 1rem = 16px */
+}
+
+body {
+    font-size: 1rem; /* 16px */
+    margin: 1rem; /* 16px */
+}
+
+.heading {
+    font-size: 2rem; /* 32px */
+    margin-bottom: 1.5rem; /* 24px */
+}
+
+.container {
+    padding: 1rem; /* Always 16px */
+}
+
+/* em example - compounds */
+.parent {
+    font-size: 16px;
+}
+
+.parent .child {
+    font-size: 1.5em; /* 24px */
+}
+
+.parent .child .grandchild {
+    font-size: 1.5em; /* 36px - compounded! */
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 Recommendation:</strong> Use <strong>rem</strong> for most sizing (font-size, padding, margins). Use <strong>em</strong> when you need relative sizing within components.
+                </div>
+
+                <div class="note">
+                    <strong>💡 Pro Tip:</strong> Set root font-size to 10px (or 62.5%) for easier math: 1rem = 10px, 1.5rem = 15px, etc.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== VIEWPORT UNITS ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Viewport Units (vw, vh, vmin, vmax)</h2>
+                <p class="section-desc">Scale based on viewport dimensions</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Viewport-based</span>
+                <span class="label">Responsive</span>
+                <span class="label">Screen-relative</span>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Unit</th>
+                            <th>Description</th>
+                            <th>Calculation</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="unit-cell">vw</span></td>
+                            <td>Viewport Width</td>
+                            <td>1vw = 1% of viewport width</td>
+                            <td>Full-width layouts, responsive fonts</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">vh</span></td>
+                            <td>Viewport Height</td>
+                            <td>1vh = 1% of viewport height</td>
+                            <td>Full-height sections, hero images</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">vmin</span></td>
+                            <td>Minimum of vw/vh</td>
+                            <td>1vmin = 1% of smallest dimension</td>
+                            <td>Responsive scaling that won't overflow</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">vmax</span></td>
+                            <td>Maximum of vw/vh</td>
+                            <td>1vmax = 1% of largest dimension</td>
+                            <td>Responsive scaling for visibility</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="category-title">Viewport Unit Demonstrations</div>
+
+                <div class="responsive-demo">
+                    <p style="margin-bottom: 10px; color: #666; font-weight: 600;">Desktop (1000px width):</p>
+                    <div class="size-demo" style="width: 50vw; height: 40px;">50vw = 500px</div>
+                    <div class="size-demo" style="width: 100vw; height: 40px;">100vw = 1000px</div>
+                </div>
+
+                <div class="responsive-demo">
+                    <p style="margin-bottom: 10px; color: #666; font-weight: 600;">Mobile (375px width):</p>
+                    <div class="size-demo" style="width: 50vw; height: 40px;">50vw = 187.5px</div>
+                    <div class="size-demo" style="width: 80vw; height: 40px;">80vw = 300px</div>
+                </div>
+
+                <div class="code-block">
+/* Viewport units */
+
+/* Full-height section */
+.hero {
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Responsive font size */
+h1 {
+    font-size: 5vw; /* 5% of viewport width */
+}
+
+/* Square that scales */
+.box {
+    width: 30vmin;
+    height: 30vmin;
+}
+
+/* Responsive padding */
+.section {
+    padding: 10vh 5vw;
+}
+                </div>
+
+                <div class="warning">
+                    <strong>⚠️ Note:</strong> On mobile, vh includes browser chrome (address bar, controls) which can cause unexpected behavior. Use <strong>dvh</strong> (dynamic viewport height) in modern browsers.
+                </div>
+
+                <div class="info">
+                    <strong>💡 Best for:</strong> Hero sections, full-screen layouts, responsive typography, and scaling decorative elements.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PERCENTAGE UNITS ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Percentage Units (%)</h2>
+                <p class="section-desc">Relative to parent container</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Parent-relative</span>
+                <span class="label">Context-dependent</span>
+                <span class="label">Most Common</span>
+
+                <p style="color: #555; margin-bottom: 15px;">
+                    Percentages are relative to the parent element. The reference value depends on the property: width/height use parent dimensions, font-size uses parent font-size, margins/padding use parent width, etc.
+                </p>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Percentage Relative To</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="unit-cell">width / max-width</span></td>
+                            <td>Parent's width</td>
+                            <td>50% width = half parent width</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">height / max-height</span></td>
+                            <td>Parent's height</td>
+                            <td>100% height = full parent height</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">margin / padding</span></td>
+                            <td>Parent's width (always!)</td>
+                            <td>10% margin = 10% of parent width</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">font-size</span></td>
+                            <td>Parent's font-size</td>
+                            <td>150% font-size = 1.5x parent</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">line-height</span></td>
+                            <td>Element's own font-size</td>
+                            <td>150% line-height = 1.5x font size</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="category-title">Percentage Examples</div>
+
+                <div class="code-block">
+/* Common percentage patterns */
+
+/* Responsive columns */
+.container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.column {
+    width: 33.333%;
+    float: left;
+}
+
+/* Centered with percentage */
+.centered {
+    width: 80%;
+    margin: 0 auto; /* centers automatically */
+}
+
+/* Full-width sections */
+.section {
+    width: 100%;
+}
+
+/* Percentage padding (creates squares) */
+.square {
+    width: 100px;
+    padding-bottom: 100%; /* 1:1 aspect ratio */
+}
+
+/* Font scaling */
+.large-text {
+    font-size: 150%; /* 1.5x parent */
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 Key Insight:</strong> Margins and padding always calculate percentage relative to parent <strong>width</strong>, even for top/bottom margins! This can be useful for maintaining aspect ratios.
+                </div>
+
+                <div class="note">
+                    <strong>💡 Pro Tip:</strong> Use 100% for full-width layouts and percentage-based columns for flexible grids.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== COMPARISON TABLE ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>📊 Unit Comparison & When to Use</h2>
+                <p class="section-desc">Quick reference for choosing units</p>
+            </div>
+            <div class="section-content">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Unit</th>
+                            <th>Type</th>
+                            <th>Responsive</th>
+                            <th>Best Use</th>
+                            <th>Avoid When</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="unit-cell">px</span></td>
+                            <td>Absolute</td>
+                            <td>❌ No</td>
+                            <td>Borders, shadows, small fixed sizes</td>
+                            <td>Font sizes, main layouts</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">rem</span></td>
+                            <td>Relative</td>
+                            <td>✅ Yes</td>
+                            <td>Font sizes, spacing, margins</td>
+                            <td>Component-specific sizing</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">em</span></td>
+                            <td>Relative</td>
+                            <td>✅ Yes</td>
+                            <td>Component-relative sizing</td>
+                            <td>Global sizing (causes compounds)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">%</span></td>
+                            <td>Relative</td>
+                            <td>✅ Yes</td>
+                            <td>Width, layout columns, flexibility</td>
+                            <td>Precise fixed dimensions</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">vw/vh</span></td>
+                            <td>Relative</td>
+                            <td>✅ Yes</td>
+                            <td>Full-screen sections, hero images</td>
+                            <td>Small components, mobile (vh)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">vmin/vmax</span></td>
+                            <td>Relative</td>
+                            <td>✅ Yes</td>
+                            <td>Responsive scaling, squares</td>
+                            <td>Critical precision layouts</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ==================== PRACTICAL EXAMPLES ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🎯 Practical Examples & Patterns</h2>
+                <p class="section-desc">Real-world CSS unit usage</p>
+            </div>
+            <div class="section-content">
+
+                <div class="category-title">1. Responsive Typography Scale</div>
+                <div class="code-block">
+/* Scale fonts responsively */
+html {
+    font-size: 16px;
+}
+
+h1 {
+    font-size: 2.5rem; /* 40px at base */
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 2rem; /* 32px at base */
+}
+
+body {
+    font-size: 1rem; /* 16px */
+    line-height: 1.6rem; /* Readable line height */
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px; /* Smaller on mobile */
+    }
+    /* All rem-based sizes scale down automatically */
+}
+                </div>
+
+                <div class="category-title">2. Flexible Layout Grid</div>
+                <div class="code-block">
+/* Percentage-based responsive grid */
+.container {
+    width: 90%; /* Leaves 5% margin each side */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.column {
+    width: 48%; /* Two columns with gap */
+    float: left;
+    margin-right: 4%;
+}
+
+.column:nth-child(even) {
+    margin-right: 0;
+}
+
+@media (max-width: 768px) {
+    .column {
+        width: 100%; /* Stack on mobile */
+        margin-right: 0;
+    }
+}
+                </div>
+
+                <div class="category-title">3. Hero Section with Viewport Units</div>
+                <div class="code-block">
+/* Full-screen hero with responsive text */
+.hero {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero h1 {
+    font-size: 8vw; /* Scale with viewport */
+    max-width: 90vw;
+}
+
+.hero p {
+    font-size: 3vw;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 6vw;
+    }
+}
+                </div>
+
+                <div class="category-title">4. Component Scaling with em</div>
+                <div class="code-block">
+/* Component that scales with em */
+.button {
+    font-size: 1rem;
+    padding: 0.75em 1.5em; /* Scales with font-size */
+    border-radius: 0.25em;
+}
+
+.button.small {
+    font-size: 0.875rem; /* Padding scales automatically */
+}
+
+.button.large {
+    font-size: 1.25rem; /* Padding scales automatically */
+}
+
+/* All button sizes scale proportionally */
+                </div>
+
+                <div class="category-title">5. Spacing System with rem</div>
+                <div class="code-block">
+/* Consistent spacing using rem */
+html {
+    --spacing-xs: 0.5rem; /* 8px */
+    --spacing-sm: 1rem;    /* 16px */
+    --spacing-md: 1.5rem;  /* 24px */
+    --spacing-lg: 2rem;    /* 32px */
+    --spacing-xl: 3rem;    /* 48px */
+}
+
+.section {
+    padding: var(--spacing-lg);
+}
+
+.card {
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-md);
+}
+
+.button {
+    padding: var(--spacing-sm) var(--spacing-md);
+}
+                </div>
+
+                <div class="category-title">6. Aspect Ratio with Percentage</div>
+                <div class="code-block">
+/* Maintain aspect ratio with padding-bottom */
+.container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 ratio */
+}
+
+.content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Create perfect squares */
+.square {
+    width: 200px;
+    height: 200px;
+}
+
+/* Responsive square (always 1:1) */
+.responsive-square {
+    width: 30%;
+    aspect-ratio: 1; /* Modern browsers */
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BEST PRACTICES ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>✨ Best Practices & Guidelines</h2>
+                <p class="section-desc">How to effectively use CSS units</p>
+            </div>
+            <div class="section-content">
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>1. Use rem for Global Sizing</h4>
+                        <p>Set base font-size on html element, then use rem for all spacing, font sizes, and layout dimensions.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>2. Use em for Components</h4>
+                        <p>Build self-contained components with em so they scale proportionally when font-size changes.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>3. Use % for Layouts</h4>
+                        <p>Use percentages for widths, columns, and flexible layouts that adapt to container size.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>4. Minimize px Usage</h4>
+                        <p>Reserve pixels for small fixed sizes like borders, shadows, and outlines. Avoid for fonts and layouts.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>5. Viewport Units for Heroes</h4>
+                        <p>Use vw/vh for full-screen sections and dramatic layouts. Avoid on mobile for vh.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>6. Combine Units Strategically</h4>
+                        <p>Mix units for different purposes: rem for spacing, % for layout, em for components.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>7. Test Responsive Scaling</h4>
+                        <p>Test your designs at different font sizes and viewport widths to ensure proper scaling.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>8. Document Your Choices</h4>
+                        <p>Maintain a style guide documenting which units to use for different scenarios.</p>
+                    </div>
+                </div>
+
+                <div class="info">
+                    <strong>🎯 Modern Approach:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px; line-height: 1.8;">
+                        <li>Use <strong>rem</strong> for font sizes and global spacing</li>
+                        <li>Use <strong>%</strong> for layout widths and flex containers</li>
+                        <li>Use <strong>em</strong> for component-level sizing</li>
+                        <li>Use <strong>vw/vh</strong> for full-screen elements</li>
+                        <li>Use <strong>px</strong> only for borders, shadows, and 1-2px elements</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CONVERSION REFERENCE ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🔄 Unit Conversion Reference</h2>
+                <p class="section-desc">Quick conversion guide</p>
+            </div>
+            <div class="section-content">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Formula</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="unit-cell">px</span></td>
+                            <td><span class="unit-cell">rem</span></td>
+                            <td>pixels ÷ 16</td>
+                            <td>24px = 1.5rem</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">rem</span></td>
+                            <td><span class="unit-cell">px</span></td>
+                            <td>rem × 16</td>
+                            <td>1.5rem = 24px</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">px</span></td>
+                            <td><span class="unit-cell">em</span></td>
+                            <td>pixels ÷ parent font-size</td>
+                            <td>24px ÷ 16px = 1.5em</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">%</span></td>
+                            <td><span class="unit-cell">px</span></td>
+                            <td>% × parent size ÷ 100</td>
+                            <td>50% of 800px = 400px</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">vw</span></td>
+                            <td><span class="unit-cell">px</span></td>
+                            <td>vw × viewport width ÷ 100</td>
+                            <td>50vw at 1000px = 500px</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+/* Common conversions at 16px base font-size */
+1rem = 16px
+0.5rem = 8px
+1.5rem = 24px
+2rem = 32px
+3rem = 48px
+
+/* Quick visual scale */
+12px = 0.75rem
+14px = 0.875rem
+16px = 1rem
+18px = 1.125rem
+20px = 1.25rem
+24px = 1.5rem
+32px = 2rem
+48px = 3rem
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BROWSER SUPPORT ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🌐 Browser Support</h2>
+                <p class="section-desc">Compatibility for CSS units</p>
+            </div>
+            <div class="section-content">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Unit</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                            <th>IE 11</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="unit-cell">px, %, em, rem</span></td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">vw, vh, vmin</span></td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                            <td>✅ IE9+</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">vmax</span></td>
+                            <td>✅ All</td>
+                            <td>✅ 26+</td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">ch, ex</span></td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td><span class="unit-cell">cm, mm, in, pt, pc</span></td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                            <td>✅ All</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info">
+                    <strong>✅ Safe to Use:</strong> Pixels, rem, em, %, and basic viewport units (vw, vh, vmin) work in all modern browsers. Avoid outdated units for modern projects.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CHEAT SHEET ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>📝 CSS Units Cheat Sheet</h2>
+                <p class="section-desc">Quick reference for all units</p>
+            </div>
+            <div class="section-content">
+                <div class="code-block">
+ABSOLUTE UNITS (Fixed)
+px  - Pixels (1px = 1/96 inch)
+pt  - Points (1pt = 1/72 inch) [Print]
+cm  - Centimeters
+mm  - Millimeters
+in  - Inches
+pc  - Picas
+
+RELATIVE UNITS (Responsive)
+em   - Relative to parent font-size
+rem  - Relative to root (html) font-size
+%    - Relative to parent element
+vw   - 1% of viewport width
+vh   - 1% of viewport height
+vmin - 1% of smallest viewport dimension
+vmax - 1% of largest viewport dimension
+ch   - Width of '0' character (monospace)
+ex   - Height of 'x' character
+
+QUICK RULES
+• Use rem for global sizing
+• Use em for component sizing
+• Use % for flexible layouts
+• Use vw/vh for full-screen elements
+• Minimize px for responsive design
+
+BASE CONVERSIONS (16px = 1rem)
+8px = 0.5rem   12px = 0.75rem   14px = 0.875rem
+16px = 1rem    18px = 1.125rem  20px = 1.25rem
+24px = 1.5rem  32px = 2rem      48px = 3rem
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

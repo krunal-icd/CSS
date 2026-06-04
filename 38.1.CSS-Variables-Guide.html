@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Variables: var() and Custom Properties - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --text-color: #333;
+            --bg-light: #f8f9fa;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --transition-speed: 0.3s;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .section-desc {
+            font-size: 0.95em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .section-content {
+            padding: 30px;
+        }
+
+        .label {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-radius: 4px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1565c0;
+        }
+
+        .warning {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #c62828;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        .table thead {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .table tbody tr:hover {
+            background: #f0f7ff;
+        }
+
+        .var-cell {
+            font-family: 'Courier New', monospace;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin: 20px 0;
+        }
+
+        .demo-box {
+            background: var(--bg-light);
+            border: 2px solid #e0e0e0;
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .demo-box:hover {
+            border-color: var(--primary-color);
+            background: #f0f7ff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .demo-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .demo-visual {
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .demo-description {
+            font-size: 0.85em;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tip-card {
+            background: #f0f7ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.95em;
+        }
+
+        .tip-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .tip-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: var(--bg-light);
+            border: 2px solid #e0e0e0;
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+        }
+
+        .comparison-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .theme-selector {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            padding: var(--spacing-sm);
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .theme-btn:hover {
+            border-color: var(--primary-color);
+            background: var(--bg-light);
+        }
+
+        .theme-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Light Theme */
+        body.light-theme {
+            --text-color: #333;
+            --bg-light: #f8f9fa;
+        }
+
+        /* Dark Theme */
+        body.dark-theme {
+            --text-color: #e0e0e0;
+            --bg-light: #2a2a2a;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-theme .section {
+            background: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .code-block {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .demo-box {
+            background: #333;
+            border-color: #444;
+        }
+
+        body.dark-theme .comparison-item {
+            background: #333;
+            border-color: #444;
+        }
+
+        /* High Contrast Theme */
+        body.highcontrast-theme {
+            --primary-color: #0000ff;
+            --secondary-color: #0066cc;
+            --text-color: #000;
+            --bg-light: #ffff00;
+        }
+
+        body.highcontrast-theme .section {
+            background: white;
+            border: 3px solid black;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <div class="container">
+        <h1>🎨 CSS Variables</h1>
+        <p class="subtitle">var() and Custom Properties Complete Guide</p>
+
+        <!-- ==================== OVERVIEW ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>What are CSS Variables (Custom Properties)?</h2>
+                <p class="section-desc">Reusable values defined in CSS that can be updated dynamically</p>
+            </div>
+            <div class="section-content">
+                <p style="color: #555; font-size: 1em; line-height: 1.8; margin-bottom: 15px;">
+                    CSS Variables (also called Custom Properties) are user-defined values that can be reused throughout your stylesheets. They are defined with a double hyphen prefix (<span style="font-family: monospace; color: var(--secondary-color); font-weight: 600;">--</span>) and accessed using the <span style="font-family: monospace; color: var(--secondary-color); font-weight: 600;">var()</span> function. They enable maintainable, scalable, and dynamically updateable stylesheets.
+                </p>
+
+                <div class="info">
+                    <strong>💡 Key Benefits:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px; line-height: 1.8;">
+                        <li>DRY Principle - Define once, use everywhere</li>
+                        <li>Dynamic Updates - Change variables with JavaScript</li>
+                        <li>Responsive Theming - Switch themes easily</li>
+                        <li>Better Maintainability - Update one place, affects everywhere</li>
+                        <li>Scope Support - Different variables for different elements</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+/* Define CSS variables in :root (global scope) */
+:root {
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --spacing: 1rem;
+    --border-radius: 0.5rem;
+}
+
+/* Use CSS variables with var() function */
+button {
+    background-color: var(--primary-color);
+    padding: var(--spacing);
+    border-radius: var(--border-radius);
+}
+
+/* Fallback value if variable doesn't exist */
+p {
+    color: var(--text-color, #333);
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Syntax:</strong> Variables use <span style="font-family: monospace; background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">--variable-name: value;</span> to define and <span style="font-family: monospace; background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">var(--variable-name)</span> to use.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BASICS ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>CSS Variables Basics</h2>
+                <p class="section-desc">Definition, usage, and scope</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Definition</span>
+                <span class="label">Usage</span>
+                <span class="label">Scope</span>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="var-cell">Definition</span></td>
+                            <td>Declare custom property with -- prefix</td>
+                            <td><span style="font-family: monospace;">--color: blue;</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="var-cell">Usage</span></td>
+                            <td>Reference with var() function</td>
+                            <td><span style="font-family: monospace;">color: var(--color);</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="var-cell">Fallback</span></td>
+                            <td>Provide default if variable undefined</td>
+                            <td><span style="font-family: monospace;">var(--color, red)</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="var-cell">Global Scope</span></td>
+                            <td>Define in :root for all elements</td>
+                            <td><span style="font-family: monospace;">:root { --var: value; }</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="var-cell">Local Scope</span></td>
+                            <td>Define in specific selector</td>
+                            <td><span style="font-family: monospace;">.component { --var: value; }</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="var-cell">Nested Variables</span></td>
+                            <td>Use variables in variable values</td>
+                            <td><span style="font-family: monospace;">--padding: calc(var(--space) * 2);</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+/* Global scope - accessible everywhere */
+:root {
+    --primary: blue;
+    --secondary: green;
+    --spacing: 1rem;
+}
+
+/* Local scope - only in .button */
+.button {
+    --bg: var(--primary);
+    --padding: var(--spacing);
+}
+
+/* Nested scope - only in .button:hover */
+.button:hover {
+    --bg: var(--secondary);
+}
+
+/* Using variables */
+.button {
+    background: var(--bg);
+    padding: var(--padding);
+}
+
+/* Fallback value */
+.text {
+    color: var(--custom-color, #333); /* Uses #333 if --custom-color undefined */
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 Scoping Rules:</strong> Variables defined in :root are global. Variables defined in selectors are local to that selector and inherited by children. Child scopes override parent scopes.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== ADVANCED FEATURES ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Advanced Features</h2>
+                <p class="section-desc">Powerful techniques with CSS variables</p>
+            </div>
+            <div class="section-content">
+                <span class="label">Advanced</span>
+                <span class="label">Dynamic</span>
+                <span class="label">Powerful</span>
+
+                <div class="category-title" style="font-size: 1.3em; font-weight: 600; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--primary-color);">1. Fallback Values</div>
+
+                <div class="code-block">
+/* Single fallback */
+color: var(--text-color, #333);
+
+/* Multiple fallbacks (first valid is used) */
+color: var(--primary, var(--secondary, var(--default, blue)));
+
+/* Practical example */
+.card {
+    background: var(--card-bg, var(--bg-light, white));
+    padding: var(--card-padding, 1rem);
+}
+                </div>
+
+                <div class="category-title" style="font-size: 1.3em; font-weight: 600; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--primary-color); margin-top: 30px;">2. calc() with Variables</div>
+
+                <div class="code-block">
+:root {
+    --base-size: 1rem;
+    --multiplier: 2;
+}
+
+.heading {
+    font-size: calc(var(--base-size) * var(--multiplier)); /* 2rem */
+    padding: calc(var(--base-size) * 1.5); /* 1.5rem */
+    margin: calc(var(--base-size) + 0.5rem); /* 1.5rem */
+}
+                </div>
+
+                <div class="category-title" style="font-size: 1.3em; font-weight: 600; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--primary-color); margin-top: 30px;">3. Nested Variables</div>
+
+                <div class="code-block">
+:root {
+    --base-color: #667eea;
+    --hover-color: #764ba2;
+    --text: white;
+    
+    /* Composed variables */
+    --button-bg: var(--base-color);
+    --button-hover: var(--hover-color);
+    --button-text: var(--text);
+}
+
+button {
+    background: var(--button-bg);
+    color: var(--button-text);
+}
+
+button:hover {
+    background: var(--button-hover);
+}
+                </div>
+
+                <div class="category-title" style="font-size: 1.3em; font-weight: 600; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--primary-color); margin-top: 30px;">4. JavaScript Integration</div>
+
+                <div class="code-block">
+/* Get CSS variable value */
+const primaryColor = getComputedStyle(document.documentElement)
+    .getPropertyValue('--primary-color')
+    .trim();
+
+/* Set CSS variable value */
+document.documentElement.style.setProperty('--primary-color', '#ff0000');
+
+/* Change for specific element */
+const element = document.querySelector('.button');
+element.style.setProperty('--button-size', '2rem');
+
+/* Toggle theme */
+function toggleDarkMode() {
+    const isDark = document.body.classList.toggle('dark-theme');
+    if (isDark) {
+        document.documentElement.style.setProperty('--text-color', '#fff');
+        document.documentElement.style.setProperty('--bg-color', '#000');
+    } else {
+        document.documentElement.style.setProperty('--text-color', '#333');
+        document.documentElement.style.setProperty('--bg-color', '#fff');
+    }
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 JavaScript Power:</strong> Use getComputedStyle() and setProperty() to read and update CSS variables dynamically. Perfect for themes, animations, and responsive updates.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== THEMING EXAMPLE ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🎨 Interactive Theme Switcher</h2>
+                <p class="section-desc">Switch between themes using CSS variables</p>
+            </div>
+            <div class="section-content">
+                <p style="color: #555; margin-bottom: 15px;">Click a button to switch themes:</p>
+
+                <div class="theme-selector">
+                    <button class="theme-btn active" onclick="switchTheme('light-theme')">☀️ Light</button>
+                    <button class="theme-btn" onclick="switchTheme('dark-theme')">🌙 Dark</button>
+                    <button class="theme-btn" onclick="switchTheme('highcontrast-theme')">♿ High Contrast</button>
+                </div>
+
+                <div class="demo-grid">
+                    <div class="demo-box">
+                        <div class="demo-title">Using Variables</div>
+                        <div class="demo-visual"></div>
+                        <div class="demo-description">
+                            This box uses CSS variables for colors and spacing. Change the theme and it updates instantly!
+                        </div>
+                    </div>
+
+                    <div class="demo-box">
+                        <div class="demo-title">Consistent Design</div>
+                        <div class="demo-visual"></div>
+                        <div class="demo-description">
+                            All elements use the same variables, ensuring consistency across the entire design system.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Define multiple themes */
+:root {
+    /* Light theme (default) */
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --text-color: #333;
+    --bg-light: #f8f9fa;
+}
+
+body.dark-theme {
+    --primary-color: #bb86fc;
+    --secondary-color: #bb86fc;
+    --text-color: #e0e0e0;
+    --bg-light: #2a2a2a;
+}
+
+body.highcontrast-theme {
+    --primary-color: #0000ff;
+    --secondary-color: #0066cc;
+    --text-color: #000;
+    --bg-light: #ffff00;
+}
+
+/* Use variables everywhere */
+.element {
+    background: var(--bg-light);
+    color: var(--text-color);
+    border: 2px solid var(--primary-color);
+}
+
+/* JavaScript to switch themes */
+function switchTheme(theme) {
+    document.body.className = theme;
+}
+                </div>
+
+                <script>
+                    function switchTheme(theme) {
+                        document.body.className = theme;
+                        document.querySelectorAll('.theme-btn').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        event.target.classList.add('active');
+                    }
+                </script>
+            </div>
+        </div>
+
+        <!-- ==================== COMPARISON TABLE ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>CSS Variables vs Preprocessor Variables</h2>
+                <p class="section-desc">CSS custom properties vs SASS/LESS variables</p>
+            </div>
+            <div class="section-content">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>CSS Variables</th>
+                            <th>SASS/LESS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Runtime Updates</strong></td>
+                            <td>✅ Yes (JavaScript)</td>
+                            <td>❌ No (compile-time)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cascade/Scope</strong></td>
+                            <td>✅ Yes (CSS cascade)</td>
+                            <td>❌ No (lexical scope)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Browser Native</strong></td>
+                            <td>✅ Yes (no build needed)</td>
+                            <td>❌ No (requires compilation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Inheritance</strong></td>
+                            <td>✅ Yes (inherited by children)</td>
+                            <td>❌ No (lexical scope only)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Debugging</strong></td>
+                            <td>✅ Visible in DevTools</td>
+                            <td>❌ Not visible (compiled away)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Complexity</strong></td>
+                            <td>✅ Simple syntax</td>
+                            <td>❌ More complex features</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info">
+                    <strong>💡 Recommendation:</strong> Use CSS Variables for design tokens (colors, spacing). Use SASS/LESS for complex logic and operations. Many projects use both!
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PRACTICAL PATTERNS ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🎯 Practical Patterns</h2>
+                <p class="section-desc">Real-world CSS variable usage patterns</p>
+            </div>
+            <div class="section-content">
+
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #667eea; margin-bottom: 15px; font-size: 1.2em;">1. Design Tokens System</h3>
+                    <div class="code-block">
+:root {
+    /* Colors */
+    --color-primary: #667eea;
+    --color-secondary: #764ba2;
+    --color-success: #4caf50;
+    --color-danger: #f44336;
+    --color-warning: #ff9800;
+    
+    /* Spacing */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    
+    /* Typography */
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.125rem;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+    
+    /* Border radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+}
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #667eea; margin-bottom: 15px; font-size: 1.2em;">2. Component-Level Variables</h3>
+                    <div class="code-block">
+.button {
+    --btn-bg: var(--color-primary);
+    --btn-color: white;
+    --btn-padding: var(--space-sm) var(--space-md);
+    --btn-radius: var(--radius-md);
+    
+    background: var(--btn-bg);
+    color: var(--btn-color);
+    padding: var(--btn-padding);
+    border-radius: var(--btn-radius);
+}
+
+.button:hover {
+    --btn-bg: var(--color-secondary);
+}
+
+.button.danger {
+    --btn-bg: var(--color-danger);
+}
+
+.button.small {
+    --btn-padding: var(--space-xs) var(--space-sm);
+    --btn-radius: var(--radius-sm);
+}
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #667eea; margin-bottom: 15px; font-size: 1.2em;">3. Responsive Variables</h3>
+                    <div class="code-block">
+:root {
+    --font-size-h1: 2.5rem;
+    --font-size-h2: 2rem;
+    --font-size-body: 1rem;
+    --spacing: 1rem;
+}
+
+@media (max-width: 768px) {
+    :root {
+        --font-size-h1: 1.75rem;
+        --font-size-h2: 1.5rem;
+        --font-size-body: 0.95rem;
+        --spacing: 0.75rem;
+    }
+}
+
+h1 { font-size: var(--font-size-h1); }
+h2 { font-size: var(--font-size-h2); }
+p { font-size: var(--font-size-body); }
+.section { padding: var(--spacing); }
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #667eea; margin-bottom: 15px; font-size: 1.2em;">4. Animated Variables</h3>
+                    <div class="code-block">
+:root {
+    --hue: 0;
+    --rotation: 0deg;
+}
+
+.animated-box {
+    background: hsl(var(--hue), 100%, 50%);
+    transform: rotate(var(--rotation));
+    transition: all 1s ease;
+}
+
+.animated-box:hover {
+    --hue: 200;
+    --rotation: 360deg;
+}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================== BEST PRACTICES ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>✨ Best Practices & Guidelines</h2>
+                <p class="section-desc">How to effectively use CSS variables</p>
+            </div>
+            <div class="section-content">
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>1. Use Consistent Naming</h4>
+                        <p>Use kebab-case and descriptive names: <code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">--primary-color</code>, <code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">--space-lg</code></p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>2. Define in :root for Global</h4>
+                        <p>Put design tokens in :root for accessibility across all selectors. Use local scope for component-specific overrides.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>3. Group by Category</h4>
+                        <p>Organize variables by type: colors, spacing, typography, shadows. Makes maintenance easier.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>4. Use with Fallbacks</h4>
+                        <p>Always provide fallback values: <code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">var(--color, #333)</code> for better error handling.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>5. Document Your System</h4>
+                        <p>Create a living styleguide documenting all available variables and their use cases.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>6. Avoid Over-Nesting</h4>
+                        <p>Don't nest variables excessively. Keep one or two levels maximum for readability.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>7. Use calc() for Math</h4>
+                        <p>Combine variables with calc() for responsive sizing: <code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">calc(var(--base) * 2)</code></p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>8. Test Browser Support</h4>
+                        <p>CSS Variables are well-supported in modern browsers. Provide fallbacks for IE11 if needed.</p>
+                    </div>
+                </div>
+
+                <div class="note">
+                    <strong>💡 Naming Convention:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px; line-height: 1.8;">
+                        <li><code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">--component-property-state</code> for components</li>
+                        <li><code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">--semantic-level</code> for design tokens</li>
+                        <li><code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">--{color,space,font,shadow}-{level}</code> for utilities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BROWSER SUPPORT ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🌐 Browser Support & Compatibility</h2>
+                <p class="section-desc">CSS Variables support across browsers</p>
+            </div>
+            <div class="section-content">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Browser</th>
+                            <th>Support</th>
+                            <th>Version</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Chrome</td>
+                            <td>✅ Full</td>
+                            <td>49+</td>
+                            <td>Excellent support</td>
+                        </tr>
+                        <tr>
+                            <td>Firefox</td>
+                            <td>✅ Full</td>
+                            <td>31+</td>
+                            <td>Excellent support</td>
+                        </tr>
+                        <tr>
+                            <td>Safari</td>
+                            <td>✅ Full</td>
+                            <td>9.1+</td>
+                            <td>Excellent support</td>
+                        </tr>
+                        <tr>
+                            <td>Edge</td>
+                            <td>✅ Full</td>
+                            <td>15+</td>
+                            <td>Excellent support</td>
+                        </tr>
+                        <tr>
+                            <td>Opera</td>
+                            <td>✅ Full</td>
+                            <td>36+</td>
+                            <td>Excellent support</td>
+                        </tr>
+                        <tr>
+                            <td>IE 11</td>
+                            <td>❌ No</td>
+                            <td>-</td>
+                            <td>Use fallbacks or PostCSS</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="warning">
+                    <strong>⚠️ IE 11 Compatibility:</strong> CSS Variables are not supported in IE 11. Use PostCSS or provide alternative stylesheets for older browser support.
+                </div>
+
+                <div class="info">
+                    <strong>✅ Good News:</strong> All modern browsers (Chrome, Firefox, Safari, Edge) support CSS Variables fully. IE11 is the main exception.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== QUICK REFERENCE ==================== -->
+        <div class="section">
+            <div class="section-header">
+                <h2>📋 Quick Reference</h2>
+                <p class="section-desc">CSS Variables cheat sheet</p>
+            </div>
+            <div class="section-content">
+                <div class="code-block">
+/* ========== DEFINE ========== */
+:root {
+    --color-primary: #667eea;
+    --size: 16px;
+}
+
+/* ========== USE ========== */
+.element {
+    color: var(--color-primary);
+    font-size: var(--size);
+}
+
+/* ========== FALLBACK ========== */
+color: var(--undefined, #333);
+
+/* ========== NESTED ========== */
+:root {
+    --base: 1rem;
+    --double: calc(var(--base) * 2);
+}
+
+/* ========== LOCAL SCOPE ========== */
+.component {
+    --local-var: value;
+}
+
+/* ========== JAVASCRIPT ========== */
+/* Get */
+const value = getComputedStyle(el).getPropertyValue('--var');
+
+/* Set */
+el.style.setProperty('--var', 'newValue');
+
+/* ========== RESPONSIVE ========== */
+:root {
+    --font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    :root {
+        --font-size: 0.875rem;
+    }
+}
+
+/* ========== THEMES ========== */
+body.dark-theme {
+    --bg: #000;
+    --text: #fff;
+}
+
+body.light-theme {
+    --bg: #fff;
+    --text: #000;
+}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

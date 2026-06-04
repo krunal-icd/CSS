@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Cursor Properties - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .example-section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .example-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .example-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .example-desc {
+            font-size: 0.95em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .example-content {
+            padding: 30px;
+        }
+
+        .label {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-radius: 4px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1565c0;
+        }
+
+        /* ==================== EXAMPLE 1: BUTTON STATES ==================== */
+        .button-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .demo-button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-disabled {
+            background: #ccc;
+            color: #666;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-disabled:hover {
+            background: #ccc;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .btn-loading {
+            cursor: wait;
+            opacity: 0.8;
+        }
+
+        /* ==================== EXAMPLE 2: INTERACTIVE LIST ==================== */
+        .interactive-list {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .list-item {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-item:hover {
+            background: #f8f9fa;
+        }
+
+        .list-item.draggable {
+            cursor: grab;
+        }
+
+        .list-item.dragging {
+            cursor: grabbing;
+            background: #e8f4f8;
+            opacity: 0.7;
+        }
+
+        .list-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .list-content {
+            flex: 1;
+        }
+
+        .list-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .list-subtitle {
+            font-size: 0.85em;
+            color: #999;
+        }
+
+        .list-icon {
+            font-size: 1.2em;
+            cursor: help;
+        }
+
+        /* ==================== EXAMPLE 3: DATA TABLE ==================== */
+        .table-wrapper {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: auto;
+            margin: 20px 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+        }
+
+        .data-table thead {
+            background: #667eea;
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+
+        .data-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            user-select: none;
+            cursor: default;
+        }
+
+        .data-table th.sortable {
+            cursor: pointer;
+        }
+
+        .data-table th.sortable:hover {
+            background: #764ba2;
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .data-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .data-table tbody tr {
+            cursor: default;
+        }
+
+        .data-table tbody tr.clickable {
+            cursor: pointer;
+        }
+
+        .column-resizer {
+            position: absolute;
+            width: 6px;
+            height: 100%;
+            cursor: col-resize;
+            background: transparent;
+            right: -3px;
+            top: 0;
+        }
+
+        /* ==================== EXAMPLE 4: FORM WITH STATES ==================== */
+        .form-demo {
+            max-width: 500px;
+            margin: 20px 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            cursor: default;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-input[type="text"],
+        .form-input[type="email"],
+        textarea {
+            cursor: text;
+        }
+
+        .form-input:disabled {
+            cursor: not-allowed;
+            background: #f0f0f0;
+            color: #999;
+        }
+
+        .form-input[readonly] {
+            cursor: default;
+            background: #f8f9fa;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input {
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+        }
+
+        .help-text {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+            cursor: help;
+        }
+
+        /* ==================== EXAMPLE 5: DRAWING CANVAS ==================== */
+        .canvas-container {
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tool-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tool-btn {
+            padding: 10px 16px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tool-btn:hover {
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+
+        .tool-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .canvas-demo {
+            width: 100%;
+            height: 250px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 1em;
+            cursor: default;
+        }
+
+        .canvas-demo.pen-mode {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="3" fill="%23667eea"/></svg>') 10 10, auto;
+        }
+
+        .canvas-demo.eraser-mode {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect x="5" y="5" width="10" height="10" fill="%23667eea"/></svg>') 10 10, auto;
+        }
+
+        .canvas-demo.picker-mode {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" stroke="%23667eea" stroke-width="1" fill="none"/></svg>') 8 8, auto;
+        }
+
+        /* ==================== EXAMPLE 6: DRAG & DROP ==================== */
+        .drag-drop-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .drop-zone {
+            background: #f8f9fa;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 200px;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .drop-zone.drag-over {
+            border-color: #667eea;
+            background: #f0f7ff;
+        }
+
+        .draggable-item {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: grab;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .draggable-item:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .draggable-item.dragging {
+            cursor: grabbing;
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+
+        .item-icon {
+            margin-right: 10px;
+        }
+
+        /* ==================== EXAMPLE 7: IMAGE EDITOR ==================== */
+        .editor-toolbar {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #ddd;
+            border-radius: 6px 6px 0 0;
+            flex-wrap: wrap;
+        }
+
+        .editor-tool {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.1em;
+        }
+
+        .editor-tool:hover {
+            background: #e8f4f8;
+            border-color: #667eea;
+        }
+
+        .editor-tool.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: default;
+            margin-top: 15px;
+        }
+
+        .image-preview.zoom-in-mode {
+            cursor: zoom-in;
+        }
+
+        .image-preview.zoom-out-mode {
+            cursor: zoom-out;
+        }
+
+        .image-preview.grab-mode {
+            cursor: grab;
+        }
+
+        .image-preview.grab-mode.grabbing {
+            cursor: grabbing;
+        }
+
+        /* ==================== EXAMPLE 8: CONTEXT MENU ==================== */
+        .context-demo {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8f4f8 100%);
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-weight: 600;
+            cursor: context-menu;
+            margin: 20px 0;
+        }
+
+        /* ==================== TIPS SECTION ==================== */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tip-card {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.95em;
+        }
+
+        .tip-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .tip-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .drag-drop-container {
+                grid-template-columns: 1fr;
+            }
+
+            .button-demo {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖱️ CSS Cursor Properties</h1>
+        <p class="subtitle">Real-World Practical Examples & Use Cases</p>
+
+        <!-- ==================== EXAMPLE 1: BUTTON STATES ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>1. Interactive Button States</h2>
+                <p class="example-desc">Different cursor feedback for button interaction states</p>
+            </div>
+            <div class="example-content">
+                <span class="label">cursor: pointer</span>
+                <span class="label">cursor: wait</span>
+                <span class="label">cursor: not-allowed</span>
+
+                <p style="color: #555; margin-bottom: 15px;">
+                    Buttons should have different cursors depending on their state. Clickable buttons show pointer, loading shows wait, and disabled shows not-allowed.
+                </p>
+
+                <div class="button-demo">
+                    <button class="demo-button btn-primary">✓ Click Me</button>
+                    <button class="demo-button btn-danger">✗ Delete</button>
+                    <button class="demo-button btn-primary btn-loading">⏳ Loading...</button>
+                    <button class="demo-button btn-disabled">✗ Disabled</button>
+                </div>
+
+                <div class="code-block">
+/* Button cursor states */
+button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+button.loading {
+    cursor: wait;
+}
+
+button:active {
+    cursor: pointer;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Best Practice:</strong> Always use <strong>cursor: pointer</strong> on clickable buttons. Switch to <strong>cursor: not-allowed</strong> when disabled and <strong>cursor: wait</strong> during loading operations.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 2: INTERACTIVE LIST ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>2. Interactive Todo List</h2>
+                <p class="example-desc">Draggable list items with multiple cursor states</p>
+            </div>
+            <div class="example-content">
+                <span class="label">cursor: grab</span>
+                <span class="label">cursor: grabbing</span>
+                <span class="label">cursor: pointer</span>
+
+                <div class="interactive-list">
+                    <div class="list-item draggable">
+                        <input type="checkbox" class="list-checkbox">
+                        <div class="list-content">
+                            <div class="list-title">☑ Complete project documentation</div>
+                            <div class="list-subtitle">Drag to reorder • Click to select</div>
+                        </div>
+                        <span class="list-icon">ℹ️</span>
+                    </div>
+                    <div class="list-item draggable">
+                        <input type="checkbox" class="list-checkbox">
+                        <div class="list-content">
+                            <div class="list-title">☐ Review pull requests</div>
+                            <div class="list-subtitle">Grab to move • Checkbox to toggle</div>
+                        </div>
+                        <span class="list-icon">ℹ️</span>
+                    </div>
+                    <div class="list-item draggable">
+                        <input type="checkbox" class="list-checkbox">
+                        <div class="list-content">
+                            <div class="list-title">☐ Update cursor guide</div>
+                            <div class="list-subtitle">Hover to see grab cursor</div>
+                        </div>
+                        <span class="list-icon">ℹ️</span>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Interactive list with cursors */
+.list-item {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.list-item.draggable {
+    cursor: grab;
+}
+
+.list-item.dragging {
+    cursor: grabbing;
+    opacity: 0.7;
+}
+
+.list-checkbox {
+    cursor: pointer;
+}
+
+.list-icon {
+    cursor: help;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Best Practice:</strong> Use <strong>cursor: grab</strong> to indicate draggable elements, then switch to <strong>cursor: grabbing</strong> when actively dragging. This gives immediate visual feedback.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 3: DATA TABLE ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>3. Data Table with Sortable Columns</h2>
+                <p class="example-desc">Table headers with sort cursor for interactive columns</p>
+            </div>
+            <div class="example-content">
+                <span class="label">cursor: default</span>
+                <span class="label">cursor: pointer</span>
+                <span class="label">cursor: col-resize</span>
+
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable">↕ ID</th>
+                                <th class="sortable">↕ Name</th>
+                                <th class="sortable">↕ Email</th>
+                                <th class="sortable">↕ Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="clickable">
+                                <td>#001</td>
+                                <td>John Anderson</td>
+                                <td>john@example.com</td>
+                                <td>✓ Active</td>
+                                <td><button class="demo-button btn-primary" style="padding: 6px 12px; font-size: 0.85em;">Edit</button></td>
+                            </tr>
+                            <tr class="clickable">
+                                <td>#002</td>
+                                <td>Sarah Mitchell</td>
+                                <td>sarah@example.com</td>
+                                <td>✓ Active</td>
+                                <td><button class="demo-button btn-primary" style="padding: 6px 12px; font-size: 0.85em;">Edit</button></td>
+                            </tr>
+                            <tr class="clickable">
+                                <td>#003</td>
+                                <td>Mike Brown</td>
+                                <td>mike@example.com</td>
+                                <td>⊘ Inactive</td>
+                                <td><button class="demo-button btn-primary" style="padding: 6px 12px; font-size: 0.85em;">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="code-block">
+/* Table with interactive cursors */
+.data-table th {
+    cursor: default;
+}
+
+.data-table th.sortable {
+    cursor: pointer;
+}
+
+.data-table th.sortable:hover {
+    background: #764ba2;
+}
+
+.data-table tbody tr.clickable {
+    cursor: pointer;
+}
+
+.data-table tbody tr:hover {
+    background: #f8f9fa;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Best Practice:</strong> Use <strong>cursor: pointer</strong> on sortable column headers to indicate they're clickable. Regular data cells keep <strong>cursor: default</strong>.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 4: FORM WITH STATES ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>4. Form with Different Input States</h2>
+                <p class="example-desc">Form inputs with appropriate cursors for each state</p>
+            </div>
+            <div class="example-content">
+                <span class="label">cursor: text</span>
+                <span class="label">cursor: pointer</span>
+                <span class="label">cursor: not-allowed</span>
+
+                <form class="form-demo">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" placeholder="Enter your name..." value="John Doe">
+                        <div class="help-text">ℹ️ Hover for text cursor</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" placeholder="your@email.com">
+                        <div class="help-text">ℹ️ Type to enter email</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Read-Only Field</label>
+                        <input type="text" class="form-input" value="Cannot edit this" readonly>
+                        <div class="help-text">ℹ️ Cursor shows default (not text)</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Disabled Field</label>
+                        <input type="text" class="form-input" value="Field is disabled" disabled>
+                        <div class="help-text">ℹ️ Cursor shows not-allowed</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Preferences</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox"> Subscribe to updates
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" checked> Enable notifications
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="demo-button btn-primary">Submit Form</button>
+                </form>
+
+                <div class="code-block">
+/* Form input cursors */
+input[type="text"],
+input[type="email"],
+textarea {
+    cursor: text;
+}
+
+input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+input:disabled {
+    cursor: not-allowed;
+    background: #f0f0f0;
+}
+
+input[readonly] {
+    cursor: default;
+    background: #f8f9fa;
+}
+
+input[type="checkbox"],
+input[type="radio"],
+label {
+    cursor: pointer;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Best Practice:</strong> Text inputs should have <strong>cursor: text</strong>, checkboxes/radio buttons get <strong>cursor: pointer</strong>, and disabled fields show <strong>cursor: not-allowed</strong>.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 5: DRAWING CANVAS ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>5. Drawing Canvas with Tool Cursors</h2>
+                <p class="example-desc">Custom cursors for different drawing tools</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Custom cursors</span>
+                <span class="label">Tool-specific feedback</span>
+                <span class="label">SVG cursors</span>
+
+                <div class="canvas-container">
+                    <div class="tool-selector">
+                        <button class="tool-btn active" onclick="switchTool(this, 'pen')">✏️ Pen</button>
+                        <button class="tool-btn" onclick="switchTool(this, 'eraser')">🧹 Eraser</button>
+                        <button class="tool-btn" onclick="switchTool(this, 'picker')">🎨 Color Picker</button>
+                        <button class="tool-btn" onclick="switchTool(this, 'clear')">↻ Clear</button>
+                    </div>
+                    <div class="canvas-demo pen-mode">
+                        Draw here... (Hover to see custom cursors)
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Custom tool cursors */
+.canvas-demo {
+    cursor: default;
+}
+
+.canvas-demo.pen-mode {
+    cursor: url('pen-cursor.svg') 5 20, auto;
+}
+
+.canvas-demo.eraser-mode {
+    cursor: url('eraser-cursor.svg') 5 20, auto;
+}
+
+.canvas-demo.picker-mode {
+    cursor: url('pipette-cursor.svg') 5 20, auto;
+}
+
+/* Fallback cursors */
+.canvas-demo.pen-mode {
+    cursor: url('data:image/svg+xml;utf8,...') 10 10, pointer;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Best Practice:</strong> Create custom cursors for specialized tools. Use SVG or PNG files and always provide a fallback cursor. Include coordinates for the hotspot (click point).
+                </div>
+
+                <script>
+                    function switchTool(btn, tool) {
+                        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const canvas = document.querySelector('.canvas-demo');
+                        canvas.className = 'canvas-demo ' + tool + '-mode';
+                    }
+                </script>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 6: DRAG & DROP ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>6. Drag & Drop Interface</h2>
+                <p class="example-desc">Items with grab/grabbing cursor for drag operations</p>
+            </div>
+            <div class="example-content">
+                <span class="label">cursor: grab</span>
+                <span class="label">cursor: grabbing</span>
+                <span class="label">cursor: no-drop</span>
+
+                <div class="drag-drop-container">
+                    <div>
+                        <h3 style="margin-bottom: 15px; color: #333;">Available Items</h3>
+                        <div class="draggable-item">
+                            📁 <strong>Project Files</strong>
+                            <div style="font-size: 0.85em; color: #999; margin-top: 5px;">Drag to drop zone</div>
+                        </div>
+                        <div class="draggable-item">
+                            📸 <strong>Photos</strong>
+                            <div style="font-size: 0.85em; color: #999; margin-top: 5px;">Drag to drop zone</div>
+                        </div>
+                        <div class="draggable-item">
+                            📄 <strong>Documents</strong>
+                            <div style="font-size: 0.85em; color: #999; margin-top: 5px;">Drag to drop zone</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="margin-bottom: 15px; color: #333;">Drop Zone</h3>
+                        <div class="drop-zone">
+                            <p style="text-align: center; color: #999;">
+                                🎯<br>
+                                Drag items here
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Drag and drop cursors */
+.draggable-item {
+    cursor: grab;
+    transition: all 0.2s ease;
+}
+
+.draggable-item:active {
+    cursor: grabbing;
+}
+
+.draggable-item.dragging {
+    cursor: grabbing;
+    opacity: 0.5;
+}
+
+.drop-zone {
+    cursor: default;
+}
+
+.drop-zone.drag-over {
+    border-color: #667eea;
+    background: #f0f7ff;
+}
+
+/* When item can't be dropped */
+.drop-zone.no-drop {
+    cursor: no-drop;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Best Practice:</strong> Use <strong>cursor: grab</strong> to show items are draggable, switch to <strong>cursor: grabbing</strong> during drag, and use <strong>cursor: no-drop</strong> to indicate invalid drop zones.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 7: IMAGE EDITOR ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>7. Image Editor with Zoom Controls</h2>
+                <p class="example-desc">Zoom and pan cursors for image manipulation</p>
+            </div>
+            <div class="example-content">
+                <span class="label">cursor: zoom-in</span>
+                <span class="label">cursor: zoom-out</span>
+                <span class="label">cursor: grab</span>
+
+                <div>
+                    <div class="editor-toolbar">
+                        <button class="editor-tool active" onclick="switchMode(this, 'zoom-in')" title="Zoom In">🔍+</button>
+                        <button class="editor-tool" onclick="switchMode(this, 'zoom-out')" title="Zoom Out">🔍-</button>
+                        <button class="editor-tool" onclick="switchMode(this, 'grab')" title="Pan/Grab">✋</button>
+                        <button class="editor-tool" onclick="switchMode(this, 'default')" title="Select">➜</button>
+                    </div>
+                    <div class="image-preview zoom-in-mode">
+                        🖼️ Image Preview<br>
+                        <span style="font-size: 0.8em; margin-top: 10px;">Click above buttons to change cursor</span>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* Image editor cursors */
+.image-preview {
+    cursor: default;
+}
+
+.image-preview.zoom-in-mode {
+    cursor: zoom-in;
+}
+
+.image-preview.zoom-out-mode {
+    cursor: zoom-out;
+}
+
+.image-preview.grab-mode {
+    cursor: grab;
+}
+
+.image-preview.grab-mode:active {
+    cursor: grabbing;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Best Practice:</strong> Use <strong>cursor: zoom-in/zoom-out</strong> for zoom controls and <strong>cursor: grab/grabbing</strong> for panning. Switch dynamically based on current tool.
+                </div>
+
+                <script>
+                    function switchMode(btn, mode) {
+                        document.querySelectorAll('.editor-tool').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const preview = document.querySelector('.image-preview');
+                        preview.className = 'image-preview ' + mode + '-mode';
+                    }
+                </script>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 8: CONTEXT MENU ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>8. Context Menu (Right-Click)</h2>
+                <p class="example-desc">Element with context menu cursor</p>
+            </div>
+            <div class="example-content">
+                <span class="label">cursor: context-menu</span>
+                <span class="label">Right-click feedback</span>
+
+                <p style="color: #555; margin-bottom: 15px;">
+                    Right-click on the area below to see context menu behavior. The cursor changes to indicate a context menu is available.
+                </p>
+
+                <div class="context-demo">
+                    Right-click me to see context menu cursor
+                </div>
+
+                <div class="code-block">
+/* Context menu cursor */
+.context-area {
+    cursor: context-menu;
+}
+
+.context-area:active {
+    cursor: default;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Best Practice:</strong> Use <strong>cursor: context-menu</strong> on elements that have right-click functionality. This indicates custom context menus are available.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BEST PRACTICES ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>✨ Best Practices & Guidelines</h2>
+                <p class="example-desc">How to effectively use cursor properties in your projects</p>
+            </div>
+            <div class="example-content">
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>1. Match Cursor to Action</h4>
+                        <p>Always use cursors that match element functionality. <strong>pointer</strong> for buttons, <strong>text</strong> for inputs, <strong>grab</strong> for draggables.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>2. Consistency is Key</h4>
+                        <p>Use standard cursors throughout your app. Users expect <strong>pointer</strong> for all clickable elements and <strong>text</strong> for all editable fields.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>3. Disabled State</h4>
+                        <p>Always indicate disabled elements with <strong>cursor: not-allowed</strong>. Combine with visual indicators like opacity or color changes.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>4. Loading Feedback</h4>
+                        <p>Use <strong>cursor: wait</strong> or <strong>cursor: progress</strong> during async operations to show something is happening.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>5. Custom Cursors</h4>
+                        <p>Use custom cursors sparingly for specialized tools. Always provide a fallback cursor. Keep file sizes small.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>6. Resize Direction</h4>
+                        <p>Use directional resize cursors on resizable elements. <strong>col-resize</strong> for columns, <strong>se-resize</strong> for corners.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>7. Help Indicator</h4>
+                        <p>Use <strong>cursor: help</strong> on tooltips or help text to indicate additional information is available.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>8. Performance</h4>
+                        <p>Minimize custom cursor usage. They can impact performance. Use standard cursors when possible for better performance.</p>
+                    </div>
+                </div>
+
+                <div class="info">
+                    <strong>🎯 Accessibility Tip:</strong> Don't rely only on cursor changes. Combine with:
+                    <ul style="margin-top: 10px; margin-left: 20px; line-height: 1.8;">
+                        <li>Visual styling changes (color, opacity, borders)</li>
+                        <li>Aria labels and tooltips</li>
+                        <li>Keyboard focus indicators</li>
+                        <li>Descriptive text and help messages</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== QUICK REFERENCE ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>📋 Quick Reference - When to Use Each Cursor</h2>
+                <p class="example-desc">Lookup table for common scenarios</p>
+            </div>
+            <div class="example-content">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.95em; margin: 20px 0;">
+                    <thead>
+                        <tr style="background: #667eea; color: white;">
+                            <th style="padding: 12px; text-align: left; border: 1px solid #555;">Scenario</th>
+                            <th style="padding: 12px; text-align: left; border: 1px solid #555;">Cursor Value</th>
+                            <th style="padding: 12px; text-align: left; border: 1px solid #555;">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 12px; border: 1px solid #ddd;">Clickable button</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; font-family: monospace; color: #667eea; font-weight: 600;">pointer</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Buttons, links, clickable cards</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Text input</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; font-family: monospace; color: #667eea; font-weight: 600;">text</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Input fields, textarea, editable areas</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 12px; border: 1px solid #ddd;">Disabled element</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; font-family: monospace; color: #667eea; font-weight: 600;">not-allowed</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Disabled buttons, locked fields</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Draggable item</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; font-family: monospace; color: #667eea; font-weight: 600;">grab / grabbing</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Drag handles, sortable lists</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 12px; border: 1px solid #ddd;">Resizable edge</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; font-family: monospace; color: #667eea; font-weight: 600;">col/row/se-resize</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Column headers, window edges</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Loading action</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; font-family: monospace; color: #667eea; font-weight: 600;">wait / progress</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">During async operations</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 12px; border: 1px solid #ddd;">Zoom control</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; font-family: monospace; color: #667eea; font-weight: 600;">zoom-in / zoom-out</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Image editors, maps, charts</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Help/info</td>
+                            <td style="padding: 12px; border: 1px solid #ddd; font-family: monospace; color: #667eea; font-weight: 600;">help</td>
+                            <td style="padding: 12px; border: 1px solid #ddd;">Tooltip triggers, help icons</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

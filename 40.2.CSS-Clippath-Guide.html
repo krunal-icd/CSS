@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS clip-path - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .example-section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .example-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .example-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .example-desc {
+            font-size: 0.95em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .example-content {
+            padding: 30px;
+        }
+
+        .label {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-radius: 4px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1565c0;
+        }
+
+        /* ==================== EXAMPLE 1: CIRCLE PROFILES ==================== */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .profile {
+            text-align: center;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            clip-path: circle(50%);
+            transition: clip-path 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .profile-image:hover {
+            clip-path: circle(48%);
+            transform: scale(1.05);
+        }
+
+        .profile-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .profile-title {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* ==================== EXAMPLE 2: DIAGONAL SECTIONS ==================== */
+        .diagonal-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            margin: 20px 0;
+            border-radius: 0;
+        }
+
+        .diagonal-section h3 {
+            font-size: 1.5em;
+            margin-bottom: 1rem;
+        }
+
+        .diagonal-section p {
+            font-size: 0.95em;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        /* ==================== EXAMPLE 3: REVEAL ANIMATION ==================== */
+        .reveal-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2em;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .reveal-container.revealed {
+            clip-path: inset(0% 0% 0% 0%);
+        }
+
+        .reveal-container:not(.revealed) {
+            animation: slideReveal 2s ease-in-out infinite;
+        }
+
+        @keyframes slideReveal {
+            0%, 100% { clip-path: inset(0% 100% 0% 0%); }
+            50% { clip-path: inset(0% 0% 0% 0%); }
+        }
+
+        /* ==================== EXAMPLE 4: CREATIVE BUTTONS ==================== */
+        .button-demo {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .btn-shape {
+            padding: 1rem 2rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #667eea;
+            color: white;
+            font-size: 0.95em;
+        }
+
+        .btn-hexagon {
+            clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+        }
+
+        .btn-star {
+            clip-path: polygon(
+                50% 0%, 61% 35%, 98% 35%, 68% 57%, 
+                79% 91%, 50% 70%, 21% 91%, 32% 57%, 
+                2% 35%, 39% 35%
+            );
+            padding: 1rem 1.5rem;
+        }
+
+        .btn-arrow {
+            clip-path: polygon(0% 20%, 80% 50%, 0% 80%, 20% 50%);
+        }
+
+        .btn-shape:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+        }
+
+        /* ==================== EXAMPLE 5: CARD CORNERS ==================== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-text {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        /* ==================== EXAMPLE 6: TESTIMONIALS ==================== */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .testimonial:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transform: scale(1.02);
+        }
+
+        .testimonial-text {
+            font-size: 0.95em;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 0.9em;
+        }
+
+        /* ==================== EXAMPLE 7: HERO SECTION ==================== */
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .hero-title {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1em;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-cta {
+            background: white;
+            color: #667eea;
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .hero-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ==================== EXAMPLE 8: IMAGE GALLERY ==================== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-image.oval {
+            clip-path: ellipse(45% 35%);
+        }
+
+        .gallery-image.circle {
+            clip-path: circle(50%);
+        }
+
+        .gallery-image.hexagon {
+            clip-path: polygon(
+                50% 0%, 100% 25%, 100% 75%, 
+                50% 100%, 0% 75%, 0% 25%
+            );
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ==================== EXAMPLE 9: RIBBON BADGES ==================== */
+        .badge-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .ribbon-badge {
+            position: relative;
+            padding: 1rem 1.5rem;
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+            clip-path: polygon(0 0, 100% 0, 85% 50%, 100% 100%, 0 100%, 15% 50%);
+            text-align: center;
+        }
+
+        /* ==================== EXAMPLE 10: TEXT OVERLAY ==================== */
+        .overlay-demo {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .overlay-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .overlay-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
+            z-index: 1;
+        }
+
+        .overlay-title {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .overlay-text {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        /* ==================== TIPS SECTION ==================== */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tip-card {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.95em;
+        }
+
+        .tip-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .tip-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .example-header h2 {
+                font-size: 1.3em;
+            }
+
+            .button-demo {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-shape {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✂️ CSS clip-path</h1>
+        <p class="subtitle">Real-World Practical Examples & Use Cases</p>
+
+        <!-- ==================== EXAMPLE 1: CIRCLE PROFILES ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>1. Circular Profile Images</h2>
+                <p class="example-desc">Profile avatars with hover effects using circle clip-path</p>
+            </div>
+            <div class="example-content">
+                <span class="label">circle()</span>
+                <span class="label">Hover effect</span>
+                <span class="label">Profile cards</span>
+
+                <p style="margin-bottom: 15px;">
+                    Create perfect circular profile images with subtle hover effects.
+                </p>
+
+                <div class="profile-grid">
+                    <div class="profile">
+                        <div class="profile-image">👤 User 1</div>
+                        <div class="profile-name">Sarah Johnson</div>
+                        <div class="profile-title">Designer</div>
+                    </div>
+                    <div class="profile">
+                        <div class="profile-image">👤 User 2</div>
+                        <div class="profile-name">Mike Chen</div>
+                        <div class="profile-title">Developer</div>
+                    </div>
+                    <div class="profile">
+                        <div class="profile-image">👤 User 3</div>
+                        <div class="profile-name">Emma Davis</div>
+                        <div class="profile-title">Manager</div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+.profile-image {
+    width: 120px;
+    height: 120px;
+    clip-path: circle(50%);
+    transition: clip-path 0.3s ease, transform 0.3s ease;
+}
+
+.profile-image:hover {
+    clip-path: circle(48%);
+    transform: scale(1.05);
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Benefit:</strong> Perfect circles without border-radius. Can animate clip-path for interactive effects.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 2: DIAGONAL SECTIONS ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>2. Diagonal Section Dividers</h2>
+                <p class="example-desc">Create angled section breaks using polygon clip-path</p>
+            </div>
+            <div class="example-content">
+                <span class="label">polygon()</span>
+                <span class="label">Sections</span>
+                <span class="label">Design</span>
+
+                <div class="diagonal-section">
+                    <h3>Design Section</h3>
+                    <p>This section uses clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%) to create a diagonal cut at the bottom. Perfect for separating content sections with style.</p>
+                </div>
+
+                <div class="code-block">
+.diagonal-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 3rem;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 Alternative Angles:</strong> Adjust coordinates for different angles:
+                    <ul style="margin-top: 10px; margin-left: 20px; line-height: 1.6;">
+                        <li>Gentle slope: polygon(0 0, 100% 0, 100% 90%, 0 100%)</li>
+                        <li>Steep slope: polygon(0 0, 100% 0, 100% 70%, 0 100%)</li>
+                        <li>Reversed: polygon(0 0, 100% 10%, 100% 100%, 0 100%)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 3: REVEAL ANIMATION ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>3. Animated Reveal Effect</h2>
+                <p class="example-desc">Animated clip-path for revealing content</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Animation</span>
+                <span class="label">inset()</span>
+                <span class="label">Reveal</span>
+
+                <p style="margin-bottom: 15px;">
+                    Click or hover to see the reveal animation in action.
+                </p>
+
+                <div class="reveal-container" onclick="this.classList.toggle('revealed')">
+                    Click to reveal! (Animated with clip-path)
+                </div>
+
+                <div class="code-block">
+@keyframes slideReveal {
+    0%, 100% { clip-path: inset(0% 100% 0% 0%); }
+    50% { clip-path: inset(0% 0% 0% 0%); }
+}
+
+.reveal-container {
+    animation: slideReveal 2s ease-in-out infinite;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Use Case:</strong> Perfect for promotional animations, hero images, or content reveals on scroll.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 4: CREATIVE BUTTONS ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>4. Creative Button Shapes</h2>
+                <p class="example-desc">Unique button designs using polygon clip-path</p>
+            </div>
+            <div class="example-content">
+                <span class="label">polygon()</span>
+                <span class="label">Interactive</span>
+                <span class="label">Creative</span>
+
+                <div class="button-demo">
+                    <button class="btn-shape btn-hexagon">Hexagon</button>
+                    <button class="btn-shape btn-star">Star</button>
+                    <button class="btn-shape btn-arrow">Arrow</button>
+                </div>
+
+                <div class="code-block">
+.btn-hexagon {
+    clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+}
+
+.btn-star {
+    clip-path: polygon(
+        50% 0%, 61% 35%, 98% 35%, 68% 57%, 
+        79% 91%, 50% 70%, 21% 91%, 32% 57%, 
+        2% 35%, 39% 35%
+    );
+}
+
+.btn-arrow {
+    clip-path: polygon(0% 20%, 80% 50%, 0% 80%, 20% 50%);
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Pro Tip:</strong> Hover effects work perfectly with creative shapes. Combine clip-path with transform for smooth animations.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 5: CARD CORNERS ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>5. Cards with Clipped Corners</h2>
+                <p class="example-desc">Modern card designs with angular top corners</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Cards</span>
+                <span class="label">polygon()</span>
+                <span class="label">Modern design</span>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-image">Feature 1</div>
+                        <div class="card-content">
+                            <div class="card-title">Innovation</div>
+                            <div class="card-text">Clipped corners create modern, angular designs without complex CSS.</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">Feature 2</div>
+                        <div class="card-content">
+                            <div class="card-title">Flexibility</div>
+                            <div class="card-text">Easy to customize angles and create consistent card designs.</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">Feature 3</div>
+                        <div class="card-content">
+                            <div class="card-title">Performance</div>
+                            <div class="card-text">Lightweight alternative to complex shape designs or background images.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+.card-image {
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+}
+
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 Responsive:</strong> clip-path coordinates scale with element size automatically.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 6: TESTIMONIALS ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>6. Testimonial Cards with Clip Corners</h2>
+                <p class="example-desc">Quote sections with custom clipped bottom corner</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Testimonials</span>
+                <span class="label">polygon()</span>
+                <span class="label">User feedback</span>
+
+                <div class="testimonial-grid">
+                    <div class="testimonial">
+                        <div class="testimonial-text">"This approach transformed how we build interfaces. Highly recommended!"</div>
+                        <div class="testimonial-author">— Alex K., Designer</div>
+                    </div>
+                    <div class="testimonial">
+                        <div class="testimonial-text">"Creative and powerful. The possibilities with clip-path are endless."</div>
+                        <div class="testimonial-author">— Jordan M., Developer</div>
+                    </div>
+                    <div class="testimonial">
+                        <div class="testimonial-text">"Perfect for modern web designs. Works great across all devices."</div>
+                        <div class="testimonial-author">— Casey L., Manager</div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+.testimonial {
+    clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%);
+    transition: all 0.3s ease;
+}
+
+.testimonial:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Effect:</strong> Subtle clipped corner at bottom-right adds visual interest without overwhelming the design.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 7: HERO SECTION ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>7. Hero Section with Clipped Bottom</h2>
+                <p class="example-desc">Full-width hero with angled transition to next section</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Hero</span>
+                <span class="label">polygon()</span>
+                <span class="label">Landing page</span>
+
+                <div class="hero-section">
+                    <h1 class="hero-title">Welcome to Our Platform</h1>
+                    <p class="hero-subtitle">Discover creative possibilities with CSS clip-path</p>
+                    <button class="hero-cta">Get Started</button>
+                </div>
+
+                <div class="code-block">
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 4rem 2rem;
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+                </div>
+
+                <div class="info">
+                    <strong>💡 Design Tip:</strong> Angled transitions create visual flow between sections without requiring additional HTML elements.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 8: IMAGE GALLERY ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>8. Image Gallery with Shape Variety</h2>
+                <p class="example-desc">Different clip-path shapes for gallery items</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Gallery</span>
+                <span class="label">Multiple shapes</span>
+                <span class="label">Visual interest</span>
+
+                <div class="gallery-grid">
+                    <div class="gallery-image circle">Circle</div>
+                    <div class="gallery-image oval">Oval</div>
+                    <div class="gallery-image hexagon">Hexagon</div>
+                </div>
+
+                <div class="code-block">
+.gallery-image.circle {
+    clip-path: circle(50%);
+}
+
+.gallery-image.oval {
+    clip-path: ellipse(45% 35%);
+}
+
+.gallery-image.hexagon {
+    clip-path: polygon(
+        50% 0%, 100% 25%, 100% 75%, 
+        50% 100%, 0% 75%, 0% 25%
+    );
+}
+
+.gallery-image:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Variety:</strong> Mix different shapes in a gallery for visual interest while maintaining consistency.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 9: RIBBON BADGES ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>9. Ribbon-Style Badges</h2>
+                <p class="example-desc">Decorative ribbon badges using polygon clip-path</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Badges</span>
+                <span class="label">Ribbons</span>
+                <span class="label">Decorative</span>
+
+                <div class="badge-grid">
+                    <div class="ribbon-badge">Featured</div>
+                    <div class="ribbon-badge">Popular</div>
+                    <div class="ribbon-badge">New</div>
+                </div>
+
+                <div class="code-block">
+.ribbon-badge {
+    padding: 1rem 1.5rem;
+    background: #667eea;
+    color: white;
+    font-weight: 600;
+    clip-path: polygon(0 0, 100% 0, 85% 50%, 100% 100%, 0 100%, 15% 50%);
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Use Case:</strong> Perfect for promotional badges, product labels, or status indicators with decorative flair.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 10: TEXT OVERLAY ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>10. Overlay with Clipped Background</h2>
+                <p class="example-desc">Angled dark overlay for text visibility</p>
+            </div>
+            <div class="example-content">
+                <span class="label">Overlay</span>
+                <span class="label">Positioning</span>
+                <span class="label">Text clarity</span>
+
+                <div class="overlay-demo">
+                    <div class="overlay-background"></div>
+                    <div class="overlay-content">
+                        <div class="overlay-title">Amazing Content</div>
+                        <div class="overlay-text">With clip-path overlay for better text readability</div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+.overlay-background {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.3);
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
+    z-index: 1;
+}
+
+.overlay-content {
+    position: relative;
+    z-index: 2;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Pattern:</strong> Use clipped overlays to ensure text clarity over background images without covering the entire image.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BEST PRACTICES ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>✨ Best Practices & Guidelines</h2>
+                <p class="example-desc">Effective use of clip-path in production</p>
+            </div>
+            <div class="example-content">
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>1. Test Performance</h4>
+                        <p>Complex polygons can impact performance. Test on lower-end devices and keep shapes simple when possible.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>2. Ensure Accessibility</h4>
+                        <p>Content must remain accessible. Clipped content should still be readable and interactive.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>3. Use Responsive Shapes</h4>
+                        <p>Percentages scale with element size. Use percentages for responsive designs across devices.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>4. Animate Smoothly</h4>
+                        <p>Simple clip-path animations perform well. Avoid overly complex polygon changes in animations.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>5. Provide Fallbacks</h4>
+                        <p>For IE11, provide fallback styling or alternative designs that work without clip-path.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>6. Combine with Hover States</h4>
+                        <p>Interactive clip-path on hover creates engaging UX. Pair with other transitions for smooth effects.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>7. Keep Polygon Points Minimal</h4>
+                        <p>Fewer points = better performance. Only use as many coordinates as needed for your shape.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>8. Test Cross-Browser</h4>
+                        <p>Test on Chrome, Firefox, Safari, Edge to ensure consistent rendering across browsers.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+/* ===== BEST PRACTICES EXAMPLE ===== */
+
+/* Fallback for IE11 */
+.shape-element {
+    border-radius: 50%; /* Fallback */
+    clip-path: circle(50%);
+}
+
+/* Responsive polygon */
+.responsive-shape {
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    /* Scales with element automatically */
+}
+
+/* Smooth animation */
+.animated-shape {
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    transition: clip-path 0.3s ease;
+}
+
+.animated-shape:hover {
+    clip-path: polygon(50% 10%, 95% 45%, 50% 90%, 5% 45%);
+}
+
+/* Accessible clipped content */
+.clipped-content {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%);
+}
+
+.clipped-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333;
+}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

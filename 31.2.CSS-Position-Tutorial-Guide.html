@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Position - Practical Examples & Challenges</title>
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #ec4899;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --text-primary: var(--neutral-900);
+            --text-secondary: var(--neutral-600);
+            --bg-primary: #ffffff;
+            --bg-secondary: var(--neutral-50);
+            --bg-tertiary: var(--neutral-100);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: var(--neutral-50);
+                --text-secondary: var(--neutral-300);
+                --bg-primary: var(--neutral-900);
+                --bg-secondary: var(--neutral-800);
+                --bg-tertiary: var(--neutral-700);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-primary);
+            border-bottom: 2px solid var(--primary-color);
+            padding: 1rem 2rem;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--secondary-color);
+        }
+
+        .example-container {
+            background-color: var(--bg-secondary);
+            border: 2px dashed var(--neutral-300);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .demo-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .demo-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+        }
+
+        .demo-box.secondary {
+            background: linear-gradient(135deg, var(--secondary-color), #d946a6);
+        }
+
+        .demo-box.accent {
+            background: linear-gradient(135deg, var(--accent-color), #d97706);
+        }
+
+        .code-section {
+            background-color: var(--bg-tertiary);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+        }
+
+        .challenge-box {
+            background-color: var(--bg-secondary);
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .challenge-box h4 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .challenge-box p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        button.secondary {
+            background-color: var(--secondary-color);
+        }
+
+        button.secondary:hover {
+            background-color: #d946a6;
+        }
+
+        button.success {
+            background-color: var(--success-color);
+        }
+
+        button.success:hover {
+            background-color: #059669;
+        }
+
+        .output {
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--neutral-300);
+            border-radius: 4px;
+            padding: 1rem;
+            margin-top: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .collapsible {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 1rem;
+            border: 1px solid var(--neutral-300);
+            border-radius: 4px;
+            text-align: left;
+            outline: none;
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            background-color: var(--bg-tertiary);
+            border-color: var(--primary-color);
+        }
+
+        .collapsible::after {
+            content: '\002B';
+            color: var(--primary-color);
+            float: right;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .collapsible.active::after {
+            content: '\2212';
+        }
+
+        .content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--neutral-300);
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .content.show {
+            padding: 1rem;
+            max-height: 2000px;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background-color: var(--bg-primary);
+        }
+
+        th, td {
+            border: 1px solid var(--neutral-300);
+            padding: 1rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--bg-secondary);
+        }
+
+        .footer {
+            background-color: var(--neutral-800);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .position-demo-parent {
+            background-color: var(--bg-tertiary);
+            border: 3px solid var(--neutral-400);
+            padding: 1rem;
+            position: relative;
+            height: 300px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .position-demo-parent.static {
+            position: static;
+        }
+
+        .position-demo-parent.relative {
+            position: relative;
+        }
+
+        .position-demo-child {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .sticky-demo {
+            height: 150px;
+            overflow-y: auto;
+            background-color: var(--bg-tertiary);
+            border: 2px solid var(--neutral-300);
+            border-radius: 4px;
+        }
+
+        .sticky-item {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, var(--secondary-color), #d946a6);
+            color: white;
+            padding: 1rem;
+            margin: 0.5rem;
+            border-radius: 4px;
+            z-index: 10;
+        }
+
+        .fixed-demo-container {
+            height: 200px;
+            overflow-y: auto;
+            background-color: var(--bg-tertiary);
+            border: 2px solid var(--neutral-300);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .fixed-item {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, var(--accent-color), #d97706);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .grid-example {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                flex-direction: column;
+            }
+
+            .grid-example {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                padding: 1rem;
+            }
+        }
+
+        .quick-ref {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .quick-ref-item {
+            background-color: var(--bg-secondary);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .quick-ref-item strong {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎯 CSS Position - Practical Examples & Challenges</h1>
+        <p>Master positioning techniques with interactive demos and real-world projects</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#interactive-examples">Interactive Examples</a></li>
+            <li><a href="#coding-challenges">Coding Challenges</a></li>
+            <li><a href="#real-world-projects">Real-World Projects</a></li>
+            <li><a href="#quick-reference">Quick Reference</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- Interactive Examples Section -->
+        <section id="interactive-examples">
+            <h2>Interactive Examples</h2>
+
+            <!-- Example 1: Relative Positioning -->
+            <h3>1. Relative Positioning - Box Offset</h3>
+            <div class="example-container">
+                <p>Click the buttons to move the box using relative positioning (offset from its normal position):</p>
+                <div class="position-demo-parent relative" style="height: 200px;">
+                    <div class="demo-box" id="relativeBox" style="position: relative; top: 0; left: 0; width: 100px;">
+                        Relative
+                    </div>
+                </div>
+                <button onclick="moveRelative('top', -20)">Move Up</button>
+                <button onclick="moveRelative('top', 20)">Move Down</button>
+                <button onclick="moveRelative('left', -20)">Move Left</button>
+                <button onclick="moveRelative('left', 20)">Move Right</button>
+                <button onclick="resetRelative()">Reset</button>
+                <div class="code-section">
+                    <code>
+                        position: relative;<br>
+                        top: var(--top-offset);<br>
+                        left: var(--left-offset);
+                    </code>
+                </div>
+            </div>
+
+            <!-- Example 2: Absolute Positioning -->
+            <h3>2. Absolute Positioning - Corner Anchoring</h3>
+            <div class="example-container">
+                <p>Click buttons to anchor the box to different corners (absolute positioned within the container):</p>
+                <div class="position-demo-parent relative" style="height: 250px;">
+                    <div class="demo-box secondary" id="absoluteBox" style="position: absolute; top: 10px; left: 10px; width: 100px;">
+                        Absolute
+                    </div>
+                </div>
+                <button onclick="positionAbsolute('top-left')">Top-Left</button>
+                <button onclick="positionAbsolute('top-right')">Top-Right</button>
+                <button onclick="positionAbsolute('bottom-left')">Bottom-Left</button>
+                <button onclick="positionAbsolute('bottom-right')">Bottom-Right</button>
+                <button onclick="positionAbsolute('center')">Center</button>
+                <div class="code-section">
+                    <code>
+                        position: absolute;<br>
+                        top/bottom/left/right: value;
+                    </code>
+                </div>
+            </div>
+
+            <!-- Example 3: Fixed Positioning -->
+            <h3>3. Fixed Positioning - Scroll Demonstration</h3>
+            <div class="example-container">
+                <p>Scroll inside the container to see the fixed element stay in place:</p>
+                <div class="fixed-demo-container">
+                    <div class="fixed-item" style="position: fixed; top: 0; right: 0; width: 150px; background: linear-gradient(135deg, var(--accent-color), #d97706); z-index: 100;">
+                        📌 FIXED
+                    </div>
+                    <div style="padding: 2rem; color: var(--text-secondary);">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
+                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.</p>
+                    </div>
+                </div>
+                <div class="code-section">
+                    <code>
+                        position: fixed;<br>
+                        top: 0; right: 0;<br>
+                        z-index: 100;
+                    </code>
+                </div>
+            </div>
+
+            <!-- Example 4: Sticky Positioning -->
+            <h3>4. Sticky Positioning - Section Headers</h3>
+            <div class="example-container">
+                <p>Scroll inside the container to see sticky headers stay visible:</p>
+                <div class="sticky-demo">
+                    <div class="sticky-item">📌 Section 1</div>
+                    <div style="padding: 0.5rem; color: var(--text-secondary);">
+                        <p>Content for section 1...</p>
+                        <p>More content here...</p>
+                    </div>
+                    <div class="sticky-item">📌 Section 2</div>
+                    <div style="padding: 0.5rem; color: var(--text-secondary);">
+                        <p>Content for section 2...</p>
+                        <p>More content here...</p>
+                    </div>
+                    <div class="sticky-item">📌 Section 3</div>
+                    <div style="padding: 0.5rem; color: var(--text-secondary);">
+                        <p>Content for section 3...</p>
+                        <p>More content here...</p>
+                    </div>
+                </div>
+                <div class="code-section">
+                    <code>
+                        position: sticky;<br>
+                        top: 0;<br>
+                        z-index: 10;
+                    </code>
+                </div>
+            </div>
+
+            <!-- Example 5: Z-Index Stacking Context -->
+            <h3>5. Z-Index - Layering Elements</h3>
+            <div class="example-container">
+                <p>Adjust z-index values to control element layering:</p>
+                <div class="position-demo-parent relative" style="height: 300px;">
+                    <div class="demo-box" id="zBox1" style="position: absolute; top: 50px; left: 50px; z-index: 1; width: 120px;">Z-1</div>
+                    <div class="demo-box secondary" id="zBox2" style="position: absolute; top: 80px; left: 100px; z-index: 2; width: 120px;">Z-2</div>
+                    <div class="demo-box accent" id="zBox3" style="position: absolute; top: 110px; left: 150px; z-index: 3; width: 120px;">Z-3</div>
+                </div>
+                <button onclick="updateZIndex('zBox1', 5)">Z-1 to Front</button>
+                <button onclick="updateZIndex('zBox2', 5)">Z-2 to Front</button>
+                <button onclick="updateZIndex('zBox3', 5)">Z-3 to Front</button>
+                <button onclick="resetZIndex()">Reset</button>
+                <div class="code-section">
+                    <code>
+                        position: absolute;<br>
+                        z-index: 1, 2, 3, ...;
+                    </code>
+                </div>
+            </div>
+
+            <!-- Example 6: Overlay Pattern -->
+            <h3>6. Overlay Pattern - Image with Text</h3>
+            <div class="example-container">
+                <div style="position: relative; width: 100%; height: 250px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 4px; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.4); display: flex; align-items: center; justify-content: center;">
+                        <div style="text-align: center; color: white;">
+                            <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">Overlay Text</h3>
+                            <p>Positioned absolutely over background</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-section">
+                    <code>
+                        .container { position: relative; }<br>
+                        .overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+                    </code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coding Challenges Section -->
+        <section id="coding-challenges">
+            <h2>Coding Challenges</h2>
+
+            <!-- Challenge 1 -->
+            <div class="challenge-box">
+                <h4>Challenge 1: Create a Tooltip</h4>
+                <p><strong>Goal:</strong> Build a tooltip that appears on hover using absolute positioning. The tooltip should be positioned above the button.</p>
+                <p><strong>Hint:</strong> Use <code>position: absolute</code>, <code>top: -40px</code>, and <code>white-space: nowrap</code></p>
+                <div id="challenge1" class="code-section" style="background-color: var(--bg-tertiary); border-radius: 4px; padding: 1rem; margin: 1rem 0;">
+                    <code>/* Create your CSS here */</code>
+                </div>
+                <button onclick="showChallengeSolution(1)">Show Solution</button>
+                <div id="challenge1-solution" style="display: none; margin-top: 1rem;">
+                    <p><strong>Solution:</strong></p>
+                    <div class="code-section">
+                        <code>
+                            .button-tooltip {<br>
+                            &nbsp;&nbsp;position: relative;<br>
+                            }<br>
+                            <br>
+                            .tooltip {<br>
+                            &nbsp;&nbsp;position: absolute;<br>
+                            &nbsp;&nbsp;bottom: 125%;<br>
+                            &nbsp;&nbsp;left: 50%;<br>
+                            &nbsp;&nbsp;transform: translateX(-50%);<br>
+                            &nbsp;&nbsp;background-color: #333;<br>
+                            &nbsp;&nbsp;color: white;<br>
+                            &nbsp;&nbsp;padding: 0.5rem 1rem;<br>
+                            &nbsp;&nbsp;border-radius: 4px;<br>
+                            &nbsp;&nbsp;white-space: nowrap;<br>
+                            &nbsp;&nbsp;opacity: 0;<br>
+                            &nbsp;&nbsp;pointer-events: none;<br>
+                            &nbsp;&nbsp;transition: opacity 0.3s;<br>
+                            }<br>
+                            <br>
+                            .button-tooltip:hover .tooltip {<br>
+                            &nbsp;&nbsp;opacity: 1;<br>
+                            }
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenge 2 -->
+            <div class="challenge-box">
+                <h4>Challenge 2: Create a Modal Overlay</h4>
+                <p><strong>Goal:</strong> Build a modal that covers the entire screen with a semi-transparent overlay and a centered dialog box.</p>
+                <p><strong>Hint:</strong> Use <code>position: fixed</code>, <code>inset: 0</code>, and <code>flex</code> for centering</p>
+                <button onclick="showChallengeSolution(2)">Show Solution</button>
+                <div id="challenge2-solution" style="display: none; margin-top: 1rem;">
+                    <p><strong>Solution:</strong></p>
+                    <div class="code-section">
+                        <code>
+                            .modal-overlay {<br>
+                            &nbsp;&nbsp;position: fixed;<br>
+                            &nbsp;&nbsp;inset: 0;<br>
+                            &nbsp;&nbsp;background-color: rgba(0, 0, 0, 0.5);<br>
+                            &nbsp;&nbsp;display: flex;<br>
+                            &nbsp;&nbsp;align-items: center;<br>
+                            &nbsp;&nbsp;justify-content: center;<br>
+                            &nbsp;&nbsp;z-index: 1000;<br>
+                            }<br>
+                            <br>
+                            .modal-content {<br>
+                            &nbsp;&nbsp;background-color: white;<br>
+                            &nbsp;&nbsp;padding: 2rem;<br>
+                            &nbsp;&nbsp;border-radius: 8px;<br>
+                            &nbsp;&nbsp;box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);<br>
+                            &nbsp;&nbsp;max-width: 500px;<br>
+                            }
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenge 3 -->
+            <div class="challenge-box">
+                <h4>Challenge 3: Create a Navbar with Sticky Behavior</h4>
+                <p><strong>Goal:</strong> Build a navigation bar that sticks to the top when scrolling but is initially positioned with content above it.</p>
+                <p><strong>Hint:</strong> Use <code>position: sticky</code>, <code>top: 0</code>, and <code>z-index</code></p>
+                <button onclick="showChallengeSolution(3)">Show Solution</button>
+                <div id="challenge3-solution" style="display: none; margin-top: 1rem;">
+                    <p><strong>Solution:</strong></p>
+                    <div class="code-section">
+                        <code>
+                            nav {<br>
+                            &nbsp;&nbsp;position: sticky;<br>
+                            &nbsp;&nbsp;top: 0;<br>
+                            &nbsp;&nbsp;z-index: 100;<br>
+                            &nbsp;&nbsp;background-color: white;<br>
+                            &nbsp;&nbsp;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);<br>
+                            &nbsp;&nbsp;border-bottom: 2px solid #6366f1;<br>
+                            }<br>
+                            <br>
+                            nav ul {<br>
+                            &nbsp;&nbsp;display: flex;<br>
+                            &nbsp;&nbsp;list-style: none;<br>
+                            &nbsp;&nbsp;gap: 2rem;<br>
+                            }
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenge 4 -->
+            <div class="challenge-box">
+                <h4>Challenge 4: Create a Dropdown Menu</h4>
+                <p><strong>Goal:</strong> Build a dropdown menu where the submenu appears absolutely positioned below the parent item on hover.</p>
+                <p><strong>Hint:</strong> Parent needs <code>position: relative</code>, child needs <code>position: absolute</code>, <code>top: 100%</code></p>
+                <button onclick="showChallengeSolution(4)">Show Solution</button>
+                <div id="challenge4-solution" style="display: none; margin-top: 1rem;">
+                    <p><strong>Solution:</strong></p>
+                    <div class="code-section">
+                        <code>
+                            .menu-item {<br>
+                            &nbsp;&nbsp;position: relative;<br>
+                            &nbsp;&nbsp;display: inline-block;<br>
+                            }<br>
+                            <br>
+                            .submenu {<br>
+                            &nbsp;&nbsp;position: absolute;<br>
+                            &nbsp;&nbsp;top: 100%;<br>
+                            &nbsp;&nbsp;left: 0;<br>
+                            &nbsp;&nbsp;background-color: white;<br>
+                            &nbsp;&nbsp;min-width: 200px;<br>
+                            &nbsp;&nbsp;box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);<br>
+                            &nbsp;&nbsp;display: none;<br>
+                            }<br>
+                            <br>
+                            .menu-item:hover .submenu {<br>
+                            &nbsp;&nbsp;display: block;<br>
+                            }
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenge 5 -->
+            <div class="challenge-box">
+                <h4>Challenge 5: Create a Floating Action Button (FAB)</h4>
+                <p><strong>Goal:</strong> Build a floating button that stays in the corner of the screen and scrolls with the page (or stays fixed, your choice).</p>
+                <p><strong>Hint:</strong> Use <code>position: fixed</code>, <code>bottom: 2rem</code>, <code>right: 2rem</code></p>
+                <button onclick="showChallengeSolution(5)">Show Solution</button>
+                <div id="challenge5-solution" style="display: none; margin-top: 1rem;">
+                    <p><strong>Solution:</strong></p>
+                    <div class="code-section">
+                        <code>
+                            .fab {<br>
+                            &nbsp;&nbsp;position: fixed;<br>
+                            &nbsp;&nbsp;bottom: 2rem;<br>
+                            &nbsp;&nbsp;right: 2rem;<br>
+                            &nbsp;&nbsp;width: 60px;<br>
+                            &nbsp;&nbsp;height: 60px;<br>
+                            &nbsp;&nbsp;border-radius: 50%;<br>
+                            &nbsp;&nbsp;background: linear-gradient(135deg, #6366f1, #ec4899);<br>
+                            &nbsp;&nbsp;color: white;<br>
+                            &nbsp;&nbsp;border: none;<br>
+                            &nbsp;&nbsp;font-size: 1.5rem;<br>
+                            &nbsp;&nbsp;cursor: pointer;<br>
+                            &nbsp;&nbsp;box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);<br>
+                            &nbsp;&nbsp;z-index: 999;<br>
+                            }
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Real-World Projects Section -->
+        <section id="real-world-projects">
+            <h2>Real-World Projects</h2>
+
+            <!-- Project 1 -->
+            <div class="challenge-box">
+                <h4>Project 1: Product Card with Badge</h4>
+                <p>Create a product card with a corner badge using absolute positioning. Badge should be positioned in the top-right corner.</p>
+                <div style="position: relative; width: 300px; background-color: var(--bg-secondary); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+                    <div style="height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">Image Area</div>
+                    <div style="padding: 1rem; position: relative;">
+                        <h4 style="margin-bottom: 0.5rem;">Product Name</h4>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Product description here</p>
+                        <span style="color: var(--text-secondary);">$99.99</span>
+                    </div>
+                    <div style="position: absolute; top: -10px; right: -10px; background: linear-gradient(135deg, var(--accent-color), #d97706); color: white; padding: 0.5rem 1rem; border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-weight: bold; text-align: center;">
+                        NEW
+                    </div>
+                </div>
+                <button onclick="showChallengeSolution('proj1')">Show CSS</button>
+                <div id="proj1-solution" style="display: none; margin-top: 1rem;">
+                    <div class="code-section">
+                        <code>
+                            .product-card {<br>
+                            &nbsp;&nbsp;position: relative;<br>
+                            &nbsp;&nbsp;background-color: white;<br>
+                            &nbsp;&nbsp;border-radius: 8px;<br>
+                            &nbsp;&nbsp;overflow: hidden;<br>
+                            }<br>
+                            <br>
+                            .badge {<br>
+                            &nbsp;&nbsp;position: absolute;<br>
+                            &nbsp;&nbsp;top: -10px;<br>
+                            &nbsp;&nbsp;right: -10px;<br>
+                            &nbsp;&nbsp;width: 80px;<br>
+                            &nbsp;&nbsp;height: 80px;<br>
+                            &nbsp;&nbsp;background: linear-gradient(135deg, #f59e0b, #d97706);<br>
+                            &nbsp;&nbsp;border-radius: 50%;<br>
+                            &nbsp;&nbsp;display: flex;<br>
+                            &nbsp;&nbsp;align-items: center;<br>
+                            &nbsp;&nbsp;justify-content: center;<br>
+                            }
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="challenge-box">
+                <h4>Project 2: Image Gallery with Overlay Labels</h4>
+                <p>Create an image gallery with overlay labels that appear on hover. Labels should be positioned at the bottom using absolute positioning.</p>
+                <div class="grid-example" style="margin: 1rem 0;">
+                    <div style="position: relative; width: 100%; height: 150px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; overflow: hidden;">
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; padding: 1rem; opacity: 0; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0'">
+                            Image 1
+                        </div>
+                    </div>
+                    <div style="position: relative; width: 100%; height: 150px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 8px; overflow: hidden;">
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; padding: 1rem; opacity: 0; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0'">
+                            Image 2
+                        </div>
+                    </div>
+                    <div style="position: relative; width: 100%; height: 150px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 8px; overflow: hidden;">
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; padding: 1rem; opacity: 0; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0'">
+                            Image 3
+                        </div>
+                    </div>
+                </div>
+                <button onclick="showChallengeSolution('proj2')">Show CSS</button>
+                <div id="proj2-solution" style="display: none; margin-top: 1rem;">
+                    <div class="code-section">
+                        <code>
+                            .gallery-item {<br>
+                            &nbsp;&nbsp;position: relative;<br>
+                            &nbsp;&nbsp;overflow: hidden;<br>
+                            }<br>
+                            <br>
+                            .gallery-label {<br>
+                            &nbsp;&nbsp;position: absolute;<br>
+                            &nbsp;&nbsp;bottom: 0;<br>
+                            &nbsp;&nbsp;left: 0;<br>
+                            &nbsp;&nbsp;right: 0;<br>
+                            &nbsp;&nbsp;background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);<br>
+                            &nbsp;&nbsp;color: white;<br>
+                            &nbsp;&nbsp;padding: 1rem;<br>
+                            &nbsp;&nbsp;opacity: 0;<br>
+                            &nbsp;&nbsp;transition: opacity 0.3s;<br>
+                            }<br>
+                            <br>
+                            .gallery-item:hover .gallery-label {<br>
+                            &nbsp;&nbsp;opacity: 1;<br>
+                            }
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="challenge-box">
+                <h4>Project 3: Sticky Table Header on Scroll</h4>
+                <p>Create a table with a sticky header that remains visible while scrolling through the table content.</p>
+                <div style="max-height: 300px; overflow-y: auto; border: 2px solid var(--neutral-300); border-radius: 4px;">
+                    <table>
+                        <thead style="position: sticky; top: 0; background-color: var(--primary-color); color: white; z-index: 10;">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>John Doe</td><td>john@example.com</td><td>Active</td></tr>
+                            <tr><td>Jane Smith</td><td>jane@example.com</td><td>Active</td></tr>
+                            <tr><td>Bob Johnson</td><td>bob@example.com</td><td>Inactive</td></tr>
+                            <tr><td>Alice Brown</td><td>alice@example.com</td><td>Active</td></tr>
+                            <tr><td>Charlie Davis</td><td>charlie@example.com</td><td>Active</td></tr>
+                            <tr><td>Diana Evans</td><td>diana@example.com</td><td>Inactive</td></tr>
+                            <tr><td>Eve Wilson</td><td>eve@example.com</td><td>Active</td></tr>
+                            <tr><td>Frank Moore</td><td>frank@example.com</td><td>Active</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button onclick="showChallengeSolution('proj3')">Show CSS</button>
+                <div id="proj3-solution" style="display: none; margin-top: 1rem;">
+                    <div class="code-section">
+                        <code>
+                            table {<br>
+                            &nbsp;&nbsp;width: 100%;<br>
+                            &nbsp;&nbsp;border-collapse: collapse;<br>
+                            }<br>
+                            <br>
+                            thead {<br>
+                            &nbsp;&nbsp;position: sticky;<br>
+                            &nbsp;&nbsp;top: 0;<br>
+                            &nbsp;&nbsp;z-index: 10;<br>
+                            &nbsp;&nbsp;background-color: #6366f1;<br>
+                            &nbsp;&nbsp;color: white;<br>
+                            }
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="challenge-box">
+                <h4>Project 4: Chat Bubble Layout with Position</h4>
+                <p>Create a chat interface where messages are positioned using flexbox and absolute positioning for timestamps.</p>
+                <div style="background-color: var(--bg-secondary); border-radius: 8px; padding: 1rem; max-width: 400px;">
+                    <div style="position: relative; margin-bottom: 1rem; display: flex; justify-content: flex-start;">
+                        <div style="background-color: var(--primary-color); color: white; padding: 0.75rem 1rem; border-radius: 12px; max-width: 70%; word-wrap: break-word;">
+                            Hey, how are you?
+                            <div style="position: absolute; bottom: -20px; left: 0; font-size: 0.75rem; color: var(--text-secondary);">10:30 AM</div>
+                        </div>
+                    </div>
+                    <div style="position: relative; margin-bottom: 1rem; display: flex; justify-content: flex-end; margin-top: 2rem;">
+                        <div style="background-color: var(--secondary-color); color: white; padding: 0.75rem 1rem; border-radius: 12px; max-width: 70%; word-wrap: break-word;">
+                            I'm doing great!
+                            <div style="position: absolute; bottom: -20px; right: 0; font-size: 0.75rem; color: var(--text-secondary);">10:31 AM</div>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="showChallengeSolution('proj4')">Show CSS</button>
+                <div id="proj4-solution" style="display: none; margin-top: 1rem;">
+                    <div class="code-section">
+                        <code>
+                            .message {<br>
+                            &nbsp;&nbsp;position: relative;<br>
+                            &nbsp;&nbsp;margin-bottom: 2rem;<br>
+                            &nbsp;&nbsp;display: flex;<br>
+                            }<br>
+                            <br>
+                            .message-bubble {<br>
+                            &nbsp;&nbsp;padding: 0.75rem 1rem;<br>
+                            &nbsp;&nbsp;border-radius: 12px;<br>
+                            &nbsp;&nbsp;max-width: 70%;<br>
+                            }<br>
+                            <br>
+                            .message-time {<br>
+                            &nbsp;&nbsp;position: absolute;<br>
+                            &nbsp;&nbsp;bottom: -20px;<br>
+                            &nbsp;&nbsp;font-size: 0.75rem;<br>
+                            &nbsp;&nbsp;color: #999;<br>
+                            }
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="challenge-box">
+                <h4>Project 5: Notification Toast with Position Fixed</h4>
+                <p>Create a notification toast that appears in the corner and stays visible while scrolling.</p>
+                <button onclick="showToast()">Show Notification</button>
+                <div id="toast" style="position: fixed; bottom: 2rem; right: 2rem; background: linear-gradient(135deg, var(--success-color), #059669); color: white; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); z-index: 1000; display: none; animation: slideIn 0.3s ease;">
+                    ✓ Notification sent successfully!
+                </div>
+                <button onclick="showChallengeSolution('proj5')">Show CSS</button>
+                <div id="proj5-solution" style="display: none; margin-top: 1rem;">
+                    <div class="code-section">
+                        <code>
+                            .toast {<br>
+                            &nbsp;&nbsp;position: fixed;<br>
+                            &nbsp;&nbsp;bottom: 2rem;<br>
+                            &nbsp;&nbsp;right: 2rem;<br>
+                            &nbsp;&nbsp;background-color: #10b981;<br>
+                            &nbsp;&nbsp;color: white;<br>
+                            &nbsp;&nbsp;padding: 1rem 1.5rem;<br>
+                            &nbsp;&nbsp;border-radius: 8px;<br>
+                            &nbsp;&nbsp;box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);<br>
+                            &nbsp;&nbsp;z-index: 1000;<br>
+                            &nbsp;&nbsp;animation: slideIn 0.3s ease;<br>
+                            }<br>
+                            <br>
+                            @keyframes slideIn {<br>
+                            &nbsp;&nbsp;from {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;transform: translateX(400px);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;opacity: 0;<br>
+                            &nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;to {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;transform: translateX(0);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;opacity: 1;<br>
+                            &nbsp;&nbsp;}<br>
+                            }
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Reference Section -->
+        <section id="quick-reference">
+            <h2>Quick Reference</h2>
+
+            <h3>Position Values Summary</h3>
+            <div class="quick-ref">
+                <div class="quick-ref-item">
+                    <strong>static</strong><br>
+                    Default value. Element is positioned in normal document flow.
+                </div>
+                <div class="quick-ref-item">
+                    <strong>relative</strong><br>
+                    Positioned relative to its normal position. Takes up original space.
+                </div>
+                <div class="quick-ref-item">
+                    <strong>absolute</strong><br>
+                    Removed from flow. Positioned relative to nearest positioned ancestor.
+                </div>
+                <div class="quick-ref-item">
+                    <strong>fixed</strong><br>
+                    Removed from flow. Positioned relative to viewport. Fixed when scrolling.
+                </div>
+                <div class="quick-ref-item">
+                    <strong>sticky</strong><br>
+                    Hybrid of relative & fixed. Sticks to container edge while scrolling.
+                </div>
+            </div>
+
+            <h3>Common Position Properties</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Values</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>top</strong></td>
+                        <td>px, %, auto</td>
+                        <td>Distance from top edge</td>
+                    </tr>
+                    <tr>
+                        <td><strong>bottom</strong></td>
+                        <td>px, %, auto</td>
+                        <td>Distance from bottom edge</td>
+                    </tr>
+                    <tr>
+                        <td><strong>left</strong></td>
+                        <td>px, %, auto</td>
+                        <td>Distance from left edge</td>
+                    </tr>
+                    <tr>
+                        <td><strong>right</strong></td>
+                        <td>px, %, auto</td>
+                        <td>Distance from right edge</td>
+                    </tr>
+                    <tr>
+                        <td><strong>z-index</strong></td>
+                        <td>integer, auto</td>
+                        <td>Stacking order (higher = on top)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>inset</strong></td>
+                        <td>value or 4 values</td>
+                        <td>Shorthand for top/right/bottom/left</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Positioning Tips & Tricks</h3>
+            <button class="collapsible">1. Creating Positioning Contexts</button>
+            <div class="content">
+                <p><strong>What:</strong> Any positioned element creates a stacking context for its children.</p>
+                <p><strong>Key:</strong> The nearest positioned ancestor becomes the reference for child absolute positioning.</p>
+                <div class="code-section">
+                    <code>
+                        .parent { position: relative; } /* Creates context */<br>
+                        .child { position: absolute; } /* Relative to parent */
+                    </code>
+                </div>
+            </div>
+
+            <button class="collapsible">2. Centering with Absolute Positioning</button>
+            <div class="content">
+                <p><strong>Method 1: Using inset and margin auto</strong></p>
+                <div class="code-section">
+                    <code>
+                        .parent { position: relative; }<br>
+                        .child {<br>
+                        &nbsp;&nbsp;position: absolute;<br>
+                        &nbsp;&nbsp;inset: 0;<br>
+                        &nbsp;&nbsp;margin: auto;<br>
+                        &nbsp;&nbsp;width: 200px; height: 200px;<br>
+                        }
+                    </code>
+                </div>
+                <p><strong>Method 2: Using transform</strong></p>
+                <div class="code-section">
+                    <code>
+                        .parent { position: relative; }<br>
+                        .child {<br>
+                        &nbsp;&nbsp;position: absolute;<br>
+                        &nbsp;&nbsp;top: 50%; left: 50%;<br>
+                        &nbsp;&nbsp;transform: translate(-50%, -50%);<br>
+                        }
+                    </code>
+                </div>
+            </div>
+
+            <button class="collapsible">3. Z-Index Management</button>
+            <div class="content">
+                <p><strong>Best Practice:</strong> Use z-index values in increments (100, 200, 300) for easier management.</p>
+                <p><strong>Example hierarchy:</strong></p>
+                <div class="code-section">
+                    <code>
+                        .background { z-index: 1; }<br>
+                        .content { z-index: 10; }<br>
+                        .modal { z-index: 1000; }<br>
+                        .tooltip { z-index: 2000; }
+                    </code>
+                </div>
+            </div>
+
+            <button class="collapsible">4. Sticky Positioning Gotchas</button>
+            <div class="content">
+                <p><strong>Important:</strong> Sticky elements are sticky within their parent container, not the viewport.</p>
+                <p><strong>Parent constraints:</strong> Parent must have overflow: visible (default) and enough height.</p>
+                <p><strong>Solution:</strong> If sticky doesn't work, check parent overflow property.</p>
+            </div>
+
+            <button class="collapsible">5. Fixed Positioning Performance</button>
+            <div class="content">
+                <p><strong>Tip:</strong> Fixed elements create new stacking contexts and can impact performance.</p>
+                <p><strong>Best practice:</strong> Use sparingly and consider transform: translateZ(0) for GPU acceleration.</p>
+                <div class="code-section">
+                    <code>
+                        .fixed-element {<br>
+                        &nbsp;&nbsp;position: fixed;<br>
+                        &nbsp;&nbsp;will-change: transform;<br>
+                        &nbsp;&nbsp;transform: translateZ(0);<br>
+                        }
+                    </code>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 CSS Position Practice Guide. All rights reserved.</p>
+        <p>Keep practicing and mastering CSS positioning! 🚀</p>
+    </footer>
+
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const isDark = document.documentElement.style.colorScheme === 'dark';
+            document.documentElement.style.colorScheme = isDark ? 'light' : 'dark';
+        }
+
+        // Relative Positioning
+        let relativeTop = 0;
+        let relativeLeft = 0;
+
+        function moveRelative(direction, value) {
+            const box = document.getElementById('relativeBox');
+            if (direction === 'top') {
+                relativeTop += value;
+                box.style.top = relativeTop + 'px';
+            } else if (direction === 'left') {
+                relativeLeft += value;
+                box.style.left = relativeLeft + 'px';
+            }
+        }
+
+        function resetRelative() {
+            relativeTop = 0;
+            relativeLeft = 0;
+            document.getElementById('relativeBox').style.top = '0px';
+            document.getElementById('relativeBox').style.left = '0px';
+        }
+
+        // Absolute Positioning
+        function positionAbsolute(position) {
+            const box = document.getElementById('absoluteBox');
+            const parent = box.parentElement;
+            const parentHeight = parent.offsetHeight;
+            const parentWidth = parent.offsetWidth;
+
+            switch (position) {
+                case 'top-left':
+                    box.style.top = '10px';
+                    box.style.left = '10px';
+                    box.style.bottom = 'auto';
+                    box.style.right = 'auto';
+                    break;
+                case 'top-right':
+                    box.style.top = '10px';
+                    box.style.right = '10px';
+                    box.style.bottom = 'auto';
+                    box.style.left = 'auto';
+                    break;
+                case 'bottom-left':
+                    box.style.bottom = '10px';
+                    box.style.left = '10px';
+                    box.style.top = 'auto';
+                    box.style.right = 'auto';
+                    break;
+                case 'bottom-right':
+                    box.style.bottom = '10px';
+                    box.style.right = '10px';
+                    box.style.top = 'auto';
+                    box.style.left = 'auto';
+                    break;
+                case 'center':
+                    box.style.top = '50%';
+                    box.style.left = '50%';
+                    box.style.transform = 'translate(-50%, -50%)';
+                    break;
+            }
+        }
+
+        // Z-Index Management
+        function updateZIndex(elementId, zValue) {
+            document.getElementById(elementId).style.zIndex = zValue;
+        }
+
+        function resetZIndex() {
+            document.getElementById('zBox1').style.zIndex = '1';
+            document.getElementById('zBox2').style.zIndex = '2';
+            document.getElementById('zBox3').style.zIndex = '3';
+        }
+
+        // Challenge Solutions
+        function showChallengeSolution(challengeNum) {
+            const solutionId = `challenge${challengeNum}-solution`;
+            const solution = document.getElementById(solutionId);
+            if (solution) {
+                solution.style.display = solution.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        // Project Solutions
+        function showChallengeSolution(id) {
+            const solution = document.getElementById(id + '-solution');
+            if (solution) {
+                solution.style.display = solution.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        // Collapsible
+        document.querySelectorAll('.collapsible').forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                if (content && content.classList.contains('content')) {
+                    content.classList.toggle('show');
+                }
+            });
+        });
+
+        // Toast Notification
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // Smooth scrolling for nav links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS clamp() Function - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .section h2 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .info-box {
+            background: #ffe8e8;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            line-height: 1.7;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .demo-container {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .demo-label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        /* Example 1: Responsive Width */
+        .clamp-width {
+            width: clamp(200px, 50%, 800px);
+            background: #3498db;
+            padding: 15px;
+            color: white;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        /* Example 2: Fluid Typography */
+        .clamp-font {
+            font-size: clamp(16px, 5vw, 48px);
+            font-weight: bold;
+            color: #e74c3c;
+            margin: 15px 0;
+        }
+
+        /* Example 3: Responsive Padding */
+        .clamp-padding {
+            background: #2ecc71;
+            padding: clamp(15px, 3%, 40px);
+            color: white;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        /* Example 4: Gap Sizing */
+        .clamp-gap-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: clamp(10px, 2%, 30px);
+            margin: 15px 0;
+        }
+
+        .clamp-gap-item {
+            background: #f39c12;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Example 5: Height Sizing */
+        .clamp-height {
+            height: clamp(200px, 40vh, 500px);
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+
+        /* Example 6: Border Radius */
+        .clamp-radius {
+            width: 200px;
+            height: 200px;
+            background: #1abc9c;
+            border-radius: clamp(5px, 5%, 50px);
+            margin: 20px auto;
+        }
+
+        /* Example 7: Responsive Card Grid */
+        .clamp-card-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(clamp(200px, 25%, 300px), 1fr)
+            );
+            gap: clamp(15px, 2%, 25px);
+            margin: 15px 0;
+        }
+
+        .clamp-card {
+            background: white;
+            border: 2px solid #e74c3c;
+            border-radius: 8px;
+            padding: clamp(15px, 3%, 25px);
+            text-align: center;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .clamp-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .clamp-card-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Example 8: Line Height */
+        .clamp-line-height {
+            line-height: clamp(1.2, 1.5vw, 1.8);
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-size: 18px;
+        }
+
+        /* Example 9: Margin Sizing */
+        .clamp-margin-1 {
+            background: #3498db;
+            padding: 20px;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .clamp-margin-2 {
+            background: #e74c3c;
+            padding: 20px;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: clamp(20px, 5%, 60px);
+        }
+
+        /* Example 10: Button Sizing */
+        .clamp-button-demo {
+            display: flex;
+            gap: clamp(10px, 2%, 20px);
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .clamp-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: clamp(10px, 2%, 15px) clamp(20px, 3%, 40px);
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: clamp(14px, 1.5vw, 18px);
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .clamp-btn:hover {
+            background: #c0392b;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .comparison-box {
+            padding: 15px;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+            text-align: center;
+        }
+
+        .comparison-box.min {
+            background: #fff3cd;
+            border-color: #ffc107;
+        }
+
+        .comparison-box.max {
+            background: #cfe2ff;
+            border-color: #0d6efd;
+        }
+
+        .comparison-box.clamp {
+            background: #d1ecf1;
+            border-color: #0c5460;
+        }
+
+        .comparison-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .use-case-card {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #e74c3c;
+            margin: 15px 0;
+        }
+
+        .use-case-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th {
+            background: #e74c3c;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        .highlight {
+            background: #ffffcc;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .visual-guide {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .visual-item {
+            margin: 15px 0;
+            padding: 15px;
+            border: 2px solid #e74c3c;
+            border-radius: 5px;
+        }
+
+        .visual-label {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .range-visual {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .range-min, .range-preferred, .range-max {
+            padding: 8px 12px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .range-min {
+            background: #ffd1d1;
+            color: #c0392b;
+        }
+
+        .range-preferred {
+            background: #fff3cd;
+            color: #ff9800;
+        }
+
+        .range-max {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 CSS clamp() Function - Practical Examples</h1>
+
+        <!-- What is clamp() -->
+        <div class="section">
+            <h2>What is the CSS clamp() Function?</h2>
+            <p>The <span class="highlight">clamp()</span> function sets a <strong>minimum</strong>, <strong>preferred</strong>, and <strong>maximum</strong> value. It returns the middle value if it's within the range, or the min/max if it exceeds the bounds.</p>
+
+            <div class="info-box">
+                <strong>Basic Syntax:</strong>
+                <div style="font-family: 'Courier New', monospace; margin-top: 10px;">
+                    property: clamp(minimum, preferred, maximum);
+                </div>
+            </div>
+
+            <div class="success">
+                <strong>✅ Browser Support:</strong> All modern browsers (Chrome 79+, Firefox 75+, Safari 13.1+, Edge 79+)
+            </div>
+
+            <h3>How It Works:</h3>
+            <div class="visual-guide">
+                <div class="visual-item">
+                    <div class="visual-label">clamp(200px, 50%, 800px)</div>
+                    <div class="range-visual">
+                        <div class="range-min">200px (MIN)</div>
+                        <div style="flex: 1; text-align: center; font-size: 1.2rem;">→</div>
+                        <div class="range-preferred">50% (PREFERRED)</div>
+                        <div style="flex: 1; text-align: center; font-size: 1.2rem;">→</div>
+                        <div class="range-max">800px (MAX)</div>
+                    </div>
+                </div>
+            </div>
+
+            <ul style="margin-left: 20px; margin: 15px 0; line-height: 2;">
+                <li><strong>Minimum:</strong> Smallest allowed value</li>
+                <li><strong>Preferred:</strong> Ideal value (usually responsive unit)</li>
+                <li><strong>Maximum:</strong> Largest allowed value</li>
+            </ul>
+        </div>
+
+        <!-- Example 1: Responsive Width -->
+        <div class="section">
+            <h2>Example 1: Responsive Container Width</h2>
+            <p>Create a container with both minimum and maximum constraints.</p>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+.container {
+    width: clamp(200px, 50%, 800px);
+}
+            </div>
+
+            <h3>How it Works:</h3>
+            <ul style="margin-left: 20px; margin: 15px 0; line-height: 2;">
+                <li>Minimum 200px on tiny screens</li>
+                <li>Scales to 50% of parent on medium screens</li>
+                <li>Caps at 800px on large screens</li>
+            </ul>
+
+            <h3>Demo:</h3>
+            <div class="demo-container">
+                <div class="demo-label">width: clamp(200px, 50%, 800px)</div>
+                <div class="clamp-width">
+                    Resize to see clamp in action
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 2: Fluid Typography -->
+        <div class="section">
+            <h2>Example 2: Fluid Typography (Most Popular Use)</h2>
+            <p>Perfect for creating text that scales smoothly between min and max sizes.</p>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+h1 {
+    font-size: clamp(16px, 5vw, 48px);
+}
+
+h2 {
+    font-size: clamp(14px, 3.5vw, 36px);
+}
+
+p {
+    font-size: clamp(12px, 2vw, 18px);
+}
+            </div>
+
+            <h3>How it Works:</h3>
+            <ul style="margin-left: 20px; margin: 15px 0; line-height: 2;">
+                <li>Minimum 16px for mobile readability</li>
+                <li>Scales to 5% of viewport width</li>
+                <li>Caps at 48px on large screens</li>
+                <li>No media queries needed!</li>
+            </ul>
+
+            <h3>Demo:</h3>
+            <div class="demo-container">
+                <div class="demo-label">font-size: clamp(16px, 5vw, 48px)</div>
+                <div class="clamp-font">
+                    Heading That Scales Perfectly
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 3: Responsive Padding -->
+        <div class="section">
+            <h2>Example 3: Responsive Padding</h2>
+            <p>Add padding that adapts with both minimum and maximum constraints.</p>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+.box {
+    padding: clamp(15px, 3%, 40px);
+}
+            </div>
+
+            <h3>Demo:</h3>
+            <div class="demo-container">
+                <div class="demo-label">padding: clamp(15px, 3%, 40px)</div>
+                <div class="clamp-padding">
+                    Box with smart responsive padding
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 4: Gap Sizing -->
+        <div class="section">
+            <h2>Example 4: Responsive Grid Gap</h2>
+            <p>Control spacing between grid items with minimum and maximum.</p>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: clamp(10px, 2%, 30px);
+}
+            </div>
+
+            <h3>Demo:</h3>
+            <div class="demo-container">
+                <div class="demo-label">gap: clamp(10px, 2%, 30px)</div>
+                <div class="clamp-gap-container">
+                    <div class="clamp-gap-item">Item 1</div>
+                    <div class="clamp-gap-item">Item 2</div>
+                    <div class="clamp-gap-item">Item 3</div>
+                    <div class="clamp-gap-item">Item 4</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 5: Height Sizing -->
+        <div class="section">
+            <h2>Example 5: Responsive Height with Constraints</h2>
+            <p>Create flexible sections that don't get too small or too large.</p>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+.hero {
+    height: clamp(200px, 40vh, 500px);
+}
+            </div>
+
+            <h3>Demo:</h3>
+            <div class="demo-container">
+                <div class="demo-label">height: clamp(200px, 40vh, 500px)</div>
+                <div class="clamp-height">
+                    Hero with Bounded Height
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 6: Border Radius -->
+        <div class="section">
+            <h2>Example 6: Responsive Border Radius</h2>
+            <p>Create rounded corners that scale proportionally.</p>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+.box {
+    border-radius: clamp(5px, 5%, 50px);
+}
+            </div>
+
+            <h3>Demo:</h3>
+            <div class="demo-container">
+                <div class="demo-label">border-radius: clamp(5px, 5%, 50px)</div>
+                <div class="clamp-radius"></div>
+            </div>
+        </div>
+
+        <!-- Example 7: Advanced - Card Grid -->
+        <div class="section">
+            <h2>Example 7: Advanced - Responsive Card Grid</h2>
+            <p>Complete responsive grid layout using clamp().</p>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(clamp(200px, 25%, 300px), 1fr)
+    );
+    gap: clamp(15px, 2%, 25px);
+}
+
+.card {
+    padding: clamp(15px, 3%, 25px);
+}
+            </div>
+
+            <h3>Demo:</h3>
+            <div class="demo-container">
+                <div class="clamp-card-grid">
+                    <div class="clamp-card">
+                        <div class="clamp-card-title">Card 1</div>
+                        <p>Responsive sizing</p>
+                    </div>
+                    <div class="clamp-card">
+                        <div class="clamp-card-title">Card 2</div>
+                        <p>With clamp()</p>
+                    </div>
+                    <div class="clamp-card">
+                        <div class="clamp-card-title">Card 3</div>
+                        <p>All devices</p>
+                    </div>
+                    <div class="clamp-card">
+                        <div class="clamp-card-title">Card 4</div>
+                        <p>Perfect fit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 8: Line Height -->
+        <div class="section">
+            <h2>Example 8: Responsive Line Height</h2>
+            <p>Optimize readability with line height that scales.</p>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+.text {
+    line-height: clamp(1.2, 1.5vw, 1.8);
+}
+            </div>
+
+            <h3>Demo:</h3>
+            <div class="demo-container">
+                <div class="clamp-line-height">
+                    <p>This is a long paragraph that demonstrates how line-height: clamp(1.2, 1.5vw, 1.8) creates optimal readability at any screen size. The spacing between lines stays comfortable whether you're on mobile or desktop.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 9: Margin Spacing -->
+        <div class="section">
+            <h2>Example 9: Responsive Margin Between Elements</h2>
+            <p>Create smart spacing that adapts to viewport.</p>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+.element + .element {
+    margin-top: clamp(20px, 5%, 60px);
+}
+            </div>
+
+            <h3>Demo:</h3>
+            <div class="demo-container">
+                <div class="clamp-margin-1">First Element</div>
+                <div class="clamp-margin-2">Second Element (with clamp margin)</div>
+            </div>
+        </div>
+
+        <!-- Example 10: Button Sizing -->
+        <div class="section">
+            <h2>Example 10: Accessible Button Sizing</h2>
+            <p>Buttons that scale responsively but stay clickable (min 44px).</p>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+.button {
+    padding: clamp(10px, 2%, 15px) clamp(20px, 3%, 40px);
+    font-size: clamp(14px, 1.5vw, 18px);
+}
+            </div>
+
+            <h3>Demo:</h3>
+            <div class="demo-container">
+                <div class="clamp-button-demo">
+                    <button class="clamp-btn">Click Me</button>
+                    <button class="clamp-btn">Submit</button>
+                    <button class="clamp-btn">Learn More</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison: min() vs max() vs clamp() -->
+        <div class="section">
+            <h2>Comparison: min(), max(), and clamp()</h2>
+
+            <h3>Visual Comparison:</h3>
+            <div class="comparison-grid">
+                <div class="comparison-box min">
+                    <div class="comparison-title">min()</div>
+                    <p>Returns <strong>smallest</strong> value</p>
+                    <div style="font-family: 'Courier New', monospace; margin-top: 10px; font-size: 0.9rem;">
+                        min(90%, 600px)
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">Sets a <strong>maximum</strong> limit</p>
+                </div>
+
+                <div class="comparison-box max">
+                    <div class="comparison-title">max()</div>
+                    <p>Returns <strong>largest</strong> value</p>
+                    <div style="font-family: 'Courier New', monospace; margin-top: 10px; font-size: 0.9rem;">
+                        max(300px, 50%)
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">Sets a <strong>minimum</strong> constraint</p>
+                </div>
+
+                <div class="comparison-box clamp">
+                    <div class="comparison-title">clamp()</div>
+                    <p>Sets <strong>min, preferred, max</strong></p>
+                    <div style="font-family: 'Courier New', monospace; margin-top: 10px; font-size: 0.9rem;">
+                        clamp(16px, 2vw, 32px)
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">Sets <strong>both</strong> boundaries</p>
+                </div>
+            </div>
+
+            <h3>Decision Tree:</h3>
+            <table style="margin-top: 20px;">
+                <thead>
+                    <tr>
+                        <th>Use Case</th>
+                        <th>Function</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Only want a <strong>maximum</strong> width</td>
+                        <td><strong>min()</strong></td>
+                        <td><code>width: min(90%, 600px)</code></td>
+                    </tr>
+                    <tr>
+                        <td>Only want a <strong>minimum</strong> width</td>
+                        <td><strong>max()</strong></td>
+                        <td><code>width: max(200px, 50%)</code></td>
+                    </tr>
+                    <tr>
+                        <td>Want <strong>both minimum and maximum</strong></td>
+                        <td><strong>clamp()</strong></td>
+                        <td><code>width: clamp(200px, 50%, 800px)</code></td>
+                    </tr>
+                    <tr>
+                        <td>Need to prevent overflow</td>
+                        <td><strong>min()</strong></td>
+                        <td><code>max-width: min(100%, 600px)</code></td>
+                    </tr>
+                    <tr>
+                        <td>Need to ensure visibility</td>
+                        <td><strong>max()</strong></td>
+                        <td><code>padding: max(20px, 2%)</code></td>
+                    </tr>
+                    <tr>
+                        <td>Fluid typography</td>
+                        <td><strong>clamp()</strong></td>
+                        <td><code>font-size: clamp(16px, 5vw, 48px)</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Use Cases Table -->
+        <div class="section">
+            <h2>Common Use Cases for clamp()</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Use Case</th>
+                        <th>CSS Code</th>
+                        <th>Benefit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Fluid Headings</strong></td>
+                        <td><code>font-size: clamp(24px, 6vw, 60px)</code></td>
+                        <td>Perfect heading scaling on all devices</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Body Text</strong></td>
+                        <td><code>font-size: clamp(14px, 2vw, 20px)</code></td>
+                        <td>Always readable, no media queries</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Container Width</strong></td>
+                        <td><code>width: clamp(300px, 90%, 1200px)</code></td>
+                        <td>Responsive layout with bounds</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Spacing</strong></td>
+                        <td><code>margin: clamp(20px, 5%, 60px)</code></td>
+                        <td>Proportional spacing with limits</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Touch Targets</strong></td>
+                        <td><code>min-height: clamp(44px, 5%, 60px)</code></td>
+                        <td>Accessible buttons/links on all sizes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Grid Columns</strong></td>
+                        <td><code>minmax(clamp(200px, 25%, 350px), 1fr)</code></td>
+                        <td>Perfect responsive card layouts</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Best Practices -->
+        <div class="section">
+            <h2>💡 Best Practices</h2>
+
+            <div class="use-case-card">
+                <div class="use-case-title">1. Start with Minimum for Accessibility</div>
+                <p>Always set a reasonable minimum to ensure content is accessible on small devices (min 44px for touch targets)</p>
+            </div>
+
+            <div class="use-case-card">
+                <div class="use-case-title">2. Use Preferred Value Smartly</div>
+                <p>The middle value should be responsive - use vw, vh, or % for fluid scaling</p>
+            </div>
+
+            <div class="use-case-card">
+                <div class="use-case-title">3. Keep Ranges Reasonable</div>
+                <p>Don't set min and max values too far apart - the range should be visually consistent</p>
+            </div>
+
+            <div class="use-case-card">
+                <div class="use-case-title">4. Typography First</div>
+                <p>clamp() is most powerful for fonts - use it for headings, body text, and reading experience</p>
+            </div>
+
+            <div class="use-case-card">
+                <div class="use-case-title">5. Test Extensively</div>
+                <p>Test on real devices from very small phones to large desktop monitors</p>
+            </div>
+
+            <div class="use-case-card">
+                <div class="use-case-title">6. Combine with Grid</div>
+                <p>Use clamp() inside CSS Grid's minmax() for perfect responsive layouts</p>
+            </div>
+        </div>
+
+        <!-- Real-World Example -->
+        <div class="section">
+            <h2>🚀 Real-World Example: Complete Website Setup</h2>
+
+            <h3>Recommended CSS for a Complete Site:</h3>
+            <div class="code-block">
+/* Typography */
+html {
+    font-size: clamp(14px, 1.5vw, 18px);
+}
+
+h1 {
+    font-size: clamp(28px, 6vw, 56px);
+    line-height: clamp(1.2, 1.5vw, 1.5);
+}
+
+h2 {
+    font-size: clamp(24px, 5vw, 42px);
+}
+
+h3 {
+    font-size: clamp(18px, 4vw, 28px);
+}
+
+/* Spacing */
+body {
+    padding: clamp(20px, 5%, 40px);
+}
+
+section {
+    margin: clamp(40px, 8%, 80px) 0;
+}
+
+/* Layout */
+.container {
+    width: clamp(300px, 90%, 1200px);
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(clamp(200px, 25%, 300px), 1fr)
+    );
+    gap: clamp(15px, 3%, 30px);
+}
+            </div>
+        </div>
+
+        <!-- Browser Fallback -->
+        <div class="section">
+            <h2>Browser Fallback Example</h2>
+
+            <h3>With Fallback for Older Browsers:</h3>
+            <div class="code-block">
+.heading {
+    /* Fallback for browsers without clamp() */
+    font-size: 24px;
+
+    /* Modern browsers use this */
+    font-size: clamp(18px, 5vw, 48px);
+}
+            </div>
+
+            <div class="info-box">
+                Older browsers ignore the clamp() value and use the fallback (24px), while modern browsers use the fluid clamp() value.
+            </div>
+        </div>
+
+        <!-- Performance Note -->
+        <div class="section">
+            <h2>⚡ Performance & Browser Support</h2>
+
+            <div class="success">
+                <strong>✅ Performance Benefits:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>No JavaScript needed</li>
+                    <li>Calculations happen at render time</li>
+                    <li>Better than media queries for many use cases</li>
+                    <li>Reduces CSS file size</li>
+                </ul>
+            </div>
+
+            <h3>Browser Support Timeline:</h3>
+            <ul style="margin-left: 20px; margin: 15px 0; line-height: 2;">
+                <li><strong>Chrome:</strong> 79+ (Jan 2020)</li>
+                <li><strong>Firefox:</strong> 75+ (Jan 2020)</li>
+                <li><strong>Safari:</strong> 13.1+ (Mar 2020)</li>
+                <li><strong>Edge:</strong> 79+ (Jan 2020)</li>
+                <li><strong>Mobile Browsers:</strong> All modern versions</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

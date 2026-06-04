@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Table Properties - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .example-section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .example-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .example-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .example-desc {
+            font-size: 0.95em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .example-content {
+            padding: 30px;
+        }
+
+        .demo-wrapper {
+            margin-bottom: 25px;
+        }
+
+        .demo-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-radius: 4px;
+            color: #333;
+        }
+
+        /* ==================== EXAMPLE 1: FINANCIAL REPORT ==================== */
+        .financial-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+
+        .financial-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        .financial-table th {
+            padding: 15px;
+            text-align: right;
+        }
+
+        .financial-table th:first-child {
+            text-align: left;
+        }
+
+        .financial-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ecf0f1;
+            text-align: right;
+        }
+
+        .financial-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .financial-table tbody tr {
+            background: #f8f9fa;
+            transition: background 0.3s ease;
+        }
+
+        .financial-table tbody tr:hover {
+            background: #e8f4f8;
+            transform: scale(1.01);
+        }
+
+        .financial-table tbody tr:nth-child(even) {
+            background: white;
+        }
+
+        .financial-total {
+            background: #2c3e50;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* ==================== EXAMPLE 2: PRODUCT COMPARISON ==================== */
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+
+        .comparison-table thead {
+            background: #1abc9c;
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid #16a085;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border: 1px solid #d5dbdb;
+            text-align: center;
+        }
+
+        .comparison-table td:first-child {
+            text-align: left;
+            background: #ecf0f1;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .comparison-table tbody tr:nth-child(odd) {
+            background: white;
+        }
+
+        .comparison-table tbody tr:nth-child(even) {
+            background: #f8fffe;
+        }
+
+        .checkmark {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .cross {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        /* ==================== EXAMPLE 3: SCHEDULE ==================== */
+        .schedule-table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .schedule-table th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid #2980b9;
+        }
+
+        .schedule-table td {
+            padding: 12px;
+            border: 1px solid #bdc3c7;
+            text-align: center;
+            vertical-align: middle;
+            word-wrap: break-word;
+        }
+
+        .schedule-table td.time {
+            background: #ecf0f1;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .schedule-table tr:nth-child(odd) {
+            background: white;
+        }
+
+        .schedule-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .event-morning {
+            background: #fffacd;
+            border-left: 4px solid #f39c12;
+        }
+
+        .event-afternoon {
+            background: #e8f5f5;
+            border-left: 4px solid #1abc9c;
+        }
+
+        .event-evening {
+            background: #f0e5ff;
+            border-left: 4px solid #9b59b6;
+        }
+
+        /* ==================== EXAMPLE 4: EMPLOYEE DIRECTORY ==================== */
+        .directory-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+
+        .directory-table thead {
+            background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+        }
+
+        .directory-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .directory-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ecf0f1;
+            vertical-align: middle;
+        }
+
+        .directory-table tbody tr {
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        .directory-table tbody tr:hover {
+            background: #fff3e0;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-away {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-offline {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* ==================== EXAMPLE 5: INVENTORY ==================== */
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+
+        .inventory-table thead {
+            background: #34495e;
+            color: white;
+        }
+
+        .inventory-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .inventory-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .inventory-table tbody tr {
+            background: white;
+        }
+
+        .inventory-table tbody tr:nth-child(even) {
+            background: #f5f7f9;
+        }
+
+        .inventory-table tbody tr:hover {
+            background: #ecf0f8;
+        }
+
+        .stock-low {
+            background: #ffcccc;
+            color: #c0392b;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .stock-medium {
+            background: #fff3cd;
+            color: #856404;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .stock-high {
+            background: #d4edda;
+            color: #155724;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        /* ==================== EXAMPLE 6: RESPONSIVE DATA ==================== */
+        .responsive-table {
+            width: 100%;
+            table-layout: auto;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+
+        .responsive-table thead {
+            background: #8e44ad;
+            color: white;
+        }
+
+        .responsive-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .responsive-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .responsive-table tbody tr {
+            background: white;
+        }
+
+        .responsive-table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .responsive-table tbody tr:hover {
+            background: #f0e6ff;
+        }
+
+        /* ==================== EXAMPLE 7: PRICING TABLE ==================== */
+        .pricing-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .pricing-table thead {
+            background: linear-gradient(90deg, #2980b9 0%, #3498db 100%);
+            color: white;
+        }
+
+        .pricing-table th {
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .pricing-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #bdc3c7;
+        }
+
+        .pricing-table td:first-child {
+            text-align: left;
+            background: #ecf0f1;
+            font-weight: 500;
+        }
+
+        .pricing-featured {
+            background: #e3f2fd;
+            font-weight: 600;
+            color: #1565c0;
+        }
+
+        .price-highlight {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        /* ==================== EXAMPLE 8: EMPTY CELLS ==================== */
+        .empty-show-table {
+            width: 100%;
+            empty-cells: show;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+
+        .empty-hide-table {
+            width: 100%;
+            empty-cells: hide;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+
+        .empty-show-table th, .empty-show-table td,
+        .empty-hide-table th, .empty-hide-table td {
+            border: 2px solid #e74c3c;
+            padding: 12px;
+        }
+
+        .empty-show-table th,
+        .empty-hide-table th {
+            background: #e74c3c;
+            color: white;
+            font-weight: 600;
+        }
+
+        .empty-show-table tbody tr,
+        .empty-hide-table tbody tr {
+            background: #fadbd8;
+        }
+
+        .empty-show-table tbody tr:nth-child(even),
+        .empty-hide-table tbody tr:nth-child(even) {
+            background: white;
+        }
+
+        /* ==================== TIPS SECTION ==================== */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tip-card {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 6px;
+        }
+
+        .tip-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .tip-card p {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .label {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .example-header h2 {
+                font-size: 1.3em;
+            }
+
+            .schedule-table {
+                font-size: 0.8em;
+            }
+
+            .schedule-table th,
+            .schedule-table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 CSS Table Properties</h1>
+        <p class="subtitle">Real-World Practical Examples & Use Cases</p>
+
+        <!-- ==================== EXAMPLE 1 ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>1. Financial Report Table</h2>
+                <p class="example-desc">Professional financial data with hover effects and total row styling</p>
+            </div>
+            <div class="example-content">
+                <span class="label">border-collapse: collapse</span>
+                <span class="label">Hover effects</span>
+                <span class="label">Alternating rows</span>
+
+                <table class="financial-table">
+                    <thead>
+                        <tr>
+                            <th>Quarter</th>
+                            <th>Revenue</th>
+                            <th>Expenses</th>
+                            <th>Profit</th>
+                            <th>Growth</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Q1 2026</td>
+                            <td>$245,000</td>
+                            <td>$189,000</td>
+                            <td>$56,000</td>
+                            <td>+8.5%</td>
+                        </tr>
+                        <tr>
+                            <td>Q2 2026</td>
+                            <td>$312,000</td>
+                            <td>$198,000</td>
+                            <td>$114,000</td>
+                            <td>+22.3%</td>
+                        </tr>
+                        <tr>
+                            <td>Q3 2026</td>
+                            <td>$425,000</td>
+                            <td>$215,000</td>
+                            <td>$210,000</td>
+                            <td>+35.7%</td>
+                        </tr>
+                        <tr>
+                            <td>Q4 2026</td>
+                            <td>$512,000</td>
+                            <td>$245,000</td>
+                            <td>$267,000</td>
+                            <td>+42.1%</td>
+                        </tr>
+                        <tr class="financial-total">
+                            <td>Annual Total</td>
+                            <td>$1,494,000</td>
+                            <td>$847,000</td>
+                            <td>$647,000</td>
+                            <td>+27.2%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+.financial-table tbody tr:hover {
+    background: #e8f4f8;
+    transform: scale(1.01);
+}
+
+.financial-total {
+    background: #2c3e50;
+    color: white;
+    font-weight: 600;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Tip:</strong> Use alternating row colors (nth-child) to improve readability for financial data. Add hover effects to help users focus on specific rows.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 2 ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>2. Product Comparison Table</h2>
+                <p class="example-desc">Feature comparison with checkmarks and visual separation</p>
+            </div>
+            <div class="example-content">
+                <span class="label">border-collapse: separate</span>
+                <span class="label">border-spacing</span>
+                <span class="label">Visual hierarchy</span>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Starter</th>
+                            <th>Professional</th>
+                            <th>Enterprise</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Users</td>
+                            <td>1-5</td>
+                            <td>6-50</td>
+                            <td>Unlimited</td>
+                        </tr>
+                        <tr>
+                            <td>Storage</td>
+                            <td>10GB</td>
+                            <td>100GB</td>
+                            <td>Unlimited</td>
+                        </tr>
+                        <tr>
+                            <td>API Access</td>
+                            <td><span class="cross">✕</span></td>
+                            <td><span class="checkmark">✓</span></td>
+                            <td><span class="checkmark">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Priority Support</td>
+                            <td><span class="cross">✕</span></td>
+                            <td><span class="checkmark">✓</span></td>
+                            <td><span class="checkmark">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Custom Branding</td>
+                            <td><span class="cross">✕</span></td>
+                            <td><span class="cross">✕</span></td>
+                            <td><span class="checkmark">✓</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+.comparison-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.comparison-table td:first-child {
+    background: #ecf0f1;
+    font-weight: 600;
+}
+
+.checkmark { color: #27ae60; }
+.cross { color: #e74c3c; }
+                </div>
+
+                <div class="note">
+                    <strong>💡 Tip:</strong> Use separate borders with border-spacing for cleaner comparison tables. Highlight feature names and use visual symbols (✓/✕) for quick scanning.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 3 ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>3. Weekly Schedule/Timetable</h2>
+                <p class="example-desc">Fixed table layout for content that might wrap</p>
+            </div>
+            <div class="example-content">
+                <span class="label">table-layout: fixed</span>
+                <span class="label">Text wrapping</span>
+                <span class="label">Color coding</span>
+
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="time">9:00 AM</td>
+                            <td class="event-morning">Team Standup Meeting</td>
+                            <td class="event-morning">Project Review</td>
+                            <td class="event-morning">Code Review Session</td>
+                            <td class="event-morning">Planning</td>
+                        </tr>
+                        <tr>
+                            <td class="time">2:00 PM</td>
+                            <td class="event-afternoon">Client Call</td>
+                            <td class="event-afternoon">Design Workshop</td>
+                            <td class="event-afternoon">Testing Phase</td>
+                            <td class="event-afternoon">Demo Preparation</td>
+                        </tr>
+                        <tr>
+                            <td class="time">5:00 PM</td>
+                            <td class="event-evening">Development Work</td>
+                            <td class="event-evening">Documentation</td>
+                            <td class="event-evening">Bug Fixes</td>
+                            <td class="event-evening">Deployment</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+.schedule-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.schedule-table td {
+    word-wrap: break-word;
+}
+
+.event-morning { background: #fffacd; border-left: 4px solid #f39c12; }
+.event-afternoon { background: #e8f5f5; border-left: 4px solid #1abc9c; }
+.event-evening { background: #f0e5ff; border-left: 4px solid #9b59b6; }
+                </div>
+
+                <div class="note">
+                    <strong>💡 Tip:</strong> Use table-layout: fixed for schedules where content might overflow. The fixed layout forces word wrapping, maintaining consistent column widths.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 4 ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>4. Employee Directory</h2>
+                <p class="example-desc">User data with status badges and vertical alignment</p>
+            </div>
+            <div class="example-content">
+                <span class="label">vertical-align: middle</span>
+                <span class="label">Status indicators</span>
+                <span class="label">Hover interaction</span>
+
+                <table class="directory-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alice Johnson</td>
+                            <td>Engineering</td>
+                            <td>alice@company.com</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Bob Williams</td>
+                            <td>Marketing</td>
+                            <td>bob@company.com</td>
+                            <td><span class="status-badge status-away">Away</span></td>
+                        </tr>
+                        <tr>
+                            <td>Carol Davis</td>
+                            <td>Sales</td>
+                            <td>carol@company.com</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>David Miller</td>
+                            <td>HR</td>
+                            <td>david@company.com</td>
+                            <td><span class="status-badge status-offline">Offline</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+.directory-table td {
+    vertical-align: middle;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.status-active { background: #d4edda; color: #155724; }
+.status-away { background: #fff3cd; color: #856404; }
+.status-offline { background: #f8d7da; color: #721c24; }
+                </div>
+
+                <div class="note">
+                    <strong>💡 Tip:</strong> Use vertical-align: middle with inline badges for better visual alignment. Status colors follow intuitive conventions (green=active, yellow=away, red=offline).
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 5 ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>5. Inventory Management</h2>
+                <p class="example-desc">Stock levels with color-coded indicators</p>
+            </div>
+            <div class="example-content">
+                <span class="label">border-collapse: collapse</span>
+                <span class="label">Status indicators</span>
+                <span class="label">Data visualization</span>
+
+                <table class="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Stock Level</th>
+                            <th>Min Level</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#SK001</td>
+                            <td>Wireless Mouse</td>
+                            <td>245</td>
+                            <td>50</td>
+                            <td><span class="stock-high">In Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>#SK002</td>
+                            <td>USB-C Cable</td>
+                            <td>38</td>
+                            <td>100</td>
+                            <td><span class="stock-low">Low</span></td>
+                        </tr>
+                        <tr>
+                            <td>#SK003</td>
+                            <td>Mechanical Keyboard</td>
+                            <td>156</td>
+                            <td>50</td>
+                            <td><span class="stock-high">In Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>#SK004</td>
+                            <td>Monitor Stand</td>
+                            <td>72</td>
+                            <td>30</td>
+                            <td><span class="stock-medium">Medium</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+.stock-low {
+    background: #ffcccc;
+    color: #c0392b;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+.stock-medium {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.stock-high {
+    background: #d4edda;
+    color: #155724;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Tip:</strong> Color-code inventory status levels for quick visual scanning. Use inline badges to provide immediate context about stock availability.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 6 ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>6. Performance Metrics</h2>
+                <p class="example-desc">Auto layout for flexible content sizing</p>
+            </div>
+            <div class="example-content">
+                <span class="label">table-layout: auto</span>
+                <span class="label">Flexible sizing</span>
+                <span class="label">Responsive</span>
+
+                <table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Current</th>
+                            <th>Target</th>
+                            <th>Variance</th>
+                            <th>Trend</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Page Load Time</td>
+                            <td>1.2s</td>
+                            <td>1.0s</td>
+                            <td>+20%</td>
+                            <td>📈 Improving</td>
+                        </tr>
+                        <tr>
+                            <td>Error Rate</td>
+                            <td>0.5%</td>
+                            <td>0.2%</td>
+                            <td>+150%</td>
+                            <td>📉 Needs Work</td>
+                        </tr>
+                        <tr>
+                            <td>Uptime</td>
+                            <td>99.95%</td>
+                            <td>99.99%</td>
+                            <td>-0.04%</td>
+                            <td>📈 Excellent</td>
+                        </tr>
+                        <tr>
+                            <td>API Response</td>
+                            <td>145ms</td>
+                            <td>100ms</td>
+                            <td>+45%</td>
+                            <td>📉 Needs Optimization</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+.responsive-table {
+    table-layout: auto;
+    width: 100%;
+}
+
+/* Auto layout allows columns to size based on content */
+                </div>
+
+                <div class="note">
+                    <strong>💡 Tip:</strong> Use table-layout: auto when content length varies significantly. The browser will automatically adjust column widths based on content, providing better responsiveness.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 7 ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>7. Pricing Plans with Caption</h2>
+                <p class="example-desc">Professional pricing table with table caption</p>
+            </div>
+            <div class="example-content">
+                <span class="label">border-spacing</span>
+                <span class="label">caption-side: top</span>
+                <span class="label">Visual hierarchy</span>
+
+                <table class="pricing-table">
+                    <caption style="background: #2980b9; color: white; padding: 15px; margin-bottom: 2px; font-weight: 600;">2026 Pricing Plans - Choose Your Perfect Plan</caption>
+                    <thead>
+                        <tr>
+                            <th>Plan Type</th>
+                            <th>Monthly Cost</th>
+                            <th>Annual Cost</th>
+                            <th>Savings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Starter Plan</td>
+                            <td><span class="price-highlight">$29</span>/mo</td>
+                            <td>$290/yr</td>
+                            <td>Save $58</td>
+                        </tr>
+                        <tr class="pricing-featured">
+                            <td>🌟 Professional Plan</td>
+                            <td><span class="price-highlight">$79</span>/mo</td>
+                            <td>$790/yr</td>
+                            <td>Save $158</td>
+                        </tr>
+                        <tr>
+                            <td>Enterprise Plan</td>
+                            <td><span class="price-highlight">Custom</span></td>
+                            <td>Custom</td>
+                            <td>Contact us</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+caption {
+    caption-side: top;
+    background: #2980b9;
+    color: white;
+    padding: 15px;
+}
+
+.pricing-featured {
+    background: #e3f2fd;
+    font-weight: 600;
+    color: #1565c0;
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Tip:</strong> Use table captions to add context and description. Highlight featured options (like "Professional Plan") with distinct styling to draw user attention.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXAMPLE 8 ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>8. Empty Cells Comparison</h2>
+                <p class="example-desc">Show vs Hide behavior for empty cells</p>
+            </div>
+            <div class="example-content">
+                <span class="label">empty-cells: show</span>
+                <span class="label">empty-cells: hide</span>
+                <span class="label">Subtle but useful</span>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <h4 style="margin-bottom: 10px; color: #333;">empty-cells: show (default)</h4>
+                        <table class="empty-show-table">
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Login</td>
+                                    <td>✓</td>
+                                </tr>
+                                <tr>
+                                    <td>API</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Export</td>
+                                    <td>✓</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 10px; color: #333;">empty-cells: hide</h4>
+                        <table class="empty-hide-table">
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Login</td>
+                                    <td>✓</td>
+                                </tr>
+                                <tr>
+                                    <td>API</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Export</td>
+                                    <td>✓</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="code-block">
+.show-empty-table {
+    empty-cells: show;  /* Displays border and background */
+}
+
+.hide-empty-table {
+    empty-cells: hide;  /* Hides border and background */
+}
+                </div>
+
+                <div class="note">
+                    <strong>💡 Tip:</strong> Notice the difference: "show" displays the border and background on the empty API cell, while "hide" makes it completely disappear. Only works with border-collapse: collapse.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TIPS SECTION ==================== -->
+        <div class="example-section">
+            <div class="example-header">
+                <h2>✨ Best Practices & Tips</h2>
+                <p class="example-desc">Guidelines for creating effective data tables</p>
+            </div>
+            <div class="example-content">
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>1. Choose the Right Collapse Mode</h4>
+                        <p><strong>border-collapse: collapse</strong> → Clean, merged borders (most common). <strong>border-collapse: separate</strong> → More spacing, distinctive cells.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>2. Use Fixed Layout Wisely</h4>
+                        <p><strong>table-layout: fixed</strong> → Better performance, predictable widths, wraps text. <strong>table-layout: auto</strong> → Content-driven sizing, more flexible.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>3. Vertical Alignment Matters</h4>
+                        <p>Use <strong>vertical-align: middle</strong> for badges and icons. Use <strong>vertical-align: top</strong> for longer content. Default is <strong>baseline</strong>.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>4. Enhance Readability</h4>
+                        <p>Alternate row colors with nth-child. Add hover effects for interactivity. Use borders sparingly. Maintain good contrast ratios.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>5. Accessibility First</h4>
+                        <p>Always use proper <strong>&lt;thead&gt;</strong>, <strong>&lt;tbody&gt;</strong> structure. Use <strong>&lt;caption&gt;</strong> for table description. Include proper color + text cues (not color alone).</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>6. Performance Considerations</h4>
+                        <p><strong>fixed</strong> layout is faster with large tables. <strong>auto</strong> requires more processing. For massive tables, consider pagination or virtualization.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>7. Status Indicators</h4>
+                        <p>Use color-coded badges for status (active/inactive). Combine colors with text for accessibility. Follow intuitive conventions (green=good, red=bad).</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>8. Mobile Responsiveness</h4>
+                        <p>Consider horizontal scrolling or card layouts on mobile. Test table layout on small screens. Use media queries to adjust padding and font sizes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
