@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Display Flow-Root - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-left: 4px solid #764ba2;
+            padding-left: 15px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .intro {
+            font-size: 1.1em;
+            color: #555;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 25px;
+        }
+
+        .reference-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .reference-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .reference-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .reference-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .reference-table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            border: 1px solid #333;
+        }
+
+        .syntax { color: #569cd6; font-weight: bold; }
+        .selector { color: #9cdcfe; }
+        .property { color: #9cdcfe; }
+        .value { color: #ce9178; }
+        .keyword { color: #569cd6; }
+        .comment { color: #6a9955; }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .demo-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border: 2px solid #667eea;
+            padding: 25px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .demo-card:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .demo-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .feature-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .do-dont-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .do-box, .dont-box {
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .do-box {
+            background: rgba(76, 175, 80, 0.05);
+            border-left-color: #4caf50;
+        }
+
+        .do-box h4 {
+            color: #4caf50;
+            margin-bottom: 10px;
+        }
+
+        .dont-box {
+            background: rgba(244, 67, 54, 0.05);
+            border-left-color: #f44336;
+        }
+
+        .dont-box h4 {
+            color: #f44336;
+            margin-bottom: 10px;
+        }
+
+        .browser-support {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .browser-item {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #667eea;
+        }
+
+        .browser-item strong {
+            display: block;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .support-yes {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .support-partial {
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        .support-no {
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        .note-box {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .note-box strong {
+            color: #ff9800;
+        }
+
+        .use-case {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #764ba2;
+        }
+
+        .use-case strong {
+            color: #764ba2;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .syntax-info {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+
+        .syntax-info code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .diagram {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.8;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .do-dont-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Display: Flow-Root</h1>
+            <p>Complete Guide to Understanding and Using the Flow-Root Display Value</p>
+        </header>
+
+        <div class="section">
+            <h2>What is Display: Flow-Root?</h2>
+            <div class="intro">
+                <code>display: flow-root</code> is a CSS display value that establishes a new Block Formatting Context (BFC) without affecting the element's box model or requiring float or absolute positioning. It creates a contained layout context that prevents margin collapse and contains floats, making it an elegant solution to many common CSS layout problems.
+            </div>
+
+            <h3>Key Characteristics:</h3>
+            <ul class="feature-list">
+                <li>Establishes a new Block Formatting Context (BFC)</li>
+                <li>Creates a containing block for floats</li>
+                <li>Prevents margin collapse between parent and child elements</li>
+                <li>Prevents margin collapse with adjacent siblings</li>
+                <li>Does not affect element dimensions or box model</li>
+                <li>Cleaner alternative to overflow: hidden or clearfix hacks</li>
+                <li>Maintains normal document flow (not taken out of flow)</li>
+                <li>Good browser support (modern browsers)</li>
+                <li>Solves float containment problems elegantly</li>
+                <li>No side effects like overflow: hidden might have</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Understanding Block Formatting Context (BFC)</h2>
+
+            <h3>What is a BFC?</h3>
+            <p style="margin: 15px 0;">A Block Formatting Context is a part of a visual CSS rendering that determines how block boxes are laid out and how floats interact with content. When you establish a new BFC, it becomes an isolated layout environment.</p>
+
+            <h3>BFC Characteristics:</h3>
+            <ul class="feature-list">
+                <li>Floats inside BFC don't affect elements outside it</li>
+                <li>Elements inside BFC don't affect elements outside it</li>
+                <li>Margins don't collapse within a BFC</li>
+                <li>Block-level boxes inside a BFC stack vertically</li>
+                <li>Left edge of content aligns with container's left edge</li>
+            </ul>
+
+            <h3>Ways to Create a BFC:</h3>
+            <table class="reference-table">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Syntax</th>
+                        <th>Side Effects</th>
+                        <th>Modern?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>flow-root</strong></td>
+                        <td><code>display: flow-root</code></td>
+                        <td>None</td>
+                        <td>✓ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>overflow (hidden)</strong></td>
+                        <td><code>overflow: hidden</code></td>
+                        <td>Clips content, hides scrollbars</td>
+                        <td>✓ Legacy</td>
+                    </tr>
+                    <tr>
+                        <td><strong>overflow (auto)</strong></td>
+                        <td><code>overflow: auto</code></td>
+                        <td>May show scrollbars</td>
+                        <td>✓ Legacy</td>
+                    </tr>
+                    <tr>
+                        <td><strong>float</strong></td>
+                        <td><code>float: left/right</code></td>
+                        <td>Takes element out of flow</td>
+                        <td>✓ Legacy</td>
+                    </tr>
+                    <tr>
+                        <td><strong>position</strong></td>
+                        <td><code>position: absolute</code></td>
+                        <td>Takes element out of flow</td>
+                        <td>✓ Legacy</td>
+                    </tr>
+                    <tr>
+                        <td><strong>flex/grid</strong></td>
+                        <td><code>display: flex/grid</code></td>
+                        <td>Changes layout type</td>
+                        <td>✓ Modern</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Syntax and Syntax Variants</h2>
+
+            <div class="syntax-info">
+                <h3>Basic Syntax</h3>
+                <div class="code-block">
+<span class="selector">element</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+}
+                </div>
+            </div>
+
+            <h3>That's It!</h3>
+            <p style="margin: 15px 0;"><code>display: flow-root</code> is straightforward with no values or modifiers. It either establishes a new BFC or it doesn't.</p>
+        </div>
+
+        <div class="section">
+            <h2>Common Problems and Solutions</h2>
+
+            <h3>Problem 1: Margin Collapse</h3>
+            <p style="margin: 15px 0;">Without flow-root, margins between parent and first/last child collapse:</p>
+            <div class="code-block">
+<span class="comment">/* WITHOUT flow-root: margins collapse */</span>
+<span class="selector">parent</span> {
+    <span class="property">background</span>: <span class="value">lightblue</span>;
+}
+
+<span class="selector">parent > first-child</span> {
+    <span class="property">margin-top</span>: <span class="value">20px</span>; <span class="comment">/* Collapses with parent! */</span>
+}
+
+<span class="comment">/* WITH flow-root: margins don't collapse */</span>
+<span class="selector">parent</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+    <span class="property">background</span>: <span class="value">lightblue</span>;
+}
+
+<span class="selector">parent > first-child</span> {
+    <span class="property">margin-top</span>: <span class="value">20px</span>; <span class="comment">/* Respects margin now! */</span>
+}
+            </div>
+
+            <h3>Problem 2: Float Overflow</h3>
+            <p style="margin: 15px 0;">Floated elements extend beyond parent container without BFC:</p>
+            <div class="code-block">
+<span class="comment">/* WITHOUT flow-root: float overflows */</span>
+<span class="selector">container</span> {
+    <span class="property">border</span>: <span class="value">2px solid black</span>;
+}
+
+<span class="selector">floated-child</span> {
+    <span class="property">float</span>: <span class="value">left</span>;
+    <span class="property">width</span>: <span class="value">50%</span>;
+}
+
+<span class="comment">/* Container collapses, not containing float */</span>
+
+<span class="comment">/* WITH flow-root: float is contained */</span>
+<span class="selector">container</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+    <span class="property">border</span>: <span class="value">2px solid black</span>;
+}
+
+<span class="selector">floated-child</span> {
+    <span class="property">float</span>: <span class="value">left</span>;
+    <span class="property">width</span>: <span class="value">50%</span>;
+}
+
+<span class="comment">/* Container properly contains float */</span>
+            </div>
+
+            <h3>Problem 3: Adjacent Float Issues</h3>
+            <p style="margin: 15px 0;">Content flows around floats unless it establishes BFC:</p>
+            <div class="code-block">
+<span class="comment">/* WITHOUT flow-root: text flows around float */</span>
+<span class="selector">float</span> {
+    <span class="property">float</span>: <span class="value">left</span>;
+    <span class="property">width</span>: <span class="value">200px</span>;
+}
+
+<span class="selector">content</span> {
+    <span class="property">width</span>: <span class="value">100%</span>;
+    <span class="comment">/* This wraps around float */</span>
+}
+
+<span class="comment">/* WITH flow-root: element respects float */</span>
+<span class="selector">float</span> {
+    <span class="property">float</span>: <span class="value">left</span>;
+    <span class="property">width</span>: <span class="value">200px</span>;
+}
+
+<span class="selector">content</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+    <span class="property">width</span>: <span class="value">100%</span>;
+    <span class="comment">/* Doesn't wrap around float */</span>
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Practical Use Cases</h2>
+
+            <h3>Use Case 1: Container with Floated Items</h3>
+            <div class="code-block">
+<span class="selector">.gallery</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+}
+
+<span class="selector">.gallery-item</span> {
+    <span class="property">float</span>: <span class="value">left</span>;
+    <span class="property">width</span>: <span class="value">33.333%</span>;
+    <span class="property">padding</span>: <span class="value">10px</span>;
+}
+
+<span class="comment">/* Gallery properly contains all floated items */</span>
+            </div>
+
+            <h3>Use Case 2: Sidebar Layout with Floats</h3>
+            <div class="code-block">
+<span class="selector">.sidebar</span> {
+    <span class="property">float</span>: <span class="value">right</span>;
+    <span class="property">width</span>: <span class="value">30%</span>;
+}
+
+<span class="selector">.main</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+    <span class="property">width</span>: <span class="value">70%</span>;
+    <span class="comment">/* Prevents main from wrapping under sidebar */</span>
+}
+            </div>
+
+            <h3>Use Case 3: Margin Spacing</h3>
+            <div class="code-block">
+<span class="selector">.card</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+    <span class="property">padding</span>: <span class="value">20px</span>;
+    <span class="property">background</span>: <span class="value">white</span>;
+}
+
+<span class="selector">.card h3</span> {
+    <span class="property">margin-top</span>: <span class="value">0</span>; <span class="comment">/* No collapse */</span>
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Flow-Root vs Alternative Solutions</h2>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Solution</th>
+                        <th>BFC Created</th>
+                        <th>Side Effects</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>flow-root</strong></td>
+                        <td>✓ Yes</td>
+                        <td>None</td>
+                        <td>Best: No side effects</td>
+                    </tr>
+                    <tr>
+                        <td><strong>overflow: hidden</strong></td>
+                        <td>✓ Yes</td>
+                        <td>Clips content</td>
+                        <td>Legacy workaround</td>
+                    </tr>
+                    <tr>
+                        <td><strong>overflow: auto</strong></td>
+                        <td>✓ Yes</td>
+                        <td>May show scrollbars</td>
+                        <td>Legacy workaround</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Clearfix ::after</strong></td>
+                        <td>✗ No (clears)</td>
+                        <td>Extra element</td>
+                        <td>Legacy workaround</td>
+                    </tr>
+                    <tr>
+                        <td><strong>display: flex</strong></td>
+                        <td>✓ Yes</td>
+                        <td>Changes layout</td>
+                        <td>When flex needed</td>
+                    </tr>
+                    <tr>
+                        <td><strong>display: grid</strong></td>
+                        <td>✓ Yes</td>
+                        <td>Changes layout</td>
+                        <td>When grid needed</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note-box">
+                <strong>💡 Best Practice:</strong> Use <code>display: flow-root</code> when you need BFC behavior without changing the layout type. It's the cleanest solution with no side effects.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Best Practices</h2>
+
+            <div class="do-dont-grid">
+                <div class="do-box">
+                    <h4>✓ DO</h4>
+                    <ul class="feature-list">
+                        <li>Use flow-root for float containment</li>
+                        <li>Use flow-root to prevent margin collapse</li>
+                        <li>Use flow-root for multi-column layouts</li>
+                        <li>Combine with other properties as needed</li>
+                        <li>Use as replacement for clearfix hacks</li>
+                        <li>Document why you're using it</li>
+                        <li>Test with nested content</li>
+                        <li>Consider performance (generally none)</li>
+                    </ul>
+                </div>
+
+                <div class="dont-box">
+                    <h4>✗ DON'T</h4>
+                    <ul class="feature-list">
+                        <li>Don't use if flex/grid is more appropriate</li>
+                        <li>Don't assume it works in IE11 (not supported)</li>
+                        <li>Don't use when position: absolute is needed</li>
+                        <li>Don't use with z-index management</li>
+                        <li>Don't use if overflow behavior needed</li>
+                        <li>Don't combine with overflow properties</li>
+                        <li>Don't use on every element</li>
+                        <li>Don't forget fallbacks for older browsers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Browser Support</h2>
+
+            <div class="browser-support">
+                <div class="browser-item">
+                    <strong>Chrome</strong>
+                    <span class="support-yes">58+</span>
+                </div>
+                <div class="browser-item">
+                    <strong>Firefox</strong>
+                    <span class="support-yes">53+</span>
+                </div>
+                <div class="browser-item">
+                    <strong>Safari</strong>
+                    <span class="support-yes">13+</span>
+                </div>
+                <div class="browser-item">
+                    <strong>Edge</strong>
+                    <span class="support-yes">79+</span>
+                </div>
+                <div class="browser-item">
+                    <strong>IE 11</strong>
+                    <span class="support-no">Not supported</span>
+                </div>
+                <div class="browser-item">
+                    <strong>Opera</strong>
+                    <span class="support-yes">45+</span>
+                </div>
+            </div>
+
+            <div class="note-box">
+                <strong>⚠️ Compatibility Note:</strong> <code>display: flow-root</code> is not supported in Internet Explorer 11. For IE11, use <code>overflow: hidden</code> or other BFC methods as fallback.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Real-World Use Cases</h2>
+
+            <div class="use-case">
+                <strong>Grid Layouts with Floats</strong>
+                <p>When building grid-like layouts with floats, flow-root prevents unwanted float wrapping and margin issues.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>Blog Comment Threading</strong>
+                <p>Nested comments can use flow-root to maintain proper spacing and prevent margin collapse issues.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>Image Galleries</strong>
+                <p>Floated image containers with flow-root containers prevent layout breaks and maintain proper spacing.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>Sidebar Layouts</strong>
+                <p>Main content areas with flow-root next to floated sidebars prevent content from wrapping.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>Card Components</strong>
+                <p>Cards with flow-root ensure internal margins behave predictably regardless of parent context.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>Legacy Float Cleanup</strong>
+                <p>Replacing clearfix hacks and overflow: hidden workarounds with clean flow-root implementation.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Migration from Legacy Solutions</h2>
+
+            <h3>From overflow: hidden</h3>
+            <div class="code-block">
+<span class="comment">/* Old way */</span>
+<span class="selector">.container</span> {
+    <span class="property">overflow</span>: <span class="value">hidden</span>;
+}
+
+<span class="comment">/* New way */</span>
+<span class="selector">.container</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+}
+
+<span class="comment">/* With fallback for IE11 */</span>
+<span class="selector">.container</span> {
+    <span class="property">overflow</span>: <span class="value">hidden</span>; <span class="comment">/* Fallback */</span>
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+}
+            </div>
+
+            <h3>From Clearfix Hack</h3>
+            <div class="code-block">
+<span class="comment">/* Old clearfix */</span>
+<span class="selector">.clearfix::after</span> {
+    <span class="property">content</span>: <span class="value">""</span>;
+    <span class="property">display</span>: <span class="value">table</span>;
+    <span class="property">clear</span>: <span class="value">both</span>;
+}
+
+<span class="comment">/* New way */</span>
+<span class="selector">.container</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+}
+
+<span class="comment">/* No pseudo-elements needed! */</span>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Property Guide | Display Flow-Root Complete Reference</p>
+            <p>Comprehensive guide for understanding and using CSS display: flow-root</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Mix-Blend-Mode Guide - Complete Reference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f97316;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --text-primary: var(--neutral-900);
+            --text-secondary: var(--neutral-600);
+            --bg-primary: #ffffff;
+            --bg-secondary: var(--neutral-100);
+            --border-color: var(--neutral-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: var(--neutral-50);
+                --text-secondary: var(--neutral-400);
+                --bg-primary: var(--neutral-900);
+                --bg-secondary: var(--neutral-800);
+                --border-color: var(--neutral-700);
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        nav {
+            background-color: var(--bg-secondary);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 130px;
+            z-index: 99;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section > h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        pre {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+
+        pre code {
+            color: var(--text-primary);
+        }
+
+        :not(pre) > code {
+            background-color: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card h4 {
+            margin-top: 0;
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--neutral-100));
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .feature-box {
+                background: linear-gradient(135deg, var(--neutral-800), var(--neutral-700));
+            }
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+        }
+
+        .toggle-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .toggle-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Demo Container */
+        .demo-container {
+            background-color: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            position: relative;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .demo-element {
+            width: 150px;
+            height: 150px;
+            border-radius: 8px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .demo-element:hover {
+            transform: scale(1.05);
+        }
+
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .comparison-item {
+            text-align: center;
+        }
+
+        .comparison-visual {
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        .comparison-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        /* Collapsible */
+        .collapsible {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            background-color: var(--border-color);
+        }
+
+        .collapsible.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .content {
+            padding: 15px;
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            margin-bottom: 10px;
+        }
+
+        .content.show {
+            display: block;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            background-color: rgba(243, 158, 11, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Mode Categories */
+        .mode-category {
+            margin-bottom: 40px;
+        }
+
+        .mode-category h3 {
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            .demo-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>CSS Mix-Blend-Mode Guide</h1>
+        <p>Complete reference for blending elements with their background</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#basics">Basics</a></li>
+            <li><a href="#differences">vs Background-Blend-Mode</a></li>
+            <li><a href="#modes">All Modes</a></li>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#reference">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Basics Section -->
+        <section id="basics">
+            <h2>Understanding Mix-Blend-Mode</h2>
+            
+            <p><code>mix-blend-mode</code> defines how an element's content blends with its background (everything behind it). Unlike <code>background-blend-mode</code> which blends background layers, <code>mix-blend-mode</code> blends the element itself with what's behind it.</p>
+
+            <div class="feature-box">
+                <strong>Key Concept:</strong> mix-blend-mode applies to the element's rendering layer, affecting how it visually combines with all content behind it - backgrounds, images, text, other elements, etc.
+            </div>
+
+            <h3>How It Works</h3>
+            <pre><code>element {
+    color: blue;
+    mix-blend-mode: multiply;
+    /* The element blends with everything behind it */
+}</code></pre>
+
+            <h3>Key Differences from background-blend-mode</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>mix-blend-mode</th>
+                        <th>background-blend-mode</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Applies To</strong></td>
+                        <td>Element's content & element itself</td>
+                        <td>Background layers only</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Blends With</strong></td>
+                        <td>Everything behind element</td>
+                        <td>Within background layers only</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Works On</strong></td>
+                        <td>Text, images, boxes, any element</td>
+                        <td>Background images/colors</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Use Case</strong></td>
+                        <td>Blend elements over background</td>
+                        <td>Blend background with overlay</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance</strong></td>
+                        <td>GPU accelerated</td>
+                        <td>GPU accelerated</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Basic Syntax</h3>
+            <pre><code>/* Single blend mode */
+mix-blend-mode: multiply;
+
+/* All possible values */
+mix-blend-mode: normal;
+mix-blend-mode: multiply;
+mix-blend-mode: screen;
+mix-blend-mode: overlay;
+mix-blend-mode: darken;
+mix-blend-mode: lighten;
+mix-blend-mode: color-dodge;
+mix-blend-mode: color-burn;
+mix-blend-mode: hard-light;
+mix-blend-mode: soft-light;
+mix-blend-mode: difference;
+mix-blend-mode: exclusion;
+mix-blend-mode: hue;
+mix-blend-mode: saturation;
+mix-blend-mode: color;
+mix-blend-mode: luminosity;</code></pre>
+
+            <h3>Browser Support</h3>
+            <ul>
+                <li>✅ Chrome 29+</li>
+                <li>✅ Firefox 32+</li>
+                <li>✅ Safari 8+</li>
+                <li>✅ Edge 79+</li>
+                <li>⚠️ IE 11 - No support</li>
+                <li>✅ Mobile browsers (all modern versions)</li>
+            </ul>
+        </section>
+
+        <!-- Differences Section -->
+        <section id="differences">
+            <h2>Mix-Blend-Mode vs Background-Blend-Mode</h2>
+
+            <h3>Practical Comparison</h3>
+            <div class="demo-container">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                    <div>
+                        <h4 style="margin-bottom: 10px;">background-blend-mode</h4>
+                        <div style="
+                            width: 150px;
+                            height: 100px;
+                            background-image: linear-gradient(45deg, #6366f1, #ec4899);
+                            background-color: #fbbf24;
+                            background-blend-mode: multiply;
+                            border-radius: 6px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: white;
+                            font-size: 0.8rem;
+                            font-weight: 600;
+                        ">
+                            Blends inside element
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 10px;">mix-blend-mode</h4>
+                        <div style="
+                            background: linear-gradient(135deg, #ddd, #666);
+                            padding: 20px;
+                            border-radius: 6px;
+                        ">
+                            <div style="
+                                width: 150px;
+                                height: 100px;
+                                background: #6366f1;
+                                border-radius: 4px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                color: white;
+                                font-size: 0.8rem;
+                                font-weight: 600;
+                                mix-blend-mode: multiply;
+                            ">
+                                Blends with background
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>When to Use Each</h3>
+
+            <div class="card">
+                <h4>Use background-blend-mode when:</h4>
+                <ul>
+                    <li>You want to blend multiple background images together</li>
+                    <li>You're layering gradients with images</li>
+                    <li>You need to tint or overlay a background</li>
+                    <li>Creating effects within an element's background</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h4>Use mix-blend-mode when:</h4>
+                <ul>
+                    <li>You want to blend an element with what's behind it</li>
+                    <li>Creating overlay effects with text or images</li>
+                    <li>Blending elements over complex backgrounds</li>
+                    <li>Creating glass-morphism or frosted glass effects</li>
+                    <li>Blending images/text with page background</li>
+                </ul>
+            </div>
+
+            <h3>Code Comparison</h3>
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <div class="comparison-label">background-blend-mode</div>
+                    <pre><code>.element {
+    background-image: url('image.jpg');
+    background-color: rgba(0,0,0,0.5);
+    background-blend-mode: multiply;
+    /* Blends these TWO layers */
+}</code></pre>
+                </div>
+                <div class="comparison-item">
+                    <div class="comparison-label">mix-blend-mode</div>
+                    <pre><code>.element {
+    background: blue;
+    mix-blend-mode: multiply;
+    /* Blends element's content
+       with page background */
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- All Modes Section -->
+        <section id="modes">
+            <h2>All Mix-Blend-Mode Values</h2>
+
+            <div class="mode-category">
+                <h3>🔄 Normal Blend Modes</h3>
+                
+                <div class="card">
+                    <h4>normal</h4>
+                    <p>Default. Element sits on top with no blending. Standard layering.</p>
+                    <pre><code>mix-blend-mode: normal;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>multiply</h4>
+                    <p>Darkens. Multiplies colors. White becomes invisible, black stays black.</p>
+                    <pre><code>mix-blend-mode: multiply;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>screen</h4>
+                    <p>Lightens. Opposite of multiply. Black becomes invisible, white stays white.</p>
+                    <pre><code>mix-blend-mode: screen;</code></pre>
+                </div>
+            </div>
+
+            <div class="mode-category">
+                <h3>🌑 Darkening Modes</h3>
+
+                <div class="card">
+                    <h4>darken</h4>
+                    <p>Selects darker color for each pixel.</p>
+                    <pre><code>mix-blend-mode: darken;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>color-burn</h4>
+                    <p>Darkens by increasing contrast. Creates intense darkening.</p>
+                    <pre><code>mix-blend-mode: color-burn;</code></pre>
+                </div>
+            </div>
+
+            <div class="mode-category">
+                <h3>🌟 Lightening Modes</h3>
+
+                <div class="card">
+                    <h4>lighten</h4>
+                    <p>Selects lighter color for each pixel.</p>
+                    <pre><code>mix-blend-mode: lighten;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>color-dodge</h4>
+                    <p>Lightens by decreasing contrast. Creates bright glow.</p>
+                    <pre><code>mix-blend-mode: color-dodge;</code></pre>
+                </div>
+            </div>
+
+            <div class="mode-category">
+                <h3>⚖️ Contrast Modes</h3>
+
+                <div class="card">
+                    <h4>overlay</h4>
+                    <p>Combines multiply and screen. Creates high contrast.</p>
+                    <pre><code>mix-blend-mode: overlay;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>hard-light</h4>
+                    <p>Similar to overlay but stronger effect.</p>
+                    <pre><code>mix-blend-mode: hard-light;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>soft-light</h4>
+                    <p>Gentle version of overlay. Subtle contrast.</p>
+                    <pre><code>mix-blend-mode: soft-light;</code></pre>
+                </div>
+            </div>
+
+            <div class="mode-category">
+                <h3>🔀 Difference Modes</h3>
+
+                <div class="card">
+                    <h4>difference</h4>
+                    <p>Subtracts colors. Creates inverted effect.</p>
+                    <pre><code>mix-blend-mode: difference;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>exclusion</h4>
+                    <p>Similar to difference but lower contrast.</p>
+                    <pre><code>mix-blend-mode: exclusion;</code></pre>
+                </div>
+            </div>
+
+            <div class="mode-category">
+                <h3>🎨 Color Component Modes</h3>
+
+                <div class="card">
+                    <h4>hue</h4>
+                    <p>Uses hue of element with saturation and luminosity of background.</p>
+                    <pre><code>mix-blend-mode: hue;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>saturation</h4>
+                    <p>Uses saturation of element with hue and luminosity of background.</p>
+                    <pre><code>mix-blend-mode: saturation;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>color</h4>
+                    <p>Uses hue and saturation of element with luminosity of background.</p>
+                    <pre><code>mix-blend-mode: color;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>luminosity</h4>
+                    <p>Uses luminosity of element with hue and saturation of background.</p>
+                    <pre><code>mix-blend-mode: luminosity;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section id="examples">
+            <h2>Real-World Examples</h2>
+
+            <div class="card">
+                <h3>Example 1: Text Over Image</h3>
+                <p>Blend text with background image for better readability.</p>
+                <pre><code>h1 {
+    color: white;
+    mix-blend-mode: multiply;
+    /* Text blends with background image */
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 2: Overlay Image</h3>
+                <p>Place an image over background with blend effect.</p>
+                <pre><code>.overlay-image {
+    position: absolute;
+    mix-blend-mode: screen;
+    opacity: 0.8;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 3: Glass-Morphism Card</h3>
+                <p>Create frosted glass effect with blend mode.</p>
+                <pre><code>.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    mix-blend-mode: soft-light;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 4: Hover Glow Effect</h3>
+                <p>Create interactive glow on hover.</p>
+                <pre><code>.button {
+    mix-blend-mode: normal;
+    transition: mix-blend-mode 0.3s ease;
+}
+
+.button:hover {
+    mix-blend-mode: screen;
+    /* Creates glowing effect on hover */
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 5: Image Gallery Overlay</h3>
+                <p>Blend overlay with gallery images.</p>
+                <pre><code>.gallery-item {
+    position: relative;
+}
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    mix-blend-mode: multiply;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 0.8;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 6: SVG Filter</h3>
+                <p>Blend SVG elements with background.</p>
+                <pre><code>svg {
+    mix-blend-mode: color-dodge;
+}
+
+svg path {
+    fill: white;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 7: Color Filter on Hover</h3>
+                <p>Change blend mode for color effect.</p>
+                <pre><code>.element {
+    background: blue;
+    mix-blend-mode: normal;
+    transition: mix-blend-mode 0.3s ease;
+}
+
+.element:hover {
+    mix-blend-mode: hard-light;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 8: Transparent Element Blend</h3>
+                <p>Blend semi-transparent elements.</p>
+                <pre><code>.semi-transparent {
+    background: rgba(99, 102, 241, 0.5);
+    mix-blend-mode: overlay;
+    /* Blends with background while maintaining transparency */
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Reference Section -->
+        <section id="reference">
+            <h2>Quick Reference</h2>
+
+            <h3>Blend Mode Selection Guide</h3>
+            <pre><code>/* Want to darken element with background? */
+mix-blend-mode: multiply;
+
+/* Want to lighten element? */
+mix-blend-mode: screen;
+
+/* Want high contrast effect? */
+mix-blend-mode: overlay;
+
+/* Want subtle contrast? */
+mix-blend-mode: soft-light;
+
+/* Want to change hue? */
+mix-blend-mode: hue;
+
+/* Want to maintain brightness? */
+mix-blend-mode: color;
+
+/* Want to preserve color? */
+mix-blend-mode: luminosity;</code></pre>
+
+            <h3>Common Patterns</h3>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Text Blend with Background</button>
+            <div class="content">
+                <pre><code>h1 {
+    color: white;
+    mix-blend-mode: multiply;
+}
+
+/* Or for light background */
+h1 {
+    color: black;
+    mix-blend-mode: screen;
+}</code></pre>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Overlay Hover Effect</button>
+            <div class="content">
+                <pre><code>.element {
+    mix-blend-mode: normal;
+    transition: mix-blend-mode 0.3s ease;
+}
+
+.element:hover {
+    mix-blend-mode: overlay;
+}</code></pre>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Image Overlay Blend</button>
+            <div class="content">
+                <pre><code>.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    mix-blend-mode: multiply;
+}</code></pre>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Glass Morphism</button>
+            <div class="content">
+                <pre><code>.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    mix-blend-mode: soft-light;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}</code></pre>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Glow Effect</button>
+            <div class="content">
+                <pre><code>.glow {
+    background: white;
+    mix-blend-mode: screen;
+    opacity: 0.8;
+}</code></pre>
+            </div>
+
+            <h3>Use Cases by Category</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Use Case</th>
+                        <th>Recommended Mode</th>
+                        <th>Alternative</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Text over dark image</td>
+                        <td><code>multiply</code></td>
+                        <td><code>darken</code></td>
+                    </tr>
+                    <tr>
+                        <td>Text over light image</td>
+                        <td><code>screen</code></td>
+                        <td><code>lighten</code></td>
+                    </tr>
+                    <tr>
+                        <td>High contrast effect</td>
+                        <td><code>overlay</code></td>
+                        <td><code>hard-light</code></td>
+                    </tr>
+                    <tr>
+                        <td>Subtle enhancement</td>
+                        <td><code>soft-light</code></td>
+                        <td><code>overlay</code></td>
+                    </tr>
+                    <tr>
+                        <td>Color overlay</td>
+                        <td><code>color</code></td>
+                        <td><code>hue</code></td>
+                    </tr>
+                    <tr>
+                        <td>Brightness adjust</td>
+                        <td><code>luminosity</code></td>
+                        <td><code>overlay</code></td>
+                    </tr>
+                    <tr>
+                        <td>Glow effect</td>
+                        <td><code>screen</code></td>
+                        <td><code>color-dodge</code></td>
+                    </tr>
+                    <tr>
+                        <td>Dark overlay</td>
+                        <td><code>multiply</code></td>
+                        <td><code>color-burn</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Performance Tips</h3>
+            <ul>
+                <li>Mix-blend-mode is GPU accelerated on modern browsers</li>
+                <li>Changing blend modes on hover is performant</li>
+                <li>Use on small number of elements when possible</li>
+                <li>Combine with <code>will-change: mix-blend-mode</code> for heavy use</li>
+                <li>Test on real devices, especially mobile</li>
+            </ul>
+
+            <h3>Accessibility Considerations</h3>
+            <ul>
+                <li>Ensure sufficient contrast when using blend modes</li>
+                <li>Don't rely on blend modes alone to convey information</li>
+                <li>Test with color blindness simulators</li>
+                <li>Provide fallback for unsupported browsers</li>
+                <li>Consider transparency impact on readability</li>
+            </ul>
+
+            <h3>Browser Fallbacks</h3>
+            <pre><code>/* Provide fallback for IE 11 */
+.element {
+    background: blue;
+    mix-blend-mode: multiply;
+}
+
+/* For unsupported browsers, element appears normal */
+@supports not (mix-blend-mode: multiply) {
+    .element {
+        opacity: 0.8;  /* Fallback effect */
+    }
+}</code></pre>
+
+            <h3>Tips & Tricks</h3>
+            <ul>
+                <li><strong>Combine with opacity:</strong> Use both for fine-tuned effects</li>
+                <li><strong>Test multiple modes:</strong> Same mode looks different on different backgrounds</li>
+                <li><strong>Layer effects:</strong> Combine parent and child mix-blend-modes</li>
+                <li><strong>Animate blend modes:</strong> Create transitions between modes for dynamic effects</li>
+                <li><strong>Use with filters:</strong> Combine with CSS filters for advanced effects</li>
+                <li><strong>SVG friendly:</strong> Works great with SVG elements and filters</li>
+            </ul>
+        </section>
+
+        <!-- Best Practices -->
+        <section>
+            <h2>Best Practices</h2>
+
+            <div class="card">
+                <h3>✅ Do's</h3>
+                <ul>
+                    <li>Use appropriate mode for your design intent</li>
+                    <li>Test on various backgrounds and devices</li>
+                    <li>Maintain sufficient color contrast</li>
+                    <li>Use transitions when changing blend modes</li>
+                    <li>Combine with other CSS properties for creativity</li>
+                    <li>Consider accessibility implications</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>❌ Don'ts</h3>
+                <ul>
+                    <li>Don't use excessive blend modes on one page</li>
+                    <li>Don't sacrifice readability for visual effects</li>
+                    <li>Don't ignore browser support issues</li>
+                    <li>Don't apply to large content areas without testing</li>
+                    <li>Don't rely solely on blend modes for hierarchy</li>
+                    <li>Don't forget about print styles</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🎨 Creative Ideas</h3>
+                <ul>
+                    <li>Create interactive hover effects with mode changes</li>
+                    <li>Use for seasonal theme switching</li>
+                    <li>Build glass-morphism UI components</li>
+                    <li>Create watermark effects with luminosity</li>
+                    <li>Design duotone or posterized effects</li>
+                    <li>Build neon glow effects with screen mode</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>CSS Mix-Blend-Mode Guide</strong></p>
+        <p>Master blend modes for blending elements with their background</p>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary);">
+            mix-blend-mode provides powerful visual effects for blending elements. Use it creatively while maintaining design clarity and accessibility.
+        </p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const btn = document.querySelector('.toggle-btn');
+            const isDark = btn.textContent.includes('Light');
+            btn.textContent = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+
+        function toggleCollapsible(event) {
+            const btn = event.target;
+            const content = btn.nextElementSibling;
+            btn.classList.toggle('active');
+            content.classList.toggle('show');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize theme on page load
+        window.addEventListener('load', function() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const btn = document.querySelector('.toggle-btn');
+            if (prefersDark) {
+                btn.textContent = '☀️ Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>

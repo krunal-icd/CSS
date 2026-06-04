@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Column Properties - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        /* Demo Container */
+        .demo-container {
+            background: #f9f9f9;
+            border: 3px dashed #667eea;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .demo-label {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Column Properties Examples */
+        .column-2 {
+            column-count: 2;
+            column-gap: 30px;
+            text-align: justify;
+            padding: 20px;
+        }
+
+        .column-3 {
+            column-count: 3;
+            column-gap: 30px;
+            text-align: justify;
+            padding: 20px;
+        }
+
+        .column-auto {
+            columns: auto 200px;
+            column-gap: 30px;
+            text-align: justify;
+            padding: 20px;
+        }
+
+        .column-rule-solid {
+            column-count: 3;
+            column-gap: 30px;
+            column-rule: 2px solid #667eea;
+            text-align: justify;
+            padding: 20px;
+        }
+
+        .column-rule-dashed {
+            column-count: 2;
+            column-gap: 30px;
+            column-rule: 3px dashed #764ba2;
+            text-align: justify;
+            padding: 20px;
+        }
+
+        .column-rule-gradient {
+            column-count: 3;
+            column-gap: 25px;
+            column-rule: 4px solid;
+            column-rule-color: transparent;
+            background: linear-gradient(to right, white, white 48%, #667eea 48%, #667eea 52%, white 52%, white);
+            background-size: 100% 100%;
+            padding: 20px;
+            text-align: justify;
+        }
+
+        .column-fill-balance {
+            column-count: 3;
+            column-gap: 30px;
+            column-fill: balance;
+            height: 300px;
+            padding: 20px;
+            text-align: justify;
+        }
+
+        .column-fill-auto {
+            column-count: 3;
+            column-gap: 30px;
+            column-fill: auto;
+            height: 300px;
+            padding: 20px;
+            text-align: justify;
+        }
+
+        .column-span-all {
+            column-count: 3;
+            column-gap: 30px;
+            padding: 20px;
+        }
+
+        .column-span-all h4 {
+            column-span: all;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .column-width-200 {
+            columns: 200px;
+            column-gap: 20px;
+            text-align: justify;
+            padding: 20px;
+        }
+
+        .column-width-250 {
+            columns: 250px;
+            column-gap: 25px;
+            text-align: justify;
+            padding: 20px;
+        }
+
+        .column-width-300 {
+            columns: 300px;
+            column-gap: 30px;
+            text-align: justify;
+            padding: 20px;
+        }
+
+        .column-break-inside {
+            column-count: 3;
+            column-gap: 30px;
+            padding: 20px;
+        }
+
+        .column-break-inside .card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            break-inside: avoid;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .column-break-inside .card h5 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .column-responsive {
+            columns: auto;
+            column-gap: 30px;
+            column-rule: 2px solid #667eea;
+            text-align: justify;
+            padding: 20px;
+        }
+
+        /* Advanced Examples */
+        .newspaper-style {
+            column-count: 3;
+            column-gap: 40px;
+            column-rule: 3px solid #333;
+            text-align: justify;
+            padding: 30px;
+            background: #fafafa;
+        }
+
+        .newspaper-style h3 {
+            column-span: all;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .magazine-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .magazine-sidebar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .magazine-content {
+            column-count: 2;
+            column-gap: 30px;
+            column-rule: 2px dashed #667eea;
+            text-align: justify;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .keyword { color: #ff79c6; }
+        .property { color: #8be9fd; }
+        .value { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+        .selector { color: #50fa7b; }
+
+        /* Info Boxes */
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* Sample Text */
+        .sample-text {
+            color: #555;
+        }
+
+        /* Property Reference Card */
+        .property-card {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .property-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .property-card .values {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .magazine-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .column-2,
+            .column-3,
+            .column-auto,
+            .column-rule-solid,
+            .newspaper-style {
+                column-count: 1;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📰 CSS Column Properties - Complete Guide</h1>
+            <p>Master Multi-Column Layouts with Practical Examples</p>
+        </header>
+
+        <div class="content">
+            <!-- Introduction -->
+            <section>
+                <h2>Introduction to CSS Columns</h2>
+                <p>CSS column properties allow you to create multi-column text layouts like newspapers and magazines. This guide covers all column-related CSS properties with interactive examples.</p>
+                <div class="success-box">
+                    <strong>✓ What You'll Learn:</strong>
+                    <p>column-count, column-width, columns shorthand, column-gap, column-rule, column-fill, column-span, and break-inside properties.</p>
+                </div>
+            </section>
+
+            <!-- Section 1: column-count -->
+            <section>
+                <h2>1. column-count Property</h2>
+                <p>Specifies the number of columns to divide content into:</p>
+
+                <h3>Two Columns</h3>
+                <div class="demo-container">
+                    <div class="demo-label">column-count: 2</div>
+                    <div class="column-2 sample-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                    </div>
+                </div>
+
+                <h3>Three Columns</h3>
+                <div class="demo-container">
+                    <div class="demo-label">column-count: 3</div>
+                    <div class="column-3 sample-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Two column layout */</span>
+<span class="selector">.two-column</span> {
+    <span class="property">column-count</span>: <span class="value">2</span>;
+    <span class="property">column-gap</span>: <span class="value">30px</span>;
+}
+
+<span class="comment">/* Three column layout */</span>
+<span class="selector">.three-column</span> {
+    <span class="property">column-count</span>: <span class="value">3</span>;
+    <span class="property">column-gap</span>: <span class="value">30px</span>;
+}
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>column-count</h4>
+                    <p><strong>Values:</strong> integer | auto</p>
+                    <div class="values">
+                        • auto (default)<br>
+                        • 1, 2, 3... (number of columns)<br>
+                        • Initial: auto
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: column-width -->
+            <section>
+                <h2>2. column-width Property</h2>
+                <p>Specifies the ideal width of columns (not a fixed width):</p>
+
+                <h3>Column Width: 200px</h3>
+                <div class="demo-container">
+                    <div class="demo-label">columns: 200px</div>
+                    <div class="column-width-200 sample-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </div>
+                </div>
+
+                <h3>Column Width: 250px</h3>
+                <div class="demo-container">
+                    <div class="demo-label">columns: 250px</div>
+                    <div class="column-width-250 sample-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </div>
+                </div>
+
+                <h3>Column Width: 300px</h3>
+                <div class="demo-container">
+                    <div class="demo-label">columns: 300px</div>
+                    <div class="column-width-300 sample-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="selector">.text-column</span> {
+    <span class="property">column-width</span>: <span class="value">250px</span>;
+    <span class="property">column-gap</span>: <span class="value">30px</span>;
+}
+
+<span class="comment">/* Browser automatically adjusts number of columns */</span>
+<span class="comment">/* based on available width */</span>
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>column-width</h4>
+                    <p><strong>Values:</strong> length | auto</p>
+                    <div class="values">
+                        • auto (default)<br>
+                        • 150px, 200px, 250px, etc.<br>
+                        • Works with column-count
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: columns shorthand -->
+            <section>
+                <h2>3. columns Shorthand Property</h2>
+                <p>Combines column-count and column-width in one property:</p>
+
+                <h3>Auto Responsive Columns</h3>
+                <div class="demo-container">
+                    <div class="demo-label">columns: auto 200px</div>
+                    <div class="column-auto sample-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Shorthand: column-count column-width */</span>
+<span class="selector">.responsive-columns</span> {
+    <span class="property">columns</span>: <span class="value">auto 200px</span>;
+    <span class="property">column-gap</span>: <span class="value">30px</span>;
+}
+
+<span class="comment">/* Equivalent to: */</span>
+<span class="selector">.responsive-columns</span> {
+    <span class="property">column-count</span>: <span class="value">auto</span>;
+    <span class="property">column-width</span>: <span class="value">200px</span>;
+}
+
+<span class="comment">/* Fixed columns */</span>
+<span class="selector">.fixed-columns</span> {
+    <span class="property">columns</span>: <span class="value">3</span>;
+}
+
+<span class="comment">/* Mixed syntax */</span>
+<span class="selector">.mixed-columns</span> {
+    <span class="property">columns</span>: <span class="value">2 250px</span>;
+}
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>columns (shorthand)</h4>
+                    <p><strong>Values:</strong> [ column-count || column-width ]</p>
+                    <div class="values">
+                        • auto (default)<br>
+                        • 2 (count only)<br>
+                        • 200px (width only)<br>
+                        • 2 200px (both)<br>
+                        • auto 200px (responsive)
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: column-gap -->
+            <section>
+                <h2>4. column-gap Property</h2>
+                <p>Controls the space between columns:</p>
+
+                <h3>Column Gap: 20px</h3>
+                <div class="demo-container" style="padding-top: 40px;">
+                    <div class="demo-label">column-gap: 20px</div>
+                    <div style="column-count: 3; column-gap: 20px; text-align: justify; padding: 20px;" class="sample-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </div>
+                </div>
+
+                <h3>Column Gap: 50px</h3>
+                <div class="demo-container" style="padding-top: 40px;">
+                    <div class="demo-label">column-gap: 50px</div>
+                    <div style="column-count: 3; column-gap: 50px; text-align: justify; padding: 20px;" class="sample-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="selector">.columns</span> {
+    <span class="property">column-count</span>: <span class="value">3</span>;
+    <span class="property">column-gap</span>: <span class="value">30px</span>;
+    <span class="property">column-gap</span>: <span class="value">normal</span>; <span class="comment">/* default 1em */</span>
+}
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>column-gap</h4>
+                    <p><strong>Values:</strong> length | normal</p>
+                    <div class="values">
+                        • normal (default, ~1em)<br>
+                        • 20px, 30px, 50px, etc.<br>
+                        • Can use em, rem, %<br>
+                        • Must be non-negative
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: column-rule -->
+            <section>
+                <h2>5. column-rule Property</h2>
+                <p>Adds decorative lines between columns (doesn't affect layout):</p>
+
+                <h3>Solid Column Rule</h3>
+                <div class="demo-container">
+                    <div class="demo-label">column-rule: 2px solid #667eea</div>
+                    <div class="column-rule-solid sample-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </div>
+                </div>
+
+                <h3>Dashed Column Rule</h3>
+                <div class="demo-container">
+                    <div class="demo-label">column-rule: 3px dashed #764ba2</div>
+                    <div class="column-rule-dashed sample-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Shorthand: column-rule-width | column-rule-style | column-rule-color */</span>
+<span class="selector">.column-rule</span> {
+    <span class="property">column-count</span>: <span class="value">3</span>;
+    <span class="property">column-rule</span>: <span class="value">2px solid #667eea</span>;
+}
+
+<span class="comment">/* Individual properties */</span>
+<span class="selector">.column-rule-advanced</span> {
+    <span class="property">column-rule-width</span>: <span class="value">3px</span>;
+    <span class="property">column-rule-style</span>: <span class="value">dashed</span>;
+    <span class="property">column-rule-color</span>: <span class="value">#764ba2</span>;
+}
+
+<span class="comment">/* Possible styles */</span>
+<span class="comment">/* solid | dashed | dotted | double | groove | ridge | inset | outset */</span>
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>column-rule</h4>
+                    <p><strong>Values:</strong> [ column-rule-width || column-rule-style || column-rule-color ]</p>
+                    <div class="values">
+                        • Width: thin | medium | thick | length<br>
+                        • Style: solid | dashed | dotted | double | etc.<br>
+                        • Color: color value<br>
+                        • Example: 2px solid #667eea
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: column-fill -->
+            <section>
+                <h2>6. column-fill Property</h2>
+                <p>Controls how content is distributed across columns:</p>
+
+                <h3>column-fill: balance</h3>
+                <p>Columns are balanced (default) - content spreads evenly:</p>
+                <div class="demo-container">
+                    <div class="demo-label">column-fill: balance</div>
+                    <div class="column-fill-balance sample-text">
+                        <p>Column 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+                        <p>Column 2: Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                        <p>Column 3: Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <p>Content continues and balances across all columns equally.</p>
+                    </div>
+                </div>
+
+                <h3>column-fill: auto</h3>
+                <p>Columns fill sequentially (first column filled completely first):</p>
+                <div class="demo-container">
+                    <div class="demo-label">column-fill: auto</div>
+                    <div class="column-fill-auto sample-text">
+                        <p>Column 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <p>Column 2: Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <p>Column 3: Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Balance columns (default) */</span>
+<span class="selector">.column-balanced</span> {
+    <span class="property">column-count</span>: <span class="value">3</span>;
+    <span class="property">column-fill</span>: <span class="value">balance</span>;
+    <span class="property">height</span>: <span class="value">300px</span>;
+}
+
+<span class="comment">/* Sequential fill */</span>
+<span class="selector">.column-sequential</span> {
+    <span class="property">column-count</span>: <span class="value">3</span>;
+    <span class="property">column-fill</span>: <span class="value">auto</span>;
+    <span class="property">height</span>: <span class="value">300px</span>;
+}
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>column-fill</h4>
+                    <p><strong>Values:</strong> balance | auto</p>
+                    <div class="values">
+                        • balance (default)<br>
+                        • auto (sequential filling)<br>
+                        • Use with height property
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7: column-span -->
+            <section>
+                <h2>7. column-span Property</h2>
+                <p>Makes an element span across all columns:</p>
+
+                <div class="demo-container">
+                    <div class="demo-label">column-span: all</div>
+                    <div class="column-span-all sample-text">
+                        <h4>Spanning Header</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="selector">.multi-column</span> {
+    <span class="property">column-count</span>: <span class="value">3</span>;
+    <span class="property">column-gap</span>: <span class="value">30px</span>;
+}
+
+<span class="selector">.multi-column h4</span> {
+    <span class="property">column-span</span>: <span class="value">all</span>;
+    <span class="property">color</span>: <span class="value">#667eea</span>;
+}
+
+<span class="comment">/* Values: */</span>
+<span class="comment">/* none (default) - element stays in one column */</span>
+<span class="comment">/* all - element spans all columns */</span>
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>column-span</h4>
+                    <p><strong>Values:</strong> none | all</p>
+                    <div class="values">
+                        • none (default)<br>
+                        • all (spans all columns)<br>
+                        • Creates visual break in layout
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 8: break-inside -->
+            <section>
+                <h2>8. break-inside Property</h2>
+                <p>Prevents breaking of elements between columns:</p>
+
+                <div class="demo-container">
+                    <div class="demo-label">break-inside: avoid</div>
+                    <div class="column-break-inside">
+                        <div class="card">
+                            <h5>Card 1</h5>
+                            <p>This card won't break across columns. Lorem ipsum dolor sit amet.</p>
+                        </div>
+                        <div class="card">
+                            <h5>Card 2</h5>
+                            <p>This card stays together. Consectetur adipiscing elit. Sed do eiusmod.</p>
+                        </div>
+                        <div class="card">
+                            <h5>Card 3</h5>
+                            <p>Another complete card. Tempor incididunt ut labore et dolore magna.</p>
+                        </div>
+                        <div class="card">
+                            <h5>Card 4</h5>
+                            <p>Final card in layout. Aliqua ut enim ad minim veniam quis nostrud.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="selector">.cards</span> {
+    <span class="property">column-count</span>: <span class="value">3</span>;
+    <span class="property">column-gap</span>: <span class="value">30px</span>;
+}
+
+<span class="selector">.card</span> {
+    <span class="property">break-inside</span>: <span class="value">avoid</span>;
+    <span class="property">page-break-inside</span>: <span class="value">avoid</span>; <span class="comment">/* Fallback */</span>
+    <span class="property">background</span>: <span class="value">white</span>;
+    <span class="property">border</span>: <span class="value">2px solid #ddd</span>;
+    <span class="property">padding</span>: <span class="value">15px</span>;
+    <span class="property">margin-bottom</span>: <span class="value">15px</span>;
+}
+
+<span class="comment">/* Values: */</span>
+<span class="comment">/* auto (default), avoid, avoid-page, avoid-column */</span>
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>break-inside</h4>
+                    <p><strong>Values:</strong> auto | avoid | avoid-page | avoid-column</p>
+                    <div class="values">
+                        • auto (default)<br>
+                        • avoid (prevent breaks)<br>
+                        • avoid-page (printing)<br>
+                        • avoid-column (column breaks)
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 9: Real-World Examples -->
+            <section>
+                <h2>9. Real-World Examples</h2>
+
+                <h3>Newspaper Layout</h3>
+                <div class="demo-container" style="padding-top: 20px;">
+                    <div class="newspaper-style">
+                        <h3>Daily News</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                    </div>
+                </div>
+
+                <h3>Magazine Layout</h3>
+                <div class="demo-container" style="padding-top: 20px;">
+                    <div class="magazine-layout">
+                        <div class="magazine-sidebar">
+                            <h4>Latest News</h4>
+                            <ul style="list-style: none; margin-top: 15px;">
+                                <li style="margin-bottom: 10px;">📰 Breaking News 1</li>
+                                <li style="margin-bottom: 10px;">📰 Breaking News 2</li>
+                                <li style="margin-bottom: 10px;">📰 Breaking News 3</li>
+                                <li style="margin-bottom: 10px;">📰 Breaking News 4</li>
+                            </ul>
+                        </div>
+                        <div class="magazine-content">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Newspaper style */</span>
+<span class="selector">.newspaper</span> {
+    <span class="property">column-count</span>: <span class="value">3</span>;
+    <span class="property">column-gap</span>: <span class="value">40px</span>;
+    <span class="property">column-rule</span>: <span class="value">3px solid #333</span>;
+    <span class="property">text-align</span>: <span class="value">justify</span>;
+}
+
+<span class="selector">.newspaper h2</span> {
+    <span class="property">column-span</span>: <span class="value">all</span>;
+}
+
+<span class="comment">/* Magazine with sidebar */</span>
+<span class="selector">.magazine</span> {
+    <span class="property">display</span>: <span class="value">grid</span>;
+    <span class="property">grid-template-columns</span>: <span class="value">250px 1fr</span>;
+    <span class="property">gap</span>: <span class="value">30px</span>;
+}
+
+<span class="selector">.magazine-content</span> {
+    <span class="property">column-count</span>: <span class="value">2</span>;
+    <span class="property">column-gap</span>: <span class="value">30px</span>;
+}
+                    </code>
+                </div>
+            </section>
+
+            <!-- Section 10: Browser Support -->
+            <section>
+                <h2>10. Browser Support & Compatibility</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                            <th>IE 11</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>column-count</code></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <td><code>column-width</code></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <td><code>column-gap</code></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <td><code>column-rule</code></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>⚠ Partial</td>
+                        </tr>
+                        <tr>
+                            <td><code>column-fill</code></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>⚠ Limited</td>
+                            <td>✓</td>
+                            <td>✗</td>
+                        </tr>
+                        <tr>
+                            <td><code>column-span</code></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>⚠ Partial</td>
+                        </tr>
+                        <tr>
+                            <td><code>break-inside</code></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>⚠ Limited</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <strong>ℹ️ Note:</strong> Most column properties are well-supported in modern browsers. For IE 11 compatibility, use fallback layouts with CSS Grid or Flexbox.
+                </div>
+            </section>
+
+            <!-- Section 11: Quick Reference -->
+            <section>
+                <h2>11. Quick Reference Guide</h2>
+
+                <div class="property-card">
+                    <h4>column-count</h4>
+                    <p>Number of columns</p>
+                    <div class="values">
+<span class="selector">.element</span> { <span class="property">column-count</span>: <span class="value">3</span>; }
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <h4>column-width</h4>
+                    <p>Ideal column width</p>
+                    <div class="values">
+<span class="selector">.element</span> { <span class="property">column-width</span>: <span class="value">250px</span>; }
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <h4>column-gap</h4>
+                    <p>Space between columns</p>
+                    <div class="values">
+<span class="selector">.element</span> { <span class="property">column-gap</span>: <span class="value">30px</span>; }
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <h4>column-rule</h4>
+                    <p>Line between columns</p>
+                    <div class="values">
+<span class="selector">.element</span> { <span class="property">column-rule</span>: <span class="value">2px solid #667eea</span>; }
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <h4>column-fill</h4>
+                    <p>How to fill columns</p>
+                    <div class="values">
+<span class="selector">.element</span> { <span class="property">column-fill</span>: <span class="value">balance</span>; /* or auto */ }
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <h4>column-span</h4>
+                    <p>Span across columns</p>
+                    <div class="values">
+<span class="selector">.element</span> { <span class="property">column-span</span>: <span class="value">all</span>; /* or none */ }
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <h4>break-inside</h4>
+                    <p>Prevent element breaks</p>
+                    <div class="values">
+<span class="selector">.element</span> { <span class="property">break-inside</span>: <span class="value">avoid</span>; }
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 12: Best Practices -->
+            <section>
+                <h2>12. Best Practices</h2>
+
+                <div class="success-box">
+                    <h4>✓ Do's:</h4>
+                    <ul class="checklist">
+                        <li>Use columns for long-form text content</li>
+                        <li>Combine with break-inside: avoid for cards</li>
+                        <li>Test responsiveness on different screen sizes</li>
+                        <li>Use column-rule for visual separation</li>
+                        <li>Provide fallback layouts for older browsers</li>
+                        <li>Use text-align: justify for better appearance</li>
+                        <li>Combine with media queries for responsive design</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>✗ Don'ts:</h4>
+                    <ul class="checklist">
+                        <li>Don't use columns for navigation or complex layouts</li>
+                        <li>Don't force too many columns on small screens</li>
+                        <li>Don't use columns with very narrow width</li>
+                        <li>Don't forget to test in different browsers</li>
+                        <li>Don't make columns too wide for readability</li>
+                        <li>Don't combine with floats without caution</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h4>💡 Pro Tips:</h4>
+                    <ul class="checklist">
+                        <li>Use <code>columns: auto 200px</code> for responsive layouts</li>
+                        <li>Combine columns with Grid for hybrid layouts</li>
+                        <li>Use column-rule for visual interest without extra markup</li>
+                        <li>Always test readability at different zoom levels</li>
+                        <li>Consider using max-width for optimal column width</li>
+                        <li>Use Elementor custom CSS for easy implementation</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Column Properties Guide | Complete Reference with Examples</p>
+            <p>Perfect for Elementor website builders and web designers</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Visibility Practice Examples - Interactive Exercises</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f97316;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --text-primary: var(--neutral-900);
+            --text-secondary: var(--neutral-600);
+            --bg-primary: #ffffff;
+            --bg-secondary: var(--neutral-100);
+            --border-color: var(--neutral-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: var(--neutral-50);
+                --text-secondary: var(--neutral-400);
+                --bg-primary: var(--neutral-900);
+                --bg-secondary: var(--neutral-800);
+                --border-color: var(--neutral-700);
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        nav {
+            background-color: var(--bg-secondary);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 130px;
+            z-index: 99;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section > h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        pre {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+
+        pre code {
+            color: var(--text-primary);
+        }
+
+        :not(pre) > code {
+            background-color: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .practice-box {
+            background-color: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .practice-box h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .demo-area {
+            background-color: var(--bg-primary);
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            min-height: 200px;
+        }
+
+        .demo-item {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+        }
+
+        .toggle-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .toggle-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--neutral-100));
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .feature-box {
+                background: linear-gradient(135deg, var(--neutral-800), var(--neutral-700));
+            }
+        }
+
+        .challenge-section {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .challenge-section h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .solution-btn {
+            background: var(--success);
+            color: white;
+        }
+
+        .solution-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .output-area {
+            background-color: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 150px;
+        }
+
+        .solution {
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--success);
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .solution.show {
+            display: block;
+        }
+
+        .collapsible {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            background-color: var(--border-color);
+        }
+
+        .collapsible.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .content {
+            padding: 15px;
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            margin-bottom: 10px;
+        }
+
+        .content.show {
+            display: block;
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        /* Visibility demo items */
+        .item-box {
+            background: var(--success);
+            color: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .item-hidden {
+            visibility: hidden;
+        }
+
+        .toggle-demo {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>CSS Visibility Practice</h1>
+        <p>Interactive exercises to master the visibility property</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#challenges">Challenges</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#reference">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Examples Section -->
+        <section id="examples">
+            <h2>Practice Examples</h2>
+            <p>Work through these interactive examples to understand visibility.</p>
+
+            <!-- Example 1: Visible vs Hidden -->
+            <div class="practice-box">
+                <h3>1️⃣ Visibility: Visible vs Hidden</h3>
+                <p>See how visibility: hidden reserves space while display: none does not.</p>
+                <div class="demo-area">
+                    <div class="item-box">Item 1 - Visible</div>
+                    <div class="item-box item-hidden">Item 2 - Hidden (space reserved)</div>
+                    <div class="item-box">Item 3 - Visible</div>
+                </div>
+                <pre><code>.visible {
+    visibility: visible;  /* Default */
+}
+
+.hidden {
+    visibility: hidden;   /* Hidden but space reserved! */
+}</code></pre>
+                <p><strong>Key Insight:</strong> Notice Item 2 is hidden but the space is still there. Compare with display: none which removes space entirely.</p>
+            </div>
+
+            <!-- Example 2: Toggle Visibility -->
+            <div class="practice-box">
+                <h3>2️⃣ Toggle Visibility with JavaScript</h3>
+                <p>Click items to toggle their visibility on and off.</p>
+                <div class="demo-area">
+                    <div class="item-box toggle-demo" onclick="toggleVisibility(this)">Click to hide - Item 1</div>
+                    <div class="item-box toggle-demo" onclick="toggleVisibility(this)">Click to hide - Item 2</div>
+                    <div class="item-box toggle-demo" onclick="toggleVisibility(this)">Click to hide - Item 3</div>
+                </div>
+                <pre><code>function toggleVisibility(element) {
+    const visibility = window.getComputedStyle(element).visibility;
+    element.style.visibility = visibility === 'hidden' ? 'visible' : 'hidden';
+}</code></pre>
+                <p><strong>Interactive:</strong> Try clicking the items above!</p>
+            </div>
+
+            <!-- Example 3: Hover Tooltip -->
+            <div class="practice-box">
+                <h3>3️⃣ Hover Tooltip with Visibility</h3>
+                <p>Tooltip appears on hover using visibility: hidden/visible.</p>
+                <div class="demo-area">
+                    <div style="position: relative; display: inline-block; background: var(--primary); color: white; padding: 15px 20px; border-radius: 6px; cursor: help;">
+                        Hover me
+                        <div style="
+                            position: absolute;
+                            bottom: 120%;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            background: rgba(0, 0, 0, 0.9);
+                            color: white;
+                            padding: 8px 12px;
+                            border-radius: 4px;
+                            font-size: 0.85rem;
+                            white-space: nowrap;
+                            visibility: hidden;
+                            transition: visibility 0.3s ease;
+                        " onmouseover="this.style.visibility='visible'" onmouseout="this.style.visibility='hidden'">
+                            Helpful tooltip!
+                        </div>
+                    </div>
+                </div>
+                <pre><code>.tooltip {
+    visibility: hidden;
+    transition: visibility 0.3s ease;
+}
+
+.element:hover .tooltip {
+    visibility: visible;
+}</code></pre>
+                <p><strong>Key Point:</strong> Visibility works great for tooltips and dropdowns.</p>
+            </div>
+
+            <!-- Example 4: Form Error Messages -->
+            <div class="practice-box">
+                <h3>4️⃣ Form Error Messages</h3>
+                <p>Hide error message but reserve space for it.</p>
+                <div class="demo-area">
+                    <div style="max-width: 300px; margin: 0 auto;">
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Email:</label>
+                            <input type="text" placeholder="Enter email" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                        </div>
+                        <div style="
+                            color: var(--danger);
+                            font-size: 0.85rem;
+                            visibility: hidden;
+                            height: 20px;
+                        ">
+                            ⚠️ Invalid email format
+                        </div>
+                        <button style="width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">Submit</button>
+                    </div>
+                </div>
+                <pre><code>.error-message {
+    visibility: hidden;
+    color: red;
+    font-size: 0.85rem;
+}
+
+.form-group.error .error-message {
+    visibility: visible;
+}</code></pre>
+                <p><strong>Benefit:</strong> Form doesn't shift when error appears/disappears.</p>
+            </div>
+
+            <!-- Example 5: Table Column Hiding -->
+            <div class="practice-box">
+                <h3>5️⃣ Hide Table Columns</h3>
+                <p>Hide table columns while preserving layout.</p>
+                <div class="demo-area">
+                    <table style="width: 100%; border-collapse: collapse; margin: 0 auto;">
+                        <thead>
+                            <tr style="background: var(--primary); color: white;">
+                                <th style="padding: 10px; text-align: left;">Name</th>
+                                <th style="padding: 10px; text-align: left;">Email</th>
+                                <th style="padding: 10px; text-align: left; visibility: hidden;">Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 10px;">John Doe</td>
+                                <td style="padding: 10px;">john@example.com</td>
+                                <td style="padding: 10px; visibility: hidden;">555-1234</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 10px;">Jane Smith</td>
+                                <td style="padding: 10px;">jane@example.com</td>
+                                <td style="padding: 10px; visibility: hidden;">555-5678</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <pre><code>/* Hide phone column but keep space */
+table th:nth-child(3),
+table td:nth-child(3) {
+    visibility: hidden;
+}</code></pre>
+                <p><strong>Note:</strong> Phone column space is still reserved in the table layout.</p>
+            </div>
+
+            <!-- Example 6: Animated Visibility -->
+            <div class="practice-box">
+                <h3>6️⃣ Animated Visibility with Opacity</h3>
+                <p>Combine visibility with opacity for smooth transitions.</p>
+                <div class="demo-area">
+                    <div style="text-align: center;">
+                        <button style="
+                            padding: 10px 20px;
+                            background: var(--primary);
+                            color: white;
+                            border: none;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            font-weight: 600;
+                        " onclick="toggleAnimated(this)">Toggle Message</button>
+                        <div id="animated-msg" style="
+                            margin-top: 20px;
+                            padding: 20px;
+                            background: var(--success);
+                            color: white;
+                            border-radius: 6px;
+                            visibility: hidden;
+                            opacity: 0;
+                            transition: opacity 0.3s ease, visibility 0.3s ease;
+                            font-weight: 600;
+                        ">
+                            Success! This appeared smoothly.
+                        </div>
+                    </div>
+                </div>
+                <pre><code>.message {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.message.show {
+    visibility: visible;
+    opacity: 1;
+}</code></pre>
+                <p><strong>Tip:</strong> Click the button to see smooth animation!</p>
+            </div>
+
+            <!-- Example 7: Child Override Parent -->
+            <div class="practice-box">
+                <h3>7️⃣ Child Overrides Parent Visibility</h3>
+                <p>Child elements can show even if parent is hidden.</p>
+                <div class="demo-area">
+                    <div style="visibility: hidden; background: var(--danger); color: white; padding: 20px; border-radius: 6px;">
+                        <p style="margin: 0; margin-bottom: 10px;">Parent is hidden...</p>
+                        <div style="visibility: visible; background: var(--success); color: white; padding: 15px; border-radius: 4px; margin: 0; font-weight: 600;">
+                            But this child is visible!
+                        </div>
+                    </div>
+                </div>
+                <pre><code>.parent {
+    visibility: hidden;
+}
+
+.parent .important-child {
+    visibility: visible;  /* Shows despite parent */
+}</code></pre>
+                <p><strong>Feature:</strong> Visibility can be overridden in child elements.</p>
+            </div>
+
+            <!-- Example 8: Accessibility Skip Link -->
+            <div class="practice-box">
+                <h3>8️⃣ Accessible Skip Link</h3>
+                <p>Hide skip link but keep accessible to keyboard navigation.</p>
+                <div class="demo-area">
+                    <div style="
+                        position: absolute;
+                        left: -9999px;
+                        background: var(--primary);
+                        color: white;
+                        padding: 10px 15px;
+                        border-radius: 4px;
+                        text-decoration: none;
+                    " onmouseover="this.style.left='10px'" onmouseout="this.style.left='-9999px'">
+                        Skip to main content
+                    </div>
+                    <p style="color: var(--text-secondary);">Try tabbing (may not be visible in this demo, but skip links use similar techniques)</p>
+                </div>
+                <pre><code>.skip-link {
+    position: absolute;
+    left: -9999px;
+    visibility: hidden;
+}
+
+.skip-link:focus {
+    visibility: visible;
+    left: 0;
+}</code></pre>
+                <p><strong>Accessibility:</strong> Keyboard users can still access skip links.</p>
+            </div>
+        </section>
+
+        <!-- Challenges Section -->
+        <section id="challenges">
+            <h2>Challenge Exercises</h2>
+            <p>Test your knowledge with these challenges.</p>
+
+            <!-- Challenge 1 -->
+            <div class="challenge-section">
+                <h3>Challenge 1: Toggle Element Visibility</h3>
+                <p>Create CSS that shows/hides an element on button click. Use visibility property.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge1()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge1')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge1">
+                    <pre><code>.element {
+    visibility: hidden;
+    transition: visibility 0.3s ease;
+}
+
+.element.show {
+    visibility: visible;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge1-output"></div>
+            </div>
+
+            <!-- Challenge 2 -->
+            <div class="challenge-section">
+                <h3>Challenge 2: Hidden Form Error</h3>
+                <p>Create a form field with hidden error message that reserves space.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge2()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge2')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge2">
+                    <pre><code>.error {
+    visibility: hidden;
+    color: red;
+    font-size: 0.85rem;
+    height: 20px;
+}
+
+.field.invalid .error {
+    visibility: visible;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge2-output"></div>
+            </div>
+
+            <!-- Challenge 3 -->
+            <div class="challenge-section">
+                <h3>Challenge 3: Hover Dropdown</h3>
+                <p>Create dropdown menu hidden by default, visible on hover.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge3()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge3')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge3">
+                    <pre><code>.dropdown-menu {
+    visibility: hidden;
+    position: absolute;
+}
+
+.dropdown:hover .dropdown-menu {
+    visibility: visible;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge3-output"></div>
+            </div>
+
+            <!-- Challenge 4 -->
+            <div class="challenge-section">
+                <h3>Challenge 4: Responsive Visibility</h3>
+                <p>Hide elements on mobile using visibility and media queries.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge4()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge4')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge4">
+                    <pre><code>@media (max-width: 768px) {
+    .desktop-only {
+        visibility: hidden;
+        display: none;  /* Also remove from layout */
+    }
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge4-output"></div>
+            </div>
+
+            <!-- Challenge 5 -->
+            <div class="challenge-section">
+                <h3>Challenge 5: Animated Show/Hide</h3>
+                <p>Create smooth animation using visibility and opacity together.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge5()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge5')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge5">
+                    <pre><code>.element {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s ease, opacity 0.3s ease;
+}
+
+.element.visible {
+    visibility: visible;
+    opacity: 1;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge5-output"></div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>Real-World Projects</h2>
+
+            <div class="practice-box">
+                <h3>Project 1: Modal Dialog</h3>
+                <p>Modal that hides by default and shows on trigger.</p>
+                <pre><code>.modal {
+    visibility: hidden;
+    opacity: 0;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.modal.open {
+    visibility: visible;
+    opacity: 1;
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 2: Navigation Menu</h3>
+                <p>Mobile menu hidden, desktop menu visible (responsive).</p>
+                <pre><code>.menu {
+    visibility: visible;
+}
+
+@media (max-width: 768px) {
+    .menu {
+        visibility: hidden;
+        display: none;
+    }
+    
+    .mobile-menu {
+        visibility: visible;
+    }
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 3: Form Validation</h3>
+                <p>Show/hide validation messages based on field state.</p>
+                <pre><code>.form-group {
+    position: relative;
+}
+
+.validation-message {
+    visibility: hidden;
+    font-size: 0.85rem;
+    color: red;
+    height: 20px;
+}
+
+.form-group.error .validation-message {
+    visibility: visible;
+}
+
+.form-group.success .validation-message {
+    color: green;
+    visibility: visible;
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 4: Accordion Menu</h3>
+                <p>Accordion items with hidden/visible content.</p>
+                <pre><code>.accordion-content {
+    visibility: hidden;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.accordion-item.open .accordion-content {
+    visibility: visible;
+    max-height: 500px;
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 5: Loading States</h3>
+                <p>Show spinner, hide content while loading.</p>
+                <pre><code>.loading-spinner {
+    visibility: visible;
+}
+
+.content {
+    visibility: hidden;
+}
+
+.loaded .loading-spinner {
+    visibility: hidden;
+}
+
+.loaded .content {
+    visibility: visible;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Reference Section -->
+        <section id="reference">
+            <h2>Quick Reference & Tips</h2>
+
+            <div class="practice-box">
+                <h3>Visibility Property Selection</h3>
+                <ul>
+                    <li><strong>visibility: visible:</strong> Show element, take space</li>
+                    <li><strong>visibility: hidden:</strong> Hide element, reserve space</li>
+                    <li><strong>visibility: collapse:</strong> Hide table row/column</li>
+                </ul>
+            </div>
+
+            <div class="practice-box">
+                <h3>Common Patterns</h3>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Toggle on click</button>
+                <div class="content">
+                    <pre><code>.element {
+    visibility: hidden;
+}
+
+.element.show {
+    visibility: visible;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Show on hover</button>
+                <div class="content">
+                    <pre><code>.tooltip {
+    visibility: hidden;
+}
+
+.element:hover .tooltip {
+    visibility: visible;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Smooth transition</button>
+                <div class="content">
+                    <pre><code>.element {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.element.show {
+    visibility: visible;
+    opacity: 1;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Reserve space</button>
+                <div class="content">
+                    <pre><code>.placeholder {
+    visibility: hidden;
+    height: 20px;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Child override</button>
+                <div class="content">
+                    <pre><code>.parent {
+    visibility: hidden;
+}
+
+.parent .important {
+    visibility: visible;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="practice-box">
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>✅ Use visibility: hidden to preserve layout</li>
+                    <li>✅ Use display: none to remove from layout</li>
+                    <li>✅ Combine with opacity for animations</li>
+                    <li>✅ Use transitions for smooth effects</li>
+                    <li>✅ Test keyboard navigation</li>
+                    <li>❌ Don't hide critical navigation with visibility</li>
+                    <li>❌ Don't forget accessibility implications</li>
+                </ul>
+            </div>
+
+            <div class="practice-box">
+                <h3>Troubleshooting</h3>
+                <ul>
+                    <li><strong>Layout shifts:</strong> Use visibility: hidden to avoid this</li>
+                    <li><strong>Animation not smooth:</strong> Combine with opacity</li>
+                    <li><strong>Child not showing:</strong> Override parent with visibility: visible</li>
+                    <li><strong>Keyboard not accessing:</strong> Check visibility on parent</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>CSS Visibility Practice Examples</strong></p>
+        <p>Master the visibility property for smart content hiding</p>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary);">
+            Practice these examples until you can confidently use visibility for forms, modals, dropdowns, and more.
+        </p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const btn = document.querySelector('.toggle-btn');
+            const isDark = btn.textContent.includes('Light');
+            btn.textContent = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+
+        function toggleVisibility(element) {
+            const visibility = window.getComputedStyle(element).visibility;
+            element.style.visibility = visibility === 'hidden' ? 'visible' : 'hidden';
+        }
+
+        function toggleAnimated(btn) {
+            const msg = document.getElementById('animated-msg');
+            const isHidden = window.getComputedStyle(msg).visibility === 'hidden';
+            if (isHidden) {
+                msg.classList.add('show');
+            } else {
+                msg.classList.remove('show');
+            }
+        }
+
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            solution.classList.toggle('show');
+        }
+
+        function toggleCollapsible(event) {
+            const btn = event.target;
+            const content = btn.nextElementSibling;
+            btn.classList.toggle('active');
+            content.classList.toggle('show');
+        }
+
+        function testChallenge1() {
+            const output = document.getElementById('challenge1-output');
+            output.innerHTML = `
+                <button style="padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;" onclick="this.nextElementSibling.style.visibility = this.nextElementSibling.style.visibility === 'hidden' ? 'visible' : 'hidden'">Toggle</button>
+                <div style="margin-top: 15px; visibility: visible; background: var(--success); color: white; padding: 20px; border-radius: 6px; transition: visibility 0.3s ease;">Element is visible</div>
+                <p style="margin-top: 10px; font-size: 0.9rem;">✓ Click button to toggle visibility</p>
+            `;
+        }
+
+        function testChallenge2() {
+            const output = document.getElementById('challenge2-output');
+            output.innerHTML = `
+                <div style="max-width: 300px; margin: 0 auto;">
+                    <input type="email" placeholder="Enter email" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); margin-bottom: 8px;">
+                    <div style="color: var(--danger); font-size: 0.85rem; visibility: hidden; height: 20px;">⚠️ Invalid email</div>
+                    <p style="font-size: 0.9rem;">✓ Error space is reserved</p>
+                </div>
+            `;
+        }
+
+        function testChallenge3() {
+            const output = document.getElementById('challenge3-output');
+            output.innerHTML = `
+                <div style="position: relative; display: inline-block;">
+                    <button style="padding: 10px 15px; background: var(--primary); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">Menu ▼</button>
+                    <div style="
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        background: white;
+                        border: 1px solid var(--border-color);
+                        border-radius: 4px;
+                        width: 150px;
+                        margin-top: 5px;
+                        visibility: hidden;
+                    " onmouseover="this.style.visibility='visible'" onmouseout="this.style.visibility='hidden'">
+                        <div style="padding: 10px; border-bottom: 1px solid var(--border-color); cursor: pointer;">Option 1</div>
+                        <div style="padding: 10px; border-bottom: 1px solid var(--border-color); cursor: pointer;">Option 2</div>
+                        <div style="padding: 10px; cursor: pointer;">Option 3</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; font-size: 0.9rem;">✓ Hover over Menu to see dropdown</p>
+            `;
+        }
+
+        function testChallenge4() {
+            const output = document.getElementById('challenge4-output');
+            output.innerHTML = `
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px;">Resize window to see visibility changes (768px breakpoint)</p>
+                <div style="
+                    background: var(--primary);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 6px;
+                    text-align: center;
+                    font-weight: 600;
+                ">
+                    Desktop/Tablet View
+                </div>
+            `;
+        }
+
+        function testChallenge5() {
+            const output = document.getElementById('challenge5-output');
+            const styleId = 'challenge5-style';
+            
+            if (!document.getElementById(styleId)) {
+                const style = document.createElement('style');
+                style.id = styleId;
+                style.innerHTML = `
+                    @keyframes fadeInOut {
+                        0% { opacity: 0; }
+                        100% { opacity: 1; }
+                    }
+                    #challenge5-animated {
+                        visibility: hidden;
+                        opacity: 0;
+                        transition: opacity 0.3s ease, visibility 0.3s ease;
+                        animation: fadeInOut 0.3s ease forwards;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            output.innerHTML = `
+                <button style="
+                    padding: 10px 20px;
+                    background: var(--primary);
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-weight: 600;
+                " onclick="
+                    const el = document.getElementById('challenge5-animated');
+                    el.style.visibility = el.style.visibility === 'hidden' ? 'visible' : 'hidden';
+                    el.style.opacity = el.style.opacity === '0' ? '1' : '0';
+                ">Toggle Smooth</button>
+                <div id="challenge5-animated" style="
+                    margin-top: 15px;
+                    background: var(--success);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 6px;
+                ">
+                    Smooth animation!
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem;">✓ Smooth transition with visibility + opacity</p>
+            `;
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize theme on page load
+        window.addEventListener('load', function() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const btn = document.querySelector('.toggle-btn');
+            if (prefersDark) {
+                btn.textContent = '☀️ Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>

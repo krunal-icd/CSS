@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Background-Blend-Mode Guide - Complete Reference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f97316;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --text-primary: var(--neutral-900);
+            --text-secondary: var(--neutral-600);
+            --bg-primary: #ffffff;
+            --bg-secondary: var(--neutral-100);
+            --border-color: var(--neutral-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: var(--neutral-50);
+                --text-secondary: var(--neutral-400);
+                --bg-primary: var(--neutral-900);
+                --bg-secondary: var(--neutral-800);
+                --border-color: var(--neutral-700);
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        nav {
+            background-color: var(--bg-secondary);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 130px;
+            z-index: 99;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section > h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        pre {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+
+        pre code {
+            color: var(--text-primary);
+        }
+
+        :not(pre) > code {
+            background-color: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card h4 {
+            margin-top: 0;
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--neutral-100));
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .feature-box {
+                background: linear-gradient(135deg, var(--neutral-800), var(--neutral-700));
+            }
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+        }
+
+        .toggle-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .toggle-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Blend Mode Examples Grid */
+        .blend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .blend-box {
+            height: 200px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .blend-box:hover {
+            transform: scale(1.02);
+        }
+
+        .blend-box-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* Demo Container */
+        .demo-container {
+            background-color: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            position: relative;
+            min-height: 250px;
+        }
+
+        .demo-element {
+            width: 100%;
+            height: 200px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(0,0,0,0.1)" stroke-width="1"/></pattern></defs><rect width="200" height="200" fill="rgba(99,102,241,0.3)"/><rect width="200" height="200" fill="url(%23grid)"/></svg>');
+            background-color: rgba(99, 102, 241, 0.3);
+            background-size: 20px 20px;
+            border-radius: 6px;
+            position: relative;
+        }
+
+        /* Collapsible */
+        .collapsible {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            background-color: var(--border-color);
+        }
+
+        .collapsible.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .content {
+            padding: 15px;
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            margin-bottom: 10px;
+        }
+
+        .content.show {
+            display: block;
+        }
+
+        /* Comparison Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .highlight {
+            background-color: rgba(243, 158, 11, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        /* Interactive Slider */
+        .slider-demo {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .slider-demo input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .slider-value {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
+        /* Mode Categories */
+        .mode-category {
+            margin-bottom: 40px;
+        }
+
+        .mode-category h3 {
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            .blend-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>CSS Background-Blend-Mode Guide</h1>
+        <p>Master blend modes for creative visual effects and image overlays</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#basics">Basics</a></li>
+            <li><a href="#modes">All Modes</a></li>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#use-cases">Use Cases</a></li>
+            <li><a href="#reference">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Basics Section -->
+        <section id="basics">
+            <h2>Understanding Background-Blend-Mode</h2>
+            
+            <p><code>background-blend-mode</code> defines how an element's background layers blend together. It controls the visual interaction between multiple backgrounds, colors, and images on the same element.</p>
+
+            <div class="feature-box">
+                <strong>Key Concept:</strong> background-blend-mode only works when an element has multiple backgrounds or a background image over a background color. It determines how these layers combine visually.
+            </div>
+
+            <h3>How It Works</h3>
+            <pre><code>element {
+    background-image: url('image.jpg');
+    background-color: rgba(99, 102, 241, 0.8);
+    background-blend-mode: multiply;  /* How layers blend together */
+}</code></pre>
+
+            <h3>Basic Requirements</h3>
+            <ul>
+                <li>At least 2 background layers (image + color, or multiple images)</li>
+                <li>The background-blend-mode property</li>
+                <li>Modern browser support (all modern browsers)</li>
+                <li>Works with background-image, background-color, gradients</li>
+            </ul>
+
+            <h3>Syntax</h3>
+            <pre><code>/* Single blend mode */
+background-blend-mode: multiply;
+
+/* Common values */
+background-blend-mode: normal;
+background-blend-mode: multiply;
+background-blend-mode: screen;
+background-blend-mode: overlay;
+background-blend-mode: darken;
+background-blend-mode: lighten;
+background-blend-mode: color-dodge;
+background-blend-mode: color-burn;
+background-blend-mode: hard-light;
+background-blend-mode: soft-light;
+background-blend-mode: difference;
+background-blend-mode: exclusion;
+background-blend-mode: hue;
+background-blend-mode: saturation;
+background-blend-mode: color;
+background-blend-mode: luminosity;</code></pre>
+        </section>
+
+        <!-- Blend Modes Section -->
+        <section id="modes">
+            <h2>All Background-Blend-Mode Values</h2>
+
+            <!-- Normal Blend Modes -->
+            <div class="mode-category">
+                <h3>🔄 Normal Blend Modes</h3>
+                
+                <div class="card">
+                    <h4>normal</h4>
+                    <p>Default behavior. Top layer completely covers bottom layer. No blending occurs.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: normal;"></div>
+                    </div>
+                    <pre><code>.element {
+    background-image: linear-gradient(45deg, blue, pink);
+    background-color: yellow;
+    background-blend-mode: normal;
+}</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>multiply</h4>
+                    <p>Darkens image. Multiplies colors. White becomes invisible, black stays black. Perfect for darkening overlays.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: multiply;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: multiply;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>screen</h4>
+                    <p>Lightens image. Opposite of multiply. Black becomes invisible, white stays white. Creates light overlay effect.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: screen;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: screen;</code></pre>
+                </div>
+            </div>
+
+            <!-- Darkening Blend Modes -->
+            <div class="mode-category">
+                <h3>🌑 Darkening Blend Modes</h3>
+
+                <div class="card">
+                    <h4>darken</h4>
+                    <p>Selects darker color for each pixel. Compares colors and keeps the darker one.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: darken;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: darken;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>color-burn</h4>
+                    <p>Darkens by increasing contrast. Creates intense, saturated darkening effect.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: color-burn;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: color-burn;</code></pre>
+                </div>
+            </div>
+
+            <!-- Lightening Blend Modes -->
+            <div class="mode-category">
+                <h3>🌟 Lightening Blend Modes</h3>
+
+                <div class="card">
+                    <h4>lighten</h4>
+                    <p>Selects lighter color for each pixel. Opposite of darken mode.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: lighten;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: lighten;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>color-dodge</h4>
+                    <p>Lightens by decreasing contrast. Creates bright, glowing effect.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: color-dodge;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: color-dodge;</code></pre>
+                </div>
+            </div>
+
+            <!-- Contrast Blend Modes -->
+            <div class="mode-category">
+                <h3>⚖️ Contrast Blend Modes</h3>
+
+                <div class="card">
+                    <h4>overlay</h4>
+                    <p>Combines multiply and screen. Dark areas get darker, light areas get lighter. Creates high-contrast effect.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: overlay;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: overlay;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>hard-light</h4>
+                    <p>Similar to overlay but with background and overlay reversed. Strong contrast effect.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: hard-light;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: hard-light;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>soft-light</h4>
+                    <p>Subtle version of overlay. Gentle contrast adjustment without harsh effects.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: soft-light;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: soft-light;</code></pre>
+                </div>
+            </div>
+
+            <!-- Difference Blend Modes -->
+            <div class="mode-category">
+                <h3>🔀 Difference Blend Modes</h3>
+
+                <div class="card">
+                    <h4>difference</h4>
+                    <p>Subtracts colors. Creates inverted effect. Useful for unique visual styles.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: difference;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: difference;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>exclusion</h4>
+                    <p>Similar to difference but lower contrast. Creates muted inverted effect.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: exclusion;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: exclusion;</code></pre>
+                </div>
+            </div>
+
+            <!-- Color Blend Modes -->
+            <div class="mode-category">
+                <h3>🎨 Color Component Blend Modes</h3>
+
+                <div class="card">
+                    <h4>hue</h4>
+                    <p>Uses hue of blend color with saturation and luminosity of base color.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: hue;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: hue;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>saturation</h4>
+                    <p>Uses saturation of blend color with hue and luminosity of base color.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: saturation;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: saturation;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>color</h4>
+                    <p>Uses hue and saturation of blend color with luminosity of base color. Perfect for color overlays.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: color;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: color;</code></pre>
+                </div>
+
+                <div class="card">
+                    <h4>luminosity</h4>
+                    <p>Uses luminosity of blend color with hue and saturation of base color. Preserves original colors.</p>
+                    <div class="demo-container">
+                        <div class="demo-element" style="background-image: linear-gradient(45deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: luminosity;"></div>
+                    </div>
+                    <pre><code>background-blend-mode: luminosity;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section id="examples">
+            <h2>Real-World Examples</h2>
+
+            <div class="card">
+                <h4>Example 1: Image with Dark Overlay</h4>
+                <p>Create a darkened image for better text readability.</p>
+                <div class="demo-container">
+                    <div class="demo-element" style="
+                        background-image: linear-gradient(135deg, #6366f1, #ec4899);
+                        background-color: rgba(0, 0, 0, 0.5);
+                        background-blend-mode: multiply;
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        font-weight: 600;
+                    ">
+                        Text Over Darkened Image
+                    </div>
+                </div>
+                <pre><code>.image-with-text {
+    background-image: url('image.jpg');
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: multiply;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>Example 2: Color Tint Overlay</h4>
+                <p>Add a color tint to an image while preserving details.</p>
+                <div class="demo-container">
+                    <div class="demo-element" style="
+                        background-image: linear-gradient(135deg, #6366f1, #ec4899);
+                        background-color: #fbbf24;
+                        background-blend-mode: color;
+                    "></div>
+                </div>
+                <pre><code>.tinted-image {
+    background-image: url('image.jpg');
+    background-color: #fbbf24;
+    background-blend-mode: color;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>Example 3: Glowing Light Overlay</h4>
+                <p>Create a glowing or bright overlay effect.</p>
+                <div class="demo-container">
+                    <div class="demo-element" style="
+                        background-image: linear-gradient(135deg, #6366f1, #ec4899);
+                        background-color: rgba(255, 255, 255, 0.6);
+                        background-blend-mode: screen;
+                    "></div>
+                </div>
+                <pre><code>.glowing-overlay {
+    background-image: url('image.jpg');
+    background-color: rgba(255, 255, 255, 0.6);
+    background-blend-mode: screen;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>Example 4: High Contrast Effect</h4>
+                <p>Increase contrast for dramatic visual impact.</p>
+                <div class="demo-container">
+                    <div class="demo-element" style="
+                        background-image: linear-gradient(135deg, #6366f1, #ec4899);
+                        background-color: #00000088;
+                        background-blend-mode: overlay;
+                    "></div>
+                </div>
+                <pre><code>.high-contrast {
+    background-image: url('image.jpg');
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: overlay;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>Example 5: Multiple Blend Modes</h4>
+                <p>Combine multiple background images with different blend modes.</p>
+                <pre><code>.multi-blend {
+    background-image: 
+        linear-gradient(45deg, rgba(99, 102, 241, 0.5), transparent),
+        url('texture.jpg'),
+        linear-gradient(135deg, #6366f1, #ec4899);
+    background-blend-mode: multiply, normal, lighten;
+    background-size: cover, auto, cover;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Use Cases Section -->
+        <section id="use-cases">
+            <h2>Common Use Cases</h2>
+
+            <div class="card">
+                <h3>🖼️ Image Galleries</h3>
+                <p>Use blend modes to create hover effects and overlays on gallery images.</p>
+                <pre><code>.gallery-item {
+    background-image: url('photo.jpg');
+    background-color: var(--primary);
+    background-blend-mode: multiply;
+    transition: background-blend-mode 0.3s ease;
+}
+
+.gallery-item:hover {
+    background-blend-mode: normal;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>🌈 Color Filters</h3>
+                <p>Create various color filter effects on images.</p>
+                <pre><code>/* Sepia effect */
+.sepia {
+    background-image: url('image.jpg');
+    background-color: #8B4513;
+    background-blend-mode: multiply;
+}
+
+/* Cool/Blue effect */
+.cool {
+    background-image: url('image.jpg');
+    background-color: #00A8FF;
+    background-blend-mode: color;
+}
+
+/* Warm/Orange effect */
+.warm {
+    background-image: url('image.jpg');
+    background-color: #FF8C00;
+    background-blend-mode: color;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>📢 Hero Sections</h3>
+                <p>Add dramatic overlays to hero section background images.</p>
+                <pre><code>.hero {
+    background-image: url('hero-bg.jpg');
+    background-color: rgba(0, 0, 0, 0.6);
+    background-blend-mode: multiply;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>🎨 Design Elements</h3>
+                <p>Create texture and pattern overlays.</p>
+                <pre><code>.textured-element {
+    background-image: 
+        url('noise.png'),
+        linear-gradient(135deg, #6366f1, #ec4899);
+    background-blend-mode: overlay;
+    background-size: 100%, cover;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>🔔 Notifications & Badges</h3>
+                <p>Use blend modes to make elements stand out.</p>
+                <pre><code>.notification {
+    background-image: linear-gradient(45deg, transparent, white);
+    background-color: #ef4444;
+    background-blend-mode: screen;
+    color: white;
+    padding: 15px;
+    border-radius: 6px;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>🎬 Video Backgrounds</h3>
+                <p>Blend modes work with video backgrounds too.</p>
+                <pre><code>.video-background {
+    background-image: url('video.webm');
+    background-color: rgba(99, 102, 241, 0.3);
+    background-blend-mode: overlay;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Reference Section -->
+        <section id="reference">
+            <h2>Quick Reference</h2>
+
+            <h3>Blend Mode Categories</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Modes</th>
+                        <th>Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Normal</strong></td>
+                        <td>normal, multiply, screen</td>
+                        <td>Basic layering effects</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Darkening</strong></td>
+                        <td>darken, color-burn</td>
+                        <td>Darkens image, increases contrast</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lightening</strong></td>
+                        <td>lighten, color-dodge</td>
+                        <td>Lightens image, decreases contrast</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contrast</strong></td>
+                        <td>overlay, hard-light, soft-light</td>
+                        <td>Increases or decreases contrast</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Difference</strong></td>
+                        <td>difference, exclusion</td>
+                        <td>Subtracts colors for inversion</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Color</strong></td>
+                        <td>hue, saturation, color, luminosity</td>
+                        <td>Manipulates color components</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Choosing the Right Blend Mode</h3>
+            <pre><code>/* Want to darken an image? */
+background-blend-mode: multiply;
+
+/* Want to lighten an image? */
+background-blend-mode: screen;
+
+/* Want to tint an image with a color? */
+background-blend-mode: color;
+
+/* Want high contrast effect? */
+background-blend-mode: overlay;
+
+/* Want gentle contrast adjustment? */
+background-blend-mode: soft-light;
+
+/* Want to increase saturation? */
+background-blend-mode: saturation;
+
+/* Want to preserve luminosity? */
+background-blend-mode: luminosity;
+
+/* Want to invert colors? */
+background-blend-mode: difference;</code></pre>
+
+            <h3>Browser Support</h3>
+            <ul>
+                <li>✅ Chrome 29+</li>
+                <li>✅ Firefox 30+</li>
+                <li>✅ Safari 8+</li>
+                <li>✅ Edge 12+</li>
+                <li>⚠️ IE 11 - No support</li>
+            </ul>
+
+            <h3>Performance Considerations</h3>
+            <ul>
+                <li>Blend modes are GPU-accelerated on modern browsers</li>
+                <li>Multiple blend modes have minimal performance impact</li>
+                <li>Animated blend mode changes may affect performance</li>
+                <li>Test on real devices, especially mobile</li>
+            </ul>
+
+            <h3>Common Patterns</h3>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Dark Overlay for Text Readability</button>
+            <div class="content">
+                <pre><code>element {
+    background-image: url('image.jpg');
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: multiply;
+}</code></pre>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Light Glow Effect</button>
+            <div class="content">
+                <pre><code>element {
+    background-image: url('image.jpg');
+    background-color: rgba(255, 255, 255, 0.3);
+    background-blend-mode: screen;
+}</code></pre>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Color Filter</button>
+            <div class="content">
+                <pre><code>element {
+    background-image: url('image.jpg');
+    background-color: #FF8C00;  /* Orange */
+    background-blend-mode: color;
+}</code></pre>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Texture Overlay</button>
+            <div class="content">
+                <pre><code>element {
+    background-image: 
+        url('noise.png'),
+        url('background.jpg');
+    background-blend-mode: overlay;
+}</code></pre>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Hover Effect Change</button>
+            <div class="content">
+                <pre><code>.element {
+    background-image: url('image.jpg');
+    background-color: var(--primary);
+    background-blend-mode: multiply;
+    transition: background-blend-mode 0.3s ease;
+}
+
+.element:hover {
+    background-blend-mode: lighten;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Tips Section -->
+        <section>
+            <h2>Tips & Best Practices</h2>
+
+            <div class="card">
+                <h3>✅ Best Practices</h3>
+                <ul>
+                    <li><strong>Test with real images:</strong> Blend modes look different on various images</li>
+                    <li><strong>Use for visual enhancement:</strong> Blend modes should improve the design, not distract</li>
+                    <li><strong>Consider accessibility:</strong> Ensure sufficient contrast for readability</li>
+                    <li><strong>Keep it subtle:</strong> Extreme blend modes can look unprofessional</li>
+                    <li><strong>Combine with transitions:</strong> Smooth changes between blend modes</li>
+                    <li><strong>Mobile optimization:</strong> Test on various devices and screen sizes</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>❌ Common Mistakes</h3>
+                <ul>
+                    <li>Using blend modes without sufficient background layers</li>
+                    <li>Forgetting to set both background-image and background-color</li>
+                    <li>Making text unreadable with poor contrast</li>
+                    <li>Using too many different blend modes on one page</li>
+                    <li>Not testing on actual target devices</li>
+                    <li>Relying on blend modes without fallback styling</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🎨 Creative Tips</h3>
+                <ul>
+                    <li>Layer multiple gradients with different blend modes for complex effects</li>
+                    <li>Use <code>color</code> mode for tinting without affecting saturation</li>
+                    <li>Combine <code>multiply</code> with slight transparency for natural darkening</li>
+                    <li>Use <code>screen</code> mode with light colors for glow effects</li>
+                    <li>Experiment with <code>overlay</code> for dramatic contrast</li>
+                    <li>Use <code>saturation</code> mode to create color-blind friendly designs</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>CSS Background-Blend-Mode Guide</strong></p>
+        <p>Master blend modes for creative visual effects and professional image overlays</p>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary);">
+            background-blend-mode provides powerful tools for creating visually stunning web designs while maintaining performance and accessibility.
+        </p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const btn = document.querySelector('.toggle-btn');
+            const isDark = btn.textContent.includes('Light');
+            btn.textContent = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+
+        function toggleCollapsible(event) {
+            const btn = event.target;
+            const content = btn.nextElementSibling;
+            btn.classList.toggle('active');
+            content.classList.toggle('show');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize theme on page load
+        window.addEventListener('load', function() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const btn = document.querySelector('.toggle-btn');
+            if (prefersDark) {
+                btn.textContent = '☀️ Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>

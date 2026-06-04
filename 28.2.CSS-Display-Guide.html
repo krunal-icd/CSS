@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Display Practice Examples - Interactive Exercises</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f97316;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --text-primary: var(--neutral-900);
+            --text-secondary: var(--neutral-600);
+            --bg-primary: #ffffff;
+            --bg-secondary: var(--neutral-100);
+            --border-color: var(--neutral-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: var(--neutral-50);
+                --text-secondary: var(--neutral-400);
+                --bg-primary: var(--neutral-900);
+                --bg-secondary: var(--neutral-800);
+                --border-color: var(--neutral-700);
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        nav {
+            background-color: var(--bg-secondary);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 130px;
+            z-index: 99;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section > h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        pre {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+
+        pre code {
+            color: var(--text-primary);
+        }
+
+        :not(pre) > code {
+            background-color: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .practice-box {
+            background-color: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .practice-box h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .demo-area {
+            background-color: var(--bg-primary);
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            min-height: 150px;
+        }
+
+        .demo-item {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+        }
+
+        .toggle-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .toggle-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--neutral-100));
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .feature-box {
+                background: linear-gradient(135deg, var(--neutral-800), var(--neutral-700));
+            }
+        }
+
+        .challenge-section {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .challenge-section h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .solution-btn {
+            background: var(--success);
+            color: white;
+        }
+
+        .solution-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .output-area {
+            background-color: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 150px;
+        }
+
+        .solution {
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--success);
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .solution.show {
+            display: block;
+        }
+
+        .collapsible {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            background-color: var(--border-color);
+        }
+
+        .collapsible.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .content {
+            padding: 15px;
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            margin-bottom: 10px;
+        }
+
+        .content.show {
+            display: block;
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        /* Display Examples */
+        .block-example {
+            display: block;
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .inline-example {
+            display: inline;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 10px;
+            margin: 2px;
+            border-radius: 4px;
+        }
+
+        .inline-block-example {
+            display: inline-block;
+            background: var(--accent);
+            color: #000;
+            padding: 15px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            width: 150px;
+            text-align: center;
+        }
+
+        .flex-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .flex-item {
+            flex: 1;
+            min-width: 150px;
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .grid-item {
+            background: var(--secondary);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>CSS Display Practice Examples</h1>
+        <p>Interactive exercises to master the display property</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#challenges">Challenges</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#reference">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Examples Section -->
+        <section id="examples">
+            <h2>Practice Examples</h2>
+            <p>Work through these interactive examples to understand each display value.</p>
+
+            <!-- Example 1: Block -->
+            <div class="practice-box">
+                <h3>1️⃣ Display: Block</h3>
+                <p>Block elements take full width and stack vertically. They respect all margins and padding.</p>
+                <div class="demo-area">
+                    <div class="block-example">Block 1 - Takes full width</div>
+                    <div class="block-example">Block 2 - Starts new line</div>
+                    <div class="block-example">Block 3 - Respects margins</div>
+                </div>
+                <pre><code>.block {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+}</code></pre>
+                <p><strong>Key Points:</strong></p>
+                <ul>
+                    <li>Takes full available width</li>
+                    <li>Starts on new line</li>
+                    <li>Respects width, height, margin, padding</li>
+                    <li>Default for &lt;div&gt;, &lt;p&gt;, &lt;section&gt;</li>
+                </ul>
+            </div>
+
+            <!-- Example 2: Inline -->
+            <div class="practice-box">
+                <h3>2️⃣ Display: Inline</h3>
+                <p>Inline elements flow with text, only take needed width. Width/height ignored.</p>
+                <div class="demo-area">
+                    <span class="inline-example">Inline 1</span>
+                    <span class="inline-example">Inline 2</span>
+                    <span class="inline-example">Inline 3</span>
+                    <span class="inline-example">Inline 4</span>
+                </div>
+                <pre><code>.inline {
+    display: inline;
+    background: color;
+    padding: 5px;
+    margin: 2px;
+}</code></pre>
+                <p><strong>Key Points:</strong></p>
+                <ul>
+                    <li>Flows inline with text</li>
+                    <li>Only takes needed width</li>
+                    <li>Width/height ignored</li>
+                    <li>Vertical margin/padding not respected</li>
+                    <li>Default for &lt;span&gt;, &lt;a&gt;, &lt;em&gt;</li>
+                </ul>
+            </div>
+
+            <!-- Example 3: Inline-Block -->
+            <div class="practice-box">
+                <h3>3️⃣ Display: Inline-Block</h3>
+                <p>Hybrid of inline and block. Flows inline but respects sizing.</p>
+                <div class="demo-area">
+                    <div class="inline-block-example">Box 1</div>
+                    <div class="inline-block-example">Box 2</div>
+                    <div class="inline-block-example">Box 3</div>
+                </div>
+                <pre><code>.inline-block {
+    display: inline-block;
+    width: 150px;
+    padding: 15px 20px;
+    margin: 5px;
+}</code></pre>
+                <p><strong>Key Points:</strong></p>
+                <ul>
+                    <li>Flows inline with other elements</li>
+                    <li>Respects width and height</li>
+                    <li>Respects all margins and padding</li>
+                    <li>Mostly replaced by flexbox today</li>
+                </ul>
+            </div>
+
+            <!-- Example 4: Flex -->
+            <div class="practice-box">
+                <h3>4️⃣ Display: Flex</h3>
+                <p>Enables flexible 1D layout. Items distribute space intelligently.</p>
+                <div class="flex-container">
+                    <div class="flex-item">Flex 1</div>
+                    <div class="flex-item">Flex 2</div>
+                    <div class="flex-item">Flex 3</div>
+                </div>
+                <pre><code>.flex-container {
+    display: flex;
+    gap: 10px;
+}
+
+.flex-item {
+    flex: 1;  /* Equal width */
+}</code></pre>
+                <p><strong>Key Points:</strong></p>
+                <ul>
+                    <li>One-dimensional layout (row or column)</li>
+                    <li>Items flex to fill space</li>
+                    <li>Powerful alignment options</li>
+                    <li>Most popular for modern layouts</li>
+                </ul>
+            </div>
+
+            <!-- Example 5: Grid -->
+            <div class="practice-box">
+                <h3>5️⃣ Display: Grid</h3>
+                <p>Enables 2D layout with rows and columns. Precise control.</p>
+                <div class="grid-container">
+                    <div class="grid-item">Grid 1</div>
+                    <div class="grid-item">Grid 2</div>
+                    <div class="grid-item">Grid 3</div>
+                    <div class="grid-item">Grid 4</div>
+                    <div class="grid-item">Grid 5</div>
+                    <div class="grid-item">Grid 6</div>
+                </div>
+                <pre><code>.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}</code></pre>
+                <p><strong>Key Points:</strong></p>
+                <ul>
+                    <li>Two-dimensional layout</li>
+                    <li>Control rows and columns</li>
+                    <li>Powerful alignment</li>
+                    <li>Best for full layouts</li>
+                </ul>
+            </div>
+
+            <!-- Example 6: None -->
+            <div class="practice-box">
+                <h3>6️⃣ Display: None</h3>
+                <p>Hides element completely, removes from layout flow.</p>
+                <div class="demo-area">
+                    <p style="display: block;">This is visible</p>
+                    <p style="display: none;">This is hidden with display: none</p>
+                    <p style="display: block;">Back to visible</p>
+                </div>
+                <pre><code>.hidden {
+    display: none;  /* Completely hidden, takes no space */
+}
+
+.visible {
+    display: block;  /* Visible and in layout */
+}</code></pre>
+                <p><strong>Key Points:</strong></p>
+                <ul>
+                    <li>Element is completely hidden</li>
+                    <li>Takes no space in layout</li>
+                    <li>Common for responsive design</li>
+                    <li>Different from visibility: hidden</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Challenges Section -->
+        <section id="challenges">
+            <h2>Challenge Exercises</h2>
+            <p>Test your knowledge by creating layouts with display values.</p>
+
+            <!-- Challenge 1 -->
+            <div class="challenge-section">
+                <h3>Challenge 1: Create Navigation Bar (Flex)</h3>
+                <p>Create horizontal navigation using display: flex with space between items.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge1()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge1')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge1">
+                    <pre><code>nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    padding: 10px 15px;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge1-output"></div>
+            </div>
+
+            <!-- Challenge 2 -->
+            <div class="challenge-section">
+                <h3>Challenge 2: Center Content Vertically</h3>
+                <p>Use display: flex to center content both horizontally and vertically.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge2()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge2')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge2">
+                    <pre><code>.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge2-output"></div>
+            </div>
+
+            <!-- Challenge 3 -->
+            <div class="challenge-section">
+                <h3>Challenge 3: Responsive Card Grid</h3>
+                <p>Create responsive card grid using display: grid with auto-fit.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge3()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge3')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge3">
+                    <pre><code>.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge3-output"></div>
+            </div>
+
+            <!-- Challenge 4 -->
+            <div class="challenge-section">
+                <h3>Challenge 4: Hide on Mobile</h3>
+                <p>Hide sidebar on mobile using display: none in media query.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge4()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge4')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge4">
+                    <pre><code>@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+    
+    main {
+        grid-column: 1 / -1;
+    }
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge4-output"></div>
+            </div>
+
+            <!-- Challenge 5 -->
+            <div class="challenge-section">
+                <h3>Challenge 5: Flex Direction Column</h3>
+                <p>Create vertical layout using flex-direction: column.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge5()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge5')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge5">
+                    <pre><code>.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form input {
+    width: 100%;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge5-output"></div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>Real-World Projects</h2>
+
+            <div class="practice-box">
+                <h3>Project 1: Page Layout (Grid)</h3>
+                <p>Full page layout with header, sidebar, main, footer.</p>
+                <pre><code>body {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+    gap: 20px;
+}
+
+header { grid-column: 1 / -1; }
+aside { grid-row: 2; }
+main { grid-row: 2; }
+footer { grid-column: 1 / -1; }</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 2: Navigation Bar (Flex)</h3>
+                <p>Responsive navigation with flex layout.</p>
+                <pre><code>nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 3: Card Grid (Responsive)</h3>
+                <p>Auto-responsive card grid with grid.</p>
+                <pre><code>.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 4: Hero Section</h3>
+                <p>Centered hero content using flex.</p>
+                <pre><code>.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    text-align: center;
+    color: white;
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 5: Form Layout</h3>
+                <p>Vertical form using flex column.</p>
+                <pre><code>.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form input,
+.form textarea,
+.form select {
+    width: 100%;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Reference Section -->
+        <section id="reference">
+            <h2>Quick Reference & Tips</h2>
+
+            <div class="practice-box">
+                <h3>Display Value Selection</h3>
+                <ul>
+                    <li><strong>Block:</strong> Main content, sections, containers</li>
+                    <li><strong>Inline:</strong> Text within text, em, strong, span</li>
+                    <li><strong>Inline-Block:</strong> Avoid - use flex/grid instead</li>
+                    <li><strong>Flex:</strong> Navigation, toolbars, 1D layouts</li>
+                    <li><strong>Grid:</strong> Page layouts, 2D structures</li>
+                    <li><strong>None:</strong> Hide elements, responsive design</li>
+                </ul>
+            </div>
+
+            <div class="practice-box">
+                <h3>Common Patterns</h3>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Flex Row (Horizontal)</button>
+                <div class="content">
+                    <pre><code>.flex-row {
+    display: flex;
+    gap: 10px;
+}
+
+.flex-row > * {
+    flex: 1;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Flex Column (Vertical)</button>
+                <div class="content">
+                    <pre><code>.flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Center Everything</button>
+                <div class="content">
+                    <pre><code>.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Responsive Grid</button>
+                <div class="content">
+                    <pre><code>.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Space Between</button>
+                <div class="content">
+                    <pre><code>.space-between {
+    display: flex;
+    justify-content: space-between;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="practice-box">
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>✅ Use <code>flex</code> for 1D layouts</li>
+                    <li>✅ Use <code>grid</code> for 2D layouts</li>
+                    <li>✅ Use <code>block</code> for sections</li>
+                    <li>✅ Use <code>none</code> for responsive hiding</li>
+                    <li>❌ Don't use <code>inline-block</code></li>
+                    <li>❌ Don't use floats for layout</li>
+                    <li>✅ Combine flex and grid</li>
+                    <li>✅ Test responsive at all breakpoints</li>
+                </ul>
+            </div>
+
+            <div class="practice-box">
+                <h3>Troubleshooting</h3>
+                <ul>
+                    <li><strong>Items not sizing:</strong> Check display value - inline ignores size</li>
+                    <li><strong>Layout broken:</strong> Verify grid/flex container on parent</li>
+                    <li><strong>Elements overlapping:</strong> Check z-index and positioning</li>
+                    <li><strong>Responsive issues:</strong> Add display: block for mobile</li>
+                    <li><strong>Margin collapse:</strong> Use flex/grid or padding instead</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>CSS Display Practice Examples</strong></p>
+        <p>Master display values for modern web layouts</p>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary);">
+            Practice these examples until you can confidently build layouts with block, flex, and grid displays.
+        </p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const btn = document.querySelector('.toggle-btn');
+            const isDark = btn.textContent.includes('Light');
+            btn.textContent = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            solution.classList.toggle('show');
+        }
+
+        function toggleCollapsible(event) {
+            const btn = event.target;
+            const content = btn.nextElementSibling;
+            btn.classList.toggle('active');
+            content.classList.toggle('show');
+        }
+
+        function testChallenge1() {
+            const output = document.getElementById('challenge1-output');
+            output.innerHTML = `
+                <nav style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    background: var(--primary);
+                    color: white;
+                    padding: 15px;
+                    border-radius: 6px;
+                ">
+                    <div style="font-weight: 600;">Logo</div>
+                    <div style="display: flex; gap: 20px;">
+                        <a href="#" style="color: white; text-decoration: none;">Home</a>
+                        <a href="#" style="color: white; text-decoration: none;">About</a>
+                        <a href="#" style="color: white; text-decoration: none;">Contact</a>
+                    </div>
+                </nav>
+                <p style="margin-top: 10px; font-size: 0.9rem;">✓ Navigation bar created with flex</p>
+            `;
+        }
+
+        function testChallenge2() {
+            const output = document.getElementById('challenge2-output');
+            output.innerHTML = `
+                <div style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: linear-gradient(135deg, var(--primary), var(--secondary));
+                    color: white;
+                    height: 150px;
+                    border-radius: 6px;
+                ">
+                    <h3 style="margin: 0;">Centered Content</h3>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem;">✓ Content centered vertically and horizontally</p>
+            `;
+        }
+
+        function testChallenge3() {
+            const output = document.getElementById('challenge3-output');
+            output.innerHTML = `
+                <div style="
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                    gap: 15px;
+                ">
+                    <div style="background: var(--primary); color: white; padding: 20px; border-radius: 6px; text-align: center; font-weight: 600;">Card 1</div>
+                    <div style="background: var(--secondary); color: white; padding: 20px; border-radius: 6px; text-align: center; font-weight: 600;">Card 2</div>
+                    <div style="background: var(--accent); color: #000; padding: 20px; border-radius: 6px; text-align: center; font-weight: 600;">Card 3</div>
+                    <div style="background: var(--success); color: white; padding: 20px; border-radius: 6px; text-align: center; font-weight: 600;">Card 4</div>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem;">✓ Responsive card grid created</p>
+            `;
+        }
+
+        function testChallenge4() {
+            const output = document.getElementById('challenge4-output');
+            output.innerHTML = `
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Layout changes on mobile. Try resizing window to see display: none in action.</p>
+                <div style="display: grid; grid-template-columns: 1fr 3fr; gap: 15px;">
+                    <div style="background: var(--primary); color: white; padding: 20px; border-radius: 6px;">Sidebar</div>
+                    <div style="background: var(--secondary); color: white; padding: 20px; border-radius: 6px;">Main Content</div>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem;">✓ Responsive layout - sidebar hides on mobile</p>
+            `;
+        }
+
+        function testChallenge5() {
+            const output = document.getElementById('challenge5-output');
+            output.innerHTML = `
+                <form style="display: flex; flex-direction: column; gap: 15px; background: var(--bg-secondary); padding: 20px; border-radius: 6px;">
+                    <div style="display: flex; flex-direction: column;">
+                        <label style="margin-bottom: 5px; font-weight: 600;">Name:</label>
+                        <input type="text" placeholder="Enter name" style="padding: 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <label style="margin-bottom: 5px; font-weight: 600;">Email:</label>
+                        <input type="email" placeholder="Enter email" style="padding: 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                    </div>
+                    <button style="padding: 10px; background: var(--primary); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">Submit</button>
+                </form>
+                <p style="margin-top: 10px; font-size: 0.9rem;">✓ Form created with flex column layout</p>
+            `;
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize theme on page load
+        window.addEventListener('load', function() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const btn = document.querySelector('.toggle-btn');
+            if (prefersDark) {
+                btn.textContent = '☀️ Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS list-style-type - 12 Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .examples-grid {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .example-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .example h2 {
+            color: #667eea;
+            font-size: 1.6em;
+            margin: 0;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .example-tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .example-tag.numeric {
+            background: #fd7e14;
+        }
+
+        .example-tag.alphabetic {
+            background: #28a745;
+        }
+
+        .example-tag.symbol {
+            background: #dc3545;
+        }
+
+        .example-tag.structure {
+            background: #17a2b8;
+        }
+
+        .example-tag.language {
+            background: #6f42c1;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .demo-area {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+
+        .code-block .keyword {
+            color: #569cd6;
+        }
+
+        .code-block .property {
+            color: #9cdcfe;
+        }
+
+        .code-block .value {
+            color: #ce9178;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* ========== EXAMPLE STYLES ========== */
+
+        /* Example 1: Basic Numeric */
+        .list-decimal {
+            list-style-type: decimal;
+            margin-left: 30px;
+            line-height: 1.8;
+        }
+
+        .list-decimal li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        /* Example 2: Decimal Leading Zero */
+        .list-decimal-leading {
+            list-style-type: decimal-leading-zero;
+            margin-left: 30px;
+            line-height: 1.8;
+        }
+
+        .list-decimal-leading li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        /* Example 3: Roman Numerals */
+        .list-roman {
+            list-style-type: upper-roman;
+            margin-left: 30px;
+            line-height: 1.8;
+            font-weight: 500;
+        }
+
+        .list-roman li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        /* Example 4: Alphabetic Upper */
+        .list-alpha-upper {
+            list-style-type: upper-alpha;
+            margin-left: 30px;
+            line-height: 1.8;
+        }
+
+        .list-alpha-upper li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        /* Example 5: Alphabetic Lower */
+        .list-alpha-lower {
+            list-style-type: lower-alpha;
+            margin-left: 30px;
+            line-height: 1.8;
+        }
+
+        .list-alpha-lower li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        /* Example 6: Symbols */
+        .list-disc {
+            list-style-type: disc;
+            margin-left: 30px;
+            line-height: 1.8;
+        }
+
+        .list-disc li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .list-circle {
+            list-style-type: circle;
+            margin-left: 30px;
+            line-height: 1.8;
+        }
+
+        .list-circle li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .list-square {
+            list-style-type: square;
+            margin-left: 30px;
+            line-height: 1.8;
+        }
+
+        .list-square li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        /* Example 7: No Markers */
+        .list-none {
+            list-style-type: none;
+            margin-left: 0;
+            line-height: 1.8;
+        }
+
+        .list-none li {
+            margin-bottom: 8px;
+            color: #333;
+            padding-left: 20px;
+            border-left: 3px solid #667eea;
+        }
+
+        /* Example 8: Nested Lists */
+        .nested-list {
+            list-style-type: decimal;
+            margin-left: 30px;
+            line-height: 1.8;
+        }
+
+        .nested-list li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .nested-list ol {
+            list-style-type: lower-alpha;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .nested-list ol ol {
+            list-style-type: lower-roman;
+        }
+
+        /* Example 9: Greek Letters */
+        .list-greek {
+            list-style-type: lower-greek;
+            margin-left: 30px;
+            line-height: 1.8;
+        }
+
+        .list-greek li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        /* Example 10: HTML Structure */
+        .structure-list {
+            list-style-type: decimal;
+            margin-left: 30px;
+            line-height: 1.8;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .structure-list li {
+            margin-bottom: 8px;
+        }
+
+        /* Example 11: Task List with Custom Styles */
+        .task-list {
+            list-style-type: none;
+            margin-left: 0;
+            line-height: 1.8;
+        }
+
+        .task-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px;
+            background: #f0f4ff;
+            border-radius: 6px;
+            color: #333;
+        }
+
+        .task-list li::before {
+            content: "☐";
+            margin-right: 12px;
+            font-size: 1.2em;
+            color: #667eea;
+        }
+
+        .task-list li.completed {
+            background: #f1f9f6;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .task-list li.completed::before {
+            content: "☑";
+            color: #28a745;
+        }
+
+        /* Example 12: Mixed Styles */
+        .priority-list {
+            list-style-type: none;
+            margin-left: 0;
+        }
+
+        .priority-list li {
+            margin-bottom: 12px;
+            padding: 12px;
+            border-left: 4px solid #e0e0e0;
+            background: #fafafa;
+        }
+
+        .priority-list li.high {
+            border-left-color: #dc3545;
+            background: #ffe5e5;
+        }
+
+        .priority-list li.medium {
+            border-left-color: #fd7e14;
+            background: #fff5e5;
+        }
+
+        .priority-list li.low {
+            border-left-color: #28a745;
+            background: #e5f5e5;
+        }
+
+        .priority-list li::before {
+            content: attr(data-priority);
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: currentColor;
+            color: white;
+            text-align: center;
+            line-height: 24px;
+            margin-right: 10px;
+            font-size: 0.8em;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+
+        .priority-list li.high::before {
+            background: #dc3545;
+            content: "!";
+        }
+
+        .priority-list li.medium::before {
+            background: #fd7e14;
+            content: "•";
+            font-size: 1.2em;
+        }
+
+        .priority-list li.low::before {
+            background: #28a745;
+            content: "✓";
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .example h2 {
+                font-size: 1.3em;
+                min-width: auto;
+            }
+
+            .code-block {
+                font-size: 0.75em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+            }
+
+            .example {
+                padding: 15px;
+            }
+
+            .example h2 {
+                font-size: 1.1em;
+            }
+
+            .code-block {
+                font-size: 0.7em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS list-style-type</h1>
+            <p class="subtitle">12 Practical Examples • Complete List Styling Guide</p>
+        </header>
+
+        <div class="examples-grid">
+            <!-- EXAMPLE 1: DECIMAL NUMBERS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>1. Decimal Numbers (1, 2, 3...)</h2>
+                    <span class="example-tag numeric">Numeric</span>
+                </div>
+                <p class="example-description">
+                    Standard numbered list using decimal (base 10) integers. Most common for ordered lists and step-by-step instructions.
+                </p>
+                <div class="demo-area">
+                    <ol class="list-decimal">
+                        <li>First step in the process</li>
+                        <li>Second step in the process</li>
+                        <li>Third step in the process</li>
+                        <li>Fourth step in the process</li>
+                        <li>Fifth step in the process</li>
+                    </ol>
+                </div>
+                <div class="code-block">
+<span class="keyword">ol</span> {
+    <span class="property">list-style-type:</span> <span class="value">decimal</span>;
+}
+
+<span class="keyword">Result:</span> <span class="value">1, 2, 3, 4, 5...</span>
+                </div>
+            </div>
+
+            <!-- EXAMPLE 2: DECIMAL LEADING ZERO -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>2. Decimal Leading Zero (01, 02, 03...)</h2>
+                    <span class="example-tag numeric">Numeric</span>
+                </div>
+                <p class="example-description">
+                    Numbered list with leading zeros for single-digit numbers. Useful for formal documents, specifications, or when visual alignment matters.
+                </p>
+                <div class="demo-area">
+                    <ol class="list-decimal-leading">
+                        <li>Introduction and overview</li>
+                        <li>Requirements and specifications</li>
+                        <li>Implementation details</li>
+                        <li>Testing procedures</li>
+                        <li>Deployment checklist</li>
+                    </ol>
+                </div>
+                <div class="code-block">
+<span class="keyword">ol</span> {
+    <span class="property">list-style-type:</span> <span class="value">decimal-leading-zero</span>;
+}
+
+<span class="keyword">Result:</span> <span class="value">01, 02, 03, 04, 05...</span>
+                </div>
+            </div>
+
+            <!-- EXAMPLE 3: ROMAN NUMERALS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>3. Roman Numerals (I, II, III...)</h2>
+                    <span class="example-tag numeric">Numeric</span>
+                </div>
+                <p class="example-description">
+                    Uppercase Roman numerals for classical or formal documents, legal sections, or outline-style organization.
+                </p>
+                <div class="demo-area">
+                    <ol class="list-roman">
+                        <li>Executive Summary</li>
+                        <li>Main Findings</li>
+                        <li>Recommendations</li>
+                        <li>Conclusion</li>
+                        <li>Appendix</li>
+                    </ol>
+                </div>
+                <div class="code-block">
+<span class="keyword">ol</span> {
+    <span class="property">list-style-type:</span> <span class="value">upper-roman</span>;
+}
+
+<span class="keyword">Result:</span> <span class="value">I, II, III, IV, V...</span>
+<span class="keyword">Lowercase:</span> <span class="value">lower-roman</span> <span class="keyword">=</span> <span class="value">i, ii, iii...</span>
+                </div>
+            </div>
+
+            <!-- EXAMPLE 4: UPPER ALPHA -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>4. Uppercase Letters (A, B, C...)</h2>
+                    <span class="example-tag alphabetic">Alphabetic</span>
+                </div>
+                <p class="example-description">
+                    Uppercase alphabetic markers for labeled options, questions, or subsections. Common in educational materials and forms.
+                </p>
+                <div class="demo-area">
+                    <ol class="list-alpha-upper">
+                        <li>Multiple choice option one</li>
+                        <li>Multiple choice option two</li>
+                        <li>Multiple choice option three</li>
+                        <li>Multiple choice option four</li>
+                    </ol>
+                </div>
+                <div class="code-block">
+<span class="keyword">ol</span> {
+    <span class="property">list-style-type:</span> <span class="value">upper-alpha</span>;
+}
+
+<span class="keyword">Result:</span> <span class="value">A, B, C, D, E...</span>
+<span class="keyword">Lowercase:</span> <span class="value">lower-alpha</span> <span class="keyword">=</span> <span class="value">a, b, c...</span>
+                </div>
+            </div>
+
+            <!-- EXAMPLE 5: LOWER ALPHA -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>5. Lowercase Letters (a, b, c...)</h2>
+                    <span class="example-tag alphabetic">Alphabetic</span>
+                </div>
+                <p class="example-description">
+                    Lowercase alphabetic markers for detailed sub-points or nested organization. Less formal than uppercase.
+                </p>
+                <div class="demo-area">
+                    <ol class="list-alpha-lower">
+                        <li>First detailed requirement</li>
+                        <li>Second detailed requirement</li>
+                        <li>Third detailed requirement</li>
+                        <li>Fourth detailed requirement</li>
+                        <li>Fifth detailed requirement</li>
+                    </ol>
+                </div>
+                <div class="code-block">
+<span class="keyword">ol</span> {
+    <span class="property">list-style-type:</span> <span class="value">lower-alpha</span>;
+}
+
+<span class="keyword">Result:</span> <span class="value">a, b, c, d, e...</span>
+                </div>
+            </div>
+
+            <!-- EXAMPLE 6: SYMBOL MARKERS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>6. Symbol Markers (•, ○, ■)</h2>
+                    <span class="example-tag symbol">Symbols</span>
+                </div>
+                <p class="example-description">
+                    Three basic symbol types for unordered lists. Disc (filled), Circle (outline), and Square provide visual variety for bullet points.
+                </p>
+                <div class="demo-area">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                        <div>
+                            <strong style="color: #667eea; font-size: 0.9em;">Disc (•)</strong>
+                            <ul class="list-disc">
+                                <li>Feature one</li>
+                                <li>Feature two</li>
+                                <li>Feature three</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong style="color: #667eea; font-size: 0.9em;">Circle (○)</strong>
+                            <ul class="list-circle">
+                                <li>Feature one</li>
+                                <li>Feature two</li>
+                                <li>Feature three</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong style="color: #667eea; font-size: 0.9em;">Square (■)</strong>
+                            <ul class="list-square">
+                                <li>Feature one</li>
+                                <li>Feature two</li>
+                                <li>Feature three</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">ul</span> {
+    <span class="property">list-style-type:</span> <span class="value">disc</span>;   <span class="comment">/* • */</span>
+    <span class="property">/* or */</span>
+    <span class="property">list-style-type:</span> <span class="value">circle</span>; <span class="comment">/* ○ */</span>
+    <span class="property">/* or */</span>
+    <span class="property">list-style-type:</span> <span class="value">square</span>; <span class="comment">/* ■ */</span>
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 7: NO MARKERS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>7. No Markers (None)</h2>
+                    <span class="example-tag symbol">Custom</span>
+                </div>
+                <p class="example-description">
+                    Remove list markers entirely while maintaining semantic structure. Provide alternative visual indicators like borders or styling.
+                </p>
+                <div class="demo-area">
+                    <ul class="list-none">
+                        <li>Clean list item one</li>
+                        <li>Clean list item two</li>
+                        <li>Clean list item three</li>
+                        <li>Clean list item four</li>
+                    </ul>
+                </div>
+                <div class="code-block">
+<span class="keyword">ul</span> {
+    <span class="property">list-style-type:</span> <span class="value">none</span>;
+}
+
+<span class="keyword">li</span> {
+    <span class="property">border-left:</span> <span class="value">3px solid #667eea</span>;
+    <span class="property">padding-left:</span> <span class="value">20px</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 8: NESTED LISTS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>8. Multi-Level Nested Lists</h2>
+                    <span class="example-tag structure">Structure</span>
+                </div>
+                <p class="example-description">
+                    Use different marker types for each nesting level. Creates visual hierarchy: decimal → lower-alpha → lower-roman.
+                </p>
+                <div class="demo-area">
+                    <ol class="nested-list">
+                        <li>Main section
+                            <ol>
+                                <li>Subsection
+                                    <ol>
+                                        <li>Detail point</li>
+                                        <li>Detail point</li>
+                                    </ol>
+                                </li>
+                                <li>Subsection</li>
+                            </ol>
+                        </li>
+                        <li>Main section
+                            <ol>
+                                <li>Subsection</li>
+                                <li>Subsection</li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+                <div class="code-block">
+<span class="keyword">ol</span> {
+    <span class="property">list-style-type:</span> <span class="value">decimal</span>;
+}
+
+<span class="keyword">ol ol</span> {
+    <span class="property">list-style-type:</span> <span class="value">lower-alpha</span>;
+}
+
+<span class="keyword">ol ol ol</span> {
+    <span class="property">list-style-type:</span> <span class="value">lower-roman</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 9: GREEK LETTERS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>9. Greek Letters (α, β, γ...)</h2>
+                    <span class="example-tag language">Language</span>
+                </div>
+                <p class="example-description">
+                    Greek alphabetic markers for mathematical, scientific, or academic content. Also useful for international documentation.
+                </p>
+                <div class="demo-area">
+                    <ol class="list-greek">
+                        <li>Alpha marker</li>
+                        <li>Beta marker</li>
+                        <li>Gamma marker</li>
+                        <li>Delta marker</li>
+                        <li>Epsilon marker</li>
+                    </ol>
+                </div>
+                <div class="code-block">
+<span class="keyword">ol</span> {
+    <span class="property">list-style-type:</span> <span class="value">lower-greek</span>;
+}
+
+<span class="keyword">Result:</span> <span class="value">α, β, γ, δ, ε...</span>
+<span class="keyword">Note:</span> <span class="value">Also available: hebrew, armenian, georgian</span>
+                </div>
+            </div>
+
+            <!-- EXAMPLE 10: HTML STRUCTURE -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>10. Code Structure Reference</h2>
+                    <span class="example-tag structure">Learning</span>
+                </div>
+                <p class="example-description">
+                    Display HTML structure with numbered markers. Useful for documentation and code examples.
+                </p>
+                <div class="demo-area">
+                    <ol class="structure-list">
+                        <li>&lt;html&gt;</li>
+                        <li>&lt;head&gt; ... &lt;/head&gt;</li>
+                        <li>&lt;body&gt;</li>
+                        <li>&lt;header&gt; ... &lt;/header&gt;</li>
+                        <li>&lt;main&gt; ... &lt;/main&gt;</li>
+                        <li>&lt;footer&gt; ... &lt;/footer&gt;</li>
+                        <li>&lt;/body&gt;</li>
+                    </ol>
+                </div>
+                <div class="code-block">
+<span class="keyword">ol</span> {
+    <span class="property">list-style-type:</span> <span class="value">decimal</span>;
+    <span class="property">font-family:</span> <span class="value">'Courier New'</span>;
+    <span class="property">color:</span> <span class="value">#333</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 11: TASK LIST -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>11. Task List with Checkboxes</h2>
+                    <span class="example-tag symbol">Interactive</span>
+                </div>
+                <p class="example-description">
+                    Task list using list-style-type: none with custom checkbox indicators via ::before pseudo-element.
+                </p>
+                <div class="demo-area">
+                    <ul class="task-list">
+                        <li>Setup development environment</li>
+                        <li>Install dependencies</li>
+                        <li class="completed">Read documentation</li>
+                        <li class="completed">Create project structure</li>
+                        <li>Implement main features</li>
+                        <li>Write unit tests</li>
+                        <li class="completed">Code review</li>
+                    </ul>
+                </div>
+                <div class="code-block">
+<span class="keyword">ul</span> {
+    <span class="property">list-style-type:</span> <span class="value">none</span>;
+}
+
+<span class="keyword">li::before</span> {
+    <span class="property">content:</span> <span class="value">"☐"</span>;
+    <span class="property">margin-right:</span> <span class="value">12px</span>;
+}
+
+<span class="keyword">li.completed::before</span> {
+    <span class="property">content:</span> <span class="value">"☑"</span>;
+    <span class="property">color:</span> <span class="value">#28a745</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 12: PRIORITY LIST -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>12. Priority-Based List</h2>
+                    <span class="example-tag symbol">Advanced</span>
+                </div>
+                <p class="example-description">
+                    Color-coded priority list combining list-style-type: none with custom borders and pseudo-elements for visual priority indicators.
+                </p>
+                <div class="demo-area">
+                    <ul class="priority-list">
+                        <li class="high">Critical bug in production database</li>
+                        <li class="high">Security vulnerability patch needed</li>
+                        <li class="medium">Performance optimization required</li>
+                        <li class="medium">Update documentation</li>
+                        <li class="low">Refactor legacy code</li>
+                        <li class="low">Add new feature request</li>
+                    </ul>
+                </div>
+                <div class="code-block">
+<span class="keyword">ul</span> {
+    <span class="property">list-style-type:</span> <span class="value">none</span>;
+}
+
+<span class="keyword">li.high</span> {
+    <span class="property">border-left:</span> <span class="value">4px solid #dc3545</span>;
+    <span class="property">background:</span> <span class="value">#ffe5e5</span>;
+}
+
+<span class="keyword">li::before</span> {
+    <span class="property">content:</span> <span class="value">attr(data-priority)</span>;
+    <span class="property">margin-right:</span> <span class="value">10px</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS list-style-type • 12 Practical Examples</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Each example demonstrates different marker styles and list organization patterns</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elementor Implementation Guide - CSS Color Modes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary-color: #ec4899;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --warning-color: #f97316;
+            --danger-color: #ef4444;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --text-primary: var(--neutral-900);
+            --text-secondary: var(--neutral-600);
+            --bg-primary: #ffffff;
+            --bg-secondary: var(--neutral-100);
+            --border-color: var(--neutral-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: var(--neutral-50);
+                --text-secondary: var(--neutral-400);
+                --bg-primary: var(--neutral-900);
+                --bg-secondary: var(--neutral-800);
+                --border-color: var(--neutral-700);
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--bg-secondary);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 130px;
+            z-index: 99;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+        }
+
+        .toggle-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .toggle-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.6);
+        }
+
+        /* Main Content */
+        main {
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        section > h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            line-height: 1.5;
+        }
+
+        pre code {
+            color: var(--text-primary);
+        }
+
+        /* Inline Code */
+        :not(pre) > code {
+            background-color: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card h4 {
+            margin-top: 0;
+        }
+
+        /* Color Palette */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .color-box {
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .color-box:hover {
+            transform: scale(1.05);
+        }
+
+        .color-box.primary {
+            background: var(--primary-color);
+        }
+
+        .color-box.secondary {
+            background: var(--secondary-color);
+        }
+
+        .color-box.accent {
+            background: var(--accent-color);
+            color: var(--neutral-900);
+        }
+
+        .color-box.success {
+            background: var(--success-color);
+        }
+
+        .color-box.warning {
+            background: var(--warning-color);
+            color: var(--neutral-900);
+        }
+
+        .color-box.danger {
+            background: var(--danger-color);
+        }
+
+        /* Feature Boxes */
+        .feature-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--neutral-100));
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .feature-box {
+                background: linear-gradient(135deg, var(--neutral-800), var(--neutral-700));
+            }
+        }
+
+        .feature-box strong {
+            color: var(--primary-color);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #db2777;
+            transform: translateY(-2px);
+        }
+
+        /* Collapsible */
+        .collapsible {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            background-color: var(--border-color);
+        }
+
+        .collapsible.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .content {
+            padding: 15px;
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            margin-bottom: 10px;
+        }
+
+        .content.show {
+            display: block;
+        }
+
+        /* Highlight */
+        .highlight {
+            background-color: rgba(243, 158, 11, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle">
+        <button class="toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>Elementor Implementation Guide</h1>
+        <p>CSS Color Modes & Advanced Styling Techniques</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#color-system">Color System</a></li>
+            <li><a href="#implementation">Implementation</a></li>
+            <li><a href="#best-practices">Best Practices</a></li>
+            <li><a href="#advanced">Advanced Techniques</a></li>
+            <li><a href="#troubleshooting">Troubleshooting</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Overview Section -->
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>This guide covers implementing CSS Color Modes in Elementor, enabling seamless light and dark mode support for your website. Modern web design requires thoughtful color management that respects user preferences and provides accessible experiences across different viewing environments.</p>
+
+            <div class="feature-box">
+                <strong>Key Benefits:</strong>
+                <ul style="margin-top: 10px;">
+                    <li>Enhanced user experience with automatic dark mode support</li>
+                    <li>Reduced eye strain for users in low-light environments</li>
+                    <li>Better accessibility compliance (WCAG standards)</li>
+                    <li>Improved battery life on OLED displays</li>
+                    <li>Modern, professional appearance</li>
+                </ul>
+            </div>
+
+            <h3>What You'll Learn</h3>
+            <ul>
+                <li>CSS Custom Properties (Variables) fundamentals</li>
+                <li>prefers-color-scheme media query implementation</li>
+                <li>Elementor integration with color modes</li>
+                <li>Color contrast and accessibility considerations</li>
+                <li>Performance optimization techniques</li>
+            </ul>
+        </section>
+
+        <!-- Color System Section -->
+        <section id="color-system">
+            <h2>Color System Architecture</h2>
+
+            <h3>CSS Custom Properties Overview</h3>
+            <p>CSS Custom Properties (CSS Variables) allow you to define reusable color values that can be updated dynamically. They follow the format <code>--variable-name: value;</code> and are accessed using <code>var(--variable-name)</code>.</p>
+
+            <pre><code>:root {
+    /* Primary Colors */
+    --primary-color: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #818cf8;
+    
+    /* Secondary Colors */
+    --secondary-color: #ec4899;
+    --accent-color: #f59e0b;
+    
+    /* Status Colors */
+    --success-color: #10b981;
+    --warning-color: #f97316;
+    --danger-color: #ef4444;
+}</code></pre>
+
+            <h3>Color Palette</h3>
+            <div class="color-grid">
+                <div class="color-box primary">Primary<br>#6366f1</div>
+                <div class="color-box secondary">Secondary<br>#ec4899</div>
+                <div class="color-box accent warning">Accent<br>#f59e0b</div>
+                <div class="color-box success">Success<br>#10b981</div>
+                <div class="color-box warning">Warning<br>#f97316</div>
+                <div class="color-box danger">Danger<br>#ef4444</div>
+            </div>
+
+            <h3>Dark Mode Color Variables</h3>
+            <pre><code>@media (prefers-color-scheme: dark) {
+    :root {
+        --text-primary: #f9fafb;
+        --text-secondary: #d1d5db;
+        --bg-primary: #111827;
+        --bg-secondary: #1f2937;
+        --border-color: #374151;
+    }
+}</code></pre>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Variable</th>
+                        <th>Light Mode</th>
+                        <th>Dark Mode</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>--text-primary</code></td>
+                        <td>#111827 (Dark)</td>
+                        <td>#f9fafb (Light)</td>
+                        <td>Main text color</td>
+                    </tr>
+                    <tr>
+                        <td><code>--text-secondary</code></td>
+                        <td>#6b7280 (Gray)</td>
+                        <td>#d1d5db (Light Gray)</td>
+                        <td>Secondary text</td>
+                    </tr>
+                    <tr>
+                        <td><code>--bg-primary</code></td>
+                        <td>#ffffff (White)</td>
+                        <td>#111827 (Dark)</td>
+                        <td>Main background</td>
+                    </tr>
+                    <tr>
+                        <td><code>--bg-secondary</code></td>
+                        <td>#f3f4f6 (Light Gray)</td>
+                        <td>#1f2937 (Darker)</td>
+                        <td>Secondary background</td>
+                    </tr>
+                    <tr>
+                        <td><code>--border-color</code></td>
+                        <td>#e5e7eb (Light)</td>
+                        <td>#374151 (Dark)</td>
+                        <td>Border color</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Implementation Section -->
+        <section id="implementation">
+            <h2>Implementation Guide</h2>
+
+            <h3>Step 1: Define CSS Variables in Elementor</h3>
+            <p>Add custom CSS to your Elementor page or global CSS settings:</p>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">View Complete CSS Setup Code</button>
+            <div class="content">
+                <pre><code>/* Root Variables - Light Mode (Default) */
+:root {
+    --primary-color: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #818cf8;
+    --secondary-color: #ec4899;
+    --accent-color: #f59e0b;
+    --success-color: #10b981;
+    --warning-color: #f97316;
+    --danger-color: #ef4444;
+    
+    /* Neutral Colors - Grayscale Palette */
+    --neutral-50: #f9fafb;
+    --neutral-100: #f3f4f6;
+    --neutral-200: #e5e7eb;
+    --neutral-300: #d1d5db;
+    --neutral-400: #9ca3af;
+    --neutral-500: #6b7280;
+    --neutral-600: #4b5563;
+    --neutral-700: #374151;
+    --neutral-800: #1f2937;
+    --neutral-900: #111827;
+    
+    /* Light Mode Specific */
+    --text-primary: var(--neutral-900);
+    --text-secondary: var(--neutral-600);
+    --bg-primary: #ffffff;
+    --bg-secondary: var(--neutral-100);
+    --border-color: var(--neutral-200);
+    
+    /* Transitions */
+    --transition-duration: 0.3s;
+    --transition-timing: ease;
+}
+
+/* Dark Mode - prefers-color-scheme */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-primary: var(--neutral-50);
+        --text-secondary: var(--neutral-400);
+        --bg-primary: var(--neutral-900);
+        --bg-secondary: var(--neutral-800);
+        --border-color: var(--neutral-700);
+    }
+}
+
+/* Apply to Body */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color var(--transition-duration) var(--transition-timing),
+                color var(--transition-duration) var(--transition-timing);
+}</code></pre>
+            </div>
+
+            <h3>Step 2: Apply Variables to Elementor Elements</h3>
+            <p>Use the variables in your Elementor custom CSS sections:</p>
+
+            <pre><code>/* Button Styling */
+.elementor-button {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transition: all var(--transition-duration) var(--transition-timing);
+}
+
+.elementor-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* Heading Colors */
+.elementor-heading-title {
+    color: var(--text-primary);
+}
+
+/* Text and Paragraphs */
+.elementor-text-editor {
+    color: var(--text-secondary);
+}
+
+/* Card/Box Styling */
+.elementor-column {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+
+/* Link Colors */
+a {
+    color: var(--primary-color);
+    transition: color var(--transition-duration);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}</code></pre>
+
+            <h3>Step 3: Elementor Theme Builder Configuration</h3>
+            <div class="card">
+                <h4>In Elementor > Settings > Colors</h4>
+                <ol>
+                    <li>Go to <span class="highlight">Elementor Dashboard</span></li>
+                    <li>Navigate to <span class="highlight">Settings > Colors</span></li>
+                    <li>Add your color variables:
+                        <ul>
+                            <li>Primary Color: #6366f1</li>
+                            <li>Secondary Color: #ec4899</li>
+                            <li>Accent Color: #f59e0b</li>
+                        </ul>
+                    </li>
+                    <li>Save settings</li>
+                </ol>
+            </div>
+
+            <h3>Step 4: Connect to Elementor Widgets</h3>
+            <p>In your Elementor widgets, use dynamic color selection:</p>
+
+            <pre><code>/* In Elementor widget custom CSS */
+.my-element {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.my-element:hover {
+    background: var(--bg-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}</code></pre>
+        </section>
+
+        <!-- Best Practices Section -->
+        <section id="best-practices">
+            <h2>Best Practices</h2>
+
+            <h3>1. Color Contrast & Accessibility</h3>
+            <div class="card">
+                <p><strong>WCAG AA Standard:</strong> Minimum contrast ratio of 4.5:1 for normal text, 3:1 for large text</p>
+                <p><strong>WCAG AAA Standard:</strong> Minimum contrast ratio of 7:1 for normal text, 4.5:1 for large text</p>
+                <pre><code>/* Good Contrast Example */
+--text-primary: #111827;  /* On light background */
+--bg-primary: #ffffff;    /* 21:1 contrast ratio ✓ */
+
+--text-primary: #f9fafb;  /* On dark background */
+--bg-primary: #111827;    /* 20:1 contrast ratio ✓ */</code></pre>
+            </div>
+
+            <h3>2. Variable Naming Convention</h3>
+            <ul>
+                <li>Use <code>--semantic-name</code> format: <code>--success-color</code>, <code>--error-color</code></li>
+                <li>Group related variables: <code>--primary-color</code>, <code>--primary-dark</code>, <code>--primary-light</code></li>
+                <li>Include tone/shade info: <code>--neutral-50</code> through <code>--neutral-900</code></li>
+                <li>Avoid device-specific names: NOT <code>--mobile-bg</code></li>
+            </ul>
+
+            <h3>3. Smooth Transitions</h3>
+            <pre><code>/* Apply transitions to color-aware elements */
+body,
+.elementor-widget,
+.elementor-heading-title,
+a {
+    transition: background-color 0.3s ease,
+                color 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+}</code></pre>
+
+            <h3>4. Testing Color Modes</h3>
+            <div class="feature-box">
+                <strong>Browser DevTools Method:</strong>
+                <ol>
+                    <li>Open DevTools (F12)</li>
+                    <li>Press Ctrl+Shift+P (Cmd+Shift+P on Mac)</li>
+                    <li>Type "color scheme" or "dark"</li>
+                    <li>Select "Emulate CSS media feature prefers-color-scheme"</li>
+                    <li>Choose "dark" or "light"</li>
+                </ol>
+            </div>
+
+            <h3>5. Fallback Values</h3>
+            <pre><code>/* Always provide fallback colors */
+.element {
+    /* Fallback first, variable second */
+    color: #111827;
+    color: var(--text-primary);
+    
+    background: white;
+    background: var(--bg-primary);
+}</code></pre>
+        </section>
+
+        <!-- Advanced Techniques Section -->
+        <section id="advanced">
+            <h2>Advanced Techniques</h2>
+
+            <h3>1. CSS Custom Property Inheritance</h3>
+            <pre><code>/* Parent-child color inheritance */
+.card {
+    --card-bg: var(--bg-secondary);
+    --card-text: var(--text-primary);
+    --card-border: var(--border-color);
+    
+    background: var(--card-bg);
+    color: var(--card-text);
+    border: 1px solid var(--card-border);
+}
+
+.card .card-title {
+    /* Automatically uses parent's --card-text */
+    color: var(--card-text);
+    font-weight: 600;
+}</code></pre>
+
+            <h3>2. Dynamic Color Adjustments</h3>
+            <pre><code>/* Using hsla() for color variations */
+:root {
+    --primary-h: 226;
+    --primary-s: 100%;
+    --primary-l: 50%;
+    --primary-color: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
+    --primary-dark: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) - 5%));
+    --primary-light: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) + 5%));
+    --primary-alpha: hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.1);
+}</code></pre>
+
+            <h3>3. User Preference Override</h3>
+            <pre><code>/* Allow users to override system preference */
+html.dark-mode {
+    --text-primary: var(--neutral-50);
+    --text-secondary: var(--neutral-400);
+    --bg-primary: var(--neutral-900);
+    --bg-secondary: var(--neutral-800);
+    --border-color: var(--neutral-700);
+}
+
+html.light-mode {
+    --text-primary: var(--neutral-900);
+    --text-secondary: var(--neutral-600);
+    --bg-primary: #ffffff;
+    --bg-secondary: var(--neutral-100);
+    --border-color: var(--neutral-200);
+}</code></pre>
+
+            <h3>4. JavaScript Color Mode Toggle</h3>
+            <pre><code>// Toggle dark/light mode
+function toggleTheme() {
+    const html = document.documentElement;
+    const currentMode = html.getAttribute('data-color-mode');
+    const newMode = currentMode === 'dark' ? 'light' : 'dark';
+    
+    // Update attribute
+    html.setAttribute('data-color-mode', newMode);
+    
+    // Save preference to localStorage
+    localStorage.setItem('preferred-color-mode', newMode);
+    
+    // Update button text
+    document.querySelector('.toggle-btn').textContent = 
+        newMode === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+}
+
+// Load user preference on page load
+function initTheme() {
+    const savedMode = localStorage.getItem('preferred-color-mode');
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    const mode = savedMode || (prefersLight ? 'light' : 'dark');
+    
+    document.documentElement.setAttribute('data-color-mode', mode);
+}</code></pre>
+
+            <h3>5. Combine with Media Query</h3>
+            <pre><code>/* CSS with data attribute override */
+:root {
+    --text-primary: var(--neutral-900);
+    --bg-primary: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-primary: var(--neutral-50);
+        --bg-primary: var(--neutral-900);
+    }
+}
+
+/* User override via data attribute */
+html[data-color-mode="light"] {
+    --text-primary: var(--neutral-900);
+    --bg-primary: #ffffff;
+}
+
+html[data-color-mode="dark"] {
+    --text-primary: var(--neutral-50);
+    --bg-primary: var(--neutral-900);
+}</code></pre>
+        </section>
+
+        <!-- Troubleshooting Section -->
+        <section id="troubleshooting">
+            <h2>Troubleshooting & FAQ</h2>
+
+            <h3>Common Issues</h3>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Colors not changing in dark mode</button>
+            <div class="content">
+                <p><strong>Problem:</strong> Variables aren't updating when switching to dark mode</p>
+                <p><strong>Solution:</strong></p>
+                <ul>
+                    <li>Verify <code>@media (prefers-color-scheme: dark)</code> is in your CSS</li>
+                    <li>Check browser inspector shows correct variables in dark mode</li>
+                    <li>Clear browser cache (Ctrl+Shift+Delete)</li>
+                    <li>Ensure Elementor isn't overriding with hardcoded colors</li>
+                </ul>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Poor contrast in dark mode</button>
+            <div class="content">
+                <p><strong>Problem:</strong> Text is hard to read in dark mode</p>
+                <p><strong>Solution:</strong></p>
+                <ul>
+                    <li>Increase text lightness: use <code>#d1d5db</code> or lighter</li>
+                    <li>Test with WebAIM contrast checker tool</li>
+                    <li>Ensure <code>--text-primary</code> has 4.5:1+ contrast ratio</li>
+                    <li>Don't use pure white (#ffffff) on dark backgrounds</li>
+                </ul>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Variables not working in Elementor</button>
+            <div class="content">
+                <p><strong>Problem:</strong> Custom CSS variables show as unrecognized</p>
+                <p><strong>Solution:</strong></p>
+                <ul>
+                    <li>Add CSS to <span class="highlight">Elementor > Settings > Custom CSS</span></li>
+                    <li>Or add directly in <span class="highlight">Appearance > Customize > Additional CSS</span></li>
+                    <li>Use double dash: <code>var(--my-color)</code> not <code>var(-my-color)</code></li>
+                    <li>Browser must support CSS Variables (all modern browsers do)</li>
+                </ul>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">Transition appearing glitchy</button>
+            <div class="content">
+                <p><strong>Problem:</strong> Color changes appear jerky or delayed</p>
+                <p><strong>Solution:</strong></p>
+                <ul>
+                    <li>Use transition duration: 0.3s (not too slow, not too fast)</li>
+                    <li>Apply transitions only to color properties, not transforms</li>
+                    <li>Check GPU acceleration: use <code>transform: translateZ(0)</code></li>
+                    <li>Reduce animations on slower devices</li>
+                </ul>
+            </div>
+
+            <h3>Best Practices Q&A</h3>
+
+            <div class="card">
+                <h4>Q: Should I use hex, rgb, or hsl colors?</h4>
+                <p><strong>A:</strong> All work! But HSL is best for color variations. It's easier to adjust lightness for dark mode while keeping hue and saturation consistent.</p>
+            </div>
+
+            <div class="card">
+                <h4>Q: How do I force light mode on specific sections?</h4>
+                <p><strong>A:</strong> Create an override section with its own CSS variables:</p>
+                <pre><code>.light-section {
+    --text-primary: var(--neutral-900);
+    --bg-primary: #ffffff;
+    --bg-secondary: var(--neutral-100);
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>Q: Do I need to worry about browser support?</h4>
+                <p><strong>A:</strong> CSS Variables are supported in all modern browsers (95%+ of users). For older browsers, always provide fallback values.</p>
+            </div>
+
+            <div class="card">
+                <h4>Q: How can I test on different devices?</h4>
+                <p><strong>A:</strong> Use Chrome DevTools device emulation + color scheme selector. Or manually change OS settings and refresh.</p>
+            </div>
+        </section>
+
+        <!-- Performance Section -->
+        <section>
+            <h2>Performance Considerations</h2>
+
+            <h3>Optimization Tips</h3>
+            <ul>
+                <li><strong>Minimize Repaints:</strong> Apply transitions to specific properties, not <code>all</code></li>
+                <li><strong>Variable Scope:</strong> Define frequently-used variables at :root level</li>
+                <li><strong>CSS File Size:</strong> Using variables doesn't increase size significantly</li>
+                <li><strong>localStorage:</strong> Keep theme preference in localStorage for faster load</li>
+                <li><strong>Avoid Nesting:</strong> Don't use variables inside variables excessively</li>
+            </ul>
+
+            <pre><code>/* ✓ Good - Specific transitions */
+.button {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* ✗ Avoid - Transitions on all properties */
+.button {
+    transition: all 0.3s;
+}</code></pre>
+        </section>
+
+        <!-- Quick Reference -->
+        <section>
+            <h2>Quick Reference</h2>
+
+            <h3>CSS Variables Syntax</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Purpose</th>
+                        <th>Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Define variable</td>
+                        <td><code>--var-name: value;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Use variable</td>
+                        <td><code>color: var(--var-name);</code></td>
+                    </tr>
+                    <tr>
+                        <td>With fallback</td>
+                        <td><code>color: var(--var-name, blue);</code></td>
+                    </tr>
+                    <tr>
+                        <td>Nested variables</td>
+                        <td><code>--new: var(--existing);</code></td>
+                    </tr>
+                    <tr>
+                        <td>Dark mode media query</td>
+                        <td><code>@media (prefers-color-scheme: dark) { }</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Elementor Integration Checklist</h3>
+            <ul>
+                <li>☑ Define CSS variables in :root</li>
+                <li>☑ Add @media (prefers-color-scheme: dark) override</li>
+                <li>☑ Apply variables to body element</li>
+                <li>☑ Add smooth transitions</li>
+                <li>☑ Test contrast ratios</li>
+                <li>☑ Test in DevTools dark mode</li>
+                <li>☑ Verify on mobile devices</li>
+                <li>☑ Add toggle button for user preference</li>
+                <li>☑ Store preference in localStorage</li>
+                <li>☑ Document custom variables</li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>Elementor CSS Color Modes Implementation Guide</strong></p>
+        <p>Last Updated: May 2026 | For modern WordPress & Elementor websites</p>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary);">
+            This guide covers best practices for implementing color modes in Elementor using CSS Custom Properties.
+            Ensure proper testing and accessibility compliance for your specific implementation.
+        </p>
+    </footer>
+
+    <script>
+        // Theme Toggle Functionality
+        function toggleTheme() {
+            const btn = document.querySelector('.toggle-btn');
+            const isDark = btn.textContent.includes('Light');
+            
+            if (isDark) {
+                btn.textContent = '🌙 Dark Mode';
+            } else {
+                btn.textContent = '☀️ Light Mode';
+            }
+        }
+
+        // Collapsible Sections
+        function toggleCollapsible(event) {
+            const btn = event.target;
+            const content = btn.nextElementSibling;
+            
+            btn.classList.toggle('active');
+            content.classList.toggle('show');
+        }
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize theme on page load
+        window.addEventListener('load', function() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const btn = document.querySelector('.toggle-btn');
+            if (prefersDark) {
+                btn.textContent = '☀️ Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>

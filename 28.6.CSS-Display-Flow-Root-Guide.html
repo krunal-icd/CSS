@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Display Flow-Root Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            border-left: 4px solid #764ba2;
+            padding-left: 15px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .example-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border: 2px solid #667eea;
+            padding: 25px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .example-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .example-label {
+            color: #764ba2;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+            border: 1px solid #333;
+        }
+
+        .syntax { color: #569cd6; font-weight: bold; }
+        .selector { color: #9cdcfe; }
+        .property { color: #9cdcfe; }
+        .value { color: #ce9178; }
+        .keyword { color: #569cd6; }
+        .comment { color: #6a9955; }
+
+        .demo-preview {
+            background: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .note-box {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .note-box strong {
+            color: #ff9800;
+        }
+
+        .full-width-example {
+            margin: 30px 0;
+        }
+
+        /* Example 1: Float Containment */
+        .float-container {
+            display: flow-root;
+            border: 2px solid #667eea;
+            padding: 15px;
+            background: #f9f9f9;
+        }
+
+        .float-item {
+            float: left;
+            width: 48%;
+            background: white;
+            padding: 15px;
+            margin: 1%;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        /* Example 2: Margin Collapse Prevention */
+        .parent-with-flow-root {
+            display: flow-root;
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        .parent-without-flow-root {
+            background: #f44336;
+            color: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        .child-element {
+            background: white;
+            color: #333;
+            padding: 15px;
+            margin-top: 30px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        /* Example 3: Multi-column with Floats */
+        .gallery {
+            display: flow-root;
+            border: 2px dashed #764ba2;
+            padding: 10px;
+            background: #f5f5f5;
+        }
+
+        .gallery-item {
+            float: left;
+            width: 30%;
+            margin: 1.5%;
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Example 4: Sidebar Layout */
+        .sidebar-container {
+            display: flow-root;
+            border: 2px solid #667eea;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .sidebar-float {
+            float: right;
+            width: 25%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-left: 15px;
+        }
+
+        .main-content {
+            overflow: hidden;
+        }
+
+        /* Example 5: Card Component */
+        .card {
+            display: flow-root;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background: white;
+            margin: 10px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #667eea;
+        }
+
+        .card p {
+            margin: 10px 0;
+        }
+
+        /* Example 6: Nested Margins */
+        .container-flow-root {
+            display: flow-root;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+        }
+
+        .nested-box {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        /* Example 7: Float with Text */
+        .image-float {
+            float: left;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-right: 15px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .text-flow-root {
+            display: flow-root;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        /* Example 8: Grid-like Layout with Floats */
+        .grid-float-container {
+            display: flow-root;
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .grid-float-item {
+            float: left;
+            width: calc(25% - 8px);
+            margin: 4px;
+            background: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Example 9: BFC Comparison */
+        .comparison-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .demo-without {
+            border: 2px solid #f44336;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .demo-with {
+            display: flow-root;
+            border: 2px solid #4caf50;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        /* Example 10: Comment Threading */
+        .comment {
+            display: flow-root;
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .comment-avatar {
+            float: left;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .comment-content {
+            overflow: hidden;
+        }
+
+        .comment-content strong {
+            color: #667eea;
+        }
+
+        /* Example 11: Multiple Floats */
+        .multi-float-container {
+            display: flow-root;
+            border: 2px dashed #764ba2;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .multi-float-item {
+            float: left;
+            width: calc(33.333% - 10px);
+            margin: 5px;
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        /* Example 12: Clearfix Alternative */
+        .traditional-clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .clearfix-item {
+            float: left;
+            width: 48%;
+            background: white;
+            padding: 15px;
+            margin: 1%;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .comparison-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .comparison-demo,
+            .comparison-section {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item {
+                width: calc(50% - 3%);
+            }
+
+            .grid-float-item {
+                width: calc(50% - 8px);
+            }
+
+            .multi-float-item {
+                width: calc(50% - 10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Display: Flow-Root Practical Examples</h1>
+            <p>Real-World Applications and Interactive Demonstrations</p>
+        </header>
+
+        <div class="section">
+            <h2>1. Float Containment</h2>
+            <p>Container properly containing floated items without height collapse:</p>
+            
+            <div class="demo-preview">
+                <div class="float-container">
+                    <div class="float-item">Item 1</div>
+                    <div class="float-item">Item 2</div>
+                    <div class="float-item">Item 3</div>
+                    <div class="float-item">Item 4</div>
+                </div>
+                <p style="text-align: center; color: #666; margin-top: 10px; font-size: 0.9em;">✓ Container properly wraps floated items</p>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.float-container</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+    <span class="property">border</span>: <span class="value">2px solid #667eea</span>;
+    <span class="property">padding</span>: <span class="value">15px</span>;
+}
+
+<span class="selector">.float-item</span> {
+    <span class="property">float</span>: <span class="value">left</span>;
+    <span class="property">width</span>: <span class="value">48%</span>;
+    <span class="property">margin</span>: <span class="value">1%</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Margin Collapse Prevention</h2>
+            <p>Comparing margin behavior with and without flow-root:</p>
+            
+            <div class="comparison-section">
+                <div>
+                    <div class="example-label">WITHOUT flow-root (Margin Collapses)</div>
+                    <div class="parent-without-flow-root">
+                        Parent (red)
+                        <div class="child-element">
+                            Child with margin-top: 30px
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px;">Margin collapses with parent</p>
+                </div>
+
+                <div>
+                    <div class="example-label">WITH flow-root (Margin Preserved)</div>
+                    <div class="parent-with-flow-root">
+                        Parent (blue - flow-root)
+                        <div class="child-element">
+                            Child with margin-top: 30px
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px;">Margin properly respected</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="comment">/* With flow-root */</span>
+<span class="selector">.parent</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+}
+
+<span class="selector">.child</span> {
+    <span class="property">margin-top</span>: <span class="value">30px</span>; <span class="comment">/* Doesn't collapse */</span>
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Image Gallery with Floats</h2>
+            <p>Gallery container with floated items, properly contained:</p>
+            
+            <div class="demo-preview">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <div class="gallery-item img">Image 1</div>
+                        <p style="margin-top: 10px; font-size: 0.9em;">Gallery Item</p>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-item img">Image 2</div>
+                        <p style="margin-top: 10px; font-size: 0.9em;">Gallery Item</p>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-item img">Image 3</div>
+                        <p style="margin-top: 10px; font-size: 0.9em;">Gallery Item</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.gallery</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+    <span class="property">padding</span>: <span class="value">10px</span>;
+}
+
+<span class="selector">.gallery-item</span> {
+    <span class="property">float</span>: <span class="value">left</span>;
+    <span class="property">width</span>: <span class="value">30%</span>;
+    <span class="property">margin</span>: <span class="value">1.5%</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Sidebar Layout</h2>
+            <p>Two-column layout with floated sidebar and flow-root main content:</p>
+            
+            <div class="demo-preview">
+                <div class="sidebar-container">
+                    <div class="sidebar-float">
+                        <strong>Sidebar</strong>
+                        <p style="margin-top: 10px; font-size: 0.9em;">Floated right</p>
+                    </div>
+                    <div class="main-content">
+                        <div style="background: #f5f5f5; padding: 15px; border-radius: 6px;">
+                            <strong>Main Content</strong>
+                            <p style="margin-top: 10px;">This content doesn't wrap under the sidebar because it uses flow-root (or display: block). The content respects the floated sidebar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.main-content</span> {
+    <span class="property">overflow</span>: <span class="value">hidden</span>; <span class="comment">/* or display: flow-root */</span>
+}
+
+<span class="selector">.sidebar-float</span> {
+    <span class="property">float</span>: <span class="value">right</span>;
+    <span class="property">width</span>: <span class="value">25%</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Card Component with Proper Spacing</h2>
+            <p>Card elements with flow-root ensure consistent internal spacing:</p>
+            
+            <div class="demo-preview">
+                <div class="card">
+                    <h3>Card Title</h3>
+                    <p>This card uses flow-root to ensure margin-top on the h3 doesn't collapse with the card's padding.</p>
+                    <p>Notice how the spacing is consistent even with nested margins.</p>
+                </div>
+                <div class="card">
+                    <h3>Another Card</h3>
+                    <p>All cards maintain consistent internal spacing due to flow-root.</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.card</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+    <span class="property">border</span>: <span class="value">1px solid #ddd</span>;
+    <span class="property">padding</span>: <span class="value">20px</span>;
+    <span class="property">margin</span>: <span class="value">10px 0</span>;
+}
+
+<span class="selector">.card h3</span> {
+    <span class="property">margin-top</span>: <span class="value">0</span>; <span class="comment">/* Properly contained */</span>
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. Nested Margins Within Container</h2>
+            <p>Multiple nested elements with proper margin handling:</p>
+            
+            <div class="demo-preview">
+                <div class="container-flow-root">
+                    <div class="nested-box">
+                        <strong>Nested Box 1</strong>
+                        <p style="margin-top: 10px; margin-bottom: 0;">Content inside nested box</p>
+                    </div>
+                    <div class="nested-box">
+                        <strong>Nested Box 2</strong>
+                        <p style="margin-top: 10px; margin-bottom: 0;">Margins respect flow-root boundary</p>
+                    </div>
+                    <div class="nested-box">
+                        <strong>Nested Box 3</strong>
+                        <p style="margin-top: 10px; margin-bottom: 0;">No margin collapse issues</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.container-flow-root</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+    <span class="property">padding</span>: <span class="value">20px</span>;
+}
+
+<span class="selector">.nested-box</span> {
+    <span class="property">margin</span>: <span class="value">15px 0</span>;
+    <span class="comment">/* Margins work predictably */</span>
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>7. Float with Text Content</h2>
+            <p>Text next to floated element using flow-root:</p>
+            
+            <div class="demo-preview">
+                <div class="text-flow-root">
+                    <div class="image-float">Image</div>
+                    <strong>Article Title</strong>
+                    <p>This paragraph uses flow-root so it doesn't wrap around the floated image on the left. Instead, it respects the float and maintains its own column.</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.image-float</span> {
+    <span class="property">float</span>: <span class="value">left</span>;
+    <span class="property">width</span>: <span class="value">150px</span>;
+    <span class="property">margin-right</span>: <span class="value">15px</span>;
+}
+
+<span class="selector">.text-flow-root</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+    <span class="comment">/* Doesn't wrap around float */</span>
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>8. Grid-like Layout with Floats</h2>
+            <p>Creating grid patterns using floats within flow-root container:</p>
+            
+            <div class="demo-preview">
+                <div class="grid-float-container">
+                    <div class="grid-float-item">Item 1</div>
+                    <div class="grid-float-item">Item 2</div>
+                    <div class="grid-float-item">Item 3</div>
+                    <div class="grid-float-item">Item 4</div>
+                    <div class="grid-float-item">Item 5</div>
+                    <div class="grid-float-item">Item 6</div>
+                    <div class="grid-float-item">Item 7</div>
+                    <div class="grid-float-item">Item 8</div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.grid-float-container</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+    <span class="property">padding</span>: <span class="value">10px</span>;
+}
+
+<span class="selector">.grid-float-item</span> {
+    <span class="property">float</span>: <span class="value">left</span>;
+    <span class="property">width</span>: <span class="value">calc(25% - 8px)</span>;
+    <span class="property">margin</span>: <span class="value">4px</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>9. BFC Behavior Comparison</h2>
+            <p>Side-by-side comparison of float behavior with and without BFC:</p>
+            
+            <div class="comparison-demo">
+                <div>
+                    <div class="example-label">WITHOUT BFC</div>
+                    <div class="demo-without">
+                        <div style="float: left; width: 40%; background: #f5f5f5; padding: 10px; margin-right: 10px; border-radius: 4px;">Floated Box</div>
+                        <p>This text wraps around the floated box because there's no BFC established.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="example-label">WITH BFC (flow-root)</div>
+                    <div class="demo-with">
+                        <div style="float: left; width: 40%; background: #f5f5f5; padding: 10px; margin-right: 10px; border-radius: 4px;">Floated Box</div>
+                        <p>This text doesn't wrap because this container establishes its own BFC with flow-root.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>10. Comment Threading System</h2>
+            <p>Nested comments with proper spacing using flow-root:</p>
+            
+            <div class="demo-preview">
+                <div class="comment">
+                    <div class="comment-avatar">A1</div>
+                    <div class="comment-content">
+                        <strong>Alice:</strong>
+                        <p>Great article! Really helpful information.</p>
+                    </div>
+                </div>
+                <div class="comment">
+                    <div class="comment-avatar">B2</div>
+                    <div class="comment-content">
+                        <strong>Bob:</strong>
+                        <p>I agree with Alice. This really helped me understand flow-root.</p>
+                    </div>
+                </div>
+                <div class="comment">
+                    <div class="comment-avatar">C3</div>
+                    <div class="comment-content">
+                        <strong>Charlie:</strong>
+                        <p>Thanks for the explanation! Now I'll use flow-root instead of the clearfix hack.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.comment</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+    <span class="property">padding</span>: <span class="value">15px</span>;
+    <span class="property">margin</span>: <span class="value">10px 0</span>;
+}
+
+<span class="selector">.comment-avatar</span> {
+    <span class="property">float</span>: <span class="value">left</span>;
+    <span class="property">width</span>: <span class="value">40px</span>;
+    <span class="property">height</span>: <span class="value">40px</span>;
+}
+
+<span class="selector">.comment-content</span> {
+    <span class="property">overflow</span>: <span class="value">hidden</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>11. Multiple Floats Contained</h2>
+            <p>Multiple floated columns properly contained within flow-root:</p>
+            
+            <div class="demo-preview">
+                <div class="multi-float-container">
+                    <div class="multi-float-item">Column 1</div>
+                    <div class="multi-float-item">Column 2</div>
+                    <div class="multi-float-item">Column 3</div>
+                </div>
+                <p style="text-align: center; color: #666; margin-top: 10px; font-size: 0.9em;">✓ All floats contained, no overflow</p>
+            </div>
+
+            <div class="code-block">
+<span class="selector">.multi-float-container</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+    <span class="property">padding</span>: <span class="value">15px</span>;
+}
+
+<span class="selector">.multi-float-item</span> {
+    <span class="property">float</span>: <span class="value">left</span>;
+    <span class="property">width</span>: <span class="value">calc(33.333% - 10px)</span>;
+    <span class="property">margin</span>: <span class="value">5px</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>12. Flow-Root vs Clearfix</h2>
+            <p>Modern flow-root vs legacy clearfix approach:</p>
+            
+            <div class="comparison-section">
+                <div>
+                    <div class="example-label">Legacy Clearfix</div>
+                    <div class="traditional-clearfix" style="border: 2px solid #f44336; padding: 15px; background: #f9f9f9; border-radius: 8px;">
+                        <div class="clearfix-item">Item 1</div>
+                        <div class="clearfix-item">Item 2</div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Requires ::after pseudo-element</p>
+                </div>
+
+                <div>
+                    <div class="example-label">Modern Flow-Root</div>
+                    <div class="float-container">
+                        <div class="float-item">Item 1</div>
+                        <div class="float-item">Item 2</div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: #666;">No pseudo-element needed</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="comment">/* Old way with clearfix */</span>
+<span class="selector">.container::after</span> {
+    <span class="property">content</span>: <span class="value">""</span>;
+    <span class="property">display</span>: <span class="value">table</span>;
+    <span class="property">clear</span>: <span class="value">both</span>;
+}
+
+<span class="comment">/* New way with flow-root */</span>
+<span class="selector">.container</span> {
+    <span class="property">display</span>: <span class="keyword">flow-root</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Key Takeaways</h2>
+            <ul class="feature-list">
+                <li>Use flow-root to establish a Block Formatting Context</li>
+                <li>Prevents margin collapse between parent and children</li>
+                <li>Contains floated elements without height collapse</li>
+                <li>Cleaner than overflow: hidden or clearfix hacks</li>
+                <li>No side effects like overflow might have</li>
+                <li>Perfect for card components and containers</li>
+                <li>Works with text next to floats</li>
+                <li>Enables proper grid-like layouts with floats</li>
+                <li>Modern alternative to legacy workarounds</li>
+                <li>Check browser support (IE11 not supported)</li>
+                <li>Can be combined with other properties</li>
+                <li>No performance impact</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Property Guide | Display Flow-Root Practical Examples</p>
+            <p>Real-world applications and interactive demonstrations for flow-root display value</p>
+        </footer>
+    </div>
+</body>
+</html>

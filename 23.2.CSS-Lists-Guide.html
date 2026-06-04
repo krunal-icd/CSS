@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS List Style - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        /* Demo Container */
+        .demo-container {
+            background: #f9f9f9;
+            border: 3px dashed #667eea;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .demo-label {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* List Style Examples */
+        .list-disc {
+            list-style-type: disc;
+            padding-left: 40px;
+            margin: 20px 0;
+        }
+
+        .list-circle {
+            list-style-type: circle;
+            padding-left: 40px;
+            margin: 20px 0;
+        }
+
+        .list-square {
+            list-style-type: square;
+            padding-left: 40px;
+            margin: 20px 0;
+        }
+
+        .list-decimal {
+            list-style-type: decimal;
+            padding-left: 40px;
+            margin: 20px 0;
+        }
+
+        .list-lower-alpha {
+            list-style-type: lower-alpha;
+            padding-left: 40px;
+            margin: 20px 0;
+        }
+
+        .list-upper-alpha {
+            list-style-type: upper-alpha;
+            padding-left: 40px;
+            margin: 20px 0;
+        }
+
+        .list-lower-roman {
+            list-style-type: lower-roman;
+            padding-left: 40px;
+            margin: 20px 0;
+        }
+
+        .list-upper-roman {
+            list-style-type: upper-roman;
+            padding-left: 40px;
+            margin: 20px 0;
+        }
+
+        .list-none {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 20px 0;
+        }
+
+        .list-custom-bullets {
+            list-style-image: none;
+            padding-left: 40px;
+            margin: 20px 0;
+        }
+
+        .list-custom-bullets li {
+            margin-bottom: 10px;
+        }
+
+        .list-custom-bullets li:before {
+            content: "★ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .list-check-marks li:before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .list-arrows li:before {
+            content: "→ ";
+            color: #764ba2;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .list-hearts li:before {
+            content: "♥ ";
+            color: #e74c3c;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        /* List Position */
+        .list-inside {
+            list-style-position: inside;
+            padding-left: 0;
+            margin: 20px 0;
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .list-outside {
+            list-style-position: outside;
+            padding-left: 40px;
+            margin: 20px 0;
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        /* Styled Lists */
+        .styled-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .styled-list li {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 6px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .styled-list li:before {
+            content: "➤ ";
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .icon-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .icon-list li {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: white;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-list li:before {
+            content: "◆ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 1.2em;
+        }
+
+        /* Nested Lists */
+        .nested-list {
+            list-style-type: decimal;
+            padding-left: 40px;
+            margin: 20px 0;
+        }
+
+        .nested-list li {
+            margin-bottom: 8px;
+        }
+
+        .nested-list ul {
+            list-style-type: lower-alpha;
+            margin-top: 8px;
+            padding-left: 40px;
+        }
+
+        .nested-list ul li {
+            margin-bottom: 4px;
+        }
+
+        /* Animated Lists */
+        .animated-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .animated-list li {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: #f5f5f5;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .animated-list li:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .animated-list li:before {
+            content: "► ";
+            margin-right: 10px;
+        }
+
+        /* Horizontal Lists */
+        .horizontal-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .horizontal-list li {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        /* Breadcrumb List */
+        .breadcrumb-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            display: flex;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-list li {
+            padding: 8px 12px;
+            background: #f5f5f5;
+        }
+
+        .breadcrumb-list li:not(:last-child)::after {
+            content: "/";
+            margin-left: 12px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .keyword { color: #ff79c6; }
+        .property { color: #8be9fd; }
+        .value { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+        .selector { color: #50fa7b; }
+
+        /* Info Boxes */
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* Property Reference Card */
+        .property-card {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .property-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .property-card .values {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* Grid Layout */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .horizontal-list {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 CSS List Style - Complete Guide</h1>
+            <p>Master List Styling with Practical Examples & Custom Designs</p>
+        </header>
+
+        <div class="content">
+            <!-- Introduction -->
+            <section>
+                <h2>Introduction to CSS List Style</h2>
+                <p>The CSS list style properties allow you to control the appearance of list markers (bullets and numbers). This comprehensive guide covers all list-related CSS properties with interactive examples.</p>
+                <div class="success-box">
+                    <strong>✓ What You'll Learn:</strong>
+                    <p>list-style-type, list-style-position, list-style-image, list-style shorthand, and custom bullet styling techniques.</p>
+                </div>
+            </section>
+
+            <!-- Section 1: list-style-type -->
+            <section>
+                <h2>1. list-style-type Property</h2>
+                <p>Specifies the type of list marker (bullet or number):</p>
+
+                <h3>Bullet Types</h3>
+                <div class="grid-2">
+                    <div class="demo-container">
+                        <div class="demo-label">disc (default)</div>
+                        <ul class="list-disc">
+                            <li>Item one</li>
+                            <li>Item two</li>
+                            <li>Item three</li>
+                            <li>Item four</li>
+                        </ul>
+                    </div>
+
+                    <div class="demo-container">
+                        <div class="demo-label">circle</div>
+                        <ul class="list-circle">
+                            <li>Item one</li>
+                            <li>Item two</li>
+                            <li>Item three</li>
+                            <li>Item four</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="demo-container">
+                        <div class="demo-label">square</div>
+                        <ul class="list-square">
+                            <li>Item one</li>
+                            <li>Item two</li>
+                            <li>Item three</li>
+                            <li>Item four</li>
+                        </ul>
+                    </div>
+
+                    <div class="demo-container">
+                        <div class="demo-label">none</div>
+                        <ul class="list-none">
+                            <li>Item one</li>
+                            <li>Item two</li>
+                            <li>Item three</li>
+                            <li>Item four</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Numeric Types</h3>
+                <div class="grid-2">
+                    <div class="demo-container">
+                        <div class="demo-label">decimal</div>
+                        <ol class="list-decimal">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                            <li>Fourth item</li>
+                        </ol>
+                    </div>
+
+                    <div class="demo-container">
+                        <div class="demo-label">lower-alpha</div>
+                        <ol class="list-lower-alpha">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                            <li>Fourth item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="demo-container">
+                        <div class="demo-label">upper-alpha</div>
+                        <ol class="list-upper-alpha">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                            <li>Fourth item</li>
+                        </ol>
+                    </div>
+
+                    <div class="demo-container">
+                        <div class="demo-label">lower-roman</div>
+                        <ol class="list-lower-roman">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                            <li>Fourth item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="demo-container">
+                    <div class="demo-label">upper-roman</div>
+                    <ol class="list-upper-roman">
+                        <li>First item</li>
+                        <li>Second item</li>
+                        <li>Third item</li>
+                        <li>Fourth item</li>
+                    </ol>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Bullet styles */</span>
+<span class="selector">ul.disc</span> { <span class="property">list-style-type</span>: <span class="value">disc</span>; }
+<span class="selector">ul.circle</span> { <span class="property">list-style-type</span>: <span class="value">circle</span>; }
+<span class="selector">ul.square</span> { <span class="property">list-style-type</span>: <span class="value">square</span>; }
+
+<span class="comment">/* Numeric styles */</span>
+<span class="selector">ol.decimal</span> { <span class="property">list-style-type</span>: <span class="value">decimal</span>; }
+<span class="selector">ol.lower-alpha</span> { <span class="property">list-style-type</span>: <span class="value">lower-alpha</span>; }
+<span class="selector">ol.upper-alpha</span> { <span class="property">list-style-type</span>: <span class="value">upper-alpha</span>; }
+<span class="selector">ol.lower-roman</span> { <span class="property">list-style-type</span>: <span class="value">lower-roman</span>; }
+<span class="selector">ol.upper-roman</span> { <span class="property">list-style-type</span>: <span class="value">upper-roman</span>; }
+<span class="selector">ul.none</span> { <span class="property">list-style-type</span>: <span class="value">none</span>; }
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>list-style-type</h4>
+                    <p><strong>Common Values:</strong></p>
+                    <div class="values">
+                        disc | circle | square | none |<br>
+                        decimal | lower-alpha | upper-alpha |<br>
+                        lower-roman | upper-roman | hebrew | georgian
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: list-style-position -->
+            <section>
+                <h2>2. list-style-position Property</h2>
+                <p>Specifies whether the list marker appears inside or outside the list item box:</p>
+
+                <h3>Position: inside</h3>
+                <div class="demo-container">
+                    <div class="demo-label">list-style-position: inside</div>
+                    <ul class="list-inside">
+                        <li>Item one with longer text to show how it wraps when position is inside</li>
+                        <li>Item two</li>
+                        <li>Item three with another longer text example</li>
+                    </ul>
+                </div>
+
+                <h3>Position: outside (default)</h3>
+                <div class="demo-container">
+                    <div class="demo-label">list-style-position: outside</div>
+                    <ul class="list-outside">
+                        <li>Item one with longer text to show how it wraps when position is outside</li>
+                        <li>Item two</li>
+                        <li>Item three with another longer text example</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Marker inside the list item box */</span>
+<span class="selector">ul.inside</span> {
+    <span class="property">list-style-position</span>: <span class="value">inside</span>;
+}
+
+<span class="comment">/* Marker outside the list item box (default) */</span>
+<span class="selector">ul.outside</span> {
+    <span class="property">list-style-position</span>: <span class="value">outside</span>;
+}
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>list-style-position</h4>
+                    <p><strong>Values:</strong></p>
+                    <div class="values">
+                        inside | outside (default)
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Custom Bullets with ::before -->
+            <section>
+                <h2>3. Custom Bullets with ::before Pseudo-Element</h2>
+                <p>Create custom bullet styles using ::before without any list marker:</p>
+
+                <h3>Star Bullets</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Custom: ::before with ★</div>
+                    <ul class="list-custom-bullets" style="list-style: none; padding-left: 0;">
+                        <li style="padding-left: 30px; position: relative;">First custom bullet item</li>
+                        <li style="padding-left: 30px; position: relative;">Second custom bullet item</li>
+                        <li style="padding-left: 30px; position: relative;">Third custom bullet item</li>
+                    </ul>
+                </div>
+
+                <h3>Check Marks</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Custom: ::before with ✓</div>
+                    <ul class="list-check-marks" style="list-style: none; padding-left: 0;">
+                        <li style="padding-left: 30px; position: relative;">Task completed</li>
+                        <li style="padding-left: 30px; position: relative;">Another task done</li>
+                        <li style="padding-left: 30px; position: relative;">Final task complete</li>
+                    </ul>
+                </div>
+
+                <h3>Arrow Bullets</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Custom: ::before with →</div>
+                    <ul class="list-arrows" style="list-style: none; padding-left: 0;">
+                        <li style="padding-left: 30px; position: relative;">Navigation item one</li>
+                        <li style="padding-left: 30px; position: relative;">Navigation item two</li>
+                        <li style="padding-left: 30px; position: relative;">Navigation item three</li>
+                    </ul>
+                </div>
+
+                <h3>Heart Bullets</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Custom: ::before with ♥</div>
+                    <ul class="list-hearts" style="list-style: none; padding-left: 0;">
+                        <li style="padding-left: 30px; position: relative;">Favorite item one</li>
+                        <li style="padding-left: 30px; position: relative;">Favorite item two</li>
+                        <li style="padding-left: 30px; position: relative;">Favorite item three</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="selector">ul.custom-bullets</span> {
+    <span class="property">list-style</span>: <span class="value">none</span>;
+    <span class="property">padding-left</span>: <span class="value">0</span>;
+}
+
+<span class="selector">ul.custom-bullets li</span> {
+    <span class="property">padding-left</span>: <span class="value">30px</span>;
+    <span class="property">position</span>: <span class="value">relative</span>;
+}
+
+<span class="selector">ul.custom-bullets li::before</span> {
+    <span class="property">content</span>: <span class="value">"★ "</span>;
+    <span class="property">color</span>: <span class="value">#667eea</span>;
+    <span class="property">position</span>: <span class="value">absolute</span>;
+    <span class="property">left</span>: <span class="value">0</span>;
+}
+                    </code>
+                </div>
+
+                <div class="info-box">
+                    <strong>ℹ️ Unicode Characters:</strong>
+                    <p>Use any Unicode character: ★ (star), ✓ (check), → (arrow), ♥ (heart), ◆ (diamond), ● (circle), etc.</p>
+                </div>
+            </section>
+
+            <!-- Section 4: Styled Lists -->
+            <section>
+                <h2>4. Advanced Styled Lists</h2>
+                <p>Create beautiful custom lists with styling and animations:</p>
+
+                <h3>Gradient Background Lists</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Styled with Gradient Background</div>
+                    <ul class="styled-list">
+                        <li>Feature one</li>
+                        <li>Feature two</li>
+                        <li>Feature three</li>
+                        <li>Feature four</li>
+                    </ul>
+                </div>
+
+                <h3>Icon-Based Lists</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Icon List with Border</div>
+                    <ul class="icon-list">
+                        <li>Important notification message</li>
+                        <li>Another important item</li>
+                        <li>Critical information here</li>
+                        <li>Final item in the list</li>
+                    </ul>
+                </div>
+
+                <h3>Animated Interactive Lists</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Hover Animation (try hovering)</div>
+                    <ul class="animated-list">
+                        <li>Hover to see animation</li>
+                        <li>Try hovering over me</li>
+                        <li>Interactive list item</li>
+                        <li>Another animated item</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Styled list with gradient */</span>
+<span class="selector">ul.styled</span> {
+    <span class="property">list-style</span>: <span class="value">none</span>;
+    <span class="property">padding</span>: <span class="value">0</span>;
+}
+
+<span class="selector">ul.styled li</span> {
+    <span class="property">padding</span>: <span class="value">12px 15px</span>;
+    <span class="property">margin-bottom</span>: <span class="value">8px</span>;
+    <span class="property">background</span>: <span class="value">linear-gradient(135deg, #667eea 0%, #764ba2 100%)</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">border-radius</span>: <span class="value">6px</span>;
+    <span class="property">border-left</span>: <span class="value">4px solid #764ba2</span>;
+}
+
+<span class="selector">ul.styled li:before</span> {
+    <span class="property">content</span>: <span class="value">"➤ "</span>;
+    <span class="property">margin-right</span>: <span class="value">10px</span>;
+}
+                    </code>
+                </div>
+            </section>
+
+            <!-- Section 5: Nested Lists -->
+            <section>
+                <h2>5. Nested Lists</h2>
+                <p>Style nested lists with different markers at each level:</p>
+
+                <div class="demo-container">
+                    <div class="demo-label">Nested List Styling</div>
+                    <ol class="nested-list">
+                        <li>First item
+                            <ul>
+                                <li>Sub-item A</li>
+                                <li>Sub-item B</li>
+                                <li>Sub-item C</li>
+                            </ul>
+                        </li>
+                        <li>Second item
+                            <ul>
+                                <li>Sub-item D</li>
+                                <li>Sub-item E</li>
+                            </ul>
+                        </li>
+                        <li>Third item
+                            <ul>
+                                <li>Sub-item F</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="selector">ol</span> {
+    <span class="property">list-style-type</span>: <span class="value">decimal</span>;
+    <span class="property">padding-left</span>: <span class="value">40px</span>;
+}
+
+<span class="selector">ol li</span> {
+    <span class="property">margin-bottom</span>: <span class="value">8px</span>;
+}
+
+<span class="selector">ol ul</span> {
+    <span class="property">list-style-type</span>: <span class="value">lower-alpha</span>;
+    <span class="property">margin-top</span>: <span class="value">8px</span>;
+    <span class="property">padding-left</span>: <span class="value">40px</span>;
+}
+                    </code>
+                </div>
+            </section>
+
+            <!-- Section 6: Horizontal Lists -->
+            <section>
+                <h2>6. Horizontal Lists (Navigation)</h2>
+                <p>Create horizontal list layouts using flexbox or display techniques:</p>
+
+                <h3>Horizontal Navigation</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Horizontal List with Flexbox</div>
+                    <ul class="horizontal-list">
+                        <li>Home</li>
+                        <li>About</li>
+                        <li>Services</li>
+                        <li>Portfolio</li>
+                        <li>Contact</li>
+                    </ul>
+                </div>
+
+                <h3>Breadcrumb Navigation</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Breadcrumb Navigation</div>
+                    <ul class="breadcrumb-list">
+                        <li>Home</li>
+                        <li>Products</li>
+                        <li>Electronics</li>
+                        <li>Computers</li>
+                        <li>Laptops</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Horizontal list with flexbox */</span>
+<span class="selector">ul.horizontal</span> {
+    <span class="property">list-style</span>: <span class="value">none</span>;
+    <span class="property">padding</span>: <span class="value">0</span>;
+    <span class="property">display</span>: <span class="value">flex</span>;
+    <span class="property">gap</span>: <span class="value">15px</span>;
+    <span class="property">flex-wrap</span>: <span class="value">wrap</span>;
+}
+
+<span class="selector">ul.horizontal li</span> {
+    <span class="property">background</span>: <span class="value">linear-gradient(135deg, #667eea 0%, #764ba2 100%)</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">padding</span>: <span class="value">10px 20px</span>;
+    <span class="property">border-radius</span>: <span class="value">20px</span>;
+}
+
+<span class="comment">/* Breadcrumb list */</span>
+<span class="selector">ul.breadcrumb</span> {
+    <span class="property">list-style</span>: <span class="value">none</span>;
+    <span class="property">padding</span>: <span class="value">0</span>;
+    <span class="property">display</span>: <span class="value">flex</span>;
+}
+
+<span class="selector">ul.breadcrumb li:not(:last-child)::after</span> {
+    <span class="property">content</span>: <span class="value">"/"</span>;
+    <span class="property">margin-left</span>: <span class="value">12px</span>;
+}
+                    </code>
+                </div>
+            </section>
+
+            <!-- Section 7: Complete Property Reference -->
+            <section>
+                <h2>7. list-style Shorthand Property</h2>
+                <p>Combine all list properties using the shorthand property:</p>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Shorthand: type position image */</span>
+<span class="selector">ul</span> {
+    <span class="property">list-style</span>: <span class="value">disc outside none</span>;
+}
+
+<span class="comment">/* Examples */</span>
+<span class="selector">ul.bullets</span> {
+    <span class="property">list-style</span>: <span class="value">circle inside</span>;
+}
+
+<span class="selector">ul.custom</span> {
+    <span class="property">list-style</span>: <span class="value">none</span>;
+}
+
+<span class="selector">ol.roman</span> {
+    <span class="property">list-style</span>: <span class="value">upper-roman outside</span>;
+}
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>list-style (shorthand)</h4>
+                    <p><strong>Syntax:</strong> [ list-style-type || list-style-position || list-style-image ]</p>
+                    <div class="values">
+                        list-style: disc outside none;<br>
+                        list-style: decimal inside;<br>
+                        list-style: none;<br>
+                        list-style: circle;
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 8: Comparison Table -->
+            <section>
+                <h2>8. List Style Types Comparison</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Value</th>
+                            <th>Display</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bullet</td>
+                            <td><code>disc</code></td>
+                            <td>•</td>
+                            <td>Standard unordered lists</td>
+                        </tr>
+                        <tr>
+                            <td>Bullet</td>
+                            <td><code>circle</code></td>
+                            <td>○</td>
+                            <td>Sub-level lists</td>
+                        </tr>
+                        <tr>
+                            <td>Bullet</td>
+                            <td><code>square</code></td>
+                            <td>■</td>
+                            <td>Alternative bullet style</td>
+                        </tr>
+                        <tr>
+                            <td>Numeric</td>
+                            <td><code>decimal</code></td>
+                            <td>1, 2, 3...</td>
+                            <td>Ordered lists</td>
+                        </tr>
+                        <tr>
+                            <td>Alphabetic</td>
+                            <td><code>lower-alpha</code></td>
+                            <td>a, b, c...</td>
+                            <td>Sub-section ordering</td>
+                        </tr>
+                        <tr>
+                            <td>Alphabetic</td>
+                            <td><code>upper-alpha</code></td>
+                            <td>A, B, C...</td>
+                            <td>Uppercase ordering</td>
+                        </tr>
+                        <tr>
+                            <td>Roman</td>
+                            <td><code>lower-roman</code></td>
+                            <td>i, ii, iii...</td>
+                            <td>Formal documents</td>
+                        </tr>
+                        <tr>
+                            <td>Roman</td>
+                            <td><code>upper-roman</code></td>
+                            <td>I, II, III...</td>
+                            <td>Formal outlines</td>
+                        </tr>
+                        <tr>
+                            <td>None</td>
+                            <td><code>none</code></td>
+                            <td>(no marker)</td>
+                            <td>Custom styling</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 9: Best Practices -->
+            <section>
+                <h2>9. Best Practices & Tips</h2>
+
+                <div class="success-box">
+                    <h4>✓ Do's:</h4>
+                    <ul class="checklist">
+                        <li>Use semantic HTML (ul for unordered, ol for ordered)</li>
+                        <li>Keep list marker styles consistent throughout your site</li>
+                        <li>Use ::before for custom bullets with list-style: none</li>
+                        <li>Test lists on different devices and screen sizes</li>
+                        <li>Ensure proper padding and spacing for readability</li>
+                        <li>Use lower-alpha for sub-items in formal documents</li>
+                        <li>Maintain good color contrast for accessibility</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>✗ Don'ts:</h4>
+                    <ul class="checklist">
+                        <li>Don't use custom images for list markers (use ::before instead)</li>
+                        <li>Don't remove padding/margin without replacing it</li>
+                        <li>Don't mix too many different marker styles</li>
+                        <li>Don't use list-style-position: inside for long text</li>
+                        <li>Don't forget accessibility for screen reader users</li>
+                        <li>Don't make custom bullets too small to see</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h4>💡 Pro Tips:</h4>
+                    <ul class="checklist">
+                        <li>Use ::before with position: absolute for precise control</li>
+                        <li>Combine with hover effects for interactive lists</li>
+                        <li>Use flexbox for horizontal list layouts</li>
+                        <li>Add transitions for smooth animations</li>
+                        <li>Use CSS variables for easy theme switching</li>
+                        <li>Consider using <code>counters</code> for advanced numbering</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 10: Browser Support -->
+            <section>
+                <h2>10. Browser Support</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                            <th>IE 11</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>list-style-type</code></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <td><code>list-style-position</code></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <td><code>list-style-image</code></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <td><code>list-style</code></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <td><code>::before content</code></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 11: Quick Reference -->
+            <section>
+                <h2>11. Quick Reference Card</h2>
+
+                <div class="property-card">
+                    <h4>list-style-type Values</h4>
+                    <div class="values">
+                        disc | circle | square | none |<br>
+                        decimal | lower-alpha | upper-alpha |<br>
+                        lower-roman | upper-roman
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <h4>list-style-position Values</h4>
+                    <div class="values">
+                        inside | outside
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <h4>Common Unicode Bullets</h4>
+                    <div class="values">
+                        ★ (star) | ✓ (check) | → (arrow) |<br>
+                        ♥ (heart) | ◆ (diamond) | ● (circle) |<br>
+                        ■ (square) | ◈ (sparkle)
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <h4>Examples</h4>
+                    <div class="values">
+                        list-style: disc outside;<br>
+                        list-style: decimal inside;<br>
+                        list-style: none;<br>
+                        li::before { content: "★ "; }
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS List Style Complete Guide | Master List Styling</p>
+            <p>Perfect for Elementor website builders and web designers</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Display: Table Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        pre {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        /* ===== BASIC TABLE ===== */
+        .basic-table {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: table-header-group;
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .table-body {
+            display: table-row-group;
+        }
+
+        .table-footer {
+            display: table-footer-group;
+            background: #f0f0f0;
+            font-weight: bold;
+            border-top: 2px solid #667eea;
+        }
+
+        .table-row {
+            display: table-row;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table-row:hover {
+            background: #f9f9f9;
+        }
+
+        .table-cell {
+            display: table-cell;
+            padding: 12px 15px;
+            text-align: left;
+            border-right: 1px solid #ddd;
+        }
+
+        .table-cell:last-child {
+            border-right: none;
+        }
+
+        .table-header .table-cell {
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* ===== LAYOUT TABLE ===== */
+        .layout-table {
+            display: table;
+            width: 100%;
+            margin-top: 15px;
+            gap: 15px;
+        }
+
+        .layout-table-cell {
+            display: table-cell;
+            padding: 20px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            background: #f0f4ff;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: #667eea;
+            color: white;
+            border: none;
+        }
+
+        .main-content {
+            vertical-align: top;
+            background: #f9f9f9;
+        }
+
+        /* ===== COMPARISON TABLE ===== */
+        .comparison-table {
+            display: table;
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+
+        .comp-row {
+            display: table-row;
+        }
+
+        .comp-cell {
+            display: table-cell;
+            padding: 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .comp-header {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .comp-label {
+            text-align: left;
+            background: #f0f4ff;
+            font-weight: 600;
+        }
+
+        .comp-yes {
+            background: #d4edda;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .comp-no {
+            background: #f8d7da;
+            color: #721c24;
+            font-weight: bold;
+        }
+
+        /* ===== ALIGNMENT EXAMPLES ===== */
+        .alignment-demo {
+            display: table;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .align-cell {
+            display: table-cell;
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin-right: 15px;
+            margin-bottom: 15px;
+            background: #f0f4ff;
+            border-radius: 6px;
+        }
+
+        .valign-top {
+            vertical-align: top;
+            height: 120px;
+        }
+
+        .valign-middle {
+            vertical-align: middle;
+            height: 120px;
+        }
+
+        .valign-bottom {
+            vertical-align: bottom;
+            height: 120px;
+        }
+
+        /* ===== EQUAL WIDTH LAYOUT ===== */
+        .equal-width-table {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .equal-cell {
+            display: table-cell;
+            padding: 20px;
+            background: #667eea;
+            color: white;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* ===== RESPONSIVE TABLE ===== */
+        .responsive-table {
+            display: table;
+            width: 100%;
+            margin-top: 15px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .responsive-header {
+            display: table-header-group;
+            background: #667eea;
+        }
+
+        .responsive-body {
+            display: table-row-group;
+        }
+
+        .resp-row {
+            display: table-row;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .resp-row:hover {
+            background: #f5f5f5;
+        }
+
+        .resp-cell {
+            display: table-cell;
+            padding: 12px 15px;
+            border-right: 1px solid #ddd;
+        }
+
+        .resp-cell:last-child {
+            border-right: none;
+        }
+
+        .responsive-header .resp-cell {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* ===== UTILITY STYLES ===== */
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #004085;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #856404;
+        }
+
+        .pros {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #155724;
+        }
+
+        .cons {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #721c24;
+        }
+
+        .example-container {
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+
+        .browser-support {
+            display: table;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .browser-row {
+            display: table-row;
+        }
+
+        .browser-cell {
+            display: table-cell;
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .browser-cell.header {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .browser-cell.supported {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .browser-cell.partial {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* ===== COLUMNS LAYOUT ===== */
+        .cols-demo {
+            display: table;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .col {
+            display: table-cell;
+            padding: 20px;
+            background: #667eea;
+            color: white;
+            border-right: 1px solid rgba(255,255,255,0.3);
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .col:last-child {
+            border-right: none;
+        }
+
+        /* ===== ADVANCED LAYOUT ===== */
+        .advanced-layout {
+            display: table;
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+
+        .header-full {
+            display: table-row;
+            background: #667eea;
+            color: white;
+        }
+
+        .header-cell {
+            display: table-cell;
+            padding: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .content-row {
+            display: table-row;
+        }
+
+        .sidebar-cell {
+            display: table-cell;
+            width: 25%;
+            padding: 20px;
+            background: #f0f4ff;
+            border-right: 2px solid #667eea;
+            vertical-align: top;
+        }
+
+        .main-cell {
+            display: table-cell;
+            width: 50%;
+            padding: 20px;
+            background: white;
+            vertical-align: top;
+        }
+
+        .aside-cell {
+            display: table-cell;
+            width: 25%;
+            padding: 20px;
+            background: #f0f4ff;
+            border-left: 2px solid #667eea;
+            vertical-align: top;
+        }
+
+        .footer-full {
+            display: table-row;
+            background: #333;
+            color: white;
+        }
+
+        .footer-cell {
+            display: table-cell;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* ===== MIXED CONTENT ===== */
+        .mixed-table {
+            display: table;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .mixed-row {
+            display: table-row;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .mixed-cell {
+            display: table-cell;
+            padding: 15px;
+        }
+
+        .icon-cell {
+            width: 60px;
+            text-align: center;
+            font-size: 2em;
+        }
+
+        .content-cell {
+            padding: 15px;
+        }
+
+        .price-cell {
+            width: 100px;
+            text-align: right;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        /* ===== RESPONSIVE MOBILE ===== */
+        @media (max-width: 768px) {
+            .responsive-table,
+            .basic-table,
+            .comparison-table {
+                display: block;
+            }
+
+            .responsive-header,
+            .table-header,
+            .table-footer {
+                display: none;
+            }
+
+            .responsive-body,
+            .table-body {
+                display: block;
+            }
+
+            .resp-row,
+            .table-row {
+                display: block;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+            }
+
+            .resp-cell,
+            .table-cell {
+                display: block;
+                padding: 10px;
+                border: none;
+                text-align: left;
+            }
+
+            .resp-cell::before,
+            .table-cell::before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+                margin-bottom: 5px;
+                color: #667eea;
+            }
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .syntax-table {
+            display: table;
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+
+        .syntax-row {
+            display: table-row;
+        }
+
+        .syntax-cell {
+            display: table-cell;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .syntax-header {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS Display: Table</h1>
+        <p class="subtitle">Complete Guide to CSS Table Display Properties</p>
+
+        <!-- ===== SECTION 1: Introduction ===== -->
+        <div class="section">
+            <h2>1. What is CSS Display: Table?</h2>
+            <p><code>display: table</code> is a CSS property that allows you to create table layouts without using actual HTML <code>&lt;table&gt;</code> elements. It applies CSS table formatting to any HTML element.</p>
+
+            <h3>Key Concept:</h3>
+            <p>You can convert any HTML element (div, section, article, etc.) into a table-like structure using CSS display properties. This provides:</p>
+            <ul>
+                <li>Layout control without semantic HTML tables</li>
+                <li>Equal column heights automatically</li>
+                <li>Better separation between layout and structure</li>
+                <li>Flexible alignment options</li>
+            </ul>
+
+            <h3>Related Display Values:</h3>
+            <ul>
+                <li><code>display: table</code> - Creates table container</li>
+                <li><code>display: table-row</code> - Creates table row</li>
+                <li><code>display: table-cell</code> - Creates table cell</li>
+                <li><code>display: table-header-group</code> - Groups header rows</li>
+                <li><code>display: table-body</code> - Groups body rows</li>
+                <li><code>display: table-footer-group</code> - Groups footer rows</li>
+                <li><code>display: table-caption</code> - Creates table caption</li>
+                <li><code>display: table-column</code> - Defines column properties</li>
+                <li><code>display: table-column-group</code> - Groups columns</li>
+            </ul>
+        </div>
+
+        <!-- ===== SECTION 2: Basic Structure ===== -->
+        <div class="section">
+            <h2>2. Basic Table Structure</h2>
+            <p>Here's a simple CSS table created with display properties:</p>
+
+            <h3>HTML Structure:</h3>
+            <pre>&lt;div class="basic-table"&gt;
+    &lt;div class="table-header"&gt;
+        &lt;div class="table-row"&gt;
+            &lt;div class="table-cell"&gt;Name&lt;/div&gt;
+            &lt;div class="table-cell"&gt;Email&lt;/div&gt;
+            &lt;div class="table-cell"&gt;Role&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="table-body"&gt;
+        &lt;div class="table-row"&gt;
+            &lt;div class="table-cell"&gt;John Doe&lt;/div&gt;
+            &lt;div class="table-cell"&gt;john@example.com&lt;/div&gt;
+            &lt;div class="table-cell"&gt;Developer&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+
+            <h3>CSS Styling:</h3>
+            <pre>.basic-table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-header {
+    display: table-header-group;
+    background: #667eea;
+    color: white;
+}
+
+.table-body {
+    display: table-row-group;
+}
+
+.table-row {
+    display: table-row;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-cell {
+    display: table-cell;
+    padding: 12px 15px;
+    text-align: left;
+}</pre>
+
+            <h3>Live Example:</h3>
+            <div class="basic-table">
+                <div class="table-header">
+                    <div class="table-row">
+                        <div class="table-cell">Name</div>
+                        <div class="table-cell">Email</div>
+                        <div class="table-cell">Role</div>
+                    </div>
+                </div>
+                <div class="table-body">
+                    <div class="table-row">
+                        <div class="table-cell">John Doe</div>
+                        <div class="table-cell">john@example.com</div>
+                        <div class="table-cell">Developer</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">Jane Smith</div>
+                        <div class="table-cell">jane@example.com</div>
+                        <div class="table-cell">Designer</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">Mike Johnson</div>
+                        <div class="table-cell">mike@example.com</div>
+                        <div class="table-cell">Manager</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 3: Display Properties ===== -->
+        <div class="section">
+            <h2>3. CSS Table Display Properties</h2>
+
+            <h3>Complete Property Reference:</h3>
+            <div class="syntax-table">
+                <div class="syntax-row">
+                    <div class="syntax-cell syntax-header">Property</div>
+                    <div class="syntax-cell syntax-header">Purpose</div>
+                    <div class="syntax-cell syntax-header">Example</div>
+                </div>
+                <div class="syntax-row">
+                    <div class="syntax-cell"><code>display: table</code></div>
+                    <div class="syntax-cell">Container for entire table</div>
+                    <div class="syntax-cell">.table { display: table; }</div>
+                </div>
+                <div class="syntax-row">
+                    <div class="syntax-cell"><code>display: table-row</code></div>
+                    <div class="syntax-cell">Creates a table row</div>
+                    <div class="syntax-cell">.row { display: table-row; }</div>
+                </div>
+                <div class="syntax-row">
+                    <div class="syntax-cell"><code>display: table-cell</code></div>
+                    <div class="syntax-cell">Creates a table cell</div>
+                    <div class="syntax-cell">.cell { display: table-cell; }</div>
+                </div>
+                <div class="syntax-row">
+                    <div class="syntax-cell"><code>display: table-header-group</code></div>
+                    <div class="syntax-cell">Groups header rows</div>
+                    <div class="syntax-cell">.thead { display: table-header-group; }</div>
+                </div>
+                <div class="syntax-row">
+                    <div class="syntax-cell"><code>display: table-body</code></div>
+                    <div class="syntax-cell">Groups body rows</div>
+                    <div class="syntax-cell">.tbody { display: table-body; }</div>
+                </div>
+                <div class="syntax-row">
+                    <div class="syntax-cell"><code>display: table-footer-group</code></div>
+                    <div class="syntax-cell">Groups footer rows</div>
+                    <div class="syntax-cell">.tfoot { display: table-footer-group; }</div>
+                </div>
+                <div class="syntax-row">
+                    <div class="syntax-cell"><code>display: table-caption</code></div>
+                    <div class="syntax-cell">Creates table caption</div>
+                    <div class="syntax-cell">.caption { display: table-caption; }</div>
+                </div>
+            </div>
+
+            <h3>Property Details:</h3>
+            <h4><code>display: table</code></h4>
+            <p>The container element. Should wrap all rows and cells.</p>
+            <pre>.container {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}</pre>
+
+            <h4><code>display: table-row</code></h4>
+            <p>Creates horizontal rows within the table. All cells in a row have equal height.</p>
+            <pre>.row {
+    display: table-row;
+    border-bottom: 1px solid #ddd;
+}</pre>
+
+            <h4><code>display: table-cell</code></h4>
+            <p>Creates individual cells. Automatically aligns vertically with other cells in same row.</p>
+            <pre>.cell {
+    display: table-cell;
+    padding: 15px;
+    vertical-align: middle;
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 4: Vertical Alignment ===== -->
+        <div class="section">
+            <h2>4. Vertical Alignment with Table Cells</h2>
+            <p>One of the best features of <code>display: table-cell</code> is automatic vertical alignment control:</p>
+
+            <h3>Alignment Options:</h3>
+            <pre>vertical-align: top;        /* Align to top */
+vertical-align: middle;     /* Center vertically */
+vertical-align: bottom;     /* Align to bottom */
+vertical-align: baseline;   /* Align to baseline */
+vertical-align: text-top;   /* Align to text top */
+vertical-align: text-bottom; /* Align to text bottom */</pre>
+
+            <h3>Live Examples:</h3>
+            <div class="example-container">
+                <h4>Top Alignment:</h4>
+                <div class="alignment-demo" style="margin-bottom: 20px;">
+                    <div class="align-cell valign-top">
+                        <strong>vertical-align: top</strong><br>
+                        Content aligned to top of cell
+                    </div>
+                </div>
+
+                <h4>Middle Alignment:</h4>
+                <div class="alignment-demo" style="margin-bottom: 20px;">
+                    <div class="align-cell valign-middle">
+                        <strong>vertical-align: middle</strong><br>
+                        Content centered vertically
+                    </div>
+                </div>
+
+                <h4>Bottom Alignment:</h4>
+                <div class="alignment-demo">
+                    <div class="align-cell valign-bottom">
+                        <strong>vertical-align: bottom</strong><br>
+                        Content aligned to bottom of cell
+                    </div>
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Note:</strong> <code>vertical-align</code> only works with <code>display: table-cell</code>, not with other display values!
+            </div>
+        </div>
+
+        <!-- ===== SECTION 5: Layout Patterns ===== -->
+        <div class="section">
+            <h2>5. Two-Column Layout</h2>
+            <p>Create a classic two-column layout with sidebar and main content:</p>
+
+            <h3>HTML Structure:</h3>
+            <pre>&lt;div class="layout-table"&gt;
+    &lt;div class="layout-table-cell sidebar"&gt;
+        &lt;h3&gt;Sidebar&lt;/h3&gt;
+        &lt;p&gt;Side navigation or info&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="layout-table-cell main-content"&gt;
+        &lt;h3&gt;Main Content&lt;/h3&gt;
+        &lt;p&gt;Primary content area&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+
+            <h3>CSS Code:</h3>
+            <pre>.layout-table {
+    display: table;
+    width: 100%;
+    gap: 15px;
+}
+
+.layout-table-cell {
+    display: table-cell;
+    padding: 20px;
+    vertical-align: top;
+}
+
+.sidebar {
+    width: 250px;
+    background: #667eea;
+    color: white;
+}
+
+.main-content {
+    background: #f9f9f9;
+}</pre>
+
+            <h3>Live Example:</h3>
+            <div class="layout-table">
+                <div class="layout-table-cell sidebar">
+                    <h3>Sidebar</h3>
+                    <p>Navigation links</p>
+                    <p>Categories</p>
+                    <p>Filters</p>
+                </div>
+                <div class="layout-table-cell main-content">
+                    <h3>Main Content Area</h3>
+                    <p>This is the primary content area. It will automatically fill the remaining space while the sidebar maintains its fixed width.</p>
+                    <p>Table cells in the same row have equal height, making this perfect for layouts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 6: Equal Width Columns ===== -->
+        <div class="section">
+            <h2>6. Equal Width Columns</h2>
+            <p>Create columns with equal widths automatically:</p>
+
+            <h3>CSS Code:</h3>
+            <pre>.equal-width-table {
+    display: table;
+    width: 100%;
+    table-layout: fixed;  /* Important for equal widths */
+}
+
+.equal-cell {
+    display: table-cell;
+    padding: 20px;
+}</pre>
+
+            <h3>Live Example (3 Equal Columns):</h3>
+            <div class="equal-width-table">
+                <div class="equal-cell">Column 1</div>
+                <div class="equal-cell">Column 2</div>
+                <div class="equal-cell">Column 3</div>
+            </div>
+
+            <div class="note">
+                <strong>Key Property:</strong> <code>table-layout: fixed</code> forces equal column widths. Without it, columns adjust to content.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 7: Data Display ===== -->
+        <div class="section">
+            <h2>7. Data Table with Sorting</h2>
+            <p>Display tabular data using table display properties:</p>
+
+            <h3>Complete Example:</h3>
+            <div class="responsive-table">
+                <div class="responsive-header">
+                    <div class="resp-row">
+                        <div class="resp-cell">Product</div>
+                        <div class="resp-cell">Price</div>
+                        <div class="resp-cell">Stock</div>
+                        <div class="resp-cell">Status</div>
+                    </div>
+                </div>
+                <div class="responsive-body">
+                    <div class="resp-row">
+                        <div class="resp-cell" data-label="Product">Laptop</div>
+                        <div class="resp-cell" data-label="Price">$999</div>
+                        <div class="resp-cell" data-label="Stock">12</div>
+                        <div class="resp-cell" data-label="Status" style="color: #28a745; font-weight: bold;">In Stock</div>
+                    </div>
+                    <div class="resp-row">
+                        <div class="resp-cell" data-label="Product">Mouse</div>
+                        <div class="resp-cell" data-label="Price">$29</div>
+                        <div class="resp-cell" data-label="Stock">45</div>
+                        <div class="resp-cell" data-label="Status" style="color: #28a745; font-weight: bold;">In Stock</div>
+                    </div>
+                    <div class="resp-row">
+                        <div class="resp-cell" data-label="Product">Keyboard</div>
+                        <div class="resp-cell" data-label="Price">$79</div>
+                        <div class="resp-cell" data-label="Stock">0</div>
+                        <div class="resp-cell" data-label="Status" style="color: #dc3545; font-weight: bold;">Out of Stock</div>
+                    </div>
+                    <div class="resp-row">
+                        <div class="resp-cell" data-label="Product">Monitor</div>
+                        <div class="resp-cell" data-label="Price">$349</div>
+                        <div class="resp-cell" data-label="Stock">8</div>
+                        <div class="resp-cell" data-label="Status" style="color: #28a745; font-weight: bold;">In Stock</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 8: Three Column Layout ===== -->
+        <div class="section">
+            <h2>8. Three-Column Layout (Sidebar, Main, Aside)</h2>
+            <p>Create a complex three-column layout perfect for blogs or content sites:</p>
+
+            <h3>HTML & CSS:</h3>
+            <pre>.advanced-layout {
+    display: table;
+    width: 100%;
+}
+
+.sidebar-cell {
+    display: table-cell;
+    width: 25%;
+    vertical-align: top;
+}
+
+.main-cell {
+    display: table-cell;
+    width: 50%;
+    vertical-align: top;
+}
+
+.aside-cell {
+    display: table-cell;
+    width: 25%;
+    vertical-align: top;
+}</pre>
+
+            <h3>Live Example:</h3>
+            <div class="advanced-layout">
+                <div class="header-full">
+                    <div class="header-cell">Website Header</div>
+                </div>
+                <div class="content-row">
+                    <div class="sidebar-cell">
+                        <h4>Left Sidebar</h4>
+                        <p>Navigation menu</p>
+                        <p>Categories</p>
+                        <p>Tags</p>
+                    </div>
+                    <div class="main-cell">
+                        <h4>Main Content</h4>
+                        <p>This is the main content area. All three cells maintain equal height automatically.</p>
+                        <p>Perfect for blog layouts with sidebars on both sides.</p>
+                    </div>
+                    <div class="aside-cell">
+                        <h4>Right Sidebar</h4>
+                        <p>Recent posts</p>
+                        <p>Popular items</p>
+                        <p>Ads/Info</p>
+                    </div>
+                </div>
+                <div class="footer-full">
+                    <div class="footer-cell">Website Footer - 2026</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 9: Comparison Table ===== -->
+        <div class="section">
+            <h2>9. Comparison Tables</h2>
+            <p>Display comparison data with multiple features:</p>
+
+            <div class="comparison-table">
+                <div class="comp-row">
+                    <div class="comp-cell comp-header comp-label">Feature</div>
+                    <div class="comp-cell comp-header">Basic Plan</div>
+                    <div class="comp-cell comp-header">Pro Plan</div>
+                    <div class="comp-cell comp-header">Enterprise</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell comp-label">Users</div>
+                    <div class="comp-cell">1</div>
+                    <div class="comp-cell">5</div>
+                    <div class="comp-cell">Unlimited</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell comp-label">Storage</div>
+                    <div class="comp-cell">10 GB</div>
+                    <div class="comp-cell">100 GB</div>
+                    <div class="comp-cell">Unlimited</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell comp-label">API Access</div>
+                    <div class="comp-cell comp-no">✗</div>
+                    <div class="comp-cell comp-yes">✓</div>
+                    <div class="comp-cell comp-yes">✓</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell comp-label">Support</div>
+                    <div class="comp-cell">Email</div>
+                    <div class="comp-cell">Priority</div>
+                    <div class="comp-cell">24/7 Phone</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 10: table-layout Property ===== -->
+        <div class="section">
+            <h2>10. table-layout Property</h2>
+            <p>Controls how table cells are sized:</p>
+
+            <h3>Two Values:</h3>
+            <h4><code>table-layout: auto</code> (Default)</h4>
+            <ul>
+                <li>Column width is based on content</li>
+                <li>Cells expand/shrink to fit content</li>
+                <li>Slower rendering with large tables</li>
+                <li>More flexible column sizing</li>
+            </ul>
+
+            <h4><code>table-layout: fixed</code></h4>
+            <ul>
+                <li>Column width based on first row or specified widths</li>
+                <li>Faster rendering</li>
+                <li>Predictable column sizes</li>
+                <li>Content may overflow or truncate</li>
+            </ul>
+
+            <h3>Comparison:</h3>
+            <pre>/* Auto - flexible sizing */
+.table-auto {
+    display: table;
+    table-layout: auto;  /* Default */
+    width: 100%;
+}
+
+/* Fixed - rigid sizing */
+.table-fixed {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}</pre>
+
+            <div class="pros">
+                <strong>Use <code>table-layout: fixed</code> for:</strong>
+                <ul>
+                    <li>Performance-critical applications</li>
+                    <li>Tables with consistent column widths</li>
+                    <li>Large datasets</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 11: border-collapse ===== -->
+        <div class="section">
+            <h2>11. border-collapse Property</h2>
+            <p>Controls how borders are rendered in tables:</p>
+
+            <h3>Two Values:</h3>
+            <h4><code>border-collapse: separate</code> (Default)</h4>
+            <p>Borders are rendered separately between cells.</p>
+            <pre>.table {
+    border-collapse: separate;
+    border-spacing: 10px;  /* Space between cells */
+}</pre>
+
+            <h4><code>border-collapse: collapse</code></h4>
+            <p>Borders between adjacent cells are merged.</p>
+            <pre>.table {
+    border-collapse: collapse;  /* No space between borders */
+}</pre>
+
+            <h3>Comparison Example:</h3>
+            <div class="note">
+                <strong>border-collapse: separate</strong>
+                <ul>
+                    <li>Allows <code>border-spacing</code> property</li>
+                    <li>Each cell has its own border</li>
+                    <li>Better for spaced layouts</li>
+                </ul>
+            </div>
+
+            <div class="pros">
+                <strong>border-collapse: collapse</strong>
+                <ul>
+                    <li>Creates grid effect</li>
+                    <li>More compact appearance</li>
+                    <li>Traditional table look</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 12: Advantages vs Disadvantages ===== -->
+        <div class="section">
+            <h2>12. Pros and Cons</h2>
+
+            <h3>Advantages:</h3>
+            <div class="pros">
+                <ul>
+                    <li><strong>Semantic HTML:</strong> Use div/section instead of &lt;table&gt;</li>
+                    <li><strong>Equal Heights:</strong> Cells in same row auto-equalize</li>
+                    <li><strong>Vertical Alignment:</strong> Easy centering with vertical-align</li>
+                    <li><strong>Flexible:</strong> Convert any element to table layout</li>
+                    <li><strong>No table semantics confusion:</strong> Better for non-tabular data</li>
+                    <li><strong>CSS-only:</strong> No HTML structure changes needed</li>
+                    <li><strong>Responsive-friendly:</strong> Easy to change layout with media queries</li>
+                </ul>
+            </div>
+
+            <h3>Disadvantages:</h3>
+            <div class="cons">
+                <ul>
+                    <li><strong>Accessibility:</strong> Screen readers may not recognize as table</li>
+                    <li><strong>Complex nesting:</strong> Requires specific HTML structure</li>
+                    <li><strong>Browser differences:</strong> Minor rendering variations</li>
+                    <li><strong>Column sizing:</strong> Can be tricky with dynamic content</li>
+                    <li><strong>Mobile-unfriendly:</strong> Needs media queries for responsiveness</li>
+                    <li><strong>Limited mobile support:</strong> Doesn't wrap well on small screens</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 13: Browser Support ===== -->
+        <div class="section">
+            <h2>13. Browser Support</h2>
+            <p>Excellent modern browser support:</p>
+
+            <div class="browser-support">
+                <div class="browser-row">
+                    <div class="browser-cell header">Browser</div>
+                    <div class="browser-cell header">Support Level</div>
+                    <div class="browser-cell header">Minimum Version</div>
+                </div>
+                <div class="browser-row">
+                    <div class="browser-cell">Chrome</div>
+                    <div class="browser-cell supported">✓ Full</div>
+                    <div class="browser-cell">All versions</div>
+                </div>
+                <div class="browser-row">
+                    <div class="browser-cell">Firefox</div>
+                    <div class="browser-cell supported">✓ Full</div>
+                    <div class="browser-cell">All versions</div>
+                </div>
+                <div class="browser-row">
+                    <div class="browser-cell">Safari</div>
+                    <div class="browser-cell supported">✓ Full</div>
+                    <div class="browser-cell">All versions</div>
+                </div>
+                <div class="browser-row">
+                    <div class="browser-cell">Edge</div>
+                    <div class="browser-cell supported">✓ Full</div>
+                    <div class="browser-cell">All versions</div>
+                </div>
+                <div class="browser-row">
+                    <div class="browser-cell">IE 11</div>
+                    <div class="browser-cell supported">✓ Full</div>
+                    <div class="browser-cell">IE 11</div>
+                </div>
+                <div class="browser-row">
+                    <div class="browser-cell">Mobile Safari</div>
+                    <div class="browser-cell supported">✓ Full</div>
+                    <div class="browser-cell">iOS 5+</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 14: Best Practices ===== -->
+        <div class="section">
+            <h2>14. Best Practices</h2>
+
+            <h3>✓ Do's:</h3>
+            <div class="pros">
+                <ul>
+                    <li>Use <code>display: table</code> for layout, not tabular data</li>
+                    <li>Add <code>border-collapse: collapse</code> for clean grids</li>
+                    <li>Use <code>table-layout: fixed</code> for performance</li>
+                    <li>Test accessibility with screen readers</li>
+                    <li>Provide fallback styles for older browsers</li>
+                    <li>Use meaningful HTML elements (div, section, article)</li>
+                    <li>Combine with media queries for responsive design</li>
+                </ul>
+            </div>
+
+            <h3>✗ Don'ts:</h3>
+            <div class="cons">
+                <ul>
+                    <li>Don't use for actual tabular data—use &lt;table&gt;</li>
+                    <li>Don't forget accessibility attributes</li>
+                    <li>Don't nest table displays too deeply</li>
+                    <li>Don't use with complex animations</li>
+                    <li>Don't ignore mobile responsiveness</li>
+                    <li>Don't use for SEO-critical data</li>
+                    <li>Don't hardcode column widths without flexibility</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 15: When to Use ===== -->
+        <div class="section">
+            <h2>15. When to Use display: table</h2>
+
+            <h3>Good Use Cases:</h3>
+            <div class="pros">
+                <ul>
+                    <li>Creating equal-height columns</li>
+                    <li>Vertical centering without flexbox</li>
+                    <li>Complex page layouts with sidebars</li>
+                    <li>Card grids with consistent heights</li>
+                    <li>Dashboard layouts</li>
+                    <li>Feature comparison displays</li>
+                    <li>Admin panel interfaces</li>
+                </ul>
+            </div>
+
+            <h3>When NOT to Use:</h3>
+            <div class="cons">
+                <ul>
+                    <li>Actual tabular data (use &lt;table&gt;)</li>
+                    <li>Modern layouts (use Flexbox or CSS Grid instead)</li>
+                    <li>Simple layouts (Flexbox is simpler)</li>
+                    <li>Responsive mobile designs</li>
+                    <li>When accessibility is critical</li>
+                    <li>SEO-sensitive content</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>Note:</strong> For modern projects, <strong>Flexbox</strong> or <strong>CSS Grid</strong> are usually better choices than <code>display: table</code>. Use table display when you specifically need table behavior like equal-height cells.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 16: Responsive Tables ===== -->
+        <div class="section">
+            <h2>16. Making Tables Responsive</h2>
+
+            <h3>CSS Solution:</h3>
+            <pre>/* Desktop: Table layout */
+@media (min-width: 768px) {
+    .responsive-table {
+        display: table;
+        width: 100%;
+    }
+    
+    .resp-row {
+        display: table-row;
+    }
+    
+    .resp-cell {
+        display: table-cell;
+        padding: 12px;
+    }
+}
+
+/* Mobile: Block layout */
+@media (max-width: 767px) {
+    .responsive-table {
+        display: block;
+    }
+    
+    .responsive-header {
+        display: none;  /* Hide header */
+    }
+    
+    .resp-row {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+    }
+    
+    .resp-cell {
+        display: block;
+        padding: 10px;
+    }
+    
+    .resp-cell::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+}</pre>
+
+            <div class="note">
+                <strong>Tip:</strong> The table above uses this responsive technique. Resize your browser to see it in action!
+            </div>
+        </div>
+
+        <!-- ===== SECTION 17: Comparison with Flexbox ===== -->
+        <div class="section">
+            <h2>17. display: table vs Flexbox vs Grid</h2>
+
+            <div class="comparison-table">
+                <div class="comp-row">
+                    <div class="comp-cell comp-header comp-label">Feature</div>
+                    <div class="comp-cell comp-header">display: table</div>
+                    <div class="comp-cell comp-header">Flexbox</div>
+                    <div class="comp-cell comp-header">Grid</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell comp-label">Equal Heights</div>
+                    <div class="comp-cell comp-yes">Automatic</div>
+                    <div class="comp-cell comp-yes">With align-items</div>
+                    <div class="comp-cell comp-yes">With auto rows</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell comp-label">Vertical Align</div>
+                    <div class="comp-cell comp-yes">Simple</div>
+                    <div class="comp-cell comp-yes">Simple</div>
+                    <div class="comp-cell comp-yes">Simple</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell comp-label">Column Gaps</div>
+                    <div class="comp-cell comp-no">Complex</div>
+                    <div class="comp-cell comp-yes">gap property</div>
+                    <div class="comp-cell comp-yes">gap property</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell comp-label">Responsive</div>
+                    <div class="comp-cell comp-no">Needs Media Queries</div>
+                    <div class="comp-cell comp-yes">Easy</div>
+                    <div class="comp-cell comp-yes">Easy</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell comp-label">Browser Support</div>
+                    <div class="comp-cell comp-yes">Excellent</div>
+                    <div class="comp-cell comp-yes">Excellent</div>
+                    <div class="comp-cell">IE 10+</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell comp-label">Learning Curve</div>
+                    <div class="comp-cell comp-yes">Easy</div>
+                    <div class="comp-cell comp-yes">Easy</div>
+                    <div class="comp-cell comp-no">Moderate</div>
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Recommendation:</strong> For new projects, use <strong>Flexbox</strong> for one-dimensional layouts and <strong>CSS Grid</strong> for two-dimensional layouts. Use <code>display: table</code> only when you specifically need table-like behavior.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 18: Real-World Examples ===== -->
+        <div class="section">
+            <h2>18. Real-World Examples</h2>
+
+            <h3>Example 1: Dashboard Widget</h3>
+            <p>A card-based dashboard with equal heights:</p>
+            <pre>.dashboard {
+    display: table;
+    width: 100%;
+    gap: 20px;
+}
+
+.widget {
+    display: table-cell;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}</pre>
+
+            <h3>Example 2: Blog Layout</h3>
+            <p>Three-column blog with consistent sidebar heights:</p>
+            <pre>.blog-layout {
+    display: table;
+    width: 100%;
+    gap: 20px;
+}
+
+.blog-sidebar, .blog-main, .blog-aside {
+    display: table-cell;
+    vertical-align: top;
+}</pre>
+
+            <h3>Example 3: Form Layout</h3>
+            <p>Label and input fields with equal heights:</p>
+            <pre>.form-row {
+    display: table;
+    width: 100%;
+    gap: 15px;
+}
+
+.form-label, .form-input {
+    display: table-cell;
+    vertical-align: middle;
+}</pre>
+
+            <h3>Example 4: Navigation Menu</h3>
+            <p>Horizontal menu items with equal widths:</p>
+            <pre>.nav-menu {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.nav-item {
+    display: table-cell;
+    text-align: center;
+    padding: 15px;
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 19: Advanced Techniques ===== -->
+        <div class="section">
+            <h2>19. Advanced Techniques</h2>
+
+            <h3>Technique 1: Nested Tables</h3>
+            <pre>.outer-table {
+    display: table;
+}
+
+.outer-cell {
+    display: table-cell;
+}
+
+.inner-table {
+    display: table;
+    width: 100%;
+}
+
+.inner-cell {
+    display: table-cell;
+}</pre>
+
+            <h3>Technique 2: Table with Fixed Header</h3>
+            <pre>.table-container {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.table-header {
+    position: sticky;
+    top: 0;
+    background: #667eea;
+    z-index: 10;
+}</pre>
+
+            <h3>Technique 3: Animated Rows</h3>
+            <pre>.table-row {
+    display: table-row;
+    transition: background 0.3s ease;
+}
+
+.table-row:hover {
+    background: #f0f4ff;
+}</pre>
+
+            <h3>Technique 4: Responsive Grid Fallback</h3>
+            <pre>@supports (display: grid) {
+    .layout {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+    }
+}
+
+@supports not (display: grid) {
+    .layout {
+        display: table;
+    }
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 20: Common Mistakes ===== -->
+        <div class="section">
+            <h2>20. Common Mistakes & Solutions</h2>
+
+            <h3>Mistake 1: Forgetting table-row</h3>
+            <p><strong>Problem:</strong> Cells appear in single row instead of multiple rows.</p>
+            <p><strong>Solution:</strong> Always wrap cells in a <code>display: table-row</code> element.</p>
+
+            <h3>Mistake 2: Wrong border-spacing</h3>
+            <p><strong>Problem:</strong> Borders appear twice thick between cells.</p>
+            <p><strong>Solution:</strong> Use <code>border-collapse: collapse</code> to merge borders.</p>
+
+            <h3>Mistake 3: vertical-align not working</h3>
+            <p><strong>Problem:</strong> Content not vertically centered.</p>
+            <p><strong>Solution:</strong> Apply <code>vertical-align</code> only to <code>display: table-cell</code> elements.</p>
+
+            <h3>Mistake 4: Unequal cell heights</h3>
+            <p><strong>Problem:</strong> Cells in same row have different heights.</p>
+            <p><strong>Solution:</strong> Ensure all cells are direct children of same <code>table-row</code>.</p>
+
+            <h3>Mistake 5: Poor mobile rendering</h3>
+            <p><strong>Problem:</strong> Table too wide on mobile devices.</p>
+            <p><strong>Solution:</strong> Use media queries to change to block display on mobile.</p>
+
+            <div class="warning">
+                <strong>⚠ Important:</strong> Test your tables across different screen sizes and browsers!
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS Display: Table Complete Guide | Created for Web Development Learning</p>
+            <p>For more information, visit <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/display#table" style="color: white; text-decoration: underline;">MDN Web Docs</a></p>
+        </footer>
+    </div>
+</body>
+</html>

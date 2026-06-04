@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Visibility Guide - Complete Reference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f97316;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --text-primary: var(--neutral-900);
+            --text-secondary: var(--neutral-600);
+            --bg-primary: #ffffff;
+            --bg-secondary: var(--neutral-100);
+            --border-color: var(--neutral-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: var(--neutral-50);
+                --text-secondary: var(--neutral-400);
+                --bg-primary: var(--neutral-900);
+                --bg-secondary: var(--neutral-800);
+                --border-color: var(--neutral-700);
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        nav {
+            background-color: var(--bg-secondary);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 130px;
+            z-index: 99;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section > h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        pre {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+
+        pre code {
+            color: var(--text-primary);
+        }
+
+        :not(pre) > code {
+            background-color: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card h4 {
+            margin-top: 0;
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--neutral-100));
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .feature-box {
+                background: linear-gradient(135deg, var(--neutral-800), var(--neutral-700));
+            }
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+        }
+
+        .toggle-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .toggle-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Demo Container */
+        .demo-container {
+            background-color: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            min-height: 250px;
+            position: relative;
+        }
+
+        .demo-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Collapsible */
+        .collapsible {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            background-color: var(--border-color);
+        }
+
+        .collapsible.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .content {
+            padding: 15px;
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            margin-bottom: 10px;
+        }
+
+        .content.show {
+            display: block;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            background-color: rgba(243, 158, 11, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Visibility Demos */
+        .box-normal {
+            background: var(--success);
+            color: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 6px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .box-hidden {
+            background: var(--danger);
+            color: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 6px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            visibility: hidden;
+        }
+
+        .box-visible {
+            background: var(--success);
+            color: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 6px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>CSS Visibility Guide</h1>
+        <p>Complete reference for the visibility property and related techniques</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#basics">Basics</a></li>
+            <li><a href="#visibility-property">Visibility Property</a></li>
+            <li><a href="#comparisons">Comparisons</a></li>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#reference">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Basics Section -->
+        <section id="basics">
+            <h2>Understanding CSS Visibility</h2>
+            
+            <p>The <code>visibility</code> property controls whether an element is visible or hidden. Unlike <code>display: none</code> which removes the element from layout, <code>visibility: hidden</code> hides the element but preserves its space in the layout.</p>
+
+            <div class="feature-box">
+                <strong>Key Concept:</strong> Visibility hides an element but keeps its space reserved. The element is invisible but still takes up space in the document flow.
+            </div>
+
+            <h3>Visibility vs Display vs Opacity</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Takes Space</th>
+                        <th>Hidden</th>
+                        <th>Interactive</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>visibility: hidden</code></td>
+                        <td>✅ Yes</td>
+                        <td>✅ Hidden</td>
+                        <td>❌ No</td>
+                        <td>Reserve space, hide content</td>
+                    </tr>
+                    <tr>
+                        <td><code>display: none</code></td>
+                        <td>❌ No</td>
+                        <td>✅ Hidden</td>
+                        <td>❌ No</td>
+                        <td>Remove from layout</td>
+                    </tr>
+                    <tr>
+                        <td><code>opacity: 0</code></td>
+                        <td>✅ Yes</td>
+                        <td>✅ Hidden</td>
+                        <td>✅ Yes</td>
+                        <td>Transparent, interactive</td>
+                    </tr>
+                    <tr>
+                        <td><code>clip-path: polygon(0 0 0 0)</code></td>
+                        <td>❌ No (visually)</td>
+                        <td>✅ Hidden</td>
+                        <td>❌ No</td>
+                        <td>Hide without space</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>When to Use Each</h3>
+            <ul>
+                <li><strong>visibility: hidden:</strong> Hide element but keep layout intact</li>
+                <li><strong>display: none:</strong> Completely remove from layout</li>
+                <li><strong>opacity: 0:</strong> Make transparent but keep interactive</li>
+                <li><strong>clip-path:</strong> Hide visually without taking space</li>
+            </ul>
+        </section>
+
+        <!-- Visibility Property Section -->
+        <section id="visibility-property">
+            <h2>The Visibility Property</h2>
+
+            <h3>Syntax</h3>
+            <pre><code>/* Basic values */
+visibility: visible;     /* Default - element is visible */
+visibility: hidden;      /* Element is hidden but takes space */
+visibility: collapse;    /* Hide table rows/columns */
+
+/* Global values */
+visibility: inherit;     /* Inherit from parent */
+visibility: initial;     /* Reset to default */
+visibility: revert;      /* Revert to browser default */
+visibility: unset;       /* Unset visibility */</code></pre>
+
+            <div class="card">
+                <h4>1. Visibility: Visible (Default)</h4>
+                <p>Element is visible and takes up space. This is the default value.</p>
+                <div class="demo-container">
+                    <div class="box-visible">Visible Element</div>
+                    <p style="color: var(--text-secondary); margin-top: 10px;">This element is visible and takes space</p>
+                </div>
+                <pre><code>.element {
+    visibility: visible;  /* Default */
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>2. Visibility: Hidden</h4>
+                <p>Element is hidden but still takes up space in the layout. Good for preserving layout structure.</p>
+                <div class="demo-container">
+                    <div class="box-normal">Normal Element</div>
+                    <div class="box-hidden">Hidden Element (but space reserved)</div>
+                    <div class="box-normal">Normal Element</div>
+                </div>
+                <pre><code>.element {
+    visibility: hidden;  /* Hidden but space preserved */
+}</code></pre>
+                <p style="margin-top: 15px; color: var(--text-secondary);">Notice the middle element is hidden but its space is still reserved in the layout.</p>
+            </div>
+
+            <div class="card">
+                <h4>3. Visibility: Collapse</h4>
+                <p>Used for table rows and columns. Hides the row/column and removes it from table layout.</p>
+                <pre><code>/* For table rows */
+tr.hidden {
+    visibility: collapse;
+}
+
+/* For table columns */
+col.hidden {
+    visibility: collapse;
+}</code></pre>
+            </div>
+
+            <h3>Inheritance Behavior</h3>
+            <p>Important: <code>visibility</code> is inherited from parent elements, but it can be overridden in children.</p>
+            <pre><code>/* Parent is hidden */
+.parent {
+    visibility: hidden;
+}
+
+/* But child can be shown */
+.parent .child {
+    visibility: visible;  /* Shows this child despite parent being hidden */
+}</code></pre>
+        </section>
+
+        <!-- Comparisons Section -->
+        <section id="comparisons">
+            <h2>Visibility vs Other Hiding Methods</h2>
+
+            <h3>Visibility: Hidden vs Display: None</h3>
+            <div class="card">
+                <h4>visibility: hidden</h4>
+                <ul>
+                    <li>✅ Element takes space</li>
+                    <li>✅ Layout is preserved</li>
+                    <li>❌ Element is hidden</li>
+                    <li>❌ Not interactive</li>
+                    <li>⚡ Faster than display changes (in some cases)</li>
+                </ul>
+                <pre><code>.hidden {
+    visibility: hidden;
+}
+
+/* Space is still reserved! */</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>display: none</h4>
+                <ul>
+                    <li>❌ Element takes no space</li>
+                    <li>❌ Layout shifts</li>
+                    <li>✅ Completely removed</li>
+                    <li>❌ Not interactive</li>
+                    <li>⚡ Triggers layout recalculation</li>
+                </ul>
+                <pre><code>.hidden {
+    display: none;
+}
+
+/* No space reserved! */</code></pre>
+            </div>
+
+            <h3>Visibility: Hidden vs Opacity: 0</h3>
+            <div class="card">
+                <h4>visibility: hidden</h4>
+                <ul>
+                    <li>✅ Takes space</li>
+                    <li>❌ Not interactive</li>
+                    <li>✅ Truly hidden</li>
+                    <li>⚡ No interaction listeners</li>
+                </ul>
+                <pre><code>.hidden {
+    visibility: hidden;
+}
+
+/* Element won't respond to clicks */</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>opacity: 0</h4>
+                <ul>
+                    <li>✅ Takes space</li>
+                    <li>✅ Still interactive</li>
+                    <li>✅ Transparent</li>
+                    <li>⚡ Good for transitions</li>
+                </ul>
+                <pre><code>.hidden {
+    opacity: 0;
+    pointer-events: none;  /* To prevent interaction */
+}
+
+/* Element will still respond to clicks unless pointer-events disabled */</code></pre>
+            </div>
+
+            <h3>Decision Tree</h3>
+            <p><strong>Do you want to hide AND remove from layout?</strong></p>
+            <ul>
+                <li>✅ Yes → Use <code>display: none</code></li>
+                <li>❌ No → Continue...</li>
+            </ul>
+
+            <p><strong>Do you want the element to be interactive?</strong></p>
+            <ul>
+                <li>✅ Yes → Use <code>opacity: 0</code> with <code>pointer-events: none</code></li>
+                <li>❌ No → Continue...</li>
+            </ul>
+
+            <p><strong>Use <code>visibility: hidden</code> when:</strong></p>
+            <ul>
+                <li>You want to keep the element's space in layout</li>
+                <li>You don't want it to be interactive</li>
+                <li>You want to smoothly hide/show without layout shift</li>
+            </ul>
+        </section>
+
+        <!-- Examples Section -->
+        <section id="examples">
+            <h2>Real-World Examples</h2>
+
+            <div class="card">
+                <h3>Example 1: Hidden Placeholder in Form</h3>
+                <p>Hide but reserve space for error messages.</p>
+                <pre><code>.form-error {
+    visibility: hidden;  /* Space reserved */
+    color: red;
+    font-size: 0.85rem;
+}
+
+/* Show when there's an error */
+.form-error.show {
+    visibility: visible;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 2: Invisible Spacing Element</h3>
+                <p>Use for layout alignment without showing content.</p>
+                <pre><code>.spacer {
+    visibility: hidden;
+    height: 20px;
+}
+
+/* Alternative: use margin or padding instead */</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 3: Hidden Column in Table</h3>
+                <p>Hide table columns while preserving layout.</p>
+                <pre><code>table tr td:nth-child(3) {
+    visibility: hidden;  /* Column space is preserved */
+}
+
+/* Or collapse for complete removal */
+table tr td:nth-child(3) {
+    visibility: collapse;  /* Removes space from table */
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 4: Conditional Visibility</h3>
+                <p>Toggle visibility based on state.</p>
+                <pre><code>.tooltip {
+    visibility: hidden;
+    position: absolute;
+    background: black;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.element:hover .tooltip {
+    visibility: visible;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 5: Animation with Visibility</h3>
+                <p>Show/hide with smooth transitions using visibility.</p>
+                <pre><code>.modal {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal.open {
+    visibility: visible;
+    opacity: 1;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 6: Accessible Skip Link</h3>
+                <p>Hide but keep accessible to screen readers.</p>
+                <pre><code>.skip-link {
+    position: absolute;
+    left: -9999px;
+    visibility: hidden;
+}
+
+.skip-link:focus {
+    visibility: visible;
+    left: 0;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 7: Loading Placeholder</h3>
+                <p>Reserve space for loading content.</p>
+                <pre><code>.content {
+    visibility: hidden;
+    min-height: 200px;
+}
+
+.content.loaded {
+    visibility: visible;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 8: Responsive Menu Visibility</h3>
+                <p>Show/hide menu based on screen size.</p>
+                <pre><code>@media (max-width: 768px) {
+    .desktop-menu {
+        visibility: hidden;
+        display: none;
+    }
+    
+    .mobile-menu {
+        visibility: visible;
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Reference Section -->
+        <section id="reference">
+            <h2>Quick Reference & Best Practices</h2>
+
+            <div class="card">
+                <h3>Visibility Property Values</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Effect</th>
+                            <th>Space Preserved</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>visible</code></td>
+                            <td>Element is shown</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr>
+                            <td><code>hidden</code></td>
+                            <td>Element is hidden</td>
+                            <td>✅ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><code>collapse</code></td>
+                            <td>Hide table rows/cols</td>
+                            <td>❌ No (for tables)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>Common Patterns</h3>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Hide but preserve space</button>
+                <div class="content">
+                    <pre><code>.hidden {
+    visibility: hidden;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Show/hide on hover</button>
+                <div class="content">
+                    <pre><code>.element .hidden-content {
+    visibility: hidden;
+}
+
+.element:hover .hidden-content {
+    visibility: visible;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Animated visibility</button>
+                <div class="content">
+                    <pre><code>.element {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.element.show {
+    visibility: visible;
+    opacity: 1;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Child overrides parent</button>
+                <div class="content">
+                    <pre><code>.parent {
+    visibility: hidden;
+}
+
+.parent .important {
+    visibility: visible;  /* Shows despite parent */
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Screen reader hidden</button>
+                <div class="content">
+                    <pre><code>.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>✅ Use <code>visibility: hidden</code> when you need to preserve layout</li>
+                    <li>✅ Use <code>display: none</code> when you want to remove from layout</li>
+                    <li>✅ Use <code>opacity: 0</code> for smooth transitions</li>
+                    <li>✅ Combine with <code>pointer-events: none</code> to prevent interaction</li>
+                    <li>✅ Consider accessibility implications</li>
+                    <li>✅ Test with keyboard navigation</li>
+                    <li>❌ Don't use visibility: hidden for critical links</li>
+                    <li>❌ Don't hide form fields with visibility (use display: none)</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Performance Considerations</h3>
+                <ul>
+                    <li><strong>Visibility changes:</strong> Fast, no layout recalculation</li>
+                    <li><strong>Display changes:</strong> Slower, triggers layout</li>
+                    <li><strong>Opacity changes:</strong> GPU accelerated</li>
+                    <li><strong>Multiple visibility changes:</strong> Use CSS classes or data attributes</li>
+                    <li><strong>JavaScript toggling:</strong> Batch DOM changes</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Accessibility Tips</h3>
+                <ul>
+                    <li>Use <code>visibility: hidden</code> for truly hidden content</li>
+                    <li>Use <code>display: none</code> for UI chrome (decorative)</li>
+                    <li>Use <code>aria-hidden="true"</code> for screen readers</li>
+                    <li>Don't hide interactive elements needed for navigation</li>
+                    <li>Provide alternative ways to access hidden content</li>
+                    <li>Test with screen readers</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Browser Support</h3>
+                <ul>
+                    <li>✅ <code>visibility: visible</code> - All browsers</li>
+                    <li>✅ <code>visibility: hidden</code> - All browsers</li>
+                    <li>✅ <code>visibility: collapse</code> - All modern browsers (tables)</li>
+                    <li>✅ <code>visibility</code> inheritance - All browsers</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Common Mistakes to Avoid</h3>
+                <ul>
+                    <li>❌ Using <code>visibility: hidden</code> for critical navigation</li>
+                    <li>❌ Forgetting that space is still reserved</li>
+                    <li>❌ Not considering accessibility</li>
+                    <li>❌ Using <code>visibility</code> instead of <code>display: none</code> when space shouldn't be reserved</li>
+                    <li>❌ Hiding content that should be in tab order</li>
+                    <li>✅ Use the right tool for the job</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Advanced Section -->
+        <section>
+            <h2>Advanced Concepts</h2>
+
+            <div class="card">
+                <h3>Visibility Inheritance</h3>
+                <p>Visibility is inherited, but child elements can override it.</p>
+                <pre><code>/* Parent hidden, child visible */
+.parent {
+    visibility: hidden;
+}
+
+.parent .child {
+    visibility: visible;  /* This child is visible! */
+}
+
+/* But grandchild inherits from child */
+.parent .child .grandchild {
+    visibility: visible;  /* Inherits from child */
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Combining with Other Properties</h3>
+                <pre><code>/* Visibility + Opacity for smooth transitions */
+.element {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s ease, opacity 0.3s ease;
+}
+
+.element.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Visibility + Pointer Events for interaction control */
+.element {
+    visibility: hidden;
+    pointer-events: none;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Table-Specific Use Case</h3>
+                <pre><code>/* Hide specific table column */
+table th:nth-child(4),
+table td:nth-child(4) {
+    visibility: collapse;  /* Removes from table layout */
+}
+
+/* vs hiding without removing space */
+table th:nth-child(4),
+table td:nth-child(4) {
+    visibility: hidden;    /* Keeps space in table */
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Screen Reader Accessibility</h3>
+                <pre><code>/* Method 1: CSS visually hidden but accessible */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Method 2: ARIA hidden */
+.decorative {
+    aria-hidden: true;
+}
+
+/* Method 3: Visible to screen readers but visually hidden */
+.element {
+    visibility: hidden;
+    /* Screen readers still announce this! */
+}</code></pre>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>CSS Visibility Guide</strong></p>
+        <p>Master the visibility property for effective content hiding strategies</p>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary);">
+            Understanding visibility, display, and opacity is crucial for building accessible, performant web applications. Choose the right tool for your use case.
+        </p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const btn = document.querySelector('.toggle-btn');
+            const isDark = btn.textContent.includes('Light');
+            btn.textContent = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+
+        function toggleCollapsible(event) {
+            const btn = event.target;
+            const content = btn.nextElementSibling;
+            btn.classList.toggle('active');
+            content.classList.toggle('show');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize theme on page load
+        window.addEventListener('load', function() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const btn = document.querySelector('.toggle-btn');
+            if (prefersDark) {
+                btn.textContent = '☀️ Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>

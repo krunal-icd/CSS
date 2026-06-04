@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Background-Blend-Mode Practice Examples - Interactive Exercises</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f97316;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --text-primary: var(--neutral-900);
+            --text-secondary: var(--neutral-600);
+            --bg-primary: #ffffff;
+            --bg-secondary: var(--neutral-100);
+            --border-color: var(--neutral-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: var(--neutral-50);
+                --text-secondary: var(--neutral-400);
+                --bg-primary: var(--neutral-900);
+                --bg-secondary: var(--neutral-800);
+                --border-color: var(--neutral-700);
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        nav {
+            background-color: var(--bg-secondary);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 130px;
+            z-index: 99;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section > h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        pre {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+
+        pre code {
+            color: var(--text-primary);
+        }
+
+        :not(pre) > code {
+            background-color: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .practice-box {
+            background-color: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .practice-box h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .demo-area {
+            background-color: var(--bg-primary);
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            min-height: 250px;
+            align-items: stretch;
+        }
+
+        .demo-element {
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+        }
+
+        .demo-element:hover {
+            transform: scale(1.02);
+        }
+
+        .demo-label {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 0 0 6px 6px;
+            text-align: center;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+        }
+
+        .toggle-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .toggle-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .challenge-section {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .challenge-section h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .code-editor {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .code-editor textarea {
+            width: 100%;
+            min-height: 180px;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .solution-btn {
+            background: var(--success);
+            color: white;
+        }
+
+        .solution-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .output-area {
+            background-color: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .solution {
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--success);
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .solution.show {
+            display: block;
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--neutral-100));
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .feature-box {
+                background: linear-gradient(135deg, var(--neutral-800), var(--neutral-700));
+            }
+        }
+
+        .collapsible {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            background-color: var(--border-color);
+        }
+
+        .collapsible.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .content {
+            padding: 15px;
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            margin-bottom: 10px;
+        }
+
+        .content.show {
+            display: block;
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            .demo-area {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>CSS Background-Blend-Mode Practice</h1>
+        <p>Interactive exercises to master blend mode effects</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#challenges">Challenges</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#reference">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Examples Section -->
+        <section id="examples">
+            <h2>Practice Examples</h2>
+            <p>Work through these interactive examples to understand how different blend modes create various visual effects.</p>
+
+            <!-- Example 1: Multiply Mode -->
+            <div class="practice-box">
+                <h3>1️⃣ Multiply Mode - Darkening Effect</h3>
+                <p>Multiply mode darkens the image. The darker the overlay color, the more dramatic the effect. Great for overlays with text.</p>
+                <div class="demo-area">
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(0, 0, 0, 0.3); background-blend-mode: multiply;">
+                        Multiply
+                        <div class="demo-label">Dark Overlay</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(0, 0, 0, 0.6); background-blend-mode: multiply;">
+                        Multiply Darker
+                        <div class="demo-label">Darker Overlay</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: #000000; background-blend-mode: multiply;">
+                        Multiply Black
+                        <div class="demo-label">Black Overlay</div>
+                    </div>
+                </div>
+                <pre><code>.multiply-overlay {
+    background-image: url('image.jpg');
+    background-color: rgba(0, 0, 0, 0.5);  /* Adjust opacity */
+    background-blend-mode: multiply;
+}</code></pre>
+                <p><strong>Key Insight:</strong> White becomes transparent, black stays black. Use with semi-transparent black for natural darkening.</p>
+            </div>
+
+            <!-- Example 2: Screen Mode -->
+            <div class="practice-box">
+                <h3>2️⃣ Screen Mode - Lightening Effect</h3>
+                <p>Screen mode lightens the image. Perfect for creating glowing or light overlay effects. Opposite of multiply.</p>
+                <div class="demo-area">
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(255, 255, 255, 0.3); background-blend-mode: screen;">
+                        Screen Light
+                        <div class="demo-label">Light Overlay</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(255, 255, 255, 0.6); background-blend-mode: screen;">
+                        Screen Lighter
+                        <div class="demo-label">Lighter Overlay</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: #ffffff; background-blend-mode: screen;">
+                        Screen White
+                        <div class="demo-label">White Overlay</div>
+                    </div>
+                </div>
+                <pre><code>.screen-overlay {
+    background-image: url('image.jpg');
+    background-color: rgba(255, 255, 255, 0.4);
+    background-blend-mode: screen;
+}</code></pre>
+                <p><strong>Key Insight:</strong> Black becomes transparent, white stays white. Creates a glowing effect.</p>
+            </div>
+
+            <!-- Example 3: Overlay Mode -->
+            <div class="practice-box">
+                <h3>3️⃣ Overlay Mode - High Contrast</h3>
+                <p>Overlay combines multiply and screen. Dark areas get darker, light areas get lighter. Creates dramatic contrast.</p>
+                <div class="demo-area">
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(0, 0, 0, 0.3); background-blend-mode: overlay;">
+                        Overlay Dark
+                        <div class="demo-label">Black Overlay</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(255, 255, 255, 0.3); background-blend-mode: overlay;">
+                        Overlay Light
+                        <div class="demo-label">White Overlay</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: #ff9500; background-blend-mode: overlay;">
+                        Overlay Color
+                        <div class="demo-label">Color Overlay</div>
+                    </div>
+                </div>
+                <pre><code>.overlay-effect {
+    background-image: url('image.jpg');
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: overlay;
+}</code></pre>
+                <p><strong>Key Insight:</strong> Creates punchy, high-contrast effects. Great for dramatic hero sections.</p>
+            </div>
+
+            <!-- Example 4: Color Mode -->
+            <div class="practice-box">
+                <h3>4️⃣ Color Mode - Tinting</h3>
+                <p>Color mode applies the hue and saturation while preserving luminosity. Perfect for color tinting without losing detail.</p>
+                <div class="demo-area">
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: #ff0000; background-blend-mode: color;">
+                        Red Tint
+                        <div class="demo-label">Red</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: #fbbf24; background-blend-mode: color;">
+                        Yellow Tint
+                        <div class="demo-label">Yellow</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: #10b981; background-blend-mode: color;">
+                        Green Tint
+                        <div class="demo-label">Green</div>
+                    </div>
+                </div>
+                <pre><code>.color-tint {
+    background-image: url('image.jpg');
+    background-color: #fbbf24;  /* Any color works */
+    background-blend-mode: color;
+}</code></pre>
+                <p><strong>Key Insight:</strong> Applies color without losing image details. Great for seasonal color schemes.</p>
+            </div>
+
+            <!-- Example 5: Soft-Light Mode -->
+            <div class="practice-box">
+                <h3>5️⃣ Soft-Light Mode - Subtle Enhancement</h3>
+                <p>Soft-light provides gentle contrast adjustment. Less extreme than overlay. Good for subtle enhancements.</p>
+                <div class="demo-area">
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(0, 0, 0, 0.2); background-blend-mode: soft-light;">
+                        Soft-Light Dark
+                        <div class="demo-label">Subtle Dark</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(255, 255, 255, 0.2); background-blend-mode: soft-light;">
+                        Soft-Light Light
+                        <div class="demo-label">Subtle Light</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(255, 200, 0, 0.5); background-blend-mode: soft-light;">
+                        Soft-Light Color
+                        <div class="demo-label">Color Blend</div>
+                    </div>
+                </div>
+                <pre><code>.soft-light-effect {
+    background-image: url('image.jpg');
+    background-color: rgba(0, 0, 0, 0.2);
+    background-blend-mode: soft-light;
+}</code></pre>
+                <p><strong>Key Insight:</strong> More professional than overlay. Good for portfolio and product showcase sites.</p>
+            </div>
+
+            <!-- Example 6: Darken/Lighten Modes -->
+            <div class="practice-box">
+                <h3>6️⃣ Darken & Lighten Modes - Selective Blending</h3>
+                <p>Darken and Lighten compare pixel by pixel and keep only the darker/lighter color. Creates selective blending.</p>
+                <div class="demo-area">
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: #000000; background-blend-mode: darken;">
+                        Darken
+                        <div class="demo-label">Keeps Darker</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: #ffffff; background-blend-mode: lighten;">
+                        Lighten
+                        <div class="demo-label">Keeps Lighter</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: #00ffff; background-blend-mode: screen;">
+                        Comparison
+                        <div class="demo-label">Reference</div>
+                    </div>
+                </div>
+                <pre><code>.darken-blend {
+    background-image: url('image.jpg');
+    background-color: #000000;
+    background-blend-mode: darken;
+}
+
+.lighten-blend {
+    background-image: url('image.jpg');
+    background-color: #ffffff;
+    background-blend-mode: lighten;
+}</code></pre>
+                <p><strong>Key Insight:</strong> Selective blending based on color values. Creates interesting masking effects.</p>
+            </div>
+
+            <!-- Example 7: Saturation Mode -->
+            <div class="practice-box">
+                <h3>7️⃣ Saturation Mode - Color Enhancement</h3>
+                <p>Saturation mode applies color saturation while preserving hue and luminosity. Perfect for making colors pop.</p>
+                <div class="demo-area">
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(255, 100, 0, 0.3); background-blend-mode: saturation;">
+                        Saturate
+                        <div class="demo-label">Color Saturation</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(128, 128, 128, 0.8); background-blend-mode: saturation;">
+                        Desaturate
+                        <div class="demo-label">Reduce Color</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(0, 255, 255, 0.5); background-blend-mode: saturation;">
+                        Vivid
+                        <div class="demo-label">Vivid Color</div>
+                    </div>
+                </div>
+                <pre><code>.saturate-effect {
+    background-image: url('image.jpg');
+    background-color: rgba(255, 100, 0, 0.3);
+    background-blend-mode: saturation;
+}</code></pre>
+                <p><strong>Key Insight:</strong> Enhances or reduces color intensity without affecting brightness.</p>
+            </div>
+
+            <!-- Example 8: Luminosity Mode -->
+            <div class="practice-box">
+                <h3>8️⃣ Luminosity Mode - Brightness Preservation</h3>
+                <p>Luminosity mode uses only brightness while preserving the image's color information. Great for brightness adjustments.</p>
+                <div class="demo-area">
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(255, 255, 255, 0.3); background-blend-mode: luminosity;">
+                        Brighten
+                        <div class="demo-label">More Bright</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(0, 0, 0, 0.3); background-blend-mode: luminosity;">
+                        Darken
+                        <div class="demo-label">Less Bright</div>
+                    </div>
+                    <div class="demo-element" style="background-image: linear-gradient(135deg, #6366f1, #ec4899); background-color: rgba(100, 100, 100, 0.5); background-blend-mode: luminosity;">
+                        Adjust
+                        <div class="demo-label">Mid Tone</div>
+                    </div>
+                </div>
+                <pre><code>.luminosity-effect {
+    background-image: url('image.jpg');
+    background-color: rgba(255, 255, 255, 0.3);
+    background-blend-mode: luminosity;
+}</code></pre>
+                <p><strong>Key Insight:</strong> Adjusts brightness while preserving original colors.</p>
+            </div>
+        </section>
+
+        <!-- Challenges Section -->
+        <section id="challenges">
+            <h2>Challenge Exercises</h2>
+            <p>Test your knowledge by completing these challenges. Try to identify or create the correct blend mode.</p>
+
+            <!-- Challenge 1 -->
+            <div class="challenge-section">
+                <h3>Challenge 1: Create Dark Hero Overlay</h3>
+                <p>Create CSS that adds a dark overlay to an image for better text readability. Use multiply mode with a semi-transparent black color.</p>
+                <div class="code-editor">
+                    <textarea id="challenge1-code" placeholder="/* Write your CSS code here */
+.hero {
+    background-image: url('hero.jpg');
+    background-color: /* What color? */;
+    background-blend-mode: /* What mode? */;
+}"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge1()">Test Your Code</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge1')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge1">
+                    <pre><code>.hero {
+    background-image: url('hero.jpg');
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: multiply;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge1-output"></div>
+            </div>
+
+            <!-- Challenge 2 -->
+            <div class="challenge-section">
+                <h3>Challenge 2: Create a Glowing Light Effect</h3>
+                <p>Create a light overlay that makes the image appear to glow. Use screen mode with a semi-transparent white color.</p>
+                <div class="code-editor">
+                    <textarea id="challenge2-code" placeholder="/* Write your CSS code here */
+.glow {
+    background-image: url('image.jpg');
+    background-color: /* What color? */;
+    background-blend-mode: /* What mode? */;
+}"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge2()">Test Your Code</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge2')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge2">
+                    <pre><code>.glow {
+    background-image: url('image.jpg');
+    background-color: rgba(255, 255, 255, 0.4);
+    background-blend-mode: screen;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge2-output"></div>
+            </div>
+
+            <!-- Challenge 3 -->
+            <div class="challenge-section">
+                <h3>Challenge 3: Create a Color Tint</h3>
+                <p>Tint an image with a warm orange color while preserving image details. Use color mode with an orange overlay.</p>
+                <div class="code-editor">
+                    <textarea id="challenge3-code" placeholder="/* Write your CSS code here */
+.warm-tint {
+    background-image: url('image.jpg');
+    background-color: /* What orange color? */;
+    background-blend-mode: /* What mode? */;
+}"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge3()">Test Your Code</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge3')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge3">
+                    <pre><code>.warm-tint {
+    background-image: url('image.jpg');
+    background-color: #FF8C00;
+    background-blend-mode: color;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge3-output"></div>
+            </div>
+
+            <!-- Challenge 4 -->
+            <div class="challenge-section">
+                <h3>Challenge 4: Create High Contrast Effect</h3>
+                <p>Make an image pop with increased contrast. Use overlay mode with a dark overlay for dramatic effect.</p>
+                <div class="code-editor">
+                    <textarea id="challenge4-code" placeholder="/* Write your CSS code here */
+.high-contrast {
+    background-image: url('image.jpg');
+    background-color: /* What color? */;
+    background-blend-mode: /* What mode? */;
+}"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge4()">Test Your Code</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge4')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge4">
+                    <pre><code>.high-contrast {
+    background-image: url('image.jpg');
+    background-color: rgba(0, 0, 0, 0.4);
+    background-blend-mode: overlay;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge4-output"></div>
+            </div>
+
+            <!-- Challenge 5 -->
+            <div class="challenge-section">
+                <h3>Challenge 5: Create Subtle Enhancement</h3>
+                <p>Subtly enhance an image without extreme effects. Use soft-light mode for a gentle contrast adjustment.</p>
+                <div class="code-editor">
+                    <textarea id="challenge5-code" placeholder="/* Write your CSS code here */
+.subtle {
+    background-image: url('image.jpg');
+    background-color: /* What color? */;
+    background-blend-mode: /* What mode? */;
+}"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge5()">Test Your Code</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge5')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge5">
+                    <pre><code>.subtle {
+    background-image: url('image.jpg');
+    background-color: rgba(0, 0, 0, 0.15);
+    background-blend-mode: soft-light;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge5-output"></div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>Real-World Projects</h2>
+
+            <div class="practice-box">
+                <h3>Project 1: Product Card with Hover Effect</h3>
+                <p>Create a product card that changes blend mode on hover for an interactive effect.</p>
+                <pre><code>.product-card {
+    background-image: url('product.jpg');
+    background-color: var(--primary);
+    background-blend-mode: multiply;
+    transition: background-blend-mode 0.3s ease;
+}
+
+.product-card:hover {
+    background-blend-mode: normal;
+    /* Changes from darkened to full image on hover */
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 2: Gallery with Color Filters</h3>
+                <p>Create a gallery where each item has a different color filter using color blend mode.</p>
+                <pre><code>.gallery-item {
+    background-image: url('photo.jpg');
+    background-blend-mode: color;
+    background-size: cover;
+    width: 200px;
+    height: 200px;
+}
+
+.gallery-item.sepia {
+    background-color: #8B4513;
+}
+
+.gallery-item.cool {
+    background-color: #00A8FF;
+}
+
+.gallery-item.warm {
+    background-color: #FF6B35;
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 3: Layered Hero Section</h3>
+                <p>Create a professional hero section with multiple blend modes stacked.</p>
+                <pre><code>.hero-section {
+    background-image: 
+        linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(236, 72, 153, 0.3)),
+        url('hero-bg.jpg');
+    background-blend-mode: multiply, normal;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 4: Team Member Cards</h3>
+                <p>Create team member cards with subtle overlay effects for professionalism.</p>
+                <pre><code>.team-member {
+    background-image: url('member-photo.jpg');
+    background-color: rgba(0, 0, 0, 0.2);
+    background-blend-mode: soft-light;
+    position: relative;
+    height: 300px;
+}
+
+.team-member:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    /* Reduces overlay on hover to show full image */
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 5: Seasonal Color Scheme</h3>
+                <p>Implement seasonal color schemes using color blend mode.</p>
+                <pre><code>.seasonal-image {
+    background-image: url('image.jpg');
+    background-blend-mode: color;
+    transition: background-color 0.5s ease;
+}
+
+/* Spring - Green */
+.seasonal-image.spring {
+    background-color: #10b981;
+}
+
+/* Summer - Yellow */
+.seasonal-image.summer {
+    background-color: #fbbf24;
+}
+
+/* Fall - Orange */
+.seasonal-image.fall {
+    background-color: #f97316;
+}
+
+/* Winter - Blue */
+.seasonal-image.winter {
+    background-color: #3b82f6;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Reference Section -->
+        <section id="reference">
+            <h2>Quick Reference & Tips</h2>
+
+            <div class="practice-box">
+                <h3>Blend Mode Selection Guide</h3>
+                <p><strong>Want to darken?</strong> Use <code>multiply</code></p>
+                <p><strong>Want to lighten?</strong> Use <code>screen</code></p>
+                <p><strong>Want high contrast?</strong> Use <code>overlay</code></p>
+                <p><strong>Want subtle effect?</strong> Use <code>soft-light</code></p>
+                <p><strong>Want color tint?</strong> Use <code>color</code></p>
+                <p><strong>Want brightness control?</strong> Use <code>luminosity</code></p>
+            </div>
+
+            <div class="practice-box">
+                <h3>Common Patterns</h3>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Dark Overlay for Text</button>
+                <div class="content">
+                    <pre><code>background-image: url('image.jpg');
+background-color: rgba(0, 0, 0, 0.5);
+background-blend-mode: multiply;</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Light Glow Effect</button>
+                <div class="content">
+                    <pre><code>background-image: url('image.jpg');
+background-color: rgba(255, 255, 255, 0.3);
+background-blend-mode: screen;</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Color Tinting</button>
+                <div class="content">
+                    <pre><code>background-image: url('image.jpg');
+background-color: #fbbf24;  /* Any color */
+background-blend-mode: color;</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Hover Effect Toggle</button>
+                <div class="content">
+                    <pre><code>.element {
+    background-image: url('image.jpg');
+    background-color: var(--primary);
+    background-blend-mode: multiply;
+    transition: background-blend-mode 0.3s ease;
+}
+
+.element:hover {
+    background-blend-mode: normal;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Multiple Blend Modes</button>
+                <div class="content">
+                    <pre><code>background-image: 
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+    url('image.jpg');
+background-blend-mode: multiply, normal;</code></pre>
+                </div>
+            </div>
+
+            <div class="practice-box">
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>Always test with real images</li>
+                    <li>Maintain text readability with proper contrast</li>
+                    <li>Use subtle effects for professional designs</li>
+                    <li>Combine blend modes for complex effects</li>
+                    <li>Use transitions when changing blend modes</li>
+                    <li>Test on actual devices and browsers</li>
+                    <li>Consider performance with many blend modes</li>
+                    <li>Provide fallback styles for older browsers</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>CSS Background-Blend-Mode Practice Examples</strong></p>
+        <p>Master blend modes for creative visual effects</p>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary);">
+            Practice these examples until you can confidently apply blend modes to create professional visual effects.
+        </p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const btn = document.querySelector('.toggle-btn');
+            const isDark = btn.textContent.includes('Light');
+            btn.textContent = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            solution.classList.toggle('show');
+        }
+
+        function toggleCollapsible(event) {
+            const btn = event.target;
+            const content = btn.nextElementSibling;
+            btn.classList.toggle('active');
+            content.classList.toggle('show');
+        }
+
+        function testChallenge1() {
+            const output = document.getElementById('challenge1-output');
+            output.innerHTML = `
+                <div style="
+                    width: 100%;
+                    height: 150px;
+                    background-image: linear-gradient(135deg, #6366f1, #ec4899);
+                    background-color: rgba(0, 0, 0, 0.5);
+                    background-blend-mode: multiply;
+                    border-radius: 6px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: 600;
+                ">
+                    Dark Hero Overlay
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem; text-align: center;">✓ Example Created</p>
+            `;
+        }
+
+        function testChallenge2() {
+            const output = document.getElementById('challenge2-output');
+            output.innerHTML = `
+                <div style="
+                    width: 100%;
+                    height: 150px;
+                    background-image: linear-gradient(135deg, #6366f1, #ec4899);
+                    background-color: rgba(255, 255, 255, 0.4);
+                    background-blend-mode: screen;
+                    border-radius: 6px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: 600;
+                ">
+                    Glowing Light Effect
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem; text-align: center;">✓ Example Created</p>
+            `;
+        }
+
+        function testChallenge3() {
+            const output = document.getElementById('challenge3-output');
+            output.innerHTML = `
+                <div style="
+                    width: 100%;
+                    height: 150px;
+                    background-image: linear-gradient(135deg, #6366f1, #ec4899);
+                    background-color: #FF8C00;
+                    background-blend-mode: color;
+                    border-radius: 6px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: 600;
+                ">
+                    Color Tint (Orange)
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem; text-align: center;">✓ Example Created</p>
+            `;
+        }
+
+        function testChallenge4() {
+            const output = document.getElementById('challenge4-output');
+            output.innerHTML = `
+                <div style="
+                    width: 100%;
+                    height: 150px;
+                    background-image: linear-gradient(135deg, #6366f1, #ec4899);
+                    background-color: rgba(0, 0, 0, 0.4);
+                    background-blend-mode: overlay;
+                    border-radius: 6px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: 600;
+                ">
+                    High Contrast Effect
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem; text-align: center;">✓ Example Created</p>
+            `;
+        }
+
+        function testChallenge5() {
+            const output = document.getElementById('challenge5-output');
+            output.innerHTML = `
+                <div style="
+                    width: 100%;
+                    height: 150px;
+                    background-image: linear-gradient(135deg, #6366f1, #ec4899);
+                    background-color: rgba(0, 0, 0, 0.15);
+                    background-blend-mode: soft-light;
+                    border-radius: 6px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: 600;
+                ">
+                    Subtle Enhancement
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem; text-align: center;">✓ Example Created</p>
+            `;
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize theme on page load
+        window.addEventListener('load', function() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const btn = document.querySelector('.toggle-btn');
+            if (prefersDark) {
+                btn.textContent = '☀️ Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>

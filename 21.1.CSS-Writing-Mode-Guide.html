@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elementor Implementation Guide with CSS Writing Mode</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 20px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .code-block code {
+            display: block;
+            padding: 0;
+        }
+
+        .keyword { color: #ff79c6; }
+        .property { color: #8be9fd; }
+        .value { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+        .selector { color: #50fa7b; }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .example-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f9f9f9;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .example-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .writing-mode-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .writing-demo {
+            border: 2px dashed #764ba2;
+            padding: 20px;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-radius: 8px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .demo-text {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .demo-ltr {
+            writing-mode: horizontal-tb;
+            direction: ltr;
+        }
+
+        .demo-rtl {
+            writing-mode: horizontal-tb;
+            direction: rtl;
+        }
+
+        .demo-vertical-rl {
+            writing-mode: vertical-rl;
+        }
+
+        .demo-vertical-lr {
+            writing-mode: vertical-lr;
+        }
+
+        .demo-sideways-rl {
+            writing-mode: sideways-rl;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .checklist {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .warning {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .info {
+            background-color: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .success {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .toc {
+            background: #f9f9f9;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .toc h3 {
+            margin-top: 0;
+        }
+
+        .toc ol {
+            margin-left: 20px;
+        }
+
+        .toc li {
+            margin-bottom: 8px;
+            color: #667eea;
+        }
+
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .comparison-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .comparison-table {
+                grid-template-columns: 1fr;
+            }
+
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 Elementor Implementation Guide</h1>
+            <p>Complete Guide with CSS Writing Mode Examples</p>
+        </header>
+
+        <div class="content">
+            <!-- Table of Contents -->
+            <div class="toc">
+                <h3>📋 Table of Contents</h3>
+                <ol>
+                    <li><a href="#introduction">Introduction to Elementor</a></li>
+                    <li><a href="#getting-started">Getting Started with Elementor</a></li>
+                    <li><a href="#writing-modes">Understanding CSS Writing Modes</a></li>
+                    <li><a href="#writing-mode-examples">Writing Mode Examples</a></li>
+                    <li><a href="#implementation">Implementation Guide</a></li>
+                    <li><a href="#real-world-examples">Real-World Examples</a></li>
+                    <li><a href="#widget-examples">Widget-Specific Examples</a></li>
+                    <li><a href="#grid-layouts">Advanced CSS Grid Layouts</a></li>
+                    <li><a href="#animation-examples">Animation & Interactions</a></li>
+                    <li><a href="#best-practices">Best Practices</a></li>
+                    <li><a href="#troubleshooting">Troubleshooting</a></li>
+                </ol>
+            </div>
+
+            <!-- Introduction Section -->
+            <section id="introduction">
+                <h2>Introduction to Elementor</h2>
+                <p>Elementor is a powerful WordPress page builder that allows you to create professional, responsive websites without writing code. It provides a drag-and-drop interface with extensive customization options, including CSS writing modes for advanced text orientation and layout control.</p>
+
+                <div class="highlight">
+                    <strong>💡 What is Elementor?</strong>
+                    <p>Elementor enables users to design beautiful websites using a visual editor with real-time preview capabilities. It supports multiple languages and right-to-left (RTL) layouts through CSS Writing Mode properties.</p>
+                </div>
+
+                <h3>Key Features</h3>
+                <ul class="checklist">
+                    <li>Drag-and-drop page builder</li>
+                    <li>Real-time editing with live preview</li>
+                    <li>Responsive design templates</li>
+                    <li>Advanced CSS styling options</li>
+                    <li>Writing mode support for RTL and vertical text</li>
+                    <li>Mobile optimization tools</li>
+                    <li>Template library</li>
+                    <li>Custom code integration</li>
+                </ul>
+            </section>
+
+            <!-- Getting Started Section -->
+            <section id="getting-started">
+                <h2>Getting Started with Elementor</h2>
+                <h3>Installation Steps</h3>
+                <ol class="checklist">
+                    <li>Log in to your WordPress dashboard</li>
+                    <li>Navigate to Plugins → Add New</li>
+                    <li>Search for "Elementor"</li>
+                    <li>Click Install Now and Activate</li>
+                    <li>Access Elementor from the left menu</li>
+                </ol>
+
+                <h3>Creating Your First Page</h3>
+                <div class="info">
+                    <strong>ℹ️ Quick Start:</strong>
+                    <p>Create a new page, click "Edit with Elementor," and start building with the visual editor. Use the left panel to add widgets, customize sections, and apply styling.</p>
+                </div>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>👤 Page Setup</h4>
+                        <p>Create a new page from WordPress admin and select "Edit with Elementor" to launch the builder.</p>
+                    </div>
+                    <div class="example-card">
+                        <h4>🎯 Add Widgets</h4>
+                        <p>Drag widgets from the left panel into your page sections. Customize each widget's content and design.</p>
+                    </div>
+                    <div class="example-card">
+                        <h4>🎨 Style & Customize</h4>
+                        <p>Use the style panel to adjust colors, typography, spacing, and apply CSS for advanced effects.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Writing Modes Section -->
+            <section id="writing-modes">
+                <h2>Understanding CSS Writing Modes</h2>
+                <p>The CSS <code>writing-mode</code> property defines how text flows in your layout. This is particularly useful for:</p>
+                <ul class="checklist">
+                    <li>Supporting right-to-left (RTL) languages like Arabic, Hebrew, and Persian</li>
+                    <li>Creating vertical text for artistic designs</li>
+                    <li>Building international websites with language-specific layouts</li>
+                    <li>Implementing Asian typography (Chinese, Japanese, Korean)</li>
+                </ul>
+
+                <h3>Writing Mode Values</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Value</th>
+                                <th>Description</th>
+                                <th>Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>horizontal-tb</code></td>
+                                <td>Default: left-to-right, top-to-bottom</td>
+                                <td>English, Spanish, and most Western languages</td>
+                            </tr>
+                            <tr>
+                                <td><code>vertical-rl</code></td>
+                                <td>Vertical text, right-to-left flow</td>
+                                <td>Traditional Chinese, Japanese, Korean</td>
+                            </tr>
+                            <tr>
+                                <td><code>vertical-lr</code></td>
+                                <td>Vertical text, left-to-right flow</td>
+                                <td>Mongolian, some Asian languages</td>
+                            </tr>
+                            <tr>
+                                <td><code>sideways-rl</code></td>
+                                <td>Text rotated 90° clockwise from vertical-rl</td>
+                                <td>Artistic designs, modern layouts</td>
+                            </tr>
+                            <tr>
+                                <td><code>sideways-lr</code></td>
+                                <td>Text rotated 90° clockwise from vertical-lr</td>
+                                <td>Creative typography effects</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Related CSS Properties</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Related properties that work with writing-mode */</span>
+<span class="selector">.element</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">direction</span>: <span class="value">rtl</span>; <span class="comment">/* Left-to-right or right-to-left */</span>
+    <span class="property">text-orientation</span>: <span class="value">mixed</span>; <span class="comment">/* How letters are oriented */</span>
+}
+                    </code>
+                </div>
+            </section>
+
+            <!-- Writing Mode Examples Section -->
+            <section id="writing-mode-examples">
+                <h2>CSS Writing Mode Examples</h2>
+
+                <h3>Live Demonstrations</h3>
+                <p>Below are interactive examples showing different writing modes in action:</p>
+
+                <div class="writing-mode-demo">
+                    <div class="writing-demo demo-ltr">
+                        <div class="demo-text">
+                            <div>Horizontal LTR</div>
+                            <div style="font-size: 0.8em; color: #666; margin-top: 5px;">Left to Right</div>
+                        </div>
+                    </div>
+
+                    <div class="writing-demo demo-rtl">
+                        <div class="demo-text">
+                            <div>RTL أفقي</div>
+                            <div style="font-size: 0.8em; color: #666; margin-top: 5px;">Right to Left</div>
+                        </div>
+                    </div>
+
+                    <div class="writing-demo demo-vertical-rl">
+                        <div class="demo-text">
+                            <div>Vertical-RL</div>
+                            <div style="font-size: 0.8em; color: #666; margin-top: 5px;">Right to Left</div>
+                        </div>
+                    </div>
+
+                    <div class="writing-demo demo-vertical-lr">
+                        <div class="demo-text">
+                            <div>Vertical-LR</div>
+                            <div style="font-size: 0.8em; color: #666; margin-top: 5px;">Left to Right</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Code Examples</h3>
+
+                <h4>Example 1: Right-to-Left Text (RTL)</h4>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Arabic or Hebrew text */</span>
+<span class="selector">.rtl-text</span> {
+    <span class="property">writing-mode</span>: <span class="value">horizontal-tb</span>;
+    <span class="property">direction</span>: <span class="value">rtl</span>;
+    <span class="property">text-align</span>: <span class="value">right</span>;
+    <span class="property">font-family</span>: <span class="value">'Arabic Typesetting', 'Microsoft Uighur'</span>;
+}
+                    </code>
+                </div>
+
+                <h4>Example 2: Vertical Text (Traditional Chinese/Japanese)</h4>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Traditional Chinese or Japanese vertical text */</span>
+<span class="selector">.vertical-text</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">text-orientation</span>: <span class="value">mixed</span>;
+    <span class="property">height</span>: <span class="value">300px</span>;
+    <span class="property">width</span>: <span class="value">100px</span>;
+}
+                    </code>
+                </div>
+
+                <h4>Example 3: Artistic Sideways Text</h4>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Creative design element */</span>
+<span class="selector">.sideways-text</span> {
+    <span class="property">writing-mode</span>: <span class="value">sideways-rl</span>;
+    <span class="property">font-size</span>: <span class="value">2em</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+    <span class="property">color</span>: <span class="value">#667eea</span>;
+    <span class="property">transform</span>: <span class="value">scaleX(-1)</span>;
+}
+                    </code>
+                </div>
+
+                <h4>Example 4: Mixed Orientation (Asian Languages)</h4>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Numbers and Latin in vertical Asian text */</span>
+<span class="selector">.mixed-orientation</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">text-orientation</span>: <span class="value">mixed</span>;
+}
+
+<span class="comment">/* Override for specific elements */</span>
+<span class="selector">.mixed-orientation em</span> {
+    <span class="property">text-orientation</span>: <span class="value">upright</span>;
+}
+                    </code>
+                </div>
+
+                <h4>Example 5: Responsive Writing Mode</h4>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Responsive design with writing mode */</span>
+<span class="selector">.responsive-text</span> {
+    <span class="property">writing-mode</span>: <span class="value">horizontal-tb</span>;
+}
+
+<span class="comment">/* Change to vertical on desktop */</span>
+<span class="keyword">@media</span> (<span class="property">min-width</span>: <span class="value">768px</span>) {
+    <span class="selector">.responsive-text</span> {
+        <span class="property">writing-mode</span>: <span class="value">vertical-lr</span>;
+    }
+}
+                    </code>
+                </div>
+            </section>
+
+            <!-- Implementation Guide -->
+            <section id="implementation">
+                <h2>Elementor Implementation Guide</h2>
+
+                <h3>Step 1: Install and Activate Elementor</h3>
+                <div class="success">
+                    <strong>✓ Installation Complete</strong>
+                    <p>After activation, you'll see "Elementor" in your WordPress left menu. You can now create pages with Elementor.</p>
+                </div>
+
+                <h3>Step 2: Create a New Page with Writing Mode</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* In Elementor, add custom CSS to your widget */</span>
+<span class="selector">.my-section</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">padding</span>: <span class="value">20px</span>;
+}
+
+<span class="comment">/* Ensure proper dimensions for vertical text */</span>
+<span class="selector">.my-section</span> {
+    <span class="property">min-height</span>: <span class="value">200px</span>;
+    <span class="property">min-width</span>: <span class="value">80px</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Step 3: Add Custom CSS to Widgets</h3>
+                <ol class="checklist">
+                    <li>Select any widget in Elementor</li>
+                    <li>Go to the "Advanced" tab</li>
+                    <li>Scroll down to "Custom CSS"</li>
+                    <li>Add your writing-mode CSS rules</li>
+                    <li>Update and preview in real-time</li>
+                </ol>
+
+                <h3>Step 4: Test Responsiveness</h3>
+                <p>Use Elementor's responsive editing tools to adjust writing modes for different screen sizes:</p>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Mobile first approach */</span>
+<span class="selector">.text-block</span> {
+    <span class="property">writing-mode</span>: <span class="value">horizontal-tb</span>; <span class="comment">/* Mobile */</span>
+}
+
+<span class="comment">/* Tablet and above */</span>
+<span class="keyword">@media</span> (<span class="property">min-width</span>: <span class="value">1024px</span>) {
+    <span class="selector">.text-block</span> {
+        <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    }
+}
+                    </code>
+                </div>
+
+                <h3>Step 5: Optimize for Performance</h3>
+                <div class="warning">
+                    <strong>⚠️ Performance Note:</strong>
+                    <p>Excessive use of complex CSS properties can impact page load time. Minimize custom CSS and use Elementor's built-in features when possible.</p>
+                </div>
+
+                <h3>Elementor Widgets That Support Custom CSS</h3>
+                <ul class="checklist">
+                    <li>Text Editor - Perfect for writing mode implementations</li>
+                    <li>Heading - Support for styled vertical text</li>
+                    <li>Text Path - Advanced text effects</li>
+                    <li>Image - Combine with writing modes for creative layouts</li>
+                    <li>Button - Vertical button text</li>
+                    <li>Custom HTML - Full control with writing-mode</li>
+                </ul>
+            </section>
+
+            <!-- Best Practices Section -->
+            <section id="best-practices">
+                <h2>Best Practices</h2>
+
+                <h3>1. Accessibility First</h3>
+                <div class="info">
+                    <strong>ℹ️ Include Alternative Text:</strong>
+                    <p>When using vertical or rotated text, provide clear fallbacks and ensure screen readers can interpret the content correctly.</p>
+                </div>
+
+                <h3>2. Test Across Browsers</h3>
+                <p>Writing modes are well-supported in modern browsers, but test extensively:</p>
+                <ul class="checklist">
+                    <li>Chrome/Edge (Full support)</li>
+                    <li>Firefox (Full support)</li>
+                    <li>Safari (Full support)</li>
+                    <li>Internet Explorer (Limited support)</li>
+                </ul>
+
+                <h3>3. Mobile Optimization</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Don't force vertical text on small screens */</span>
+<span class="keyword">@media</span> (<span class="property">max-width</span>: <span class="value">767px</span>) {
+    <span class="selector">.vertical-heading</span> {
+        <span class="property">writing-mode</span>: <span class="value">horizontal-tb</span>;
+    }
+}
+
+<span class="comment">/* Use vertical on larger screens */</span>
+<span class="keyword">@media</span> (<span class="property">min-width</span>: <span class="value">768px</span>) {
+    <span class="selector">.vertical-heading</span> {
+        <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    }
+}
+                    </code>
+                </div>
+
+                <h3>4. Language-Specific Considerations</h3>
+                <div class="comparison-table">
+                    <div class="comparison-item">
+                        <h4>RTL Languages</h4>
+                        <p><span class="badge">Arabic</span> <span class="badge">Hebrew</span> <span class="badge">Persian</span></p>
+                        <p>Use <code>direction: rtl</code> with <code>writing-mode: horizontal-tb</code> for proper text flow and alignment.</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Vertical Languages</h4>
+                        <p><span class="badge">Chinese</span> <span class="badge">Japanese</span> <span class="badge">Korean</span></p>
+                        <p>Use <code>writing-mode: vertical-rl</code> or <code>vertical-lr</code> with appropriate <code>text-orientation</code>.</p>
+                    </div>
+                </div>
+
+                <h3>5. Performance Tips</h3>
+                <ul class="checklist">
+                    <li>Minimize font sizes with extreme writing modes</li>
+                    <li>Use system fonts when possible for faster loading</li>
+                    <li>Cache your custom CSS</li>
+                    <li>Use CSS preprocessors (SASS/LESS) for maintainability</li>
+                    <li>Minify custom CSS code</li>
+                </ul>
+
+                <h3>6. Combination Example: RTL + Elementor</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Complete RTL setup for Arabic content */</span>
+<span class="selector">body.rtl-layout</span> {
+    <span class="property">direction</span>: <span class="value">rtl</span>;
+}
+
+<span class="selector">.rtl-layout .elementor-container</span> {
+    <span class="property">flex-direction</span>: <span class="value">row-reverse</span>;
+    <span class="property">text-align</span>: <span class="value">right</span>;
+}
+
+<span class="selector">.rtl-layout .elementor-heading-title</span> {
+    <span class="property">direction</span>: <span class="value">rtl</span>;
+    <span class="property">text-align</span>: <span class="value">right</span>;
+}
+                    </code>
+                </div>
+            </section>
+
+            <!-- Troubleshooting Section -->
+            <section id="troubleshooting">
+                <h2>Troubleshooting Common Issues</h2>
+
+                <h3>Issue 1: Writing Mode Not Applied</h3>
+                <div class="warning">
+                    <strong>Problem:</strong> Your writing-mode CSS isn't showing up.
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Check that CSS is in the correct widget's "Advanced" → "Custom CSS" section</li>
+                        <li>Clear WordPress cache</li>
+                        <li>Use browser DevTools to inspect the element</li>
+                        <li>Ensure the selector targets the correct element</li>
+                    </ul>
+                </div>
+
+                <h3>Issue 2: Text Overflowing Container</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Fix overflow issues with vertical text */</span>
+<span class="selector">.vertical-container</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">overflow</span>: <span class="value">hidden</span>;
+    <span class="property">text-overflow</span>: <span class="value">ellipsis</span>;
+    <span class="property">word-break</span>: <span class="value">break-word</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Issue 3: Mobile Display Problems</h3>
+                <div class="info">
+                    <strong>Quick Fix:</strong>
+                    <p>Use Elementor's responsive editing tools to hide or modify writing-mode on mobile devices. Set different CSS rules for each breakpoint.</p>
+                </div>
+
+                <h3>Issue 4: Font Compatibility</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Use Google Fonts with language support */</span>
+<span class="keyword">@import</span> <span class="value">url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700')</span>;
+
+<span class="selector">.arabic-text</span> {
+    <span class="property">font-family</span>: <span class="value">'Noto Sans Arabic', sans-serif</span>;
+    <span class="property">direction</span>: <span class="value">rtl</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Issue 5: Browser Compatibility</h3>
+                <p>For older browser support, use fallback CSS:</p>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Fallback for older browsers */</span>
+<span class="selector">.text</span> {
+    <span class="property">writing-mode</span>: <span class="value">horizontal-tb</span>; <span class="comment">/* Fallback */</span>
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">transform</span>: <span class="value">rotate(180deg)</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Debugging Checklist</h3>
+                <ul class="checklist">
+                    <li>Open browser DevTools (F12)</li>
+                    <li>Inspect the element and verify CSS is applied</li>
+                    <li>Check for CSS conflicts from other stylesheets</li>
+                    <li>Test with CSS specificity: use <code>!important</code> if necessary</li>
+                    <li>Disable all plugins temporarily to identify conflicts</li>
+                    <li>Try a different browser to rule out browser-specific issues</li>
+                </ul>
+            </section>
+
+            <!-- Real-World Examples Section -->
+            <section id="real-world-examples">
+                <h2>Real-World Elementor Examples</h2>
+
+                <h3>Example 1: E-Commerce Product Page</h3>
+                <p>Create a professional product page layout with vertical product names:</p>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Product title with vertical text on desktop */</span>
+<span class="selector">.product-title</span> {
+    <span class="property">font-size</span>: <span class="value">2.5em</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+    <span class="property">color</span>: <span class="value">#333</span>;
+}
+
+<span class="selector">.product-title-vertical</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">padding</span>: <span class="value">20px</span>;
+    <span class="property">border-right</span>: <span class="value">3px solid #667eea</span>;
+    <span class="property">margin-right</span>: <span class="value">20px</span>;
+}
+
+<span class="keyword">@media</span> (<span class="property">max-width</span>: <span class="value">768px</span>) {
+    <span class="selector">.product-title-vertical</span> {
+        <span class="property">writing-mode</span>: <span class="value">horizontal-tb</span>;
+        <span class="property">border-right</span>: <span class="value">none</span>;
+        <span class="property">border-bottom</span>: <span class="value">3px solid #667eea</span>;
+    }
+}
+                    </code>
+                </div>
+
+                <h3>Example 2: Multilingual Blog with RTL Support</h3>
+                <p>Complete Arabic/Hebrew blog setup:</p>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Main container for RTL content */</span>
+<span class="selector">.blog-post-rtl</span> {
+    <span class="property">direction</span>: <span class="value">rtl</span>;
+    <span class="property">text-align</span>: <span class="value">right</span>;
+    <span class="property">padding</span>: <span class="value">30px</span>;
+}
+
+<span class="selector">.blog-post-rtl h1</span> {
+    <span class="property">font-size</span>: <span class="value">2.2em</span>;
+    <span class="property">color</span>: <span class="value">#667eea</span>;
+    <span class="property">text-align</span>: <span class="value">right</span>;
+    <span class="property">margin-bottom</span>: <span class="value">15px</span>;
+}
+
+<span class="selector">.blog-post-rtl p</span> {
+    <span class="property">line-height</span>: <span class="value">1.8</span>;
+    <span class="property">text-align</span>: <span class="value">justify</span>;
+}
+
+<span class="selector">.blog-post-rtl img</span> {
+    <span class="property">margin</span>: <span class="value">20px 0 20px 20px</span>;
+    <span class="property">float</span>: <span class="value">right</span>;
+}
+
+<span class="selector">.blog-post-rtl .author-box</span> {
+    <span class="property">background</span>: <span class="value">#f5f5f5</span>;
+    <span class="property">padding</span>: <span class="value">20px</span>;
+    <span class="property">border-right</span>: <span class="value">4px solid #667eea</span>;
+    <span class="property">margin-top</span>: <span class="value">30px</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Example 3: Portfolio Gallery with Vertical Captions</h3>
+                <p>Artistic portfolio layout with vertical text overlays:</p>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Portfolio grid item */</span>
+<span class="selector">.portfolio-item</span> {
+    <span class="property">position</span>: <span class="value">relative</span>;
+    <span class="property">overflow</span>: <span class="value">hidden</span>;
+    <span class="property">height</span>: <span class="value">300px</span>;
+}
+
+<span class="selector">.portfolio-item img</span> {
+    <span class="property">width</span>: <span class="value">100%</span>;
+    <span class="property">height</span>: <span class="value">100%</span>;
+    <span class="property">object-fit</span>: <span class="value">cover</span>;
+    <span class="property">transition</span>: <span class="value">transform 0.3s ease</span>;
+}
+
+<span class="selector">.portfolio-item:hover img</span> {
+    <span class="property">transform</span>: <span class="value">scale(1.05)</span>;
+}
+
+<span class="comment">/* Vertical caption */</span>
+<span class="selector">.portfolio-caption</span> {
+    <span class="property">position</span>: <span class="value">absolute</span>;
+    <span class="property">left</span>: <span class="value">10px</span>;
+    <span class="property">top</span>: <span class="value">50%</span>;
+    <span class="property">transform</span>: <span class="value">translateY(-50%)</span>;
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+    <span class="property">font-size</span>: <span class="value">1.5em</span>;
+    <span class="property">background</span>: <span class="value">rgba(0, 0, 0, 0.6)</span>;
+    <span class="property">padding</span>: <span class="value">10px</span>;
+    <span class="property">opacity</span>: <span class="value">0</span>;
+    <span class="property">transition</span>: <span class="value">opacity 0.3s ease</span>;
+}
+
+<span class="selector">.portfolio-item:hover .portfolio-caption</span> {
+    <span class="property">opacity</span>: <span class="value">1</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Example 4: Magazine-Style Layout</h3>
+                <p>Professional magazine layout with mixed writing modes:</p>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Magazine wrapper */</span>
+<span class="selector">.magazine-layout</span> {
+    <span class="property">display</span>: <span class="value">grid</span>;
+    <span class="property">grid-template-columns</span>: <span class="value">80px 1fr</span>;
+    <span class="property">gap</span>: <span class="value">20px</span>;
+}
+
+<span class="comment">/* Vertical sidebar for main article title */</span>
+<span class="selector">.magazine-sidebar</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">font-size</span>: <span class="value">1.8em</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+    <span class="property">color</span>: <span class="value">#667eea</span>;
+    <span class="property">display</span>: <span class="value">flex</span>;
+    <span class="property">align-items</span>: <span class="value">flex-end</span>;
+    <span class="property">padding</span>: <span class="value">0 10px</span>;
+}
+
+<span class="comment">/* Article content area */</span>
+<span class="selector">.magazine-content</span> {
+    <span class="property">display</span>: <span class="value">grid</span>;
+    <span class="property">grid-template-columns</span>: <span class="value">2fr 1fr</span>;
+    <span class="property">gap</span>: <span class="value">20px</span>;
+}
+
+<span class="selector">.magazine-content article</span> {
+    <span class="property">column-count</span>: <span class="value">2</span>;
+    <span class="property">column-gap</span>: <span class="value">20px</span>;
+}
+
+<span class="keyword">@media</span> (<span class="property">max-width</span>: <span class="value">1024px</span>) {
+    <span class="selector">.magazine-layout</span> {
+        <span class="property">grid-template-columns</span>: <span class="value">1fr</span>;
+    }
+    <span class="selector">.magazine-sidebar</span> {
+        <span class="property">writing-mode</span>: <span class="value">horizontal-tb</span>;
+    }
+}
+                    </code>
+                </div>
+
+                <h3>Example 5: Restaurant Menu with Vertical Headers</h3>
+                <p>Stylish restaurant menu layout:</p>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Menu section header */</span>
+<span class="selector">.menu-section</span> {
+    <span class="property">display</span>: <span class="value">grid</span>;
+    <span class="property">grid-template-columns</span>: <span class="value">60px 1fr</span>;
+    <span class="property">gap</span>: <span class="value">20px</span>;
+    <span class="property">margin-bottom</span>: <span class="value">30px</span>;
+}
+
+<span class="selector">.menu-header</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">font-size</span>: <span class="value">1.6em</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+    <span class="property">color</span>: <span class="value">#8B4513</span>;
+    <span class="property">text-decoration</span>: <span class="value">uppercase</span>;
+    <span class="property">padding</span>: <span class="value">0 10px</span>;
+    <span class="property">border-right</span>: <span class="value">2px solid #8B4513</span>;
+}
+
+<span class="selector">.menu-items</span> {
+    <span class="property">display</span>: <span class="value">grid</span>;
+    <span class="property">gap</span>: <span class="value">15px</span>;
+}
+
+<span class="selector">.menu-item</span> {
+    <span class="property">border-bottom</span>: <span class="value">1px dotted #ddd</span>;
+    <span class="property">padding-bottom</span>: <span class="value">15px</span>;
+}
+
+<span class="selector">.menu-item-name</span> {
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+    <span class="property">color</span>: <span class="value">#333</span>;
+    <span class="property">display</span>: <span class="value">flex</span>;
+    <span class="property">justify-content</span>: <span class="value">space-between</span>;
+    <span class="property">align-items</span>: <span class="value">center</span>;
+}
+
+<span class="selector">.menu-price</span> {
+    <span class="property">color</span>: <span class="value">#667eea</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Example 6: Landing Page Hero Section</h3>
+                <p>Modern hero section with vertical text accent:</p>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Hero section container */</span>
+<span class="selector">.hero-section</span> {
+    <span class="property">background</span>: <span class="value">linear-gradient(135deg, #667eea 0%, #764ba2 100%)</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">padding</span>: <span class="value">80px 40px</span>;
+    <span class="property">display</span>: <span class="value">grid</span>;
+    <span class="property">grid-template-columns</span>: <span class="value">1fr 100px 1fr</span>;
+    <span class="property">align-items</span>: <span class="value">center</span>;
+    <span class="property">gap</span>: <span class="value">40px</span>;
+}
+
+<span class="comment">/* Left content */</span>
+<span class="selector">.hero-content</span> {
+    <span class="property">max-width</span>: <span class="value">500px</span>;
+}
+
+<span class="selector">.hero-content h1</span> {
+    <span class="property">font-size</span>: <span class="value">3em</span>;
+    <span class="property">margin-bottom</span>: <span class="value">20px</span>;
+}
+
+<span class="selector">.hero-content p</span> {
+    <span class="property">font-size</span>: <span class="value">1.2em</span>;
+    <span class="property">opacity</span>: <span class="value">0.9</span>;
+}
+
+<span class="comment">/* Vertical accent line */</span>
+<span class="selector">.hero-divider</span> {
+    <span class="property">height</span>: <span class="value">200px</span>;
+    <span class="property">background</span>: <span class="value">rgba(255, 255, 255, 0.3)</span>;
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">display</span>: <span class="value">flex</span>;
+    <span class="property">align-items</span>: <span class="value">center</span>;
+    <span class="property">justify-content</span>: <span class="value">center</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+    <span class="property">letter-spacing</span>: <span class="value">2px</span>;
+}
+
+<span class="comment">/* Right image/visual */</span>
+<span class="selector">.hero-image</span> {
+    <span class="property">width</span>: <span class="value">100%</span>;
+    <span class="property">height</span>: <span class="value">auto</span>;
+}
+
+<span class="keyword">@media</span> (<span class="property">max-width</span>: <span class="value">1024px</span>) {
+    <span class="selector">.hero-section</span> {
+        <span class="property">grid-template-columns</span>: <span class="value">1fr</span>;
+    }
+    <span class="selector">.hero-divider</span> {
+        <span class="property">display</span>: <span class="value">none</span>;
+    }
+}
+                    </code>
+                </div>
+
+                <h3>Example 7: Testimonials with Vertical Names</h3>
+                <p>Customer testimonials with creative vertical author names:</p>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Testimonial card */</span>
+<span class="selector">.testimonial</span> {
+    <span class="property">background</span>: <span class="value">#f9f9f9</span>;
+    <span class="property">border-left</span>: <span class="value">4px solid #667eea</span>;
+    <span class="property">padding</span>: <span class="value">30px</span>;
+    <span class="property">margin</span>: <span class="value">20px 0</span>;
+    <span class="property">display</span>: <span class="value">grid</span>;
+    <span class="property">grid-template-columns</span>: <span class="value">1fr 60px</span>;
+    <span class="property">gap</span>: <span class="value">20px</span>;
+}
+
+<span class="selector">.testimonial-text</span> {
+    <span class="property">font-style</span>: <span class="value">italic</span>;
+    <span class="property">color</span>: <span class="value">#555</span>;
+}
+
+<span class="selector">.testimonial-text:before</span> {
+    <span class="property">content</span>: <span class="value">"\"</span>;
+    <span class="property">font-size</span>: <span class="value">2em</span>;
+    <span class="property">color</span>: <span class="value">#667eea</span>;
+}
+
+<span class="comment">/* Vertical author name */</span>
+<span class="selector">.testimonial-author</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+    <span class="property">color</span>: <span class="value">#667eea</span>;
+    <span class="property">display</span>: <span class="value">flex</span>;
+    <span class="property">align-items</span>: <span class="value">flex-end</span>;
+    <span class="property">text-align</span>: <span class="value">center</span>;
+}
+
+<span class="keyword">@media</span> (<span class="property">max-width</span>: <span class="value">600px</span>) {
+    <span class="selector">.testimonial</span> {
+        <span class="property">grid-template-columns</span>: <span class="value">1fr</span>;
+    }
+    <span class="selector">.testimonial-author</span> {
+        <span class="property">writing-mode</span>: <span class="value">horizontal-tb</span>;
+    }
+}
+                    </code>
+                </div>
+
+                <h3>Example 8: Sidebar Navigation with Vertical Text</h3>
+                <p>Modern sidebar with vertical navigation labels:</p>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Vertical sidebar nav */</span>
+<span class="selector">.sidebar-nav</span> {
+    <span class="property">display</span>: <span class="value">flex</span>;
+    <span class="property">flex-direction</span>: <span class="value">column</span>;
+    <span class="property">background</span>: <span class="value">#2d2d2d</span>;
+    <span class="property">width</span>: <span class="value">80px</span>;
+    <span class="property">position</span>: <span class="value">fixed</span>;
+    <span class="property">left</span>: <span class="value">0</span>;
+    <span class="property">height</span>: <span class="value">100vh</span>;
+}
+
+<span class="selector">.nav-item</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">padding</span>: <span class="value">20px</span>;
+    <span class="property">text-align</span>: <span class="value">center</span>;
+    <span class="property">cursor</span>: <span class="value">pointer</span>;
+    <span class="property">transition</span>: <span class="value">background 0.3s ease</span>;
+    <span class="property">border-bottom</span>: <span class="value">1px solid #444</span>;
+}
+
+<span class="selector">.nav-item:hover</span> {
+    <span class="property">background</span>: <span class="value">#667eea</span>;
+}
+
+<span class="comment">/* Main content offset */</span>
+<span class="selector">main</span> {
+    <span class="property">margin-left</span>: <span class="value">80px</span>;
+}
+                    </code>
+                </div>
+            </section>
+
+            <!-- Widget-Specific Examples -->
+            <section id="widget-examples">
+                <h2>Widget-Specific Examples</h2>
+
+                <h3>Text Editor Widget with Writing Mode</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* In Elementor: Add Text Editor widget */</span>
+<span class="comment">/* Then add this CSS in widget Advanced → Custom CSS */</span>
+<span class="selector">.elementor-widget-text-editor</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+}
+
+<span class="selector">.elementor-widget-text-editor p</span> {
+    <span class="property">font-size</span>: <span class="value">1.1em</span>;
+    <span class="property">line-height</span>: <span class="value">1.6</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Heading Widget Styling</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Style heading with vertical mode */</span>
+<span class="selector">.elementor-heading-title</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-lr</span>;
+    <span class="property">text-orientation</span>: <span class="value">mixed</span>;
+    <span class="property">background</span>: <span class="value">linear-gradient(180deg, #667eea 0%, #764ba2 100%)</span>;
+    <span class="property">-webkit-background-clip</span>: <span class="value">text</span>;
+    <span class="property">-webkit-text-fill-color</span>: <span class="value">transparent</span>;
+    <span class="property">background-clip</span>: <span class="value">text</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Image Widget with Caption Overlay</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Image with vertical caption */</span>
+<span class="selector">.elementor-widget-image</span> {
+    <span class="property">position</span>: <span class="value">relative</span>;
+}
+
+<span class="selector">.elementor-widget-image .elementor-image</span> {
+    <span class="property">position</span>: <span class="value">relative</span>;
+}
+
+<span class="selector">.elementor-widget-image figcaption</span> {
+    <span class="property">position</span>: <span class="value">absolute</span>;
+    <span class="property">bottom</span>: <span class="value">0</span>;
+    <span class="property">left</span>: <span class="value">0</span>;
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">background</span>: <span class="value">rgba(0, 0, 0, 0.7)</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">padding</span>: <span class="value">10px</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Button Widget Vertical Text</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Vertical button text */</span>
+<span class="selector">.elementor-button</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">min-height</span>: <span class="value">100px</span>;
+    <span class="property">display</span>: <span class="value">flex</span>;
+    <span class="property">align-items</span>: <span class="value">center</span>;
+    <span class="property">justify-content</span>: <span class="value">center</span>;
+}
+
+<span class="selector">.elementor-button:hover</span> {
+    <span class="property">transform</span>: <span class="value">rotate(-90deg)</span>;
+    <span class="property">transition</span>: <span class="value">transform 0.3s ease</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Column with RTL Layout</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* RTL column structure */</span>
+<span class="selector">.elementor-column</span> {
+    <span class="property">direction</span>: <span class="value">rtl</span>;
+    <span class="property">text-align</span>: <span class="value">right</span>;
+}
+
+<span class="selector">.elementor-column .elementor-widget-wrap</span> {
+    <span class="property">flex-direction</span>: <span class="value">row-reverse</span>;
+}
+
+<span class="selector">.elementor-column .elementor-widget</span> {
+    <span class="property">text-align</span>: <span class="value">right</span>;
+}
+                    </code>
+                </div>
+            </section>
+
+            <!-- CSS Grid Layouts -->
+            <section id="grid-layouts">
+                <h2>Advanced CSS Grid Layouts with Writing Modes</h2>
+
+                <h3>Example 1: Asymmetric Portfolio Grid</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Asymmetric grid layout */</span>
+<span class="selector">.portfolio-grid</span> {
+    <span class="property">display</span>: <span class="value">grid</span>;
+    <span class="property">grid-template-columns</span>: <span class="value">repeat(auto-fit, minmax(250px, 1fr))</span>;
+    <span class="property">grid-auto-rows</span>: <span class="value">300px</span>;
+    <span class="property">gap</span>: <span class="value">15px</span>;
+}
+
+<span class="selector">.portfolio-grid .grid-item:nth-child(1)</span> {
+    <span class="property">grid-column</span>: <span class="value">span 2</span>;
+    <span class="property">grid-row</span>: <span class="value">span 2</span>;
+}
+
+<span class="selector">.portfolio-grid .grid-item</span> {
+    <span class="property">position</span>: <span class="value">relative</span>;
+    <span class="property">overflow</span>: <span class="value">hidden</span>;
+}
+
+<span class="selector">.grid-item-title</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">position</span>: <span class="value">absolute</span>;
+    <span class="property">left</span>: <span class="value">10px</span>;
+    <span class="property">top</span>: <span class="value">50%</span>;
+    <span class="property">transform</span>: <span class="value">translateY(-50%)</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Example 2: Timeline with Vertical Dates</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Timeline layout */</span>
+<span class="selector">.timeline</span> {
+    <span class="property">display</span>: <span class="value">grid</span>;
+    <span class="property">grid-template-columns</span>: <span class="value">100px 1fr 100px</span>;
+    <span class="property">gap</span>: <span class="value">20px</span>;
+}
+
+<span class="selector">.timeline-item</span> {
+    <span class="property">grid-column</span>: <span class="value">2</span>;
+    <span class="property">padding</span>: <span class="value">20px</span>;
+    <span class="property">border-left</span>: <span class="value">3px solid #667eea</span>;
+}
+
+<span class="selector">.timeline-date</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">text-align</span>: <span class="value">center</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+    <span class="property">color</span>: <span class="value">#667eea</span>;
+}
+
+<span class="selector">.timeline-item:nth-child(odd) .timeline-date</span> {
+    <span class="property">grid-column</span>: <span class="value">1</span>;
+}
+
+<span class="selector">.timeline-item:nth-child(even) .timeline-date</span> {
+    <span class="property">grid-column</span>: <span class="value">3</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Example 3: Dual-Column RTL + LTR</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Split view with different text directions */</span>
+<span class="selector">.split-layout</span> {
+    <span class="property">display</span>: <span class="value">grid</span>;
+    <span class="property">grid-template-columns</span>: <span class="value">1fr 1fr</span>;
+    <span class="property">gap</span>: <span class="value">30px</span>;
+}
+
+<span class="selector">.split-layout .ltr-section</span> {
+    <span class="property">direction</span>: <span class="value">ltr</span>;
+    <span class="property">text-align</span>: <span class="value">left</span>;
+}
+
+<span class="selector">.split-layout .rtl-section</span> {
+    <span class="property">direction</span>: <span class="value">rtl</span>;
+    <span class="property">text-align</span>: <span class="value">right</span>;
+    <span class="property">border-right</span>: <span class="value">2px solid #667eea</span>;
+}
+
+<span class="keyword">@media</span> (<span class="property">max-width</span>: <span class="value">768px</span>) {
+    <span class="selector">.split-layout</span> {
+        <span class="property">grid-template-columns</span>: <span class="value">1fr</span>;
+    }
+    <span class="selector">.split-layout .rtl-section</span> {
+        <span class="property">border-right</span>: <span class="value">none</span>;
+        <span class="property">border-top</span>: <span class="value">2px solid #667eea</span>;
+    }
+}
+                    </code>
+                </div>
+            </section>
+
+            <!-- Animation Examples -->
+            <section id="animation-examples">
+                <h2>Animation & Interaction Examples</h2>
+
+                <h3>Rotating Text Animation</h3>
+                <div class="code-block">
+                    <code>
+<span class="keyword">@keyframes</span> rotateText {
+    <span class="keyword">0%</span> {
+        <span class="property">transform</span>: <span class="value">rotate(0deg)</span>;
+    }
+    <span class="keyword">100%</span> {
+        <span class="property">transform</span>: <span class="value">rotate(360deg)</span>;
+    }
+}
+
+<span class="selector">.rotating-text</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">animation</span>: <span class="value">rotateText 4s linear infinite</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Typewriter Effect with Vertical Text</h3>
+                <div class="code-block">
+                    <code>
+<span class="keyword">@keyframes</span> typewriter {
+    <span class="keyword">0%</span> {
+        <span class="property">width</span>: <span class="value">0</span>;
+    }
+    <span class="keyword">100%</span> {
+        <span class="property">width</span>: <span class="value">100%</span>;
+    }
+}
+
+<span class="selector">.typewriter</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">overflow</span>: <span class="value">hidden</span>;
+    <span class="property">border-right</span>: <span class="value">3px solid #667eea</span>;
+    <span class="property">animation</span>: <span class="value">typewriter 3s steps(40, end)</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Scroll-Based Reveal Animation</h3>
+                <div class="code-block">
+                    <code>
+<span class="keyword">@keyframes</span> slideInVertical {
+    <span class="keyword">from</span> {
+        <span class="property">opacity</span>: <span class="value">0</span>;
+        <span class="property">transform</span>: <span class="value">translateY(50px)</span>;
+    }
+    <span class="keyword">to</span> {
+        <span class="property">opacity</span>: <span class="value">1</span>;
+        <span class="property">transform</span>: <span class="value">translateY(0)</span>;
+    }
+}
+
+<span class="selector">.scroll-reveal</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">animation</span>: <span class="value">slideInVertical 0.8s ease-out forwards</span>;
+    <span class="property">animation-timeline</span>: <span class="value">view()</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Hover Text Transformation</h3>
+                <div class="code-block">
+                    <code>
+<span class="selector">.hover-transform</span> {
+    <span class="property">writing-mode</span>: <span class="value">horizontal-tb</span>;
+    <span class="property">transition</span>: <span class="value">writing-mode 0.3s ease, transform 0.3s ease</span>;
+}
+
+<span class="selector">.hover-transform:hover</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">transform</span>: <span class="value">scale(1.1)</span>;
+    <span class="property">color</span>: <span class="value">#667eea</span>;
+}
+                    </code>
+                </div>
+            </section>
+
+            <!-- Advanced Tips Section -->
+            <section>
+                <h2>Advanced Tips & Tricks</h2>
+
+                <h3>Combining Writing Mode with Transforms</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Create artistic effects */</span>
+<span class="selector">.artistic-text</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">transform</span>: <span class="value">rotate(45deg) scale(1.1)</span>;
+    <span class="property">transition</span>: <span class="value">all 0.3s ease</span>;
+}
+
+<span class="selector">.artistic-text:hover</span> {
+    <span class="property">transform</span>: <span class="value">rotate(45deg) scale(1.2)</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Multi-Column Layout with Writing Modes</h3>
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Create magazine-style layouts */</span>
+<span class="selector">.multi-column</span> {
+    <span class="property">column-count</span>: <span class="value">3</span>;
+    <span class="property">column-gap</span>: <span class="value">30px</span>;
+    <span class="property">writing-mode</span>: <span class="value">horizontal-tb</span>;
+}
+
+<span class="comment">/* Vertical column headers */</span>
+<span class="selector">.multi-column h3</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-lr</span>;
+    <span class="property">text-align</span>: <span class="value">center</span>;
+}
+                    </code>
+                </div>
+
+                <h3>Animation with Writing Modes</h3>
+                <div class="code-block">
+                    <code>
+<span class="keyword">@keyframes</span> slideVertical {
+    <span class="keyword">from</span> {
+        <span class="property">transform</span>: <span class="value">translateY(100%)</span>;
+        <span class="property">opacity</span>: <span class="value">0</span>;
+    }
+    <span class="keyword">to</span> {
+        <span class="property">transform</span>: <span class="value">translateY(0)</span>;
+        <span class="property">opacity</span>: <span class="value">1</span>;
+    }
+}
+
+<span class="selector">.animated-vertical</span> {
+    <span class="property">writing-mode</span>: <span class="value">vertical-rl</span>;
+    <span class="property">animation</span>: <span class="value">slideVertical 0.8s ease-out</span>;
+}
+                    </code>
+                </div>
+            </section>
+
+            <!-- Resources Section -->
+            <section>
+                <h2>Additional Resources</h2>
+
+                <h3>Official Documentation</h3>
+                <ul class="checklist">
+                    <li><a href="https://elementor.com/help/" target="_blank">Elementor Help Center</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/writing-mode" target="_blank">MDN: CSS writing-mode</a></li>
+                    <li><a href="https://w3c.github.io/css-writing-modes/" target="_blank">W3C: CSS Writing Modes Specification</a></li>
+                </ul>
+
+                <h3>Useful Tools</h3>
+                <ul class="checklist">
+                    <li>Chrome DevTools for CSS debugging</li>
+                    <li>CSS Generator tools for writing-mode values</li>
+                    <li>Elementor Template Library for design inspiration</li>
+                    <li>Google Fonts for multi-language support</li>
+                </ul>
+
+                <h3>Community & Support</h3>
+                <ul class="checklist">
+                    <li>Elementor Community Forum</li>
+                    <li>Stack Overflow for CSS questions</li>
+                    <li>GitHub for open-source contributions</li>
+                    <li>Reddit communities: r/elementor, r/css</li>
+                </ul>
+            </section>
+
+            <!-- Conclusion Section -->
+            <section>
+                <h2>Conclusion</h2>
+                <p>Elementor combined with CSS writing modes provides powerful tools for creating modern, international, and visually stunning websites. Whether you're building multilingual sites with RTL support or creating artistic vertical text layouts, the combination of Elementor's visual editor and CSS writing modes gives you complete control over your design.</p>
+
+                <div class="success">
+                    <strong>✓ Key Takeaways:</strong>
+                    <ul>
+                        <li>Elementor is accessible to non-developers while offering advanced CSS capabilities</li>
+                        <li>CSS writing-mode property enables multilingual and creative text layouts</li>
+                        <li>Test thoroughly across browsers and devices</li>
+                        <li>Combine writing modes with responsive design for optimal user experience</li>
+                        <li>Always prioritize accessibility and performance</li>
+                    </ul>
+                </div>
+
+                <p style="text-align: center; margin-top: 40px; font-style: italic; color: #666;">
+                    Happy designing! Build beautiful, accessible, and international websites with Elementor and CSS writing modes.
+                </p>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Elementor Implementation Guide | Comprehensive Guide with CSS Writing Mode Examples</p>
+            <p>Created with ❤️ for web designers and developers</p>
+        </footer>
+    </div>
+</body>
+</html>

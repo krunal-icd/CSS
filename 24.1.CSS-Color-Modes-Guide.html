@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Color Modes - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                color: #e0e0e0;
+            }
+
+            .container {
+                background: #0f3460;
+                color: #e0e0e0;
+            }
+
+            .demo-container {
+                background: #16213e;
+                border-color: #667eea;
+            }
+
+            .code-block {
+                background: #1a1a1a;
+            }
+
+            .comparison-table {
+                background: #16213e;
+            }
+
+            .comparison-table th {
+                background: #0f3460;
+            }
+
+            .comparison-table td {
+                border-bottom-color: #333;
+            }
+
+            .property-card {
+                background: #16213e;
+                border-color: #667eea;
+                color: #e0e0e0;
+            }
+
+            .property-card .values {
+                background: #0f3460;
+                color: #b0b0b0;
+            }
+
+            .info-box {
+                background: #1b3a52;
+                border-color: #17a2b8;
+                color: #e0e0e0;
+            }
+
+            .warning-box {
+                background: #4d3d1a;
+                border-color: #ffc107;
+                color: #e0e0e0;
+            }
+
+            .success-box {
+                background: #1b3d2e;
+                border-color: #28a745;
+                color: #e0e0e0;
+            }
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            p {
+                color: #b0b0b0;
+            }
+        }
+
+        /* Demo Container */
+        .demo-container {
+            background: #f9f9f9;
+            border: 3px dashed #667eea;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .demo-label {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Color Swatches */
+        .color-swatch {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            margin: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #ddd;
+            vertical-align: top;
+            position: relative;
+        }
+
+        .swatch-label {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3px;
+            border-radius: 3px;
+            font-size: 0.7em;
+            text-align: center;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Hex Colors */
+        .color-hex {
+            background: #FF6B6B;
+        }
+
+        .color-hex-2 {
+            background: #4ECDC4;
+        }
+
+        .color-hex-3 {
+            background: #45B7D1;
+        }
+
+        /* RGB Colors */
+        .color-rgb {
+            background: rgb(255, 107, 107);
+        }
+
+        .color-rgb-2 {
+            background: rgb(78, 205, 196);
+        }
+
+        .color-rgb-3 {
+            background: rgb(69, 183, 209);
+        }
+
+        /* RGBA Colors with Transparency */
+        .color-rgba {
+            background: rgba(255, 107, 107, 0.5);
+            border: 2px solid #FF6B6B;
+        }
+
+        .color-rgba-2 {
+            background: rgba(78, 205, 196, 0.7);
+            border: 2px solid #4ECDC4;
+        }
+
+        .color-rgba-3 {
+            background: rgba(69, 183, 209, 0.3);
+            border: 2px solid #45B7D1;
+        }
+
+        /* HSL Colors */
+        .color-hsl {
+            background: hsl(0, 100%, 71%);
+        }
+
+        .color-hsl-2 {
+            background: hsl(174, 66%, 54%);
+        }
+
+        .color-hsl-3 {
+            background: hsl(193, 79%, 54%);
+        }
+
+        /* HSLA Colors with Transparency */
+        .color-hsla {
+            background: hsla(0, 100%, 71%, 0.5);
+            border: 2px solid hsl(0, 100%, 71%);
+        }
+
+        .color-hsla-2 {
+            background: hsla(174, 66%, 54%, 0.7);
+            border: 2px solid hsl(174, 66%, 54%);
+        }
+
+        .color-hsla-3 {
+            background: hsla(193, 79%, 54%, 0.3);
+            border: 2px solid hsl(193, 79%, 54%);
+        }
+
+        /* Named Colors */
+        .color-named-red {
+            background: red;
+        }
+
+        .color-named-blue {
+            background: blue;
+        }
+
+        .color-named-green {
+            background: green;
+        }
+
+        /* CSS Variables */
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --border-color: #ddd;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #667eea;
+                --secondary-color: #764ba2;
+                --accent-color: #f093fb;
+                --text-color: #e0e0e0;
+                --bg-color: #16213e;
+                --border-color: #333;
+            }
+        }
+
+        .color-var-primary {
+            background: var(--primary-color);
+        }
+
+        .color-var-secondary {
+            background: var(--secondary-color);
+        }
+
+        .color-var-accent {
+            background: var(--accent-color);
+        }
+
+        /* Color Gradients */
+        .gradient-linear {
+            background: linear-gradient(90deg, #FF6B6B 0%, #4ECDC4 50%, #45B7D1 100%);
+        }
+
+        .gradient-radial {
+            background: radial-gradient(circle, #FF6B6B 0%, #4ECDC4 50%, #45B7D1 100%);
+        }
+
+        .gradient-conic {
+            background: conic-gradient(#FF6B6B, #4ECDC4, #45B7D1, #FF6B6B);
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .keyword { color: #ff79c6; }
+        .property { color: #8be9fd; }
+        .value { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+        .selector { color: #50fa7b; }
+
+        /* Info Boxes */
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* Property Reference Card */
+        .property-card {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .property-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .property-card .values {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Grid Layout */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .color-swatch {
+                width: 80px;
+                height: 80px;
+                margin: 5px;
+            }
+        }
+
+        /* Color Contrast Example */
+        .contrast-light {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        .contrast-dark {
+            background: black;
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        .contrast-color {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        /* Color Mode Toggle */
+        .mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 CSS Color Modes - Complete Guide</h1>
+            <p>Master Color Formats, Modes, and Dark Mode Implementation</p>
+        </header>
+
+        <div class="content">
+            <!-- Introduction -->
+            <section>
+                <h2>Introduction to CSS Color Modes</h2>
+                <p>CSS color modes allow you to define colors in multiple formats and implement light/dark mode support. This comprehensive guide covers all color formats, accessibility considerations, and modern color mode techniques.</p>
+                <div class="success-box">
+                    <strong>✓ What You'll Learn:</strong>
+                    <p>Hex colors, RGB/RGBA, HSL/HSLA, Named colors, CSS Variables, Gradients, and Dark Mode with prefers-color-scheme.</p>
+                </div>
+            </section>
+
+            <!-- Section 1: Hex Colors -->
+            <section>
+                <h2>1. Hexadecimal (Hex) Colors</h2>
+                <p>The most common color format using 6-digit hexadecimal notation (#RRGGBB):</p>
+
+                <h3>Hex Color Examples</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Hex Colors</div>
+                    <div style="text-align: center;">
+                        <div class="color-swatch color-hex">
+                            <div class="swatch-label">#FF6B6B</div>
+                        </div>
+                        <div class="color-swatch color-hex-2">
+                            <div class="swatch-label">#4ECDC4</div>
+                        </div>
+                        <div class="color-swatch color-hex-3">
+                            <div class="swatch-label">#45B7D1</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Shorthand Hex</h3>
+                <div class="demo-container">
+                    <div class="demo-label">3-Digit Hex (Shorthand)</div>
+                    <div style="text-align: center;">
+                        <div class="color-swatch" style="background: #F00;">
+                            <div class="swatch-label">#F00</div>
+                        </div>
+                        <div class="color-swatch" style="background: #0F0;">
+                            <div class="swatch-label">#0F0</div>
+                        </div>
+                        <div class="color-swatch" style="background: #00F;">
+                            <div class="swatch-label">#00F</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* 6-digit Hex format (#RRGGBB) */</span>
+<span class="selector">.element</span> {
+    <span class="property">background</span>: <span class="value">#FF6B6B</span>;
+    <span class="property">color</span>: <span class="value">#333333</span>;
+    <span class="property">border</span>: <span class="value">2px solid #4ECDC4</span>;
+}
+
+<span class="comment">/* 3-digit Hex format (shorthand) */</span>
+<span class="selector">.short-hex</span> {
+    <span class="property">background</span>: <span class="value">#F00</span>; <span class="comment">/* = #FF0000 */</span>
+    <span class="property">color</span>: <span class="value">#0F0</span>; <span class="comment">/* = #00FF00 */</span>
+    <span class="property">border</span>: <span class="value">#00F</span>; <span class="comment">/* = #0000FF */</span>
+}
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>Hex Color Format</h4>
+                    <p><strong>Syntax:</strong> #RRGGBB or #RGB</p>
+                    <div class="values">
+                        • #FF6B6B (red)<br>
+                        • #00FF00 (green)<br>
+                        • #0000FF (blue)<br>
+                        • #FFF (white)<br>
+                        • #000 (black)
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: RGB Colors -->
+            <section>
+                <h2>2. RGB (Red, Green, Blue) Colors</h2>
+                <p>Functional color notation using rgb() function with values 0-255:</p>
+
+                <h3>RGB Color Examples</h3>
+                <div class="demo-container">
+                    <div class="demo-label">RGB Colors</div>
+                    <div style="text-align: center;">
+                        <div class="color-swatch color-rgb">
+                            <div class="swatch-label">rgb(255, 107, 107)</div>
+                        </div>
+                        <div class="color-swatch color-rgb-2">
+                            <div class="swatch-label">rgb(78, 205, 196)</div>
+                        </div>
+                        <div class="color-swatch color-rgb-3">
+                            <div class="swatch-label">rgb(69, 183, 209)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>RGB with Percentages</h3>
+                <div class="demo-container">
+                    <div class="demo-label">RGB with % Values</div>
+                    <div style="text-align: center;">
+                        <div class="color-swatch" style="background: rgb(100%, 42%, 42%);">
+                            <div class="swatch-label">rgb(100%, 42%, 42%)</div>
+                        </div>
+                        <div class="color-swatch" style="background: rgb(31%, 80%, 77%);">
+                            <div class="swatch-label">rgb(31%, 80%, 77%)</div>
+                        </div>
+                        <div class="color-swatch" style="background: rgb(27%, 72%, 82%);">
+                            <div class="swatch-label">rgb(27%, 72%, 82%)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* RGB format - values 0-255 */</span>
+<span class="selector">.rgb-color</span> {
+    <span class="property">background</span>: <span class="value">rgb(255, 107, 107)</span>;
+    <span class="property">color</span>: <span class="value">rgb(51, 51, 51)</span>;
+}
+
+<span class="comment">/* RGB format - percentage values */</span>
+<span class="selector">.rgb-percent</span> {
+    <span class="property">background</span>: <span class="value">rgb(100%, 42%, 42%)</span>;
+    <span class="property">color</span>: <span class="value">rgb(20%, 20%, 20%)</span>;
+}
+
+<span class="comment">/* Modern CSS syntax (spaces optional) */</span>
+<span class="selector">.rgb-modern</span> {
+    <span class="property">background</span>: <span class="value">rgb(255 107 107)</span>;
+}
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>RGB Color Format</h4>
+                    <p><strong>Syntax:</strong> rgb(red, green, blue)</p>
+                    <div class="values">
+                        • Values: 0-255<br>
+                        • Or: 0%-100%<br>
+                        • rgb(255, 0, 0) = red<br>
+                        • rgb(0, 255, 0) = green<br>
+                        • rgb(0, 0, 255) = blue
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: RGBA Colors -->
+            <section>
+                <h2>3. RGBA (RGB with Alpha) Colors</h2>
+                <p>RGB with transparency using alpha channel (0-1 or 0%-100%):</p>
+
+                <h3>RGBA Color Examples</h3>
+                <div class="demo-container">
+                    <div class="demo-label">RGBA Colors with Transparency</div>
+                    <div style="text-align: center;">
+                        <div class="color-swatch color-rgba">
+                            <div class="swatch-label">rgba(255, 107, 107, 0.5)</div>
+                        </div>
+                        <div class="color-swatch color-rgba-2">
+                            <div class="swatch-label">rgba(78, 205, 196, 0.7)</div>
+                        </div>
+                        <div class="color-swatch color-rgba-3">
+                            <div class="swatch-label">rgba(69, 183, 209, 0.3)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Alpha Channel Values</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Different Alpha Values</div>
+                    <div style="text-align: center;">
+                        <div class="color-swatch" style="background: rgba(102, 126, 234, 0.1); border: 2px solid #667eea;">
+                            <div class="swatch-label">Alpha: 0.1</div>
+                        </div>
+                        <div class="color-swatch" style="background: rgba(102, 126, 234, 0.5); border: 2px solid #667eea;">
+                            <div class="swatch-label">Alpha: 0.5</div>
+                        </div>
+                        <div class="color-swatch" style="background: rgba(102, 126, 234, 0.9); border: 2px solid #667eea;">
+                            <div class="swatch-label">Alpha: 0.9</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* RGBA format - with transparency */</span>
+<span class="selector">.rgba-color</span> {
+    <span class="property">background</span>: <span class="value">rgba(255, 107, 107, 0.5)</span>;
+    <span class="property">box-shadow</span>: <span class="value">0 0 10px rgba(0, 0, 0, 0.2)</span>;
+}
+
+<span class="comment">/* Alpha values: 0 = transparent, 1 = opaque */</span>
+<span class="selector">.transparent</span> {
+    <span class="property">background</span>: <span class="value">rgba(255, 255, 255, 0)</span>;
+}
+
+<span class="selector">.semi-transparent</span> {
+    <span class="property">background</span>: <span class="value">rgba(255, 255, 255, 0.5)</span>;
+}
+
+<span class="selector">.opaque</span> {
+    <span class="property">background</span>: <span class="value">rgba(255, 255, 255, 1)</span>;
+}
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>RGBA Color Format</h4>
+                    <p><strong>Syntax:</strong> rgba(red, green, blue, alpha)</p>
+                    <div class="values">
+                        • Red, Green, Blue: 0-255<br>
+                        • Alpha: 0-1 (or 0%-100%)<br>
+                        • 0 = fully transparent<br>
+                        • 1 = fully opaque
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: HSL Colors -->
+            <section>
+                <h2>4. HSL (Hue, Saturation, Lightness) Colors</h2>
+                <p>Perceptual color model using hue (0-360°), saturation (0-100%), and lightness (0-100%):</p>
+
+                <h3>HSL Color Examples</h3>
+                <div class="demo-container">
+                    <div class="demo-label">HSL Colors</div>
+                    <div style="text-align: center;">
+                        <div class="color-swatch color-hsl">
+                            <div class="swatch-label">hsl(0, 100%, 71%)</div>
+                        </div>
+                        <div class="color-swatch color-hsl-2">
+                            <div class="swatch-label">hsl(174, 66%, 54%)</div>
+                        </div>
+                        <div class="color-swatch color-hsl-3">
+                            <div class="swatch-label">hsl(193, 79%, 54%)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>HSL Lightness Variations</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Adjusting Lightness</div>
+                    <div style="text-align: center;">
+                        <div class="color-swatch" style="background: hsl(193, 79%, 20%);">
+                            <div class="swatch-label">hsl(..., 20%)</div>
+                        </div>
+                        <div class="color-swatch" style="background: hsl(193, 79%, 50%);">
+                            <div class="swatch-label">hsl(..., 50%)</div>
+                        </div>
+                        <div class="color-swatch" style="background: hsl(193, 79%, 80%);">
+                            <div class="swatch-label">hsl(..., 80%)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* HSL format */</span>
+<span class="selector">.hsl-color</span> {
+    <span class="property">background</span>: <span class="value">hsl(193, 79%, 54%)</span>;
+    <span class="property">color</span>: <span class="value">hsl(0, 0%, 20%)</span>;
+}
+
+<span class="comment">/* Creating color variations */</span>
+<span class="selector">.primary</span> {
+    <span class="property">background</span>: <span class="value">hsl(220, 100%, 50%)</span>;
+}
+
+<span class="selector">.primary-dark</span> {
+    <span class="property">background</span>: <span class="value">hsl(220, 100%, 35%)</span>;
+}
+
+<span class="selector">.primary-light</span> {
+    <span class="property">background</span>: <span class="value">hsl(220, 100%, 70%)</span>;
+}
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>HSL Color Format</h4>
+                    <p><strong>Syntax:</strong> hsl(hue, saturation, lightness)</p>
+                    <div class="values">
+                        • Hue: 0-360 (degrees)<br>
+                        • Saturation: 0-100%<br>
+                        • Lightness: 0-100%<br>
+                        • hsl(0, 100%, 50%) = red
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: HSLA Colors -->
+            <section>
+                <h2>5. HSLA (HSL with Alpha) Colors</h2>
+                <p>HSL with transparency using alpha channel:</p>
+
+                <h3>HSLA Color Examples</h3>
+                <div class="demo-container">
+                    <div class="demo-label">HSLA Colors with Transparency</div>
+                    <div style="text-align: center;">
+                        <div class="color-swatch color-hsla">
+                            <div class="swatch-label">hsla(0, 100%, 71%, 0.5)</div>
+                        </div>
+                        <div class="color-swatch color-hsla-2">
+                            <div class="swatch-label">hsla(174, 66%, 54%, 0.7)</div>
+                        </div>
+                        <div class="color-swatch color-hsla-3">
+                            <div class="swatch-label">hsla(193, 79%, 54%, 0.3)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* HSLA format - HSL with transparency */</span>
+<span class="selector">.hsla-color</span> {
+    <span class="property">background</span>: <span class="value">hsla(193, 79%, 54%, 0.5)</span>;
+    <span class="property">box-shadow</span>: <span class="value">0 0 10px hsla(0, 0%, 0%, 0.2)</span>;
+}
+
+<span class="comment">/* Easy color variations with alpha */</span>
+<span class="selector">.overlay</span> {
+    <span class="property">background</span>: <span class="value">hsla(220, 100%, 50%, 0.8)</span>;
+}
+                    </code>
+                </div>
+
+                <div class="property-card">
+                    <h4>HSLA Color Format</h4>
+                    <p><strong>Syntax:</strong> hsla(hue, saturation, lightness, alpha)</p>
+                    <div class="values">
+                        • Hue: 0-360 (degrees)<br>
+                        • Saturation: 0-100%<br>
+                        • Lightness: 0-100%<br>
+                        • Alpha: 0-1
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Named Colors -->
+            <section>
+                <h2>6. Named Colors</h2>
+                <p>CSS has 147 predefined named colors (red, blue, green, etc.):</p>
+
+                <h3>Common Named Colors</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Named Colors</div>
+                    <div style="text-align: center;">
+                        <div class="color-swatch color-named-red">
+                            <div class="swatch-label">red</div>
+                        </div>
+                        <div class="color-swatch color-named-blue">
+                            <div class="swatch-label">blue</div>
+                        </div>
+                        <div class="color-swatch color-named-green">
+                            <div class="swatch-label">green</div>
+                        </div>
+                        <div class="color-swatch" style="background: orange;">
+                            <div class="swatch-label">orange</div>
+                        </div>
+                        <div class="color-swatch" style="background: purple;">
+                            <div class="swatch-label">purple</div>
+                        </div>
+                        <div class="color-swatch" style="background: pink;">
+                            <div class="swatch-label">pink</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Named colors */</span>
+<span class="selector">.element</span> {
+    <span class="property">background</span>: <span class="value">red</span>;
+    <span class="property">color</span>: <span class="value">blue</span>;
+    <span class="property">border</span>: <span class="value">2px solid green</span>;
+}
+
+<span class="comment">/* Common named colors */</span>
+<span class="comment">/* red, blue, green, yellow, orange, purple, pink, black, white, gray, silver, etc. */</span>
+                    </code>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Note:</strong> While convenient, named colors are less flexible. Use hex, RGB, or HSL for more control.
+                </div>
+            </section>
+
+            <!-- Section 7: CSS Variables -->
+            <section>
+                <h2>7. CSS Variables (Custom Properties)</h2>
+                <p>Define reusable color values using CSS custom properties:</p>
+
+                <h3>CSS Variable Examples</h3>
+                <div class="demo-container">
+                    <div class="demo-label">CSS Custom Properties</div>
+                    <div style="text-align: center;">
+                        <div class="color-swatch color-var-primary">
+                            <div class="swatch-label">--primary-color</div>
+                        </div>
+                        <div class="color-swatch color-var-secondary">
+                            <div class="swatch-label">--secondary-color</div>
+                        </div>
+                        <div class="color-swatch color-var-accent">
+                            <div class="swatch-label">--accent-color</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Define CSS variables */</span>
+<span class="selector">:root</span> {
+    <span class="property">--primary-color</span>: <span class="value">#667eea</span>;
+    <span class="property">--secondary-color</span>: <span class="value">#764ba2</span>;
+    <span class="property">--accent-color</span>: <span class="value">#f093fb</span>;
+    <span class="property">--text-color</span>: <span class="value">#333</span>;
+    <span class="property">--bg-color</span>: <span class="value">#f9f9f9</span>;
+}
+
+<span class="comment">/* Use CSS variables */</span>
+<span class="selector">.button</span> {
+    <span class="property">background</span>: <span class="value">var(--primary-color)</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+}
+
+<span class="selector">.card</span> {
+    <span class="property">background</span>: <span class="value">var(--bg-color)</span>;
+    <span class="property">color</span>: <span class="value">var(--text-color)</span>;
+}
+
+<span class="comment">/* With fallback value */</span>
+<span class="selector">.element</span> {
+    <span class="property">background</span>: <span class="value">var(--custom-color, blue)</span>;
+}
+                    </code>
+                </div>
+
+                <div class="success-box">
+                    <strong>✓ Benefits:</strong>
+                    <p>Easy theme switching, consistent colors, maintainability, dynamic theme changes with JavaScript.</p>
+                </div>
+            </section>
+
+            <!-- Section 8: Color Gradients -->
+            <section>
+                <h2>8. Color Gradients</h2>
+                <p>Smooth color transitions using linear, radial, and conic gradients:</p>
+
+                <h3>Linear Gradient</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Linear Gradient</div>
+                    <div class="color-swatch gradient-linear" style="width: 100%; height: 150px; margin: 20px 0;">
+                        <div class="swatch-label" style="position: static; background: none; color: white; text-shadow: 1px 1px 2px black; margin-top: 120px;">linear-gradient(90deg, ...)</div>
+                    </div>
+                </div>
+
+                <h3>Radial Gradient</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Radial Gradient</div>
+                    <div class="color-swatch gradient-radial" style="width: 100%; height: 150px; margin: 20px 0;">
+                        <div class="swatch-label" style="position: static; background: none; color: white; text-shadow: 1px 1px 2px black; margin-top: 120px;">radial-gradient(...)</div>
+                    </div>
+                </div>
+
+                <h3>Conic Gradient</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Conic Gradient</div>
+                    <div class="color-swatch gradient-conic" style="width: 100%; height: 150px; margin: 20px 0;">
+                        <div class="swatch-label" style="position: static; background: none; color: white; text-shadow: 1px 1px 2px black; margin-top: 120px;">conic-gradient(...)</div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Linear gradient */</span>
+<span class="selector">.linear</span> {
+    <span class="property">background</span>: <span class="value">linear-gradient(90deg, #FF6B6B 0%, #4ECDC4 50%, #45B7D1 100%)</span>;
+}
+
+<span class="comment">/* Radial gradient */</span>
+<span class="selector">.radial</span> {
+    <span class="property">background</span>: <span class="value">radial-gradient(circle, #FF6B6B 0%, #4ECDC4 50%, #45B7D1 100%)</span>;
+}
+
+<span class="comment">/* Conic gradient */</span>
+<span class="selector">.conic</span> {
+    <span class="property">background</span>: <span class="value">conic-gradient(#FF6B6B, #4ECDC4, #45B7D1)</span>;
+}
+
+<span class="comment">/* With multiple colors */</span>
+<span class="selector">.multi-stop</span> {
+    <span class="property">background</span>: <span class="value">linear-gradient(135deg, #FF6B6B 0%, #FFD93D 25%, #6BCF7F 50%, #4D96FF 75%, #9D84B7 100%)</span>;
+}
+                    </code>
+                </div>
+            </section>
+
+            <!-- Section 9: Dark Mode Support -->
+            <section>
+                <h2>9. Dark Mode with prefers-color-scheme</h2>
+                <p>Implement dark/light mode support using the prefers-color-scheme media query:</p>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* Light mode (default) */</span>
+<span class="selector">:root</span> {
+    <span class="property">--bg-color</span>: <span class="value">white</span>;
+    <span class="property">--text-color</span>: <span class="value">#333</span>;
+    <span class="property">--border-color</span>: <span class="value">#ddd</span>;
+}
+
+<span class="selector">body</span> {
+    <span class="property">background</span>: <span class="value">var(--bg-color)</span>;
+    <span class="property">color</span>: <span class="value">var(--text-color)</span>;
+}
+
+<span class="comment">/* Dark mode */</span>
+<span class="keyword">@media</span> (<span class="property">prefers-color-scheme</span>: <span class="value">dark</span>) {
+    <span class="selector">:root</span> {
+        <span class="property">--bg-color</span>: <span class="value">#1a1a2e</span>;
+        <span class="property">--text-color</span>: <span class="value">#e0e0e0</span>;
+        <span class="property">--border-color</span>: <span class="value">#333</span>;
+    }
+}
+                    </code>
+                </div>
+
+                <h3>Light Mode Example</h3>
+                <div class="contrast-light">
+                    <p><strong>Light Mode Example</strong></p>
+                    <p>This is how content appears in light mode with white background and dark text.</p>
+                </div>
+
+                <h3>Dark Mode Example</h3>
+                <div class="contrast-dark">
+                    <p><strong>Dark Mode Example</strong></p>
+                    <p>This is how content appears in dark mode with dark background and light text.</p>
+                </div>
+
+                <div class="info-box">
+                    <strong>ℹ️ How It Works:</strong>
+                    <p>The browser respects the user's operating system preference for light or dark mode and applies the corresponding CSS automatically.</p>
+                </div>
+            </section>
+
+            <!-- Section 10: Color Accessibility -->
+            <section>
+                <h2>10. Color Accessibility</h2>
+                <p>Ensure sufficient color contrast for readability and accessibility:</p>
+
+                <h3>Contrast Examples</h3>
+                <div class="demo-container">
+                    <div class="demo-label">Good Contrast</div>
+                    <div class="contrast-color">
+                        <p><strong>✓ Good Contrast</strong> - WCAG AA compliant</p>
+                        <p>Text is easily readable on this background.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <code>
+<span class="comment">/* WCAG AA - Minimum 4.5:1 contrast for normal text */</span>
+<span class="comment">/* WCAG AAA - Minimum 7:1 contrast for normal text */</span>
+
+<span class="selector">.good-contrast</span> {
+    <span class="property">background</span>: <span class="value">#667eea</span>;
+    <span class="property">color</span>: <span class="value">white</span>; <span class="comment">/* High contrast */</span>
+}
+
+<span class="selector">.poor-contrast</span> {
+    <span class="property">background</span>: <span class="value">#e0e0e0</span>;
+    <span class="property">color</span>: <span class="value">#d0d0d0</span>; <span class="comment">/* Low contrast - avoid! */</span>
+}
+                    </code>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Important:</strong>
+                    <p>Use contrast checkers to verify your color combinations meet WCAG guidelines for accessibility.</p>
+                </div>
+            </section>
+
+            <!-- Section 11: Color Modes Comparison -->
+            <section>
+                <h2>11. Color Modes Comparison Table</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Format</th>
+                            <th>Example</th>
+                            <th>Transparency</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Hex</strong></td>
+                            <td>#FF6B6B</td>
+                            <td>No</td>
+                            <td>Most common, web design</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hex + Alpha</strong></td>
+                            <td>#FF6B6BCC</td>
+                            <td>Yes</td>
+                            <td>Hex with transparency</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RGB</strong></td>
+                            <td>rgb(255, 107, 107)</td>
+                            <td>No</td>
+                            <td>Functional notation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RGBA</strong></td>
+                            <td>rgba(255, 107, 107, 0.5)</td>
+                            <td>Yes</td>
+                            <td>Overlays, shadows</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HSL</strong></td>
+                            <td>hsl(0, 100%, 71%)</td>
+                            <td>No</td>
+                            <td>Color variations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HSLA</strong></td>
+                            <td>hsla(0, 100%, 71%, 0.5)</td>
+                            <td>Yes</td>
+                            <td>Theme changes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Named</strong></td>
+                            <td>red, blue, green</td>
+                            <td>No</td>
+                            <td>Simple projects</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CSS Variables</strong></td>
+                            <td>var(--primary-color)</td>
+                            <td>Yes (if stored)</td>
+                            <td>Theme switching</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 12: Quick Reference -->
+            <section>
+                <h2>12. Quick Reference Guide</h2>
+
+                <div class="property-card">
+                    <h4>Hex Color Format</h4>
+                    <div class="values">
+                        #RRGGBB<br>
+                        Example: #FF6B6B<br>
+                        Shorthand: #F6B (= #FF66BB)
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <h4>RGB Color Format</h4>
+                    <div class="values">
+                        rgb(red, green, blue)<br>
+                        Example: rgb(255, 107, 107)<br>
+                        Range: 0-255 or 0%-100%
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <h4>RGBA Color Format</h4>
+                    <div class="values">
+                        rgba(red, green, blue, alpha)<br>
+                        Example: rgba(255, 107, 107, 0.5)<br>
+                        Alpha: 0-1
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <h4>HSL Color Format</h4>
+                    <div class="values">
+                        hsl(hue, saturation, lightness)<br>
+                        Example: hsl(0, 100%, 71%)<br>
+                        Hue: 0-360°
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <h4>Dark Mode Support</h4>
+                    <div class="values">
+                        @media (prefers-color-scheme: dark) { ... }<br>
+                        Use CSS variables for theme switching<br>
+                        Define separate color schemes
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 13: Best Practices -->
+            <section>
+                <h2>13. Best Practices & Tips</h2>
+
+                <div class="success-box">
+                    <h4>✓ Do's:</h4>
+                    <ul class="checklist">
+                        <li>Use CSS Variables for consistent theming</li>
+                        <li>Implement dark mode support</li>
+                        <li>Test color contrast for accessibility</li>
+                        <li>Use HSL for easy color variations</li>
+                        <li>Choose appropriate color formats for your needs</li>
+                        <li>Use RGBA for transparency instead of opacity</li>
+                        <li>Define colors at the root level for easy access</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>✗ Don'ts:</h4>
+                    <ul class="checklist">
+                        <li>Don't use poor color contrast</li>
+                        <li>Don't hardcode colors throughout your CSS</li>
+                        <li>Don't ignore dark mode preferences</li>
+                        <li>Don't use color alone to convey information</li>
+                        <li>Don't mix multiple color format systems</li>
+                        <li>Don't forget to test accessibility</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h4>💡 Pro Tips:</h4>
+                    <ul class="checklist">
+                        <li>Use HSL for creating color palettes (adjust lightness/saturation)</li>
+                        <li>Combine RGBA with background colors for overlay effects</li>
+                        <li>Use CSS Variables with media queries for theme switching</li>
+                        <li>Test with browser DevTools to verify color accessibility</li>
+                        <li>Use color tools like Adobe Color or Coolors for palettes</li>
+                        <li>Keep color definitions DRY (Don't Repeat Yourself)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 14: Browser Support -->
+            <section>
+                <h2>14. Browser Support</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                            <th>IE 11</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hex Colors</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <td>RGB Colors</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <td>RGBA Colors</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✗</td>
+                        </tr>
+                        <tr>
+                            <td>HSL/HSLA</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✗</td>
+                        </tr>
+                        <tr>
+                            <td>CSS Variables</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✗</td>
+                        </tr>
+                        <tr>
+                            <td>prefers-color-scheme</td>
+                            <td>✓ (76+)</td>
+                            <td>✓ (67+)</td>
+                            <td>✓ (12.1+)</td>
+                            <td>✓ (76+)</td>
+                            <td>✗</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Color Modes Complete Guide | Master Color Formats & Dark Mode</p>
+            <p>Perfect for Elementor website builders and web designers</p>
+        </footer>
+    </div>
+</body>
+</html>

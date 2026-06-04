@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS list-style-type - Complete Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .feature-status {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .syntax-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .example-grid {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .example-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .example-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .example-card code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #764ba2;
+            font-size: 0.9em;
+        }
+
+        .demo-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border: 2px dashed #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            min-height: 150px;
+        }
+
+        .demo-list {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        .demo-list li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .key-points {
+            background: #e8f4f8;
+            border-left: 4px solid #17a2b8;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .key-points h4 {
+            color: #17a2b8;
+            margin-bottom: 10px;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .key-points li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .browser-support {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px;
+            color: #555;
+        }
+
+        .comparison-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .tag.markers {
+            background: #28a745;
+        }
+
+        .tag.numeric {
+            background: #fd7e14;
+        }
+
+        .tag.alphabetic {
+            background: #17a2b8;
+        }
+
+        .tag.symbols {
+            background: #dc3545;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .marker-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .marker-item {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .marker-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .marker-example {
+            text-align: left;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            header {
+                padding: 25px;
+            }
+
+            .comparison-table {
+                font-size: 0.9em;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px;
+            }
+
+            .marker-showcase {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            h2 {
+                font-size: 1.2em;
+            }
+
+            h3 {
+                font-size: 1.1em;
+            }
+
+            .section {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .syntax-box {
+                font-size: 0.85em;
+                padding: 15px;
+            }
+
+            .marker-showcase {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS list-style-type</h1>
+            <p class="subtitle">List Marker Styling & Customization</p>
+            <div class="feature-status">
+                <div class="status-badge">✓ Numeric Markers</div>
+                <div class="status-badge">✓ Alphabetic Markers</div>
+                <div class="status-badge">✓ Symbol Markers</div>
+                <div class="status-badge">✓ Custom Types</div>
+            </div>
+        </header>
+
+        <div class="section">
+            <h2>What is list-style-type?</h2>
+            <p>
+                The <code>list-style-type</code> CSS property specifies the appearance of list markers (bullets, numbers, letters) used in ordered and unordered lists. It allows you to customize how list items are displayed, choosing from predefined marker styles or creating custom ones.
+            </p>
+            <div class="key-points">
+                <h4>Core Concept:</h4>
+                <ul>
+                    <li>Controls the visual marker appearing before list items</li>
+                    <li>Applies to both <code>&lt;ol&gt;</code> (ordered) and <code>&lt;ul&gt;</code> (unordered) lists</li>
+                    <li>Supports 50+ predefined marker styles</li>
+                    <li>Can be combined with <code>list-style-position</code> and <code>list-style-image</code></li>
+                    <li>Inherited property - applies to nested lists unless overridden</li>
+                    <li>Can be customized with CSS counters for advanced effects</li>
+                </ul>
+            </div>
+            <div class="browser-support">
+                <strong>Browser Support:</strong> Universal support across all modern and legacy browsers. IE 6+ supported.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Numeric Marker Types</h2>
+            
+            <h3>Common Numeric Markers</h3>
+            <p>Display numbers in various formats:</p>
+            <div class="syntax-box">
+/* Standard decimal numbers */
+ol { list-style-type: decimal; }        /* 1, 2, 3... */
+
+/* Zero-padded numbers */
+ol { list-style-type: decimal-leading-zero; }  /* 01, 02, 03... */
+
+/* Roman numerals (uppercase) */
+ol { list-style-type: upper-roman; }    /* I, II, III... */
+
+/* Roman numerals (lowercase) */
+ol { list-style-type: lower-roman; }    /* i, ii, iii... */
+
+/* Greek letters (lowercase) */
+ol { list-style-type: lower-greek; }    /* α, β, γ... */
+
+/* Armenian numerals */
+ol { list-style-type: armenian; }       /* Ա, Բ, Գ... */
+
+/* Georgian numerals */
+ol { list-style-type: georgian; }       /* ა, ბ, გ... */
+
+/* Hebrew numerals */
+ol { list-style-type: hebrew; }         /* א, ב, ג... */
+            </div>
+
+            <div class="marker-showcase">
+                <div class="marker-item">
+                    <strong>decimal</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: decimal;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>decimal-leading-zero</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: decimal-leading-zero;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>upper-roman</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: upper-roman;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>lower-roman</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: lower-roman;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>lower-greek</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: lower-greek;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>hebrew</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: hebrew;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <span class="tag numeric">Numeric</span>
+        </div>
+
+        <div class="section">
+            <h2>Alphabetic Marker Types</h2>
+            
+            <h3>Letter-Based Markers</h3>
+            <p>Display alphabetic characters as list markers:</p>
+            <div class="syntax-box">
+/* Uppercase letters */
+ol { list-style-type: upper-alpha; }    /* A, B, C... */
+
+/* Lowercase letters */
+ol { list-style-type: lower-alpha; }    /* a, b, c... */
+
+/* Uppercase Latin letters */
+ol { list-style-type: upper-latin; }    /* A, B, C... */
+
+/* Lowercase Latin letters */
+ol { list-style-type: lower-latin; }    /* a, b, c... */
+
+/* Hiragana (Japanese) */
+ol { list-style-type: hiragana; }       /* あ, い, う... */
+
+/* Hiragana-iroha (Japanese alternative) */
+ol { list-style-type: hiragana-iroha; } /* い, ろ, は... */
+
+/* Katakana (Japanese) */
+ol { list-style-type: katakana; }       /* ア, イ, ウ... */
+
+/* Katakana-iroha (Japanese alternative) */
+ol { list-style-type: katakana-iroha; } /* イ, ロ, ハ... */
+
+/* CJK ideographic numbers */
+ol { list-style-type: cjk-ideographic; }    /* 一, 二, 三... */
+
+/* Traditional Chinese counting */
+ol { list-style-type: trad-chinese-formal; }
+
+/* Simplified Chinese counting */
+ol { list-style-type: simp-chinese-formal; }
+            </div>
+
+            <div class="marker-showcase">
+                <div class="marker-item">
+                    <strong>upper-alpha</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: upper-alpha;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>lower-alpha</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: lower-alpha;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>upper-latin</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: upper-latin;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>lower-latin</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: lower-latin;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>hiragana</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: hiragana;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>katakana</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: katakana;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <span class="tag alphabetic">Alphabetic</span>
+        </div>
+
+        <div class="section">
+            <h2>Symbol & Special Marker Types</h2>
+            
+            <h3>Non-Alphabetic & Symbol Markers</h3>
+            <p>Display symbols, discs, and special characters:</p>
+            <div class="syntax-box">
+/* Basic symbols for unordered lists */
+ul { list-style-type: disc; }           /* • */
+ul { list-style-type: circle; }         /* ○ */
+ul { list-style-type: square; }         /* ■ */
+
+/* No marker */
+ul { list-style-type: none; }           /* (no marker) */
+
+/* Symbolic numbering */
+ol { list-style-type: symbols(cyclic, "◉" "◎" "◍"); }
+
+/* Thai numerals */
+ol { list-style-type: thai; }           /* ๑, ๒, ๓... */
+
+/* Lao numerals */
+ol { list-style-type: lao; }            /* ໑, ໒, ໓... */
+
+/* Devanagari numerals (Hindi) */
+ol { list-style-type: devanagari; }     /* १, २, ३... */
+
+/* Bengali numerals */
+ol { list-style-type: bengali; }        /* ১, ২, ৩... */
+
+/* Khmer numerals (Cambodian) */
+ol { list-style-type: khmer; }          /* ១, ២, ៣... */
+
+/* Vietnamese */
+ol { list-style-type: vietnamese; }     /* I, II, III... */
+            </div>
+
+            <div class="marker-showcase">
+                <div class="marker-item">
+                    <strong>disc</strong>
+                    <div class="marker-example">
+                        <ul style="list-style-type: disc;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>circle</strong>
+                    <div class="marker-example">
+                        <ul style="list-style-type: circle;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>square</strong>
+                    <div class="marker-example">
+                        <ul style="list-style-type: square;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>thai</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: thai;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>devanagari</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: devanagari;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="marker-item">
+                    <strong>bengali</strong>
+                    <div class="marker-example">
+                        <ol style="list-style-type: bengali;">
+                            <li>First item</li>
+                            <li>Second item</li>
+                            <li>Third item</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <span class="tag symbols">Symbols</span>
+        </div>
+
+        <div class="section">
+            <h2>List Style Properties</h2>
+            
+            <h3>Complete list-style Shorthand</h3>
+            <p>Combine list-style properties in a single declaration:</p>
+            <div class="syntax-box">
+/* Shorthand: type | position | image */
+ul {
+    list-style: square inside url('bullet.png');
+}
+
+/* Equivalent to: */
+ul {
+    list-style-type: square;
+    list-style-position: inside;
+    list-style-image: url('bullet.png');
+}
+
+/* Individual properties */
+ol {
+    list-style-type: upper-roman;          /* Marker type */
+    list-style-position: outside;          /* Marker position */
+    list-style-image: none;                /* Custom image */
+}
+            </div>
+
+            <h3>Position Values</h3>
+            <div class="syntax-box">
+/* outside (default) - marker outside text box */
+ol { list-style-position: outside; }
+
+/* inside - marker inside text box */
+ol { list-style-position: inside; }
+            </div>
+
+            <h3>Nested Lists</h3>
+            <div class="syntax-box">
+/* Different markers for nested levels */
+ol { list-style-type: decimal; }
+ol ol { list-style-type: lower-alpha; }
+ol ol ol { list-style-type: lower-roman; }
+
+/* Result: 1, 2, 3 / a, b, c / i, ii, iii */
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Best Practices</h2>
+            
+            <div class="key-points">
+                <h4>✓ DO:</h4>
+                <ul>
+                    <li><strong>Match list type to purpose:</strong> Use decimal for steps, lower-alpha for lettered options</li>
+                    <li><strong>Consider accessibility:</strong> Maintain readable contrast between marker and text</li>
+                    <li><strong>Use nested markers appropriately:</strong> Use different markers for multi-level lists</li>
+                    <li><strong>Test with different languages:</strong> Some marker types are language-specific</li>
+                    <li><strong>Keep it simple:</strong> Stick to common marker types for better compatibility</li>
+                    <li><strong>Use list-style shorthand:</strong> Cleaner than individual properties</li>
+                    <li><strong>Consider mobile rendering:</strong> Test marker appearance on small screens</li>
+                </ul>
+            </div>
+
+            <div class="key-points" style="background: #f8d7da; border-color: #721c24; color: #721c24;">
+                <h4 style="color: #721c24;">✗ DON'T:</h4>
+                <ul style="color: #721c24;">
+                    <li><strong>Use none without replacement:</strong> Provide visual hierarchy or alternative markers</li>
+                    <li><strong>Mix too many marker types:</strong> Consistency aids comprehension</li>
+                    <li><strong>Ignore semantics:</strong> Use &lt;ol&gt; for ordered lists, &lt;ul&gt; for unordered</li>
+                    <li><strong>Make markers invisible:</strong> Ensure sufficient contrast for accessibility</li>
+                    <li><strong>Combine conflicting properties:</strong> list-style-image overrides list-style-type</li>
+                    <li><strong>Use language-specific markers incorrectly:</strong> Match marker to content language</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Browser Support & Compatibility</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Marker Type</th>
+                        <th>Category</th>
+                        <th>Browser Support</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>decimal, upper-alpha, lower-alpha</td>
+                        <td>Basic</td>
+                        <td>Universal</td>
+                        <td>Supported in all browsers</td>
+                    </tr>
+                    <tr>
+                        <td>upper-roman, lower-roman</td>
+                        <td>Numeric</td>
+                        <td>Universal</td>
+                        <td>Standard support</td>
+                    </tr>
+                    <tr>
+                        <td>disc, circle, square</td>
+                        <td>Symbols</td>
+                        <td>Universal</td>
+                        <td>Standard unordered markers</td>
+                    </tr>
+                    <tr>
+                        <td>lower-greek, hebrew, armenian</td>
+                        <td>Language</td>
+                        <td>Modern Browsers</td>
+                        <td>May need fallback for older IE</td>
+                    </tr>
+                    <tr>
+                        <td>hiragana, katakana, cjk-ideographic</td>
+                        <td>CJK</td>
+                        <td>Modern Browsers</td>
+                        <td>Language-specific support</td>
+                    </tr>
+                    <tr>
+                        <td>devanagari, bengali, khmer, thai</td>
+                        <td>Scripts</td>
+                        <td>Modern Browsers</td>
+                        <td>Script-specific numbering</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Key Takeaways</h2>
+            
+            <div class="key-points">
+                <ul>
+                    <li>
+                        <strong>50+ Marker Types:</strong> CSS provides extensive options for numeric, alphabetic, and symbol markers
+                    </li>
+                    <li>
+                        <strong>Language Support:</strong> Markers exist for various languages and writing systems
+                    </li>
+                    <li>
+                        <strong>Semantic HTML First:</strong> Use &lt;ol&gt; for ordered and &lt;ul&gt; for unordered lists
+                    </li>
+                    <li>
+                        <strong>Nested Lists:</strong> Use different marker types at each nesting level for clarity
+                    </li>
+                    <li>
+                        <strong>Position Property:</strong> Control whether markers appear inside or outside content flow
+                    </li>
+                    <li>
+                        <strong>Accessibility Matters:</strong> Ensure markers are visible and provide meaningful structure
+                    </li>
+                    <li>
+                        <strong>Universal Browser Support:</strong> Basic markers work everywhere; advanced ones need testing
+                    </li>
+                    <li>
+                        <strong>Use list-style Shorthand:</strong> Combine type, position, and image in one property
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS list-style-type Tutorial • Complete List Marker Guide</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Created with ❤️ for modern CSS education</p>
+        </footer>
+    </div>
+</body>
+</html>

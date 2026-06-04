@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Mix-Blend-Mode Practice Examples - Interactive Exercises</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f97316;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --text-primary: var(--neutral-900);
+            --text-secondary: var(--neutral-600);
+            --bg-primary: #ffffff;
+            --bg-secondary: var(--neutral-100);
+            --border-color: var(--neutral-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: var(--neutral-50);
+                --text-secondary: var(--neutral-400);
+                --bg-primary: var(--neutral-900);
+                --bg-secondary: var(--neutral-800);
+                --border-color: var(--neutral-700);
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        nav {
+            background-color: var(--bg-secondary);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 130px;
+            z-index: 99;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section > h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        pre {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+
+        pre code {
+            color: var(--text-primary);
+        }
+
+        :not(pre) > code {
+            background-color: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .practice-box {
+            background-color: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .practice-box h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .demo-background {
+            background: linear-gradient(135deg, #6366f1 0%, #ec4899 50%, #f59e0b 100%);
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .demo-element {
+            padding: 20px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .demo-element:hover {
+            transform: scale(1.05);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+        }
+
+        .toggle-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .toggle-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--neutral-100));
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .feature-box {
+                background: linear-gradient(135deg, var(--neutral-800), var(--neutral-700));
+            }
+        }
+
+        .challenge-section {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .challenge-section h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .solution-btn {
+            background: var(--success);
+            color: white;
+        }
+
+        .solution-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .output-area {
+            background-color: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .solution {
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--success);
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .solution.show {
+            display: block;
+        }
+
+        .collapsible {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            background-color: var(--border-color);
+        }
+
+        .collapsible.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .content {
+            padding: 15px;
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            margin-bottom: 10px;
+        }
+
+        .content.show {
+            display: block;
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>CSS Mix-Blend-Mode Practice</h1>
+        <p>Interactive exercises to master element blending with backgrounds</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#challenges">Challenges</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#reference">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Examples Section -->
+        <section id="examples">
+            <h2>Practice Examples</h2>
+            <p>Work through these interactive examples to understand how mix-blend-mode blends elements with their background.</p>
+
+            <!-- Example 1: Multiply Mode -->
+            <div class="practice-box">
+                <h3>1️⃣ Multiply Mode - Element Darkening</h3>
+                <p>Multiply mode darkens the element based on what's behind it. Perfect for text and overlays on colorful backgrounds.</p>
+                <div class="demo-background">
+                    <div class="demo-element" style="background: white; color: #333; mix-blend-mode: normal;">
+                        Normal (white stays white)
+                    </div>
+                    <div class="demo-element" style="background: white; mix-blend-mode: multiply;">
+                        Multiply (blends with background)
+                    </div>
+                </div>
+                <pre><code>.element {
+    background: white;
+    color: white;
+    mix-blend-mode: multiply;
+}
+
+/* Result: Element darkens based on background colors */</code></pre>
+                <p><strong>Key Insight:</strong> White becomes invisible, darker colors remain darker. Great for blending UI elements over images.</p>
+            </div>
+
+            <!-- Example 2: Screen Mode -->
+            <div class="practice-box">
+                <h3>2️⃣ Screen Mode - Lightening Effect</h3>
+                <p>Screen mode lightens the element. Opposite of multiply. Perfect for glow effects.</p>
+                <div class="demo-background">
+                    <div class="demo-element" style="background: black; mix-blend-mode: normal;">
+                        Normal (black stays black)
+                    </div>
+                    <div class="demo-element" style="background: black; mix-blend-mode: screen;">
+                        Screen (lightens background)
+                    </div>
+                </div>
+                <pre><code>.glow-element {
+    background: black;
+    mix-blend-mode: screen;
+}
+
+/* Result: Creates glowing/light effect */</code></pre>
+                <p><strong>Key Insight:</strong> Black becomes transparent, light colors create bright glow.</p>
+            </div>
+
+            <!-- Example 3: Overlay Mode -->
+            <div class="practice-box">
+                <h3>3️⃣ Overlay Mode - High Contrast</h3>
+                <p>Overlay combines multiply and screen. Creates dramatic contrast effects.</p>
+                <div class="demo-background">
+                    <div class="demo-element" style="background: rgba(99, 102, 241, 0.5); color: white; mix-blend-mode: normal;">
+                        Normal (standard opacity)
+                    </div>
+                    <div class="demo-element" style="background: rgba(99, 102, 241, 0.5); color: white; mix-blend-mode: overlay;">
+                        Overlay (high contrast)
+                    </div>
+                </div>
+                <pre><code>.contrast-element {
+    background: rgba(99, 102, 241, 0.5);
+    mix-blend-mode: overlay;
+}
+
+/* Result: High contrast blend effect */</code></pre>
+                <p><strong>Key Insight:</strong> Creates punchy, professional effects. Good for design elements.</p>
+            </div>
+
+            <!-- Example 4: Soft-Light Mode -->
+            <div class="practice-box">
+                <h3>4️⃣ Soft-Light Mode - Subtle Enhancement</h3>
+                <p>Soft-light provides gentle contrast adjustment. More subtle than overlay.</p>
+                <div class="demo-background">
+                    <div class="demo-element" style="background: rgba(99, 102, 241, 0.7); color: white; mix-blend-mode: overlay;">
+                        Overlay (strong)
+                    </div>
+                    <div class="demo-element" style="background: rgba(99, 102, 241, 0.7); color: white; mix-blend-mode: soft-light;">
+                        Soft-Light (gentle)
+                    </div>
+                </div>
+                <pre><code>.gentle-element {
+    background: rgba(99, 102, 241, 0.7);
+    mix-blend-mode: soft-light;
+}
+
+/* Result: Professional, subtle effect */</code></pre>
+                <p><strong>Key Insight:</strong> Perfect for professional designs that need subtlety.</p>
+            </div>
+
+            <!-- Example 5: Color Mode -->
+            <div class="practice-box">
+                <h3>5️⃣ Color Mode - Hue & Saturation Blend</h3>
+                <p>Color mode applies the element's color while preserving background luminosity.</p>
+                <div class="demo-background">
+                    <div class="demo-element" style="background: #ff0000; mix-blend-mode: normal;">
+                        Normal (opaque red)
+                    </div>
+                    <div class="demo-element" style="background: #ff0000; mix-blend-mode: color;">
+                        Color (red blend)
+                    </div>
+                </div>
+                <pre><code>.color-blend {
+    background: #ff0000;
+    mix-blend-mode: color;
+}
+
+/* Result: Red hue applied while preserving detail */</code></pre>
+                <p><strong>Key Insight:</strong> Perfect for tinting or applying color effects without losing background detail.</p>
+            </div>
+
+            <!-- Example 6: Darken & Lighten -->
+            <div class="practice-box">
+                <h3>6️⃣ Darken & Lighten Modes - Selective Blending</h3>
+                <p>Darken and Lighten compare colors and select the darker/lighter one.</p>
+                <div class="demo-background">
+                    <div class="demo-element" style="background: #333333; mix-blend-mode: darken; color: white;">
+                        Darken
+                    </div>
+                    <div class="demo-element" style="background: #ffffff; mix-blend-mode: lighten; color: #333;">
+                        Lighten
+                    </div>
+                </div>
+                <pre><code>.darken-blend {
+    mix-blend-mode: darken;
+}
+
+.lighten-blend {
+    mix-blend-mode: lighten;
+}</code></pre>
+                <p><strong>Key Insight:</strong> Creates selective masking effects based on brightness.</p>
+            </div>
+
+            <!-- Example 7: Text Blending -->
+            <div class="practice-box">
+                <h3>7️⃣ Text with Mix-Blend-Mode</h3>
+                <p>Blend text directly with colorful backgrounds for creative typography.</p>
+                <div class="demo-background">
+                    <h2 style="margin: 0; color: white; mix-blend-mode: normal; font-size: 2rem;">
+                        Normal Text
+                    </h2>
+                    <h2 style="margin: 0; color: white; mix-blend-mode: multiply; font-size: 2rem;">
+                        Multiply Text
+                    </h2>
+                </div>
+                <pre><code>h2 {
+    color: white;
+    mix-blend-mode: multiply;
+}
+
+/* Result: Text blends with background */</code></pre>
+                <p><strong>Key Insight:</strong> Create eye-catching typography by blending text with colorful backgrounds.</p>
+            </div>
+
+            <!-- Example 8: Hover Effects -->
+            <div class="practice-box">
+                <h3>8️⃣ Hover Effect - Dynamic Blending</h3>
+                <p>Change blend mode on hover for interactive effects.</p>
+                <div class="demo-background">
+                    <div class="demo-element" style="
+                        background: rgba(99, 102, 241, 0.6);
+                        color: white;
+                        mix-blend-mode: normal;
+                        transition: mix-blend-mode 0.3s ease;
+                        cursor: pointer;
+                    " onmouseover="this.style.mixBlendMode='overlay'" onmouseout="this.style.mixBlendMode='normal'">
+                        Hover me for blend effect
+                    </div>
+                </div>
+                <pre><code>.element {
+    background: rgba(99, 102, 241, 0.6);
+    mix-blend-mode: normal;
+    transition: mix-blend-mode 0.3s ease;
+}
+
+.element:hover {
+    mix-blend-mode: overlay;
+}</code></pre>
+                <p><strong>Key Insight:</strong> Interactive hover effects create engaging user experiences.</p>
+            </div>
+        </section>
+
+        <!-- Challenges Section -->
+        <section id="challenges">
+            <h2>Challenge Exercises</h2>
+            <p>Test your knowledge by identifying or creating the correct blend modes.</p>
+
+            <!-- Challenge 1 -->
+            <div class="challenge-section">
+                <h3>Challenge 1: Blend Text Over Image</h3>
+                <p>Create CSS that makes white text blend naturally with a colorful background using multiply mode.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge1()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge1')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge1">
+                    <pre><code>h1 {
+    color: white;
+    mix-blend-mode: multiply;
+}
+
+/* The white text multiplies with the colorful background,
+   creating natural-looking blended text */</code></pre>
+                </div>
+                <div class="output-area" id="challenge1-output"></div>
+            </div>
+
+            <!-- Challenge 2 -->
+            <div class="challenge-section">
+                <h3>Challenge 2: Create Glow Overlay</h3>
+                <p>Create a glowing effect on a dark element using screen mode.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge2()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge2')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge2">
+                    <pre><code>.glow {
+    background: black;
+    mix-blend-mode: screen;
+}
+
+/* Black becomes transparent, creating bright glow effect */</code></pre>
+                </div>
+                <div class="output-area" id="challenge2-output"></div>
+            </div>
+
+            <!-- Challenge 3 -->
+            <div class="challenge-section">
+                <h3>Challenge 3: High Contrast Card</h3>
+                <p>Create a card with overlay mode for high contrast effect.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge3()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge3')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge3">
+                    <pre><code>.card {
+    background: rgba(99, 102, 241, 0.5);
+    mix-blend-mode: overlay;
+}
+
+/* Creates high contrast, punchy card design */</code></pre>
+                </div>
+                <div class="output-area" id="challenge3-output"></div>
+            </div>
+
+            <!-- Challenge 4 -->
+            <div class="challenge-section">
+                <h3>Challenge 4: Color Tint Overlay</h3>
+                <p>Apply a color tint using color mode to blend element with background.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge4()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge4')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge4">
+                    <pre><code>.tint {
+    background: #ff6b35;
+    mix-blend-mode: color;
+}
+
+/* Applies warm orange tint while preserving background detail */</code></pre>
+                </div>
+                <div class="output-area" id="challenge4-output"></div>
+            </div>
+
+            <!-- Challenge 5 -->
+            <div class="challenge-section">
+                <h3>Challenge 5: Hover Blend Effect</h3>
+                <p>Create hover effect that changes blend mode from normal to overlay.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge5()">Test Example</button>
+                    <button class="btn solution-btn" onclick="toggleSolution('challenge5')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge5">
+                    <pre><code>.element {
+    mix-blend-mode: normal;
+    transition: mix-blend-mode 0.3s ease;
+}
+
+.element:hover {
+    mix-blend-mode: overlay;
+}
+
+/* Changes to high contrast on hover */</code></pre>
+                </div>
+                <div class="output-area" id="challenge5-output"></div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>Real-World Projects</h2>
+
+            <div class="practice-box">
+                <h3>Project 1: Blended Navigation</h3>
+                <p>Create navigation that blends over hero background image.</p>
+                <pre><code>nav {
+    background: rgba(255, 255, 255, 0.1);
+    mix-blend-mode: soft-light;
+    backdrop-filter: blur(10px);
+}
+
+nav a {
+    color: white;
+    mix-blend-mode: multiply;
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 2: Image Gallery Overlay</h3>
+                <p>Gallery images with hover blend effect and overlay.</p>
+                <pre><code>.gallery-item {
+    position: relative;
+}
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(99, 102, 241, 0.5);
+    mix-blend-mode: multiply;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 3: Blended Hero Section</h3>
+                <p>Hero with text blended using mix-blend-mode.</p>
+                <pre><code>.hero {
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.hero h1 {
+    color: white;
+    mix-blend-mode: multiply;
+    font-size: 3rem;
+}
+
+.hero p {
+    color: white;
+    mix-blend-mode: overlay;
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 4: Card Deck with Blends</h3>
+                <p>Cards with different blend modes for visual interest.</p>
+                <pre><code>.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.card.primary {
+    background: rgba(99, 102, 241, 0.6);
+    mix-blend-mode: multiply;
+}
+
+.card.secondary {
+    background: rgba(236, 72, 153, 0.6);
+    mix-blend-mode: overlay;
+}
+
+.card.accent {
+    background: rgba(245, 158, 11, 0.6);
+    mix-blend-mode: soft-light;
+}</code></pre>
+            </div>
+
+            <div class="practice-box">
+                <h3>Project 5: Animated Blend Effect</h3>
+                <p>Animated elements with changing blend modes.</p>
+                <pre><code>@keyframes blendAnimation {
+    0% { mix-blend-mode: multiply; }
+    50% { mix-blend-mode: overlay; }
+    100% { mix-blend-mode: screen; }
+}
+
+.element {
+    animation: blendAnimation 3s ease-in-out infinite;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Reference Section -->
+        <section id="reference">
+            <h2>Quick Reference & Tips</h2>
+
+            <div class="practice-box">
+                <h3>Blend Mode Selection</h3>
+                <p><strong>Need to darken text/element?</strong> Use <code>multiply</code></p>
+                <p><strong>Need to lighten text/element?</strong> Use <code>screen</code></p>
+                <p><strong>Need high contrast?</strong> Use <code>overlay</code></p>
+                <p><strong>Need subtle effect?</strong> Use <code>soft-light</code></p>
+                <p><strong>Need color tint?</strong> Use <code>color</code></p>
+                <p><strong>Need brightness control?</strong> Use <code>luminosity</code></p>
+            </div>
+
+            <div class="practice-box">
+                <h3>Common Patterns</h3>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Text Blending Over Image</button>
+                <div class="content">
+                    <pre><code>h1 {
+    color: white;
+    mix-blend-mode: multiply;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Glow Effect</button>
+                <div class="content">
+                    <pre><code>.glow {
+    background: white;
+    mix-blend-mode: screen;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">High Contrast Card</button>
+                <div class="content">
+                    <pre><code>.card {
+    background: rgba(99, 102, 241, 0.5);
+    mix-blend-mode: overlay;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Hover Blend Change</button>
+                <div class="content">
+                    <pre><code>.element {
+    mix-blend-mode: normal;
+    transition: mix-blend-mode 0.3s ease;
+}
+
+.element:hover {
+    mix-blend-mode: overlay;
+}</code></pre>
+                </div>
+
+                <button class="collapsible" onclick="toggleCollapsible(event)">Glass Morphism</button>
+                <div class="content">
+                    <pre><code>.glass {
+                        background: rgba(255, 255, 255, 0.1);
+                        mix-blend-mode: soft-light;
+                        backdrop-filter: blur(10px);
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                    }</code></pre>
+                </div>
+            </div>
+
+            <div class="practice-box">
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>Test blend modes on different backgrounds</li>
+                    <li>Maintain text readability with sufficient contrast</li>
+                    <li>Use transitions when changing blend modes</li>
+                    <li>Combine with opacity for fine control</li>
+                    <li>Consider mobile and print styles</li>
+                    <li>Don't overuse - let effects enhance design</li>
+                    <li>Test on real devices and browsers</li>
+                    <li>Provide accessible fallbacks</li>
+                </ul>
+            </div>
+
+            <div class="practice-box">
+                <h3>Troubleshooting</h3>
+                <ul>
+                    <li><strong>Text unreadable:</strong> Adjust opacity or change blend mode</li>
+                    <li><strong>Effect too subtle:</strong> Try overlay or hard-light instead</li>
+                    <li><strong>Effect too strong:</strong> Use soft-light or color instead</li>
+                    <li><strong>Not blending:</strong> Ensure element is positioned over background</li>
+                    <li><strong>Looking wrong on mobile:</strong> Test and adjust for different screens</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>CSS Mix-Blend-Mode Practice Examples</strong></p>
+        <p>Master element blending with backgrounds</p>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary);">
+            Practice these examples until you can confidently use mix-blend-mode to create professional blending effects.
+        </p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const btn = document.querySelector('.toggle-btn');
+            const isDark = btn.textContent.includes('Light');
+            btn.textContent = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            solution.classList.toggle('show');
+        }
+
+        function toggleCollapsible(event) {
+            const btn = event.target;
+            const content = btn.nextElementSibling;
+            btn.classList.toggle('active');
+            content.classList.toggle('show');
+        }
+
+        function testChallenge1() {
+            const output = document.getElementById('challenge1-output');
+            output.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+                    padding: 30px;
+                    border-radius: 6px;
+                    width: 100%;
+                ">
+                    <h2 style="margin: 0; color: white; mix-blend-mode: multiply;">
+                        Blended Text Example
+                    </h2>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem;">✓ Text blends with background</p>
+            `;
+        }
+
+        function testChallenge2() {
+            const output = document.getElementById('challenge2-output');
+            output.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+                    padding: 30px;
+                    border-radius: 6px;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">
+                    <div style="
+                        background: black;
+                        mix-blend-mode: screen;
+                        color: white;
+                        padding: 20px 30px;
+                        border-radius: 6px;
+                        font-weight: 600;
+                    ">
+                        Glow Effect
+                    </div>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem;">✓ Glow effect created</p>
+            `;
+        }
+
+        function testChallenge3() {
+            const output = document.getElementById('challenge3-output');
+            output.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+                    padding: 30px;
+                    border-radius: 6px;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">
+                    <div style="
+                        background: rgba(99, 102, 241, 0.5);
+                        mix-blend-mode: overlay;
+                        color: white;
+                        padding: 20px 30px;
+                        border-radius: 6px;
+                        font-weight: 600;
+                    ">
+                        High Contrast Card
+                    </div>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem;">✓ High contrast effect</p>
+            `;
+        }
+
+        function testChallenge4() {
+            const output = document.getElementById('challenge4-output');
+            output.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+                    padding: 30px;
+                    border-radius: 6px;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">
+                    <div style="
+                        background: #ff6b35;
+                        mix-blend-mode: color;
+                        color: white;
+                        padding: 20px 30px;
+                        border-radius: 6px;
+                        font-weight: 600;
+                    ">
+                        Color Tint
+                    </div>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem;">✓ Color tint applied</p>
+            `;
+        }
+
+        function testChallenge5() {
+            const output = document.getElementById('challenge5-output');
+            output.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+                    padding: 30px;
+                    border-radius: 6px;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">
+                    <div style="
+                        background: rgba(99, 102, 241, 0.6);
+                        color: white;
+                        padding: 20px 30px;
+                        border-radius: 6px;
+                        font-weight: 600;
+                        mix-blend-mode: normal;
+                        transition: mix-blend-mode 0.3s ease;
+                        cursor: pointer;
+                    " 
+                    onmouseover="this.style.mixBlendMode='overlay'" 
+                    onmouseout="this.style.mixBlendMode='normal'">
+                        Hover me
+                    </div>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem;">✓ Hover to see blend change</p>
+            `;
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize theme on page load
+        window.addEventListener('load', function() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const btn = document.querySelector('.toggle-btn');
+            if (prefersDark) {
+                btn.textContent = '☀️ Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>

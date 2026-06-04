@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Opacity Practice Examples - Interactive Exercises</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f97316;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --text-primary: var(--neutral-900);
+            --text-secondary: var(--neutral-600);
+            --bg-primary: #ffffff;
+            --bg-secondary: var(--neutral-100);
+            --border-color: var(--neutral-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: var(--neutral-50);
+                --text-secondary: var(--neutral-400);
+                --bg-primary: var(--neutral-900);
+                --bg-secondary: var(--neutral-800);
+                --border-color: var(--neutral-700);
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        nav {
+            background-color: var(--bg-secondary);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 130px;
+            z-index: 99;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section > h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        pre {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+
+        pre code {
+            color: var(--text-primary);
+        }
+
+        :not(pre) > code {
+            background-color: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .practice-box {
+            background-color: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .practice-box h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .demo-area {
+            background-color: var(--bg-primary);
+            border: 2px dashed var(--border-color);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+        }
+
+        .toggle-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .toggle-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* ============= PRACTICE EXAMPLE 1: HOVER EFFECTS ============= */
+        .practice-1-box {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .practice-1-box:hover {
+            opacity: 0.7;
+        }
+
+        /* ============= PRACTICE EXAMPLE 2: BUTTON STATES ============= */
+        .practice-2-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
+
+        .practice-2-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .practice-2-btn:active {
+            opacity: 0.8;
+            transform: translateY(0);
+        }
+
+        .practice-2-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ============= PRACTICE EXAMPLE 3: IMAGE OVERLAY ============= */
+        .practice-3-container {
+            position: relative;
+            width: 250px;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .practice-3-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent), var(--warning));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .practice-3-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .practice-3-container:hover .practice-3-overlay {
+            opacity: 1;
+        }
+
+        /* ============= PRACTICE EXAMPLE 4: FADE IN ANIMATION ============= */
+        @keyframes fadeInAnimation {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .practice-4-item {
+            opacity: 0;
+            animation: fadeInAnimation 1s ease-in forwards;
+        }
+
+        .practice-4-item-1 { animation-delay: 0s; }
+        .practice-4-item-2 { animation-delay: 0.3s; }
+        .practice-4-item-3 { animation-delay: 0.6s; }
+
+        /* ============= PRACTICE EXAMPLE 5: PULSING EFFECT ============= */
+        @keyframes pulseAnimation {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .practice-5-pulse {
+            animation: pulseAnimation 2s ease-in-out infinite;
+        }
+
+        /* ============= PRACTICE EXAMPLE 6: WATERMARK ============= */
+        .practice-6-container {
+            position: relative;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            padding: 40px;
+            border-radius: 8px;
+            color: white;
+            min-height: 200px;
+            overflow: hidden;
+        }
+
+        .practice-6-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 4rem;
+            font-weight: bold;
+            opacity: 0.1;
+            color: white;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .practice-6-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============= PRACTICE EXAMPLE 7: DISABLED STATE ============= */
+        .practice-7-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            width: 150px;
+            text-align: center;
+            transition: opacity 0.3s ease;
+        }
+
+        .practice-7-card.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* ============= PRACTICE EXAMPLE 8: COLOR FADE ============= */
+        @keyframes colorFade {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .practice-8-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            animation: colorFade 3s ease-in-out infinite;
+        }
+
+        .practice-8-circle-1 {
+            background: var(--primary);
+        }
+
+        .practice-8-circle-2 {
+            background: var(--secondary);
+            animation-delay: 0.5s;
+        }
+
+        .practice-8-circle-3 {
+            background: var(--accent);
+            animation-delay: 1s;
+        }
+
+        /* ============= PRACTICE EXAMPLE 9: GRADIENT OPACITY ============= */
+        .practice-9-gradient {
+            height: 150px;
+            background: linear-gradient(to right,
+                rgba(99, 102, 241, 0) 0%,
+                rgba(99, 102, 241, 0.3) 25%,
+                rgba(99, 102, 241, 0.6) 50%,
+                rgba(99, 102, 241, 0.9) 75%,
+                rgba(99, 102, 241, 1) 100%
+            );
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding-bottom: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .practice-9-label {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ============= PRACTICE EXAMPLE 10: TOOLTIP ============= */
+        .practice-10-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .practice-10-trigger {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: help;
+            font-weight: 600;
+            border: none;
+        }
+
+        .practice-10-tooltip {
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(17, 24, 39, 0.95);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .practice-10-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: rgba(17, 24, 39, 0.95);
+        }
+
+        .practice-10-container:hover .practice-10-tooltip {
+            opacity: 1;
+        }
+
+        /* ============= CHALLENGE SECTION ============= */
+        .challenge-section {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .challenge-section h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .code-editor {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-editor textarea {
+            width: 100%;
+            min-height: 200px;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        .output-area {
+            background-color: var(--bg-primary);
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 100px;
+            margin-top: 15px;
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .solution-btn {
+            background: var(--success);
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .solution-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .solution {
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--success);
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .solution.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            .demo-area {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>CSS Opacity Practice Examples</h1>
+        <p>Interactive exercises to master opacity effects and animations</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#challenges">Challenges</a></li>
+            <li><a href="#solutions">Solutions</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Section: Practice Examples -->
+        <section id="examples">
+            <h2>Practice Examples</h2>
+            <p>Work through these 10 practical examples to understand opacity in real-world scenarios. Try hovering, clicking, and interacting with each demo.</p>
+
+            <!-- Example 1: Hover Effects -->
+            <div class="practice-box">
+                <h3>1️⃣ Hover Effect - Opacity on Click</h3>
+                <p>Click the box below to see opacity change. Notice how the entire element becomes more transparent.</p>
+                <div class="demo-area">
+                    <div class="practice-1-box" onclick="alert('Opacity changed to 0.7 on hover!')">
+                        Hover/Click Me
+                    </div>
+                </div>
+                <pre><code>.box {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.box:hover {
+    opacity: 0.7;
+}</code></pre>
+                <p><strong>Key Point:</strong> The transition property creates a smooth effect instead of instant change.</p>
+            </div>
+
+            <!-- Example 2: Button States -->
+            <div class="practice-box">
+                <h3>2️⃣ Button States - Hover & Disabled</h3>
+                <p>Try clicking the buttons. Notice the normal, hover, and disabled states with different opacity levels.</p>
+                <div class="demo-area">
+                    <button class="practice-2-btn">Normal Button</button>
+                    <button class="practice-2-btn" disabled>Disabled Button</button>
+                </div>
+                <pre><code>.button {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.button:active {
+    opacity: 0.8;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}</code></pre>
+                <p><strong>Key Point:</strong> Different opacity levels communicate different button states to users.</p>
+            </div>
+
+            <!-- Example 3: Image Overlay -->
+            <div class="practice-box">
+                <h3>3️⃣ Image Overlay - Reveal on Hover</h3>
+                <p>Hover over the image to see the overlay fade in. This technique is perfect for portfolio sites.</p>
+                <div class="demo-area">
+                    <div class="practice-3-container">
+                        <div class="practice-3-image">Image</div>
+                        <div class="practice-3-overlay">View Details</div>
+                    </div>
+                </div>
+                <pre><code>.overlay {
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.container:hover .overlay {
+    opacity: 1;
+}</code></pre>
+                <p><strong>Key Point:</strong> Use rgba() with opacity for better control over nested elements.</p>
+            </div>
+
+            <!-- Example 4: Fade In Animation -->
+            <div class="practice-box">
+                <h3>4️⃣ Fade In Animation - Staggered</h3>
+                <p>Watch as items fade in one by one with staggered delays. Perfect for page load animations.</p>
+                <div class="demo-area">
+                    <div class="practice-4-item practice-4-item-1" style="background: var(--primary); color: white; padding: 20px; border-radius: 6px;">Item 1</div>
+                    <div class="practice-4-item practice-4-item-2" style="background: var(--secondary); color: white; padding: 20px; border-radius: 6px;">Item 2</div>
+                    <div class="practice-4-item practice-4-item-3" style="background: var(--accent); color: #000; padding: 20px; border-radius: 6px;">Item 3</div>
+                </div>
+                <pre><code>@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.item {
+    animation: fadeIn 1s ease-in forwards;
+}
+
+.item-1 { animation-delay: 0s; }
+.item-2 { animation-delay: 0.3s; }
+.item-3 { animation-delay: 0.6s; }</code></pre>
+                <p><strong>Key Point:</strong> Use animation-delay to create staggered effects.</p>
+            </div>
+
+            <!-- Example 5: Pulsing Effect -->
+            <div class="practice-box">
+                <h3>5️⃣ Pulsing Effect - Breathing Animation</h3>
+                <p>This element pulses continuously. Useful for drawing attention to important elements.</p>
+                <div class="demo-area">
+                    <div class="practice-5-pulse" style="background: var(--danger); color: white; width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">Pulse</div>
+                </div>
+                <pre><code>@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.element {
+    animation: pulse 2s ease-in-out infinite;
+}</code></pre>
+                <p><strong>Key Point:</strong> Use infinite animation for continuous effects.</p>
+            </div>
+
+            <!-- Example 6: Watermark -->
+            <div class="practice-box">
+                <h3>6️⃣ Watermark - Background Text</h3>
+                <p>The watermark behind the content is barely visible. Perfect for branding without distraction.</p>
+                <div class="practice-6-container">
+                    <div class="practice-6-watermark">DRAFT</div>
+                    <div class="practice-6-content">
+                        <h4 style="margin-top: 0;">Important Content</h4>
+                        <p>The watermark behind is set to opacity: 0.1 with rotation, making it subtle but visible.</p>
+                    </div>
+                </div>
+                <pre><code>.watermark {
+    position: absolute;
+    opacity: 0.1;
+    color: white;
+    transform: rotate(-45deg);
+    font-size: 4rem;
+    font-weight: bold;
+    pointer-events: none;
+}</code></pre>
+                <p><strong>Key Point:</strong> Very low opacity (0.1) is perfect for watermarks and backgrounds.</p>
+            </div>
+
+            <!-- Example 7: Disabled State -->
+            <div class="practice-box">
+                <h3>7️⃣ Disabled State - Grayed Out</h3>
+                <p>The left card appears disabled due to opacity. This gives visual feedback without hiding content.</p>
+                <div class="demo-area">
+                    <div class="practice-7-card disabled">
+                        <p style="margin: 0;">Disabled</p>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">opacity: 0.5</p>
+                    </div>
+                    <div class="practice-7-card">
+                        <p style="margin: 0;">Enabled</p>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">opacity: 1</p>
+                    </div>
+                </div>
+                <pre><code>.card {
+    transition: opacity 0.3s ease;
+}
+
+.card.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}</code></pre>
+                <p><strong>Key Point:</strong> Add pointer-events: none to truly disable interactions.</p>
+            </div>
+
+            <!-- Example 8: Color Fade Animation -->
+            <div class="practice-box">
+                <h3>8️⃣ Color Fade Animation - Breathing Colors</h3>
+                <p>Three circles fade in and out at different times, creating a rhythmic effect.</p>
+                <div class="demo-area">
+                    <div class="practice-8-circle practice-8-circle-1"></div>
+                    <div class="practice-8-circle practice-8-circle-2"></div>
+                    <div class="practice-8-circle practice-8-circle-3"></div>
+                </div>
+                <pre><code>@keyframes colorFade {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+.circle {
+    animation: colorFade 3s ease-in-out infinite;
+}
+
+.circle-2 { animation-delay: 0.5s; }
+.circle-3 { animation-delay: 1s; }</code></pre>
+                <p><strong>Key Point:</strong> Multiple elements with staggered animations create complex visual effects.</p>
+            </div>
+
+            <!-- Example 9: Gradient Opacity -->
+            <div class="practice-box">
+                <h3>9️⃣ Gradient Opacity - Progressive Transparency</h3>
+                <p>Notice how the color transitions from fully transparent (0) to fully opaque (1) across the gradient.</p>
+                <div class="practice-9-gradient">
+                    <div class="practice-9-label">0%</div>
+                    <div class="practice-9-label">25%</div>
+                    <div class="practice-9-label">50%</div>
+                    <div class="practice-9-label">75%</div>
+                    <div class="practice-9-label">100%</div>
+                </div>
+                <pre><code>background: linear-gradient(to right,
+    rgba(99, 102, 241, 0) 0%,
+    rgba(99, 102, 241, 0.3) 25%,
+    rgba(99, 102, 241, 0.6) 50%,
+    rgba(99, 102, 241, 0.9) 75%,
+    rgba(99, 102, 241, 1) 100%
+);</code></pre>
+                <p><strong>Key Point:</strong> Use RGBA gradients to create smooth transparency transitions.</p>
+            </div>
+
+            <!-- Example 10: Tooltip -->
+            <div class="practice-box">
+                <h3>🔟 Tooltip - Hover to Reveal</h3>
+                <p>Hover over the button to see the tooltip fade in. The tooltip starts with opacity: 0 and becomes visible on hover.</p>
+                <div class="demo-area">
+                    <div class="practice-10-container">
+                        <button class="practice-10-trigger">Hover me!</button>
+                        <div class="practice-10-tooltip">This is a helpful tooltip</div>
+                    </div>
+                </div>
+                <pre><code>.tooltip {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.container:hover .tooltip {
+    opacity: 1;
+}</code></pre>
+                <p><strong>Key Point:</strong> Use opacity with pointer-events to prevent accidental interactions.</p>
+            </div>
+        </section>
+
+        <!-- Section: Challenge Exercises -->
+        <section id="challenges">
+            <h2>Challenge Exercises</h2>
+            <p>Test your knowledge by completing these challenges. Try to write the CSS code yourself before checking the solution.</p>
+
+            <!-- Challenge 1 -->
+            <div class="challenge-section">
+                <h3>Challenge 1: Create a Fade-In on Scroll Effect</h3>
+                <p>Create CSS that fades in an element when the page loads. The element should start invisible (opacity: 0) and fade to visible (opacity: 1) over 1 second.</p>
+                <div class="code-editor">
+                    <textarea id="challenge1-code" placeholder="/* Write your CSS code here */
+@keyframes fadeIn {
+    /* Your code here */
+}
+
+.fade-element {
+    /* Your code here */
+}"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge1()">Test Your Code</button>
+                    <button class="solution-btn" onclick="toggleSolution('challenge1')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge1">
+                    <pre><code>@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-element {
+    animation: fadeIn 1s ease-in;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge1-output"></div>
+            </div>
+
+            <!-- Challenge 2 -->
+            <div class="challenge-section">
+                <h3>Challenge 2: Interactive Button with Multiple States</h3>
+                <p>Create CSS for a button that has different opacity levels for normal, hover, active, and disabled states.</p>
+                <div class="code-editor">
+                    <textarea id="challenge2-code" placeholder="/* Write your CSS code here */
+.interactive-btn {
+    /* Your code here */
+}
+
+.interactive-btn:hover {
+    /* Your code here */
+}
+
+.interactive-btn:active {
+    /* Your code here */
+}
+
+.interactive-btn:disabled {
+    /* Your code here */
+}"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge2()">Test Your Code</button>
+                    <button class="solution-btn" onclick="toggleSolution('challenge2')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge2">
+                    <pre><code>.interactive-btn {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    background: #6366f1;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.interactive-btn:hover {
+    opacity: 0.9;
+}
+
+.interactive-btn:active {
+    opacity: 0.7;
+}
+
+.interactive-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge2-output"></div>
+            </div>
+
+            <!-- Challenge 3 -->
+            <div class="challenge-section">
+                <h3>Challenge 3: Pulsing Animation</h3>
+                <p>Create a pulsing animation that makes an element fade in and out continuously. The element should go from opacity: 1 to opacity: 0.5 and back.</p>
+                <div class="code-editor">
+                    <textarea id="challenge3-code" placeholder="/* Write your CSS code here */
+@keyframes pulse {
+    /* Your code here */
+}
+
+.pulse-element {
+    /* Your code here */
+}"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge3()">Test Your Code</button>
+                    <button class="solution-btn" onclick="toggleSolution('challenge3')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge3">
+                    <pre><code>@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.pulse-element {
+    animation: pulse 2s ease-in-out infinite;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge3-output"></div>
+            </div>
+
+            <!-- Challenge 4 -->
+            <div class="challenge-section">
+                <h3>Challenge 4: Image Overlay with Hover Effect</h3>
+                <p>Create an overlay that appears when hovering over an image. The overlay should start invisible and fade in to opacity: 0.7 on hover.</p>
+                <div class="code-editor">
+                    <textarea id="challenge4-code" placeholder="/* Write your CSS code here */
+.image-container {
+    /* Your code here */
+}
+
+.image-overlay {
+    /* Your code here */
+}
+
+.image-container:hover .image-overlay {
+    /* Your code here */
+}"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge4()">Test Your Code</button>
+                    <button class="solution-btn" onclick="toggleSolution('challenge4')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge4">
+                    <pre><code>.image-container {
+    position: relative;
+    display: inline-block;
+    width: 250px;
+    height: 200px;
+}
+
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-container:hover .image-overlay {
+    opacity: 1;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge4-output"></div>
+            </div>
+
+            <!-- Challenge 5 -->
+            <div class="challenge-section">
+                <h3>Challenge 5: Staggered Fade-In Animation</h3>
+                <p>Create three elements that fade in one after another with delays. Each element should have a 0.3 second delay between them.</p>
+                <div class="code-editor">
+                    <textarea id="challenge5-code" placeholder="/* Write your CSS code here */
+@keyframes fadeIn {
+    /* Your code here */
+}
+
+.stagger-item {
+    /* Your code here */
+}
+
+.stagger-item-1 { /* Your code here */ }
+.stagger-item-2 { /* Your code here */ }
+.stagger-item-3 { /* Your code here */ }"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="testChallenge5()">Test Your Code</button>
+                    <button class="solution-btn" onclick="toggleSolution('challenge5')">Show Solution</button>
+                </div>
+                <div class="solution" id="challenge5">
+                    <pre><code>@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.stagger-item {
+    animation: fadeIn 1s ease-in forwards;
+}
+
+.stagger-item-1 {
+    animation-delay: 0s;
+}
+
+.stagger-item-2 {
+    animation-delay: 0.3s;
+}
+
+.stagger-item-3 {
+    animation-delay: 0.6s;
+}</code></pre>
+                </div>
+                <div class="output-area" id="challenge5-output"></div>
+            </div>
+        </section>
+
+        <!-- Section: Solutions & Tips -->
+        <section id="solutions">
+            <h2>Tips & Best Practices</h2>
+            
+            <div class="practice-box">
+                <h3>✅ Do's</h3>
+                <ul>
+                    <li><strong>Use opacity for entire elements:</strong> When you want the whole element to be transparent</li>
+                    <li><strong>Use RGBA/HSLA for colors:</strong> When you only want specific colors transparent</li>
+                    <li><strong>Add transitions:</strong> Make opacity changes smooth for better UX</li>
+                    <li><strong>Combine with pointer-events:</strong> Prevent invisible elements from being interactive</li>
+                    <li><strong>Test contrast:</strong> Ensure text remains readable at all opacity levels</li>
+                    <li><strong>Use meaningful delays:</strong> Stagger animations to create rhythm and visual flow</li>
+                </ul>
+            </div>
+
+            <div class="practice-box">
+                <h3>❌ Don'ts</h3>
+                <ul>
+                    <li><strong>Don't hide interactive elements with opacity alone:</strong> Use display: none or visibility: hidden</li>
+                    <li><strong>Don't animate opacity on too many elements:</strong> Can harm performance</li>
+                    <li><strong>Don't forget transitions:</strong> Instant opacity changes look jarring</li>
+                    <li><strong>Don't use opacity for color fading:</strong> Use RGBA gradients instead</li>
+                    <li><strong>Don't make text unreadable:</strong> Maintain sufficient contrast</li>
+                    <li><strong>Don't abuse animations:</strong> Too many effects can be distracting</li>
+                </ul>
+            </div>
+
+            <div class="practice-box">
+                <h3>🎯 Performance Tips</h3>
+                <ul>
+                    <li>Opacity changes are GPU-accelerated on modern browsers</li>
+                    <li>Prefer <code>opacity</code> over <code>display</code> changes for animations</li>
+                    <li>Use <code>will-change: opacity;</code> for frequently animated elements</li>
+                    <li>Batch animations when possible to reduce repaints</li>
+                    <li>Test on real devices, not just modern browsers</li>
+                </ul>
+            </div>
+
+            <div class="practice-box">
+                <h3>🎨 Creative Ideas</h3>
+                <ul>
+                    <li><strong>Fade-in page loads:</strong> Create elegant page transitions</li>
+                    <li><strong>Ghost buttons:</strong> Subtle buttons with transparent backgrounds</li>
+                    <li><strong>Watermarks:</strong> Subtle branding without distraction</li>
+                    <li><strong>Overlay effects:</strong> Image galleries and portfolio sites</li>
+                    <li><strong>Loading indicators:</strong> Pulsing elements to show activity</li>
+                    <li><strong>Attention-grabbers:</strong> Pulsing or blinking elements for CTAs</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>CSS Opacity Practice Examples</strong></p>
+        <p>Interactive exercises to master transparency and opacity effects</p>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary);">
+            Practice these examples until you're comfortable with opacity, RGBA colors, and CSS animations.
+        </p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const btn = document.querySelector('.toggle-btn');
+            const isDark = btn.textContent.includes('Light');
+            btn.textContent = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            solution.classList.toggle('show');
+        }
+
+        function testChallenge1() {
+            const output = document.getElementById('challenge1-output');
+            output.innerHTML = '<div style="opacity: 0; animation: fadeIn 1s ease-in forwards; background: var(--primary); color: white; padding: 20px; border-radius: 6px; text-align: center; font-weight: 600;">Fade In Animation Test</div>';
+            output.innerHTML += '<p style="margin-top: 15px; font-size: 0.9rem;">✓ Animation executed! (Only works if your CSS contains fadeIn animation)</p>';
+        }
+
+        function testChallenge2() {
+            const output = document.getElementById('challenge2-output');
+            output.innerHTML = '<button class="practice-2-btn">Normal</button><button class="practice-2-btn" disabled>Disabled</button><p style="margin-top: 15px; font-size: 0.9rem;">✓ Buttons created! Hover and click to test states.</p>';
+        }
+
+        function testChallenge3() {
+            const output = document.getElementById('challenge3-output');
+            const styleId = 'pulse-test-style';
+            
+            // Remove old style if exists
+            const oldStyle = document.getElementById(styleId);
+            if (oldStyle) oldStyle.remove();
+            
+            // Add new style
+            const style = document.createElement('style');
+            style.id = styleId;
+            style.innerHTML = `
+                @keyframes pulseTest {
+                    0%, 100% { opacity: 1; }
+                    50% { opacity: 0.5; }
+                }
+                #pulse-test-element {
+                    animation: pulseTest 2s ease-in-out infinite;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            output.innerHTML = '<div id="pulse-test-element" style="background: var(--danger); color: white; width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; margin: 0 auto;">Pulse</div>';
+            output.innerHTML += '<p style="margin-top: 15px; font-size: 0.9rem; text-align: center;">✓ Pulse animation executed!</p>';
+        }
+
+        function testChallenge4() {
+            const output = document.getElementById('challenge4-output');
+            output.innerHTML = `
+                <div class="practice-3-container">
+                    <div class="practice-3-image">Image</div>
+                    <div class="practice-3-overlay">View Details</div>
+                </div>
+                <p style="margin-top: 15px; font-size: 0.9rem;">✓ Image overlay created! Hover to test.</p>
+            `;
+        }
+
+        function testChallenge5() {
+            const output = document.getElementById('challenge5-output');
+            const styleId = 'stagger-test-style';
+            
+            const oldStyle = document.getElementById(styleId);
+            if (oldStyle) oldStyle.remove();
+            
+            const style = document.createElement('style');
+            style.id = styleId;
+            style.innerHTML = `
+                @keyframes fadeInStagger {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                .stagger-test-item {
+                    animation: fadeInStagger 1s ease-in forwards;
+                    display: inline-block;
+                    margin: 0 10px;
+                }
+                .stagger-test-item-1 { animation-delay: 0s; }
+                .stagger-test-item-2 { animation-delay: 0.3s; }
+                .stagger-test-item-3 { animation-delay: 0.6s; }
+            `;
+            document.head.appendChild(style);
+            
+            output.innerHTML = `
+                <div class="stagger-test-item stagger-test-item-1" style="background: var(--primary); color: white; padding: 20px; border-radius: 6px;">Item 1</div>
+                <div class="stagger-test-item stagger-test-item-2" style="background: var(--secondary); color: white; padding: 20px; border-radius: 6px;">Item 2</div>
+                <div class="stagger-test-item stagger-test-item-3" style="background: var(--accent); color: #000; padding: 20px; border-radius: 6px;">Item 3</div>
+                <p style="margin-top: 15px; font-size: 0.9rem;">✓ Staggered animations executed!</p>
+            `;
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize theme on page load
+        window.addEventListener('load', function() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const btn = document.querySelector('.toggle-btn');
+            if (prefersDark) {
+                btn.textContent = '☀️ Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>

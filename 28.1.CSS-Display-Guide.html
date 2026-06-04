@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Display Guide - Complete Reference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f97316;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --text-primary: var(--neutral-900);
+            --text-secondary: var(--neutral-600);
+            --bg-primary: #ffffff;
+            --bg-secondary: var(--neutral-100);
+            --border-color: var(--neutral-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: var(--neutral-50);
+                --text-secondary: var(--neutral-400);
+                --bg-primary: var(--neutral-900);
+                --bg-secondary: var(--neutral-800);
+                --border-color: var(--neutral-700);
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        nav {
+            background-color: var(--bg-secondary);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 130px;
+            z-index: 99;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section > h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        pre {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+
+        pre code {
+            color: var(--text-primary);
+        }
+
+        :not(pre) > code {
+            background-color: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card h4 {
+            margin-top: 0;
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--neutral-100));
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .feature-box {
+                background: linear-gradient(135deg, var(--neutral-800), var(--neutral-700));
+            }
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+        }
+
+        .toggle-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .toggle-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Demo Container */
+        .demo-container {
+            background-color: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            min-height: 150px;
+        }
+
+        .demo-item {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 20px;
+            margin: 5px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* Display Type Boxes */
+        .display-box {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        /* Comparison Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        /* Collapsible */
+        .collapsible {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            background-color: var(--border-color);
+        }
+
+        .collapsible.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .content {
+            padding: 15px;
+            display: none;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            margin-bottom: 10px;
+        }
+
+        .content.show {
+            display: block;
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            background-color: rgba(243, 158, 11, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Display Examples */
+        .inline-demo {
+            display: inline;
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            margin: 2px;
+            border-radius: 4px;
+        }
+
+        .block-demo {
+            display: block;
+            background: var(--secondary);
+            color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .inline-block-demo {
+            display: inline-block;
+            background: var(--accent);
+            color: #000;
+            padding: 15px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        .flex-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .flex-item {
+            flex: 1;
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .grid-item {
+            background: var(--secondary);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .hidden-demo {
+            display: none;
+            background: var(--danger);
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        .visible-demo {
+            display: block;
+            background: var(--success);
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>CSS Display Guide</h1>
+        <p>Complete reference for the display property and layout modes</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#basics">Basics</a></li>
+            <li><a href="#values">Values</a></li>
+            <li><a href="#comparisons">Comparisons</a></li>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#reference">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Basics Section -->
+        <section id="basics">
+            <h2>Understanding CSS Display</h2>
+            
+            <p>The <code>display</code> property controls how an element is rendered and how it interacts with other elements in the layout. It's one of the most fundamental CSS properties.</p>
+
+            <div class="feature-box">
+                <strong>Key Concept:</strong> The display property determines whether an element takes up space in the document flow and how it participates in layout (block, inline, flex, grid, etc.).
+            </div>
+
+            <h3>What Does Display Do?</h3>
+            <ul>
+                <li><strong>Controls flow:</strong> How elements flow within the document</li>
+                <li><strong>Affects dimensions:</strong> How width/height properties apply</li>
+                <li><strong>Influences margins:</strong> How margins collapse or spread</li>
+                <li><strong>Enables layouts:</strong> Flexbox, Grid, and other layout modes</li>
+                <li><strong>Manages visibility:</strong> Hide/show elements (with caveats)</li>
+            </ul>
+
+            <h3>Display vs Visibility vs Opacity</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Takes Space</th>
+                        <th>Visible</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>display: none</code></td>
+                        <td>❌ No</td>
+                        <td>❌ Hidden</td>
+                        <td>Remove from layout</td>
+                    </tr>
+                    <tr>
+                        <td><code>visibility: hidden</code></td>
+                        <td>✅ Yes</td>
+                        <td>❌ Hidden</td>
+                        <td>Hide but keep space</td>
+                    </tr>
+                    <tr>
+                        <td><code>opacity: 0</code></td>
+                        <td>✅ Yes</td>
+                        <td>❌ Hidden</td>
+                        <td>Transparent but interactive</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Values Section -->
+        <section id="values">
+            <h2>All Display Values</h2>
+
+            <h3>1. Block</h3>
+            <div class="card">
+                <p>Element takes full width, starts new line, respects margin/padding on all sides.</p>
+                <pre><code>display: block;</code></pre>
+                <h4>Example:</h4>
+                <div class="demo-container">
+                    <div class="block-demo">Block 1</div>
+                    <div class="block-demo">Block 2</div>
+                </div>
+                <ul>
+                    <li>Stacks vertically</li>
+                    <li>Takes full available width</li>
+                    <li>Respects all margins</li>
+                    <li>Default for div, p, h1-h6, section, article, etc.</li>
+                </ul>
+            </div>
+
+            <h3>2. Inline</h3>
+            <div class="card">
+                <p>Element flows with text, only takes needed width. Ignores width/height.</p>
+                <pre><code>display: inline;</code></pre>
+                <h4>Example:</h4>
+                <div class="demo-container">
+                    <span class="inline-demo">Inline 1</span>
+                    <span class="inline-demo">Inline 2</span>
+                    <span class="inline-demo">Inline 3</span>
+                </div>
+                <ul>
+                    <li>Flows inline with text</li>
+                    <li>Width/height properties ignored</li>
+                    <li>Horizontal margins only</li>
+                    <li>Default for span, a, em, strong, etc.</li>
+                </ul>
+            </div>
+
+            <h3>3. Inline-Block</h3>
+            <div class="card">
+                <p>Hybrid of inline and block. Flows inline but respects width/height.</p>
+                <pre><code>display: inline-block;</code></pre>
+                <h4>Example:</h4>
+                <div class="demo-container">
+                    <div class="inline-block-demo">Box 1</div>
+                    <div class="inline-block-demo">Box 2</div>
+                </div>
+                <ul>
+                    <li>Flows inline with other elements</li>
+                    <li>Respects width and height</li>
+                    <li>Respects all margins</li>
+                    <li>Good for old layouts, use flex/grid instead</li>
+                </ul>
+            </div>
+
+            <h3>4. Flex (Flexbox)</h3>
+            <div class="card">
+                <p>Enables flexible box layout for 1D layouts (rows or columns).</p>
+                <pre><code>display: flex;</code></pre>
+                <h4>Example:</h4>
+                <div class="flex-container">
+                    <div class="flex-item">Flex 1</div>
+                    <div class="flex-item">Flex 2</div>
+                    <div class="flex-item">Flex 3</div>
+                </div>
+                <ul>
+                    <li>One-dimensional layout</li>
+                    <li>Items flex to fill available space</li>
+                    <li>Powerful alignment options</li>
+                    <li>Best for navigation, toolbars, lists</li>
+                </ul>
+            </div>
+
+            <h3>5. Grid</h3>
+            <div class="card">
+                <p>Enables grid layout for 2D layouts (rows and columns).</p>
+                <pre><code>display: grid;</code></pre>
+                <h4>Example:</h4>
+                <div class="grid-container">
+                    <div class="grid-item">Grid 1</div>
+                    <div class="grid-item">Grid 2</div>
+                    <div class="grid-item">Grid 3</div>
+                    <div class="grid-item">Grid 4</div>
+                </div>
+                <ul>
+                    <li>Two-dimensional layout</li>
+                    <li>Precise control over rows and columns</li>
+                    <li>Powerful alignment options</li>
+                    <li>Best for full page layouts, dashboards</li>
+                </ul>
+            </div>
+
+            <h3>6. None</h3>
+            <div class="card">
+                <p>Hides element and removes it from layout flow.</p>
+                <pre><code>display: none;</code></pre>
+                <p style="color: var(--success); font-weight: 600;">✓ This element is visible (shown for demonstration)</p>
+                <ul>
+                    <li>Element is completely hidden</li>
+                    <li>Takes no space in layout</li>
+                    <li>Different from visibility: hidden</li>
+                    <li>Common for responsive design</li>
+                </ul>
+            </div>
+
+            <h3>7. Other Values</h3>
+            <div class="card">
+                <h4>Table Display Values</h4>
+                <pre><code>display: table;           /* Container acts like <table> */
+display: table-row;        /* Acts like <tr> */
+display: table-cell;       /* Acts like <td> */</code></pre>
+                <p>Legacy approach to layouts. Use flexbox/grid instead.</p>
+            </div>
+
+            <div class="card">
+                <h4>List Display Values</h4>
+                <pre><code>display: list-item;        /* Default for <li> */</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>Flow Root</h4>
+                <pre><code>display: flow-root;        /* New containment value */</code></pre>
+                <p>Establishes new block formatting context without floats.</p>
+            </div>
+        </section>
+
+        <!-- Comparisons Section -->
+        <section id="comparisons">
+            <h2>Display Values Comparison</h2>
+
+            <h3>Quick Reference Table</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Direction</th>
+                        <th>Width/Height</th>
+                        <th>Margins</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>block</code></td>
+                        <td>Vertical</td>
+                        <td>✅ Respected</td>
+                        <td>✅ All sides</td>
+                        <td>Main sections</td>
+                    </tr>
+                    <tr>
+                        <td><code>inline</code></td>
+                        <td>Horizontal</td>
+                        <td>❌ Ignored</td>
+                        <td>↔️ Left/Right</td>
+                        <td>Text within text</td>
+                    </tr>
+                    <tr>
+                        <td><code>inline-block</code></td>
+                        <td>Horizontal</td>
+                        <td>✅ Respected</td>
+                        <td>✅ All sides</td>
+                        <td>Inline boxes</td>
+                    </tr>
+                    <tr>
+                        <td><code>flex</code></td>
+                        <td>1D flexible</td>
+                        <td>✅ Respected</td>
+                        <td>✅ All sides</td>
+                        <td>Navigation, lists</td>
+                    </tr>
+                    <tr>
+                        <td><code>grid</code></td>
+                        <td>2D flexible</td>
+                        <td>✅ Respected</td>
+                        <td>✅ All sides</td>
+                        <td>Page layouts</td>
+                    </tr>
+                    <tr>
+                        <td><code>none</code></td>
+                        <td>None</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td>Hide elements</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Choosing the Right Display</h3>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">When to use display: block?</button>
+            <div class="content">
+                <p>Use block when:</p>
+                <ul>
+                    <li>Element should take full width</li>
+                    <li>Elements should stack vertically</li>
+                    <li>You need width/height control</li>
+                    <li>Creating sections or containers</li>
+                    <li>Default for most semantic elements</li>
+                </ul>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">When to use display: inline?</button>
+            <div class="content">
+                <p>Use inline when:</p>
+                <ul>
+                    <li>Element should flow with text</li>
+                    <li>Content is small and inline</li>
+                    <li>Don't need width/height control</li>
+                    <li>Examples: links, spans, emphasis</li>
+                    <li>Avoid with padding/margin needs</li>
+                </ul>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">When to use display: inline-block?</button>
+            <div class="content">
+                <p>Use inline-block when:</p>
+                <ul>
+                    <li>Need inline flow with dimensions</li>
+                    <li>Creating inline boxes with sizing</li>
+                    <li>Old school layouts (pre-flexbox)</li>
+                    <li>Better to use flex/grid today</li>
+                </ul>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">When to use display: flex?</button>
+            <div class="content">
+                <p>Use flex when:</p>
+                <ul>
+                    <li>Creating 1D flexible layouts</li>
+                    <li>Navigation bars and toolbars</li>
+                    <li>Aligning items in a row/column</li>
+                    <li>Space distribution needed</li>
+                    <li>Most common modern layout choice</li>
+                </ul>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">When to use display: grid?</button>
+            <div class="content">
+                <p>Use grid when:</p>
+                <ul>
+                    <li>Creating 2D layouts (rows & columns)</li>
+                    <li>Full page layouts</li>
+                    <li>Complex dashboard layouts</li>
+                    <li>Precise control over positioning</li>
+                    <li>Aligning items in multiple dimensions</li>
+                </ul>
+            </div>
+
+            <button class="collapsible" onclick="toggleCollapsible(event)">When to use display: none?</button>
+            <div class="content">
+                <p>Use none when:</p>
+                <ul>
+                    <li>Completely hiding elements</li>
+                    <li>Responsive design breakpoints</li>
+                    <li>Toggle visibility with JavaScript</li>
+                    <li>Hide elements permanently</li>
+                    <li>Different from visibility: hidden</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section id="examples">
+            <h2>Real-World Examples</h2>
+
+            <div class="card">
+                <h3>Example 1: Navigation Bar (Flex)</h3>
+                <p>Using display: flex for navigation layout.</p>
+                <pre><code>nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 2: Grid Layout (Full Page)</h3>
+                <p>Using display: grid for page structure.</p>
+                <pre><code>body {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+}
+
+header { grid-column: 1 / -1; }
+aside { grid-row: 2; }
+main { grid-row: 2; }
+footer { grid-column: 1 / -1; }</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 3: Card Grid (Responsive)</h3>
+                <p>Using display: grid for card layouts.</p>
+                <pre><code>.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 4: Inline-Block for Badges</h3>
+                <p>Using display: inline-block for badge elements.</p>
+                <pre><code>.badge {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    margin-right: 5px;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 5: Hiding Elements Responsively</h3>
+                <p>Using display: none for responsive design.</p>
+                <pre><code>.sidebar {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;  /* Hide on mobile */
+    }
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 6: Center with Flex</h3>
+                <p>Using display: flex for centering content.</p>
+                <pre><code>.center-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 7: Flex Direction Column</h3>
+                <p>Stacking items vertically with flex.</p>
+                <pre><code>.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form input {
+    width: 100%;
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Example 8: Responsive Columns</h3>
+                <p>Using flex for responsive column layout.</p>
+                <pre><code>.columns {
+    display: flex;
+    gap: 20px;
+}
+
+.column {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .columns {
+        flex-direction: column;
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Reference Section -->
+        <section id="reference">
+            <h2>Quick Reference & Tips</h2>
+
+            <div class="card">
+                <h3>Display Property Syntax</h3>
+                <pre><code>/* Single keyword values */
+display: block;
+display: inline;
+display: inline-block;
+display: flex;
+display: grid;
+display: none;
+
+/* Two keyword values (layout + flow) */
+display: block flow;
+display: inline flow;
+display: inline flow-root;</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Common Display Combinations</h3>
+                <ul>
+                    <li><code>display: flex; justify-content: center;</code> - Center horizontally</li>
+                    <li><code>display: flex; align-items: center;</code> - Center vertically</li>
+                    <li><code>display: flex; gap: 20px;</code> - Add spacing between items</li>
+                    <li><code>display: grid; grid-template-columns: repeat(3, 1fr);</code> - 3 equal columns</li>
+                    <li><code>display: none;</code> - Hide element completely</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>Use <code>flex</code> for 1D layouts (most common)</li>
+                    <li>Use <code>grid</code> for 2D layouts</li>
+                    <li>Use <code>block</code> for main sections</li>
+                    <li>Use <code>none</code> for responsive hiding</li>
+                    <li>Avoid <code>inline-block</code> in modern layouts</li>
+                    <li>Remember: <code>display: block</code> on flex items doesn't change layout</li>
+                    <li>Grid children are automatically grid items</li>
+                    <li>Flex children are automatically flex items</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Performance Tips</h3>
+                <ul>
+                    <li>Prefer <code>display: none</code> over <code>visibility: hidden</code> when possible</li>
+                    <li>Use <code>will-change: display</code> for frequently toggled elements</li>
+                    <li>Flex/Grid layouts are GPU accelerated</li>
+                    <li>Changing display triggers layout recalculation (expensive)</li>
+                    <li>Consider CSS containment for complex layouts</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Common Mistakes to Avoid</h3>
+                <ul>
+                    <li>❌ Using <code>display: inline</code> for sized elements</li>
+                    <li>❌ Using <code>display: inline-block</code> instead of flex/grid</li>
+                    <li>❌ Forgetting <code>display: block</code> resets after flex/grid</li>
+                    <li>❌ Using <code>display: none</code> for transitions (use opacity instead)</li>
+                    <li>❌ Mixing block and inline without consideration</li>
+                    <li>✅ Use flex for 1D layouts</li>
+                    <li>✅ Use grid for 2D layouts</li>
+                    <li>✅ Use block for sections</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Browser Support</h3>
+                <ul>
+                    <li>✅ <code>display: block</code> - All browsers (since forever)</li>
+                    <li>✅ <code>display: inline</code> - All browsers (since forever)</li>
+                    <li>✅ <code>display: inline-block</code> - IE8+</li>
+                    <li>✅ <code>display: flex</code> - IE11+ (with prefix), modern browsers</li>
+                    <li>✅ <code>display: grid</code> - IE10+, modern browsers</li>
+                    <li>✅ <code>display: none</code> - All browsers (since forever)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Advanced Section -->
+        <section>
+            <h2>Advanced Concepts</h2>
+
+            <div class="card">
+                <h3>Display and Document Flow</h3>
+                <pre><code>/* Block element - new line before and after */
+display: block;      /* Element takes full width */
+
+/* Inline element - flows with text */
+display: inline;     /* Only takes needed width */
+
+/* Inline-block - hybrid */
+display: inline-block;  /* Flows inline but respects sizing */</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Flex Container Properties</h3>
+                <pre><code>.flex-container {
+    display: flex;
+    flex-direction: row;           /* row, column, row-reverse, column-reverse */
+    justify-content: flex-start;   /* Main axis alignment */
+    align-items: flex-start;       /* Cross axis alignment */
+    gap: 10px;                     /* Space between items */
+    flex-wrap: wrap;               /* Allow wrapping */
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Grid Container Properties</h3>
+                <pre><code>.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;  /* Define columns */
+    grid-template-rows: auto 1fr auto;    /* Define rows */
+    gap: 20px;                            /* Space between items */
+    align-items: center;                  /* Vertical alignment */
+    justify-items: center;                /* Horizontal alignment */
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Nested Flex/Grid</h3>
+                <pre><code>/* Flex item that is also a grid container */
+.flex-item {
+    display: grid;  /* This item becomes grid container */
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/* Can nest indefinitely */
+.grid-item {
+    display: flex;  /* This grid item becomes flex container */
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Display: None vs Visibility: Hidden</h3>
+                <pre><code>/* Removes from layout - element takes no space */
+.hidden-display {
+    display: none;
+}
+
+/* Hides but keeps space - like transparency */
+.hidden-visibility {
+    visibility: hidden;
+}
+
+/* Transparent but interactive */
+.hidden-opacity {
+    opacity: 0;
+}</code></pre>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>CSS Display Guide</strong></p>
+        <p>Master the display property for effective layouts</p>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary);">
+            The display property is fundamental to CSS layout. Master block, inline, flex, and grid for modern web design.
+        </p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const btn = document.querySelector('.toggle-btn');
+            const isDark = btn.textContent.includes('Light');
+            btn.textContent = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+
+        function toggleCollapsible(event) {
+            const btn = event.target;
+            const content = btn.nextElementSibling;
+            btn.classList.toggle('active');
+            content.classList.toggle('show');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize theme on page load
+        window.addEventListener('load', function() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const btn = document.querySelector('.toggle-btn');
+            if (prefersDark) {
+                btn.textContent = '☀️ Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>
