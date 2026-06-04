@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Order Property - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .example-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .example-code {
+            background: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        .demo-container {
+            border: 2px dashed #667eea;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+
+        .quick-ref {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .quick-ref strong {
+            color: #667eea;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        /* Example 1: Featured Item First */
+        .grid-featured {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .grid-featured .card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .grid-featured .card.featured {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            order: -1;
+        }
+
+        .grid-featured .card h4 {
+            margin-bottom: 10px;
+        }
+
+        .grid-featured .card p {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Example 2: Responsive Reordering */
+        .grid-responsive {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .grid-responsive .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            order: 1;
+        }
+
+        .grid-responsive .sidebar {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            order: 3;
+        }
+
+        .grid-responsive .main {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            order: 2;
+        }
+
+        .grid-responsive .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            order: 4;
+        }
+
+        @media (min-width: 1024px) {
+            .grid-responsive {
+                grid-template-columns: 1fr 250px;
+            }
+
+            .grid-responsive .header {
+                grid-column: 1 / -1;
+                order: 1;
+            }
+
+            .grid-responsive .main {
+                order: 2;
+            }
+
+            .grid-responsive .sidebar {
+                order: 3;
+            }
+
+            .grid-responsive .footer {
+                grid-column: 1 / -1;
+                order: 4;
+            }
+        }
+
+        .section-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        /* Example 3: Priority Based */
+        .grid-priority {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+        }
+
+        .grid-priority .item {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .grid-priority .item.priority-high {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            order: 1;
+        }
+
+        .grid-priority .item.priority-medium {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            order: 2;
+        }
+
+        .grid-priority .item.priority-low {
+            background: #e0e0e0;
+            color: #333;
+            order: 3;
+        }
+
+        /* Example 4: Admin vs User */
+        .grid-admin {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .grid-admin .item {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .grid-admin .item:hover {
+            transform: translateY(-3px);
+        }
+
+        .grid-admin .item.admin {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            order: 0;
+        }
+
+        .grid-admin .item.user {
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            order: 1;
+        }
+
+        /* Example 5: Alphabetical with Custom Order */
+        .grid-custom {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .grid-custom .item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Example 6: Conditional Reordering */
+        .grid-conditional {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .grid-conditional .item {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .grid-conditional .item.pinned {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            order: -1;
+        }
+
+        .grid-conditional .item.normal {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            order: 1;
+        }
+
+        /* Example 7: Search Results */
+        .grid-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .grid-results .result {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .grid-results .result:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .grid-results .result.promoted {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            order: -1;
+        }
+
+        .result-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #667eea;
+        }
+
+        .grid-results .result.promoted .result-title {
+            color: #ffc107;
+        }
+
+        .result-desc {
+            font-size: 0.85em;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .grid-results .result.promoted .result-desc {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Example 8: Dashboard Widgets */
+        .grid-widgets {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .widget.starred {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            order: -1;
+        }
+
+        .widget-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .widget-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .widget.starred .widget-value {
+            color: #ffc107;
+        }
+
+        /* Example 9: Navigation Reordering */
+        .grid-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+        }
+
+        .nav-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .nav-item:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-item.active {
+            order: -1;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Order Property</h1>
+            <p>Practical Examples & Real-World Implementations</p>
+        </header>
+
+        <!-- Example 1: Featured Item -->
+        <div class="example">
+            <div class="example-title">1. Featured Item First (order: -1)</div>
+            <div class="example-description">
+                Product cards with one featured item. Using order: -1 moves featured card to front without changing HTML.
+            </div>
+            <div class="example-code">
+                .featured { order: -1; } /* Always first */
+            </div>
+            <div class="demo-container">
+                <div class="grid-featured">
+                    <div class="card">
+                        <h4>Product 1</h4>
+                        <p>Regular item</p>
+                    </div>
+                    <div class="card featured">
+                        <h4>⭐ Featured</h4>
+                        <p>Promoted product</p>
+                    </div>
+                    <div class="card">
+                        <h4>Product 2</h4>
+                        <p>Regular item</p>
+                    </div>
+                    <div class="card">
+                        <h4>Product 3</h4>
+                        <p>Regular item</p>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Product listings, featured items, promotions, hero content
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> The featured card is 3rd in HTML but displays first. Perfect for dynamic content!
+            </div>
+        </div>
+
+        <!-- Example 2: Responsive Reordering -->
+        <div class="example">
+            <div class="example-title">2. Responsive Layout Reordering</div>
+            <div class="example-description">
+                On mobile: Header → Main → Sidebar → Footer (stacked). On desktop: Header spans top, Main left, Sidebar right, Footer spans bottom. Order changes at breakpoint.
+            </div>
+            <div class="example-code">
+                /* Mobile (order matters for stacking) */<br>
+                .header { order: 1; }<br>
+                .main { order: 2; }<br>
+                .sidebar { order: 3; }<br>
+                .footer { order: 4; }<br><br>
+                /* Desktop (order still controls visual sequence) */<br>
+                @media (min-width: 1024px) { /* Same order values */ }
+            </div>
+            <div class="demo-container">
+                <div class="grid-responsive">
+                    <div class="header"><div class="section-label">Header</div>Navigation Bar</div>
+                    <div class="main"><div class="section-label">Main Content (order: 2)</div>Try resizing to see desktop layout</div>
+                    <div class="sidebar"><div class="section-label">Sidebar (order: 3)</div>Secondary content</div>
+                    <div class="footer"><div class="section-label">Footer</div>© 2024</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Responsive layouts, mobile-first design, sidebar positioning
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> Try resizing to 1024px+ to see desktop layout with sidebar on right!
+            </div>
+        </div>
+
+        <!-- Example 3: Priority Based Ordering -->
+        <div class="example">
+            <div class="example-title">3. Priority-Based Item Ordering</div>
+            <div class="example-description">
+                Items ordered by priority level (high → medium → low) using data attributes. No HTML changes needed to reorder.
+            </div>
+            <div class="example-code">
+                .item.priority-high { order: 1; }<br>
+                .item.priority-medium { order: 2; }<br>
+                .item.priority-low { order: 3; }
+            </div>
+            <div class="demo-container">
+                <div class="grid-priority">
+                    <div class="item priority-low">Low Item 1</div>
+                    <div class="item priority-high">⭐ High Item</div>
+                    <div class="item priority-low">Low Item 2</div>
+                    <div class="item priority-medium">Med Item</div>
+                    <div class="item priority-high">⭐ High Item 2</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Task lists, priority queues, search results ranking, issue tracking
+            </div>
+        </div>
+
+        <!-- Example 4: Admin vs User Content -->
+        <div class="example">
+            <div class="example-title">4. Role-Based Reordering (Admin vs User)</div>
+            <div class="example-description">
+                Admin-only items display first (order: 0), user items display after (order: 1). Perfect for dynamic UIs.
+            </div>
+            <div class="example-code">
+                .item.admin { order: 0; } /* Admins first */<br>
+                .item.user { order: 1; } /* Users after */
+            </div>
+            <div class="demo-container">
+                <div class="grid-admin">
+                    <div class="item user">User Item 1</div>
+                    <div class="item admin">🔒 Admin Settings</div>
+                    <div class="item user">User Item 2</div>
+                    <div class="item admin">🔒 Admin Panel</div>
+                    <div class="item user">User Item 3</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Admin dashboards, role-based UIs, user permissions, content management
+            </div>
+        </div>
+
+        <!-- Example 5: Custom Sequence -->
+        <div class="example">
+            <div class="example-title">5. Custom Display Sequence</div>
+            <div class="example-description">
+                Display items in custom order (not source or alphabetical). HTML order: A B C D E F. Display order: D B F A C E.
+            </div>
+            <div class="example-code">
+                .item-a { order: 4; }<br>
+                .item-b { order: 2; }<br>
+                .item-c { order: 5; }<br>
+                .item-d { order: 1; }<br>
+                .item-e { order: 6; }<br>
+                .item-f { order: 3; }
+            </div>
+            <div class="demo-container">
+                <div class="grid-custom">
+                    <div class="item" style="order: 4;">Item A</div>
+                    <div class="item" style="order: 2;">Item B</div>
+                    <div class="item" style="order: 5;">Item C</div>
+                    <div class="item" style="order: 1;">Item D</div>
+                    <div class="item" style="order: 6;">Item E</div>
+                    <div class="item" style="order: 3;">Item F</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Display Order:</strong> D (1), B (2), F (3), A (4), C (5), E (6)<br>
+                <strong>HTML Order:</strong> A, B, C, D, E, F (unchanged)
+            </div>
+        </div>
+
+        <!-- Example 6: Pinned vs Normal Items -->
+        <div class="example">
+            <div class="example-title">6. Pinned Items Always First</div>
+            <div class="example-description">
+                Pinned items always appear first (order: -1), normal items after (order: 1). Common in chat apps, favorites.
+            </div>
+            <div class="example-code">
+                .item.pinned { order: -1; } /* Pinned first */<br>
+                .item.normal { order: 1; } /* Normal after */
+            </div>
+            <div class="demo-container">
+                <div class="grid-conditional">
+                    <div class="item normal">Regular</div>
+                    <div class="item pinned">📌 Pinned 1</div>
+                    <div class="item normal">Regular</div>
+                    <div class="item pinned">📌 Pinned 2</div>
+                    <div class="item normal">Regular</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Chat favorites, pinned messages, bookmarked items, starred content
+            </div>
+        </div>
+
+        <!-- Example 7: Search Results -->
+        <div class="example">
+            <div class="example-title">7. Promoted Search Results</div>
+            <div class="example-description">
+                Sponsored/promoted search results appear first (order: -1), organic results after (order: 0 or default).
+            </div>
+            <div class="example-code">
+                .result.promoted { order: -1; } /* Promoted first */<br>
+                .result { order: 0; } /* Organic results */
+            </div>
+            <div class="demo-container">
+                <div class="grid-results">
+                    <div class="result">
+                        <div class="result-title">Result 1</div>
+                        <div class="result-desc">Organic search result</div>
+                    </div>
+                    <div class="result promoted">
+                        <div class="result-title">💰 Promoted</div>
+                        <div class="result-desc">Sponsored result</div>
+                    </div>
+                    <div class="result">
+                        <div class="result-title">Result 2</div>
+                        <div class="result-desc">Organic search result</div>
+                    </div>
+                    <div class="result promoted">
+                        <div class="result-title">💰 Promoted</div>
+                        <div class="result-desc">Sponsored result</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Search results, marketplace listings, ad placement, featured products
+            </div>
+        </div>
+
+        <!-- Example 8: Dashboard Widgets -->
+        <div class="example">
+            <div class="example-title">8. Starred Dashboard Widgets</div>
+            <div class="example-description">
+                Dashboard widgets with star ratings. Starred (favorite) widgets appear first (order: -1), others after.
+            </div>
+            <div class="example-code">
+                .widget.starred { order: -1; } /* Starred first */<br>
+                .widget { order: 0; } /* Others after */
+            </div>
+            <div class="demo-container">
+                <div class="grid-widgets">
+                    <div class="widget">
+                        <div class="widget-title">Widget A</div>
+                        <div class="widget-value">100</div>
+                    </div>
+                    <div class="widget starred">
+                        <div class="widget-title">⭐ Starred</div>
+                        <div class="widget-value">250</div>
+                    </div>
+                    <div class="widget">
+                        <div class="widget-title">Widget B</div>
+                        <div class="widget-value">75</div>
+                    </div>
+                    <div class="widget starred">
+                        <div class="widget-title">⭐ Starred 2</div>
+                        <div class="widget-value">320</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Dashboard widgets, favorite items, customizable layouts, user preferences
+            </div>
+        </div>
+
+        <!-- Example 9: Active Navigation Item -->
+        <div class="example">
+            <div class="example-title">9. Active Navigation Item First</div>
+            <div class="example-description">
+                Navigation item that's currently active always appears first (order: -1), emphasizing current page.
+            </div>
+            <div class="example-code">
+                .nav-item.active { order: -1; } /* Active first */<br>
+                .nav-item { order: 0; } /* Others after */
+            </div>
+            <div class="demo-container">
+                <div class="grid-nav">
+                    <div class="nav-item">Home</div>
+                    <div class="nav-item">About</div>
+                    <div class="nav-item active">📍 Services</div>
+                    <div class="nav-item">Blog</div>
+                    <div class="nav-item">Contact</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Navigation menus, tab bars, breadcrumb trails, current section indicators
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="example" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="example-title" style="color: white;">Common Patterns & Quick Reference</div>
+            <div style="margin-top: 20px;">
+                <p><strong>Move One Item to Front:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>.featured { order: -1; }</li>
+                    <li>Perfect for featured items, pinned content, active states</li>
+                </ul>
+                <p><strong>Move One Item to Back:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>.archived { order: 999; }</li>
+                    <li>Good for archived content, less important items</li>
+                </ul>
+                <p><strong>Multiple Priority Levels:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>.priority-1 { order: 1; }</li>
+                    <li>.priority-2 { order: 2; }</li>
+                    <li>.priority-3 { order: 3; }</li>
+                </ul>
+                <p><strong>Important Reminders:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Order affects VISUAL display only, not accessibility</li>
+                    <li>Keep HTML structure semantic and logical</li>
+                    <li>Screen readers still read HTML source order</li>
+                    <li>Use order for design enhancements, not restructuring</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Implicit vs Explicit Grid</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .subsection {
+            margin-bottom: 30px;
+        }
+
+        .subsection-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .subsection-title:first-child {
+            margin-top: 0;
+        }
+
+        .concept-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .concept-box strong {
+            color: #667eea;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .code-block code {
+            color: #f8f8f2;
+        }
+
+        .keyword { color: #ff79c6; }
+        .property { color: #8be9fd; }
+        .value { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .demo {
+            background: #f9f9f9;
+            border: 2px dashed #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .grid-demo {
+            display: grid;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .grid-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grid-item.implicit {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .grid-item.overflow {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        /* Demo 1: Explicit Grid Only */
+        .explicit-grid {
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 60px 60px;
+        }
+
+        /* Demo 2: Implicit Grid Created */
+        .implicit-grid {
+            grid-template-columns: repeat(3, 1fr);
+            /* No rows defined - will be created implicitly */
+        }
+
+        /* Demo 3: Implicit Grid with Auto Rows */
+        .implicit-auto-rows {
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 80px;
+        }
+
+        /* Demo 4: Implicit Columns */
+        .implicit-columns {
+            grid-template-rows: repeat(3, 60px);
+            grid-auto-columns: 100px;
+        }
+
+        /* Demo 5: Implicit Grid Flow */
+        .implicit-flow-row {
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 60px;
+            grid-auto-flow: row;
+        }
+
+        .implicit-flow-column {
+            grid-template-rows: repeat(3, 60px);
+            grid-auto-flow: column;
+        }
+
+        /* Demo 6: Auto Flow Dense */
+        .auto-flow-dense {
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-flow: dense;
+            grid-auto-rows: 60px;
+        }
+
+        .grid-item.span2 {
+            grid-column: span 2;
+        }
+
+        .grid-item.span2x2 {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        .visual-diagram {
+            background: #f9f9f9;
+            border: 2px solid #eee;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #004085;
+        }
+
+        .note strong {
+            color: #667eea;
+        }
+
+        .best-practices {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #155724;
+        }
+
+        .best-practices strong {
+            color: #155724;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Implicit vs Explicit Grid</h1>
+            <p>Understanding Grid Definition, Auto-Placement, and Flow</p>
+        </header>
+
+        <!-- Section 1: Fundamentals -->
+        <div class="section">
+            <div class="section-title">What is Explicit vs Implicit Grid?</div>
+
+            <div class="subsection">
+                <div class="subsection-title">The Core Concept</div>
+                <div class="concept-box">
+                    <strong>Explicit Grid:</strong> Tracks you deliberately define with grid-template-columns, grid-template-rows, or grid-template-areas. You control exactly what the grid looks like.
+                </div>
+                <div class="concept-box">
+                    <strong>Implicit Grid:</strong> Tracks that CSS Grid automatically creates to accommodate items that fall outside the explicit grid. The browser creates them on-the-fly based on grid-auto-rows/grid-auto-columns properties.
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Simple Example</div>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">200px 200px</span>; <span class="comment">/* Explicit: 2 columns */</span>
+  <span class="property">grid-template-rows</span>: <span class="value">100px</span>; <span class="comment">/* Explicit: 1 row */</span>
+}
+
+<span class="comment">/* If you add 5 items, you need 3 rows total.
+   Row 1 is explicit (defined).
+   Rows 2-3 are implicit (auto-created). */</span>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Key Difference Visualized</div>
+                <div class="visual-diagram">Explicit Grid (You Define):
+┌─────────────┬─────────────┐
+│  col 1      │  col 2      │ ← Defined by you
+├─────────────┼─────────────┤
+│  row 1      │  row 1      │ ← Defined by you
+└─────────────┴─────────────┘
+
+Implicit Grid (Browser Creates):
+┌─────────────┬─────────────┐
+│  col 1      │  col 2      │ ← Explicit (you defined)
+├─────────────┼─────────────┤
+│  row 1      │  row 1      │ ← Explicit (you defined)
+├─────────────┼─────────────┤
+│  row 2      │  row 2      │ ← Implicit (auto-created)
+├─────────────┼─────────────┤
+│  row 3      │  row 3      │ ← Implicit (auto-created)
+└─────────────┴─────────────┘
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Comparison Table -->
+        <div class="section">
+            <div class="section-title">Explicit vs Implicit: Side-by-Side</div>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Explicit Grid</th>
+                        <th>Implicit Grid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Definition</strong></td>
+                        <td>You define with grid-template-*</td>
+                        <td>Browser auto-creates for overflow items</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CSS Properties</strong></td>
+                        <td>grid-template-columns, grid-template-rows, grid-template-areas</td>
+                        <td>grid-auto-columns, grid-auto-rows, grid-auto-flow</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Control</strong></td>
+                        <td>Full control - you decide sizes</td>
+                        <td>Partial control - you set default sizes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Size Default</strong></td>
+                        <td>You specify (px, fr, auto, minmax, etc.)</td>
+                        <td>Auto (content-sized) unless you specify grid-auto-rows/columns</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Number of Tracks</strong></td>
+                        <td>Fixed number you define</td>
+                        <td>Depends on number of items + grid-auto-flow</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Flexibility</strong></td>
+                        <td>Less flexible - fixed structure</td>
+                        <td>More flexible - adapts to content</td>
+                    </tr>
+                    <tr>
+                        <td><strong>When Used</strong></td>
+                        <td>When you know exact layout structure</td>
+                        <td>When items overflow predefined grid</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 3: Demonstrations -->
+        <div class="section">
+            <div class="section-title">Live Demonstrations</div>
+
+            <!-- Demo 1 -->
+            <div class="subsection">
+                <div class="subsection-title">Demo 1: Explicit Grid Only (3x2)</div>
+                <p style="color: #666; margin-bottom: 15px;">Grid defined as 3 columns × 2 rows. Exactly 6 items fit perfectly.</p>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 1fr)</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">60px 60px</span>;
+}
+                </div>
+                <div class="demo">
+                    <div class="grid-demo explicit-grid">
+                        <div class="grid-item">1</div>
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">3</div>
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">5</div>
+                        <div class="grid-item">6</div>
+                    </div>
+                </div>
+                <div class="note">
+                    <strong>Note:</strong> All 6 items fit within the explicit 3×2 grid. No implicit tracks are created.
+                </div>
+            </div>
+
+            <!-- Demo 2 -->
+            <div class="subsection">
+                <div class="subsection-title">Demo 2: Implicit Grid Created (3 columns, 3+ rows)</div>
+                <p style="color: #666; margin-bottom: 15px;">Grid defines 3 columns and 1 row. 9 items create 3 implicit rows automatically.</p>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 1fr)</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">60px</span>; <span class="comment">/* Only 1 row explicit */</span>
+  <span class="comment">/* Rows 2-3 created implicitly, auto-sized */</span>
+}
+                </div>
+                <div class="demo">
+                    <div class="grid-demo implicit-grid">
+                        <div class="grid-item">1</div>
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">3</div>
+                        <div class="grid-item implicit">4 (implicit row)</div>
+                        <div class="grid-item implicit">5 (implicit row)</div>
+                        <div class="grid-item implicit">6 (implicit row)</div>
+                        <div class="grid-item implicit">7 (implicit row)</div>
+                        <div class="grid-item implicit">8 (implicit row)</div>
+                        <div class="grid-item implicit">9 (implicit row)</div>
+                    </div>
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Notice:</strong> Items 4-9 are sized differently! They're in implicit rows with auto-sizing (content-sized). Define grid-auto-rows to control their height.
+                </div>
+            </div>
+
+            <!-- Demo 3 -->
+            <div class="subsection">
+                <div class="subsection-title">Demo 3: Controlling Implicit Rows with grid-auto-rows</div>
+                <p style="color: #666; margin-bottom: 15px;">Now implicit rows have consistent sizing via grid-auto-rows: 80px.</p>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 1fr)</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">60px</span>;
+  <span class="property">grid-auto-rows</span>: <span class="value">80px</span>; <span class="comment">/* Implicit rows are 80px */</span>
+}
+                </div>
+                <div class="demo">
+                    <div class="grid-demo implicit-auto-rows">
+                        <div class="grid-item">1 (explicit)</div>
+                        <div class="grid-item">2 (explicit)</div>
+                        <div class="grid-item">3 (explicit)</div>
+                        <div class="grid-item implicit">4 (implicit, 80px)</div>
+                        <div class="grid-item implicit">5 (implicit, 80px)</div>
+                        <div class="grid-item implicit">6 (implicit, 80px)</div>
+                        <div class="grid-item implicit">7 (implicit, 80px)</div>
+                        <div class="grid-item implicit">8 (implicit, 80px)</div>
+                        <div class="grid-item implicit">9 (implicit, 80px)</div>
+                    </div>
+                </div>
+                <div class="best-practices">
+                    <strong>✓ Best Practice:</strong> Always define grid-auto-rows when you expect items to overflow. This ensures consistent sizing.
+                </div>
+            </div>
+
+            <!-- Demo 4 -->
+            <div class="subsection">
+                <div class="subsection-title">Demo 4: Implicit Columns (Using grid-auto-columns)</div>
+                <p style="color: #666; margin-bottom: 15px;">When grid-auto-flow: column, the browser creates implicit columns instead of rows.</p>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">grid-template-rows</span>: <span class="value">repeat(3, 60px)</span>;
+  <span class="property">grid-auto-flow</span>: <span class="value">column</span>; <span class="comment">/* Fill columns, not rows */</span>
+  <span class="property">grid-auto-columns</span>: <span class="value">100px</span>; <span class="comment">/* Implicit columns are 100px */</span>
+}
+                </div>
+                <div class="demo">
+                    <div class="grid-demo implicit-columns">
+                        <div class="grid-item">1</div>
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">3</div>
+                        <div class="grid-item implicit">4 (implicit col)</div>
+                        <div class="grid-item implicit">5 (implicit col)</div>
+                        <div class="grid-item implicit">6 (implicit col)</div>
+                    </div>
+                </div>
+                <div class="note">
+                    <strong>Note:</strong> Items 4-6 appear in implicit columns because grid-auto-flow: column creates new columns instead of rows.
+                </div>
+            </div>
+
+            <!-- Demo 5 -->
+            <div class="subsection">
+                <div class="subsection-title">Demo 5: grid-auto-flow Dense</div>
+                <p style="color: #666; margin-bottom: 15px;">grid-auto-flow: dense allows items to backfill gaps left by larger items.</p>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(4, 1fr)</span>;
+  <span class="property">grid-auto-flow</span>: <span class="value">dense</span>; <span class="comment">/* Backfill gaps */</span>
+  <span class="property">grid-auto-rows</span>: <span class="value">60px</span>;
+}
+
+<span class="keyword">.item-2x2</span> { <span class="property">grid-column</span>: <span class="value">span 2</span>; <span class="property">grid-row</span>: <span class="value">span 2</span>; }
+                </div>
+                <div class="demo">
+                    <div class="grid-demo auto-flow-dense">
+                        <div class="grid-item">1</div>
+                        <div class="grid-item span2x2">2 (spans 2×2)</div>
+                        <div class="grid-item">3</div>
+                        <div class="grid-item">4</div>
+                        <div class="grid-item implicit">5</div>
+                        <div class="grid-item implicit">6</div>
+                        <div class="grid-item implicit">7</div>
+                    </div>
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Dense Packing:</strong> Without dense, items would flow in document order. Dense allows smaller items to fill gaps earlier in the grid, improving space efficiency.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Properties Reference -->
+        <div class="section">
+            <div class="section-title">Properties Reference</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Explicit Grid Properties</div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>grid-template-columns</h4>
+                        <p>Defines explicit columns. Use px, fr, %, repeat(), minmax(), auto.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>grid-template-rows</h4>
+                        <p>Defines explicit rows. Same units as columns.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>grid-template-areas</h4>
+                        <p>Creates named grid areas. Defines both rows and columns implicitly.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Implicit Grid Properties</div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>grid-auto-rows</h4>
+                        <p>Default size for implicit rows. Use px, %, auto, minmax(), or auto-fit.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>grid-auto-columns</h4>
+                        <p>Default size for implicit columns. Same units as grid-auto-rows.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>grid-auto-flow</h4>
+                        <p>Direction of auto-placement: row (default), column, or dense.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Real-World Scenarios -->
+        <div class="section">
+            <div class="section-title">Real-World Scenarios</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 1: Fixed Header + Flexible Content</div>
+                <div class="concept-box">
+                    You want a fixed header row (explicit) but don't know how many content rows you'll have (implicit).
+                </div>
+                <div class="code-block">
+<span class="keyword">.layout</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">1fr</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">60px</span>; <span class="comment">/* Explicit header */</span>
+  <span class="property">grid-auto-rows</span>: <span class="value">auto</span>; <span class="comment">/* Implicit content rows */</span>
+}
+
+<span class="keyword">header</span> { <span class="property">grid-row</span>: <span class="value">1</span>; }
+<span class="keyword">section</span> { <span class="comment">/* Falls into implicit rows 2, 3, 4... */</span> }
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 2: Dashboard with Dynamic Cards</div>
+                <div class="concept-box">
+                    Dashboard with 4 fixed columns but unknown number of rows. Each card is square (aspect-ratio: 1).
+                </div>
+                <div class="code-block">
+<span class="keyword">.dashboard</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(4, 1fr)</span>; <span class="comment">/* Explicit 4 columns */</span>
+  <span class="property">grid-auto-rows</span>: <span class="value">1fr</span>; <span class="comment">/* Implicit square rows */</span>
+}
+
+<span class="keyword">.card</span> { <span class="property">aspect-ratio</span>: <span class="value">1</span>; }
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 3: Responsive Gallery</div>
+                <div class="concept-box">
+                    Gallery that responds to content. Fixed column count on desktop, implicit rows as needed.
+                </div>
+                <div class="code-block">
+<span class="keyword">.gallery</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(auto-fit, minmax(200px, 1fr))</span>; <span class="comment">/* Explicit pattern */</span>
+  <span class="property">grid-auto-rows</span>: <span class="value">200px</span>; <span class="comment">/* Implicit square gallery items */</span>
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 4: Sidebar Navigation + Main Content</div>
+                <div class="concept-box">
+                    Fixed 250px sidebar, flexible main content area. Multiple rows in main area (implicit).
+                </div>
+                <div class="code-block">
+<span class="keyword">.layout</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">250px 1fr</span>; <span class="comment">/* Explicit columns */</span>
+  <span class="property">grid-auto-rows</span>: <span class="value">auto</span>; <span class="comment">/* Implicit rows for content */</span>
+}
+
+<span class="keyword">aside</span> { <span class="property">grid-row</span>: <span class="value">1 / -1</span>; } <span class="comment">/* Spans all rows */</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Best Practices -->
+        <div class="section">
+            <div class="section-title">Best Practices & Tips</div>
+
+            <div class="subsection">
+                <div class="subsection-title">✓ Do's</div>
+                <ul>
+                    <li><strong>Always define grid-auto-rows/columns</strong> when you expect overflow items. Don't rely on auto-sizing unless intentional.</li>
+                    <li><strong>Use grid-template-* for structure</strong> when layout is fixed and known upfront.</li>
+                    <li><strong>Use grid-auto-* for flexibility</strong> when the number of items is unknown or dynamic.</li>
+                    <li><strong>Combine explicit + implicit</strong> for best results: fixed header/columns + flexible content.</li>
+                    <li><strong>Test with varying content amounts</strong> to ensure implicit tracks handle overflow correctly.</li>
+                    <li><strong>Use grid-auto-flow: dense</strong> for optimal space packing in gallery/card layouts.</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">✗ Don'ts</div>
+                <ul>
+                    <li><strong>Don't forget grid-auto-rows</strong> when using explicit columns. Implicit rows default to auto (content-sized).</li>
+                    <li><strong>Don't mix row and column auto-placement</strong> unless you understand grid-auto-flow behavior.</li>
+                    <li><strong>Don't rely on implicit grid sizing</strong> for consistent visual design. Always set expected sizes.</li>
+                    <li><strong>Don't use grid-auto-flow: dense</strong> with dynamic item counts unless you need gap-filling.</li>
+                    <li><strong>Don't create implicit tracks unintentionally</strong>. Review your grid definition if items appear unexpectedly.</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Pro Tips</div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 1:</strong> Use grid-auto-rows: minmax(auto, 1fr) to allow rows to grow but not shrink below content height.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 2:</strong> Combine repeat(auto-fit/auto-fill, minmax()) with grid-auto-rows for fully responsive layouts.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 3:</strong> grid-template-areas automatically creates both explicit rows AND columns based on your ASCII art layout.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 4:</strong> Debug implicit grids with browser DevTools: Inspect element → Layout tab → shows explicit vs implicit tracks.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Summary -->
+        <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="section-title" style="color: white; border-bottom-color: white;">Quick Summary</div>
+            <div style="margin-top: 20px;">
+                <p><strong>Explicit Grid (You Control):</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Defined with grid-template-columns, grid-template-rows, grid-template-areas</li>
+                    <li>Fixed, predictable structure</li>
+                    <li>Perfect for known layouts (dashboards, galleries with fixed columns)</li>
+                </ul>
+                <p><strong>Implicit Grid (Browser Creates):</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Auto-created for items outside explicit tracks</li>
+                    <li>Controlled with grid-auto-rows, grid-auto-columns, grid-auto-flow</li>
+                    <li>Perfect for flexible, dynamic content (unknown item counts)</li>
+                </ul>
+                <p><strong>Best Approach:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Combine both for optimal layouts: explicit structure + implicit flexibility</li>
+                    <li>Always set grid-auto-rows/columns to control implicit track sizing</li>
+                    <li>Use grid-auto-flow to control auto-placement direction</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

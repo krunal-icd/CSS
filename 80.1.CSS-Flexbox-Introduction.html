@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox Introduction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #764ba2;
+            padding-bottom: 10px;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .example {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        /* Example 1: Basic Flex Container */
+        .flex-basic {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .flex-item {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Example 2: Direction */
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .item-row {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .item-col {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        /* Example 3: Justify Content */
+        .justify-demo {
+            display: flex;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 6px;
+            min-height: 100px;
+        }
+
+        .justify-box {
+            background: #2ecc71;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .justify-flex-start { justify-content: flex-start; }
+        .justify-flex-end { justify-content: flex-end; }
+        .justify-center { justify-content: center; }
+        .justify-space-between { justify-content: space-between; }
+        .justify-space-around { justify-content: space-around; }
+
+        /* Example 4: Align Items */
+        .align-demo {
+            display: flex;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 6px;
+            min-height: 140px;
+        }
+
+        .align-box {
+            background: #9b59b6;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .align-flex-start { align-items: flex-start; }
+        .align-center { align-items: center; }
+        .align-flex-end { align-items: flex-end; }
+        .align-stretch { align-items: stretch; }
+
+        /* Example 5: Flex Property */
+        .flex-demo {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .flex-1 { flex: 1; background: #f39c12; color: white; padding: 20px; border-radius: 6px; text-align: center; }
+        .flex-2 { flex: 2; background: #e67e22; color: white; padding: 20px; border-radius: 6px; text-align: center; }
+        .flex-3 { flex: 3; background: #d35400; color: white; padding: 20px; border-radius: 6px; text-align: center; }
+
+        /* Example 6: Wrap */
+        .flex-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .wrap-item {
+            flex: 0 0 calc(33.333% - 10px);
+            background: #1abc9c;
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .demo-label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .property-name {
+            font-weight: bold;
+            color: #667eea;
+            font-family: 'Courier New', monospace;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 CSS Flexbox Guide</h1>
+            <p>Master flexible layouts with CSS Flexbox</p>
+        </header>
+
+        <div class="content">
+            <!-- Section 1: Introduction -->
+            <div class="section">
+                <h2>What is Flexbox?</h2>
+                <div class="description">
+                    Flexbox (Flexible Box Layout) is a powerful CSS layout module that makes it easier to design flexible and responsive layouts. It provides an efficient way to arrange, distribute, and align items in containers.
+                </div>
+                <div class="code-block">
+display: flex;  /* Activates flexbox */</div>
+            </div>
+
+            <!-- Section 2: Basic Flex Container -->
+            <div class="section">
+                <h2>Basic Flex Container</h2>
+                <div class="description">
+                    When you set <span class="highlight">display: flex</span>, the element becomes a flex container, and its children become flex items that flow horizontally by default.
+                </div>
+                <div class="example">
+                    <div class="example-title">Example: Three Flex Items</div>
+                    <div class="flex-basic">
+                        <div class="flex-item">Item 1</div>
+                        <div class="flex-item">Item 2</div>
+                        <div class="flex-item">Item 3</div>
+                    </div>
+                    <div class="code-block">.container {
+    display: flex;
+    gap: 10px;
+}</div>
+                </div>
+            </div>
+
+            <!-- Section 3: Flex Direction -->
+            <div class="section">
+                <h2>Flex Direction</h2>
+                <div class="description">
+                    The <span class="highlight">flex-direction</span> property controls the direction of flex items. Default is <span class="highlight">row</span> (horizontal), but you can use <span class="highlight">column</span> for vertical layouts.
+                </div>
+                
+                <div class="example">
+                    <div class="example-title">Row Direction (Left to Right)</div>
+                    <div class="flex-row">
+                        <div class="item-row">Row 1</div>
+                        <div class="item-row">Row 2</div>
+                        <div class="item-row">Row 3</div>
+                    </div>
+                    <div class="code-block">flex-direction: row;</div>
+                </div>
+
+                <div class="example">
+                    <div class="example-title">Column Direction (Top to Bottom)</div>
+                    <div class="flex-column">
+                        <div class="item-col">Column 1</div>
+                        <div class="item-col">Column 2</div>
+                        <div class="item-col">Column 3</div>
+                    </div>
+                    <div class="code-block">flex-direction: column;</div>
+                </div>
+            </div>
+
+            <!-- Section 4: Justify Content -->
+            <div class="section">
+                <h2>Justify Content (Horizontal Alignment)</h2>
+                <div class="description">
+                    The <span class="highlight">justify-content</span> property aligns flex items along the main axis (horizontal in row direction). Use it to distribute space around items.
+                </div>
+
+                <div class="example">
+                    <div class="example-title">flex-start (Default)</div>
+                    <div class="justify-demo justify-flex-start">
+                        <div class="justify-box">1</div>
+                        <div class="justify-box">2</div>
+                        <div class="justify-box">3</div>
+                    </div>
+                    <div class="code-block">justify-content: flex-start;</div>
+                </div>
+
+                <div class="example">
+                    <div class="example-title">flex-end</div>
+                    <div class="justify-demo justify-flex-end">
+                        <div class="justify-box">1</div>
+                        <div class="justify-box">2</div>
+                        <div class="justify-box">3</div>
+                    </div>
+                    <div class="code-block">justify-content: flex-end;</div>
+                </div>
+
+                <div class="example">
+                    <div class="example-title">center</div>
+                    <div class="justify-demo justify-center">
+                        <div class="justify-box">1</div>
+                        <div class="justify-box">2</div>
+                        <div class="justify-box">3</div>
+                    </div>
+                    <div class="code-block">justify-content: center;</div>
+                </div>
+
+                <div class="example">
+                    <div class="example-title">space-between</div>
+                    <div class="justify-demo justify-space-between">
+                        <div class="justify-box">1</div>
+                        <div class="justify-box">2</div>
+                        <div class="justify-box">3</div>
+                    </div>
+                    <div class="code-block">justify-content: space-between;</div>
+                </div>
+
+                <div class="example">
+                    <div class="example-title">space-around</div>
+                    <div class="justify-demo justify-space-around">
+                        <div class="justify-box">1</div>
+                        <div class="justify-box">2</div>
+                        <div class="justify-box">3</div>
+                    </div>
+                    <div class="code-block">justify-content: space-around;</div>
+                </div>
+            </div>
+
+            <!-- Section 5: Align Items -->
+            <div class="section">
+                <h2>Align Items (Vertical Alignment)</h2>
+                <div class="description">
+                    The <span class="highlight">align-items</span> property aligns flex items along the cross axis (vertical in row direction).
+                </div>
+
+                <div class="example">
+                    <div class="example-title">flex-start</div>
+                    <div class="align-demo align-flex-start">
+                        <div class="align-box">1</div>
+                        <div class="align-box">2</div>
+                        <div class="align-box">3</div>
+                    </div>
+                    <div class="code-block">align-items: flex-start;</div>
+                </div>
+
+                <div class="example">
+                    <div class="example-title">center</div>
+                    <div class="align-demo align-center">
+                        <div class="align-box">1</div>
+                        <div class="align-box">2</div>
+                        <div class="align-box">3</div>
+                    </div>
+                    <div class="code-block">align-items: center;</div>
+                </div>
+
+                <div class="example">
+                    <div class="example-title">flex-end</div>
+                    <div class="align-demo align-flex-end">
+                        <div class="align-box">1</div>
+                        <div class="align-box">2</div>
+                        <div class="align-box">3</div>
+                    </div>
+                    <div class="code-block">align-items: flex-end;</div>
+                </div>
+
+                <div class="example">
+                    <div class="example-title">stretch (Default)</div>
+                    <div class="align-demo align-stretch">
+                        <div class="align-box" style="align-self: auto;">1</div>
+                        <div class="align-box" style="align-self: auto;">2</div>
+                        <div class="align-box" style="align-self: auto;">3</div>
+                    </div>
+                    <div class="code-block">align-items: stretch;</div>
+                </div>
+            </div>
+
+            <!-- Section 6: Flex Property -->
+            <div class="section">
+                <h2>Flex Property (Growing & Shrinking)</h2>
+                <div class="description">
+                    The <span class="highlight">flex</span> property controls how items grow to fill available space. Higher values take more space proportionally.
+                </div>
+
+                <div class="example">
+                    <div class="example-title">flex: 1, 2, 3 (Different Growth Ratios)</div>
+                    <div class="flex-demo">
+                        <div class="flex-1">flex: 1</div>
+                        <div class="flex-2">flex: 2</div>
+                        <div class="flex-3">flex: 3</div>
+                    </div>
+                    <div class="code-block">.item1 { flex: 1; }
+.item2 { flex: 2; }
+.item3 { flex: 3; }</div>
+                </div>
+            </div>
+
+            <!-- Section 7: Flex Wrap -->
+            <div class="section">
+                <h2>Flex Wrap</h2>
+                <div class="description">
+                    The <span class="highlight">flex-wrap</span> property allows items to wrap to multiple lines instead of shrinking to fit.
+                </div>
+
+                <div class="example">
+                    <div class="example-title">flex-wrap: wrap (Items wrap to new line)</div>
+                    <div class="flex-wrap">
+                        <div class="wrap-item">Item 1</div>
+                        <div class="wrap-item">Item 2</div>
+                        <div class="wrap-item">Item 3</div>
+                        <div class="wrap-item">Item 4</div>
+                        <div class="wrap-item">Item 5</div>
+                        <div class="wrap-item">Item 6</div>
+                    </div>
+                    <div class="code-block">.container {
+    display: flex;
+    flex-wrap: wrap;
+}</div>
+                </div>
+            </div>
+
+            <!-- Section 8: Quick Reference -->
+            <div class="section">
+                <h2>Quick Reference Table</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Purpose</th>
+                            <th>Common Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="property-name">display</td>
+                            <td>Enables flexbox layout</td>
+                            <td><span class="highlight">flex</span></td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">flex-direction</td>
+                            <td>Sets main axis direction</td>
+                            <td><span class="highlight">row</span>, <span class="highlight">column</span></td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">justify-content</td>
+                            <td>Aligns on main axis</td>
+                            <td><span class="highlight">flex-start</span>, <span class="highlight">center</span>, <span class="highlight">space-between</span></td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">align-items</td>
+                            <td>Aligns on cross axis</td>
+                            <td><span class="highlight">flex-start</span>, <span class="highlight">center</span>, <span class="highlight">stretch</span></td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">flex</td>
+                            <td>Growth/shrink factor</td>
+                            <td><span class="highlight">1</span>, <span class="highlight">2</span>, <span class="highlight">auto</span></td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">flex-wrap</td>
+                            <td>Wrapping behavior</td>
+                            <td><span class="highlight">wrap</span>, <span class="highlight">nowrap</span></td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">gap</td>
+                            <td>Space between items</td>
+                            <td><span class="highlight">10px</span>, <span class="highlight">1rem</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section 9: Tips -->
+            <div class="section">
+                <h2>💡 Flexbox Tips & Best Practices</h2>
+                <div class="description">
+                    <strong>1. Start with flex container:</strong> Always set <span class="highlight">display: flex</span> on the parent element, not the children.
+                    <br><br>
+                    <strong>2. Use gap for spacing:</strong> Replace margin hacks with the <span class="highlight">gap</span> property for cleaner code.
+                    <br><br>
+                    <strong>3. Combine justify & align:</strong> Use <span class="highlight">justify-content</span> + <span class="highlight">align-items: center</span> to perfectly center content.
+                    <br><br>
+                    <strong>4. Flex shorthand:</strong> <span class="highlight">flex: 1</span> is shorthand for <span class="highlight">flex: 1 1 0%</span> (grow, shrink, basis).
+                    <br><br>
+                    <strong>5. Responsive layouts:</strong> Combine with media queries to change flex-direction from row to column on mobile devices.
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>✨ Master Flexbox and build responsive, flexible layouts with ease!</p>
+        </footer>
+    </div>
+</body>
+</html>

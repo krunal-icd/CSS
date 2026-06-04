@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Overlapping Items - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .example-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .example-code {
+            background: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        .demo-container {
+            border: 2px dashed #667eea;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .quick-ref {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .quick-ref strong {
+            color: #667eea;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        /* Example 1: Product with Badge */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 200px auto auto;
+            position: relative;
+        }
+
+        .product-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            grid-column: 1;
+            grid-row: 1;
+            z-index: 1;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .product-info {
+            padding: 15px;
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Example 2: Hero with Overlay */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 300px;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            grid-column: 1;
+            grid-row: 1;
+            z-index: 1;
+        }
+
+        .hero-content {
+            grid-column: 1;
+            grid-row: 1;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .hero-content p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        /* Example 3: Card Hover Overlap */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            perspective: 1000px;
+        }
+
+        .hover-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            z-index: 1;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .hover-card:hover {
+            z-index: 10;
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .hover-card-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .hover-card-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .hover-card-desc {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* Example 4: Layered Shapes */
+        .layered-design {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            min-height: 300px;
+        }
+
+        .layered-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .shape-layer-bg {
+            grid-column: 1;
+            grid-row: 1;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0.3;
+        }
+
+        .shape-layer-mid {
+            grid-column: 1;
+            grid-row: 1;
+            z-index: 2;
+            width: 85%;
+            height: 85%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            opacity: 0.5;
+            align-self: center;
+            justify-self: center;
+            border-radius: 8px;
+        }
+
+        .shape-layer-content {
+            grid-column: 1;
+            grid-row: 1;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Example 5: Image with Text Overlay */
+        .image-overlay-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .image-overlay-item {
+            display: grid;
+            grid-template-rows: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .overlay-image {
+            grid-column: 1;
+            grid-row: 1;
+            z-index: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+        }
+
+        .overlay-text {
+            grid-column: 1;
+            grid-row: 1;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        /* Example 6: Status Indicator */
+        .user-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            margin: 20px;
+        }
+
+        .user-avatar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            color: white;
+            font-size: 2.5em;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .status-indicator {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            background: #2ecc71;
+            border: 3px solid white;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .user-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .user-role {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* Example 7: Floating Action Button */
+        .content-with-fab {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 250px;
+            position: relative;
+        }
+
+        .fab {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
+            transition: all 0.3s ease;
+            z-index: 5;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .product-grid,
+            .card-grid,
+            .image-overlay-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h2 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Overlapping Items</h1>
+            <p>Practical Examples & Real-World Implementations</p>
+        </header>
+
+        <!-- Example 1: Product Card with Badge -->
+        <div class="example">
+            <div class="example-title">1. Product Card with Sale Badge</div>
+            <div class="example-description">
+                Product image with overlapping sale badge in the corner. Badge uses z-index: 2 to appear on top of the image.
+            </div>
+            <div class="example-code">
+                .product-image { grid-column: 1; grid-row: 1; z-index: 1; }<br>
+                .product-badge { position: absolute; z-index: 2; top: 10px; right: 10px; }
+            </div>
+            <div class="demo-container">
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-image">🎨</div>
+                        <div class="product-badge">SALE 30%</div>
+                        <div class="product-info">
+                            <div class="product-name">Design Kit</div>
+                            <div class="product-price">$29.99</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">📱</div>
+                        <div class="product-name" style="padding: 15px;">App UI</div>
+                        <div class="product-price" style="padding: 0 15px;">$19.99</div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">⌚</div>
+                        <div class="product-badge" style="background: #ffc107; color: #333;">NEW</div>
+                        <div class="product-info">
+                            <div class="product-name">Watch UI</div>
+                            <div class="product-price">$24.99</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Why Overlap:</strong> Badge needs visual prominence on top of image, not separate element.
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> Use position: absolute within the card for easy badge positioning.
+            </div>
+        </div>
+
+        <!-- Example 2: Hero Section -->
+        <div class="example">
+            <div class="example-title">2. Hero Section with Text Overlay</div>
+            <div class="example-description">
+                Full-width hero background image with text content overlaid on top. Both elements span the same grid cell.
+            </div>
+            <div class="example-code">
+                .hero-background { grid-column: 1; grid-row: 1; z-index: 1; }<br>
+                .hero-content { grid-column: 1; grid-row: 1; z-index: 2; }
+            </div>
+            <div class="demo-container">
+                <div class="hero-section">
+                    <div class="hero-background"></div>
+                    <div class="hero-content">
+                        <h2>Welcome to Our Site</h2>
+                        <p>Beautiful overlapping design with CSS Grid</p>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Why Overlap:</strong> Text needs to be readable over background. Layering creates professional hero effect.
+            </div>
+        </div>
+
+        <!-- Example 3: Hover Card Elevation -->
+        <div class="example">
+            <div class="example-title">3. Cards with Hover Z-Index Elevation</div>
+            <div class="example-description">
+                Cards that increase z-index on hover to appear above neighbors. Creates depth effect when hovering.
+            </div>
+            <div class="example-code">
+                .hover-card { z-index: 1; transition: z-index 0.3s; }<br>
+                .hover-card:hover { z-index: 10; transform: translateY(-10px) scale(1.05); }
+            </div>
+            <div class="demo-container">
+                <div class="card-grid">
+                    <div class="hover-card">
+                        <div class="hover-card-icon">🎨</div>
+                        <div class="hover-card-title">Design</div>
+                        <div class="hover-card-desc">Beautiful interfaces</div>
+                    </div>
+                    <div class="hover-card">
+                        <div class="hover-card-icon">⚙️</div>
+                        <div class="hover-card-title">Develop</div>
+                        <div class="hover-card-desc">Clean code</div>
+                    </div>
+                    <div class="hover-card">
+                        <div class="hover-card-icon">🚀</div>
+                        <div class="hover-card-title">Deploy</div>
+                        <div class="hover-card-desc">Fast & reliable</div>
+                    </div>
+                    <div class="hover-card">
+                        <div class="hover-card-icon">📊</div>
+                        <div class="hover-card-title">Analyze</div>
+                        <div class="hover-card-desc">Data insights</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Why Overlap:</strong> Hover effect brings card above neighbors for visual focus and emphasis.
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Tip:</strong> Try hovering over cards to see elevation effect and z-index change!
+            </div>
+        </div>
+
+        <!-- Example 4: Layered Shapes -->
+        <div class="example">
+            <div class="example-title">4. Layered Design Shapes</div>
+            <div class="example-description">
+                Multiple decorative shapes layered on top of each other with different opacity levels to create visual depth.
+            </div>
+            <div class="example-code">
+                .shape-layer-bg { z-index: 1; opacity: 0.3; }<br>
+                .shape-layer-mid { z-index: 2; opacity: 0.5; }<br>
+                .shape-layer-content { z-index: 3; }
+            </div>
+            <div class="demo-container">
+                <div class="layered-design">
+                    <div class="layered-item">
+                        <div style="display: grid; position: relative; height: 300px;">
+                            <div class="shape-layer-bg"></div>
+                            <div class="shape-layer-mid"></div>
+                            <div class="shape-layer-content">Layered Design</div>
+                        </div>
+                    </div>
+                    <div class="layered-item">
+                        <div style="display: grid; position: relative; height: 300px;">
+                            <div class="shape-layer-bg"></div>
+                            <div class="shape-layer-mid"></div>
+                            <div class="shape-layer-content">Visual Depth</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Creative background designs, decorative elements, visual interest layers.
+            </div>
+        </div>
+
+        <!-- Example 5: Image with Text Overlay -->
+        <div class="example">
+            <div class="example-title">5. Image with Text Overlay</div>
+            <div class="example-description">
+                Images with semi-transparent overlay and text on top. Perfect for gallery items or portfolio projects.
+            </div>
+            <div class="example-code">
+                .overlay-image { grid-column: 1; grid-row: 1; z-index: 1; }<br>
+                .overlay-text { grid-column: 1; grid-row: 1; z-index: 2; background: rgba(0,0,0,0.4); }
+            </div>
+            <div class="demo-container">
+                <div class="image-overlay-grid">
+                    <div class="image-overlay-item">
+                        <div class="overlay-image">🌅</div>
+                        <div class="overlay-text">Beautiful Sunset</div>
+                    </div>
+                    <div class="image-overlay-item">
+                        <div class="overlay-image">🏔️</div>
+                        <div class="overlay-text">Mountain View</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Portfolio galleries, image cards, photo collections with titles.
+            </div>
+        </div>
+
+        <!-- Example 6: User Card with Status -->
+        <div class="example">
+            <div class="example-title">6. User Avatar with Status Indicator</div>
+            <div class="example-description">
+                User avatar with overlapping status indicator (green dot). Common in messaging and social apps.
+            </div>
+            <div class="example-code">
+                .user-avatar { position: relative; }<br>
+                .status-indicator { position: absolute; bottom: 0; right: 0; z-index: 2; }
+            </div>
+            <div class="demo-container">
+                <div class="user-card">
+                    <div class="user-avatar">
+                        👤
+                        <div class="status-indicator"></div>
+                    </div>
+                    <div class="user-name">John Doe</div>
+                    <div class="user-role">Product Designer</div>
+                </div>
+                <div class="user-card">
+                    <div class="user-avatar">
+                        👩
+                        <div class="status-indicator" style="background: #95a5a6;"></div>
+                    </div>
+                    <div class="user-name">Jane Smith</div>
+                    <div class="user-role">Developer</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> User profiles, chat interfaces, team rosters with online/offline status.
+            </div>
+        </div>
+
+        <!-- Example 7: Floating Action Button -->
+        <div class="example">
+            <div class="example-title">7. Content with Floating Action Button</div>
+            <div class="example-description">
+                FAB (Floating Action Button) that overlaps content. Common in mobile apps and modern web interfaces.
+            </div>
+            <div class="example-code">
+                .fab { position: absolute; z-index: 5; bottom: 20px; right: 20px; }
+            </div>
+            <div class="demo-container">
+                <div class="content-with-fab">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">Content Area</h3>
+                    <p>This area contains your main content. Notice the floating action button (plus icon) in the bottom right corner that overlaps the content with z-index: 5.</p>
+                    <p style="margin-top: 15px;">The FAB is always accessible and appears above all other content due to its high z-index value.</p>
+                    <div class="fab">+</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Why Overlap:</strong> FAB needs to be always visible and clickable, hovering above main content.
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Tip:</strong> Try hovering over the FAB button to see the scale and shadow effects!
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="example" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="example-title" style="color: white;">Key Takeaways & Best Practices</div>
+            <div style="margin-top: 20px;">
+                <p><strong>Common Overlapping Patterns:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Product badges on images (z-index: 2)</li>
+                    <li>Hero text overlays (z-index: 2+)</li>
+                    <li>Image captions/titles (semi-transparent overlay)</li>
+                    <li>Status indicators (z-index: 2+)</li>
+                    <li>FABs and floating elements (z-index: 5+)</li>
+                </ul>
+                <p><strong>Z-Index Guidelines:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Background: z-index 1</li>
+                    <li>Default overlays: z-index 2-3</li>
+                    <li>Hover elevations: z-index 10</li>
+                    <li>Floating elements: z-index 5+</li>
+                    <li>Modals/dialogs: z-index 100+</li>
+                </ul>
+                <p><strong>Pro Tips:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Use position: absolute for overlaps within grid items</li>
+                    <li>Combine with opacity for semi-transparent effects</li>
+                    <li>Test hover states and interactions</li>
+                    <li>Ensure overlaid content remains accessible</li>
+                    <li>Use transitions for smooth z-index changes on hover</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

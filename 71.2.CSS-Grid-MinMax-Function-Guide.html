@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid MinMax Function - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .example-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .example-code {
+            background: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            border-radius: 4px;
+        }
+
+        .example-code code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .demo-container {
+            border: 2px dashed #667eea;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        /* Example 1: Responsive Card Grid */
+        .responsive-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+
+        /* Example 2: Fluid Typography Grid */
+        .fluid-text-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .text-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .text-box h4 {
+            font-size: clamp(1.2em, 5vw, 1.8em);
+            margin-bottom: 10px;
+        }
+
+        .text-box p {
+            font-size: clamp(0.8em, 3vw, 1em);
+        }
+
+        /* Example 3: Sidebar + Content Layout */
+        .sidebar-layout {
+            display: grid;
+            grid-template-columns: minmax(250px, 300px) 1fr;
+            gap: 20px;
+        }
+
+        .sidebar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar li:last-child {
+            border-bottom: none;
+        }
+
+        .content {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        /* Example 4: Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .dashboard-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dashboard-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .dashboard-card .change {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* Example 5: Product Grid with Min/Max */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .product-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .product-price {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        /* Example 6: Gallery with Minmax */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Example 7: List with Minmax */
+        .list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .list-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .list-item-icon {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.5em;
+        }
+
+        .list-item-content h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .list-item-content p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* Example 8: Mixed Sizes Grid */
+        .mixed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .mixed-item {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Example 9: Menu Items Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .menu-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        /* Example 10: Article Cards Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+        }
+
+        .article-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-date {
+            color: #999;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .article-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            flex-grow: 1;
+        }
+
+        .article-meta {
+            color: #667eea;
+            font-size: 0.85em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .sidebar-layout {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+        }
+
+        .resize-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+
+        .quick-ref {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .quick-ref strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid MinMax() Function</h1>
+            <p>Practical Examples & Real-World Implementations</p>
+        </header>
+
+        <!-- Example 1: Responsive Card Grid -->
+        <div class="example">
+            <div class="example-title">1. Responsive Card Grid (Most Common)</div>
+            <div class="example-description">
+                Create a responsive grid that adapts from 1 column on mobile to multiple columns on desktop. Cards never shrink below 280px but can grow to fill available space.
+            </div>
+            <div class="example-code">
+                <code>grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));</code>
+            </div>
+            <div class="demo-container">
+                <div class="responsive-cards">
+                    <div class="card">
+                        <h3>Feature One</h3>
+                        <p>Minimum width ensures readability. Maximum 1fr allows equal distribution across available space.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Feature Two</h3>
+                        <p>Cards automatically wrap to new row when space is constrained. No breakpoints needed!</p>
+                    </div>
+                    <div class="card">
+                        <h3>Feature Three</h3>
+                        <p>Perfect for portfolio projects, service offerings, and product listings. Completely responsive.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Feature Four</h3>
+                        <p>Works great because minmax() does the heavy lifting. Add/remove cards without layout breaks.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="resize-note">
+                💡 <strong>Resize your browser window:</strong> Cards automatically reflow without any media queries!
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Testimonials, team members, pricing cards, feature highlights, portfolio pieces
+            </div>
+        </div>
+
+        <!-- Example 2: Fluid Typography Grid -->
+        <div class="example">
+            <div class="example-title">2. Fluid Typography with Flexible Grid</div>
+            <div class="example-description">
+                Combine minmax() for grid columns with clamp() for typography. Text sizes scale responsively with grid columns.
+            </div>
+            <div class="example-code">
+                <code>grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));<br>
+                font-size: clamp(0.8em, 3vw, 1em);</code>
+            </div>
+            <div class="demo-container">
+                <div class="fluid-text-grid">
+                    <div class="text-box">
+                        <h4>Heading</h4>
+                        <p>Text scales with viewport and grid size</p>
+                    </div>
+                    <div class="text-box">
+                        <h4>Dynamic</h4>
+                        <p>No breakpoints needed at all</p>
+                    </div>
+                    <div class="text-box">
+                        <h4>Responsive</h4>
+                        <p>Everything adapts smoothly</p>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Stats displays, testimonial cards, feature highlights with variable text lengths
+            </div>
+        </div>
+
+        <!-- Example 3: Sidebar + Content Layout -->
+        <div class="example">
+            <div class="example-title">3. Sidebar + Content Layout</div>
+            <div class="example-description">
+                Sidebar maintains minimum width, content area gets remaining space. Perfect for navigation + main content layouts.
+            </div>
+            <div class="example-code">
+                <code>grid-template-columns: minmax(250px, 300px) 1fr;</code>
+            </div>
+            <div class="demo-container">
+                <div class="sidebar-layout">
+                    <div class="sidebar">
+                        <h3>Navigation</h3>
+                        <ul>
+                            <li>Home</li>
+                            <li>About</li>
+                            <li>Services</li>
+                            <li>Portfolio</li>
+                            <li>Contact</li>
+                        </ul>
+                    </div>
+                    <div class="content">
+                        <p>This is the main content area. The sidebar on the left stays between 250px-300px wide, while this content area takes up all remaining space with 1fr.</p>
+                        <p>Perfect for blogs, documentation sites, admin dashboards, and any two-column layout where one column needs flexibility.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Blog layouts, documentation sites, admin dashboards, e-commerce product pages with filters
+            </div>
+        </div>
+
+        <!-- Example 4: Dashboard Grid -->
+        <div class="example">
+            <div class="example-title">4. Dashboard Metrics Grid</div>
+            <div class="example-description">
+                Create a dashboard where metric cards maintain 250px minimum width and grow equally to fill available space.
+            </div>
+            <div class="example-code">
+                <code>grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));</code>
+            </div>
+            <div class="demo-container">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h4>Total Users</h4>
+                        <div class="value">12,458</div>
+                        <div class="change">+2.5% from last month</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>Revenue</h4>
+                        <div class="value">$45,231</div>
+                        <div class="change">+8.2% from last month</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>Engagement</h4>
+                        <div class="value">78.5%</div>
+                        <div class="change">+1.3% from last month</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>Conversion</h4>
+                        <div class="value">3.24%</div>
+                        <div class="change">-0.5% from last month</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Analytics dashboards, admin panels, business metrics, KPI displays, reporting systems
+            </div>
+        </div>
+
+        <!-- Example 5: Product Grid -->
+        <div class="example">
+            <div class="example-title">5. Product Grid (auto-fill vs auto-fit)</div>
+            <div class="example-description">
+                Using auto-fill creates empty tracks, while auto-fit collapses them. Notice how products are sized consistently here.
+            </div>
+            <div class="example-code">
+                <code>grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));</code>
+            </div>
+            <div class="demo-container">
+                <div class="product-grid">
+                    <div class="product">
+                        <div class="product-image">🎨</div>
+                        <div class="product-info">
+                            <div class="product-name">Design Kit</div>
+                            <div class="product-price">$29</div>
+                        </div>
+                    </div>
+                    <div class="product">
+                        <div class="product-image">📱</div>
+                        <div class="product-info">
+                            <div class="product-name">App UI</div>
+                            <div class="product-price">$19</div>
+                        </div>
+                    </div>
+                    <div class="product">
+                        <div class="product-image">🎯</div>
+                        <div class="product-info">
+                            <div class="product-name">Icons Pack</div>
+                            <div class="product-price">$12</div>
+                        </div>
+                    </div>
+                    <div class="product">
+                        <div class="product-image">🖼️</div>
+                        <div class="product-info">
+                            <div class="product-name">Photo Pack</div>
+                            <div class="product-price">$39</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="resize-note">
+                💡 <strong>Try auto-fill:</strong> Creates consistent product boxes. With auto-fit, products would stretch when one row isn't full.
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> E-commerce product listings, app stores, image galleries, design system showcases
+            </div>
+        </div>
+
+        <!-- Example 6: Gallery Grid -->
+        <div class="example">
+            <div class="example-title">6. Image Gallery with Square Aspect Ratio</div>
+            <div class="example-description">
+                Gallery items maintain minimum 220px, grow to fill space, and maintain 1:1 aspect ratio. Perfect for photo galleries.
+            </div>
+            <div class="example-code">
+                <code>grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));<br>
+                aspect-ratio: 1;</code>
+            </div>
+            <div class="demo-container">
+                <div class="gallery-grid">
+                    <div class="gallery-item">01</div>
+                    <div class="gallery-item">02</div>
+                    <div class="gallery-item">03</div>
+                    <div class="gallery-item">04</div>
+                    <div class="gallery-item">05</div>
+                    <div class="gallery-item">06</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Photo portfolios, Instagram-style galleries, product image galleries, masonry layouts
+            </div>
+        </div>
+
+        <!-- Example 7: List Items Grid -->
+        <div class="example">
+            <div class="example-title">7. List Items with Icons Grid</div>
+            <div class="example-description">
+                Create flexible list items that flow across columns when space is available. Each item maintains readable minimum width.
+            </div>
+            <div class="example-code">
+                <code>grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));</code>
+            </div>
+            <div class="demo-container">
+                <div class="list-grid">
+                    <div class="list-item">
+                        <div class="list-item-icon">✓</div>
+                        <div class="list-item-content">
+                            <h4>Feature One</h4>
+                            <p>Description of the first amazing feature with all its benefits.</p>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="list-item-icon">⚡</div>
+                        <div class="list-item-content">
+                            <h4>Feature Two</h4>
+                            <p>Description of the second powerful feature you'll love.</p>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="list-item-icon">🎯</div>
+                        <div class="list-item-content">
+                            <h4>Feature Three</h4>
+                            <p>Description of the third incredible feature included.</p>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="list-item-icon">🔥</div>
+                        <div class="list-item-content">
+                            <h4>Feature Four</h4>
+                            <p>Description of the fourth game-changing feature.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Feature lists, checklist items, service offerings, benefits sections, process steps
+            </div>
+        </div>
+
+        <!-- Example 8: Mixed Content Grid -->
+        <div class="example">
+            <div class="example-title">8. Mixed Content with Variable Heights</div>
+            <div class="example-description">
+                Items with different content lengths flow naturally in minmax() grid. Minimum width ensures readability, no forced heights needed.
+            </div>
+            <div class="example-code">
+                <code>grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));</code>
+            </div>
+            <div class="demo-container">
+                <div class="mixed-grid">
+                    <div class="mixed-item">Item 1</div>
+                    <div class="mixed-item">Item 2<br>with more content</div>
+                    <div class="mixed-item">Item 3</div>
+                    <div class="mixed-item">Item 4<br>even more<br>content here</div>
+                    <div class="mixed-item">Item 5</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> User reviews, blog comments, testimonials, forum posts, social media feeds
+            </div>
+        </div>
+
+        <!-- Example 9: Menu Items Grid -->
+        <div class="example">
+            <div class="example-title">9. Menu/Navigation Items Grid</div>
+            <div class="example-description">
+                Perfect for horizontal menu items that wrap gracefully. Each menu item stays readable with 150px minimum, grows to fill space.
+            </div>
+            <div class="example-code">
+                <code>grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));</code>
+            </div>
+            <div class="demo-container">
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <div class="menu-icon">🏠</div>
+                        <div>Home</div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon">📚</div>
+                        <div>Docs</div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon">🎨</div>
+                        <div>Design</div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon">⚙️</div>
+                        <div>Settings</div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon">👤</div>
+                        <div>Profile</div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon">🚪</div>
+                        <div>Logout</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Top navigation bars, filter menus, category tabs, button groups, icon menus
+            </div>
+        </div>
+
+        <!-- Example 10: Article Cards Grid -->
+        <div class="example">
+            <div class="example-title">10. Article/Blog Cards Grid</div>
+            <div class="example-description">
+                Blog cards with images, titles, and metadata. Cards scale responsively from 1 column to multiple columns automatically.
+            </div>
+            <div class="example-code">
+                <code>grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));</code>
+            </div>
+            <div class="demo-container">
+                <div class="articles-grid">
+                    <div class="article-card">
+                        <div class="article-image">📝</div>
+                        <div class="article-content">
+                            <div class="article-date">May 15, 2024</div>
+                            <div class="article-title">Getting Started with CSS Grid MinMax</div>
+                            <div class="article-meta">5 min read</div>
+                        </div>
+                    </div>
+                    <div class="article-card">
+                        <div class="article-image">💡</div>
+                        <div class="article-content">
+                            <div class="article-date">May 12, 2024</div>
+                            <div class="article-title">Advanced Responsive Design Patterns</div>
+                            <div class="article-meta">8 min read</div>
+                        </div>
+                    </div>
+                    <div class="article-card">
+                        <div class="article-image">🚀</div>
+                        <div class="article-content">
+                            <div class="article-date">May 10, 2024</div>
+                            <div class="article-title">Building Flexible Grid Systems</div>
+                            <div class="article-meta">6 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Blog post listings, news feeds, article archives, content directories, knowledge bases
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="example" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="example-title" style="color: white;">Quick Reference: When to Use MinMax()</div>
+            <div style="margin-top: 20px; line-height: 1.8;">
+                <p><strong>✓ Use minmax() when:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>You want responsive grids without media queries</li>
+                    <li>Items should never be smaller than a readable size</li>
+                    <li>Items should grow to fill available space</li>
+                    <li>You want auto-fit or auto-fill behavior</li>
+                    <li>Creating product grids, galleries, card layouts</li>
+                </ul>
+                <p><strong>💡 Pro Tips:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Combine minmax() with auto-fit for best responsive behavior</li>
+                    <li>Use minmax() with repeat() for DRY, maintainable CSS</li>
+                    <li>Pair with clamp() for fluid typography scaling</li>
+                    <li>Perfect minimum values based on content readability</li>
+                    <li>Test across different viewport sizes to validate breakpoints</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

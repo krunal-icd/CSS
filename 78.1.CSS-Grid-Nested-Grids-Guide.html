@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Nested Grids & Subgrid</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .subsection {
+            margin-bottom: 30px;
+        }
+
+        .subsection-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .subsection-title:first-child {
+            margin-top: 0;
+        }
+
+        .concept-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .concept-box strong {
+            color: #667eea;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .keyword { color: #ff79c6; }
+        .property { color: #8be9fd; }
+        .value { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        .visual-diagram {
+            background: #f9f9f9;
+            border: 2px solid #eee;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #004085;
+        }
+
+        .note strong {
+            color: #667eea;
+        }
+
+        .best-practices {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #155724;
+        }
+
+        .best-practices strong {
+            color: #155724;
+        }
+
+        .highlight-box {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box strong {
+            color: #ff9800;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Nested Grids & Subgrid</h1>
+            <p>Master grids within grids and leverage parent grid tracks</p>
+        </header>
+
+        <!-- Section 1: Core Concept -->
+        <div class="section">
+            <div class="section-title">Understanding Nested Grids</div>
+
+            <div class="subsection">
+                <div class="subsection-title">What is a Nested Grid?</div>
+                <div class="highlight-box">
+                    <strong>Nested Grid:</strong> A grid item that is also a grid container. You can create grids inside grid items, allowing unlimited nesting depth.
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Two Types of Nesting</div>
+                <div class="concept-box">
+                    <strong>Traditional Nesting:</strong> A grid item becomes a grid container with its own independent track definitions. Completely separate from parent grid.
+                </div>
+                <div class="concept-box">
+                    <strong>Subgrid:</strong> A grid item inherits parent grid's track definitions. Child grid items can align with parent grid tracks. (Requires display: subgrid)
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Visual Overview</div>
+                <div class="visual-diagram">Traditional Nested Grid:
+┌─────────────────────────────────────┐
+│ Parent Grid (3 columns, 2 rows)     │
+│  ┌──────────────┐  ┌──────────────┐ │
+│  │Child Grid 1  │  │Child Grid 2  │ │
+│  │(2x2 nested)  │  │(2x2 nested)  │ │
+│  │ ┌─────┬─────┐│  │ ┌─────┬─────┐│ │
+│  │ │ A1  │ A2  ││  │ │ B1  │ B2  ││ │
+│  │ ├─────┼─────┤│  │ ├─────┼─────┤│ │
+│  │ │ A3  │ A4  ││  │ │ B3  │ B4  ││ │
+│  │ └─────┴─────┘│  │ └─────┴─────┘│ │
+│  └──────────────┘  └──────────────┘ │
+└─────────────────────────────────────┘
+
+Subgrid (Child aligns with Parent):
+┌─────────────────────────────────────┐
+│ Parent Grid (3 columns, 2 rows)     │
+│ Col1   | Col2   | Col3              │
+│ ┌──────┴────────┴──────────────────┐ │
+│ │ Subgrid spans parent columns     │ │
+│ │ ┌─────────┬─────────┬──────────┐ │ │
+│ │ │Child-1  │Child-2  │Child-3   │ │ │
+│ │ │(aligns) │(aligns) │(aligns)  │ │ │
+│ │ └─────────┴─────────┴──────────┘ │ │
+│ └─────────────────────────────────────┘ │
+└─────────────────────────────────────────┘
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Traditional Nesting -->
+        <div class="section">
+            <div class="section-title">Traditional Nested Grids</div>
+
+            <div class="subsection">
+                <div class="subsection-title">How It Works</div>
+                <ul>
+                    <li>Grid item has display: grid applied</li>
+                    <li>Creates completely independent grid structure</li>
+                    <li>Parent grid tracks are invisible to nested grid</li>
+                    <li>Nested grid has its own column/row definitions</li>
+                    <li>Can nest infinitely deep</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Syntax</div>
+                <div class="code-block">
+<span class="comment">/* Parent grid */</span>
+<span class="keyword">.parent-grid</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 1fr)</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">repeat(2, 200px)</span>;
+  <span class="property">gap</span>: <span class="value">20px</span>;
+}
+
+<span class="comment">/* Child item that becomes a grid */</span>
+<span class="keyword">.parent-grid > .card</span> {
+  <span class="property">display</span>: <span class="value">grid</span>; <span class="comment">/* Makes it a grid container */</span>
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(2, 1fr)</span>; <span class="comment">/* Independent columns */</span>
+  <span class="property">grid-template-rows</span>: <span class="value">repeat(2, 1fr)</span>;
+  <span class="property">gap</span>: <span class="value">10px</span>;
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Key Characteristics</div>
+                <ul>
+                    <li><strong>Independence:</strong> Child grid doesn't know about parent grid</li>
+                    <li><strong>Size Constraints:</strong> Nested grid is limited to parent item's size</li>
+                    <li><strong>Complete Control:</strong> Define all child tracks explicitly</li>
+                    <li><strong>Flexibility:</strong> Each nested grid can have different structure</li>
+                    <li><strong>Complexity:</strong> More CSS needed to align across grids</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">When to Use Traditional Nesting</div>
+                <ul>
+                    <li>Child items have completely different layout than parent</li>
+                    <li>You want full independence from parent grid</li>
+                    <li>Nested items have unique track requirements</li>
+                    <li>Supporting older browsers (subgrid is newer)</li>
+                    <li>Building reusable components with their own grids</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 3: Subgrid -->
+        <div class="section">
+            <div class="section-title">Subgrid: Inheriting Parent Tracks</div>
+
+            <div class="subsection">
+                <div class="subsection-title">What is Subgrid?</div>
+                <div class="highlight-box">
+                    <strong>display: subgrid:</strong> A grid item inherits parent grid's track definitions. Children align with parent grid tracks automatically, enabling perfect alignment across multiple nested grids.
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Syntax</div>
+                <div class="code-block">
+<span class="comment">/* Parent grid with named tracks */</span>
+<span class="keyword">.parent-grid</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">100px 1fr 200px</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">auto 1fr auto</span>;
+}
+
+<span class="comment">/* Child becomes subgrid - inherits parent columns/rows */</span>
+<span class="keyword">.child-subgrid</span> {
+  <span class="property">display</span>: <span class="value">subgrid</span>;
+  <span class="property">grid-column</span>: <span class="value">1 / -1</span>; <span class="comment">/* Span all parent columns */</span>
+  <span class="property">grid-row</span>: <span class="value">2</span>; <span class="comment">/* Position in parent rows */</span>
+}
+
+<span class="comment">/* Grandchild items align with parent grid tracks */</span>
+<span class="keyword">.child-subgrid > .item</span> {
+  <span class="property">grid-column</span>: <span class="value">2</span>; <span class="comment">/* Aligns to parent column 2 */</span>
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Key Advantages</div>
+                <ul>
+                    <li><strong>Perfect Alignment:</strong> Nested items align perfectly with parent grid</li>
+                    <li><strong>Inherits Tracks:</strong> Don't need to redefine columns/rows</li>
+                    <li><strong>Responsive Sync:</strong> When parent grid changes, subgrid adjusts automatically</li>
+                    <li><strong>Cleaner CSS:</strong> Less code needed for alignment</li>
+                    <li><strong>Flexible Nesting:</strong> Can nest subgrids within subgrids</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Column and Row Subgrid</div>
+                <div class="code-block">
+<span class="comment">/* Inherit only columns, define own rows */</span>
+<span class="keyword">.column-subgrid</span> {
+  <span class="property">display</span>: <span class="value">subgrid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">subgrid</span>; <span class="comment">/* Inherit parent columns */</span>
+  <span class="property">grid-template-rows</span>: <span class="value">auto 1fr</span>; <span class="comment">/* Own row definition */</span>
+}
+
+<span class="comment">/* Inherit only rows, define own columns */</span>
+<span class="keyword">.row-subgrid</span> {
+  <span class="property">display</span>: <span class="value">subgrid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(2, 1fr)</span>; <span class="comment">/* Own column definition */</span>
+  <span class="property">grid-template-rows</span>: <span class="value">subgrid</span>; <span class="comment">/* Inherit parent rows */</span>
+}
+
+<span class="comment">/* Both columns and rows from parent */</span>
+<span class="keyword">.full-subgrid</span> {
+  <span class="property">display</span>: <span class="value">subgrid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">subgrid</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">subgrid</span>;
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Browser Support for Subgrid</div>
+                <div class="best-practices">
+                    <strong>✓ Supported in:</strong> Chrome 90+, Firefox 71+, Safari 16+, Edge 90+
+                </div>
+                <div class="note">
+                    <strong>⚠️ Note:</strong> Subgrid is newer than Grid. Check browser support before using. Consider traditional nesting for older browser support.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Comparison -->
+        <div class="section">
+            <div class="section-title">Traditional Nesting vs Subgrid Comparison</div>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Traditional Nesting</th>
+                        <th>Subgrid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Syntax</strong></td>
+                        <td>display: grid; with grid-template-columns</td>
+                        <td>display: subgrid; or grid-template-columns: subgrid;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Track Definition</strong></td>
+                        <td>Define all tracks independently</td>
+                        <td>Inherit parent tracks</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alignment</strong></td>
+                        <td>Harder to align with parent grid</td>
+                        <td>Automatic alignment with parent</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Independence</strong></td>
+                        <td>Complete independence</td>
+                        <td>Connected to parent tracks</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CSS Code</strong></td>
+                        <td>More verbose</td>
+                        <td>Cleaner, less repetition</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Browser Support</strong></td>
+                        <td>Excellent (all modern browsers)</td>
+                        <td>Good (Chrome 90+, Firefox 71+, Safari 16+)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Use Case</strong></td>
+                        <td>Independent nested structures</td>
+                        <td>Aligned nested grids, multi-level layouts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Flexibility</strong></td>
+                        <td>Most flexible</td>
+                        <td>Constrained by parent</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 5: Real-World Scenarios -->
+        <div class="section">
+            <div class="section-title">Real-World Use Cases</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 1: Card Grids (Traditional Nesting)</div>
+                <div class="concept-box">
+                    Product cards in a parent grid. Each card contains its own layout (image, title, price, button). Cards don't need alignment with parent grid.
+                </div>
+                <div class="code-block">
+<span class="keyword">.product-grid</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(auto-fit, minmax(250px, 1fr))</span>;
+  <span class="property">gap</span>: <span class="value">20px</span>;
+}
+
+<span class="keyword">.product-card</span> {
+  <span class="property">display</span>: <span class="value">grid</span>; <span class="comment">/* Nested grid */</span>
+  <span class="property">grid-template-rows</span>: <span class="value">150px auto auto 50px</span>;
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 2: Data Tables (Subgrid)</div>
+                <div class="concept-box">
+                    Data table with multiple rows that should align vertically in columns. Subgrid ensures column alignment across all rows.
+                </div>
+                <div class="code-block">
+<span class="keyword">.table</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">100px 150px 200px 100px</span>;
+}
+
+<span class="keyword">.table-row</span> {
+  <span class="property">display</span>: <span class="value">subgrid</span>;
+  <span class="property">grid-column</span>: <span class="value">1 / -1</span>;
+}
+
+<span class="comment">/* All rows align with parent columns */</span>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 3: Form Layouts (Subgrid)</div>
+                <div class="concept-box">
+                    Multi-column form where labels and inputs need perfect vertical alignment. Subgrid keeps everything aligned.
+                </div>
+                <div class="code-block">
+<span class="keyword">.form</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">150px 1fr 150px 1fr</span>;
+  <span class="property">gap</span>: <span class="value">20px</span>;
+}
+
+<span class="keyword">.form-field</span> {
+  <span class="property">display</span>: <span class="value">subgrid</span>;
+  <span class="property">grid-column</span>: <span class="value">span 2</span>; <span class="comment">/* Spans 2 parent columns */</span>
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 4: Article with Sidebar (Subgrid)</div>
+                <div class="concept-box">
+                    Article content with sidebar. Subgrid ensures article sections and sidebar elements align with parent grid.
+                </div>
+                <div class="code-block">
+<span class="keyword">.article-layout</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">1fr 250px</span>;
+  <span class="property">gap</span>: <span class="value">40px</span>;
+}
+
+<span class="keyword">.article-content</span> {
+  <span class="property">display</span>: <span class="value">subgrid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">subgrid</span>; <span class="comment">/* Inherit parent columns */</span>
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Best Practices -->
+        <div class="section">
+            <div class="section-title">Best Practices & Tips</div>
+
+            <div class="subsection">
+                <div class="subsection-title">✓ Do's</div>
+                <ul>
+                    <li><strong>Use traditional nesting for card-like components:</strong> When each nested grid is independent</li>
+                    <li><strong>Use subgrid for multi-row alignment:</strong> When you need vertical alignment across rows</li>
+                    <li><strong>Plan your grid structure upfront:</strong> Know what needs to align before writing CSS</li>
+                    <li><strong>Test across browsers:</strong> Subgrid support varies by browser version</li>
+                    <li><strong>Use semantic HTML:</strong> Grid structure should reflect content hierarchy</li>
+                    <li><strong>Document your nesting:</strong> Comments help future maintenance</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">✗ Don'ts</div>
+                <ul>
+                    <li><strong>Don't nest unnecessarily:</strong> Sometimes simpler CSS is better than nested grids</li>
+                    <li><strong>Don't over-complicate with deep nesting:</strong> 2-3 levels is usually sufficient</li>
+                    <li><strong>Don't assume subgrid support:</strong> Check browser compatibility before using</li>
+                    <li><strong>Don't use subgrid when independence is needed:</strong> Traditional nesting is better sometimes</li>
+                    <li><strong>Don't forget about gap:</strong> Gap applies at each grid level independently</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Pro Tips</div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 1:</strong> Combine traditional nesting and subgrid. Use subgrid at top levels for alignment, traditional nesting for component internals.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 2:</strong> Use named grid areas with subgrid for powerful layout control and readable CSS.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 3:</strong> Subgrid inherits gap values from parent. Plan your spacing accordingly.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 4:</strong> Debug nested grids with browser DevTools. Toggle grid overlay to see alignment.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 5:</strong> Consider using CSS custom properties for nested grid values to make them reusable.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Summary -->
+        <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="section-title" style="color: white; border-bottom-color: white;">Quick Reference</div>
+            <div style="margin-top: 20px; line-height: 1.8;">
+                <p><strong>Traditional Nesting:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>display: grid; on child items</li>
+                    <li>Define own columns/rows</li>
+                    <li>Complete independence from parent</li>
+                    <li>Use for card components, independent layouts</li>
+                </ul>
+                <p><strong>Subgrid:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>display: subgrid; on child items</li>
+                    <li>Inherit parent columns/rows</li>
+                    <li>Perfect vertical alignment across rows</li>
+                    <li>Use for data tables, forms, multi-row layouts</li>
+                </ul>
+                <p><strong>When to Choose:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Need alignment with parent? → Subgrid</li>
+                    <li>Need independence? → Traditional nesting</li>
+                    <li>Older browser support? → Traditional nesting</li>
+                    <li>Multi-row alignment? → Subgrid</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

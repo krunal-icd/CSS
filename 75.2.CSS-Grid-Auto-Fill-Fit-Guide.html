@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Auto-Fill & Auto-Fit - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .example-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .example-code {
+            background: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        .demo-container {
+            border: 2px dashed #667eea;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+
+        .quick-ref {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .quick-ref strong {
+            color: #667eea;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        /* Example 1: auto-fill */
+        .autofill-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        /* Example 2: auto-fit */
+        .autofit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        /* Example 3: auto-fill with fixed size */
+        .autofill-fixed {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 150px);
+            gap: 15px;
+        }
+
+        /* Example 4: Product grid (auto-fill) */
+        .product-grid-autofill {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        /* Example 5: Product grid (auto-fit) */
+        .product-grid-autofit {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        /* Example 6: Gallery auto-fill */
+        .gallery-autofill {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 120px));
+            gap: 10px;
+        }
+
+        /* Example 7: Gallery auto-fit */
+        .gallery-autofit {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        /* Example 8: Responsive cards (auto-fill) */
+        .cards-autofill {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Example 9: Responsive cards (auto-fit) */
+        .cards-autofit {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Example 10: Large items auto-fit */
+        .large-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .grid-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .gallery-item {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .card-item {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .card-text {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .comparison-note {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        .comparison-note strong {
+            color: #ff9800;
+        }
+
+        .resize-note {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #1565c0;
+        }
+
+        .resize-note strong {
+            color: #1565c0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Auto-Fill & Auto-Fit</h1>
+            <p>Practical Examples & Real-World Implementations</p>
+        </header>
+
+        <!-- Example 1: Direct Comparison - auto-fill -->
+        <div class="example">
+            <div class="example-title">1. auto-fill: 4 Items (Creates Empty Column)</div>
+            <div class="example-description">
+                4 items in auto-fill. Container fits 5 columns (150px each), so an empty 5th column is created. Items stay 150px wide.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));<br>
+                gap: 15px;
+            </div>
+            <div class="demo-container">
+                <div class="autofill-grid">
+                    <div class="grid-item">Item 1</div>
+                    <div class="grid-item">Item 2</div>
+                    <div class="grid-item">Item 3</div>
+                    <div class="grid-item">Item 4</div>
+                </div>
+            </div>
+            <div class="comparison-note">
+                <strong>Notice:</strong> There's a visible 5th column gap on the right. Items don't stretch to fill it because auto-fill keeps empty columns.
+            </div>
+            <div class="resize-note">
+                <strong>💡 Try resizing:</strong> Shrink the window to see 3 columns → 2 columns → 1 column. The empty column always appears.
+            </div>
+        </div>
+
+        <!-- Example 2: Direct Comparison - auto-fit -->
+        <div class="example">
+            <div class="example-title">2. auto-fit: 4 Items (Collapses Empty Column)</div>
+            <div class="example-description">
+                Same 4 items as above, but with auto-fit. The 5th column is created but immediately collapsed to 0 width. Items stretch to fill.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));<br>
+                gap: 15px;
+            </div>
+            <div class="demo-container">
+                <div class="autofit-grid">
+                    <div class="grid-item">Item 1</div>
+                    <div class="grid-item">Item 2</div>
+                    <div class="grid-item">Item 3</div>
+                    <div class="grid-item">Item 4</div>
+                </div>
+            </div>
+            <div class="comparison-note">
+                <strong>Notice:</strong> No empty column on the right. Items are wider (~190px each) because they grew to fill the space. This is auto-fit in action.
+            </div>
+            <div class="resize-note">
+                <strong>💡 Try resizing:</strong> Same behavior but items grow/shrink proportionally. More responsive feeling.
+            </div>
+        </div>
+
+        <!-- Example 3: auto-fill with Fixed Size -->
+        <div class="example">
+            <div class="example-title">3. auto-fill with Fixed Size (No Stretching)</div>
+            <div class="example-description">
+                Using minmax(150px, 150px) means columns are always exactly 150px. auto-fill and auto-fit behave the same because no stretching happens.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(auto-fill, 150px);<br>
+                gap: 15px; /* Fixed size, no 1fr */
+            </div>
+            <div class="demo-container">
+                <div class="autofill-fixed">
+                    <div class="grid-item">Item 1</div>
+                    <div class="grid-item">Item 2</div>
+                    <div class="grid-item">Item 3</div>
+                    <div class="grid-item">Item 4</div>
+                </div>
+            </div>
+            <div class="comparison-note">
+                <strong>When They're the Same:</strong> With fixed sizes (not 1fr), auto-fill and auto-fit look identical. No stretching can occur.
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Icon grids, small badges, consistent-size galleries
+            </div>
+        </div>
+
+        <!-- Example 4: Product Grid - auto-fill -->
+        <div class="example">
+            <div class="example-title">4. E-Commerce: auto-fill (Consistent Card Width)</div>
+            <div class="example-description">
+                Product cards stay consistent width (200px). If only 2-3 items, they don't stretch to fill—there's space on the right. Better for predictable product display.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));<br>
+                gap: 20px;
+            </div>
+            <div class="demo-container">
+                <div class="product-grid-autofill">
+                    <div class="product-card">
+                        <div class="product-image">📱</div>
+                        <div class="product-info">
+                            <div class="product-name">Phone</div>
+                            <div class="product-price">$299</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">💻</div>
+                        <div class="product-info">
+                            <div class="product-name">Laptop</div>
+                            <div class="product-price">$999</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">⌚</div>
+                        <div class="product-info">
+                            <div class="product-name">Watch</div>
+                            <div class="product-price">$199</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Why auto-fill here:</strong> Product cards should maintain consistent width (200px). Empty space on right looks intentional in e-commerce.
+            </div>
+        </div>
+
+        <!-- Example 5: Product Grid - auto-fit -->
+        <div class="example">
+            <div class="example-title">5. Blog Cards: auto-fit (Adaptive Stretching)</div>
+            <div class="example-description">
+                Blog cards stretch to fill width when only 2-3 exist. Better for content-driven layouts where fewer items should expand to fill space.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));<br>
+                gap: 20px;
+            </div>
+            <div class="demo-container">
+                <div class="product-grid-autofit">
+                    <div class="product-card">
+                        <div class="product-image">📝</div>
+                        <div class="product-info">
+                            <div class="product-name">Article 1</div>
+                            <div class="product-price">5 min read</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">💡</div>
+                        <div class="product-info">
+                            <div class="product-name">Article 2</div>
+                            <div class="product-price">8 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="comparison-note">
+                <strong>See the difference:</strong> Cards are wider than in Example 4 because they stretched to fill the container. This is auto-fit.
+            </div>
+            <div class="quick-ref">
+                <strong>Why auto-fit here:</strong> Blog posts with variable item count should adapt. Few posts? Stretch them. Many posts? Fit more columns.
+            </div>
+        </div>
+
+        <!-- Example 6: Gallery - auto-fill -->
+        <div class="example">
+            <div class="example-title">6. Photo Gallery: auto-fill (Square Thumbnails)</div>
+            <div class="example-description">
+                Gallery with square thumbnails using auto-fill. Each photo is exactly 120px × 120px. Empty columns appear if needed.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(auto-fill, minmax(120px, 120px));<br>
+                gap: 10px;
+            </div>
+            <div class="demo-container">
+                <div class="gallery-autofill">
+                    <div class="gallery-item">01</div>
+                    <div class="gallery-item">02</div>
+                    <div class="gallery-item">03</div>
+                    <div class="gallery-item">04</div>
+                    <div class="gallery-item">05</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Photo galleries, thumbnail grids where consistent size is important
+            </div>
+        </div>
+
+        <!-- Example 7: Gallery - auto-fit -->
+        <div class="example">
+            <div class="example-title">7. Responsive Gallery: auto-fit (Flexible Squares)</div>
+            <div class="example-description">
+                Same 5 photos with auto-fit. Columns stretch to fill, so squares are larger than 120px. More responsive, less empty space.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));<br>
+                gap: 10px;
+            </div>
+            <div class="demo-container">
+                <div class="gallery-autofit">
+                    <div class="gallery-item">01</div>
+                    <div class="gallery-item">02</div>
+                    <div class="gallery-item">03</div>
+                    <div class="gallery-item">04</div>
+                    <div class="gallery-item">05</div>
+                </div>
+            </div>
+            <div class="comparison-note">
+                <strong>Compare:</strong> These squares are larger than Example 6 because auto-fit stretches columns. Notice the difference!
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Responsive galleries, adaptive photo grids
+            </div>
+        </div>
+
+        <!-- Example 8: Card Grid - auto-fill -->
+        <div class="example">
+            <div class="example-title">8. Dashboard Cards: auto-fill (Fixed 250px)</div>
+            <div class="example-description">
+                Dashboard metric cards stay 250px wide. With 2-3 cards, extra space appears. Good for consistent card sizing in dashboards.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));<br>
+                gap: 20px;
+            </div>
+            <div class="demo-container">
+                <div class="cards-autofill">
+                    <div class="card-item">
+                        <div class="card-title">Metric 1</div>
+                        <div class="card-text">Value: 12,458 users</div>
+                    </div>
+                    <div class="card-item">
+                        <div class="card-title">Metric 2</div>
+                        <div class="card-text">Value: $45.2K revenue</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Dashboards, admin panels, metrics where consistent spacing is important
+            </div>
+        </div>
+
+        <!-- Example 9: Card Grid - auto-fit -->
+        <div class="example">
+            <div class="example-title">9. Responsive Dashboard: auto-fit (Expanding Cards)</div>
+            <div class="example-description">
+                Same dashboard with auto-fit. Cards expand to fill width when there are only 2-3. More responsive, fills screen better.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));<br>
+                gap: 20px;
+            </div>
+            <div class="demo-container">
+                <div class="cards-autofit">
+                    <div class="card-item">
+                        <div class="card-title">Metric 1</div>
+                        <div class="card-text">Value: 12,458 users. This card is wider now because auto-fit makes it stretch.</div>
+                    </div>
+                    <div class="card-item">
+                        <div class="card-title">Metric 2</div>
+                        <div class="card-text">Value: $45.2K revenue. Compare to Example 8 - this is noticeably wider!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="comparison-note">
+                <strong>See the difference:</strong> Cards are wider here than in Example 8. This is auto-fit stretching.
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Responsive dashboards, adaptive layouts, content-driven grids
+            </div>
+        </div>
+
+        <!-- Example 10: Large Items with auto-fit -->
+        <div class="example">
+            <div class="example-title">10. Hero Blocks: auto-fit (Large Content Boxes)</div>
+            <div class="example-description">
+                Large content boxes (300px minimum) with auto-fit. With 2 items, they stretch to fill screen. Perfect for hero sections and large tiles.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));<br>
+                gap: 25px;
+            </div>
+            <div class="demo-container">
+                <div class="large-items">
+                    <div class="card-item">
+                        <div class="card-title" style="font-size: 1.5em;">Hero Block 1</div>
+                        <div class="card-text">Large content area. With only 2 items, they stretch significantly to fill the width.</div>
+                    </div>
+                    <div class="card-item">
+                        <div class="card-title" style="font-size: 1.5em;">Hero Block 2</div>
+                        <div class="card-text">Perfect for hero sections, feature highlights, large showcase items.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Hero sections, feature showcases, large content blocks, prominent displays
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> Combine with minmax(300px, 1fr) and 2 items for perfectly balanced layouts. Try adding a 3rd item to see it wrap.
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="example" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="example-title" style="color: white;">Decision Quick Reference</div>
+            <div style="margin-top: 20px;">
+                <p><strong>Use auto-fill when:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Items should maintain consistent size</li>
+                    <li>Empty columns/space on the right is acceptable</li>
+                    <li>E-commerce grids (consistent product sizing)</li>
+                    <li>Icon or thumbnail galleries</li>
+                    <li>You want predictable, structured layouts</li>
+                </ul>
+                <p><strong>Use auto-fit when:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Items should stretch to fill available space</li>
+                    <li>Number of items is variable (2-20 items)</li>
+                    <li>Content-driven layouts (blogs, articles)</li>
+                    <li>Responsive grids that adapt to content</li>
+                    <li>You want maximum use of available space</li>
+                </ul>
+                <p><strong>The Magic Formula:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li><strong>Most responsive:</strong> repeat(auto-fit, minmax(250px, 1fr))</li>
+                    <li><strong>Most predictable:</strong> repeat(auto-fill, minmax(250px, 250px))</li>
+                    <li><strong>Balanced:</strong> repeat(auto-fill, minmax(250px, 1fr)) with large item count</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

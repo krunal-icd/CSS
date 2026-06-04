@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Overlapping Items</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .subsection {
+            margin-bottom: 30px;
+        }
+
+        .subsection-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .subsection-title:first-child {
+            margin-top: 0;
+        }
+
+        .concept-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .concept-box strong {
+            color: #667eea;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .keyword { color: #ff79c6; }
+        .property { color: #8be9fd; }
+        .value { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        .visual-diagram {
+            background: #f9f9f9;
+            border: 2px solid #eee;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #004085;
+        }
+
+        .note strong {
+            color: #667eea;
+        }
+
+        .best-practices {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #155724;
+        }
+
+        .best-practices strong {
+            color: #155724;
+        }
+
+        .highlight-box {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box strong {
+            color: #ff9800;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Overlapping Items</h1>
+            <p>Master layering, z-index, and creative overlapping designs</p>
+        </header>
+
+        <!-- Section 1: Core Concept -->
+        <div class="section">
+            <div class="section-title">Understanding Overlapping Grid Items</div>
+
+            <div class="subsection">
+                <div class="subsection-title">What is Item Overlap?</div>
+                <div class="highlight-box">
+                    <strong>Overlapping Grid Items:</strong> Multiple grid items occupy the same grid cell or cells, layering on top of each other. Items are positioned explicitly at the same location, creating visual depth and creative designs.
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">How It Works</div>
+                <ul>
+                    <li><strong>Same Cell Placement:</strong> Two or more items use grid-column/grid-row to place themselves at identical positions</li>
+                    <li><strong>Natural Stacking:</strong> Items later in HTML source appear on top by default</li>
+                    <li><strong>z-index Control:</strong> Controls which item appears on top when overlapping</li>
+                    <li><strong>Visual Depth:</strong> Creates layered designs without nested elements</li>
+                    <li><strong>Responsive Friendly:</strong> Overlaps remain intact when grid adjusts</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Visual Example</div>
+                <div class="visual-diagram">Single Cell with Multiple Items:
+
+┌─────────────────────────────────┐
+│ Grid Container                  │
+│  ┌─────────────────────────────┐│
+│  │  Item 1 (z-index: 1)        ││
+│  │  ┌──────────────────┐       ││
+│  │  │  Item 2          │       ││
+│  │  │  (z-index: 2)    │       ││
+│  │  │  (on top)        │       ││
+│  │  │  ┌────────────┐  │       ││
+│  │  │  │ Item 3     │  │       ││
+│  │  │  │(z-index:3) │  │       ││
+│  │  │  └────────────┘  │       ││
+│  │  └──────────────────┘       ││
+│  └─────────────────────────────┘│
+└─────────────────────────────────┘
+
+Result: Three layers with different stacking orders
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Key Requirements for Overlap</div>
+                <ul>
+                    <li>Items must occupy same grid cell(s)</li>
+                    <li>Explicit positioning (grid-column/grid-row) usually needed</li>
+                    <li>No automatic wrapping (items force overlap)</li>
+                    <li>z-index controls stacking order</li>
+                    <li>Works with any grid track sizes</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 2: Creating Overlaps -->
+        <div class="section">
+            <div class="section-title">Creating Overlapping Items</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Method 1: Explicit Same Cell Placement</div>
+                <div class="code-block">
+<span class="comment">/* Both items placed at same grid cell */</span>
+<span class="keyword">.grid</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 200px)</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">repeat(3, 200px)</span>;
+}
+
+<span class="keyword">.item-1</span> {
+  <span class="property">grid-column</span>: <span class="value">1</span>;
+  <span class="property">grid-row</span>: <span class="value">1</span>;
+  <span class="property">z-index</span>: <span class="value">1</span>;
+}
+
+<span class="keyword">.item-2</span> {
+  <span class="property">grid-column</span>: <span class="value">1</span>;
+  <span class="property">grid-row</span>: <span class="value">1</span>;
+  <span class="property">z-index</span>: <span class="value">2</span>; <span class="comment">/* On top */</span>
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Method 2: Overlapping Ranges</div>
+                <div class="code-block">
+<span class="comment">/* Items overlap partially with each other */</span>
+<span class="keyword">.item-1</span> {
+  <span class="property">grid-column</span>: <span class="value">1 / 2</span>;
+  <span class="property">grid-row</span>: <span class="value">1 / 2</span>;
+  <span class="property">z-index</span>: <span class="value">1</span>;
+}
+
+<span class="keyword">.item-2</span> {
+  <span class="property">grid-column</span>: <span class="value">1 / 3</span>; <span class="comment">/* Spans 2 columns */</span>
+  <span class="property">grid-row</span>: <span class="value">1 / 2</span>;
+  <span class="property">z-index</span>: <span class="value">2</span>; <span class="comment">/* Overlaps item-1 */</span>
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Method 3: Using Negative Margin Offset</div>
+                <div class="code-block">
+<span class="comment">/* Position one cell, then shift with margin */</span>
+<span class="keyword">.item-1</span> {
+  <span class="property">grid-column</span>: <span class="value">1</span>;
+  <span class="property">grid-row</span>: <span class="value">1</span>;
+  <span class="property">z-index</span>: <span class="value">1</span>;
+}
+
+<span class="keyword">.item-2</span> {
+  <span class="property">grid-column</span>: <span class="value">2</span>;
+  <span class="property">grid-row</span>: <span class="value">1</span>;
+  <span class="property">margin-left</span>: <span class="value">-50px</span>; <span class="comment">/* Shifts left, overlapping */</span>
+  <span class="property">z-index</span>: <span class="value">2</span>;
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Default Stacking Order (Without z-index)</div>
+                <ul>
+                    <li>Later items in HTML source appear on top</li>
+                    <li>No z-index needed (stacking happens naturally)</li>
+                    <li>Items in document order create depth</li>
+                    <li>z-index overrides this default behavior</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 3: Z-Index -->
+        <div class="section">
+            <div class="section-title">Z-Index and Stacking Context</div>
+
+            <div class="subsection">
+                <div class="subsection-title">What is z-index?</div>
+                <div class="concept-box">
+                    <strong>z-index:</strong> A CSS property that controls stacking order of positioned elements. Higher values appear on top. Only works on positioned elements (position: relative, absolute, fixed, or sticky).
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">How z-index Works with Grid</div>
+                <div class="code-block">
+<span class="comment">/* Grid items are positioned elements by default */</span>
+<span class="keyword">.item-1</span> { <span class="property">z-index</span>: <span class="value">1</span>; }  <span class="comment">/* Bottom layer */</span>
+<span class="keyword">.item-2</span> { <span class="property">z-index</span>: <span class="value">2</span>; }  <span class="comment">/* Middle layer */</span>
+<span class="keyword">.item-3</span> { <span class="property">z-index</span>: <span class="value">3</span>; }  <span class="comment">/* Top layer */</span>
+<span class="keyword">.item-4</span> { <span class="property">z-index</span>: <span class="value">999</span>; } <span class="comment">/* Very top */</span>
+
+<span class="comment">/* Negative z-index allowed */</span>
+<span class="keyword">.background</span> { <span class="property">z-index</span>: <span class="value">-1</span>; } <span class="comment">/* Behind everything */</span>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Stacking Context Rules</div>
+                <div class="best-practices">
+                    <strong>✓ Important:</strong> z-index only compares within the same stacking context. A parent with z-index creates a new context, preventing child z-index from going "above" parent's siblings.
+                </div>
+                <div class="code-block">
+<span class="comment">/* Stacking context example */</span>
+<span class="keyword">.parent-1</span> { <span class="property">z-index</span>: <span class="value">1</span>; }
+<span class="keyword">.parent-1 .child</span> { <span class="property">z-index</span>: <span class="value">999</span>; } <span class="comment">/* Can't go above parent-2 */</span>
+
+<span class="keyword">.parent-2</span> { <span class="property">z-index</span>: <span class="value">2</span>; }
+<span class="comment">/* parent-2 appears above parent-1 and its children */</span>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">What Creates Stacking Context?</div>
+                <ul>
+                    <li>position with z-index value other than auto</li>
+                    <li>opacity less than 1</li>
+                    <li>transform, filter, mix-blend-mode properties</li>
+                    <li>will-change with certain values</li>
+                    <li>isolation: isolate</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 4: Real-World Scenarios -->
+        <div class="section">
+            <div class="section-title">Real-World Use Cases</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 1: Image with Overlay Badge</div>
+                <div class="concept-box">
+                    Product image with a "Sale" badge in the corner. Badge overlaps image, positioned absolutely within grid cell.
+                </div>
+                <div class="code-block">
+<span class="keyword">.product</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-column</span>: <span class="value">2</span>; <span class="property">grid-row</span>: <span class="value">2</span>;
+}
+
+<span class="keyword">.product-image</span> {
+  <span class="property">grid-column</span>: <span class="value">1</span>;
+  <span class="property">grid-row</span>: <span class="value">1</span>;
+  <span class="property">z-index</span>: <span class="value">1</span>;
+}
+
+<span class="keyword">.sale-badge</span> {
+  <span class="property">grid-column</span>: <span class="value">1</span>;
+  <span class="property">grid-row</span>: <span class="value">1</span>;
+  <span class="property">z-index</span>: <span class="value">2</span>; <span class="comment">/* On top of image */</span>
+  <span class="property">align-self</span>: <span class="value">end</span>;
+  <span class="property">justify-self</span>: <span class="value">end</span>;
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 2: Hero Image with Text Overlay</div>
+                <div class="concept-box">
+                    Full-width hero with background image and text content on top. Both items span same cells.
+                </div>
+                <div class="code-block">
+<span class="keyword">.hero</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-column</span>: <span class="value">1 / -1</span>;
+}
+
+<span class="keyword">.hero-background</span> {
+  <span class="property">grid-column</span>: <span class="value">1 / -1</span>;
+  <span class="property">grid-row</span>: <span class="value">1</span>;
+  <span class="property">z-index</span>: <span class="value">1</span>;
+}
+
+<span class="keyword">.hero-content</span> {
+  <span class="property">grid-column</span>: <span class="value">1 / -1</span>;
+  <span class="property">grid-row</span>: <span class="value">1</span>;
+  <span class="property">z-index</span>: <span class="value">2</span>;
+  <span class="property">place-self</span>: <span class="value">center</span>;
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 3: Card Hover Effect with Shadow</div>
+                <div class="concept-box">
+                    Card that slightly overlaps neighbor on hover. Create depth with layering.
+                </div>
+                <div class="code-block">
+<span class="keyword">.card</span> {
+  <span class="property">z-index</span>: <span class="value">1</span>;
+  <span class="property">transition</span>: <span class="value">z-index 0.3s</span>;
+}
+
+<span class="keyword">.card:hover</span> {
+  <span class="property">z-index</span>: <span class="value">10</span>; <span class="comment">/* Appears above neighbors */</span>
+  <span class="property">box-shadow</span>: <span class="value">0 10px 30px rgba(0,0,0,0.3)</span>;
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 4: Layered Design Elements</div>
+                <div class="concept-box">
+                    Multiple decorative shapes or patterns layered to create visual depth and interest.
+                </div>
+                <div class="code-block">
+<span class="keyword">.background-shape-1</span> {
+  <span class="property">grid-column</span>: <span class="value">1 / 2</span>;
+  <span class="property">grid-row</span>: <span class="value">1 / 2</span>;
+  <span class="property">z-index</span>: <span class="value">1</span>;
+  <span class="property">opacity</span>: <span class="value">0.3</span>;
+}
+
+<span class="keyword">.background-shape-2</span> {
+  <span class="property">grid-column</span>: <span class="value">1 / 2</span>;
+  <span class="property">grid-row</span>: <span class="value">1 / 2</span>;
+  <span class="property">z-index</span>: <span class="value">2</span>;
+  <span class="property">opacity</span>: <span class="value">0.5</span>;
+}
+
+<span class="keyword">.content</span> {
+  <span class="property">grid-column</span>: <span class="value">1 / 2</span>;
+  <span class="property">grid-row</span>: <span class="value">1 / 2</span>;
+  <span class="property">z-index</span>: <span class="value">10</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Best Practices -->
+        <div class="section">
+            <div class="section-title">Best Practices & Tips</div>
+
+            <div class="subsection">
+                <div class="subsection-title">✓ Do's</div>
+                <ul>
+                    <li><strong>Use meaningful z-index values:</strong> 1, 2, 3 or 10, 20, 30 for clarity</li>
+                    <li><strong>Document your layering:</strong> Comments help explain visual stacking</li>
+                    <li><strong>Test with screen readers:</strong> Ensure overlay doesn't block important content</li>
+                    <li><strong>Consider mobile:</strong> Overlaps might not work on small screens</li>
+                    <li><strong>Use position property carefully:</strong> May affect z-index behavior</li>
+                    <li><strong>Keep overlaps intentional:</strong> Not accidental due to sizing bugs</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">✗ Don'ts</div>
+                <ul>
+                    <li><strong>Don't use huge z-index values:</strong> 999999 is unnecessary (use 10 max)</li>
+                    <li><strong>Don't create unintended overlaps:</strong> Often a bug, not a feature</li>
+                    <li><strong>Don't block interactive elements:</strong> Ensure users can still click what matters</li>
+                    <li><strong>Don't nest deep stacking contexts:</strong> Makes z-index unpredictable</li>
+                    <li><strong>Don't assume stacking order without testing:</strong> Can vary across browsers</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Pro Tips</div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 1:</strong> Use opacity with overlapping items for interesting visual effects. Semi-transparent layers create depth.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 2:</strong> Combine overlaps with transform: scale() or rotate() for dynamic layered designs.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 3:</strong> Use :hover to change z-index dynamically. Brings card to front on hover.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 4:</strong> Negative margins can create overlaps without needing to span multiple cells.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 5:</strong> Browser DevTools helps visualize stacking. Inspect element to see z-index values.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Accessibility -->
+        <div class="section">
+            <div class="section-title">Accessibility Considerations</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Key Concerns</div>
+                <ul>
+                    <li><strong>Content Visibility:</strong> Ensure overlaid content isn't hidden or hard to read</li>
+                    <li><strong>Keyboard Navigation:</strong> Tab order shouldn't be confused by visual layering</li>
+                    <li><strong>Screen Readers:</strong> Read content in DOM order, not visual order</li>
+                    <li><strong>Color Contrast:</strong> Text on overlaid elements must have sufficient contrast</li>
+                    <li><strong>Focus Management:</strong> Focused elements should be visible above overlays</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Accessibility Best Practices</div>
+                <div class="best-practices">
+                    <strong>✓ Always:</strong> Ensure overlaid text is readable with sufficient contrast ratios. Place interactive elements (buttons, links) with high z-index so they're always reachable. Test keyboard navigation to verify nothing is trapped behind overlays.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Summary -->
+        <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="section-title" style="color: white; border-bottom-color: white;">Quick Reference</div>
+            <div style="margin-top: 20px; line-height: 1.8;">
+                <p><strong>Creating Overlaps:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Place items at same grid cell using grid-column/grid-row</li>
+                    <li>Use z-index to control stacking order</li>
+                    <li>Later items in HTML appear on top by default</li>
+                    <li>Negative margins can offset overlapping items</li>
+                </ul>
+                <p><strong>Z-Index Values:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Higher values appear on top</li>
+                    <li>1, 2, 3 or 10, 20, 30 are sensible</li>
+                    <li>Negative z-index sends behind</li>
+                    <li>No need for huge numbers (999999)</li>
+                </ul>
+                <p><strong>Use Cases:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Image with overlay badge</li>
+                    <li>Hero section with text on image</li>
+                    <li>Card hover effects</li>
+                    <li>Layered design elements</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

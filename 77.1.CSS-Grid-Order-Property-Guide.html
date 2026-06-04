@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Order Property</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .subsection {
+            margin-bottom: 30px;
+        }
+
+        .subsection-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .subsection-title:first-child {
+            margin-top: 0;
+        }
+
+        .concept-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .concept-box strong {
+            color: #667eea;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .keyword { color: #ff79c6; }
+        .property { color: #8be9fd; }
+        .value { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        .visual-diagram {
+            background: #f9f9f9;
+            border: 2px solid #eee;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #004085;
+        }
+
+        .note strong {
+            color: #667eea;
+        }
+
+        .best-practices {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #155724;
+        }
+
+        .best-practices strong {
+            color: #155724;
+        }
+
+        .highlight-box {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box strong {
+            color: #ff9800;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .formula-box {
+            background: #f0f4ff;
+            border: 2px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            font-size: 0.95em;
+        }
+
+        .grid-visual {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .grid-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            .grid-visual {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Order Property</h1>
+            <p>Reorder grid items visually independent of HTML source order</p>
+        </header>
+
+        <!-- Section 1: Core Concept -->
+        <div class="section">
+            <div class="section-title">Understanding the Order Property</div>
+
+            <div class="subsection">
+                <div class="subsection-title">What is Order?</div>
+                <div class="highlight-box">
+                    <strong>order:</strong> A CSS property that reorders grid items visually without changing the HTML source order. Items are displayed in order value sequence (lowest to highest), not DOM order.
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Key Characteristics</div>
+                <ul>
+                    <li><strong>Visual Reordering Only:</strong> Doesn't change source code or accessibility order</li>
+                    <li><strong>Numeric Values:</strong> Uses integers (positive, negative, or zero)</li>
+                    <li><strong>Default Value:</strong> 0 for all items by default</li>
+                    <li><strong>Works with auto-placement:</strong> Respects auto-placement and explicit positioning</li>
+                    <li><strong>Flexbox Compatible:</strong> Same order property works with Flexbox too</li>
+                    <li><strong>No Performance Impact:</strong> Reordering doesn't affect layout calculations significantly</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Visual Example</div>
+                <div class="visual-diagram">HTML Source Order:  1, 2, 3, 4, 5, 6
+
+Default Display (order: 0 for all):
+┌───┬───┬───┬───┬───┬───┐
+│ 1 │ 2 │ 3 │ 4 │ 5 │ 6 │
+└───┴───┴───┴───┴───┴───┘
+
+With Custom Order Values:
+Item 1: order: 3
+Item 2: order: 1
+Item 3: order: 4
+Item 4: order: 2
+Item 5: order: 0
+Item 6: order: -1
+
+Display Order:
+┌───┬───┬───┬───┬───┬───┐
+│ 6 │ 5 │ 2 │ 4 │ 1 │ 3 │
+└───┴───┴───┴───┴───┴───┘
+(Order: -1, 0, 1, 2, 3, 4)
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Important: Accessibility Note</div>
+                <div class="note">
+                    <strong>⚠️ Warning:</strong> The order property only affects visual order, NOT reading order for screen readers. Always ensure semantic HTML and logical source order for accessibility. Use order only for visual design enhancements, not for content hierarchy changes.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Syntax & Values -->
+        <div class="section">
+            <div class="section-title">Syntax & Value Types</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Basic Syntax</div>
+                <div class="code-block">
+<span class="comment">/* Default value */</span>
+<span class="property">order</span>: <span class="value">0</span>;
+
+<span class="comment">/* Positive values */</span>
+<span class="property">order</span>: <span class="value">1</span>;
+<span class="property">order</span>: <span class="value">10</span>;
+<span class="property">order</span>: <span class="value">999</span>;
+
+<span class="comment">/* Negative values */</span>
+<span class="property">order</span>: <span class="value">-1</span>;
+<span class="property">order</span>: <span class="value">-10</span>;
+
+<span class="comment">/* Practical example */</span>
+<span class="keyword">.grid-item-first</span> { <span class="property">order</span>: <span class="value">1</span>; }
+<span class="keyword">.grid-item-last</span> { <span class="property">order</span>: <span class="value">-1</span>; }
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Value Types & Meanings</div>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Value Type</th>
+                            <th>Example</th>
+                            <th>Display Position</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Negative</strong></td>
+                            <td>order: -1</td>
+                            <td>Comes before items with order 0 or positive</td>
+                            <td>Moving items to beginning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zero (Default)</strong></td>
+                            <td>order: 0</td>
+                            <td>Displays in source order among other 0 items</td>
+                            <td>Not specified (natural order)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Positive</strong></td>
+                            <td>order: 1, 2, 10</td>
+                            <td>Comes after items with lower order values</td>
+                            <td>Moving items to end or custom sequence</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Large Positive</strong></td>
+                            <td>order: 9999</td>
+                            <td>Comes after all other items</td>
+                            <td>Forcing item to very end</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Common Patterns</div>
+                <div class="code-block">
+<span class="comment">/* Pattern 1: Move one item to front */</span>
+<span class="keyword">.important-item</span> { <span class="property">order</span>: <span class="value">-1</span>; }
+
+<span class="comment">/* Pattern 2: Move one item to back */</span>
+<span class="keyword">.less-important-item</span> { <span class="property">order</span>: <span class="value">999</span>; }
+
+<span class="comment">/* Pattern 3: Custom sequence */</span>
+<span class="keyword">.item-1</span> { <span class="property">order</span>: <span class="value">3</span>; }
+<span class="keyword">.item-2</span> { <span class="property">order</span>: <span class="value">1</span>; }
+<span class="keyword">.item-3</span> { <span class="property">order</span>: <span class="value">2</span>; }
+
+<span class="comment">/* Pattern 4: Responsive reordering */</span>
+<span class="keyword">@media (max-width: 768px)</span> {
+  <span class="keyword">.sidebar</span> { <span class="property">order</span>: <span class="value">2</span>; }
+  <span class="keyword">.main</span> { <span class="property">order</span>: <span class="value">1</span>; }
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: How Order Works with Grid -->
+        <div class="section">
+            <div class="section-title">How Order Works with Grid Auto-Placement</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Order Determines Auto-Placement Sequence</div>
+                <div class="concept-box">
+                    <strong>With auto-placement:</strong> Items are placed into grid cells in order value sequence, not source order. Lower order values are placed first.
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Interaction with Explicit Positioning</div>
+                <div class="concept-box">
+                    <strong>Explicitly positioned items:</strong> Don't use auto-placement. They're placed at their specified grid-column/grid-row. Order still affects visual stacking (z-order) but not placement.
+                </div>
+                <div class="code-block">
+<span class="comment">/* With auto-placement */</span>
+<span class="keyword">.grid</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 1fr)</span>;
+}
+
+<span class="keyword">.item-1</span> { <span class="property">order</span>: <span class="value">3</span>; } <span class="comment">/* Placed 3rd */</span>
+<span class="keyword">.item-2</span> { <span class="property">order</span>: <span class="value">1</span>; } <span class="comment">/* Placed 1st */</span>
+<span class="keyword">.item-3</span> { <span class="property">order</span>: <span class="value">2</span>; } <span class="comment">/* Placed 2nd */</span>
+
+<span class="comment">/* Items placed: 2, 3, 1 (in order sequence) */</span>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Order with Explicitly Positioned Items</div>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 1fr)</span>;
+}
+
+<span class="keyword">.item-1</span> { 
+  <span class="property">grid-column</span>: <span class="value">1</span>;
+  <span class="property">order</span>: <span class="value">3</span>; <span class="comment">/* Order doesn't affect placement here */</span>
+}
+
+<span class="keyword">.item-2</span> { 
+  <span class="property">grid-column</span>: <span class="value">2</span>;
+  <span class="property">order</span>: <span class="value">1</span>; <span class="comment">/* Placed at column 2 regardless of order */</span>
+}
+
+<span class="comment">/* Items stay at col 1, 2, 3 despite order values */</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Real-World Use Cases -->
+        <div class="section">
+            <div class="section-title">Real-World Use Cases</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Use Case 1: Responsive Reordering</div>
+                <div class="concept-box">
+                    Display sidebar last on mobile (below main content) but before main on desktop. Use order to change visual sequence at breakpoints.
+                </div>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">1fr</span>;
+}
+
+<span class="keyword">.main</span> { <span class="property">order</span>: <span class="value">1</span>; }
+<span class="keyword">.sidebar</span> { <span class="property">order</span>: <span class="value">2</span>; }
+
+<span class="comment">/* Desktop: Sidebar first (left column) */</span>
+<span class="keyword">@media (min-width: 1024px)</span> {
+  <span class="keyword">.grid</span> { <span class="property">grid-template-columns</span>: <span class="value">250px 1fr</span>; }
+  <span class="keyword">.sidebar</span> { <span class="property">order</span>: <span class="value">1</span>; }
+  <span class="keyword">.main</span> { <span class="property">order</span>: <span class="value">2</span>; }
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Use Case 2: Featured Item First</div>
+                <div class="concept-box">
+                    Move featured or important item to the beginning without changing HTML. Perfect for dynamic content where featured status changes.
+                </div>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(auto-fit, minmax(250px, 1fr))</span>;
+}
+
+<span class="keyword">.featured</span> { <span class="property">order</span>: <span class="value">-1</span>; } <span class="comment">/* Always first */</span>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Use Case 3: Admin vs User Content</div>
+                <div class="concept-box">
+                    Show admin-only items first, then user items. Reorder based on user role without HTML changes.
+                </div>
+                <div class="code-block">
+<span class="keyword">.item</span> { <span class="property">order</span>: <span class="value">10</span>; } <span class="comment">/* User items */</span>
+<span class="keyword">.item.admin</span> { <span class="property">order</span>: <span class="value">0</span>; } <span class="comment">/* Admin items first */</span>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Use Case 4: Priority-Based Display</div>
+                <div class="concept-box">
+                    Show high-priority items first, low-priority items last, based on data attributes or classes without changing source.
+                </div>
+                <div class="code-block">
+<span class="keyword">.item[data-priority="high"]</span> { <span class="property">order</span>: <span class="value">1</span>; }
+<span class="keyword">.item[data-priority="medium"]</span> { <span class="property">order</span>: <span class="value">2</span>; }
+<span class="keyword">.item[data-priority="low"]</span> { <span class="property">order</span>: <span class="value">3</span>; }
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Best Practices -->
+        <div class="section">
+            <div class="section-title">Best Practices & Important Considerations</div>
+
+            <div class="subsection">
+                <div class="subsection-title">✓ Do's</div>
+                <ul>
+                    <li><strong>Use for visual reordering only:</strong> When display order differs from content importance</li>
+                    <li><strong>Keep semantic HTML:</strong> Maintain logical source order in HTML</li>
+                    <li><strong>Document order changes:</strong> Leave comments explaining why items are reordered</li>
+                    <li><strong>Test with screen readers:</strong> Ensure accessibility isn't broken by reordering</li>
+                    <li><strong>Use meaningful values:</strong> 0, 1, 2 or -1, 0, 1 rather than random numbers</li>
+                    <li><strong>Combine with responsive design:</strong> Change order at different breakpoints</li>
+                    <li><strong>Use for responsive layouts:</strong> Moving sidebars, changing column order on mobile</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">✗ Don'ts</div>
+                <ul>
+                    <li><strong>Don't use order to fix poor HTML structure:</strong> Reorganize HTML if content hierarchy is wrong</li>
+                    <li><strong>Don't forget accessibility:</strong> Screen readers read source order, not visual order</li>
+                    <li><strong>Don't use large arbitrary numbers:</strong> Keep order values simple and meaningful</li>
+                    <li><strong>Don't rely solely on order for UX:</strong> Important items should be important in HTML too</li>
+                    <li><strong>Don't change semantic meaning:</strong> Order shouldn't make form inputs display before labels they describe</li>
+                    <li><strong>Don't use order with interactive elements carelessly:</strong> Can confuse keyboard navigation</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Accessibility Warning</div>
+                <div class="best-practices">
+                    <strong>⚠️ Critical:</strong> The order property ONLY affects visual display. Screen readers, keyboard navigation, and form submission follow HTML source order. Never use order as a substitute for proper HTML structure. Always prioritize semantic HTML and logical source order.
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Pro Tips</div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 1:</strong> Use order: -1 to move one item to the front. Simpler than assigning positive values to others.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 2:</strong> Use order with CSS custom properties for dynamic reordering: order: var(--item-order, 0);
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 3:</strong> Combine order with auto-placement for powerful responsive layouts without changing HTML at breakpoints.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 4:</strong> Test keyboard navigation and screen readers when using order. Visual reordering can confuse assistive technologies.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 5:</strong> Consider using auto-placement with order instead of explicit grid-column/grid-row for more flexible layouts.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Browser Support -->
+        <div class="section">
+            <div class="section-title">Browser Support & Compatibility</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Excellent Support</div>
+                <div class="best-practices">
+                    <strong>✓ Supported in:</strong> All modern browsers (Chrome 27+, Firefox 28+, Safari 9+, Edge 12+)
+                </div>
+                <div class="best-practices">
+                    <strong>✓ Safe to use:</strong> No polyfills needed. Full support across all modern devices.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Summary -->
+        <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="section-title" style="color: white; border-bottom-color: white;">Quick Reference</div>
+            <div style="margin-top: 20px; line-height: 1.8;">
+                <p><strong>order Property Basics:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Default value: 0 for all items</li>
+                    <li>Reorders items visually, not in source code</li>
+                    <li>Works with grid auto-placement</li>
+                    <li>Doesn't affect reading order for screen readers</li>
+                </ul>
+                <p><strong>Common Syntax:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>order: -1; (move to front)</li>
+                    <li>order: 0; (default, source order)</li>
+                    <li>order: 1; (move after default items)</li>
+                    <li>order: 999; (move to end)</li>
+                </ul>
+                <p><strong>When to Use:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Responsive design (reorder at breakpoints)</li>
+                    <li>Featured/priority items first</li>
+                    <li>Role-based reordering (admin vs user)</li>
+                    <li>Custom item sequences without HTML changes</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

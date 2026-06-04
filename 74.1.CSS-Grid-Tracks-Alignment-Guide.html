@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Tracks Alignment Properties</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .subsection {
+            margin-bottom: 30px;
+        }
+
+        .subsection-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .subsection-title:first-child {
+            margin-top: 0;
+        }
+
+        .concept-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .concept-box strong {
+            color: #667eea;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .keyword { color: #ff79c6; }
+        .property { color: #8be9fd; }
+        .value { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .demo {
+            background: #f9f9f9;
+            border: 2px dashed #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        .visual-diagram {
+            background: #f9f9f9;
+            border: 2px solid #eee;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #004085;
+        }
+
+        .note strong {
+            color: #667eea;
+        }
+
+        .best-practices {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #155724;
+        }
+
+        .best-practices strong {
+            color: #155724;
+        }
+
+        .value-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .value-item {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .value-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .value-item p {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .comparison-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .visual-box {
+            background: white;
+            border: 2px solid #eee;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .visual-box h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .visual-grid {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 150px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .visual-label {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            .comparison-visual {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Tracks Alignment Properties</h1>
+            <p>Master justify-content, align-content, and track distribution</p>
+        </header>
+
+        <!-- Section 1: Fundamentals -->
+        <div class="section">
+            <div class="section-title">Understanding Tracks Alignment</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Core Concept: Tracks vs Items</div>
+                <div class="concept-box">
+                    <strong>Tracks:</strong> The rows and columns that make up your grid. They are the structure itself.
+                </div>
+                <div class="concept-box">
+                    <strong>Track Alignment:</strong> How the grid tracks themselves are positioned within the grid container when they don't fill all available space.
+                </div>
+                <div class="visual-diagram">Grid Container vs Tracks:
+
+Container: 600px wide
+┌──────────────────────────────────────────────┐
+│  Track 1   Track 2   Track 3                 │
+│  (100px)   (100px)   (100px)    Extra Space  │
+│  ┌────┐    ┌────┐    ┌────┐                 │
+│  │    │    │    │    │    │                 │
+│  └────┘    └────┘    └────┘                 │
+│                                              │
+│  Tracks are 300px total, container is 600px │
+│  justify-content determines placement       │
+└──────────────────────────────────────────────┘
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">When Does Track Alignment Matter?</div>
+                <ul>
+                    <li>Grid tracks don't fill the entire container width (justify-content)</li>
+                    <li>Grid tracks don't fill the entire container height (align-content)</li>
+                    <li>Using fixed-size columns like repeat(3, 100px) instead of 1fr</li>
+                    <li>Using auto-fit/auto-fill with explicit gap values</li>
+                    <li>Creating centered grids in larger containers</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Key Difference: Items vs Tracks</div>
+                <div class="comparison-visual">
+                    <div class="visual-box">
+                        <h4>justify-items</h4>
+                        <p style="margin-bottom: 15px;">Aligns items INSIDE their cells</p>
+                        <div class="visual-grid" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: grid; grid-template-columns: 1fr 1fr; gap: 5px; padding: 10px;">
+                            <div style="background: rgba(255,255,255,0.3); padding: 20px; font-size: 0.7em;">item</div>
+                            <div style="background: rgba(255,255,255,0.3); padding: 20px; font-size: 0.7em;">item</div>
+                        </div>
+                        <div class="visual-label">Items positioned in cells</div>
+                    </div>
+                    <div class="visual-box">
+                        <h4>justify-content</h4>
+                        <p style="margin-bottom: 15px;">Aligns entire grid in container</p>
+                        <div class="visual-grid" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); width: 60%; margin: 0 auto 10px;">Grid here</div>
+                        <div class="visual-label">Grid positioned in container</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Justify-Content -->
+        <div class="section">
+            <div class="section-title">justify-content (Horizontal Track Alignment)</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Definition</div>
+                <div class="concept-box">
+                    <strong>justify-content:</strong> Aligns the entire grid HORIZONTALLY within its container. Only works when the grid is narrower than the container.
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Available Values</div>
+                <div class="value-list">
+                    <div class="value-item">
+                        <strong>start</strong>
+                        <p>Grid aligned to container start (left)</p>
+                    </div>
+                    <div class="value-item">
+                        <strong>end</strong>
+                        <p>Grid aligned to container end (right)</p>
+                    </div>
+                    <div class="value-item">
+                        <strong>center</strong>
+                        <p>Grid centered horizontally</p>
+                    </div>
+                    <div class="value-item">
+                        <strong>stretch</strong>
+                        <p>Grid columns stretch to fill width</p>
+                    </div>
+                    <div class="value-item">
+                        <strong>space-between</strong>
+                        <p>Space distributed between columns</p>
+                    </div>
+                    <div class="value-item">
+                        <strong>space-around</strong>
+                        <p>Space around each column equally</p>
+                    </div>
+                    <div class="value-item">
+                        <strong>space-evenly</strong>
+                        <p>Equal space between all columns</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Syntax & Example</div>
+                <div class="code-block">
+<span class="keyword">.grid-container</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 100px)</span>; <span class="comment">/* 300px total */</span>
+  <span class="property">width</span>: <span class="value">600px</span>; <span class="comment">/* Container is 600px wide */</span>
+  <span class="property">justify-content</span>: <span class="value">center</span>; <span class="comment">/* Grid centered in 600px */</span>
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Real-World Scenarios</div>
+                <div class="code-block">
+<span class="comment">/* Centered dashboard on large screens */</span>
+<span class="keyword">.dashboard</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(4, 200px)</span>; <span class="comment">/* Fixed size */</span>
+  <span class="property">justify-content</span>: <span class="value">center</span>;
+}
+
+<span class="comment">/* Distribute columns across container */</span>
+<span class="keyword">.toolbar</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(5, auto)</span>;
+  <span class="property">justify-content</span>: <span class="value">space-around</span>; <span class="comment">/* Space buttons evenly */</span>
+}
+
+<span class="comment">/* Grid right-aligned */</span>
+<span class="keyword">.sidebar-grid</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(2, 100px)</span>;
+  <span class="property">justify-content</span>: <span class="value">end</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Align-Content -->
+        <div class="section">
+            <div class="section-title">align-content (Vertical Track Alignment)</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Definition</div>
+                <div class="concept-box">
+                    <strong>align-content:</strong> Aligns the entire grid VERTICALLY within its container. Only works when the grid is shorter than the container.
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Available Values</div>
+                <div class="value-list">
+                    <div class="value-item">
+                        <strong>start</strong>
+                        <p>Grid aligned to container top</p>
+                    </div>
+                    <div class="value-item">
+                        <strong>end</strong>
+                        <p>Grid aligned to container bottom</p>
+                    </div>
+                    <div class="value-item">
+                        <strong>center</strong>
+                        <p>Grid centered vertically</p>
+                    </div>
+                    <div class="value-item">
+                        <strong>stretch</strong>
+                        <p>Grid rows stretch to fill height</p>
+                    </div>
+                    <div class="value-item">
+                        <strong>space-between</strong>
+                        <p>Space distributed between rows</p>
+                    </div>
+                    <div class="value-item">
+                        <strong>space-around</strong>
+                        <p>Space around each row equally</p>
+                    </div>
+                    <div class="value-item">
+                        <strong>space-evenly</strong>
+                        <p>Equal space between all rows</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Syntax & Example</div>
+                <div class="code-block">
+<span class="keyword">.grid-container</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">repeat(2, 100px)</span>; <span class="comment">/* 200px total */</span>
+  <span class="property">height</span>: <span class="value">400px</span>; <span class="comment">/* Container is 400px tall */</span>
+  <span class="property">align-content</span>: <span class="value">center</span>; <span class="comment">/* Grid centered vertically */</span>
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Real-World Scenarios</div>
+                <div class="code-block">
+<span class="comment">/* Vertically centered grid on full-screen page */</span>
+<span class="keyword">.page</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">min-height</span>: <span class="value">100vh</span>;
+  <span class="property">align-content</span>: <span class="value">center</span>;
+}
+
+<span class="comment">/* Rows distributed with space between */</span>
+<span class="keyword">.form-grid</span> {
+  <span class="property">grid-template-rows</span>: <span class="value">repeat(4, auto)</span>;
+  <span class="property">height</span>: <span class="value">500px</span>;
+  <span class="property">align-content</span>: <span class="value">space-between</span>;
+}
+
+<span class="comment">/* Rows stretched to fill height */</span>
+<span class="keyword">.full-height-grid</span> {
+  <span class="property">grid-template-rows</span>: <span class="value">auto auto auto</span>;
+  <span class="property">height</span>: <span class="value">100vh</span>;
+  <span class="property">align-content</span>: <span class="value">stretch</span>; <span class="comment">/* Equal row heights */</span>
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Place-Content -->
+        <div class="section">
+            <div class="section-title">place-content (Shorthand)</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Definition</div>
+                <div class="concept-box">
+                    <strong>place-content:</strong> Shorthand for align-content and justify-content. Format: place-content: align-content justify-content.
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Syntax</div>
+                <div class="code-block">
+<span class="comment">/* Single value: applies to both axes */</span>
+<span class="keyword">.grid</span> {
+  <span class="property">place-content</span>: <span class="value">center</span>; <span class="comment">/* Centers grid both horizontally and vertically */</span>
+}
+
+<span class="comment">/* Equivalent to: */</span>
+<span class="keyword">.grid</span> {
+  <span class="property">align-content</span>: <span class="value">center</span>;
+  <span class="property">justify-content</span>: <span class="value">center</span>;
+}
+
+<span class="comment">/* Different values for each axis */</span>
+<span class="keyword">.grid</span> {
+  <span class="property">place-content</span>: <span class="value">start end</span>; <span class="comment">/* Align: top, Justify: right */</span>
+}
+
+<span class="comment">/* Equivalent to: */</span>
+<span class="keyword">.grid</span> {
+  <span class="property">align-content</span>: <span class="value">start</span>;
+  <span class="property">justify-content</span>: <span class="value">end</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Space Distribution Values -->
+        <div class="section">
+            <div class="section-title">Understanding Space Distribution Values</div>
+
+            <div class="subsection">
+                <div class="subsection-title">space-between vs space-around vs space-evenly</div>
+                <div class="visual-diagram">space-between: Space BETWEEN items only
+┌─────┐   gap   ┌─────┐   gap   ┌─────┐
+│ Col │ space  │ Col │ space  │ Col │
+└─────┘        └─────┘        └─────┘
+                 
+space-around: Space AROUND items equally
+  space  ┌─────┐ space  ┌─────┐ space  ┌─────┐  space
+        │ Col │        │ Col │        │ Col │
+        └─────┘        └─────┘        └─────┘
+
+space-evenly: Equal space EVERYWHERE
+  space  ┌─────┐ space  ┌─────┐ space  ┌─────┐  space
+        │ Col │        │ Col │        │ Col │
+        └─────┘        └─────┘        └─────┘
+         (all spaces equal)
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Detailed Comparison</div>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Start Space</th>
+                            <th>Between Tracks</th>
+                            <th>End Space</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>space-between</strong></td>
+                            <td>None (0)</td>
+                            <td>Equal</td>
+                            <td>None (0)</td>
+                            <td>Items touch edges, distribute space between</td>
+                        </tr>
+                        <tr>
+                            <td><strong>space-around</strong></td>
+                            <td>Half unit</td>
+                            <td>Full unit</td>
+                            <td>Half unit</td>
+                            <td>Even spacing around items, half at edges</td>
+                        </tr>
+                        <tr>
+                            <td><strong>space-evenly</strong></td>
+                            <td>Full unit</td>
+                            <td>Full unit</td>
+                            <td>Full unit</td>
+                            <td>Perfectly even spacing everywhere</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 6: Comparison Table -->
+        <div class="section">
+            <div class="section-title">Track Alignment Properties Comparison</div>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Axis</th>
+                        <th>Level</th>
+                        <th>Purpose</th>
+                        <th>Common Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>justify-content</strong></td>
+                        <td>Horizontal</td>
+                        <td>Container</td>
+                        <td>Align entire grid horizontally</td>
+                        <td>start, center, end, space-between</td>
+                    </tr>
+                    <tr>
+                        <td><strong>align-content</strong></td>
+                        <td>Vertical</td>
+                        <td>Container</td>
+                        <td>Align entire grid vertically</td>
+                        <td>start, center, end, space-between</td>
+                    </tr>
+                    <tr>
+                        <td><strong>place-content</strong></td>
+                        <td>Both</td>
+                        <td>Container</td>
+                        <td>Shorthand for both alignment properties</td>
+                        <td>center, start, end, space-around</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 7: Real-World Scenarios -->
+        <div class="section">
+            <div class="section-title">Real-World Scenarios</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 1: Centered Dashboard</div>
+                <div class="concept-box">
+                    Dashboard with fixed-size cards (200px each) centered on large screens.
+                </div>
+                <div class="code-block">
+<span class="keyword">.dashboard</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(4, 200px)</span>; <span class="comment">/* Fixed size */</span>
+  <span class="property">width</span>: <span class="value">100%</span>;
+  <span class="property">justify-content</span>: <span class="value">center</span>; <span class="comment">/* Center on large screens */</span>
+  <span class="property">gap</span>: <span class="value">20px</span>;
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 2: Full-Page Centered Grid</div>
+                <div class="concept-box">
+                    Grid centered both horizontally and vertically on a full-page layout.
+                </div>
+                <div class="code-block">
+<span class="keyword">.page</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 150px)</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">repeat(2, 150px)</span>;
+  <span class="property">width</span>: <span class="value">100vw</span>;
+  <span class="property">height</span>: <span class="value">100vh</span>;
+  <span class="property">place-content</span>: <span class="value">center</span>; <span class="comment">/* Center both axes */</span>
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 3: Distributed Navigation</div>
+                <div class="concept-box">
+                    Navigation menu with items distributed across container width.
+                </div>
+                <div class="code-block">
+<span class="keyword">.navbar</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(5, auto)</span>;
+  <span class="property">width</span>: <span class="value">100%</span>;
+  <span class="property">justify-content</span>: <span class="value">space-around</span>; <span class="comment">/* Distribute items */</span>
+  <span class="property">height</span>: <span class="value">60px</span>;
+  <span class="property">align-content</span>: <span class="value">center</span>;
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 4: Equal-Height Full-Screen Layout</div>
+                <div class="concept-box">
+                    Rows automatically fill available height equally.
+                </div>
+                <div class="code-block">
+<span class="keyword">.layout</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">auto auto auto</span>;
+  <span class="property">min-height</span>: <span class="value">100vh</span>;
+  <span class="property">align-content</span>: <span class="value">stretch</span>; <span class="comment">/* Rows fill height */</span>
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Best Practices -->
+        <div class="section">
+            <div class="section-title">Best Practices & Tips</div>
+
+            <div class="subsection">
+                <div class="subsection-title">✓ Do's</div>
+                <ul>
+                    <li><strong>Use justify-content when grid width < container width:</strong> For centered or distributed horizontal layouts</li>
+                    <li><strong>Use align-content when grid height < container height:</strong> For centered or distributed vertical layouts</li>
+                    <li><strong>Use place-content for shorthand:</strong> Cleaner than writing both properties separately</li>
+                    <li><strong>Use space-evenly for truly even spacing:</strong> Most visually balanced distribution</li>
+                    <li><strong>Combine with fixed grid sizes:</strong> Works best with repeat(n, fixed-size) columns/rows</li>
+                    <li><strong>Test at different viewport sizes:</strong> Track alignment behavior changes responsively</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">✗ Don'ts</div>
+                <ul>
+                    <li><strong>Don't use when grid fills container:</strong> If using 1fr, justify-content won't have effect (grid already fills)</li>
+                    <li><strong>Don't confuse with gap property:</strong> gap is spacing between tracks; justify/align-content positions entire grid</li>
+                    <li><strong>Don't combine stretch with fixed sizes:</strong> stretch only works when tracks don't have explicit sizes</li>
+                    <li><strong>Don't forget container must have excess space:</strong> These properties need room to work (container larger than grid)</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Pro Tips</div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 1:</strong> Track alignment + items alignment can be combined for precise control. Use both to achieve complex layouts.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 2:</strong> space-evenly provides the most "modern" distribution. Use it for perfectly balanced spacing.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 3:</strong> For responsive track alignment, combine with media queries at different breakpoints.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 4:</strong> Debug with browser DevTools: Inspect grid container and enable grid overlay to see track boundaries.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 5:</strong> Use align-content: stretch to create equal-height rows without specifying explicit row heights.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: Summary -->
+        <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="section-title" style="color: white; border-bottom-color: white;">Quick Reference</div>
+            <div style="margin-top: 20px; line-height: 1.8;">
+                <p><strong>Three Track Alignment Properties:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li><strong>justify-content:</strong> Horizontal track alignment (left/right/center/distribute)</li>
+                    <li><strong>align-content:</strong> Vertical track alignment (top/bottom/center/distribute)</li>
+                    <li><strong>place-content:</strong> Shorthand for both (place-content: align justify)</li>
+                </ul>
+                <p><strong>When to Use Track Alignment:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Grid is smaller than container (fixed-size columns/rows with 1fr flexible areas)</li>
+                    <li>Centering grids on large screens</li>
+                    <li>Distributing grid space across container</li>
+                    <li>Equal-height/equal-width track distribution</li>
+                </ul>
+                <p><strong>Common Values & Their Meanings:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li><strong>start/end:</strong> Align to container edge</li>
+                    <li><strong>center:</strong> Center grid in container</li>
+                    <li><strong>stretch:</strong> Tracks expand to fill container</li>
+                    <li><strong>space-between:</strong> Space between tracks only</li>
+                    <li><strong>space-around:</strong> Even space around tracks (half at edges)</li>
+                    <li><strong>space-evenly:</strong> Equal space everywhere (including edges)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

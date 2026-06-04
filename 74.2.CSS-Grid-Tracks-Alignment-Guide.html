@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Tracks Alignment Properties - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .example-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .example-code {
+            background: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        .demo-container {
+            border: 2px dashed #667eea;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .demo-label {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 0.75em;
+            background: #667eea;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .quick-ref {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .quick-ref strong {
+            color: #667eea;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        /* Example 1: justify-content start */
+        .jc-start {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+            width: 100%;
+            min-height: 150px;
+            justify-content: start;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        /* Example 2: justify-content center */
+        .jc-center {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+            width: 100%;
+            min-height: 150px;
+            justify-content: center;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        /* Example 3: justify-content end */
+        .jc-end {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+            width: 100%;
+            min-height: 150px;
+            justify-content: end;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        /* Example 4: justify-content space-between */
+        .jc-space-between {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+            width: 100%;
+            min-height: 150px;
+            justify-content: space-between;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        /* Example 5: justify-content space-around */
+        .jc-space-around {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+            width: 100%;
+            min-height: 150px;
+            justify-content: space-around;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        /* Example 6: justify-content space-evenly */
+        .jc-space-evenly {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+            width: 100%;
+            min-height: 150px;
+            justify-content: space-evenly;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        /* Example 7: align-content start */
+        .ac-start {
+            display: grid;
+            grid-template-rows: repeat(2, 60px);
+            gap: 10px;
+            width: 100%;
+            height: 300px;
+            align-content: start;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        /* Example 8: align-content center */
+        .ac-center {
+            display: grid;
+            grid-template-rows: repeat(2, 60px);
+            gap: 10px;
+            width: 100%;
+            height: 300px;
+            align-content: center;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        /* Example 9: align-content end */
+        .ac-end {
+            display: grid;
+            grid-template-rows: repeat(2, 60px);
+            gap: 10px;
+            width: 100%;
+            height: 300px;
+            align-content: end;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        /* Example 10: align-content stretch */
+        .ac-stretch {
+            display: grid;
+            grid-template-rows: repeat(2, auto);
+            gap: 10px;
+            width: 100%;
+            height: 300px;
+            align-content: stretch;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        /* Example 11: place-content center */
+        .pc-center {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(2, 60px);
+            gap: 10px;
+            width: 100%;
+            height: 300px;
+            place-content: center;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        /* Example 12: Responsive centered dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 150px);
+            gap: 15px;
+            width: 100%;
+            justify-content: center;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 20px;
+        }
+
+        .grid-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grid-row {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .centered-note {
+            text-align: center;
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 150px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Tracks Alignment Properties</h1>
+            <p>Practical Examples & Real-World Implementations</p>
+        </header>
+
+        <!-- Example 1: justify-content start -->
+        <div class="example">
+            <div class="example-title">1. justify-content: start (Left Aligned)</div>
+            <div class="example-description">
+                Grid columns aligned to the start (left) of the container. Grid is pushed to the left side, leaving space on the right.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(3, 100px);<br>
+                justify-content: start;
+            </div>
+            <div class="demo-container">
+                <div class="jc-start">
+                    <div class="grid-item">Col 1</div>
+                    <div class="grid-item">Col 2</div>
+                    <div class="grid-item">Col 3</div>
+                </div>
+                <div class="centered-note">Columns pushed to left (start)</div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Left-aligned layouts, sidebar content, left-justified grids
+            </div>
+        </div>
+
+        <!-- Example 2: justify-content center -->
+        <div class="example">
+            <div class="example-title">2. justify-content: center (Horizontally Centered)</div>
+            <div class="example-description">
+                Grid columns centered horizontally within the container. Equal space on left and right sides.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(3, 100px);<br>
+                justify-content: center;
+            </div>
+            <div class="demo-container">
+                <div class="jc-center">
+                    <div class="grid-item">Col 1</div>
+                    <div class="grid-item">Col 2</div>
+                    <div class="grid-item">Col 3</div>
+                </div>
+                <div class="centered-note">Columns centered horizontally</div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Centered dashboards, symmetric layouts, centered card grids on desktop
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> Most commonly used justify-content value. Perfect for centering fixed-width grids.
+            </div>
+        </div>
+
+        <!-- Example 3: justify-content end -->
+        <div class="example">
+            <div class="example-title">3. justify-content: end (Right Aligned)</div>
+            <div class="example-description">
+                Grid columns aligned to the end (right) of the container. Grid is pushed to the right side, leaving space on the left.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(3, 100px);<br>
+                justify-content: end;
+            </div>
+            <div class="demo-container">
+                <div class="jc-end">
+                    <div class="grid-item">Col 1</div>
+                    <div class="grid-item">Col 2</div>
+                    <div class="grid-item">Col 3</div>
+                </div>
+                <div class="centered-note">Columns pushed to right (end)</div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Right-aligned toolbars, right-justified content, RTL language layouts
+            </div>
+        </div>
+
+        <!-- Example 4: justify-content space-between -->
+        <div class="example">
+            <div class="example-title">4. justify-content: space-between (Distribute with Edges)</div>
+            <div class="example-description">
+                Columns distributed across container with equal space between them. First column touches left edge, last column touches right edge.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(3, 100px);<br>
+                justify-content: space-between;
+            </div>
+            <div class="demo-container">
+                <div class="jc-space-between">
+                    <div class="grid-item">Col 1</div>
+                    <div class="grid-item">Col 2</div>
+                    <div class="grid-item">Col 3</div>
+                </div>
+                <div class="centered-note">Columns at edges with equal spacing between</div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Navigation menus, toolbar buttons, distributed navigation items
+            </div>
+        </div>
+
+        <!-- Example 5: justify-content space-around -->
+        <div class="example">
+            <div class="example-title">5. justify-content: space-around (Equal Space Around)</div>
+            <div class="example-description">
+                Columns distributed with equal space around each column. Space at edges is half the space between columns.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(3, 100px);<br>
+                justify-content: space-around;
+            </div>
+            <div class="demo-container">
+                <div class="jc-space-around">
+                    <div class="grid-item">Col 1</div>
+                    <div class="grid-item">Col 2</div>
+                    <div class="grid-item">Col 3</div>
+                </div>
+                <div class="centered-note">Equal space around each column (half at edges)</div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Gallery layouts, button grids, centered item distribution
+            </div>
+        </div>
+
+        <!-- Example 6: justify-content space-evenly -->
+        <div class="example">
+            <div class="example-title">6. justify-content: space-evenly (Perfectly Even Spacing)</div>
+            <div class="example-description">
+                Columns distributed with perfectly equal space everywhere—between columns AND at edges. Most balanced distribution.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(3, 100px);<br>
+                justify-content: space-evenly;
+            </div>
+            <div class="demo-container">
+                <div class="jc-space-evenly">
+                    <div class="grid-item">Col 1</div>
+                    <div class="grid-item">Col 2</div>
+                    <div class="grid-item">Col 3</div>
+                </div>
+                <div class="centered-note">Perfect spacing everywhere (including edges)</div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Modern icon grids, evenly-spaced features, perfectly-balanced layouts
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> space-evenly provides the most professional, balanced appearance. Use it for modern designs.
+            </div>
+        </div>
+
+        <!-- Example 7: align-content start -->
+        <div class="example">
+            <div class="example-title">7. align-content: start (Top Aligned)</div>
+            <div class="example-description">
+                Grid rows aligned to the start (top) of the container. Grid is pushed to the top, leaving space at the bottom.
+            </div>
+            <div class="example-code">
+                grid-template-rows: repeat(2, 60px);<br>
+                height: 300px;<br>
+                align-content: start;
+            </div>
+            <div class="demo-container">
+                <div class="ac-start">
+                    <div class="grid-row">Row 1</div>
+                    <div class="grid-row">Row 1</div>
+                    <div class="grid-row">Row 2</div>
+                    <div class="grid-row">Row 2</div>
+                </div>
+                <div class="centered-note">Rows pushed to top (start)</div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Top-aligned content, header-like layouts, content that doesn't fill height
+            </div>
+        </div>
+
+        <!-- Example 8: align-content center -->
+        <div class="example">
+            <div class="example-title">8. align-content: center (Vertically Centered)</div>
+            <div class="example-description">
+                Grid rows centered vertically within the container. Equal space at top and bottom.
+            </div>
+            <div class="example-code">
+                grid-template-rows: repeat(2, 60px);<br>
+                height: 300px;<br>
+                align-content: center;
+            </div>
+            <div class="demo-container">
+                <div class="ac-center">
+                    <div class="grid-row">Row 1</div>
+                    <div class="grid-row">Row 1</div>
+                    <div class="grid-row">Row 2</div>
+                    <div class="grid-row">Row 2</div>
+                </div>
+                <div class="centered-note">Rows centered vertically</div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Centered full-page grids, modal dialogs, centered login forms
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> Combine with justify-content: center for perfectly centered grids both axes.
+            </div>
+        </div>
+
+        <!-- Example 9: align-content end -->
+        <div class="example">
+            <div class="example-title">9. align-content: end (Bottom Aligned)</div>
+            <div class="example-description">
+                Grid rows aligned to the end (bottom) of the container. Grid is pushed to the bottom, leaving space at the top.
+            </div>
+            <div class="example-code">
+                grid-template-rows: repeat(2, 60px);<br>
+                height: 300px;<br>
+                align-content: end;
+            </div>
+            <div class="demo-container">
+                <div class="ac-end">
+                    <div class="grid-row">Row 1</div>
+                    <div class="grid-row">Row 1</div>
+                    <div class="grid-row">Row 2</div>
+                    <div class="grid-row">Row 2</div>
+                </div>
+                <div class="centered-note">Rows pushed to bottom (end)</div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Footer layouts, bottom-aligned content, stack at bottom
+            </div>
+        </div>
+
+        <!-- Example 10: align-content stretch -->
+        <div class="example">
+            <div class="example-title">10. align-content: stretch (Fill Height)</div>
+            <div class="example-description">
+                Grid rows automatically stretch to fill container height. Each row grows equally. Perfect for equal-height layouts.
+            </div>
+            <div class="example-code">
+                grid-template-rows: repeat(2, auto);<br>
+                height: 300px;<br>
+                align-content: stretch;
+            </div>
+            <div class="demo-container">
+                <div class="ac-stretch">
+                    <div class="grid-row">Row 1</div>
+                    <div class="grid-row">Row 1</div>
+                    <div class="grid-row">Row 2</div>
+                    <div class="grid-row">Row 2</div>
+                </div>
+                <div class="centered-note">Rows stretched to fill height equally</div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Equal-height page sections, full-screen layouts, balanced row distribution
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> Use stretch to create equal-height rows without explicit row heights. Great for responsive layouts.
+            </div>
+        </div>
+
+        <!-- Example 11: place-content center -->
+        <div class="example">
+            <div class="example-title">11. place-content: center (Fully Centered)</div>
+            <div class="example-description">
+                Grid centered both horizontally AND vertically. Combines justify-content: center + align-content: center with one property.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(3, 100px);<br>
+                grid-template-rows: repeat(2, 60px);<br>
+                width: 100%; height: 300px;<br>
+                place-content: center;
+            </div>
+            <div class="demo-container">
+                <div class="pc-center">
+                    <div class="grid-item">Item 1</div>
+                    <div class="grid-item">Item 2</div>
+                    <div class="grid-item">Item 3</div>
+                    <div class="grid-item">Item 4</div>
+                    <div class="grid-item">Item 5</div>
+                    <div class="grid-item">Item 6</div>
+                </div>
+                <div class="centered-note">Grid centered both horizontally and vertically</div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Landing pages, splash screens, centered modals, full-page centered content
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> place-content: center is shorthand for justify-content: center; align-content: center; Much cleaner!
+            </div>
+        </div>
+
+        <!-- Example 12: Responsive Dashboard -->
+        <div class="example">
+            <div class="example-title">12. Responsive Centered Dashboard</div>
+            <div class="example-description">
+                Dashboard with fixed-size cards centered on large screens. Cards stay centered as container resizes.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(4, 150px);<br>
+                gap: 15px;<br>
+                justify-content: center; /* Center dashboard */
+            </div>
+            <div class="demo-container">
+                <div class="dashboard-grid">
+                    <div class="grid-item">Users</div>
+                    <div class="grid-item">Revenue</div>
+                    <div class="grid-item">Growth</div>
+                    <div class="grid-item">Conversion</div>
+                </div>
+                <div class="centered-note">Dashboard stays centered on large screens</div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Analytics dashboards, business metrics, centered card layouts on desktop
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> Combine with @media queries to stack cards vertically on mobile while staying centered on desktop.
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="example" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="example-title" style="color: white;">Quick Reference & Best Practices</div>
+            <div style="margin-top: 20px;">
+                <p><strong>justify-content Values (Horizontal Track Alignment):</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li><strong>start</strong> — Left-aligned (default)</li>
+                    <li><strong>center</strong> — Centered horizontally</li>
+                    <li><strong>end</strong> — Right-aligned</li>
+                    <li><strong>space-between</strong> — At edges, space between</li>
+                    <li><strong>space-around</strong> — Equal space around items</li>
+                    <li><strong>space-evenly</strong> — Perfect spacing everywhere</li>
+                </ul>
+                <p><strong>align-content Values (Vertical Track Alignment):</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li><strong>start</strong> — Top-aligned (default)</li>
+                    <li><strong>center</strong> — Centered vertically</li>
+                    <li><strong>end</strong> — Bottom-aligned</li>
+                    <li><strong>stretch</strong> — Rows fill container height</li>
+                    <li><strong>space-between</strong> — At edges, space between</li>
+                    <li><strong>space-around</strong> — Equal space around rows</li>
+                </ul>
+                <p><strong>When Track Alignment Works:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Grid is smaller than container (fixed-size columns/rows)</li>
+                    <li>Using repeat(3, 100px) instead of repeat(3, 1fr)</li>
+                    <li>Container has more space than grid needs</li>
+                    <li>Browser DevTools shows extra space in grid</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

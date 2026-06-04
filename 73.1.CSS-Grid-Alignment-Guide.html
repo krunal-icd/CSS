@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Items Alignment Properties</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .subsection {
+            margin-bottom: 30px;
+        }
+
+        .subsection-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .subsection-title:first-child {
+            margin-top: 0;
+        }
+
+        .concept-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .concept-box strong {
+            color: #667eea;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .code-block code {
+            color: #f8f8f2;
+        }
+
+        .keyword { color: #ff79c6; }
+        .property { color: #8be9fd; }
+        .value { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .demo {
+            background: #f9f9f9;
+            border: 2px dashed #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .grid-demo {
+            display: grid;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .grid-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+        }
+
+        /* Alignment demos */
+        .alignment-demo {
+            height: 120px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        .visual-diagram {
+            background: #f9f9f9;
+            border: 2px solid #eee;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 0.9em;
+        }
+
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #004085;
+        }
+
+        .note strong {
+            color: #667eea;
+        }
+
+        .best-practices {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #155724;
+        }
+
+        .best-practices strong {
+            color: #155724;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .axes-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .axis-box {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .axis-box h5 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .axis-box p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .axis-values {
+            background: white;
+            border: 1px dashed #667eea;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.85em;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            .axes-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Items Alignment Properties</h1>
+            <p>Master justify-items, align-items, justify-self, align-self, and place-* properties</p>
+        </header>
+
+        <!-- Section 1: Fundamentals -->
+        <div class="section">
+            <div class="section-title">Understanding Grid Alignment Axes</div>
+
+            <div class="subsection">
+                <div class="subsection-title">The Two Axes</div>
+                <div class="axes-container">
+                    <div class="axis-box">
+                        <h5>Inline Axis (Horizontal)</h5>
+                        <p>Left to right alignment of items within grid cells.</p>
+                        <p><strong>Properties:</strong></p>
+                        <div class="axis-values">
+justify-items<br>
+justify-self<br>
+justify-content
+                        </div>
+                    </div>
+                    <div class="axis-box">
+                        <h5>Block Axis (Vertical)</h5>
+                        <p>Top to bottom alignment of items within grid cells.</p>
+                        <p><strong>Properties:</strong></p>
+                        <div class="axis-values">
+align-items<br>
+align-self<br>
+align-content
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Core Concept</div>
+                <div class="concept-box">
+                    <strong>Grid Alignment:</strong> Controls how items are positioned INSIDE their grid cells. The grid container and items are separate concepts. Grid tracks define the layout structure; alignment properties position items within those tracks.
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Key Values (Used in Most Alignment Properties)</div>
+                <div class="code-block">
+<span class="comment">/* Most alignment properties accept these values */</span>
+<span class="value">start</span>        <span class="comment">/* Align to start of cell/container */</span>
+<span class="value">end</span>          <span class="comment">/* Align to end of cell/container */</span>
+<span class="value">center</span>       <span class="comment">/* Center within cell/container */</span>
+<span class="value">stretch</span>      <span class="comment">/* Expand to fill cell/container (default) */</span>
+<span class="value">baseline</span>     <span class="comment">/* Align to text baseline */</span>
+<span class="value">space-between</span> <span class="comment">/* Distribute space between items */</span>
+<span class="value">space-around</span>  <span class="comment">/* Distribute space around items */</span>
+<span class="value">space-evenly</span>  <span class="comment">/* Equal space around all items */</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Item Alignment Properties -->
+        <div class="section">
+            <div class="section-title">Item-Level Alignment Properties</div>
+
+            <div class="subsection">
+                <div class="subsection-title">justify-items (Grid Container)</div>
+                <div class="concept-box">
+                    <strong>justify-items:</strong> Sets default horizontal alignment for ALL items in the grid. Applied to the grid container. Individual items can override with justify-self.
+                </div>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 150px)</span>;
+  <span class="property">justify-items</span>: <span class="value">center</span>; <span class="comment">/* All items centered horizontally */</span>
+}
+                </div>
+                <div class="note">
+                    <strong>Values:</strong> start, end, center, stretch (default), baseline
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">align-items (Grid Container)</div>
+                <div class="concept-box">
+                    <strong>align-items:</strong> Sets default vertical alignment for ALL items in the grid. Applied to the grid container. Individual items can override with align-self.
+                </div>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">repeat(3, 150px)</span>;
+  <span class="property">align-items</span>: <span class="value">center</span>; <span class="comment">/* All items centered vertically */</span>
+}
+                </div>
+                <div class="note">
+                    <strong>Values:</strong> start, end, center, stretch (default), baseline
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">justify-self (Grid Item)</div>
+                <div class="concept-box">
+                    <strong>justify-self:</strong> Overrides justify-items for a single item. Allows you to align individual items differently from the grid default.
+                </div>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">justify-items</span>: <span class="value">start</span>; <span class="comment">/* Default: items at start */</span>
+}
+
+<span class="keyword">.grid-item</span> {
+  <span class="property">justify-self</span>: <span class="value">center</span>; <span class="comment">/* Override: this item centered */</span>
+}
+                </div>
+                <div class="note">
+                    <strong>Values:</strong> start, end, center, stretch, baseline, auto (inherit from justify-items)
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">align-self (Grid Item)</div>
+                <div class="concept-box">
+                    <strong>align-self:</strong> Overrides align-items for a single item. Allows you to align individual items vertically differently from the grid default.
+                </div>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">align-items</span>: <span class="value">start</span>; <span class="comment">/* Default: items at start */</span>
+}
+
+<span class="keyword">.grid-item</span> {
+  <span class="property">align-self</span>: <span class="value">end</span>; <span class="comment">/* Override: this item at end */</span>
+}
+                </div>
+                <div class="note">
+                    <strong>Values:</strong> start, end, center, stretch, baseline, auto (inherit from align-items)
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Shorthand Properties -->
+        <div class="section">
+            <div class="section-title">Shorthand Alignment Properties</div>
+
+            <div class="subsection">
+                <div class="subsection-title">place-items (Grid Container)</div>
+                <div class="concept-box">
+                    <strong>place-items:</strong> Shorthand for align-items and justify-items. Format: place-items: align-items justify-items.
+                </div>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+  <span class="property">place-items</span>: <span class="value">center</span>; <span class="comment">/* Shorthand for align-items: center; justify-items: center; */</span>
+}
+
+<span class="comment">/* Equivalent to: */</span>
+<span class="keyword">.grid</span> {
+  <span class="property">align-items</span>: <span class="value">center</span>;
+  <span class="property">justify-items</span>: <span class="value">center</span>;
+}
+
+<span class="comment">/* Different values: */</span>
+<span class="keyword">.grid</span> {
+  <span class="property">place-items</span>: <span class="value">start end</span>; <span class="comment">/* align-items: start; justify-items: end; */</span>
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">place-self (Grid Item)</div>
+                <div class="concept-box">
+                    <strong>place-self:</strong> Shorthand for align-self and justify-self. Format: place-self: align-self justify-self.
+                </div>
+                <div class="code-block">
+<span class="keyword">.grid-item</span> {
+  <span class="property">place-self</span>: <span class="value">center</span>; <span class="comment">/* Shorthand for align-self: center; justify-self: center; */</span>
+}
+
+<span class="comment">/* Different values: */</span>
+<span class="keyword">.grid-item</span> {
+  <span class="property">place-self</span>: <span class="value">end start</span>; <span class="comment">/* align-self: end; justify-self: start; */</span>
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Container Alignment -->
+        <div class="section">
+            <div class="section-title">Container-Level Alignment (justify-content & align-content)</div>
+
+            <div class="subsection">
+                <div class="subsection-title">justify-content (Grid Container)</div>
+                <div class="concept-box">
+                    <strong>justify-content:</strong> Aligns the entire grid horizontally within its container. Used when the grid doesn't fill all available space. Different from justify-items which aligns items within cells.
+                </div>
+                <div class="code-block">
+<span class="keyword">.grid-container</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 100px)</span>; <span class="comment">/* 300px total */</span>
+  <span class="property">width</span>: <span class="value">600px</span>; <span class="comment">/* Extra space available */</span>
+  <span class="property">justify-content</span>: <span class="value">center</span>; <span class="comment">/* Grid centered in container */</span>
+}
+                </div>
+                <div class="note">
+                    <strong>Values:</strong> start, end, center, stretch, space-between, space-around, space-evenly
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">align-content (Grid Container)</div>
+                <div class="concept-box">
+                    <strong>align-content:</strong> Aligns the entire grid vertically within its container. Used when the grid doesn't fill all available space. Different from align-items which aligns items within cells.
+                </div>
+                <div class="code-block">
+<span class="keyword">.grid-container</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">repeat(2, 100px)</span>; <span class="comment">/* 200px total */</span>
+  <span class="property">height</span>: <span class="value">400px</span>; <span class="comment">/* Extra space available */</span>
+  <span class="property">align-content</span>: <span class="value">center</span>; <span class="comment">/* Grid centered in container */</span>
+}
+                </div>
+                <div class="note">
+                    <strong>Values:</strong> start, end, center, stretch, space-between, space-around, space-evenly
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Key Difference: Items vs Content</div>
+                <div class="visual-diagram">justify-items vs justify-content:
+
+                        ┌─────────────────────────────┐
+                        │  Grid Container (600px)     │
+                        │                             │
+                        │   [Grid: 300px wide]        │
+                        │   ┌─────────┬────────┐      │
+                        │   │ Item 1  │ Item 2 │      │
+                        │   └─────────┴────────┘      │
+                        │                             │
+                        └─────────────────────────────┘
+
+justify-items: How items are aligned INSIDE their cells
+justify-content: How the entire GRID is positioned in the container
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Comparison Table -->
+        <div class="section">
+            <div class="section-title">Alignment Properties Comparison</div>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Level</th>
+                        <th>Axis</th>
+                        <th>Purpose</th>
+                        <th>Common Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>justify-items</strong></td>
+                        <td>Container</td>
+                        <td>Horizontal</td>
+                        <td>Default align items horizontally</td>
+                        <td>start, center, end, stretch</td>
+                    </tr>
+                    <tr>
+                        <td><strong>align-items</strong></td>
+                        <td>Container</td>
+                        <td>Vertical</td>
+                        <td>Default align items vertically</td>
+                        <td>start, center, end, stretch</td>
+                    </tr>
+                    <tr>
+                        <td><strong>justify-self</strong></td>
+                        <td>Item</td>
+                        <td>Horizontal</td>
+                        <td>Override horizontal alignment</td>
+                        <td>start, center, end, stretch, auto</td>
+                    </tr>
+                    <tr>
+                        <td><strong>align-self</strong></td>
+                        <td>Item</td>
+                        <td>Vertical</td>
+                        <td>Override vertical alignment</td>
+                        <td>start, center, end, stretch, auto</td>
+                    </tr>
+                    <tr>
+                        <td><strong>justify-content</strong></td>
+                        <td>Container</td>
+                        <td>Horizontal</td>
+                        <td>Position entire grid in container</td>
+                        <td>start, center, end, space-between, space-around</td>
+                    </tr>
+                    <tr>
+                        <td><strong>align-content</strong></td>
+                        <td>Container</td>
+                        <td>Vertical</td>
+                        <td>Position entire grid in container</td>
+                        <td>start, center, end, space-between, space-around</td>
+                    </tr>
+                    <tr>
+                        <td><strong>place-items</strong></td>
+                        <td>Container</td>
+                        <td>Both</td>
+                        <td>Shorthand for align-items + justify-items</td>
+                        <td>center, start, end, stretch</td>
+                    </tr>
+                    <tr>
+                        <td><strong>place-self</strong></td>
+                        <td>Item</td>
+                        <td>Both</td>
+                        <td>Shorthand for align-self + justify-self</td>
+                        <td>center, start, end, stretch, auto</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 6: Real-World Scenarios -->
+        <div class="section">
+            <div class="section-title">Real-World Scenarios</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 1: Centered Content Cards</div>
+                <div class="concept-box">
+                    Center all content cards within their cells. Cards should be centered both horizontally and vertically.
+                </div>
+                <div class="code-block">
+<span class="keyword">.card-grid</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 200px)</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">repeat(2, 200px)</span>;
+  <span class="property">place-items</span>: <span class="value">center</span>; <span class="comment">/* Center all cards */</span>
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 2: Stretch Cells (Hero Layout)</div>
+                <div class="concept-box">
+                    Make items stretch to fill all available space in their cells.
+                </div>
+                <div class="code-block">
+<span class="keyword">.hero-grid</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">1fr</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">300px</span>;
+  <span class="property">place-items</span>: <span class="value">stretch</span>; <span class="comment">/* Items fill entire cell */</span>
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 3: Mixed Alignment in Grid</div>
+                <div class="concept-box">
+                    Different items need different alignment. Header and footer centered, sidebar left-aligned, content stretches.
+                </div>
+                <div class="code-block">
+<span class="keyword">.layout</span> {
+  <span class="property">place-items</span>: <span class="value">center</span>; <span class="comment">/* Default center */</span>
+}
+
+<span class="keyword">.header</span> { <span class="property">place-self</span>: <span class="value">center</span>; }
+<span class="keyword">.sidebar</span> { <span class="property">justify-self</span>: <span class="value">start</span>; <span class="property">align-self</span>: <span class="value">start</span>; }
+<span class="keyword">.content</span> { <span class="property">place-self</span>: <span class="value">stretch</span>; }
+<span class="keyword">.footer</span> { <span class="property">place-self</span>: <span class="value">center</span>; }
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 4: Centered Grid in Container</div>
+                <div class="concept-box">
+                    Grid is smaller than container. Center the entire grid within the available space.
+                </div>
+                <div class="code-block">
+<span class="keyword">.wrapper</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">width</span>: <span class="value">100%</span>;
+  <span class="property">height</span>: <span class="value">100vh</span>;
+  <span class="property">place-content</span>: <span class="value">center</span>; <span class="comment">/* Center grid in wrapper */</span>
+}
+
+<span class="keyword">.grid</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 100px)</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">repeat(3, 100px)</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Best Practices -->
+        <div class="section">
+            <div class="section-title">Best Practices & Tips</div>
+
+            <div class="subsection">
+                <div class="subsection-title">✓ Do's</div>
+                <ul>
+                    <li><strong>Use place-items for shorthand:</strong> place-items: center is cleaner than justify-items: center; align-items: center;</li>
+                    <li><strong>Understand the two axes:</strong> Justify = horizontal (inline), Align = vertical (block)</li>
+                    <li><strong>Use justify-content for grid positioning:</strong> When your grid is smaller than the container</li>
+                    <li><strong>Use justify-items for item alignment:</strong> When items are smaller than their cells</li>
+                    <li><strong>Override with -self properties:</strong> Use justify-self/align-self for exceptions</li>
+                    <li><strong>Test with different viewport sizes:</strong> Alignment behavior changes responsively</li>
+                    <li><strong>Combine with grid-template-columns/rows:</strong> Make cells explicit sizes for meaningful alignment</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">✗ Don'ts</div>
+                <ul>
+                    <li><strong>Don't confuse grid sizing with alignment:</strong> Grid-template-* defines track sizes; alignment properties position items within them.</li>
+                    <li><strong>Don't use both -content and -items:</strong> They work on different scopes; use appropriately</li>
+                    <li><strong>Don't rely on stretch with gap:</strong> Gap adds space; items may not stretch as expected with large gaps</li>
+                    <li><strong>Don't forget auto value:</strong> justify-self: auto inherits from justify-items (useful for exceptions)</li>
+                    <li><strong>Don't mix alignment with transform:</strong> Transform can conflict with alignment; use carefully</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Pro Tips</div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 1:</strong> place-content shorthand combines justify-content + align-content for positioning the entire grid in its container.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 2:</strong> Use align-items: stretch (default) for full-height items without specifying heights. Perfect for equal-height cards.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 3:</strong> Baseline alignment is useful for text-heavy items to align by text baseline across cells.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 4:</strong> space-evenly in justify-content/align-content distributes space more evenly than space-around.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 5:</strong> Debug alignment issues: Use browser DevTools to see grid lines and cell boundaries clearly.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Summary -->
+        <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="section-title" style="color: white; border-bottom-color: white;">Quick Reference Chart</div>
+            <div style="margin-top: 20px; line-height: 1.8;">
+                <p><strong>Container Properties (Applied to .grid):</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li><strong>justify-items:</strong> Align ALL items horizontally (default for cells)</li>
+                    <li><strong>align-items:</strong> Align ALL items vertically (default for cells)</li>
+                    <li><strong>justify-content:</strong> Position entire grid horizontally</li>
+                    <li><strong>align-content:</strong> Position entire grid vertically</li>
+                    <li><strong>place-items:</strong> Shorthand for align-items + justify-items</li>
+                    <li><strong>place-content:</strong> Shorthand for align-content + justify-content</li>
+                </ul>
+                <p><strong>Item Properties (Applied to .grid > item):</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li><strong>justify-self:</strong> Override horizontal alignment for one item</li>
+                    <li><strong>align-self:</strong> Override vertical alignment for one item</li>
+                    <li><strong>place-self:</strong> Shorthand for align-self + justify-self</li>
+                </ul>
+                <p><strong>Remember:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Justify = Horizontal (inline axis)</li>
+                    <li>Align = Vertical (block axis)</li>
+                    <li>-items = Default for cells / -self = Override for individual item</li>
+                    <li>-content = Position entire grid / -items = Position items in cells</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

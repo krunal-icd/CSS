@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Nested Grids - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .example-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .example-code {
+            background: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        .demo-container {
+            border: 2px dashed #667eea;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+
+        .quick-ref {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .quick-ref strong {
+            color: #667eea;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        /* Example 1: Product Cards (Traditional Nesting) */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            display: grid;
+            grid-template-rows: 120px auto 40px 50px;
+            gap: 10px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            overflow: hidden;
+        }
+
+        .product-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+        }
+
+        .product-info {
+            padding: 10px;
+        }
+
+        .product-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .product-desc {
+            color: #666;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            padding: 0 10px;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .product-button {
+            padding: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 4px;
+            margin: 0 10px 10px 10px;
+        }
+
+        /* Example 2: Data Table (Subgrid) */
+        .data-table {
+            display: grid;
+            grid-template-columns: 80px 120px 150px 100px;
+            gap: 0;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            font-weight: bold;
+            text-align: center;
+            border-right: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .table-header:last-child {
+            border-right: none;
+        }
+
+        .table-row {
+            display: subgrid;
+            grid-column: 1 / -1;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-cell {
+            padding: 12px;
+            text-align: center;
+            border-right: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .table-cell:last-child {
+            border-right: none;
+        }
+
+        .table-row:nth-child(odd) .table-cell {
+            background: #f9f9f9;
+        }
+
+        /* Example 3: Form Layout (Subgrid) */
+        .form-layout {
+            display: grid;
+            grid-template-columns: 150px 1fr 150px 1fr;
+            gap: 15px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .form-field {
+            display: subgrid;
+            grid-column: span 2;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+        }
+
+        .form-input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        /* Example 4: Dashboard with Subgrid */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .dashboard-row {
+            display: subgrid;
+            grid-column: 1 / -1;
+        }
+
+        .widget {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100px;
+        }
+
+        .widget-title {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .widget-value {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        /* Example 5: Article with Sidebar (Subgrid) */
+        .article-layout {
+            display: grid;
+            grid-template-columns: 1fr 250px;
+            gap: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .article-content {
+            display: subgrid;
+            grid-template-columns: subgrid;
+        }
+
+        .article-section {
+            background: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .article-section h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .article-section p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .sidebar-widget {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .sidebar-widget h5 {
+            margin-bottom: 10px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 8px;
+        }
+
+        .sidebar-item {
+            padding: 5px 0;
+        }
+
+        /* Example 6: Card Grid with Nested Content */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .advanced-card {
+            display: grid;
+            grid-template-rows: 100px auto 60px;
+            gap: 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+        }
+
+        .card-body {
+            padding: 15px;
+            display: grid;
+            grid-template-rows: auto auto;
+            gap: 8px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .card-text {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .card-footer {
+            background: #f5f5f5;
+            padding: 10px;
+            text-align: center;
+            color: #667eea;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .form-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .form-field {
+                grid-column: span 1;
+            }
+
+            .dashboard-layout {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .article-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Nested Grids</h1>
+            <p>Practical Examples & Real-World Implementations</p>
+        </header>
+
+        <!-- Example 1: Product Cards (Traditional Nesting) -->
+        <div class="example">
+            <div class="example-title">1. Product Cards (Traditional Nesting)</div>
+            <div class="example-description">
+                Each product card is a nested grid with 4 rows: image, info, price, button. Complete independence from parent grid.
+            </div>
+            <div class="example-code">
+                .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }<br>
+                .product-card { display: grid; grid-template-rows: 120px auto 40px 50px; gap: 10px; }
+            </div>
+            <div class="demo-container">
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-image">🎨</div>
+                        <div class="product-info">
+                            <div class="product-name">Design Kit</div>
+                            <div class="product-desc">Complete design system</div>
+                        </div>
+                        <div class="product-price">$29</div>
+                        <button class="product-button">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">📱</div>
+                        <div class="product-info">
+                            <div class="product-name">App UI</div>
+                            <div class="product-desc">Mobile app components</div>
+                        </div>
+                        <div class="product-price">$19</div>
+                        <button class="product-button">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">⌚</div>
+                        <div class="product-info">
+                            <div class="product-name">Watch UI</div>
+                            <div class="product-desc">Wearable interface kit</div>
+                        </div>
+                        <div class="product-price">$24</div>
+                        <button class="product-button">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Why Traditional Nesting:</strong> Each card has independent layout. No need to align with parent grid.
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> This pattern is perfect for reusable components. Each card can have consistent internal layout.
+            </div>
+        </div>
+
+        <!-- Example 2: Data Table (Subgrid) -->
+        <div class="example">
+            <div class="example-title">2. Data Table (Subgrid for Column Alignment)</div>
+            <div class="example-description">
+                Data table with multiple rows. Subgrid ensures all rows align perfectly with parent columns. Each row spans all parent columns.
+            </div>
+            <div class="example-code">
+                .data-table { display: grid; grid-template-columns: 80px 120px 150px 100px; }<br>
+                .table-row { display: subgrid; grid-column: 1 / -1; }
+            </div>
+            <div class="demo-container">
+                <div class="data-table">
+                    <div class="table-header">ID</div>
+                    <div class="table-header">Name</div>
+                    <div class="table-header">Email</div>
+                    <div class="table-header">Status</div>
+
+                    <div class="table-row">
+                        <div class="table-cell">001</div>
+                        <div class="table-cell">Alice</div>
+                        <div class="table-cell">alice@example.com</div>
+                        <div class="table-cell">Active</div>
+                    </div>
+
+                    <div class="table-row">
+                        <div class="table-cell">002</div>
+                        <div class="table-cell">Bob</div>
+                        <div class="table-cell">bob@example.com</div>
+                        <div class="table-cell">Active</div>
+                    </div>
+
+                    <div class="table-row">
+                        <div class="table-cell">003</div>
+                        <div class="table-cell">Carol</div>
+                        <div class="table-cell">carol@example.com</div>
+                        <div class="table-cell">Inactive</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Why Subgrid:</strong> Perfect column alignment across all rows. Data stays organized and professional.
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> Use subgrid for any multi-row structure where vertical alignment matters.
+            </div>
+        </div>
+
+        <!-- Example 3: Form Layout (Subgrid) -->
+        <div class="example">
+            <div class="example-title">3. Multi-Column Form (Subgrid)</div>
+            <div class="example-description">
+                2-column form. Each form field spans 2 parent columns (label + input). Subgrid ensures labels and inputs align vertically.
+            </div>
+            <div class="example-code">
+                .form-layout { display: grid; grid-template-columns: 150px 1fr 150px 1fr; }<br>
+                .form-field { display: subgrid; grid-column: span 2; }
+            </div>
+            <div class="demo-container">
+                <div class="form-layout">
+                    <div class="form-field">
+                        <div class="form-label">First Name</div>
+                        <input class="form-input" type="text" placeholder="John">
+                    </div>
+                    <div class="form-field">
+                        <div class="form-label">Last Name</div>
+                        <input class="form-input" type="text" placeholder="Doe">
+                    </div>
+                    <div class="form-field">
+                        <div class="form-label">Email</div>
+                        <input class="form-input" type="email" placeholder="john@example.com">
+                    </div>
+                    <div class="form-field">
+                        <div class="form-label">Phone</div>
+                        <input class="form-input" type="tel" placeholder="+1 (555) 000-0000">
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Why Subgrid:</strong> Labels align perfectly in column 1 and 3. Inputs in columns 2 and 4. Professional form layout.
+            </div>
+        </div>
+
+        <!-- Example 4: Dashboard (Subgrid) -->
+        <div class="example">
+            <div class="example-title">4. Dashboard with Subgrid Rows</div>
+            <div class="example-description">
+                6-column dashboard. Subgrid rows span all columns. Widgets within each row align with parent grid columns.
+            </div>
+            <div class="example-code">
+                .dashboard-layout { display: grid; grid-template-columns: repeat(6, 1fr); }<br>
+                .dashboard-row { display: subgrid; grid-column: 1 / -1; }
+            </div>
+            <div class="demo-container">
+                <div class="dashboard-layout">
+                    <div class="dashboard-row">
+                        <div class="widget">
+                            <div class="widget-title">Users</div>
+                            <div class="widget-value">12.4K</div>
+                        </div>
+                        <div class="widget">
+                            <div class="widget-title">Sessions</div>
+                            <div class="widget-value">45.2K</div>
+                        </div>
+                        <div class="widget">
+                            <div class="widget-title">Revenue</div>
+                            <div class="widget-value">$124K</div>
+                        </div>
+                        <div class="widget">
+                            <div class="widget-title">Growth</div>
+                            <div class="widget-value">+8.2%</div>
+                        </div>
+                        <div class="widget">
+                            <div class="widget-title">Conversion</div>
+                            <div class="widget-value">3.24%</div>
+                        </div>
+                        <div class="widget">
+                            <div class="widget-title">Bounce</div>
+                            <div class="widget-value">32.1%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Why Subgrid:</strong> Widgets align perfectly with dashboard columns. Symmetrical, professional appearance.
+            </div>
+        </div>
+
+        <!-- Example 5: Article with Sidebar (Subgrid Columns) -->
+        <div class="example">
+            <div class="example-title">5. Article Layout (Column Subgrid)</div>
+            <div class="example-description">
+                Article content with sidebar. Article content uses column subgrid to inherit parent columns. Sections stay aligned.
+            </div>
+            <div class="example-code">
+                .article-layout { display: grid; grid-template-columns: 1fr 250px; }<br>
+                .article-content { display: subgrid; grid-template-columns: subgrid; }
+            </div>
+            <div class="demo-container">
+                <div class="article-layout">
+                    <div class="article-content">
+                        <div class="article-section">
+                            <h4>Introduction</h4>
+                            <p>Subgrid allows nested grids to inherit parent track definitions. This enables perfect alignment of content across multiple nested grid levels.</p>
+                        </div>
+                        <div class="article-section">
+                            <h4>Key Benefits</h4>
+                            <p>Perfect alignment, cleaner CSS, responsive synchronization, and flexible nesting. Subgrid is powerful for complex multi-level layouts.</p>
+                        </div>
+                        <div class="article-section">
+                            <h4>Use Cases</h4>
+                            <p>Data tables, forms, dashboards, articles with sidebars, and any layout where vertical alignment across rows matters.</p>
+                        </div>
+                    </div>
+                    <div class="sidebar-widget">
+                        <h5>📌 Related</h5>
+                        <div class="sidebar-item">• CSS Grid Basics</div>
+                        <div class="sidebar-item">• Auto-Fit & Auto-Fill</div>
+                        <div class="sidebar-item">• Grid Alignment</div>
+                        <div class="sidebar-item">• Responsive Design</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Why Column Subgrid:</strong> Article sections inherit parent columns. Sidebar stays separate. Perfect for article pages.
+            </div>
+        </div>
+
+        <!-- Example 6: Advanced Card Layout -->
+        <div class="example">
+            <div class="example-title">6. Advanced Cards (Nested Grid Layout)</div>
+            <div class="example-description">
+                Cards with complex internal structure. Each card is a traditional nested grid with header, body (2 grid items), and footer.
+            </div>
+            <div class="example-code">
+                .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }<br>
+                .advanced-card { display: grid; grid-template-rows: 100px auto 60px; }<br>
+                .card-body { display: grid; grid-template-rows: auto auto; }
+            </div>
+            <div class="demo-container">
+                <div class="card-grid">
+                    <div class="advanced-card">
+                        <div class="card-header">🎨</div>
+                        <div class="card-body">
+                            <div class="card-title">Design</div>
+                            <div class="card-text">Beautiful interface design patterns and techniques.</div>
+                        </div>
+                        <div class="card-footer">Learn More</div>
+                    </div>
+                    <div class="advanced-card">
+                        <div class="card-header">⚙️</div>
+                        <div class="card-body">
+                            <div class="card-title">System</div>
+                            <div class="card-text">Build scalable systems and architecture patterns.</div>
+                        </div>
+                        <div class="card-footer">Learn More</div>
+                    </div>
+                    <div class="advanced-card">
+                        <div class="card-header">🚀</div>
+                        <div class="card-body">
+                            <div class="card-title">Performance</div>
+                            <div class="card-text">Optimize and improve application performance.</div>
+                        </div>
+                        <div class="card-footer">Learn More</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Traditional nesting with multiple levels. Perfect for feature cards, service offerings.
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="example" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="example-title" style="color: white;">Decision Guide & Best Practices</div>
+            <div style="margin-top: 20px;">
+                <p><strong>Traditional Nesting (display: grid):</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Independent nested structures</li>
+                    <li>Each nested grid has own columns/rows</li>
+                    <li>Perfect for cards, components</li>
+                    <li>Works in all modern browsers</li>
+                </ul>
+                <p><strong>Subgrid (display: subgrid):</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Inherits parent grid tracks</li>
+                    <li>Perfect column/row alignment</li>
+                    <li>Ideal for data tables, forms</li>
+                    <li>Newer feature (check browser support)</li>
+                </ul>
+                <p><strong>Common Combinations:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Subgrid at top level → Traditional nesting for components</li>
+                    <li>Data table with subgrid rows → Perfect alignment</li>
+                    <li>Form with subgrid fields → Professional layout</li>
+                    <li>Cards with nested grids → Flexible components</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

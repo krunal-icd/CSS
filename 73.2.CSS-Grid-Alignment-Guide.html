@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Items Alignment Properties - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .example-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .example-code {
+            background: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        .demo-container {
+            border: 2px dashed #667eea;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+
+        .quick-ref {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .quick-ref strong {
+            color: #667eea;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        /* Example 1: Centered Cards */
+        .centered-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            grid-template-rows: repeat(2, 150px);
+            gap: 15px;
+            place-items: center;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Example 2: Start Aligned */
+        .start-aligned {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            grid-template-rows: repeat(2, 150px);
+            gap: 15px;
+            place-items: start;
+        }
+
+        /* Example 3: End Aligned */
+        .end-aligned {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            grid-template-rows: repeat(2, 150px);
+            gap: 15px;
+            place-items: end;
+        }
+
+        /* Example 4: Stretch */
+        .stretch-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 120px);
+            gap: 15px;
+            place-items: stretch;
+        }
+
+        .stretch-item {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Example 5: Mixed Alignment */
+        .mixed-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            grid-template-rows: repeat(2, 150px);
+            gap: 15px;
+            place-items: center;
+        }
+
+        .mixed-grid .item-special {
+            justify-self: start;
+            align-self: start;
+        }
+
+        .mixed-grid .item-special2 {
+            justify-self: end;
+            align-self: end;
+        }
+
+        /* Example 6: Content Centering */
+        .content-centered {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: 200px 200px;
+            gap: 15px;
+            place-content: center;
+            min-height: 500px;
+            border: 2px solid #ddd;
+        }
+
+        .content-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Example 7: Hero Section */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 300px;
+            gap: 0;
+            place-items: stretch;
+        }
+
+        .hero-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .hero-item h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        /* Example 8: Dashboard Layout */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 120px;
+            gap: 15px;
+            place-items: center;
+        }
+
+        .dashboard-item {
+            background: white;
+            border: 2px solid #667eea;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .dashboard-item .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .dashboard-item .label {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Example 9: Card Grid with Vertical Centering */
+        .vertical-centered-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 200px;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .tall-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .tall-card h4 {
+            margin-bottom: 10px;
+        }
+
+        .tall-card p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Example 10: Sidebar with Aligned Content */
+        .sidebar-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+            min-height: 400px;
+        }
+
+        .sidebar {
+            grid-row: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            place-self: start stretch;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 15px;
+        }
+
+        .sidebar-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+
+        .sidebar-item:last-child {
+            border-bottom: none;
+        }
+
+        .main-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            place-self: start stretch;
+        }
+
+        .side-widget {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            place-self: end stretch;
+        }
+
+        /* Example 11: Icon Grid */
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 100px);
+            gap: 15px;
+            place-items: center;
+        }
+
+        .icon-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .icon-item:hover {
+            transform: scale(1.1);
+        }
+
+        /* Example 12: Baseline Alignment */
+        .baseline-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 80px;
+            gap: 15px;
+            align-items: baseline;
+            padding: 20px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .baseline-item {
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .baseline-item.large {
+            font-size: 1.8em;
+        }
+
+        .baseline-item.small {
+            font-size: 0.8em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .centered-cards,
+            .start-aligned,
+            .end-aligned {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-layout {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .icon-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .baseline-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Items Alignment Properties</h1>
+            <p>Practical Examples & Real-World Implementations</p>
+        </header>
+
+        <!-- Example 1: Centered Cards -->
+        <div class="example">
+            <div class="example-title">1. Centered Cards (place-items: center)</div>
+            <div class="example-description">
+                All cards centered both horizontally and vertically within their grid cells. Perfect for icon cards, feature boxes, and centered content.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(3, 150px);<br>
+                grid-template-rows: repeat(2, 150px);<br>
+                place-items: center; /* Centers all items in their cells */
+            </div>
+            <div class="demo-container">
+                <div class="centered-cards">
+                    <div class="card">1</div>
+                    <div class="card">2</div>
+                    <div class="card">3</div>
+                    <div class="card">4</div>
+                    <div class="card">5</div>
+                    <div class="card">6</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Icon grids, badge displays, centered content cards, button matrices
+            </div>
+        </div>
+
+        <!-- Example 2: Start Aligned -->
+        <div class="example">
+            <div class="example-title">2. Start Aligned (place-items: start)</div>
+            <div class="example-description">
+                All items aligned to the start (top-left) of their cells. Useful for label-style content and left-aligned layouts.
+            </div>
+            <div class="example-code">
+                place-items: start; /* Items at start of cells */
+            </div>
+            <div class="demo-container">
+                <div class="start-aligned">
+                    <div class="card">A</div>
+                    <div class="card">B</div>
+                    <div class="card">C</div>
+                    <div class="card">D</div>
+                    <div class="card">E</div>
+                    <div class="card">F</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Data tables, label grids, form layouts, content that shouldn't stretch
+            </div>
+        </div>
+
+        <!-- Example 3: End Aligned -->
+        <div class="example">
+            <div class="example-title">3. End Aligned (place-items: end)</div>
+            <div class="example-description">
+                All items aligned to the end (bottom-right) of their cells. Less common but useful for specific design layouts.
+            </div>
+            <div class="example-code">
+                place-items: end; /* Items at end of cells */
+            </div>
+            <div class="demo-container">
+                <div class="end-aligned">
+                    <div class="card">A</div>
+                    <div class="card">B</div>
+                    <div class="card">C</div>
+                    <div class="card">D</div>
+                    <div class="card">E</div>
+                    <div class="card">F</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Bottom-aligned badges, right-aligned content, pricing displays
+            </div>
+        </div>
+
+        <!-- Example 4: Stretch (Full Height) -->
+        <div class="example">
+            <div class="example-title">4. Stretch Items (place-items: stretch)</div>
+            <div class="example-description">
+                Items stretch to fill entire cells both horizontally and vertically. Perfect for equal-height cards, full-height layouts, hero sections.
+            </div>
+            <div class="example-code">
+                place-items: stretch; /* Items fill entire cell */
+            </div>
+            <div class="demo-container">
+                <div class="stretch-grid">
+                    <div class="stretch-item">Card 1</div>
+                    <div class="stretch-item">Card 2</div>
+                    <div class="stretch-item">Card 3</div>
+                    <div class="stretch-item">Card 4</div>
+                    <div class="stretch-item">Card 5</div>
+                    <div class="stretch-item">Card 6</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Equal-height cards, gallery layouts, full-height tiles, responsive backgrounds
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> Stretch is the default value for align-items and justify-items. Remove explicit sizing on items for automatic fill behavior.
+            </div>
+        </div>
+
+        <!-- Example 5: Mixed Alignment -->
+        <div class="example">
+            <div class="example-title">5. Mixed Alignment (Using place-self)</div>
+            <div class="example-description">
+                Default center alignment for most items, but specific items override with place-self for different positioning.
+            </div>
+            <div class="example-code">
+                place-items: center; /* Default: center all */<br>
+                .item-special { place-self: start; /* Override for one item */ }<br>
+                .item-special2 { place-self: end; /* Override for another */ }
+            </div>
+            <div class="demo-container">
+                <div class="mixed-grid">
+                    <div class="card">Center</div>
+                    <div class="card">Center</div>
+                    <div class="card item-special">Start</div>
+                    <div class="card">Center</div>
+                    <div class="card item-special2">End</div>
+                    <div class="card">Center</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Layouts where most items align the same but a few need exceptions, mixed content grids
+            </div>
+        </div>
+
+        <!-- Example 6: Content Centering -->
+        <div class="example">
+            <div class="example-title">6. Center Grid in Container (place-content: center)</div>
+            <div class="example-description">
+                The entire grid is centered within its container. Different from place-items which centers items within cells.
+            </div>
+            <div class="example-code">
+                place-content: center; /* Center entire grid in container */<br>
+                min-height: 500px; /* Container needs height */
+            </div>
+            <div class="demo-container">
+                <div class="content-centered">
+                    <div class="content-card">Grid Item 1</div>
+                    <div class="content-card">Grid Item 2</div>
+                    <div class="content-card">Grid Item 3</div>
+                    <div class="content-card">Grid Item 4</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Centering grids in full-screen layouts, hero sections, centered dashboard layouts
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> place-content is different from place-items. Use place-content to position the entire grid in its container; use place-items to position items within cells.
+            </div>
+        </div>
+
+        <!-- Example 7: Hero Section -->
+        <div class="example">
+            <div class="example-title">7. Hero Section (Full-Height Stretch)</div>
+            <div class="example-description">
+                Single item stretched to fill entire hero cell. Perfect for background images, video covers, full-height hero sections.
+            </div>
+            <div class="example-code">
+                place-items: stretch; /* Item fills entire cell */<br>
+                grid-template-rows: 300px;
+            </div>
+            <div class="demo-container">
+                <div class="hero-section">
+                    <div class="hero-item">
+                        <h3>Welcome to Our Site</h3>
+                        <p>This hero section stretches to fill the entire grid cell</p>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Website hero sections, full-width image overlays, background covers
+            </div>
+        </div>
+
+        <!-- Example 8: Dashboard with Centered Values -->
+        <div class="example">
+            <div class="example-title">8. Dashboard Metrics (Centered with align-items: center)</div>
+            <div class="example-description">
+                Metric cards with values centered in their cells. Values are displayed at the center of each card.
+            </div>
+            <div class="example-code">
+                grid-template-columns: repeat(4, 1fr);<br>
+                place-items: center; /* Center all metric cards */
+            </div>
+            <div class="demo-container">
+                <div class="dashboard-layout">
+                    <div class="dashboard-item">
+                        <div class="value">12,458</div>
+                        <div class="label">Users</div>
+                    </div>
+                    <div class="dashboard-item">
+                        <div class="value">$45.2K</div>
+                        <div class="label">Revenue</div>
+                    </div>
+                    <div class="dashboard-item">
+                        <div class="value">+8.2%</div>
+                        <div class="label">Growth</div>
+                    </div>
+                    <div class="dashboard-item">
+                        <div class="value">3.24%</div>
+                        <div class="label">Conv Rate</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Analytics dashboards, metric displays, KPI cards, business intelligence panels
+            </div>
+        </div>
+
+        <!-- Example 9: Vertical Centering with Content Variation -->
+        <div class="example">
+            <div class="example-title">9. Vertically Centered Cards (align-items: center)</div>
+            <div class="example-description">
+                Cards with varying text lengths vertically centered. All cards stay in the middle vertically despite different content heights.
+            </div>
+            <div class="example-code">
+                align-items: center; /* Vertically center all items */<br>
+                grid-auto-rows: 200px;
+            </div>
+            <div class="demo-container">
+                <div class="vertical-centered-cards">
+                    <div class="tall-card">
+                        <h4>Short</h4>
+                        <p>Brief text</p>
+                    </div>
+                    <div class="tall-card">
+                        <h4>Medium Content</h4>
+                        <p>This card has more text that spans multiple lines</p>
+                    </div>
+                    <div class="tall-card">
+                        <h4>Longer Text</h4>
+                        <p>This card has significantly more content. It demonstrates how vertical centering works with varying text lengths without forcing uniform heights.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Blog post cards, article previews, testimonials, variable-length content cards
+            </div>
+        </div>
+
+        <!-- Example 10: Sidebar Layout with Mixed Alignment -->
+        <div class="example">
+            <div class="example-title">10. Sidebar Layout (Using place-self for Different Items)</div>
+            <div class="example-description">
+                Sidebar stretches full height. Main content at top. Side widget at bottom. Each element positioned with different alignment.
+            </div>
+            <div class="example-code">
+                grid-template-columns: 200px 1fr;<br>
+                .sidebar { place-self: start stretch; /* Top, full height */ }<br>
+                .main-content { place-self: start stretch; /* Top, full width */ }<br>
+                .side-widget { place-self: end stretch; /* Bottom, full width */ }
+            </div>
+            <div class="demo-container">
+                <div class="sidebar-layout">
+                    <div class="sidebar">
+                        <h3>Navigation</h3>
+                        <div class="sidebar-item">🏠 Home</div>
+                        <div class="sidebar-item">📊 Analytics</div>
+                        <div class="sidebar-item">👥 Users</div>
+                        <div class="sidebar-item">⚙️ Settings</div>
+                    </div>
+                    <div class="main-content">
+                        <h4>Main Content Area</h4>
+                        <p>This is the primary content section aligned at the top. The sidebar on the left uses place-self: start stretch to span full height.</p>
+                    </div>
+                    <div class="side-widget">
+                        <h4>Additional Widget</h4>
+                        <p>This widget is positioned at the bottom using place-self: end stretch.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Admin dashboards, blog layouts, documentation sites, complex page layouts
+            </div>
+        </div>
+
+        <!-- Example 11: Icon Grid -->
+        <div class="example">
+            <div class="example-title">11. Icon Grid (Centered Icons)</div>
+            <div class="example-description">
+                Icons perfectly centered in grid cells. Clean layout for feature icons, social links, or action buttons.
+            </div>
+            <div class="example-code">
+                place-items: center; /* Center all icons */<br>
+                grid-template-columns: repeat(4, 1fr);
+            </div>
+            <div class="demo-container">
+                <div class="icon-grid">
+                    <div class="icon-item">🎨</div>
+                    <div class="icon-item">📱</div>
+                    <div class="icon-item">🚀</div>
+                    <div class="icon-item">💡</div>
+                    <div class="icon-item">🎯</div>
+                    <div class="icon-item">⚡</div>
+                    <div class="icon-item">🔒</div>
+                    <div class="icon-item">✨</div>
+                    <div class="icon-item">🌟</div>
+                    <div class="icon-item">📈</div>
+                    <div class="icon-item">🎁</div>
+                    <div class="icon-item">🔥</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Feature showcase icons, service icons, social media links, action buttons
+            </div>
+        </div>
+
+        <!-- Example 12: Baseline Alignment -->
+        <div class="example">
+            <div class="example-title">12. Baseline Alignment (align-items: baseline)</div>
+            <div class="example-description">
+                Items aligned by their text baseline. Useful for text-heavy grids where alignment by top edge looks uneven.
+            </div>
+            <div class="example-code">
+                align-items: baseline; /* Align by text baseline */<br>
+                /* Good for mixed font sizes */
+            </div>
+            <div class="demo-container">
+                <div class="baseline-grid">
+                    <div class="baseline-item">Text</div>
+                    <div class="baseline-item large">Large</div>
+                    <div class="baseline-item small">Small</div>
+                    <div class="baseline-item">Normal</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Text-based grids with mixed font sizes, menu items with different text sizes, typography grids
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> Baseline alignment looks more professional for text-heavy content. Notice how text aligns on the baseline rather than the top of cells.
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="example" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="example-title" style="color: white;">Quick Reference & Best Practices</div>
+            <div style="margin-top: 20px;">
+                <p><strong>Common Alignment Combinations:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li><strong>place-items: center</strong> — Center all items (most common)</li>
+                    <li><strong>place-items: stretch</strong> — Full-height equal items (default)</li>
+                    <li><strong>place-items: start</strong> — All items top-left</li>
+                    <li><strong>place-items: end</strong> — All items bottom-right</li>
+                    <li><strong>place-content: center</strong> — Center entire grid in container</li>
+                </ul>
+                <p><strong>When to Override with place-self:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Most items follow default, but one or two need different alignment</li>
+                    <li>Sidebar spans full height while content aligns differently</li>
+                    <li>Hero sections and banners that need special positioning</li>
+                    <li>Footer items aligned to bottom while header at top</li>
+                </ul>
+                <p><strong>Performance Tips:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Use align-items: stretch for equal-height cards (simpler than explicit heights)</li>
+                    <li>Combine place-items with gap for consistent spacing</li>
+                    <li>Test alignment across different screen sizes</li>
+                    <li>Use browser DevTools to verify grid alignment visually</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

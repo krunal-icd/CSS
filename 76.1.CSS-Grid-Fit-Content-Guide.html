@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Fit-Content Property</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .subsection {
+            margin-bottom: 30px;
+        }
+
+        .subsection-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .subsection-title:first-child {
+            margin-top: 0;
+        }
+
+        .concept-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .concept-box strong {
+            color: #667eea;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .keyword { color: #ff79c6; }
+        .property { color: #8be9fd; }
+        .value { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        .visual-diagram {
+            background: #f9f9f9;
+            border: 2px solid #eee;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #004085;
+        }
+
+        .note strong {
+            color: #667eea;
+        }
+
+        .best-practices {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #155724;
+        }
+
+        .best-practices strong {
+            color: #155724;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .formula-box {
+            background: #f0f4ff;
+            border: 2px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            font-size: 0.95em;
+        }
+
+        .highlight-box {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box strong {
+            color: #ff9800;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Fit-Content Property</h1>
+            <p>Size columns/rows to fit content with maximum constraints</p>
+        </header>
+
+        <!-- Section 1: Core Concept -->
+        <div class="section">
+            <div class="section-title">Understanding fit-content()</div>
+
+            <div class="subsection">
+                <div class="subsection-title">What is fit-content()?</div>
+                <div class="highlight-box">
+                    <strong>fit-content():</strong> A sizing function that sizes a track (column or row) based on its content, but respects a maximum limit. The track grows only as large as its content allows, up to the specified maximum.
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">The Formula</div>
+                <div class="formula-box">
+fit-content(max-size) = min(content-size, max-size)
+
+Meaning: Use the smaller of:
+  • The natural size needed for content
+  • The maximum size you specify
+
+Examples:
+  fit-content(200px)   → Grow to fit content, max 200px
+  fit-content(50%)     → Grow to fit content, max 50% of container
+  fit-content(20em)    → Grow to fit content, max 20em
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Key Characteristics</div>
+                <ul>
+                    <li><strong>Intrinsic Sizing:</strong> Sizes based on content first</li>
+                    <li><strong>Maximum Constraint:</strong> Won't exceed the max size you specify</li>
+                    <li><strong>Flexible:</strong> Can be smaller than max if content is smaller</li>
+                    <li><strong>Responsive:</strong> Adapts to content changes automatically</li>
+                    <li><strong>Works with units:</strong> px, %, em, rem, etc.</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Visual Explanation</div>
+                <div class="visual-diagram">fit-content(200px) with different content:
+
+Short text ("Hi"):
+┌────────┐
+│ Hi     │  ← Grows only to 35px (content size)
+└────────┘
+
+Medium text ("Hello World"):
+┌──────────────────┐
+│ Hello World      │  ← Grows to 115px (content size)
+└──────────────────┘
+
+Long text ("This is very long text..."):
+┌──────────────────────────┐
+│ This is very long tex...  │  ← Capped at 200px (max-size)
+│ t that won't fit          │     Text wraps, height grows
+└──────────────────────────┘
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: fit-content vs Similar Properties -->
+        <div class="section">
+            <div class="section-title">fit-content() vs auto vs minmax()</div>
+
+            <div class="subsection">
+                <div class="subsection-title">The Three Sizing Methods</div>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Sizing Behavior</th>
+                            <th>Min Size</th>
+                            <th>Max Size</th>
+                            <th>Best For</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>auto</strong></td>
+                            <td>Fits content exactly</td>
+                            <td>Content size</td>
+                            <td>Content size</td>
+                            <td>Columns that should be exact size of content</td>
+                        </tr>
+                        <tr>
+                            <td><strong>fit-content(200px)</strong></td>
+                            <td>Fits content up to max</td>
+                            <td>Content size</td>
+                            <td>200px</td>
+                            <td>Content with a maximum limit</td>
+                        </tr>
+                        <tr>
+                            <td><strong>minmax(100px, 1fr)</strong></td>
+                            <td>Grows to fill space</td>
+                            <td>100px</td>
+                            <td>Available space</td>
+                            <td>Flexible columns that grow</td>
+                        </tr>
+                        <tr>
+                            <td><strong>1fr</strong></td>
+                            <td>Fills all available space</td>
+                            <td>Share of space</td>
+                            <td>All space</td>
+                            <td>Equal-width flexible columns</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Visual Comparison</div>
+                <div class="visual-diagram">4 columns, each with "Short", "Medium Content", "Very Long Content Here"
+
+auto (exact content):
+┌────┬─────────┬──────────────────────┐
+│ S  │ MC      │ VLCH                 │
+└────┴─────────┴──────────────────────┘
+
+fit-content(150px) (content + max):
+┌────┬─────────┬────────────────┬────┐
+│ S  │ MC      │ VLCH (wrapped) │    │
+└────┴─────────┴────────────────┴────┘
+
+minmax(80px, 1fr) (flexible):
+┌──────────┬──────────┬──────────┬──────────┐
+│ S        │ MC       │ VLCH     │ (empty)  │
+└──────────┴──────────┴──────────┴──────────┘
+(All equal width, fill space)
+
+1fr (equal fill):
+┌──────────┬──────────┬──────────┬──────────┐
+│ S        │ MC       │ VLCH     │ (empty)  │
+└──────────┴──────────┴──────────┴──────────┘
+(Same as minmax but 0 minimum)
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Syntax & Usage -->
+        <div class="section">
+            <div class="section-title">Syntax & Usage Patterns</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Basic Syntax</div>
+                <div class="code-block">
+<span class="comment">/* Single column with fit-content */</span>
+<span class="keyword">.grid</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">fit-content(200px)</span>;
+}
+
+<span class="comment">/* Multiple columns mixed */</span>
+<span class="keyword">.grid</span> {
+  <span class="property">grid-template-columns</span>: 
+    <span class="value">fit-content(150px)</span> 
+    <span class="value">1fr</span> 
+    <span class="value">fit-content(200px)</span>;
+}
+
+<span class="comment">/* For rows */</span>
+<span class="keyword">.grid</span> {
+  <span class="property">grid-template-rows</span>: <span class="value">fit-content(100px)</span> <span class="value">1fr</span>;
+}
+
+<span class="comment">/* With repeat() - NOT allowed */</span>
+<span class="comment">/* fit-content doesn't work with repeat() */</span>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Common Patterns</div>
+                <div class="code-block">
+<span class="comment">/* Sidebar + Content layout */</span>
+<span class="keyword">.layout</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">fit-content(300px) 1fr</span>;
+  <span class="comment">/* Sidebar grows to content, max 300px */</span>
+  <span class="comment">/* Content gets remaining space */</span>
+}
+
+<span class="comment">/* Header + Main + Footer */</span>
+<span class="keyword">.page</span> {
+  <span class="property">grid-template-rows</span>: 
+    <span class="value">fit-content(80px)</span> 
+    <span class="value">1fr</span> 
+    <span class="value">fit-content(60px)</span>;
+  <span class="comment">/* Header: content-based, max 80px */</span>
+  <span class="comment">/* Main: fills remaining height */</span>
+  <span class="comment">/* Footer: content-based, max 60px */</span>
+}
+
+<span class="comment">/* Sidebar + Content + Sidebar */</span>
+<span class="keyword">.three-column</span> {
+  <span class="property">grid-template-columns</span>: 
+    <span class="value">fit-content(250px)</span> 
+    <span class="value">1fr</span> 
+    <span class="value">fit-content(300px)</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Key Differences -->
+        <div class="section">
+            <div class="section-title">Key Differences from Similar Properties</div>
+
+            <div class="subsection">
+                <div class="subsection-title">fit-content() vs auto</div>
+                <div class="concept-box">
+                    <strong>auto:</strong> Grows to fit content exactly. No maximum limit. Content can be any size.
+                </div>
+                <div class="concept-box">
+                    <strong>fit-content(max):</strong> Grows to fit content but respects maximum. Won't exceed the max-size you specify.
+                </div>
+                <div class="code-block">
+<span class="comment">/* With "This is very long text..." */</span>
+
+<span class="keyword">.grid-auto</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">auto 1fr</span>;
+}
+<span class="comment">/* Column 1: 250px (full text width) */</span>
+
+<span class="keyword">.grid-fitcontent</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">fit-content(150px) 1fr</span>;
+}
+<span class="comment">/* Column 1: 150px (capped), text wraps */</span>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">fit-content() vs minmax()</div>
+                <div class="concept-box">
+                    <strong>minmax(min, max):</strong> Has both minimum and maximum. Grows to fill available space if larger than content.
+                </div>
+                <div class="concept-box">
+                    <strong>fit-content(max):</strong> No minimum. Only grows as much as content needs, up to max.
+                </div>
+                <div class="code-block">
+<span class="comment">/* With "Hi" and container 400px wide */</span>
+
+<span class="keyword">.grid-minmax</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">minmax(100px, 1fr)</span>;
+}
+<span class="comment">/* Column: 400px (fills space, minimum 100px) */</span>
+
+<span class="keyword">.grid-fitcontent</span> {
+  <span class="property">grid-template-columns</span>: <span class="value">fit-content(400px)</span>;
+}
+<span class="comment">/* Column: ~35px (content size "Hi") */</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Real-World Scenarios -->
+        <div class="section">
+            <div class="section-title">Real-World Use Cases</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 1: Responsive Sidebar Navigation</div>
+                <div class="concept-box">
+                    Sidebar should grow with navigation items but never exceed 300px. Content takes remaining space.
+                </div>
+                <div class="code-block">
+<span class="keyword">.layout</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">fit-content(300px) 1fr</span>;
+  <span class="property">height</span>: <span class="value">100vh</span>;
+}
+
+<span class="keyword">aside</span> { <span class="comment">/* Sidebar */</span> }
+<span class="keyword">main</span> { <span class="comment">/* Content area */</span> }
+                </div>
+                <div class="note">
+                    <strong>Why fit-content:</strong> Navigation width varies, but shouldn't take more than 300px. Perfect use case for fit-content(300px).
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 2: Three-Column Dashboard</div>
+                <div class="concept-box">
+                    Left sidebar (actions), main content (grows), right sidebar (widgets). Both sidebars should fit content with max limits.
+                </div>
+                <div class="code-block">
+<span class="keyword">.dashboard</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: 
+    <span class="value">fit-content(200px)</span> 
+    <span class="value">1fr</span> 
+    <span class="value">fit-content(250px)</span>;
+}
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 3: Blog Post with Sidebar</div>
+                <div class="concept-box">
+                    Post content fills main area. Sidebar with metadata/tags stays compact with max width.
+                </div>
+                <div class="code-block">
+<span class="keyword">.post-layout</span> {
+  <span class="property">grid-template-columns</span>: 
+    <span class="value">1fr</span> 
+    <span class="value">fit-content(280px)</span>;
+  <span class="property">gap</span>: <span class="value">20px</span>;
+}
+
+<span class="comment">/* Sidebar content never wider than 280px */</span>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Scenario 4: Page Layout (Header/Footer/Main)</div>
+                <div class="concept-box">
+                    Header and footer fit their content with max heights. Main area fills remaining space.
+                </div>
+                <div class="code-block">
+<span class="keyword">.page</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-rows</span>: 
+    <span class="value">fit-content(100px)</span> 
+    <span class="value">1fr</span> 
+    <span class="value">fit-content(80px)</span>;
+  <span class="property">height</span>: <span class="value">100vh</span>;
+}
+
+<span class="keyword">header</span> { <span class="comment">/* Content-sized, max 100px */</span> }
+<span class="keyword">main</span> { <span class="comment">/* Fills remaining height */</span> }
+<span class="keyword">footer</span> { <span class="comment">/* Content-sized, max 80px */</span> }
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Browser Support -->
+        <div class="section">
+            <div class="section-title">Browser Support & Compatibility</div>
+
+            <div class="subsection">
+                <div class="subsection-title">Excellent Support</div>
+                <div class="best-practices">
+                    <strong>✓ Supported in:</strong> All modern browsers (Chrome 46+, Firefox 52+, Safari 10.1+, Edge 16+)
+                </div>
+                <div class="best-practices">
+                    <strong>✓ Safe to use:</strong> For modern web development. No polyfills needed.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Best Practices -->
+        <div class="section">
+            <div class="section-title">Best Practices & Tips</div>
+
+            <div class="subsection">
+                <div class="subsection-title">✓ Do's</div>
+                <ul>
+                    <li><strong>Use for sidebars:</strong> fit-content(300px) for sidebars that grow with content but have limits</li>
+                    <li><strong>Use for headers/footers:</strong> fit-content(100px) for rows that grow with content but cap at height</li>
+                    <li><strong>Set reasonable max-sizes:</strong> Choose max values that make sense for your design</li>
+                    <li><strong>Combine with 1fr:</strong> Pair fit-content with 1fr for main content areas</li>
+                    <li><strong>Use with gap:</strong> Gap doesn't affect fit-content sizing</li>
+                    <li><strong>Test responsive behavior:</strong> See how content changes affect sizing</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">✗ Don'ts</div>
+                <ul>
+                    <li><strong>Don't use with repeat():</strong> fit-content() doesn't work inside repeat()</li>
+                    <li><strong>Don't set max-size too small:</strong> If max is smaller than minimum content, content will overflow</li>
+                    <li><strong>Don't forget to specify units:</strong> fit-content(300) won't work, must be fit-content(300px)</li>
+                    <li><strong>Don't use for all columns:</strong> If all columns are fit-content, nothing fills remaining space</li>
+                    <li><strong>Don't expect it to wrap automatically:</strong> fit-content constrains width but doesn't add text wrapping</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Pro Tips</div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 1:</strong> Use fit-content(200px) instead of auto for columns that need a reasonable maximum. Prevents layout breakage.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 2:</strong> fit-content works great with CSS Custom Properties: grid-template-columns: fit-content(var(--sidebar-width)) 1fr
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 3:</strong> Combine fit-content with @media queries for responsive max-sizes at different breakpoints.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 4:</strong> Use fit-content(50%) for columns that should fit content but never exceed half the container width.
+                </div>
+                <div class="pro-tip">
+                    <strong>💡 Tip 5:</strong> fit-content is perfect for collapsible sidebars that expand/collapse based on content.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Summary -->
+        <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="section-title" style="color: white; border-bottom-color: white;">Quick Reference</div>
+            <div style="margin-top: 20px; line-height: 1.8;">
+                <p><strong>fit-content(max-size)</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Sizes based on content, respects maximum</li>
+                    <li>Formula: min(content-size, max-size)</li>
+                    <li>Perfect for sidebars, headers, footers</li>
+                    <li>Doesn't fill remaining space (need 1fr for that)</li>
+                </ul>
+                <p><strong>Common Syntax:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>grid-template-columns: fit-content(300px) 1fr;</li>
+                    <li>grid-template-rows: fit-content(100px) 1fr fit-content(80px);</li>
+                    <li>Supports: px, %, em, rem, ch, vw, etc.</li>
+                </ul>
+                <p><strong>When to Use:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Sidebars with variable width but max limit</li>
+                    <li>Headers/footers with variable height but max cap</li>
+                    <li>Navigation bars that grow with items</li>
+                    <li>Three-column layouts (sidebar + content + sidebar)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

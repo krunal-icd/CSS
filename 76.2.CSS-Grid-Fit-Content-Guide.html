@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Fit-Content Property - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .example-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .example-code {
+            background: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        .demo-container {
+            border: 2px dashed #667eea;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+
+        .quick-ref {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .quick-ref strong {
+            color: #667eea;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        /* Example 1: Sidebar + Content */
+        .sidebar-layout {
+            display: grid;
+            grid-template-columns: fit-content(300px) 1fr;
+            gap: 20px;
+            min-height: 300px;
+        }
+
+        .sidebar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .nav-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            cursor: pointer;
+        }
+
+        .nav-item:last-child {
+            border-bottom: none;
+        }
+
+        .main-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .main-content h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .main-content p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Example 2: Three Column */
+        .three-column {
+            display: grid;
+            grid-template-columns: fit-content(200px) 1fr fit-content(250px);
+            gap: 15px;
+            min-height: 250px;
+        }
+
+        .left-panel, .right-panel {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .center-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .panel-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        /* Example 3: Header/Footer */
+        .page-layout {
+            display: grid;
+            grid-template-rows: fit-content(100px) 1fr fit-content(80px);
+            gap: 15px;
+            min-height: 400px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header h2 {
+            font-size: 1.5em;
+        }
+
+        .main-area {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+            color: #666;
+        }
+
+        /* Example 4: Blog Layout */
+        .blog-layout {
+            display: grid;
+            grid-template-columns: 1fr fit-content(280px);
+            gap: 20px;
+            min-height: 300px;
+        }
+
+        .blog-post {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .blog-post h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .blog-post p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-widget {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .widget-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 10px;
+        }
+
+        .widget-item {
+            padding: 8px 0;
+            font-size: 0.9em;
+        }
+
+        /* Example 5: With Variable Content */
+        .variable-content {
+            display: grid;
+            grid-template-columns: fit-content(200px) 1fr;
+            gap: 15px;
+            min-height: 200px;
+        }
+
+        .sidebar-short {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .content-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        /* Example 6: Responsive Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: fit-content(250px) 1fr;
+            gap: 20px;
+            min-height: 350px;
+        }
+
+        .dashboard-sidebar {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 20px;
+        }
+
+        .dashboard-main {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 20px;
+        }
+
+        .dashboard-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .dashboard-item:hover {
+            background: #e0e0e0;
+        }
+
+        .comparison-note {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        .comparison-note strong {
+            color: #ff9800;
+        }
+
+        .resize-note {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #1565c0;
+        }
+
+        .resize-note strong {
+            color: #1565c0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .sidebar-layout,
+            .three-column,
+            .blog-layout,
+            .variable-content,
+            .dashboard {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .page-layout {
+                grid-template-rows: auto 1fr auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Fit-Content Property</h1>
+            <p>Practical Examples & Real-World Implementations</p>
+        </header>
+
+        <!-- Example 1: Sidebar + Content -->
+        <div class="example">
+            <div class="example-title">1. Responsive Sidebar Navigation</div>
+            <div class="example-description">
+                Sidebar grows with content but never exceeds 300px. Navigation items can vary in width; main content always takes remaining space.
+            </div>
+            <div class="example-code">
+                grid-template-columns: fit-content(300px) 1fr;<br>
+                gap: 20px;
+            </div>
+            <div class="demo-container">
+                <div class="sidebar-layout">
+                    <div class="sidebar">
+                        <h3>Navigation</h3>
+                        <div class="nav-item">Dashboard</div>
+                        <div class="nav-item">Analytics</div>
+                        <div class="nav-item">Reports</div>
+                        <div class="nav-item">Settings</div>
+                    </div>
+                    <div class="main-content">
+                        <h3>Main Content</h3>
+                        <p>This area takes up all remaining space. The sidebar on the left grows to fit its navigation items but never exceeds 300px. This is the perfect use case for fit-content().</p>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Why fit-content:</strong> Navigation width is variable (different item lengths), but we want to limit it to 300px maximum for design consistency.
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> This pattern is perfect for collapsible sidebars. Expand/collapse the content, fit-content handles the sizing automatically.
+            </div>
+        </div>
+
+        <!-- Example 2: Three Column Layout -->
+        <div class="example">
+            <div class="example-title">2. Three-Column Dashboard Layout</div>
+            <div class="example-description">
+                Left panel (200px max), center content (fills), right panel (250px max). Both sidebars fit their content with explicit limits.
+            </div>
+            <div class="example-code">
+                grid-template-columns: fit-content(200px) 1fr fit-content(250px);<br>
+                gap: 15px;
+            </div>
+            <div class="demo-container">
+                <div class="three-column">
+                    <div class="left-panel">
+                        <div class="panel-title">Filters</div>
+                        <div style="font-size: 0.9em; line-height: 1.6;">
+                            Date Range<br>Category<br>Status<br>Priority
+                        </div>
+                    </div>
+                    <div class="center-panel">
+                        <div class="panel-title">Main Dashboard</div>
+                        <p style="color: #666;">This center area fills all available space. The side panels on left and right are sized with fit-content() to their maximum widths.</p>
+                    </div>
+                    <div class="right-panel">
+                        <div class="panel-title">Quick Stats</div>
+                        <div style="font-size: 0.9em; line-height: 1.8;">
+                            Items: 24<br>Active: 18<br>Pending: 6
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Admin dashboards, analytics panels, content management systems with filters and stats.
+            </div>
+        </div>
+
+        <!-- Example 3: Full Page Layout -->
+        <div class="example">
+            <div class="example-title">3. Full Page Layout (Header/Main/Footer)</div>
+            <div class="example-description">
+                Header fits content (max 100px), main area fills available space, footer fits content (max 80px). Perfect for complete page layouts.
+            </div>
+            <div class="example-code">
+                grid-template-rows: fit-content(100px) 1fr fit-content(80px);<br>
+                gap: 15px; height: 100vh;
+            </div>
+            <div class="demo-container">
+                <div class="page-layout">
+                    <div class="header">
+                        <h2>My Website</h2>
+                        <div style="font-size: 0.9em;">Header content</div>
+                    </div>
+                    <div class="main-area">
+                        <p style="color: #667eea; font-weight: bold; margin-bottom: 10px;">Main Content Area</p>
+                        <p style="color: #666;">This area grows to fill all available vertical space. The header above is fit-content with a maximum of 100px. The footer below is fit-content with a maximum of 80px.</p>
+                    </div>
+                    <div class="footer">
+                        Footer Content © 2024
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Website layouts, single-page applications, full-screen content areas.
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> Use with min-height: 100vh to ensure footer stays at bottom even with little content.
+            </div>
+        </div>
+
+        <!-- Example 4: Blog Post Layout -->
+        <div class="example">
+            <div class="example-title">4. Blog Post with Sidebar Widget</div>
+            <div class="example-description">
+                Post content takes main area. Sidebar widget (280px max) stays compact. Perfect for blogs and article pages.
+            </div>
+            <div class="example-code">
+                grid-template-columns: 1fr fit-content(280px);<br>
+                gap: 20px;
+            </div>
+            <div class="demo-container">
+                <div class="blog-layout">
+                    <div class="blog-post">
+                        <h3>Understanding CSS Grid Layouts</h3>
+                        <p>CSS Grid is a powerful layout system that allows you to create two-dimensional layouts with rows and columns. It's perfect for complex, responsive designs.</p>
+                        <p>The fit-content() function is especially useful for sidebars that should grow with their content but never exceed a maximum width.</p>
+                    </div>
+                    <div class="sidebar-widget">
+                        <div class="widget-title">Related Posts</div>
+                        <div class="widget-item">• CSS Flexbox Guide</div>
+                        <div class="widget-item">• Grid vs Flexbox</div>
+                        <div class="widget-item">• Advanced Grid</div>
+                        <div class="widget-item">• Responsive Design</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Blog layouts, article pages, content with supplementary information.
+            </div>
+        </div>
+
+        <!-- Example 5: Variable Content Sidebar -->
+        <div class="example">
+            <div class="example-title">5. Dynamic Sidebar Content (Shorter)</div>
+            <div class="example-description">
+                Sidebar with less content. fit-content(200px) allows it to shrink to just what's needed, while still respecting the 200px maximum.
+            </div>
+            <div class="example-code">
+                grid-template-columns: fit-content(200px) 1fr;<br>
+                gap: 15px;
+            </div>
+            <div class="demo-container">
+                <div class="variable-content">
+                    <div class="sidebar-short">
+                        <div style="font-weight: bold; margin-bottom: 10px;">Quick Links</div>
+                        <div style="font-size: 0.9em;">Home</div>
+                    </div>
+                    <div class="content-box">
+                        <p style="color: #667eea; font-weight: bold; margin-bottom: 10px;">Compare with Example 1</p>
+                        <p style="color: #666;">Notice how this sidebar is narrower than Example 1's sidebar. fit-content() uses only as much space as needed for content, up to the maximum of 200px. In Example 1, the sidebar was wider because it had more navigation items.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="comparison-note">
+                <strong>Key Insight:</strong> fit-content() shrinks and grows based on content. It doesn't always use the full max-size—only what's needed!
+            </div>
+        </div>
+
+        <!-- Example 6: Dashboard with Filters -->
+        <div class="example">
+            <div class="example-title">6. Admin Dashboard with Sidebar Filters</div>
+            <div class="example-description">
+                Filter sidebar (250px max) with main dashboard area filling remaining space. Perfect for data-heavy applications.
+            </div>
+            <div class="example-code">
+                grid-template-columns: fit-content(250px) 1fr;<br>
+                gap: 20px;
+            </div>
+            <div class="demo-container">
+                <div class="dashboard">
+                    <div class="dashboard-sidebar">
+                        <div style="font-weight: bold; margin-bottom: 15px; color: #667eea;">Filters</div>
+                        <div class="dashboard-item">All Items (24)</div>
+                        <div class="dashboard-item">Active (18)</div>
+                        <div class="dashboard-item">Pending (4)</div>
+                        <div class="dashboard-item">Archived (2)</div>
+                        <div style="margin-top: 15px; font-weight: bold; color: #667eea;">Date Range</div>
+                        <div class="dashboard-item">Last 7 Days</div>
+                        <div class="dashboard-item">Last 30 Days</div>
+                        <div class="dashboard-item">Custom Range</div>
+                    </div>
+                    <div class="dashboard-main">
+                        <div style="color: #667eea; font-weight: bold; margin-bottom: 15px;">Dashboard Content</div>
+                        <p style="color: #666; line-height: 1.7;">The filter sidebar stays at 250px maximum width, while this main area fills all remaining space. Perfect for dashboards where you want sidebar filters and a flexible content area.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Use Case:</strong> Analytics dashboards, admin panels, data management tools, CRM systems.
+            </div>
+            <div class="resize-note">
+                <strong>💡 Try resizing:</strong> Make your browser narrower. At mobile, the grid stacks to 1 column (see CSS for media query).
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="example" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="example-title" style="color: white;">Common Patterns & Quick Reference</div>
+            <div style="margin-top: 20px;">
+                <p><strong>Two Column (Sidebar + Content):</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>grid-template-columns: fit-content(300px) 1fr;</li>
+                    <li>Perfect for: Navigation, filters, sidebars</li>
+                </ul>
+                <p><strong>Three Column (Left + Center + Right):</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>grid-template-columns: fit-content(200px) 1fr fit-content(250px);</li>
+                    <li>Perfect for: Dashboards, complex layouts</li>
+                </ul>
+                <p><strong>Full Page (Header/Main/Footer):</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>grid-template-rows: fit-content(100px) 1fr fit-content(80px);</li>
+                    <li>Perfect for: Website layouts, full-screen apps</li>
+                </ul>
+                <p><strong>Key Principle:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>fit-content(max) = min(content-size, max)</li>
+                    <li>Uses only what content needs, up to maximum</li>
+                    <li>Pair with 1fr for flexible areas</li>
+                    <li>No minimum size (unlike minmax)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

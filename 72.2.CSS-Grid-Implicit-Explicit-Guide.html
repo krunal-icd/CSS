@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid: Implicit & Explicit Grid - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .example-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .example-code {
+            background: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        .code-line {
+            margin-bottom: 5px;
+        }
+
+        .demo-container {
+            border: 2px dashed #667eea;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+
+        .grid-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+        }
+
+        .grid-item.explicit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 2px solid #667eea;
+        }
+
+        .grid-item.implicit {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: 2px dashed #f5576c;
+        }
+
+        .quick-ref {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .quick-ref strong {
+            color: #667eea;
+        }
+
+        .pro-tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+
+        .pro-tip strong {
+            color: #856404;
+        }
+
+        /* Example 1: Blog Layout */
+        .blog-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 60px auto;
+            gap: 20px;
+        }
+
+        .blog-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+
+        .blog-post {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+        }
+
+        .blog-post h4 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .blog-post p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        /* Example 2: Dashboard Grid */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 150px;
+            gap: 15px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .dashboard-card h5 {
+            color: #667eea;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Example 3: Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-auto-rows: 180px;
+            gap: 15px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .product-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+        }
+
+        .product-info {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .product-name {
+            font-weight: bold;
+            font-size: 0.9em;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: #667eea;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        /* Example 4: Article List */
+        .article-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-auto-rows: auto;
+            gap: 20px;
+        }
+
+        .article-item {
+            background: white;
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .article-item h5 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .article-item p {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .article-meta {
+            color: #999;
+            font-size: 0.85em;
+        }
+
+        /* Example 5: Masonry-like Layout */
+        .masonry {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 120px;
+            gap: 15px;
+        }
+
+        .masonry-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .masonry-item:hover {
+            transform: scale(1.02);
+        }
+
+        .masonry-item.large {
+            grid-column: span 2;
+            grid-row: span 2;
+            font-size: 1.5em;
+        }
+
+        /* Example 6: Sidebar + Content */
+        .sidebar-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            grid-auto-rows: auto;
+            gap: 20px;
+        }
+
+        .sidebar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 4px;
+            height: fit-content;
+        }
+
+        .sidebar h4 {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .sidebar-item {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            font-size: 0.95em;
+        }
+
+        .sidebar-item:last-child {
+            border-bottom: none;
+        }
+
+        .main-content {
+            display: grid;
+            grid-auto-rows: auto;
+            gap: 15px;
+        }
+
+        .content-block {
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .content-block h5 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .content-block p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        /* Example 7: Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 120px;
+            gap: 10px;
+        }
+
+        .gallery-item {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Example 8: Form Layout */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-auto-rows: auto;
+            gap: 15px;
+        }
+
+        .form-group {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .form-group input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        /* Example 9: Card Grid with Variable Heights */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-auto-rows: auto;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .card-text {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        /* Example 10: Timeline */
+        .timeline {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-auto-rows: auto;
+            gap: 20px;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -12px;
+            top: 25px;
+            width: 24px;
+            height: 24px;
+            background: #667eea;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px #667eea;
+        }
+
+        .timeline-date {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .timeline-title {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .timeline-description {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .article-list {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .masonry {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Grid: Implicit & Explicit Grid</h1>
+            <p>Practical Examples & Real-World Implementations</p>
+        </header>
+
+        <!-- Example 1: Blog Layout with Header + Posts -->
+        <div class="example">
+            <div class="example-title">1. Blog Layout (Explicit Header + Implicit Posts)</div>
+            <div class="example-description">
+                Fixed header (explicit) with dynamic blog posts (implicit). As you add more posts, implicit rows are created automatically.
+            </div>
+            <div class="example-code">
+                <div class="code-line">grid-template-columns: 1fr;</div>
+                <div class="code-line">grid-template-rows: 60px auto; /* Explicit header + auto first row */</div>
+                <div class="code-line">grid-auto-rows: auto; /* Implicit posts adapt to content */</div>
+            </div>
+            <div class="demo-container">
+                <div class="blog-layout">
+                    <div class="blog-header">📝 My Blog</div>
+                    <div class="blog-post">
+                        <h4>Understanding CSS Grid Basics</h4>
+                        <p>In this post, we explore the fundamentals of CSS Grid layout and how it compares to Flexbox for different use cases.</p>
+                    </div>
+                    <div class="blog-post">
+                        <h4>Advanced Grid Techniques</h4>
+                        <p>Learn about implicit grids, auto-placement, and how to create responsive layouts that adapt to any content.</p>
+                    </div>
+                    <div class="blog-post">
+                        <h4>Best Practices for Grid Layouts</h4>
+                        <p>Discover the best practices for creating maintainable, accessible, and performant CSS Grid layouts.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Explicit:</strong> Header (60px)<br>
+                <strong>Implicit:</strong> Blog posts (auto-sized based on content)
+            </div>
+        </div>
+
+        <!-- Example 2: Dashboard Grid -->
+        <div class="example">
+            <div class="example-title">2. Analytics Dashboard (Explicit Columns + Implicit Rows)</div>
+            <div class="example-description">
+                Fixed 3-column dashboard. Explicit columns ensure consistent card widths. Implicit rows create additional rows as needed for metrics cards.
+            </div>
+            <div class="example-code">
+                <div class="code-line">grid-template-columns: repeat(3, 1fr); /* Explicit 3 columns */</div>
+                <div class="code-line">grid-auto-rows: 150px; /* Implicit rows are 150px high */</div>
+            </div>
+            <div class="demo-container">
+                <div class="dashboard">
+                    <div class="dashboard-card">
+                        <h5>Total Users</h5>
+                        <div class="dashboard-value">12,458</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h5>Revenue</h5>
+                        <div class="dashboard-value">$45.2K</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h5>Growth</h5>
+                        <div class="dashboard-value">+8.2%</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h5>Conversions</h5>
+                        <div class="dashboard-value">3.24%</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h5>Engagement</h5>
+                        <div class="dashboard-value">78.5%</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h5>Bounce Rate</h5>
+                        <div class="dashboard-value">32.1%</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Explicit:</strong> 3 columns (repeating pattern)<br>
+                <strong>Implicit:</strong> Rows 1-2 are implicit (auto-created as cards overflow)
+            </div>
+        </div>
+
+        <!-- Example 3: Product Grid with Auto-sizing -->
+        <div class="example">
+            <div class="example-title">3. E-Commerce Product Grid (Responsive Auto-fit + Implicit Rows)</div>
+            <div class="example-description">
+                Products automatically fit into columns based on viewport width. Implicit rows grow dynamically as more products are added.
+            </div>
+            <div class="example-code">
+                <div class="code-line">grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));</div>
+                <div class="code-line">grid-auto-rows: 180px; /* Implicit rows are square-like */</div>
+            </div>
+            <div class="demo-container">
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-image">📱</div>
+                        <div class="product-info">
+                            <div class="product-name">Phone</div>
+                            <div class="product-price">$299</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">💻</div>
+                        <div class="product-info">
+                            <div class="product-name">Laptop</div>
+                            <div class="product-price">$999</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">🎧</div>
+                        <div class="product-info">
+                            <div class="product-name">Headphones</div>
+                            <div class="product-price">$149</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">⌚</div>
+                        <div class="product-info">
+                            <div class="product-name">Watch</div>
+                            <div class="product-price">$199</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">🖥️</div>
+                        <div class="product-info">
+                            <div class="product-name">Monitor</div>
+                            <div class="product-price">$349</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">⌨️</div>
+                        <div class="product-info">
+                            <div class="product-name">Keyboard</div>
+                            <div class="product-price">$79</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Explicit:</strong> Dynamic column count based on auto-fit<br>
+                <strong>Implicit:</strong> Additional rows (implicit) created as products overflow
+            </div>
+        </div>
+
+        <!-- Example 4: Article List Grid -->
+        <div class="example">
+            <div class="example-title">4. Article Listing (Explicit 2 Columns + Implicit Variable Heights)</div>
+            <div class="example-description">
+                Articles arranged in 2 columns (explicit). Heights vary based on content (implicit auto-sizing).
+            </div>
+            <div class="example-code">
+                <div class="code-line">grid-template-columns: repeat(2, 1fr); /* Explicit 2 columns */</div>
+                <div class="code-line">grid-auto-rows: auto; /* Implicit rows size to content */</div>
+            </div>
+            <div class="demo-container">
+                <div class="article-list">
+                    <div class="article-item">
+                        <h5>Short Article</h5>
+                        <p>Quick 2-minute read about CSS basics.</p>
+                        <div class="article-meta">2 min read</div>
+                    </div>
+                    <div class="article-item">
+                        <h5>Medium Length Article</h5>
+                        <p>This article covers more advanced topics and takes approximately 5 minutes to read. It includes multiple sections and code examples.</p>
+                        <div class="article-meta">5 min read</div>
+                    </div>
+                    <div class="article-item">
+                        <h5>Comprehensive Guide</h5>
+                        <p>An in-depth guide covering multiple aspects of web development. This article spans several sections with detailed explanations, code samples, best practices, and real-world examples. Perfect for learners seeking comprehensive knowledge.</p>
+                        <div class="article-meta">10 min read</div>
+                    </div>
+                    <div class="article-item">
+                        <h5>Quick Tip</h5>
+                        <p>A brief tip for optimizing your workflow.</p>
+                        <div class="article-meta">1 min read</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Explicit:</strong> 2 columns (repeating)<br>
+                <strong>Implicit:</strong> Rows grow to fit content naturally
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> Using grid-auto-rows: auto allows items with different content heights to align properly without forcing uniform heights.
+            </div>
+        </div>
+
+        <!-- Example 5: Masonry-like Layout -->
+        <div class="example">
+            <div class="example-title">5. Masonry Layout with Spanning Items</div>
+            <div class="example-description">
+                3-column grid with some items spanning 2 columns and 2 rows (explicit positioning), rest flow into implicit grid.
+            </div>
+            <div class="example-code">
+                <div class="code-line">grid-template-columns: repeat(3, 1fr);</div>
+                <div class="code-line">grid-auto-rows: 120px;</div>
+                <div class="code-line">.large { grid-column: span 2; grid-row: span 2; }</div>
+            </div>
+            <div class="demo-container">
+                <div class="masonry">
+                    <div class="masonry-item large">Big Item</div>
+                    <div class="masonry-item">1</div>
+                    <div class="masonry-item">2</div>
+                    <div class="masonry-item">3</div>
+                    <div class="masonry-item">4</div>
+                    <div class="masonry-item large">Another Big</div>
+                    <div class="masonry-item">5</div>
+                    <div class="masonry-item">6</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Explicit:</strong> Column structure (3 columns)<br>
+                <strong>Implicit:</strong> Rows created as items are placed
+            </div>
+        </div>
+
+        <!-- Example 6: Sidebar + Content Layout -->
+        <div class="example">
+            <div class="example-title">6. Sidebar Navigation + Dynamic Content</div>
+            <div class="example-description">
+                Fixed 280px sidebar (explicit) with flexible main content area. Content blocks in main area are placed in implicit grid rows.
+            </div>
+            <div class="example-code">
+                <div class="code-line">grid-template-columns: 280px 1fr; /* Explicit columns */</div>
+                <div class="code-line">grid-auto-rows: auto; /* Implicit content rows */</div>
+            </div>
+            <div class="demo-container">
+                <div class="sidebar-layout">
+                    <div class="sidebar">
+                        <h4>Navigation</h4>
+                        <div class="sidebar-item">📊 Dashboard</div>
+                        <div class="sidebar-item">📈 Analytics</div>
+                        <div class="sidebar-item">👥 Users</div>
+                        <div class="sidebar-item">⚙️ Settings</div>
+                    </div>
+                    <div class="main-content">
+                        <div class="content-block">
+                            <h5>Welcome</h5>
+                            <p>This is the main content area. The sidebar is fixed width (280px), and this area takes remaining space with 1fr.</p>
+                        </div>
+                        <div class="content-block">
+                            <h5>Content Block 1</h5>
+                            <p>Each content block in the main area is placed in an implicit grid row. They size to their content automatically.</p>
+                        </div>
+                        <div class="content-block">
+                            <h5>Content Block 2</h5>
+                            <p>Adding more blocks automatically creates more implicit rows without any media query changes needed.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Explicit:</strong> 2 columns (280px + 1fr)<br>
+                <strong>Implicit:</strong> Sidebar spans all rows; content area creates implicit rows
+            </div>
+        </div>
+
+        <!-- Example 7: Photo Gallery -->
+        <div class="example">
+            <div class="example-title">7. Photo Gallery (Explicit 4-Column + Implicit Rows)</div>
+            <div class="example-description">
+                4-column gallery with square images. Explicit columns, implicit rows as gallery grows.
+            </div>
+            <div class="example-code">
+                <div class="code-line">grid-template-columns: repeat(4, 1fr); /* Explicit 4 columns */</div>
+                <div class="code-line">grid-auto-rows: 120px; /* Implicit rows are square */</div>
+            </div>
+            <div class="demo-container">
+                <div class="gallery">
+                    <div class="gallery-item">01</div>
+                    <div class="gallery-item">02</div>
+                    <div class="gallery-item">03</div>
+                    <div class="gallery-item">04</div>
+                    <div class="gallery-item">05</div>
+                    <div class="gallery-item">06</div>
+                    <div class="gallery-item">07</div>
+                    <div class="gallery-item">08</div>
+                    <div class="gallery-item">09</div>
+                    <div class="gallery-item">10</div>
+                    <div class="gallery-item">11</div>
+                    <div class="gallery-item">12</div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Explicit:</strong> 4 columns (pattern repeats)<br>
+                <strong>Implicit:</strong> 3 rows automatically created for 12 items
+            </div>
+        </div>
+
+        <!-- Example 8: Form Layout -->
+        <div class="example">
+            <div class="example-title">8. Form with Responsive Layout (Explicit 2 Columns + Implicit Rows)</div>
+            <div class="example-description">
+                Form fields in 2-column layout. Some fields span full width. Uses implicit rows for flexible form growth.
+            </div>
+            <div class="example-code">
+                <div class="code-line">grid-template-columns: repeat(2, 1fr); /* Explicit 2 columns */</div>
+                <div class="code-line">grid-auto-rows: auto; /* Implicit rows for form items */</div>
+                <div class="code-line">.full { grid-column: 1 / -1; } /* Full-width items */</div>
+            </div>
+            <div class="demo-container">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" placeholder="John">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" placeholder="Doe">
+                    </div>
+                    <div class="form-group full">
+                        <label>Email</label>
+                        <input type="email" placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" placeholder="+1 (555) 000-0000">
+                    </div>
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" placeholder="Your Company">
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Explicit:</strong> 2-column grid structure<br>
+                <strong>Implicit:</strong> Rows created for each form group
+            </div>
+        </div>
+
+        <!-- Example 9: Card Grid with Variable Content -->
+        <div class="example">
+            <div class="example-title">9. Card Grid (Auto-fit + Implicit Variable Heights)</div>
+            <div class="example-description">
+                Responsive card grid. Columns adapt to screen size. Heights vary based on content (implicit auto-sizing).
+            </div>
+            <div class="example-code">
+                <div class="code-line">grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));</div>
+                <div class="code-line">grid-auto-rows: auto; /* Cards size to content */</div>
+            </div>
+            <div class="demo-container">
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-title">Card One</div>
+                        <div class="card-text">Short content here.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Card Two</div>
+                        <div class="card-text">This card has more content. It includes additional text that makes it taller than the first card.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Card Three</div>
+                        <div class="card-text">This card has significantly more content. It demonstrates how implicit grid rows with auto-sizing allow items of different heights to coexist without forcing uniform heights. This is ideal for content-driven layouts.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Card Four</div>
+                        <div class="card-text">Medium-length content in this card.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Explicit:</strong> Auto-fit column pattern<br>
+                <strong>Implicit:</strong> Rows (auto) accommodate varying content heights
+            </div>
+            <div class="pro-tip">
+                <strong>💡 Pro Tip:</strong> Combining auto-fit columns with grid-auto-rows: auto creates truly flexible, content-driven layouts that work at any screen size.
+            </div>
+        </div>
+
+        <!-- Example 10: Timeline -->
+        <div class="example">
+            <div class="example-title">10. Timeline (Single Column + Implicit Variable Heights)</div>
+            <div class="example-description">
+                Timeline events flow in implicit rows. Each event sizes to its content automatically.
+            </div>
+            <div class="example-code">
+                <div class="code-line">grid-template-columns: 1fr; /* Single column (explicit) */</div>
+                <div class="code-line">grid-auto-rows: auto; /* Implicit rows for events */</div>
+            </div>
+            <div class="demo-container">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">May 18, 2024</div>
+                        <div class="timeline-title">Project Launch</div>
+                        <div class="timeline-description">Successfully launched the new CSS Grid learning platform.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">May 15, 2024</div>
+                        <div class="timeline-title">Design Completed</div>
+                        <div class="timeline-description">Finalized all design mockups and created component library. This item has more content to demonstrate how the timeline adapts to different text lengths.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">May 10, 2024</div>
+                        <div class="timeline-title">Development Started</div>
+                        <div class="timeline-description">Began development on core features.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-ref">
+                <strong>Explicit:</strong> Single column (1fr)<br>
+                <strong>Implicit:</strong> Timeline item rows (auto) created as needed
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="example" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="example-title" style="color: white;">Key Takeaways</div>
+            <div style="margin-top: 20px;">
+                <p><strong>When to use Explicit Grid:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>You know the exact layout structure (dashboards, 3-column layouts)</li>
+                    <li>You want consistent, predictable sizing</li>
+                    <li>Creating templates with specific numbers of rows/columns</li>
+                </ul>
+                <p><strong>When to use Implicit Grid:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Number of items is unknown or dynamic</li>
+                    <li>Content drives the layout (blogs, timelines, galleries)</li>
+                    <li>You want flexible, responsive layouts without media queries</li>
+                </ul>
+                <p><strong>Best Practice:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Combine both: explicit structure (columns/key rows) + implicit flexibility (content rows)</li>
+                    <li>Always set grid-auto-rows/columns for consistent sizing</li>
+                    <li>Use auto-fit/auto-fill for fully responsive layouts</li>
+                    <li>Test with varying amounts of content to validate implicit track behavior</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
