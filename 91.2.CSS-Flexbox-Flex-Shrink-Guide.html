@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox Flex-Shrink - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .example h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .description {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .demo {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+
+        .code-label {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Example 1: Navigation Bar with Shrinking Items */
+        .navbar {
+            display: flex;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .nav-item {
+            padding: 15px 20px;
+            color: white;
+            font-weight: 500;
+            background: rgba(255,255,255,0.1);
+            border-right: 1px solid rgba(255,255,255,0.2);
+            flex: 1;
+            flex-shrink: 1;
+            white-space: nowrap;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:last-child {
+            border-right: none;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Example 2: Search Bar with Buttons */
+        .search-container {
+            display: flex;
+            gap: 10px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .search-input {
+            flex: 1;
+            flex-shrink: 1;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            min-width: 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            flex-shrink: 0;
+            white-space: nowrap;
+            transition: transform 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Example 3: Responsive Cards Layout */
+        .cards-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            flex: 1;
+            flex-shrink: 1;
+            min-width: 250px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Example 4: Form Layout */
+        .form-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .form-field {
+            flex: 1;
+            flex-shrink: 1;
+            min-width: 150px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Example 5: Header with Logo and Menu */
+        .header-layout {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+        }
+
+        .logo {
+            flex-shrink: 0;
+            font-weight: 700;
+            font-size: 1.3rem;
+            white-space: nowrap;
+        }
+
+        .menu-items {
+            display: flex;
+            gap: 15px;
+            flex: 1;
+            flex-shrink: 1;
+            min-width: 0;
+        }
+
+        .menu-item {
+            flex: 1;
+            flex-shrink: 1;
+            min-width: 80px;
+            text-align: center;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .user-menu {
+            flex-shrink: 0;
+            display: flex;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .user-btn {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Example 6: Flexible Sidebar Layout */
+        .sidebar-layout {
+            display: flex;
+            gap: 20px;
+            min-height: 300px;
+        }
+
+        .sidebar {
+            flex-shrink: 0;
+            width: 250px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255,255,255,0.2);
+            padding-left: 16px;
+        }
+
+        .main-content {
+            flex: 1;
+            flex-shrink: 1;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            min-width: 0;
+        }
+
+        .main-content h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        /* Example 7: Flex Items with Different Shrink Ratios */
+        .shrink-container {
+            display: flex;
+            gap: 10px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 120px;
+        }
+
+        .shrink-item {
+            padding: 15px;
+            border-radius: 6px;
+            color: white;
+            font-weight: 600;
+            min-width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .shrink-1 {
+            flex-shrink: 1;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            flex: 1;
+        }
+
+        .shrink-2 {
+            flex-shrink: 2;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            flex: 1;
+        }
+
+        .shrink-3 {
+            flex-shrink: 3;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            flex: 1;
+        }
+
+        .shrink-0 {
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            white-space: nowrap;
+        }
+
+        /* Example 8: Product Grid */
+        .product-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .product-item {
+            flex: 1;
+            flex-shrink: 1;
+            min-width: 200px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .product-item:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .product-price {
+            color: #667eea;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Example 9: Flex Container with Long Content */
+        .content-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .content-box {
+            flex: 1;
+            flex-shrink: 1;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
+            min-width: 0;
+        }
+
+        .content-box h3 {
+            margin-bottom: 10px;
+        }
+
+        .content-box p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        /* Example 10: Toolbar with Icons */
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tool-group {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 1;
+        }
+
+        .tool-btn {
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            flex-shrink: 0;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tool-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .tool-spacer {
+            flex: 1;
+            flex-shrink: 1;
+            min-width: 20px;
+        }
+
+        .tool-group-right {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        /* Example 11: Responsive Footer */
+        .footer-layout {
+            display: flex;
+            gap: 20px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            flex-shrink: 1;
+            min-width: 200px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .footer-link {
+            display: block;
+            margin-bottom: 8px;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+
+        .footer-link:hover {
+            opacity: 1;
+        }
+
+        .footer-copyright {
+            flex: 0 0 100%;
+            flex-shrink: 0;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 20px;
+            margin-top: 20px;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        /* Example 12: Badge System */
+        .badges-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .badge {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            flex-shrink: 0;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .sidebar-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex-shrink: 0;
+            }
+
+            .menu-items {
+                flex-wrap: wrap;
+            }
+
+            .footer-layout {
+                flex-direction: column;
+            }
+
+            .nav-item {
+                font-size: 0.9rem;
+                padding: 12px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .example {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .cards-container {
+                flex-direction: column;
+            }
+
+            .card {
+                min-width: auto;
+            }
+
+            .shrink-container {
+                flex-direction: column;
+            }
+
+            .shrink-item {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Flexbox flex-shrink</h1>
+            <p>Practical Real-World Examples</p>
+        </header>
+
+        <!-- Example 1: Navigation Bar -->
+        <div class="example">
+            <h2>1. Responsive Navigation Bar</h2>
+            <p class="description">
+                Navigation items shrink proportionally when the container is constrained. Each item has <code>flex-shrink: 1</code>, allowing them to shrink equally while maintaining the layout.
+            </p>
+            <div class="demo">
+                <div class="navbar">
+                    <div class="nav-item">Home</div>
+                    <div class="nav-item">Features</div>
+                    <div class="nav-item">Documentation</div>
+                    <div class="nav-item">Pricing</div>
+                    <div class="nav-item">Contact</div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.navbar {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-item {
+  flex: 1;
+  flex-shrink: 1;
+  white-space: nowrap;
+  text-align: center;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 2: Search Bar with Fixed Buttons -->
+        <div class="example">
+            <h2>2. Search Bar with Non-Shrinking Buttons</h2>
+            <p class="description">
+                The search input shrinks with <code>flex-shrink: 1</code>, while the search and filter buttons maintain their size with <code>flex-shrink: 0</code>. This ensures buttons are always readable.
+            </p>
+            <div class="demo">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search products, articles, docs...">
+                    <button class="search-btn">Search</button>
+                    <button class="search-btn">Filter</button>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.search-input {
+  flex: 1;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.search-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 3: Responsive Cards -->
+        <div class="example">
+            <h2>3. Responsive Card Grid</h2>
+            <p class="description">
+                Cards shrink proportionally with <code>flex-shrink: 1</code> and have a <code>min-width</code> to prevent them from becoming too small. On small screens, they stack vertically.
+            </p>
+            <div class="demo">
+                <div class="cards-container">
+                    <div class="card">
+                        <h3>💡 Feature One</h3>
+                        <p>Responsive design that adapts to any screen size while maintaining readability.</p>
+                    </div>
+                    <div class="card">
+                        <h3>⚡ Feature Two</h3>
+                        <p>Lightning-fast performance optimized for all devices and network conditions.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🎨 Feature Three</h3>
+                        <p>Beautiful visual design with consistent styling and smooth animations.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.cards-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  flex-shrink: 1;
+  min-width: 250px;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 4: Form Layout -->
+        <div class="example">
+            <h2>4. Flexible Form Fields</h2>
+            <p class="description">
+                Form fields shrink proportionally on small screens. Each field has <code>flex-shrink: 1</code> and a <code>min-width</code> to maintain usability.
+            </p>
+            <div class="demo">
+                <div class="form-group">
+                    <div class="form-field">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-input" placeholder="John">
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-input" placeholder="Doe">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-field">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="john@example.com">
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" placeholder="+1 (555) 000-0000">
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.form-group {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.form-field {
+  flex: 1;
+  flex-shrink: 1;
+  min-width: 150px;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 5: Header Layout -->
+        <div class="example">
+            <h2>5. Header with Logo and Menu</h2>
+            <p class="description">
+                Logo doesn't shrink (<code>flex-shrink: 0</code>), menu items shrink equally (<code>flex-shrink: 1</code>), and user menu doesn't shrink. This maintains visual hierarchy.
+            </p>
+            <div class="demo">
+                <div class="header-layout">
+                    <div class="logo">🎨 Brand</div>
+                    <div class="menu-items">
+                        <div class="menu-item">Home</div>
+                        <div class="menu-item">Services</div>
+                        <div class="menu-item">Portfolio</div>
+                        <div class="menu-item">Blog</div>
+                    </div>
+                    <div class="user-menu">
+                        <button class="user-btn">Login</button>
+                        <button class="user-btn">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.logo {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.menu-items {
+  flex: 1;
+  flex-shrink: 1;
+}
+
+.menu-item {
+  flex: 1;
+  flex-shrink: 1;
+  min-width: 80px;
+}
+
+.user-menu {
+  flex-shrink: 0;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 6: Sidebar Layout -->
+        <div class="example">
+            <h2>6. Flexible Sidebar + Main Content</h2>
+            <p class="description">
+                Sidebar doesn't shrink (<code>flex-shrink: 0</code>), while main content shrinks to fit. On mobile, layout converts to single column.
+            </p>
+            <div class="demo">
+                <div class="sidebar-layout">
+                    <div class="sidebar">
+                        <h3>Navigation</h3>
+                        <div class="sidebar-item">Dashboard</div>
+                        <div class="sidebar-item">Analytics</div>
+                        <div class="sidebar-item">Settings</div>
+                        <div class="sidebar-item">Support</div>
+                    </div>
+                    <div class="main-content">
+                        <h3>Main Content Area</h3>
+                        <p>This area shrinks proportionally as the sidebar maintains its fixed width. The content adapts gracefully while the sidebar navigation remains stable and accessible.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.sidebar {
+  flex-shrink: 0;
+  width: 250px;
+}
+
+.main-content {
+  flex: 1;
+  flex-shrink: 1;
+  min-width: 0;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 7: Different Shrink Ratios -->
+        <div class="example">
+            <h2>7. Proportional Shrinking with Different Ratios</h2>
+            <p class="description">
+                Items with different <code>flex-shrink</code> values shrink at different rates. Item with flex-shrink: 3 shrinks 3x faster than items with flex-shrink: 1.
+            </p>
+            <div class="demo">
+                <div class="shrink-container">
+                    <div class="shrink-item shrink-1">Shrink: 1</div>
+                    <div class="shrink-item shrink-2">Shrink: 2</div>
+                    <div class="shrink-item shrink-3">Shrink: 3</div>
+                    <div class="shrink-item shrink-0">No Shrink</div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.shrink-1 {
+  flex: 1;
+  flex-shrink: 1;
+}
+
+.shrink-2 {
+  flex: 1;
+  flex-shrink: 2;
+}
+
+.shrink-3 {
+  flex: 1;
+  flex-shrink: 3;
+}
+
+.shrink-0 {
+  flex-shrink: 0;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 8: Product Grid -->
+        <div class="example">
+            <h2>8. E-Commerce Product Grid</h2>
+            <p class="description">
+                Product items shrink proportionally with <code>min-width</code> to maintain product card readability. Items wrap on small screens.
+            </p>
+            <div class="demo">
+                <div class="product-grid">
+                    <div class="product-item">
+                        <div class="product-image">📦</div>
+                        <div class="product-info">
+                            <div class="product-name">Product A</div>
+                            <div class="product-price">$29.99</div>
+                        </div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">🎁</div>
+                        <div class="product-info">
+                            <div class="product-name">Product B</div>
+                            <div class="product-price">$49.99</div>
+                        </div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">⭐</div>
+                        <div class="product-info">
+                            <div class="product-name">Product C</div>
+                            <div class="product-price">$39.99</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.product-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.product-item {
+  flex: 1;
+  flex-shrink: 1;
+  min-width: 200px;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 9: Long Content with Shrinking -->
+        <div class="example">
+            <h2>9. Flexible Content Boxes</h2>
+            <p class="description">
+                Content boxes shrink proportionally with <code>min-width: 0</code> to allow text content to wrap properly. Text overflows and wraps naturally.
+            </p>
+            <div class="demo">
+                <div class="content-container">
+                    <div class="content-box">
+                        <h3>Article Title</h3>
+                        <p>This is a flexible content area that shrinks gracefully. Long content wraps to the next line as the container becomes smaller.</p>
+                    </div>
+                    <div class="content-box">
+                        <h3>Another Title</h3>
+                        <p>With proper flex-shrink settings, content remains readable even on constrained layouts. Text naturally adapts to available space.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.content-box {
+  flex: 1;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.content-box p {
+  word-wrap: break-word;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 10: Toolbar -->
+        <div class="example">
+            <h2>10. Editor Toolbar</h2>
+            <p class="description">
+                Tool buttons don't shrink (<code>flex-shrink: 0</code>), while the spacer shrinks (<code>flex: 1</code>) to push right-aligned tools to the edge.
+            </p>
+            <div class="demo">
+                <div class="toolbar">
+                    <div class="tool-group">
+                        <button class="tool-btn">Bold</button>
+                        <button class="tool-btn">Italic</button>
+                        <button class="tool-btn">Underline</button>
+                    </div>
+                    <div class="tool-spacer"></div>
+                    <div class="tool-group-right">
+                        <button class="tool-btn">Save</button>
+                        <button class="tool-btn">Preview</button>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.tool-group {
+  display: flex;
+  gap: 10px;
+}
+
+.tool-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.tool-spacer {
+  flex: 1;
+  flex-shrink: 1;
+  min-width: 20px;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 11: Responsive Footer -->
+        <div class="example">
+            <h2>11. Responsive Footer Layout</h2>
+            <p class="description">
+                Footer sections shrink proportionally on medium screens, then stack on mobile. Each section maintains a minimum width for readability.
+            </p>
+            <div class="demo">
+                <div class="footer-layout">
+                    <div class="footer-section">
+                        <h4>Product</h4>
+                        <span class="footer-link">Features</span>
+                        <span class="footer-link">Pricing</span>
+                        <span class="footer-link">Security</span>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Company</h4>
+                        <span class="footer-link">About</span>
+                        <span class="footer-link">Blog</span>
+                        <span class="footer-link">Careers</span>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <span class="footer-link">Docs</span>
+                        <span class="footer-link">API</span>
+                        <span class="footer-link">Support</span>
+                    </div>
+                    <div class="footer-copyright">
+                        © 2024 Your Company. All rights reserved.
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.footer-layout {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-section {
+  flex: 1;
+  flex-shrink: 1;
+  min-width: 200px;
+}
+
+.footer-copyright {
+  flex: 0 0 100%;
+  flex-shrink: 0;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 12: Badge System -->
+        <div class="example">
+            <h2>12. Tag & Badge System</h2>
+            <p class="description">
+                Badges don't shrink (<code>flex-shrink: 0</code>) maintaining their labels clearly. Container wraps to next line as needed.
+            </p>
+            <div class="demo">
+                <div class="badges-container">
+                    <div class="badge">🔥 Featured</div>
+                    <div class="badge">✨ Popular</div>
+                    <div class="badge">🆕 New</div>
+                    <div class="badge">⭐ Premium</div>
+                    <div class="badge">💎 Exclusive</div>
+                    <div class="badge">🚀 Limited</div>
+                    <div class="badge">🎯 Trending</div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.badges-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  flex-shrink: 0;
+  white-space: nowrap;
+}</code>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

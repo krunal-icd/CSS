@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox with Margin Auto - Complete Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            font-style: italic;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .content {
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .highlight {
+            background: #f0f4ff;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .highlight strong {
+            color: #667eea;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .demo-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .demo-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .demo-container {
+            background: white;
+            border: 2px dashed #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            min-height: 120px;
+            display: flex;
+            position: relative;
+        }
+
+        .demo-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .code-label {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .comparison-table tr:hover {
+            background: #f0f4ff;
+        }
+
+        .value-cell {
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .formula {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            color: #333;
+            border-left: 4px solid #667eea;
+        }
+
+        .pattern-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .pattern-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .pattern-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Margin Auto Demonstrations */
+
+        /* Demo 1: Center Single Item */
+        .demo-center-single {
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item-center {
+            margin: auto;
+        }
+
+        /* Demo 2: Center with Margins */
+        .demo-center-margins {
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .item-margins {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Demo 3: Push to Right */
+        .demo-push-right {
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .item-push-right {
+            margin-left: auto;
+        }
+
+        /* Demo 4: Push to Left */
+        .demo-push-left {
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .item-push-left {
+            margin-right: auto;
+        }
+
+        /* Demo 5: Space Distribution */
+        .demo-space-between {
+            justify-content: flex-start;
+            align-items: center;
+            gap: 0;
+        }
+
+        .item-space-between {
+            margin-right: auto;
+        }
+
+        .item-space-between:last-child {
+            margin-right: 0;
+        }
+
+        /* Demo 6: Vertical Centering */
+        .demo-vertical {
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 200px;
+        }
+
+        .item-vertical {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        /* Demo 7: Both Axes */
+        .demo-both-axes {
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: 200px;
+        }
+
+        .item-both-axes {
+            margin: auto;
+        }
+
+        /* Demo 8: Complex Layout */
+        .demo-complex {
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .complex-item {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .complex-spacer {
+            flex: 1;
+            margin: auto;
+            min-width: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-container {
+                min-height: 100px;
+            }
+
+            .demo-vertical,
+            .demo-both-axes {
+                height: 150px;
+            }
+        }
+
+        .tips-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .tips-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .tips-box p {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .tips-box p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Flexbox with Margin Auto</h1>
+            <p>Master the Most Powerful Alignment Technique</p>
+            <p class="subtitle">Complete tutorial with interactive demonstrations</p>
+        </header>
+
+        <!-- Introduction -->
+        <section class="section">
+            <h2>What is Margin Auto in Flexbox?</h2>
+            <div class="content">
+                <p>
+                    <strong>Margin auto</strong> is a revolutionary technique in flexbox that automatically distributes available space around elements. Unlike <code>justify-content</code> and <code>align-items</code> which align multiple items, <code>margin: auto</code> works on individual flex items to push them around the container.
+                </p>
+                <p>
+                    When you set <code>margin</code> to <code>auto</code> on a flex item, the browser calculates the remaining space and distributes it equally on both sides of that margin. This gives you granular control over positioning without needing multiple properties.
+                </p>
+
+                <div class="highlight">
+                    <strong>Key Concept:</strong> Margin auto in flexbox tells the browser: "Give me all the available space and distribute it equally across this margin direction."
+                </div>
+
+                <p>
+                    This technique works on both the main axis and cross axis, making it incredibly versatile for creating complex layouts with minimal CSS code.
+                </p>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="section">
+            <h2>How Margin Auto Works in Flexbox</h2>
+            <div class="content">
+                <p>
+                    In a flexbox container, when you apply <code>margin: auto</code> to a flex item, the browser performs these steps:
+                </p>
+
+                <div style="background: #f0f4ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <ol style="color: #555; line-height: 2; padding-left: 25px;">
+                        <li><strong>Calculate total available space:</strong> Flex container size minus item size</li>
+                        <li><strong>Distribute margins:</strong> If margin is auto, split available space equally</li>
+                        <li><strong>Position item:</strong> Place item in the center of the distributed space</li>
+                        <li><strong>Apply along axis:</strong> This happens on the specified margin direction (left/right/top/bottom)</li>
+                    </ol>
+                </div>
+
+                <p>
+                    <strong>Mathematical Formula:</strong>
+                </p>
+                <div class="formula">
+Available Space = Container Size - Item Size - Other Margins
+Each Auto Margin = Available Space ÷ Number of Auto Margins
+                </div>
+
+                <p>
+                    This means:
+                </p>
+                <ul style="color: #555; line-height: 2; padding-left: 25px; margin-bottom: 15px;">
+                    <li>One <code>margin: auto</code> centers the item</li>
+                    <li>Two <code>margin: auto</code> (opposite sides) centers and balances the item</li>
+                    <li>Multiple items with <code>margin-left: auto</code> push subsequent items to the right</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Visual Demonstrations -->
+        <section class="section">
+            <h2>Interactive Demonstrations</h2>
+            
+            <div class="demo-grid">
+                <!-- Demo 1 -->
+                <div class="demo-box">
+                    <h3>1. Center Single Item</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                        Using <code>margin: auto</code> on a flex item centers it both horizontally and vertically.
+                    </p>
+                    <div class="demo-container demo-center-single">
+                        <div class="demo-item item-center">Centered</div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-label">CSS</div>
+                        <code>.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item {
+  margin: auto;
+}</code>
+                    </div>
+                </div>
+
+                <!-- Demo 2 -->
+                <div class="demo-box">
+                    <h3>2. Horizontal Centering</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                        Using <code>margin-left: auto; margin-right: auto;</code> for horizontal centering only.
+                    </p>
+                    <div class="demo-container demo-center-margins">
+                        <div class="demo-item item-margins">Centered H</div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-label">CSS</div>
+                        <code>.item {
+  margin-left: auto;
+  margin-right: auto;
+}</code>
+                    </div>
+                </div>
+
+                <!-- Demo 3 -->
+                <div class="demo-box">
+                    <h3>3. Push to Right</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                        Using <code>margin-left: auto</code> pushes item to the right edge.
+                    </p>
+                    <div class="demo-container demo-push-right">
+                        <div class="demo-item item-push-right">Pushed Right</div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-label">CSS</div>
+                        <code>.item {
+  margin-left: auto;
+}</code>
+                    </div>
+                </div>
+
+                <!-- Demo 4 -->
+                <div class="demo-box">
+                    <h3>4. Push to Left</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                        Using <code>margin-right: auto</code> pushes item to the left edge.
+                    </p>
+                    <div class="demo-container demo-push-left">
+                        <div class="demo-item item-push-left">Pushed Left</div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-label">CSS</div>
+                        <code>.item {
+  margin-right: auto;
+}</code>
+                    </div>
+                </div>
+
+                <!-- Demo 5 -->
+                <div class="demo-box">
+                    <h3>5. Space Distribution</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                        Multiple items with <code>margin-right: auto</code> on first creates dynamic spacing.
+                    </p>
+                    <div class="demo-container demo-space-between">
+                        <div class="demo-item item-space-between">Left</div>
+                        <div class="demo-item item-space-between">Right</div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-label">CSS</div>
+                        <code>.item {
+  margin-right: auto;
+}
+
+.item:last-child {
+  margin-right: 0;
+}</code>
+                    </div>
+                </div>
+
+                <!-- Demo 6 -->
+                <div class="demo-box">
+                    <h3>6. Vertical Centering</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                        Using <code>margin-top: auto; margin-bottom: auto;</code> for vertical centering.
+                    </p>
+                    <div class="demo-container demo-vertical">
+                        <div class="demo-item item-vertical">Centered V</div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-label">CSS</div>
+                        <code>.container {
+  flex-direction: column;
+}
+
+.item {
+  margin-top: auto;
+  margin-bottom: auto;
+}</code>
+                    </div>
+                </div>
+
+                <!-- Demo 7 -->
+                <div class="demo-box">
+                    <h3>7. Both Axes Centering</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                        Using <code>margin: auto</code> centers on both axes simultaneously.
+                    </p>
+                    <div class="demo-container demo-both-axes">
+                        <div class="demo-item item-both-axes">Perfect Center</div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-label">CSS</div>
+                        <code>.container {
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 200px;
+}
+
+.item {
+  margin: auto;
+}</code>
+                    </div>
+                </div>
+
+                <!-- Demo 8 -->
+                <div class="demo-box">
+                    <h3>8. Dynamic Spacing</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                        Spacers with <code>flex: 1; margin: auto;</code> create flexible gaps.
+                    </p>
+                    <div class="demo-container demo-complex">
+                        <div class="complex-item">Start</div>
+                        <div style="flex: 1; margin: auto; min-width: 20px;"></div>
+                        <div class="complex-item">Middle</div>
+                        <div style="flex: 1; margin: auto; min-width: 20px;"></div>
+                        <div class="complex-item">End</div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-label">CSS</div>
+                        <code>.spacer {
+  flex: 1;
+  margin: auto;
+}</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Table -->
+        <section class="section">
+            <h2>Margin Auto vs. Other Alignment Methods</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Technique</th>
+                        <th>Use Case</th>
+                        <th>Complexity</th>
+                        <th>Flexibility</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="value-cell">margin: auto</span></td>
+                        <td>Center single item or push items</td>
+                        <td>Very Simple</td>
+                        <td>Very High</td>
+                    </tr>
+                    <tr>
+                        <td><span class="value-cell">justify-content: center</span></td>
+                        <td>Align multiple items together</td>
+                        <td>Simple</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td><span class="value-cell">align-items: center</span></td>
+                        <td>Align all items on cross axis</td>
+                        <td>Simple</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td><span class="value-cell">gap + justify-content</span></td>
+                        <td>Distribute multiple items evenly</td>
+                        <td>Moderate</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td><span class="value-cell">margin: auto + flex</span></td>
+                        <td>Complex layouts with mixed sizing</td>
+                        <td>Moderate</td>
+                        <td>Very High</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Key Properties -->
+        <section class="section">
+            <h2>Margin Auto Properties Reference</h2>
+            <div class="demo-grid">
+                <div class="demo-box">
+                    <h3>margin: auto</h3>
+                    <p style="color: #666; margin-bottom: 10px;">
+                        Shorthand for all four directions. Centers item on both axes.
+                    </p>
+                    <div class="formula">
+margin: auto;
+/* Equivalent to: */
+margin-top: auto;
+margin-right: auto;
+margin-bottom: auto;
+margin-left: auto;
+                    </div>
+                </div>
+
+                <div class="demo-box">
+                    <h3>margin-left: auto</h3>
+                    <p style="color: #666; margin-bottom: 10px;">
+                        Consumes all available space on the left. Pushes item to the right.
+                    </p>
+                    <div class="formula">
+margin-left: auto;
+/* Item moves right, absorbing left space */
+                    </div>
+                </div>
+
+                <div class="demo-box">
+                    <h3>margin-right: auto</h3>
+                    <p style="color: #666; margin-bottom: 10px;">
+                        Consumes all available space on the right. Pushes item to the left.
+                    </p>
+                    <div class="formula">
+margin-right: auto;
+/* Item moves left, absorbing right space */
+                    </div>
+                </div>
+
+                <div class="demo-box">
+                    <h3>margin-top: auto</h3>
+                    <p style="color: #666; margin-bottom: 10px;">
+                        Consumes space above item in column direction.
+                    </p>
+                    <div class="formula">
+margin-top: auto;
+/* Item moves down in flex-direction: column */
+                    </div>
+                </div>
+
+                <div class="demo-box">
+                    <h3>margin-bottom: auto</h3>
+                    <p style="color: #666; margin-bottom: 10px;">
+                        Consumes space below item in column direction.
+                    </p>
+                    <div class="formula">
+margin-bottom: auto;
+/* Item moves up in flex-direction: column */
+                    </div>
+                </div>
+
+                <div class="demo-box">
+                    <h3>margin-left & margin-right</h3>
+                    <p style="color: #666; margin-bottom: 10px;">
+                        Combined for horizontal centering without vertical effect.
+                    </p>
+                    <div class="formula">
+margin-left: auto;
+margin-right: auto;
+/* Centers horizontally only */
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Patterns -->
+        <section class="section">
+            <h2>Common Patterns & Use Cases</h2>
+            <div class="content">
+                <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px;">Pattern 1: Center Single Item</h3>
+                <p>
+                    The simplest use case. Place a single item in the exact center of a flex container using <code>margin: auto</code> instead of <code>justify-content</code> and <code>align-items</code>.
+                </p>
+                <div class="code-block">
+                    <div class="code-label">HTML</div>
+                    <code>&lt;div class="flex-container"&gt;
+  &lt;div class="centered-item"&gt;Content&lt;/div&gt;
+&lt;/div&gt;</code>
+                </div>
+                <div class="code-block">
+                    <div class="code-label">CSS</div>
+                    <code>.flex-container {
+  display: flex;
+  width: 100%;
+  height: 300px;
+}
+
+.centered-item {
+  margin: auto;
+}</code>
+                </div>
+
+                <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px;">Pattern 2: Navigation with Spacing</h3>
+                <p>
+                    Use <code>margin-left: auto</code> on a middle item to push the last item to the right edge.
+                </p>
+                <div class="code-block">
+                    <div class="code-label">HTML</div>
+                    <code>&lt;nav class="navbar"&gt;
+  &lt;div class="nav-item"&gt;Home&lt;/div&gt;
+  &lt;div class="nav-item"&gt;About&lt;/div&gt;
+  &lt;div class="nav-spacer"&gt;&lt;/div&gt;
+  &lt;div class="nav-item"&gt;Login&lt;/div&gt;
+&lt;/nav&gt;</code>
+                </div>
+                <div class="code-block">
+                    <div class="code-label">CSS</div>
+                    <code>.navbar {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.nav-spacer {
+  margin-left: auto;
+}</code>
+                </div>
+
+                <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px;">Pattern 3: Split Content</h3>
+                <p>
+                    Separate content into left and right sections using <code>margin-left: auto</code> on the dividing element.
+                </p>
+                <div class="code-block">
+                    <div class="code-label">CSS</div>
+                    <code>.header {
+  display: flex;
+  align-items: center;
+}
+
+.header-left {
+  /* Default positioning */
+}
+
+.header-divider {
+  margin-left: auto;
+}
+
+.header-right {
+  /* Pushed to right edge */
+}</code>
+                </div>
+
+                <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px;">Pattern 4: Vertical Alignment</h3>
+                <p>
+                    For column-based layouts, use <code>margin-top: auto</code> and <code>margin-bottom: auto</code> to vertically center items.
+                </p>
+                <div class="code-block">
+                    <div class="code-label">CSS</div>
+                    <code>.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+.sidebar-middle {
+  margin-top: auto;
+  margin-bottom: auto;
+}</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tips & Best Practices -->
+        <section class="section">
+            <h2>Tips & Best Practices</h2>
+            
+            <div class="tips-box">
+                <h4>✓ Do Use margin: auto for Single Items</h4>
+                <p>
+                    When centering a single flex item, <code>margin: auto</code> is cleaner and more semantic than combining <code>justify-content</code> and <code>align-items</code>.
+                </p>
+            </div>
+
+            <div class="tips-box">
+                <h4>✓ Do Combine with flex Property</h4>
+                <p>
+                    Combine <code>margin: auto</code> with the <code>flex</code> property to create flexible, responsive layouts that adapt to different screen sizes.
+                </p>
+            </div>
+
+            <div class="tips-box">
+                <h4>✓ Do Use margin-left: auto for Navigation</h4>
+                <p>
+                    For navigation bars, apply <code>margin-left: auto</code> to create space between primary and secondary menu items without using pseudo-elements or extra containers.
+                </p>
+            </div>
+
+            <div class="tips-box">
+                <h4>✓ Do Remember Direction Matters</h4>
+                <p>
+                    In <code>flex-direction: row</code>, use <code>margin-left</code> and <code>margin-right</code>. In <code>flex-direction: column</code>, use <code>margin-top</code> and <code>margin-bottom</code>.
+                </p>
+            </div>
+
+            <div class="tips-box" style="background: #f8d7da; border-left-color: #dc3545;">
+                <h4 style="color: #721c24;">✗ Don't Use Negative Margins</h4>
+                <p style="color: #721c24;">
+                    Avoid using negative margins with flexbox. Use <code>margin: auto</code> instead for cleaner, more predictable layouts.
+                </p>
+            </div>
+
+            <div class="tips-box" style="background: #f8d7da; border-left-color: #dc3545;">
+                <h4 style="color: #721c24;">✗ Don't Mix margin: auto with justify-content</h4>
+                <p style="color: #721c24;">
+                    When using <code>margin: auto</code>, avoid also using <code>justify-content</code> on the same item. They can conflict and produce unexpected results.
+                </p>
+            </div>
+
+            <div class="tips-box" style="background: #f8d7da; border-left-color: #dc3545;">
+                <h4 style="color: #721c24;">✗ Don't Forget min-width on Flex Items</h4>
+                <p style="color: #721c24;">
+                    When text content might overflow, add <code>min-width: 0</code> to flex items using <code>margin: auto</code> to allow text wrapping.
+                </p>
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="section">
+            <h2>Browser Support</h2>
+            <div class="content">
+                <p>
+                    Margin auto with flexbox is supported in all modern browsers:
+                </p>
+                <ul style="color: #555; line-height: 2; padding-left: 25px; margin-bottom: 15px;">
+                    <li>✓ Chrome 21+</li>
+                    <li>✓ Firefox 18+</li>
+                    <li>✓ Safari 6.1+</li>
+                    <li>✓ Edge (all versions)</li>
+                    <li>✓ IE 11</li>
+                    <li>✓ Opera 12.1+</li>
+                    <li>✓ All modern mobile browsers</li>
+                </ul>
+                <p>
+                    <strong>No prefixes required.</strong> This is a stable, widely-supported feature of the CSS Flexbox specification.
+                </p>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="section">
+            <h2>Key Takeaways</h2>
+            <ul class="pattern-list">
+                <li><strong>margin: auto</strong> distributes available space equally around a flex item</li>
+                <li>Works on both main axis and cross axis for ultimate positioning control</li>
+                <li>Simpler and more semantic than combining multiple alignment properties</li>
+                <li><strong>margin-left: auto</strong> pushes items to the right; <strong>margin-right: auto</strong> pushes to the left</li>
+                <li>Perfect for navigation bars, split layouts, and centered content</li>
+                <li>Can be combined with <code>flex</code> property for responsive designs</li>
+                <li>Supported in all modern browsers without prefixes</li>
+                <li>More intuitive than <code>justify-content</code> for single-item centering</li>
+            </ul>
+        </section>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox - Nested Flex Containers - Complete Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            font-style: italic;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section h2 {
+            color: #4facfe;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 3px solid #4facfe;
+            padding-bottom: 10px;
+        }
+
+        .content {
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .highlight {
+            background: #e0f7ff;
+            padding: 15px;
+            border-left: 4px solid #4facfe;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .highlight strong {
+            color: #4facfe;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .demo-box {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #4facfe;
+        }
+
+        .demo-box h3 {
+            color: #4facfe;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .demo-container {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            min-height: 150px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .nested-flex {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #e0f7ff;
+            padding: 12px;
+            border-radius: 6px;
+            flex: 1;
+            border: 2px dashed #4facfe;
+        }
+
+        .nested-item {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .code-label {
+            font-size: 0.85rem;
+            color: #858585;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .concept-box {
+            background: #e0f7ff;
+            border: 2px solid #4facfe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .concept-box h4 {
+            color: #4facfe;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .concept-box p {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .level-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #4facfe;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .hierarchy-chart {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #4facfe;
+        }
+
+        .hierarchy-item {
+            padding: 10px 0;
+            color: #333;
+            margin-left: 20px;
+            position: relative;
+        }
+
+        .hierarchy-item:before {
+            content: "├─";
+            position: absolute;
+            left: -15px;
+            color: #4facfe;
+            font-weight: bold;
+        }
+
+        .pattern-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .pattern-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .pattern-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4facfe;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+
+        table th,
+        table td {
+            border: 2px solid #ddd;
+            padding: 15px;
+            text-align: left;
+        }
+
+        table th {
+            background: #4facfe;
+            color: white;
+            font-weight: 600;
+        }
+
+        table tr:nth-child(even) {
+            background: #f0f9ff;
+        }
+
+        table tr:hover {
+            background: #e0f7ff;
+        }
+
+        .tips-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .tips-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .tips-box p {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .tips-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-container {
+                min-height: 120px;
+            }
+        }
+
+        /* Level colors */
+        .level-1 { border-left: 4px solid #ff6b6b; }
+        .level-2 { border-left: 4px solid #4facfe; }
+        .level-3 { border-left: 4px solid #43e97b; }
+        .level-4 { border-left: 4px solid #f5a623; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Flexbox - Nested Flex Containers</h1>
+            <p>Master Complex Layouts with Multiple Flex Levels</p>
+            <p class="subtitle">Complete tutorial with hierarchy explanations</p>
+        </header>
+
+        <!-- Introduction -->
+        <section class="section">
+            <h2>What Are Nested Flex Containers?</h2>
+            <div class="content">
+                <p>
+                    <strong>Nested flex containers</strong> occur when a flex item inside one flex container is itself a flex container. This creates multiple layers of flex layout rules working together, allowing you to build sophisticated, responsive layouts with minimal code.
+                </p>
+                <p>
+                    Think of it as a hierarchy: the outer container controls how flex items are distributed, and inner containers (which are also flex items) control how their children are distributed, and so on.
+                </p>
+
+                <div class="highlight">
+                    <strong>Key Insight:</strong> Each level of nesting maintains its own flex properties (direction, justify-content, align-items, gap, etc.), creating a powerful system for organizing complex layouts.
+                </div>
+
+                <p>
+                    Nested flexbox is the foundation of modern responsive design. Almost every sophisticated layout uses multiple levels of flex containers working in harmony.
+                </p>
+            </div>
+        </section>
+
+        <!-- Hierarchy -->
+        <section class="section">
+            <h2>Understanding Flex Hierarchy</h2>
+            <div class="content">
+                <p>
+                    When you nest flex containers, you create a hierarchy where each level has its own flex properties and rules.
+                </p>
+
+                <div class="hierarchy-chart">
+                    <p style="color: #4facfe; font-weight: 700; margin-bottom: 15px;">Flex Hierarchy Example:</p>
+                    <div class="hierarchy-item" style="margin-left: 0;">
+                        <strong>.outer-container</strong> (display: flex; flex-direction: row)
+                    </div>
+                    <div class="hierarchy-item">
+                        <strong>.flex-item-1</strong> (flex: 1) ← Also a flex container!
+                    </div>
+                    <div class="hierarchy-item" style="margin-left: 50px;">
+                        .nested-item-1 (flex: 1)
+                    </div>
+                    <div class="hierarchy-item" style="margin-left: 50px;">
+                        .nested-item-2 (flex: 2)
+                    </div>
+                    <div class="hierarchy-item">
+                        <strong>.flex-item-2</strong> (flex: 1) ← Also a flex container!
+                    </div>
+                    <div class="hierarchy-item" style="margin-left: 50px;">
+                        .nested-item-3 (flex: 1)
+                    </div>
+                </div>
+
+                <p>
+                    In this example:
+                </p>
+                <ul style="color: #555; line-height: 2; padding-left: 25px; margin-bottom: 15px;">
+                    <li><strong>Level 1:</strong> .outer-container arranges .flex-item-1 and .flex-item-2 horizontally</li>
+                    <li><strong>Level 2:</strong> .flex-item-1 arranges its children (.nested-item-1 and .nested-item-2) independently</li>
+                    <li><strong>Level 3:</strong> .flex-item-2 arranges its children independently</li>
+                </ul>
+
+                <p>
+                    Each level has <strong>no effect on other levels</strong>. The outer container's flex-direction doesn't force inner containers to be row-based, and vice versa. Each container is completely independent.
+                </p>
+            </div>
+        </section>
+
+        <!-- Core Concepts -->
+        <section class="section">
+            <h2>Core Concepts of Nested Flexbox</h2>
+            <div class="content">
+                <div class="concept-box">
+                    <h4>1. Independence</h4>
+                    <p>
+                        Each flex container's layout is completely independent. An inner flex container's properties don't cascade to its children's flex properties.
+                    </p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>2. Inheritance</h4>
+                    <p>
+                        While flex properties don't cascade, other CSS properties (like font-size, color, line-height) do inherit from parent containers as normal.
+                    </p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>3. Context-Aware</h4>
+                    <p>
+                        A flex item knows about its parent's flex context (what axis it's on), but its children only know about its own flex context.
+                    </p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>4. Space Distribution</h4>
+                    <p>
+                        Each level distributes space independently. The outer container can use flex-direction: row while inner containers use flex-direction: column, creating complex layouts.
+                    </p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>5. Sizing Propagation</h4>
+                    <p>
+                        The outer container's size determines how much space inner containers have to work with. Changes to the outer container cascade down through sizing.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Two-Level Nesting -->
+        <section class="section">
+            <h2>Two-Level Nested Flexbox</h2>
+            <div class="content">
+                <p>
+                    The most common nesting pattern: an outer flex container with flex items that are themselves flex containers.
+                </p>
+
+                <div class="demo-grid">
+                    <div class="demo-box">
+                        <h3>Example: Row with Columns</h3>
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                            Outer container uses row direction, inner containers use column direction.
+                        </p>
+                        <div class="demo-container" style="gap: 10px; flex-direction: row;">
+                            <div class="nested-flex" style="flex-direction: column;">
+                                <div class="nested-item">Column 1</div>
+                                <div class="nested-item">Item A</div>
+                                <div class="nested-item">Item B</div>
+                            </div>
+                            <div class="nested-flex" style="flex-direction: column;">
+                                <div class="nested-item">Column 2</div>
+                                <div class="nested-item">Item C</div>
+                            </div>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-label">HTML</div>
+                            <code>&lt;div class="outer"&gt;
+  &lt;div class="inner-1"&gt;
+    &lt;div&gt;Item A&lt;/div&gt;
+    &lt;div&gt;Item B&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="inner-2"&gt;
+    &lt;div&gt;Item C&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-label">CSS</div>
+                            <code>.outer {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.inner-1, .inner-2 {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+}</code>
+                        </div>
+                    </div>
+
+                    <div class="demo-box">
+                        <h3>Example: Sidebar + Main</h3>
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                            Fixed sidebar with flexible main content area.
+                        </p>
+                        <div class="demo-container" style="gap: 10px; flex-direction: row; height: 200px;">
+                            <div style="width: 80px; background: #e0f7ff; border: 2px dashed #4facfe; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #4facfe; font-weight: 600; font-size: 0.8rem;">SIDEBAR</div>
+                            <div class="nested-flex" style="flex-direction: column; flex: 1;">
+                                <div class="nested-item">Header</div>
+                                <div class="nested-item" style="flex: 1;">Content</div>
+                            </div>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-label">CSS</div>
+                            <code>.outer {
+  display: flex;
+  gap: 10px;
+}
+
+.sidebar {
+  flex-shrink: 0;
+  width: 200px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+}</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Three-Level Nesting -->
+        <section class="section">
+            <h2>Three-Level Nested Flexbox</h2>
+            <div class="content">
+                <p>
+                    Adding a third level creates even more sophisticated layouts. Each level can have independent flex properties.
+                </p>
+
+                <div class="concept-box">
+                    <h4>Structure Example:</h4>
+                    <p style="font-family: monospace; margin: 15px 0; padding: 15px; background: white; border-radius: 4px;">
+                        Level 1: &lt;div display: flex; flex-direction: row&gt;<br>
+                        └─ Level 2: &lt;div display: flex; flex-direction: column&gt;<br>
+                        &nbsp;&nbsp;&nbsp;└─ Level 3: &lt;div display: flex; flex-direction: row&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ Content items
+                    </p>
+                </div>
+
+                <p>
+                    This pattern is perfect for complex layouts like:
+                </p>
+                <ul style="color: #555; line-height: 2; padding-left: 25px; margin-bottom: 15px;">
+                    <li>Dashboard with header → sidebar → content grid</li>
+                    <li>Blog with header → sidebar + main → article + comments</li>
+                    <li>Admin panel with top nav → left menu → main area → modals</li>
+                </ul>
+
+                <div class="code-block">
+                    <div class="code-label">Three-Level Example</div>
+                    <code>/* Level 1: Full Page Container */
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Level 2: Header + Main Area */
+.header { /* ... */ }
+.main {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+/* Level 3: Sidebar + Content */
+.sidebar { flex-shrink: 0; }
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Level 4: Content Grid */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Patterns -->
+        <section class="section">
+            <h2>Common Nested Flexbox Patterns</h2>
+            <div class="content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pattern</th>
+                            <th>Nesting Levels</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sidebar Layout</strong></td>
+                            <td>2 levels</td>
+                            <td>Fixed sidebar with flexible main content area</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Header + Sidebar + Main</strong></td>
+                            <td>3 levels</td>
+                            <td>Full page layout with header, sidebar, and content</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Card Grid</strong></td>
+                            <td>2 levels</td>
+                            <td>Grid of cards with flexible content inside</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Columns Layout</strong></td>
+                            <td>2 levels</td>
+                            <td>Multiple columns with independent content</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Split Pane</strong></td>
+                            <td>2 levels</td>
+                            <td>Two resizable or fixed panes side-by-side</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dashboard</strong></td>
+                            <td>3-4 levels</td>
+                            <td>Complex dashboard with multiple sections</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Direction Combinations -->
+        <section class="section">
+            <h2>Direction Combinations in Nested Flexbox</h2>
+            <div class="content">
+                <p>
+                    One of the most powerful aspects of nested flexbox is combining different flex-direction values at different levels.
+                </p>
+
+                <div class="demo-grid">
+                    <div class="demo-box">
+                        <h3>Row → Column</h3>
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                            Items arranged horizontally contain vertically-arranged children.
+                        </p>
+                        <div style="display: flex; gap: 8px; background: white; padding: 12px; border-radius: 6px;">
+                            <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                                <div style="height: 30px; background: #4facfe; border-radius: 4px; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">A</div>
+                                <div style="height: 30px; background: #00f2fe; border-radius: 4px; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">B</div>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                                <div style="height: 30px; background: #4facfe; border-radius: 4px; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">C</div>
+                                <div style="height: 30px; background: #00f2fe; border-radius: 4px; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">D</div>
+                            </div>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-label">CSS</div>
+                            <code>.outer {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 6px;
+}</code>
+                        </div>
+                    </div>
+
+                    <div class="demo-box">
+                        <h3>Column → Row</h3>
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                            Items arranged vertically contain horizontally-arranged children.
+                        </p>
+                        <div style="display: flex; flex-direction: column; gap: 8px; background: white; padding: 12px; border-radius: 6px;">
+                            <div style="display: flex; gap: 6px;">
+                                <div style="flex: 1; height: 30px; background: #4facfe; border-radius: 4px; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">A</div>
+                                <div style="flex: 1; height: 30px; background: #00f2fe; border-radius: 4px; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">B</div>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <div style="flex: 1; height: 30px; background: #4facfe; border-radius: 4px; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">C</div>
+                                <div style="flex: 1; height: 30px; background: #00f2fe; border-radius: 4px; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">D</div>
+                            </div>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-label">CSS</div>
+                            <code>.outer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+}</code>
+                        </div>
+                    </div>
+
+                    <div class="demo-box">
+                        <h3>Row → Column → Row</h3>
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                            Three levels of nested flex with alternating directions.
+                        </p>
+                        <div style="display: flex; gap: 8px; background: white; padding: 12px; border-radius: 6px;">
+                            <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+                                <div style="display: flex; gap: 3px; height: 24px;">
+                                    <div style="flex: 1; background: #4facfe; border-radius: 2px;"></div>
+                                    <div style="flex: 1; background: #00f2fe; border-radius: 2px;"></div>
+                                </div>
+                                <div style="display: flex; gap: 3px; height: 24px;">
+                                    <div style="flex: 1; background: #4facfe; border-radius: 2px;"></div>
+                                    <div style="flex: 1; background: #00f2fe; border-radius: 2px;"></div>
+                                </div>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+                                <div style="display: flex; gap: 3px; height: 24px;">
+                                    <div style="flex: 1; background: #4facfe; border-radius: 2px;"></div>
+                                    <div style="flex: 1; background: #00f2fe; border-radius: 2px;"></div>
+                                </div>
+                                <div style="display: flex; gap: 3px; height: 24px;">
+                                    <div style="flex: 1; background: #4facfe; border-radius: 2px;"></div>
+                                    <div style="flex: 1; background: #00f2fe; border-radius: 2px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-label">CSS</div>
+                            <code>.level-1 { flex-direction: row; }
+.level-2 { flex-direction: column; }
+.level-3 { flex-direction: row; }</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alignment Properties in Nesting -->
+        <section class="section">
+            <h2>Alignment Properties in Nested Flexbox</h2>
+            <div class="content">
+                <p>
+                    Each level of nesting can have its own alignment properties. They don't conflict because they apply to different flex contexts.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-label">Example: Independent Alignment at Each Level</div>
+                    <code>/* Level 1: Outer alignment */
+.outer {
+  display: flex;
+  justify-content: space-between; /* Space outer items */
+  align-items: flex-start;         /* Top-align outer items */
+}
+
+/* Level 2: Inner alignment */
+.inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* Center items vertically */
+  align-items: center;      /* Center items horizontally */
+  gap: 10px;
+}
+
+/* Each level operates independently */</code>
+                </div>
+
+                <p style="margin-top: 20px;">
+                    In this example:
+                </p>
+                <ul style="color: #555; line-height: 2; padding-left: 25px; margin-bottom: 15px;">
+                    <li>The outer container spaces its items horizontally and top-aligns them</li>
+                    <li>The inner containers center their own children both horizontally and vertically</li>
+                    <li>These alignment rules don't interfere with each other</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Responsive Nesting -->
+        <section class="section">
+            <h2>Responsive Nested Flexbox</h2>
+            <div class="content">
+                <p>
+                    One major advantage of nested flexbox is responsive design. You can change flex-direction, flex properties, and gap values at different breakpoints.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-label">Responsive Pattern Example</div>
+                    <code>/* Desktop: Sidebar + Main Content */
+.page {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.sidebar {
+  flex-shrink: 0;
+  width: 250px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+}
+
+/* Tablet: Stack but maintain sidebars */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 200px;
+  }
+}
+
+/* Mobile: Stack everything vertically */
+@media (max-width: 768px) {
+  .page {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-shrink: 1;
+  }
+}</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="section">
+            <h2>Best Practices for Nested Flexbox</h2>
+
+            <div class="tips-box">
+                <h4>✓ Use Meaningful Container Names</h4>
+                <p>
+                    Name containers based on their purpose (header, sidebar, main, card-grid) rather than flex-specific terms. This makes code more readable and maintainable.
+                </p>
+            </div>
+
+            <div class="tips-box">
+                <h4>✓ Keep Nesting Shallow When Possible</h4>
+                <p>
+                    While nested flexbox is powerful, 3-4 levels is typically enough. Beyond that, consider using CSS Grid for the outer levels.
+                </p>
+            </div>
+
+            <div class="tips-box">
+                <h4>✓ Use Gap for Consistent Spacing</h4>
+                <p>
+                    Use <code>gap</code> property at each level instead of margins. This creates consistent, predictable spacing that's easier to adjust across all flex items.
+                </p>
+            </div>
+
+            <div class="tips-box">
+                <h4>✓ Combine with CSS Grid When Appropriate</h4>
+                <p>
+                    For complex multi-dimensional layouts, consider using CSS Grid for the outer level and flexbox for inner levels. They work well together.
+                </p>
+            </div>
+
+            <div class="tips-box">
+                <h4>✓ Remember flex: 1 Means "Take Available Space"</h4>
+                <p>
+                    When a flex item is also a flex container, <code>flex: 1</code> means both "grow to fill space" and "become the parent flex context" for its children.
+                </p>
+            </div>
+
+            <div class="tips-box" style="background: #f8d7da; border-left-color: #dc3545;">
+                <h4 style="color: #721c24;">✗ Don't Forget min-width: 0</h4>
+                <p style="color: #721c24;">
+                    When nesting flex containers with text content, add <code>min-width: 0</code> to allow text wrapping. Without it, text can overflow.
+                </p>
+            </div>
+
+            <div class="tips-box" style="background: #f8d7da; border-left-color: #dc3545;">
+                <h4 style="color: #721c24;">✗ Don't Apply Conflicting Margins</h4>
+                <p style="color: #721c24;">
+                    Use gap for spacing between flex items. Combining gap with margins can create unpredictable spacing in nested layouts.
+                </p>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="section">
+            <h2>Key Takeaways</h2>
+            <ul class="pattern-list">
+                <li>Nested flexbox occurs when flex items are also flex containers</li>
+                <li>Each level maintains complete independence with its own flex properties</li>
+                <li>Different levels can use different flex-directions (row, column)</li>
+                <li>Alignment properties at each level don't interfere with other levels</li>
+                <li>Perfect for complex layouts: sidebars, dashboards, multi-column designs</li>
+                <li>Responsive design is easier with nested flexbox than with floats or absolute positioning</li>
+                <li>Keep nesting shallow (3-4 levels) for maintainability</li>
+                <li>Combine with CSS Grid for even more sophisticated layouts</li>
+                <li>Use gap property for consistent spacing across all nesting levels</li>
+                <li>Remember that nested flex items inherit sizing but not flex properties from parents</li>
+            </ul>
+        </section>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox vs Grid Comparison</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; min-height: 100vh; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); overflow: hidden; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        main { padding: 40px; }
+        section { margin-bottom: 40px; }
+        h2 { color: #667eea; font-size: 1.8em; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #667eea; }
+        h3 { color: #764ba2; font-size: 1.3em; margin-top: 25px; margin-bottom: 15px; }
+        p { margin-bottom: 15px; line-height: 1.8; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 20px 0; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+        .comparison-table th { background: #667eea; color: white; padding: 15px; text-align: left; font-weight: bold; }
+        .comparison-table td { padding: 12px 15px; border-bottom: 1px solid #eee; }
+        .comparison-table tr:hover { background: #f5f5f5; }
+        .pro-tip { background: #e8f4f8; border-left: 4px solid #06b6d4; padding: 15px; margin: 20px 0; border-radius: 4px; color: #0d47a1; }
+        .code-block { background: #f5f5f5; border-left: 4px solid #667eea; padding: 15px; margin: 20px 0; border-radius: 4px; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.95em; }
+        footer { background: #f5f5f5; padding: 20px; text-align: center; color: #666; border-top: 1px solid #ddd; margin-top: 40px; }
+        code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; color: #764ba2; }
+        ul { margin-left: 20px; margin-bottom: 15px; }
+        li { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Flexbox vs Grid</h1>
+            <p>Comprehensive Comparison Guide</p>
+        </header>
+        <main>
+            <section>
+                <h2>When to Use Each</h2>
+                <p><strong>Flexbox:</strong> One-dimensional layouts (rows OR columns)</p>
+                <p><strong>Grid:</strong> Two-dimensional layouts (rows AND columns together)</p>
+            </section>
+
+            <section>
+                <h2>Detailed Comparison</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Flexbox</th>
+                            <th>Grid</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dimensions</strong></td>
+                            <td>1D (row OR column)</td>
+                            <td>2D (rows AND columns)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Layout Type</strong></td>
+                            <td>Component layout</td>
+                            <td>Page layout</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Direction Control</strong></td>
+                            <td>Main axis focused</td>
+                            <td>Both axes equally</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Item Sizing</strong></td>
+                            <td>Items size based on content</td>
+                            <td>Explicit track sizing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Space Distribution</strong></td>
+                            <td>Excellent (justify-content)</td>
+                            <td>Excellent (grid-template-columns)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Alignment</strong></td>
+                            <td>Main + cross axis</td>
+                            <td>Rows + columns + both</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Responsive</strong></td>
+                            <td>Very flexible with wrap</td>
+                            <td>Requires media queries or fr units</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h2>Use Cases</h2>
+                
+                <h3>Perfect for Flexbox:</h3>
+                <ul>
+                    <li>Navigation bars</li>
+                    <li>Button groups</li>
+                    <li>Card layouts (flexible width)</li>
+                    <li>Centering content</li>
+                    <li>Flexible spacing</li>
+                    <li>One-directional layouts</li>
+                </ul>
+
+                <h3>Perfect for Grid:</h3>
+                <ul>
+                    <li>Page layouts (header, footer, sidebar)</li>
+                    <li>Dashboard layouts</li>
+                    <li>Complex multi-column designs</li>
+                    <li>Gallery grids with fixed dimensions</li>
+                    <li>Form layouts</li>
+                    <li>Two-dimensional positioning</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Code Examples</h2>
+                
+                <h3>Flexbox: Navigation Bar</h3>
+                <div class="code-block">
+.navbar {
+    display: flex;           /* 1D layout */
+    justify-content: space-between;
+    align-items: center;
+}
+                </div>
+
+                <h3>Grid: Page Layout</h3>
+                <div class="code-block">
+body {
+    display: grid;                    /* 2D layout */
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 60px 1fr 60px;
+}
+
+header { grid-column: 1 / -1; }
+footer { grid-column: 1 / -1; }
+                </div>
+            </section>
+
+            <section>
+                <h2>Key Differences</h2>
+                
+                <h3>1. Directionality</h3>
+                <p><strong>Flexbox:</strong> Items flow in one direction (horizontal or vertical)</p>
+                <p><strong>Grid:</strong> Items can span both directions simultaneously</p>
+
+                <h3>2. Content vs Layout</h3>
+                <p><strong>Flexbox:</strong> "Content-driven" - items size based on their content</p>
+                <p><strong>Grid:</strong> "Layout-driven" - tracks define the structure</p>
+
+                <h3>3. Nesting Complexity</h3>
+                <p><strong>Flexbox:</strong> Simpler nesting, easier mental model</p>
+                <p><strong>Grid:</strong> More powerful but steeper learning curve</p>
+            </section>
+
+            <section>
+                <h2>Best Practice: Use Both!</h2>
+                <div class="pro-tip">
+                    <strong>✅ Recommendation:</strong> Use Grid for page layout and Flexbox for component layout. 
+                    They complement each other perfectly!
+                </div>
+
+                <div class="code-block">
+/* Page level: Grid */
+body {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 60px 1fr 60px;
+}
+
+/* Component level: Flexbox */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+                </div>
+            </section>
+
+            <section>
+                <h2>Quick Decision Guide</h2>
+                <ul>
+                    <li>Is it 1D? → <strong>Flexbox</strong></li>
+                    <li>Is it 2D? → <strong>Grid</strong></li>
+                    <li>Need simple component? → <strong>Flexbox</strong></li>
+                    <li>Building entire page? → <strong>Grid</strong></li>
+                    <li>Need responsive wrapping? → <strong>Flexbox</strong></li>
+                    <li>Need precise alignment? → <strong>Grid</strong></li>
+                </ul>
+            </section>
+        </main>
+        <footer>
+            <p>CSS Flexbox vs Grid Comparison | Complete Theory Guide</p>
+        </footer>
+    </div>
+</body>
+</html>

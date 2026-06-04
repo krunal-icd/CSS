@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox - Website Layouts - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .example h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .description {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .demo {
+            background: #f8f9fa;
+            padding: 0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            overflow: hidden;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+
+        .code-label {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Layout Component Styles */
+        .layout-header {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            gap: 20px;
+        }
+
+        .layout-header-brand {
+            font-weight: 700;
+            font-size: 1.2rem;
+            white-space: nowrap;
+        }
+
+        .layout-header-nav {
+            display: flex;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .layout-header-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+
+        .layout-header-nav a:hover {
+            opacity: 0.8;
+        }
+
+        .layout-header-actions {
+            display: flex;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .layout-header-action {
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .layout-header-action:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .layout-page-body {
+            display: flex;
+            gap: 0;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .layout-sidebar {
+            flex: 0 0 200px;
+            background: #e8eef7;
+            border-right: 1px solid #ddd;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .layout-sidebar-item {
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .layout-sidebar-item:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .layout-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .layout-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .layout-content-text {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .layout-footer {
+            flex: 0 0 auto;
+            background: #667eea;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            border-top: 1px solid #ddd;
+        }
+
+        /* Card Styles */
+        .card-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .card {
+            flex: 1;
+            flex-basis: 200px;
+            min-width: 0;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .card-desc {
+            color: #666;
+            font-size: 0.85rem;
+            flex: 1;
+        }
+
+        .card-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .card-button:hover {
+            background: #764ba2;
+        }
+
+        /* Split Layout */
+        .split-left {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .split-left h3 {
+            font-size: 1.5rem;
+        }
+
+        .split-right {
+            flex: 1;
+            background: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        .split-right h3 {
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .split-right p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex-wrap: wrap;
+        }
+
+        .hero-content {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .hero-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .hero-content p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+
+        .hero-image {
+            flex: 1;
+            min-width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        /* Two Column with Sidebar */
+        .two-col-layout {
+            display: flex;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        .two-col-sidebar {
+            flex: 0 0 180px;
+            background: #e8eef7;
+            padding: 15px;
+            overflow-y: auto;
+            border-right: 1px solid #ddd;
+        }
+
+        .two-col-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .two-col-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* Blog Layout */
+        .blog-layout {
+            display: flex;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        .blog-sidebar {
+            flex: 0 0 250px;
+            background: #f8f9fa;
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid #ddd;
+        }
+
+        .blog-sidebar-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .blog-sidebar-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .blog-sidebar-item {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            cursor: pointer;
+        }
+
+        .blog-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .blog-article {
+            padding: 30px;
+            color: #555;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .layout-sidebar {
+                flex: 0 0 150px;
+            }
+
+            .layout-header-nav {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .layout-page-body {
+                flex-direction: column;
+            }
+
+            .layout-sidebar {
+                flex: 0 0 auto;
+                max-height: 150px;
+                flex-direction: row;
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                overflow-x: auto;
+            }
+
+            .hero-section {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .split-left,
+            .split-right {
+                flex: 1;
+                padding: 30px;
+            }
+
+            .two-col-layout,
+            .blog-layout {
+                flex-direction: column;
+            }
+
+            .two-col-sidebar,
+            .blog-sidebar {
+                flex: 0 0 auto;
+                max-height: 150px;
+                flex-direction: row;
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                overflow-x: auto;
+            }
+        }
+
+        .sidebar-item {
+            padding: 8px 12px;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+            color: #667eea;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Flexbox - Website Layouts</h1>
+            <p>Practical Real-World Layout Examples</p>
+        </header>
+
+        <!-- Example 1: Full Page Layout -->
+        <div class="example">
+            <h2>1. Classic Full-Page Layout</h2>
+            <p class="description">
+                Header + Sidebar + Main Content + Footer. Standard layout for most web applications.
+            </p>
+            <div class="demo">
+                <div style="display: flex; flex-direction: column; height: 100%;">
+                    <div class="layout-header">
+                        <div class="layout-header-brand">📱 App</div>
+                        <div class="layout-header-nav">
+                            <a>Dashboard</a>
+                            <a>Analytics</a>
+                            <a>Settings</a>
+                        </div>
+                        <div class="layout-header-actions">
+                            <div class="layout-header-action">Profile</div>
+                        </div>
+                    </div>
+                    <div class="layout-page-body">
+                        <div class="layout-sidebar">
+                            <div class="layout-sidebar-item">Dashboard</div>
+                            <div class="layout-sidebar-item">Analytics</div>
+                            <div class="layout-sidebar-item">Reports</div>
+                            <div class="layout-sidebar-item">Settings</div>
+                        </div>
+                        <div class="layout-main">
+                            <div class="layout-content">
+                                <div class="layout-content-text">
+                                    Main content area. This layout uses flexbox at multiple levels to create a responsive page structure that adapts to different screen sizes.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layout-footer">
+                        © 2026 Your Company. All rights reserved.
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS Structure</div>
+                <code>body { display: flex; flex-direction: column; height: 100vh; }
+header { flex: 0 0 auto; }
+.page-body { display: flex; flex: 1; }
+.sidebar { flex: 0 0 200px; }
+.main { flex: 1; }
+footer { flex: 0 0 auto; }</code>
+            </div>
+        </div>
+
+        <!-- Example 2: Card Grid Layout -->
+        <div class="example">
+            <h2>2. Responsive Card Grid</h2>
+            <p class="description">
+                Flexible card grid that adapts from 1 to N columns based on available space.
+            </p>
+            <div class="demo">
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-title">Product 1</div>
+                        <div class="card-desc">High-quality product with premium features</div>
+                        <button class="card-button">View</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Product 2</div>
+                        <div class="card-desc">Popular choice among customers</div>
+                        <button class="card-button">View</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Product 3</div>
+                        <div class="card-desc">Best seller in this category</div>
+                        <button class="card-button">View</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Product 4</div>
+                        <div class="card-desc">New arrival with latest features</div>
+                        <button class="card-button">View</button>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.card-grid { display: flex; flex-wrap: wrap; gap: 20px; }
+.card { flex: 1; flex-basis: 200px; min-width: 0; }</code>
+            </div>
+        </div>
+
+        <!-- Example 3: Split Layout -->
+        <div class="example">
+            <h2>3. Split Content Layout</h2>
+            <p class="description">
+                Two-column layout with equal or proportional width sections.
+            </p>
+            <div class="demo" style="overflow: hidden;">
+                <div style="display: flex; height: 100%;">
+                    <div class="split-left">
+                        <h3>Features</h3>
+                        <p>✓ Lightning fast performance</p>
+                        <p>✓ Fully responsive design</p>
+                        <p>✓ Secure & reliable</p>
+                    </div>
+                    <div class="split-right">
+                        <h3>Learn More</h3>
+                        <p>Our product is designed to meet the needs of modern web development. Built with cutting-edge technologies and best practices.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code">.split-layout { display: flex; }
+.split-left { flex: 1; }
+.split-right { flex: 1; }</code>
+            </div>
+        </div>
+
+        <!-- Example 4: Hero Section -->
+        <div class="example">
+            <h2>4. Hero Section with Image</h2>
+            <p class="description">
+                Large banner section with text on left, image on right. Stacks on mobile.
+            </p>
+            <div class="demo" style="overflow: hidden;">
+                <div class="hero-section">
+                    <div class="hero-content">
+                        <h2>Welcome to Our Service</h2>
+                        <p>Build amazing websites with flexbox layouts. Responsive, accessible, and production-ready.</p>
+                    </div>
+                    <div class="hero-image">📊</div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.hero { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }</code>
+            </div>
+        </div>
+
+        <!-- Example 5: Two-Column with Sidebar -->
+        <div class="example">
+            <h2>5. Two-Column with Sidebar</h2>
+            <p class="description">
+                Sidebar navigation with two-column main content area.
+            </p>
+            <div class="demo">
+                <div class="two-col-layout">
+                    <div class="two-col-sidebar">
+                        <div class="sidebar-item">Category 1</div>
+                        <div class="sidebar-item">Category 2</div>
+                        <div class="sidebar-item">Category 3</div>
+                        <div class="sidebar-item">Category 4</div>
+                    </div>
+                    <div class="two-col-main">
+                        <div class="two-col-content">
+                            <div style="display: flex; gap: 20px; flex: 1; overflow-y: auto;">
+                                <div style="flex: 1; background: #f0f4ff; padding: 15px; border-radius: 8px; font-size: 0.9rem; color: #667eea;">
+                                    Column 1 Content
+                                </div>
+                                <div style="flex: 1; background: #f0f4ff; padding: 15px; border-radius: 8px; font-size: 0.9rem; color: #667eea;">
+                                    Column 2 Content
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.layout { display: flex; }
+.sidebar { flex: 0 0 200px; }
+.main { display: flex; flex: 1; }</code>
+            </div>
+        </div>
+
+        <!-- Example 6: Blog Layout -->
+        <div class="example">
+            <h2>6. Blog with Sidebar</h2>
+            <p class="description">
+                Article in main area with sidebar for navigation, categories, and widgets.
+            </p>
+            <div class="demo">
+                <div class="blog-layout">
+                    <div class="blog-sidebar">
+                        <div class="blog-sidebar-box">
+                            <div class="blog-sidebar-title">Categories</div>
+                            <div class="blog-sidebar-item">• Technology</div>
+                            <div class="blog-sidebar-item">• Design</div>
+                            <div class="blog-sidebar-item">• Business</div>
+                        </div>
+                        <div class="blog-sidebar-box">
+                            <div class="blog-sidebar-title">Recent Posts</div>
+                            <div class="blog-sidebar-item">• Post 1</div>
+                            <div class="blog-sidebar-item">• Post 2</div>
+                            <div class="blog-sidebar-item">• Post 3</div>
+                        </div>
+                    </div>
+                    <div class="blog-main">
+                        <div class="blog-article">
+                            <h3 style="color: #667eea; margin-bottom: 10px;">Article Title</h3>
+                            <p>This is the main article content area. The layout uses flexbox to create a responsive two-column design with sidebar and main content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.blog-layout { display: flex; gap: 20px; }
+.sidebar { flex: 0 0 250px; }
+.main { flex: 1; overflow-y: auto; }</code>
+            </div>
+        </div>
+
+        <!-- Example 7: Dashboard Grid -->
+        <div class="example">
+            <h2>7. Dashboard with Grid Layout</h2>
+            <p class="description">
+                Dashboard with multiple stat cards in flexible grid.
+            </p>
+            <div class="demo">
+                <div style="padding: 20px; overflow-y: auto; flex: 1;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                        <div style="flex: 1; flex-basis: 150px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Revenue</div>
+                            <div style="font-size: 1.5rem; font-weight: 700;">$45K</div>
+                        </div>
+                        <div style="flex: 1; flex-basis: 150px; background: linear-gradient(135deg, #f093fb, #f5576c); color: white; padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Users</div>
+                            <div style="font-size: 1.5rem; font-weight: 700;">2,547</div>
+                        </div>
+                        <div style="flex: 1; flex-basis: 150px; background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Orders</div>
+                            <div style="font-size: 1.5rem; font-weight: 700;">1,234</div>
+                        </div>
+                        <div style="flex: 1; flex-basis: 150px; background: linear-gradient(135deg, #43e97b, #38f9d7); color: white; padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Growth</div>
+                            <div style="font-size: 1.5rem; font-weight: 700;">+42%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.dashboard { display: flex; flex-wrap: wrap; gap: 15px; }
+.stat-card { flex: 1; flex-basis: 150px; min-width: 0; }</code>
+            </div>
+        </div>
+
+        <!-- Example 8: Masonry-like Layout -->
+        <div class="example">
+            <h2>8. Multi-Sized Card Layout</h2>
+            <p class="description">
+                Cards with different flex values to create visual hierarchy.
+            </p>
+            <div class="demo">
+                <div style="display: flex; flex-wrap: wrap; gap: 15px; padding: 20px; overflow-y: auto;">
+                    <div style="flex: 2; flex-basis: 250px; min-width: 0; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Featured</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9;">This card takes twice the space</div>
+                    </div>
+                    <div style="flex: 1; flex-basis: 150px; background: #f0f4ff; color: #667eea; padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; text-align: center;">
+                        <div style="font-weight: 600;">Card 1</div>
+                    </div>
+                    <div style="flex: 1; flex-basis: 150px; background: #f0f4ff; color: #667eea; padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; text-align: center;">
+                        <div style="font-weight: 600;">Card 2</div>
+                    </div>
+                    <div style="flex: 1; flex-basis: 150px; background: #f0f4ff; color: #667eea; padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; text-align: center;">
+                        <div style="font-weight: 600;">Card 3</div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.featured { flex: 2; }
+.regular { flex: 1; }</code>
+            </div>
+        </div>
+
+        <!-- Example 9: Header Navigation -->
+        <div class="example">
+            <h2>9. Header with Responsive Navigation</h2>
+            <p class="description">
+                Header that adapts from full navigation to mobile-friendly layout.
+            </p>
+            <div class="demo" style="overflow: hidden;">
+                <div class="layout-header">
+                    <div class="layout-header-brand">🌟 Brand</div>
+                    <div class="layout-header-nav">
+                        <a>Home</a>
+                        <a>Products</a>
+                        <a>Pricing</a>
+                        <a>About</a>
+                    </div>
+                    <div class="layout-header-actions">
+                        <div class="layout-header-action">Login</div>
+                        <div class="layout-header-action">Sign Up</div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.header { display: flex; align-items: center; gap: 20px; }
+.brand { flex: 0 0 auto; }
+.nav { flex: 1; display: flex; gap: 20px; }
+.actions { flex: 0 0 auto; }</code>
+            </div>
+        </div>
+
+        <!-- Example 10: Footer -->
+        <div class="example">
+            <h2>10. Multi-Column Footer</h2>
+            <p class="description">
+                Footer with multiple columns that stack on mobile.
+            </p>
+            <div class="demo" style="overflow: hidden;">
+                <div style="background: #667eea; color: white; padding: 30px; display: flex; flex-wrap: wrap; gap: 30px; flex: 1;">
+                    <div style="flex: 1; flex-basis: 180px;">
+                        <div style="font-weight: 700; margin-bottom: 12px;">Product</div>
+                        <div style="font-size: 0.9rem; line-height: 1.8; opacity: 0.9;">
+                            <div style="cursor: pointer;">Features</div>
+                            <div style="cursor: pointer;">Pricing</div>
+                            <div style="cursor: pointer;">Security</div>
+                        </div>
+                    </div>
+                    <div style="flex: 1; flex-basis: 180px;">
+                        <div style="font-weight: 700; margin-bottom: 12px;">Company</div>
+                        <div style="font-size: 0.9rem; line-height: 1.8; opacity: 0.9;">
+                            <div style="cursor: pointer;">About</div>
+                            <div style="cursor: pointer;">Blog</div>
+                            <div style="cursor: pointer;">Careers</div>
+                        </div>
+                    </div>
+                    <div style="flex: 1; flex-basis: 180px;">
+                        <div style="font-weight: 700; margin-bottom: 12px;">Legal</div>
+                        <div style="font-size: 0.9rem; line-height: 1.8; opacity: 0.9;">
+                            <div style="cursor: pointer;">Privacy</div>
+                            <div style="cursor: pointer;">Terms</div>
+                            <div style="cursor: pointer;">Contact</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.footer { display: flex; flex-wrap: wrap; gap: 30px; }
+.column { flex: 1; flex-basis: 180px; }</code>
+            </div>
+        </div>
+
+        <!-- Example 11: Three-Column Layout -->
+        <div class="example">
+            <h2>11. Three-Column Content Layout</h2>
+            <p class="description">
+                Main content with left and right sidebars (2:1:1 ratio).
+            </p>
+            <div class="demo">
+                <div style="display: flex; gap: 15px; padding: 20px; overflow-y: auto;">
+                    <div style="flex: 2; flex-basis: 300px; background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.9rem; color: #667eea; font-weight: 600;">
+                        Main Content (2x width)
+                    </div>
+                    <div style="flex: 1; flex-basis: 150px; background: #f0f4ff; padding: 15px; border-radius: 8px; font-size: 0.9rem; color: #667eea; font-weight: 600;">
+                        Sidebar 1
+                    </div>
+                    <div style="flex: 1; flex-basis: 150px; background: #f0f4ff; padding: 15px; border-radius: 8px; font-size: 0.9rem; color: #667eea; font-weight: 600;">
+                        Sidebar 2
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.three-col { display: flex; gap: 15px; }
+.main { flex: 2; }
+.sidebar { flex: 1; }</code>
+            </div>
+        </div>
+
+        <!-- Example 12: Landing Page -->
+        <div class="example">
+            <h2>12. Landing Page Layout</h2>
+            <p class="description">
+                Full page: header + hero + features + footer with proper flex structure.
+            </p>
+            <div class="demo">
+                <div style="display: flex; flex-direction: column; height: 100%;">
+                    <div class="layout-header" style="flex: 0 0 auto;">
+                        <div class="layout-header-brand">🚀 StartUp</div>
+                        <div style="flex: 1;"></div>
+                        <div class="layout-header-action">Get Started</div>
+                    </div>
+                    <div class="hero-section" style="flex: 0 0 auto; gap: 20px;">
+                        <div class="hero-content" style="flex: 1;">
+                            <h2 style="font-size: 1.3rem;">Build Amazing Products</h2>
+                            <p style="font-size: 0.9rem;">With our platform, create professional websites in minutes.</p>
+                        </div>
+                        <div class="hero-image" style="flex: 1; font-size: 2rem;">✨</div>
+                    </div>
+                    <div style="flex: 1; padding: 20px; overflow-y: auto; background: white;">
+                        <div style="color: #667eea; font-size: 0.9rem;">Additional content area</div>
+                    </div>
+                    <div class="layout-footer" style="flex: 0 0 auto;">
+                        © 2026 Your Startup. All rights reserved.
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS Structure</div>
+                <code>body { display: flex; flex-direction: column; height: 100vh; }
+header { flex: 0 0 auto; }
+main { flex: 1; overflow-y: auto; }
+footer { flex: 0 0 auto; }</code>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

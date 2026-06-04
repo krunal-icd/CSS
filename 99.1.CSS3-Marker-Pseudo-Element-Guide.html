@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS3 ::marker Pseudo-Element - Complete Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            font-style: italic;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .content {
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .highlight {
+            background: #f0f4ff;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .highlight strong {
+            color: #667eea;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .demo-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .demo-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .code-label {
+            font-size: 0.85rem;
+            color: #858585;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 2px solid #ddd;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .comparison-table tr:hover {
+            background: #f0f4ff;
+        }
+
+        .pattern-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .pattern-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .pattern-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .concept-box {
+            background: #f0f4ff;
+            border: 2px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .concept-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .concept-box p {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .tips-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .tips-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .tips-box p {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .tips-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .demo-visual {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #f0f4ff;
+            margin: 20px 0;
+        }
+
+        /* Marker Demos */
+        li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .demo-list {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        .marker-colored li {
+            color: #555;
+        }
+
+        .marker-colored li::marker {
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .marker-emoji li::marker {
+            content: "🎯 ";
+            font-size: 1.2em;
+        }
+
+        .marker-custom li::marker {
+            color: #28a745;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .marker-font li::marker {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS3 ::marker Pseudo-Element</h1>
+            <p>Master List Marker Styling</p>
+            <p class="subtitle">Complete tutorial with practical applications</p>
+        </header>
+
+        <!-- Introduction -->
+        <section class="section">
+            <h2>What is the ::marker Pseudo-Element?</h2>
+            <div class="content">
+                <p>
+                    The <strong>::marker</strong> pseudo-element in CSS3 allows you to style the marker (bullet point, number, or custom symbol) of list items without affecting the list item content itself. Before ::marker, changing list marker appearance required removing the default list style and recreating it with pseudo-elements or extra markup.
+                </p>
+                <p>
+                    ::marker works with:
+                </p>
+                <ul style="color: #555; line-height: 2; padding-left: 25px; margin-bottom: 15px;">
+                    <li><strong>&lt;li&gt;</strong> elements in &lt;ul&gt; and &lt;ol&gt;</li>
+                    <li><strong>::before</strong> and <strong>::after</strong> on summary elements</li>
+                    <li>List markers in CSS Lists specification</li>
+                </ul>
+
+                <div class="highlight">
+                    <strong>Key Insight:</strong> ::marker gives you direct access to style the marker portion of list items independently from the content, enabling beautiful custom list designs without complex markup or JavaScript.
+                </div>
+
+                <p>
+                    Common use cases:
+                </p>
+                <ul style="color: #555; line-height: 2; padding-left: 25px; margin-bottom: 15px;">
+                    <li>Changing marker color to match your design</li>
+                    <li>Making markers bold, italic, or using specific fonts</li>
+                    <li>Replacing bullets with emoji or custom symbols</li>
+                    <li>Creating interactive numbered lists with highlights</li>
+                    <li>Building custom checklists and progress indicators</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Properties Supported -->
+        <section class="section">
+            <h2>Properties You Can Style with ::marker</h2>
+            <div class="content">
+                <p>
+                    The ::marker pseudo-element supports a limited but useful set of CSS properties:
+                </p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>color</strong></td>
+                            <td>Change marker color</td>
+                            <td><code>li::marker { color: red; }</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>font-size</strong></td>
+                            <td>Adjust marker size</td>
+                            <td><code>li::marker { font-size: 1.5em; }</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>font-weight</strong></td>
+                            <td>Make marker bold</td>
+                            <td><code>li::marker { font-weight: bold; }</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>font-family</strong></td>
+                            <td>Change marker font</td>
+                            <td><code>li::marker { font-family: monospace; }</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>font-style</strong></td>
+                            <td>Make marker italic</td>
+                            <td><code>li::marker { font-style: italic; }</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>content</strong></td>
+                            <td>Replace marker with custom content</td>
+                            <td><code>li::marker { content: "→ "; }</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>white-space</strong></td>
+                            <td>Control whitespace in marker</td>
+                            <td><code>li::marker { white-space: pre; }</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="concept-box">
+                    <h4>Properties NOT Supported</h4>
+                    <p>
+                        Some properties don't work with ::marker: background, width/height, positioning properties (margin, padding), transforms, and box-shadow. This is intentional—markers are meant to be simple, inline elements.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="section">
+            <h2>Browser Support</h2>
+            <div class="content">
+                <p>
+                    ::marker has good support in modern browsers:
+                </p>
+                <ul style="color: #555; line-height: 2; padding-left: 25px; margin-bottom: 15px;">
+                    <li>✓ Chrome 86+</li>
+                    <li>✓ Firefox 68+</li>
+                    <li>✓ Safari 12+</li>
+                    <li>✓ Edge 86+</li>
+                    <li>✗ IE 11 (not supported)</li>
+                </ul>
+                <p>
+                    <strong>Recommendation:</strong> Use ::marker freely in modern projects. For IE11 support, provide fallback styling on the list items themselves.
+                </p>
+            </div>
+        </section>
+
+        <!-- Basic Syntax -->
+        <section class="section">
+            <h2>Basic Syntax and Usage</h2>
+            <div class="content">
+                <div class="code-block">
+                    <div class="code-label">Basic Example</div>
+                    <code>/* Style unordered list markers */
+ul > li::marker {
+  color: #667eea;
+  font-weight: bold;
+}
+
+/* Style ordered list markers */
+ol > li::marker {
+  color: #28a745;
+  font-size: 1.1em;
+}
+
+/* Custom marker content */
+li::marker {
+  content: "✓ ";
+}</code>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Selector Specificity</h4>
+                    <p>
+                        You can target ::marker on specific list types: <code>ul > li::marker</code>, <code>ol > li::marker</code>, or even specific classes: <code>li.important::marker</code>. This allows different styling for different lists.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Patterns -->
+        <section class="section">
+            <h2>Advanced Patterns</h2>
+            <div class="content">
+                <div class="concept-box">
+                    <h4>Pattern 1: Color-Coded Priority Lists</h4>
+                    <p>
+                        Use ::marker color to indicate priority levels without changing the list structure:
+                    </p>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-label">Priority List Pattern</div>
+                    <code>li.high::marker {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+li.medium::marker {
+  color: #ffc107;
+  font-weight: bold;
+}
+
+li.low::marker {
+  color: #28a745;
+  font-weight: bold;
+}</code>
+                </div>
+
+                <div class="concept-box" style="margin-top: 20px;">
+                    <h4>Pattern 2: Custom Emoji Markers</h4>
+                    <p>
+                        Replace standard bullets with emoji or custom symbols:
+                    </p>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-label">Emoji Markers</div>
+                    <code">/* Checklist with checkmark emoji */
+li.done::marker {
+  content: "✅ ";
+}
+
+li.pending::marker {
+  content: "⏳ ";
+}
+
+/* Feature list with star markers */
+li.feature::marker {
+  content: "⭐ ";
+  font-size: 1.2em;
+}</code>
+                </div>
+
+                <div class="concept-box" style="margin-top: 20px;">
+                    <h4>Pattern 3: Numbered Lists with Custom Styling</h4>
+                    <p>
+                        Enhance ordered lists with custom styling and colors:
+                    </p>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-label">Enhanced Numbered Lists</div>
+                    <code">ol li::marker {
+  color: #667eea;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* Alternative: Replace numbers with letters */
+ol li::marker {
+  content: var(--item-letter) ". ";
+}</code>
+                </div>
+
+                <div class="concept-box" style="margin-top: 20px;">
+                    <h4>Pattern 4: Interactive Lists</h4>
+                    <p>
+                        Change marker on hover or focus for interactive effects:
+                    </p>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-label">Interactive Markers</div>
+                    <code">li::marker {
+  color: #667eea;
+  transition: color 0.3s ease;
+}
+
+li:hover::marker {
+  color: #764ba2;
+  font-weight: bold;
+}</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="section">
+            <h2>Practical Examples</h2>
+
+            <div class="demo-box">
+                <h3>Example 1: Colored Markers</h3>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">
+                    List with blue, bold markers
+                </p>
+                <div class="demo-visual">
+                    <ul class="demo-list marker-colored">
+                        <li>Item with styled marker</li>
+                        <li>Another item in the list</li>
+                        <li>Third item with blue marker</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="demo-box" style="margin-top: 20px;">
+                <h3>Example 2: Custom Content Markers</h3>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">
+                    List with emoji markers instead of bullets
+                </p>
+                <div class="demo-visual">
+                    <ul class="demo-list marker-emoji">
+                        <li>First goal to achieve</li>
+                        <li>Second objective on list</li>
+                        <li>Third target milestone</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="demo-box" style="margin-top: 20px;">
+                <h3>Example 3: Green Custom Markers</h3>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">
+                    List with larger, bold, green markers
+                </p>
+                <div class="demo-visual">
+                    <ul class="demo-list marker-custom">
+                        <li>Success item one</li>
+                        <li>Success item two</li>
+                        <li>Success item three</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="demo-box" style="margin-top: 20px;">
+                <h3>Example 4: Monospace Markers</h3>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">
+                    List with monospace, bold, red markers
+                </p>
+                <div class="demo-visual">
+                    <ul class="demo-list marker-font">
+                        <li>Code item one</li>
+                        <li>Code item two</li>
+                        <li>Code item three</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Limitations -->
+        <section class="section">
+            <h2>Limitations and Considerations</h2>
+            <div class="content">
+                <div class="tips-box">
+                    <h4>⚠ Limited CSS Properties</h4>
+                    <p>
+                        ::marker only accepts specific properties: color, font-*, white-space, and content. Layout properties like margin, padding, width are not supported.
+                    </p>
+                </div>
+
+                <div class="tips-box">
+                    <h4>⚠ Content Property Behavior</h4>
+                    <p>
+                        When you use <code>content</code> to replace the marker, it completely overrides the default marker. This is useful for custom symbols but requires manual numbering if needed.
+                    </p>
+                </div>
+
+                <div class="tips-box">
+                    <h4>⚠ Browser Support</h4>
+                    <p>
+                        IE11 doesn't support ::marker. For those users, the browser's default marker styling will show. Consider progressive enhancement.
+                    </p>
+                </div>
+
+                <div class="tips-box">
+                    <h4>⚠ Accessibility</h4>
+                    <p>
+                        When replacing markers with emoji or custom content, ensure the meaning is still clear to screen readers. Test with accessibility tools.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="section">
+            <h2>Best Practices</h2>
+
+            <div class="tips-box" style="background: #d1ecf1; border-left-color: #17a2b8;">
+                <h4 style="color: #0c5460;">✓ Use for Simple Styling</h4>
+                <p style="color: #0c5460;">
+                    Use ::marker for color, size, and font changes. It's perfect for these simple customizations.
+                </p>
+            </div>
+
+            <div class="tips-box" style="background: #d1ecf1; border-left-color: #17a2b8;">
+                <h4 style="color: #0c5460;">✓ Maintain Clarity</h4>
+                <p style="color: #0c5460;">
+                    Ensure custom markers are clear and meaningful. Don't sacrifice usability for design.
+                </p>
+            </div>
+
+            <div class="tips-box" style="background: #d1ecf1; border-left-color: #17a2b8;">
+                <h4 style="color: #0c5460;">✓ Test Readability</h4>
+                <p style="color: #0c5460;">
+                    Custom markers should have good contrast and be easy to distinguish from content.
+                </p>
+            </div>
+
+            <div class="tips-box" style="background: #d1ecf1; border-left-color: #17a2b8;">
+                <h4 style="color: #0c5460;">✓ Consider Accessibility</h4>
+                <p style="color: #0c5460;">
+                    Test with screen readers when using emoji or unconventional markers to ensure meaning is preserved.
+                </p>
+            </div>
+
+            <div class="tips-box" style="background: #f8d7da; border-left-color: #dc3545;">
+                <h4 style="color: #721c24;">✗ Don't Over-Complicate</h4>
+                <p style="color: #721c24;">
+                    Don't try to do complex layout with ::marker. It's meant for simple styling only.
+                </p>
+            </div>
+
+            <div class="tips-box" style="background: #f8d7da; border-left-color: #dc3545;">
+                <h4 style="color: #721c24;">✗ Don't Rely on Custom Content</h4>
+                <p style="color: #721c24;">
+                    If you replace markers with custom content, ensure it's appropriate for all contexts (lists can be copied, printed, etc.).
+                </p>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="section">
+            <h2>Key Takeaways</h2>
+            <ul class="pattern-list">
+                <li>::marker pseudo-element allows styling list markers independently</li>
+                <li>Works with color, font-size, font-weight, font-family, font-style, content, white-space</li>
+                <li>Perfect for custom bullet colors and sizes without changing HTML structure</li>
+                <li>Can replace markers with emoji or custom symbols using content property</li>
+                <li>Excellent for creating visual hierarchies (priority levels, status indicators)</li>
+                <li>Each list item's marker can be styled independently with classes</li>
+                <li>Good browser support in Chrome, Firefox, Safari, Edge (86+)</li>
+                <li>Should not be used for complex layout—use pseudo-elements for that</li>
+                <li>Consider accessibility when using custom markers</li>
+                <li>Perfect for interactive lists with hover effects on markers</li>
+            </ul>
+        </section>
+
+    </div>
+</body>
+</html>

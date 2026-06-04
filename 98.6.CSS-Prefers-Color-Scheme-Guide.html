@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>CSS prefers-color-scheme Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Light Mode Colors */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+            --accent-primary: #667eea;
+            --accent-secondary: #764ba2;
+            --success: #28a745;
+            --warning: #ff9800;
+            --danger: #dc3545;
+            --info: #17a2b8;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --shadow-hover: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Dark Mode Colors */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #1e1e1e;
+                --bg-secondary: #2d2d2d;
+                --text-primary: #e0e0e0;
+                --text-secondary: #b0b0b0;
+                --border-color: #444444;
+                --accent-primary: #bb86fc;
+                --accent-secondary: #3dd5f3;
+                --success: #4caf50;
+                --warning: #ffb74d;
+                --danger: #ef5350;
+                --info: #29b6f6;
+                --shadow: rgba(0, 0, 0, 0.3);
+                --shadow-hover: rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px var(--shadow);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .theme-indicator {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            margin-bottom: 30px;
+            border: 2px solid var(--accent-primary);
+            font-weight: 600;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .theme-indicator::before {
+                content: "☀️ Light Mode Active";
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .theme-indicator::before {
+                content: "🌙 Dark Mode Active";
+            }
+        }
+
+        .section {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .section h2 {
+            color: var(--accent-primary);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid var(--accent-primary);
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: var(--accent-secondary);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        code {
+            background: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--danger);
+        }
+
+        pre {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent-primary);
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+            color: var(--text-primary);
+        }
+
+        /* ===== DEMO STYLES ===== */
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .demo-box {
+            padding: 20px;
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .demo-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px var(--shadow-hover);
+            border-color: var(--accent-primary);
+        }
+
+        .demo-box h4 {
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+        }
+
+        .demo-box p {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+        }
+
+        /* ===== COLOR BOXES ===== */
+
+        .light-only {
+            background: #ffffff;
+            color: #333333;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            margin-top: 15px;
+            display: none;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .light-only {
+                display: block;
+            }
+        }
+
+        .dark-only {
+            background: #1e1e1e;
+            color: #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #444444;
+            margin-top: 15px;
+            display: none;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .dark-only {
+                display: block;
+            }
+        }
+
+        /* ===== UTILITY STYLES ===== */
+
+        .note {
+            background: var(--info);
+            background: color-mix(in srgb, var(--info) 20%, transparent);
+            border-left: 4px solid var(--info);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: var(--text-primary);
+        }
+
+        .warning {
+            background: var(--warning);
+            background: color-mix(in srgb, var(--warning) 20%, transparent);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: var(--text-primary);
+        }
+
+        .pros {
+            background: var(--success);
+            background: color-mix(in srgb, var(--success) 20%, transparent);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: var(--text-primary);
+        }
+
+        .cons {
+            background: var(--danger);
+            background: color-mix(in srgb, var(--danger) 20%, transparent);
+            border-left: 4px solid var(--danger);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: var(--text-primary);
+        }
+
+        /* ===== THEME DEMO ===== */
+
+        .theme-switcher {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .theme-option {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .theme-option:hover {
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        /* ===== COLOR PALETTE DEMO ===== */
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .color-swatch {
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85em;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .swatch-primary {
+            background: var(--accent-primary);
+        }
+
+        .swatch-secondary {
+            background: var(--accent-secondary);
+        }
+
+        .swatch-success {
+            background: var(--success);
+        }
+
+        .swatch-warning {
+            background: var(--warning);
+        }
+
+        .swatch-danger {
+            background: var(--danger);
+        }
+
+        .swatch-info {
+            background: var(--info);
+        }
+
+        /* ===== COMPARISON TABLE ===== */
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: var(--accent-primary);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table tr:hover {
+            background: var(--bg-secondary);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .yes {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .no {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .partial {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        /* ===== BROWSER SUPPORT ===== */
+
+        .browser-support {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .browser {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .browser.supported {
+            background: var(--success);
+            background: color-mix(in srgb, var(--success) 20%, transparent);
+            border-color: var(--success);
+        }
+
+        .browser.partial {
+            background: var(--warning);
+            background: color-mix(in srgb, var(--warning) 20%, transparent);
+            border-color: var(--warning);
+        }
+
+        .browser.unsupported {
+            background: var(--danger);
+            background: color-mix(in srgb, var(--danger) 20%, transparent);
+            border-color: var(--danger);
+        }
+
+        .browser strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .browser small {
+            display: block;
+            opacity: 0.8;
+        }
+
+        button {
+            background: var(--accent-primary);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow-hover);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* ===== CODE EXAMPLES ===== */
+
+        .example-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .example-section h4 {
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9em;
+            border-top: 1px solid var(--border-color);
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        footer a {
+            color: var(--accent-primary);
+        }
+
+        /* ===== VISUAL EXAMPLES ===== */
+
+        .theme-example {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .theme-card {
+            padding: 20px;
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+        }
+
+        .theme-card h5 {
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+        }
+
+        .theme-card p {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .theme-card .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 600;
+            background: var(--accent-primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS prefers-color-scheme</h1>
+        <p class="subtitle">Complete Guide to Light and Dark Mode Detection</p>
+
+        <div class="theme-indicator"></div>
+
+        <!-- ===== SECTION 1: Introduction ===== -->
+        <div class="section">
+            <h2>1. What is prefers-color-scheme?</h2>
+            <p>The <code>prefers-color-scheme</code> CSS media query allows you to detect whether the user has requested light or dark mode in their operating system or browser settings, and apply appropriate styles accordingly.</p>
+
+            <h3>Key Characteristics:</h3>
+            <ul>
+                <li>Detects user's OS/browser color scheme preference</li>
+                <li>Respects system-level accessibility settings</li>
+                <li>Two possible values: <code>light</code> and <code>dark</code></li>
+                <li>Works with all modern browsers</li>
+                <li>Can be combined with other media queries</li>
+                <li>Improves user experience and accessibility</li>
+            </ul>
+
+            <h3>Syntax:</h3>
+            <pre>@media (prefers-color-scheme: light) {
+    /* Styles for light mode */
+}
+
+@media (prefers-color-scheme: dark) {
+    /* Styles for dark mode */
+}</pre>
+
+            <div class="note">
+                <strong>Try it yourself:</strong> Change your system or browser color scheme preference and watch this page automatically adapt!
+            </div>
+        </div>
+
+        <!-- ===== SECTION 2: Color Scheme Meta Tag ===== -->
+        <div class="section">
+            <h2>2. color-scheme Meta Tag</h2>
+            <p>Always include the <code>color-scheme</code> meta tag in your HTML to declare which color schemes your site supports:</p>
+
+            <h3>HTML Setup:</h3>
+            <pre>&lt;meta name="color-scheme" content="light dark"&gt;</pre>
+
+            <h3>Options:</h3>
+            <ul>
+                <li><code>color-scheme: light</code> - Light mode only</li>
+                <li><code>color-scheme: dark</code> - Dark mode only</li>
+                <li><code>color-scheme: light dark</code> - Both modes supported (recommended)</li>
+            </ul>
+
+            <h3>CSS Equivalent:</h3>
+            <pre>:root {
+    color-scheme: light dark;
+}</pre>
+
+            <div class="pros">
+                <strong>Benefits:</strong>
+                <ul>
+                    <li>Browsers style form controls appropriately</li>
+                    <li>Improves default appearance</li>
+                    <li>Respects user preferences</li>
+                    <li>Reduces flash of wrong colors on page load</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 3: Basic Implementation ===== -->
+        <div class="section">
+            <h2>3. Basic Implementation</h2>
+
+            <h3>Simple Light/Dark Mode:</h3>
+            <pre>/* Light mode (default) */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --accent-color: #667eea;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1e1e1e;
+        --text-color: #e0e0e0;
+        --accent-color: #bb86fc;
+    }
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}</pre>
+
+            <h3>Color Palette Examples:</h3>
+            <div class="demo-grid">
+                <div class="demo-box">
+                    <h4>Light Mode Colors</h4>
+                    <p>Background: White</p>
+                    <p>Text: Dark gray</p>
+                    <p>Accent: Blue</p>
+                </div>
+                <div class="demo-box">
+                    <h4>Dark Mode Colors</h4>
+                    <p>Background: Dark gray</p>
+                    <p>Text: Light gray</p>
+                    <p>Accent: Light purple</p>
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>This page uses prefers-color-scheme:</strong> Try switching your system color scheme preference to see the page update automatically!
+            </div>
+        </div>
+
+        <!-- ===== SECTION 4: CSS Variables Strategy ===== -->
+        <div class="section">
+            <h2>4. CSS Variables Strategy (Recommended)</h2>
+
+            <h3>Complete Color System:</h3>
+            <pre>/* Light Mode */
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f5;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --border-color: #e0e0e0;
+    --accent-primary: #667eea;
+    --accent-secondary: #764ba2;
+    --success: #28a745;
+    --warning: #ff9800;
+    --danger: #dc3545;
+    --info: #17a2b8;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #1e1e1e;
+        --bg-secondary: #2d2d2d;
+        --text-primary: #e0e0e0;
+        --text-secondary: #b0b0b0;
+        --border-color: #444444;
+        --accent-primary: #bb86fc;
+        --accent-secondary: #3dd5f3;
+        --success: #4caf50;
+        --warning: #ffb74d;
+        --danger: #ef5350;
+        --info: #29b6f6;
+    }
+}</pre>
+
+            <h3>Usage Throughout HTML:</h3>
+            <pre>body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+button {
+    background: var(--accent-primary);
+    color: white;
+}
+
+.card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}</pre>
+
+            <div class="pros">
+                <strong>Advantages:</strong>
+                <ul>
+                    <li>Single source of truth for colors</li>
+                    <li>Easy to maintain and update</li>
+                    <li>Consistent across entire site</li>
+                    <li>Easy to extend with more themes</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 5: Color Palette ===== -->
+        <div class="section">
+            <h2>5. Color Palette Adaptation</h2>
+
+            <h3>Current Color Scheme:</h3>
+            <div class="color-palette">
+                <div class="color-swatch swatch-primary">
+                    Primary
+                </div>
+                <div class="color-swatch swatch-secondary">
+                    Secondary
+                </div>
+                <div class="color-swatch swatch-success">
+                    Success
+                </div>
+                <div class="color-swatch swatch-warning">
+                    Warning
+                </div>
+                <div class="color-swatch swatch-danger">
+                    Danger
+                </div>
+                <div class="color-swatch swatch-info">
+                    Info
+                </div>
+            </div>
+
+            <h3>Light Mode Design Principles:</h3>
+            <ul>
+                <li>Use bright, clean backgrounds</li>
+                <li>Dark text for good contrast</li>
+                <li>Vibrant accent colors</li>
+                <li>Lighter borders and dividers</li>
+            </ul>
+
+            <h3>Dark Mode Design Principles:</h3>
+            <ul>
+                <li>Use dark backgrounds (not pure black)</li>
+                <li>Light text for readability</li>
+                <li>Muted or adjusted accent colors</li>
+                <li>Subtle borders to define sections</li>
+            </ul>
+        </div>
+
+        <!-- ===== SECTION 6: Text Content Adaptation ===== -->
+        <div class="section">
+            <h2>6. Adapting Text and Content</h2>
+
+            <h3>Using display: none</h3>
+            <pre>/* Show only in light mode */
+.light-only {
+    display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+    .light-only {
+        display: none;
+    }
+}
+
+/* Show only in dark mode */
+.dark-only {
+    display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .dark-only {
+        display: block;
+    }
+}</pre>
+
+            <h3>Light Mode Content:</h3>
+            <div class="light-only">
+                ☀️ <strong>Light Mode:</strong> This content is only visible in light mode. Hello bright and cheerful user!
+            </div>
+
+            <h3>Dark Mode Content:</h3>
+            <div class="dark-only">
+                🌙 <strong>Dark Mode:</strong> This content is only visible in dark mode. Welcome to the dark side!
+            </div>
+
+            <div class="note">
+                <strong>Use case:</strong> Different images, icons, or descriptions for different themes.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 7: Images and SVGs ===== -->
+        <div class="section">
+            <h2>7. Adapting Images and SVGs</h2>
+
+            <h3>Background Images:</h3>
+            <pre>/* Light mode background */
+.hero {
+    background-image: url('light-bg.jpg');
+}
+
+/* Dark mode background */
+@media (prefers-color-scheme: dark) {
+    .hero {
+        background-image: url('dark-bg.jpg');
+    }
+}</pre>
+
+            <h3>SVG Colors:</h3>
+            <pre>&lt;svg width="100" height="100"&gt;
+    &lt;circle cx="50" cy="50" r="40" fill="var(--accent-primary)" /&gt;
+&lt;/svg&gt;</pre>
+
+            <h3>Image Filters:</h3>
+            <pre>/* Brighten dark images in dark mode */
+@media (prefers-color-scheme: dark) {
+    img {
+        filter: brightness(0.9) contrast(1.1);
+    }
+}</pre>
+
+            <div class="warning">
+                <strong>Consider:</strong> Some images may need version-specific adjustments rather than filters for best quality.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 8: Forms and Controls ===== -->
+        <div class="section">
+            <h2>8. Form Controls Styling</h2>
+
+            <h3>Input Styling:</h3>
+            <pre>input, textarea, select {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px var(--accent-primary);
+    opacity: 0.1;
+}</pre>
+
+            <h3>Button Styling:</h3>
+            <pre>button {
+    background: var(--accent-primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: var(--accent-secondary);
+}</pre>
+
+            <h3>Checkbox and Radio:</h3>
+            <pre>input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--accent-primary);
+}</pre>
+
+            <div class="note">
+                <strong>Browser Default:</strong> Form controls automatically adapt to color scheme when <code>color-scheme</code> meta tag is present.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 9: Shadows and Elevation ===== -->
+        <div class="section">
+            <h2>9. Shadows and Elevation</h2>
+
+            <h3>Adaptive Shadow Colors:</h3>
+            <pre>:root {
+    --shadow: rgba(0, 0, 0, 0.1);
+    --shadow-hover: rgba(0, 0, 0, 0.15);
+    --shadow-active: rgba(0, 0, 0, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --shadow: rgba(0, 0, 0, 0.3);
+        --shadow-hover: rgba(0, 0, 0, 0.4);
+        --shadow-active: rgba(0, 0, 0, 0.5);
+    }
+}</pre>
+
+            <h3>Using Shadows:</h3>
+            <pre>.card {
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.card:hover {
+    box-shadow: 0 5px 20px var(--shadow-hover);
+}</pre>
+
+            <div class="pros">
+                <strong>Benefits:</strong>
+                <ul>
+                    <li>Shadows appear more/less prominent depending on background</li>
+                    <li>Better depth perception in both modes</li>
+                    <li>Consistent visual hierarchy</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 10: Transitions ===== -->
+        <div class="section">
+            <h2>10. Smooth Transitions</h2>
+
+            <h3>Fade Between Modes:</h3>
+            <pre>* {
+    transition: background-color 0.3s ease,
+                color 0.3s ease,
+                border-color 0.3s ease;
+}
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}</pre>
+
+            <h3>CSS Example:</h3>
+            <pre>button {
+    background: var(--accent-primary);
+    color: white;
+    transition: background-color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+button:hover {
+    background: var(--accent-secondary);
+    box-shadow: 0 5px 15px var(--shadow-hover);
+}</pre>
+
+            <div class="note">
+                <strong>Note:</strong> This page uses smooth transitions when switching between light and dark modes.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 11: Browser Support ===== -->
+        <div class="section">
+            <h2>11. Browser Support</h2>
+
+            <div class="browser-support">
+                <div class="browser supported">
+                    <strong>Chrome</strong><br>76+<br><small>Full support</small>
+                </div>
+                <div class="browser supported">
+                    <strong>Firefox</strong><br>67+<br><small>Full support</small>
+                </div>
+                <div class="browser supported">
+                    <strong>Safari</strong><br>12.1+<br><small>Full support</small>
+                </div>
+                <div class="browser supported">
+                    <strong>Edge</strong><br>79+<br><small>Full support</small>
+                </div>
+                <div class="browser supported">
+                    <strong>Opera</strong><br>63+<br><small>Full support</small>
+                </div>
+                <div class="browser partial">
+                    <strong>IE 11</strong><br>×<br><small>Not supported</small>
+                </div>
+            </div>
+
+            <h3>Fallback for Older Browsers:</h3>
+            <pre>/* Default light mode for all browsers */
+:root {
+    --bg-primary: #ffffff;
+    --text-primary: #333333;
+}
+
+/* Modern browsers override with dark mode if needed */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #1e1e1e;
+        --text-primary: #e0e0e0;
+    }
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 12: Manual Theme Toggle ===== -->
+        <div class="section">
+            <h2>12. Manual Theme Toggle with JavaScript</h2>
+
+            <h3>JavaScript Implementation:</h3>
+            <pre>// Check current preference
+const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+// Listen for changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    const newColorScheme = e.matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', newColorScheme);
+});
+
+// Set initial theme
+const theme = isDarkMode ? 'dark' : 'light';
+document.documentElement.setAttribute('data-theme', theme);</pre>
+
+            <h3>CSS with data-theme:</h3>
+            <pre>/* Light theme */
+html[data-theme="light"] {
+    --bg-primary: #ffffff;
+    --text-primary: #333333;
+}
+
+/* Dark theme */
+html[data-theme="dark"] {
+    --bg-primary: #1e1e1e;
+    --text-primary: #e0e0e0;
+}</pre>
+
+            <div class="warning">
+                <strong>Important:</strong> Always respect system preference first; manual override should be secondary.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 13: Combining with Other Media Queries ===== -->
+        <div class="section">
+            <h2>13. Combining Media Queries</h2>
+
+            <h3>Dark Mode + High Contrast:</h3>
+            <pre>@media (prefers-color-scheme: dark) and (prefers-contrast: more) {
+    :root {
+        --text-primary: #ffffff;  /* Pure white */
+        --bg-primary: #000000;     /* Pure black */
+    }
+}</pre>
+
+            <h3>Light Mode + Reduced Motion:</h3>
+            <pre>@media (prefers-color-scheme: light) and (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}</pre>
+
+            <h3>Dark Mode + Forced Colors:</h3>
+            <pre>@media (prefers-color-scheme: dark) and (forced-colors: active) {
+    button {
+        border: 1px solid CanvasText;
+        background: Canvas;
+        color: CanvasText;
+    }
+}</pre>
+
+            <div class="pros">
+                <strong>Related Media Queries:</strong>
+                <ul>
+                    <li><code>prefers-reduced-motion</code> - Respect animation preferences</li>
+                    <li><code>prefers-contrast</code> - High contrast mode</li>
+                    <li><code>prefers-reduced-transparency</code> - Reduce transparency</li>
+                    <li><code>forced-colors</code> - Limited color mode</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 14: Best Practices ===== -->
+        <div class="section">
+            <h2>14. Best Practices</h2>
+
+            <h3>✓ Do's:</h3>
+            <div class="pros">
+                <ul>
+                    <li>Include <code>color-scheme</code> meta tag in HTML</li>
+                    <li>Use CSS variables for color management</li>
+                    <li>Test both light and dark modes thoroughly</li>
+                    <li>Respect user's OS preference</li>
+                    <li>Ensure sufficient contrast in both modes</li>
+                    <li>Use smooth transitions between modes</li>
+                    <li>Provide adequate fallbacks for old browsers</li>
+                    <li>Test with accessibility tools</li>
+                </ul>
+            </div>
+
+            <h3>✗ Don'ts:</h3>
+            <div class="cons">
+                <ul>
+                    <li>Don't force one mode on users</li>
+                    <li>Don't use low contrast colors</li>
+                    <li>Don't ignore the prefers-color-scheme media query</li>
+                    <li>Don't forget to test dark mode thoroughly</li>
+                    <li>Don't use pure black/white in dark mode (use near-black/near-white)</li>
+                    <li>Don't forget about images and icons</li>
+                    <li>Don't make transitions too slow</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 15: Real-World Examples ===== -->
+        <div class="section">
+            <h2>15. Real-World Examples</h2>
+
+            <h3>Example 1: Blog Site</h3>
+            <pre>:root {
+    /* Light mode */
+    --post-bg: #ffffff;
+    --post-text: #222222;
+    --link-color: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --post-bg: #1a1a1a;
+        --post-text: #e0e0e0;
+        --link-color: #66b3ff;
+    }
+}
+
+.post {
+    background: var(--post-bg);
+    color: var(--post-text);
+}
+
+.post a {
+    color: var(--link-color);
+}</pre>
+
+            <h3>Example 2: SaaS Dashboard</h3>
+            <pre>:root {
+    /* Light: Bright and clean */
+    --chart-bg: #f5f5f5;
+    --chart-text: #333333;
+    
+    /* Dark: Subtle and detailed */
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --chart-bg: #2d2d2d;
+        --chart-text: #e0e0e0;
+    }
+}</pre>
+
+            <h3>Example 3: E-commerce Site</h3>
+            <pre>:root {
+    --product-card: white;
+    --price-color: #28a745;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --product-card: #2d2d2d;
+        --price-color: #4caf50;
+    }
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 16: Testing ===== -->
+        <div class="section">
+            <h2>16. Testing Light and Dark Modes</h2>
+
+            <h3>Chrome DevTools:</h3>
+            <ul>
+                <li>Open DevTools (F12)</li>
+                <li>Press Ctrl+Shift+P (Cmd+Shift+P on Mac)</li>
+                <li>Type "Render" → "Emulate CSS media feature prefers-color-scheme"</li>
+                <li>Select light or dark mode</li>
+            </ul>
+
+            <h3>Firefox:</h3>
+            <ul>
+                <li>Visit about:config</li>
+                <li>Search for "ui.systemUsesDarkTheme"</li>
+                <li>Change value: 0 (light) or 1 (dark)</li>
+            </ul>
+
+            <h3>Safari:</h3>
+            <ul>
+                <li>System Preferences → General → Appearance</li>
+                <li>Switch between Light and Dark</li>
+            </ul>
+
+            <h3>Windows 10/11:</h3>
+            <ul>
+                <li>Settings → Personalization → Colors</li>
+                <li>Choose Light or Dark mode</li>
+            </ul>
+
+            <h3>macOS:</h3>
+            <ul>
+                <li>System Preferences → General → Appearance</li>
+                <li>Choose Light, Dark, or Auto</li>
+            </ul>
+        </div>
+
+        <!-- ===== SECTION 17: Performance ===== -->
+        <div class="section">
+            <h2>17. Performance Considerations</h2>
+
+            <h3>CSS Variables vs Multiple Stylesheets:</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Approach</th>
+                    <th>Performance</th>
+                    <th>Flexibility</th>
+                    <th>Maintenance</th>
+                </tr>
+                <tr>
+                    <td><strong>CSS Variables</strong></td>
+                    <td class="yes">Excellent</td>
+                    <td class="yes">High</td>
+                    <td class="yes">Easy</td>
+                </tr>
+                <tr>
+                    <td><strong>Multiple Stylesheets</strong></td>
+                    <td class="partial">Good</td>
+                    <td class="yes">High</td>
+                    <td class="no">Complex</td>
+                </tr>
+                <tr>
+                    <td><strong>JavaScript Toggle</strong></td>
+                    <td class="no">Lower</td>
+                    <td class="yes">Very High</td>
+                    <td class="partial">Moderate</td>
+                </tr>
+            </table>
+
+            <h3>Optimization Tips:</h3>
+            <ul>
+                <li>Use CSS variables for better performance</li>
+                <li>Minimize flash of unstyled content (FOUC)</li>
+                <li>Inline critical CSS for color scheme</li>
+                <li>Use preload for color-scheme specific resources</li>
+                <li>Cache theme preference in localStorage if manually toggling</li>
+            </ul>
+        </div>
+
+        <!-- ===== SECTION 18: Accessibility ===== -->
+        <div class="section">
+            <h2>18. Accessibility with Dark Mode</h2>
+
+            <h3>Contrast Requirements (WCAG):</h3>
+            <ul>
+                <li>Normal text: 4.5:1 minimum contrast ratio</li>
+                <li>Large text (18pt+): 3:1 minimum contrast ratio</li>
+                <li>UI components: 3:1 minimum</li>
+            </ul>
+
+            <h3>Testing Color Contrast:</h3>
+            <ul>
+                <li>WebAIM Contrast Checker</li>
+                <li>Chrome DevTools (Accessibility panel)</li>
+                <li>Color Blindness Simulator tools</li>
+            </ul>
+
+            <h3>Design for Accessibility:</h3>
+            <div class="pros">
+                <ul>
+                    <li>Don't rely on color alone</li>
+                    <li>Use icons and text together</li>
+                    <li>Test with colorblindness simulators</li>
+                    <li>Ensure keyboard navigation works</li>
+                    <li>Provide focus indicators in both modes</li>
+                    <li>Test with screen readers</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 19: Common Issues ===== -->
+        <div class="section">
+            <h2>19. Common Issues & Solutions</h2>
+
+            <h3>Issue 1: Colors too similar in dark mode</h3>
+            <p><strong>Solution:</strong> Increase contrast when switching to dark mode</p>
+
+            <h3>Issue 2: Images look bad in dark mode</h3>
+            <p><strong>Solution:</strong> Use different image versions or apply filters</p>
+
+            <h3>Issue 3: Text hard to read after mode switch</h3>
+            <p><strong>Solution:</strong> Use better contrast ratios (aim for 7:1 or higher)</p>
+
+            <h3>Issue 4: Transitions feel jarring</h3>
+            <p><strong>Solution:</strong> Add smooth CSS transitions with appropriate timing</p>
+
+            <h3>Issue 5: Form controls look inconsistent</h3>
+            <p><strong>Solution:</strong> Use standard form styling with proper color-scheme support</p>
+
+            <div class="warning">
+                <strong>Testing:</strong> Always test in both light and dark modes across browsers!
+            </div>
+        </div>
+
+        <!-- ===== SECTION 20: Summary ===== -->
+        <div class="section">
+            <h2>20. Quick Reference</h2>
+
+            <h3>Essential Code:</h3>
+            <pre>/* HTML: Declare support */
+&lt;meta name="color-scheme" content="light dark"&gt;
+
+/* CSS: Responsive colors */
+:root {
+    --bg: white;
+    --text: #333;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #1e1e1e;
+        --text: #e0e0e0;
+    }
+}
+
+/* Usage */
+body {
+    background: var(--bg);
+    color: var(--text);
+}</pre>
+
+            <h3>Checklist:</h3>
+            <ul>
+                <li>✓ Include color-scheme meta tag</li>
+                <li>✓ Use CSS variables for colors</li>
+                <li>✓ Define dark mode styles</li>
+                <li>✓ Test contrast ratios (4.5:1 minimum)</li>
+                <li>✓ Update images/icons if needed</li>
+                <li>✓ Add smooth transitions</li>
+                <li>✓ Test across browsers</li>
+                <li>✓ Test with screen readers</li>
+                <li>✓ Test with colorblindness simulators</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>CSS prefers-color-scheme Complete Guide | Created for Web Development Learning</p>
+            <p>For more information, visit <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">MDN Web Docs</a></p>
+            <p style="margin-top: 15px; font-size: 0.85em;">This page automatically adapts to your system color preference. Try changing your OS or browser settings!</p>
+        </footer>
+    </div>
+</body>
+</html>

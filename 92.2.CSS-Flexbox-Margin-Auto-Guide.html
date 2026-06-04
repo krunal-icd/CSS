@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox Margin Auto - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .example h2 {
+            color: #f5576c;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #f5576c;
+            padding-bottom: 10px;
+        }
+
+        .description {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .demo {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f5576c;
+        }
+
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+
+        .code-label {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Example 1: Navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            padding: 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .nav-brand {
+            padding: 15px 20px;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            white-space: nowrap;
+        }
+
+        .nav-items {
+            display: flex;
+            gap: 0;
+            flex: 1;
+            padding: 0 20px;
+        }
+
+        .nav-item {
+            padding: 15px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            flex: 1;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .nav-item:last-child {
+            border-right: none;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-spacer {
+            margin-left: auto;
+        }
+
+        .nav-auth {
+            display: flex;
+            gap: 10px;
+            padding: 0 20px;
+            white-space: nowrap;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Example 2: Card Center */
+        .card-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            min-height: 250px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .card {
+            width: 350px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin: auto;
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        /* Example 3: Header */
+        .header {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(90deg, #f093fb, #f5576c);
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+        }
+
+        .header-logo {
+            font-weight: 700;
+            font-size: 1.3rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .header-menu {
+            display: flex;
+            gap: 15px;
+            flex: 1;
+            margin-left: 30px;
+        }
+
+        .header-menu-item {
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+            flex: 1;
+            text-align: center;
+        }
+
+        .header-menu-item:hover {
+            opacity: 0.8;
+        }
+
+        .header-divider {
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .header-user {
+            display: flex;
+            gap: 10px;
+            white-space: nowrap;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        /* Example 4: Button Group */
+        .button-group-container {
+            display: flex;
+            justify-content: flex-start;
+            gap: 20px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-primary {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            padding: 12px 24px;
+            background: white;
+            color: #f5576c;
+            border: 2px solid #f5576c;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-secondary:hover {
+            background: #f5576c;
+            color: white;
+        }
+
+        .button-spacer {
+            margin-left: auto;
+        }
+
+        /* Example 5: Form */
+        .form-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-field {
+            flex: 1;
+            flex-shrink: 1;
+            min-width: 150px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #f5576c;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .form-actions button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .form-actions .btn-submit {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .form-actions .btn-cancel {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .form-actions .btn-cancel:hover {
+            background: #d0d0d0;
+        }
+
+        /* Example 6: Split Layout */
+        .split-layout {
+            display: flex;
+            gap: 20px;
+            min-height: 250px;
+        }
+
+        .split-left {
+            flex: 1;
+            flex-shrink: 1;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .split-divider {
+            margin-left: auto;
+            margin-right: auto;
+            flex-shrink: 0;
+            width: 4px;
+            background: #f5576c;
+            border-radius: 2px;
+        }
+
+        .split-right {
+            flex: 1;
+            flex-shrink: 1;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .split-right h3 {
+            color: #f5576c;
+            margin-bottom: 15px;
+        }
+
+        /* Example 7: Product Card */
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .product-card {
+            flex: 1;
+            flex-shrink: 1;
+            min-width: 250px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(245, 87, 108, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .product-info {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .product-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            flex: 1;
+        }
+
+        .product-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+
+        .product-price {
+            color: #f5576c;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .product-btn {
+            padding: 8px 16px;
+            background: #f5576c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .product-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Example 8: Footer */
+        .footer {
+            background: linear-gradient(90deg, #f093fb, #f5576c);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 8px;
+        }
+
+        .footer-content {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .footer-section {
+            flex: 1;
+            flex-shrink: 1;
+            min-width: 200px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .footer-link {
+            display: block;
+            margin-bottom: 8px;
+            opacity: 0.9;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-link:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        /* Example 9: Sidebar */
+        .sidebar-layout {
+            display: flex;
+            gap: 20px;
+            min-height: 400px;
+        }
+
+        .sidebar {
+            flex-shrink: 0;
+            width: 200px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .sidebar-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255,255,255,0.2);
+            padding-left: 16px;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            flex-shrink: 1;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .sidebar-content h3 {
+            color: #f5576c;
+            margin-bottom: 15px;
+        }
+
+        /* Example 10: Modal */
+        .modal-overlay {
+            background: #f8f9fa;
+            padding: 40px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+
+        .modal {
+            width: 500px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 20px;
+        }
+
+        .modal-body {
+            padding: 30px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            background: #f8f9fa;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .modal-btn-primary {
+            background: #f5576c;
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .modal-btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .modal-btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        /* Example 11: Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-item {
+            color: #f5576c;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .breadcrumb-item:hover {
+            opacity: 0.7;
+        }
+
+        .breadcrumb-separator {
+            color: #999;
+            margin: 0 5px;
+        }
+
+        .breadcrumb-current {
+            color: #333;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        /* Example 12: Toolbar */
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tool-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tool-btn {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tool-btn:hover {
+            border-color: #f5576c;
+            color: #f5576c;
+        }
+
+        .tool-divider {
+            width: 1px;
+            height: 24px;
+            background: #ddd;
+            margin: 0 5px;
+        }
+
+        .tool-spacer {
+            margin-left: auto;
+            flex-shrink: 1;
+            min-width: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .nav-items {
+                flex: 1;
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .nav-spacer {
+                margin-left: 0;
+            }
+
+            .nav-auth {
+                width: 100%;
+                padding: 0 20px;
+            }
+
+            .split-layout {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .split-divider {
+                width: 100%;
+                height: 4px;
+                margin: 0;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 350px;
+            }
+
+            .modal {
+                width: 90%;
+                max-width: 500px;
+            }
+
+            .sidebar-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-social {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+
+            .modal-footer {
+                justify-content: space-between;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .product-container {
+                flex-direction: column;
+            }
+
+            .product-card {
+                min-width: auto;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .tool-spacer {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Flexbox Margin Auto</h1>
+            <p>Practical Real-World Examples</p>
+        </header>
+
+        <!-- Example 1: Navbar -->
+        <div class="example">
+            <h2>1. Navigation Bar with Spacing</h2>
+            <p class="description">
+                Logo on the left, menu items in center, and auth buttons on right. Uses <code>margin-left: auto</code> to push the auth section to the right edge.
+            </p>
+            <div class="demo">
+                <div class="navbar">
+                    <div class="nav-brand">🚀 Brand</div>
+                    <div class="nav-items">
+                        <div class="nav-item">Features</div>
+                        <div class="nav-item">Pricing</div>
+                        <div class="nav-item">Docs</div>
+                    </div>
+                    <div class="nav-spacer"></div>
+                    <div class="nav-auth">
+                        <button class="nav-btn">Login</button>
+                        <button class="nav-btn">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.nav-spacer {
+  margin-left: auto;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 2: Centered Card -->
+        <div class="example">
+            <h2>2. Centered Card with Margin Auto</h2>
+            <p class="description">
+                Single card perfectly centered on the page using <code>margin: auto</code>. Works both horizontally and vertically.
+            </p>
+            <div class="demo">
+                <div class="card-container">
+                    <div class="card">
+                        <h3>✨ Premium Plan</h3>
+                        <p>Get started with our most popular plan and unlock all features.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.card {
+  width: 350px;
+  margin: auto;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 3: Header -->
+        <div class="example">
+            <h2>3. Header with Multiple Sections</h2>
+            <p class="description">
+                Logo stays left, menu expands, and user profile pushed to the right using <code>margin-left: auto</code>.
+            </p>
+            <div class="demo">
+                <div class="header">
+                    <div class="header-logo">📱 App</div>
+                    <div class="header-menu">
+                        <div class="header-menu-item">Home</div>
+                        <div class="header-menu-item">About</div>
+                        <div class="header-menu-item">Contact</div>
+                    </div>
+                    <div class="header-divider" style="display: none;"></div>
+                    <div class="header-user">
+                        <span>Hi, John</span>
+                        <div class="user-avatar">J</div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.header-divider {
+  margin-left: auto;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 4: Button Groups -->
+        <div class="example">
+            <h2>4. Flexible Button Layout</h2>
+            <p class="description">
+                Left-aligned buttons with spacer pushing action buttons to the right using <code>margin-left: auto</code>.
+            </p>
+            <div class="demo">
+                <div class="button-group-container">
+                    <div class="button-group">
+                        <button class="btn-primary">← Back</button>
+                        <button class="btn-secondary">Home</button>
+                    </div>
+                    <div class="button-spacer"></div>
+                    <div class="button-group">
+                        <button class="btn-secondary">Cancel</button>
+                        <button class="btn-primary">Save →</button>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.button-spacer {
+  margin-left: auto;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 5: Form Layout -->
+        <div class="example">
+            <h2>5. Responsive Form</h2>
+            <p class="description">
+                Form fields with flexible layout. Action buttons pushed to the right using <code>flex: 1</code> spacer with <code>margin-left: auto</code>.
+            </p>
+            <div class="demo">
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label class="form-label">City</label>
+                                <input type="text" class="form-input" placeholder="City">
+                            </div>
+                            <div class="form-field">
+                                <label class="form-label">State</label>
+                                <input type="text" class="form-input" placeholder="State">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="form-actions btn-cancel">Cancel</button>
+                        <button class="form-actions btn-submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 6: Split Layout -->
+        <div class="example">
+            <h2>6. Split Content Layout</h2>
+            <p class="description">
+                Two-column layout with centered divider. Left content features and right content details using margin auto spacing.
+            </p>
+            <div class="demo">
+                <div class="split-layout">
+                    <div class="split-left">
+                        <h2>🎯 Key Features</h2>
+                        <p>Fast performance, secure transactions, and 24/7 support</p>
+                    </div>
+                    <div class="split-divider"></div>
+                    <div class="split-right">
+                        <h3>Details</h3>
+                        <p>Learn more about our complete feature set and how it can benefit your business.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.split-divider {
+  margin-left: auto;
+  margin-right: auto;
+  flex-shrink: 0;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 7: Product Grid -->
+        <div class="example">
+            <h2>7. Product Card Grid</h2>
+            <p class="description">
+                Flexible product cards with margin auto spacing. Cards grow and shrink proportionally based on container width.
+            </p>
+            <div class="demo">
+                <div class="product-container">
+                    <div class="product-card">
+                        <div class="product-image">📦</div>
+                        <div class="product-info">
+                            <div class="product-name">Product A</div>
+                            <div class="product-desc">High quality, premium features</div>
+                            <div class="product-footer">
+                                <div class="product-price">$29.99</div>
+                                <button class="product-btn">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">🎁</div>
+                        <div class="product-info">
+                            <div class="product-name">Product B</div>
+                            <div class="product-desc">Popular choice among users</div>
+                            <div class="product-footer">
+                                <div class="product-price">$49.99</div>
+                                <button class="product-btn">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">⭐</div>
+                        <div class="product-info">
+                            <div class="product-name">Product C</div>
+                            <div class="product-desc">Exclusive premium features</div>
+                            <div class="product-footer">
+                                <div class="product-price">$79.99</div>
+                                <button class="product-btn">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.product-card {
+  flex: 1;
+  flex-shrink: 1;
+  min-width: 250px;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 8: Footer -->
+        <div class="example">
+            <h2>8. Responsive Footer</h2>
+            <p class="description">
+                Multi-section footer with flexible columns. Social icons pushed to right using <code>margin-left: auto</code>.
+            </p>
+            <div class="demo">
+                <div class="footer">
+                    <div class="footer-content">
+                        <div class="footer-section">
+                            <h4>Product</h4>
+                            <span class="footer-link">Features</span>
+                            <span class="footer-link">Pricing</span>
+                            <span class="footer-link">Security</span>
+                        </div>
+                        <div class="footer-section">
+                            <h4>Company</h4>
+                            <span class="footer-link">About</span>
+                            <span class="footer-link">Blog</span>
+                            <span class="footer-link">Careers</span>
+                        </div>
+                        <div class="footer-section">
+                            <h4>Resources</h4>
+                            <span class="footer-link">Docs</span>
+                            <span class="footer-link">API</span>
+                            <span class="footer-link">Support</span>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <div>© 2024 Your Company. All rights reserved.</div>
+                        <div class="footer-social">
+                            <div class="social-icon">f</div>
+                            <div class="social-icon">t</div>
+                            <div class="social-icon">in</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.footer-social {
+  margin-left: auto;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 9: Sidebar Layout -->
+        <div class="example">
+            <h2>9. Sidebar Navigation</h2>
+            <p class="description">
+                Fixed-width sidebar with flexible main content. Sidebar uses <code>flex-shrink: 0</code> to maintain width while content shrinks.
+            </p>
+            <div class="demo">
+                <div class="sidebar-layout">
+                    <div class="sidebar">
+                        <div class="sidebar-item">Dashboard</div>
+                        <div class="sidebar-item">Analytics</div>
+                        <div class="sidebar-item">Settings</div>
+                        <div class="sidebar-item">Support</div>
+                    </div>
+                    <div class="sidebar-content">
+                        <h3>Dashboard</h3>
+                        <p>Main content area that shrinks while sidebar maintains its width.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.sidebar {
+  flex-shrink: 0;
+  width: 200px;
+}
+
+.sidebar-content {
+  flex: 1;
+  flex-shrink: 1;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 10: Modal -->
+        <div class="example">
+            <h2>10. Centered Modal Dialog</h2>
+            <p class="description">
+                Modal perfectly centered using <code>margin: auto</code> on the modal container with flexbox alignment.
+            </p>
+            <div class="demo">
+                <div class="modal-overlay">
+                    <div class="modal">
+                        <div class="modal-header">
+                            <h2>Confirm Action</h2>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to proceed? This action cannot be undone.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="modal-btn modal-btn-secondary">Cancel</button>
+                            <button class="modal-btn modal-btn-primary">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.modal-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 11: Breadcrumb -->
+        <div class="example">
+            <h2>11. Breadcrumb Navigation</h2>
+            <p class="description">
+                Breadcrumb with items on left and current page on right using <code>margin-left: auto</code> on the current item.
+            </p>
+            <div class="demo">
+                <div class="breadcrumb">
+                    <span class="breadcrumb-item">Home</span>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-item">Products</span>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current" style="margin-left: auto;">Details</span>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.breadcrumb-current {
+  margin-left: auto;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 12: Toolbar -->
+        <div class="example">
+            <h2>12. Editor Toolbar</h2>
+            <p class="description">
+                Toolbar with grouped buttons. Right tools pushed to edge using <code>margin-left: auto</code> on spacer.
+            </p>
+            <div class="demo">
+                <div class="toolbar">
+                    <div class="tool-group">
+                        <button class="tool-btn">Bold</button>
+                        <button class="tool-btn">Italic</button>
+                        <button class="tool-btn">Underline</button>
+                    </div>
+                    <div class="tool-divider"></div>
+                    <div class="tool-group">
+                        <button class="tool-btn">•</button>
+                        <button class="tool-btn">1.</button>
+                    </div>
+                    <div class="tool-spacer" style="margin-left: auto;"></div>
+                    <div class="tool-group">
+                        <button class="tool-btn">Undo</button>
+                        <button class="tool-btn">Redo</button>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.tool-spacer {
+  margin-left: auto;
+  flex-shrink: 1;
+  min-width: 20px;
+}</code>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
