@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Masking - Advanced Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .example-section {
+            margin-bottom: 60px;
+        }
+
+        .example-section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .example-description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+            font-size: 1.05em;
+            color: #555;
+        }
+
+        .code-label {
+            background: #2d2d2d;
+            color: #FFD700;
+            padding: 8px 12px;
+            border-radius: 4px 4px 0 0;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 0 0 4px 4px;
+            overflow-x: auto;
+            margin-bottom: 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .demo-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+        }
+
+        /* ==========================================
+           EXAMPLE 1: Display Image on Text
+           ========================================== */
+        
+        .image-on-text-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .text-mask {
+            font-size: 4em;
+            font-weight: 900;
+            line-height: 1.2;
+            color: #333;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Text with image mask */
+        .text-with-image {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="grad1" x1="0%25" y1="0%25" x2="100%25" y2="100%25"><stop offset="0%25" style="stop-color:rgb(255,107,107);stop-opacity:1" /><stop offset="50%25" style="stop-color:rgb(74,206,212);stop-opacity:1" /><stop offset="100%25" style="stop-color:rgb(45,206,137);stop-opacity:1" /></linearGradient></defs><rect width="1200" height="800" fill="url(%23grad1)"/><circle cx="300" cy="200" r="100" fill="%23FFD700" opacity="0.8"/><circle cx="900" cy="600" r="150" fill="%2352C3E6" opacity="0.7"/><polygon points="600,100 700,400 400,400" fill="%23FF6B9D" opacity="0.6"/></svg>');
+            background-size: cover;
+            background-position: center;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideImage 8s linear infinite;
+        }
+
+        @keyframes slideImage {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+        /* Alternative: Using mask-image for text */
+        .text-with-mask {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="grad2" x1="0%25" y1="0%25" x2="100%25" y2="100%25"><stop offset="0%25" style="stop-color:rgb(102,126,234);stop-opacity:1" /><stop offset="50%25" style="stop-color:rgb(255,107,107);stop-opacity:1" /><stop offset="100%25" style="stop-color:rgb(118,75,162);stop-opacity:1" /></linearGradient></defs><rect width="1200" height="800" fill="url(%23grad2)"/><circle cx="200" cy="300" r="80" fill="white" opacity="0.3"/><circle cx="1000" cy="500" r="120" fill="white" opacity="0.2"/></svg>');
+            background-size: cover;
+            background-position: center;
+            font-size: 3.5em;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            -webkit-mask-image: linear-gradient(135deg, black 0%, black 100%);
+            mask-image: linear-gradient(135deg, black 0%, black 100%);
+        }
+
+        .examples-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .example-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .example-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .example-item p {
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        /* ==========================================
+           EXAMPLE 2: Display Specific Part of Image
+           ========================================== */
+
+        .image-parts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .image-part {
+            width: 250px;
+            height: 250px;
+            border-radius: 10px;
+            border: 3px solid #667eea;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.2em;
+            position: relative;
+        }
+
+        /* 1. Circle mask - showing center part */
+        .circle-part {
+            background: linear-gradient(135deg, #FF6B6B, #FFD93D, #6BCB77);
+            -webkit-mask-image: radial-gradient(circle at 50% 50%, black 0%, black 40%, transparent 70%);
+            mask-image: radial-gradient(circle at 50% 50%, black 0%, black 40%, transparent 70%);
+        }
+
+        /* 2. Top corner - showing specific area */
+        .top-corner-part {
+            background: linear-gradient(135deg, #667eea, #764ba2, #FF6B6B);
+            -webkit-mask-image: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%);
+            mask-image: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%);
+            clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%);
+        }
+
+        /* 3. Diagonal stripe - showing stripe pattern */
+        .diagonal-stripe {
+            background: linear-gradient(135deg, 
+                #FF1493 0%, #FF1493 10%,
+                #FFD700 10%, #FFD700 20%,
+                #00D2FC 20%, #00D2FC 30%,
+                #2dce89 30%, #2dce89 40%,
+                #FF6B6B 40%, #FF6B6B 50%,
+                transparent 50%);
+            -webkit-mask-image: linear-gradient(45deg, 
+                transparent 0%, black 10%, black 40%, transparent 50%);
+            mask-image: linear-gradient(45deg, 
+                transparent 0%, black 10%, black 40%, transparent 50%);
+        }
+
+        /* 4. Radial burst - showing center burst */
+        .radial-burst {
+            background: conic-gradient(
+                from 0deg,
+                #FF1493, #FF6B6B, #FFD700, #00D2FC, #2dce89, 
+                #667eea, #764ba2, #FF1493
+            );
+            -webkit-mask-image: radial-gradient(
+                circle at 50% 50%, 
+                black 0%, 
+                black 30%, 
+                transparent 100%
+            );
+            mask-image: radial-gradient(
+                circle at 50% 50%, 
+                black 0%, 
+                black 30%, 
+                transparent 100%
+            );
+        }
+
+        /* 5. Left side - showing left portion */
+        .left-side {
+            background: linear-gradient(90deg, 
+                #667eea 0%, #764ba2 25%, #FF6B6B 50%, 
+                #FFD93D 75%, #6BCB77 100%);
+            -webkit-mask-image: linear-gradient(90deg, 
+                black 0%, black 40%, transparent 100%);
+            mask-image: linear-gradient(90deg, 
+                black 0%, black 40%, transparent 100%);
+        }
+
+        /* 6. Bottom right corner */
+        .bottom-right-corner {
+            background: linear-gradient(225deg, #667eea, #764ba2);
+            -webkit-mask-image: polygon(100% 100%, 100% 50%, 50% 100%);
+            mask-image: polygon(100% 100%, 100% 50%, 50% 100%);
+            clip-path: polygon(100% 100%, 100% 50%, 50% 100%);
+        }
+
+        /* 7. Circular vignette - darkening edges */
+        .circular-vignette {
+            background: linear-gradient(135deg, #FF1493, #00D2FC);
+            -webkit-mask-image: radial-gradient(
+                circle at 50% 50%,
+                black 0%,
+                black 50%,
+                rgba(0, 0, 0, 0.5) 100%
+            );
+            mask-image: radial-gradient(
+                circle at 50% 50%,
+                black 0%,
+                black 50%,
+                rgba(0, 0, 0, 0.5) 100%
+            );
+        }
+
+        /* 8. Custom shape - star */
+        .star-shape {
+            background: linear-gradient(135deg, #FFD700, #FF6B6B);
+            -webkit-mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,15 61,35 82,35 65,48 72,68 50,55 28,68 35,48 18,35 39,35" fill="black"/></svg>');
+            -webkit-mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,15 61,35 82,35 65,48 72,68 50,55 28,68 35,48 18,35 39,35" fill="black"/></svg>');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+        }
+
+        .parts-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .part-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .part-item .image-part {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .part-label {
+            text-align: center;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .examples-row {
+                grid-template-columns: 1fr;
+            }
+
+            .parts-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .text-with-image,
+            .text-with-mask {
+                font-size: 2em !important;
+            }
+
+            .demo-container {
+                min-height: 200px;
+            }
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Masking - Advanced Examples</h1>
+            <p>Display Images on Text & Specific Image Parts</p>
+        </header>
+
+        <div class="content">
+            <!-- ==========================================
+                 EXAMPLE 1: Display Image on Text
+                 ========================================== -->
+            <div class="example-section">
+                <h2>Example 1: Display Image on Text</h2>
+                
+                <div class="example-description">
+                    This example demonstrates how to display an image or gradient pattern within text. Using CSS masking and background-clip, we can create stunning text effects where the text acts as a window for the image to show through.
+                </div>
+
+                <!-- Method 1: Using background-clip -->
+                <div class="code-label">Method 1: Using background-clip (Simple & Smooth)</div>
+                <div class="code-block">
+.text-with-image {
+    background: url('data:image/svg+xml,...');
+    background-size: cover;
+    background-position: center;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 4em;
+    font-weight: 900;
+}
+                </div>
+
+                <div class="demo-container">
+                    <div class="image-on-text-container">
+                        <div class="text-mask text-with-image">
+                            Creative Design
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Method 2: Using mask-image -->
+                <div class="code-label">Method 2: Using mask-image (More Control)</div>
+                <div class="code-block">
+.text-with-mask {
+    background: url('data:image/svg+xml,...');
+    background-size: cover;
+    background-position: center;
+    -webkit-mask-image: linear-gradient(135deg, black 0%, black 100%);
+    mask-image: linear-gradient(135deg, black 0%, black 100%);
+    font-size: 3.5em;
+    font-weight: 900;
+}
+                </div>
+
+                <div class="demo-container">
+                    <div class="image-on-text-container">
+                        <div class="text-with-mask">
+                            Awesome Effects
+                        </div>
+                    </div>
+                </div>
+
+                <div class="examples-row">
+                    <div class="example-item">
+                        <h4>✓ Advantages of background-clip:</h4>
+                        <p>
+                            • Simpler and more concise code<br>
+                            • Better browser support<br>
+                            • Works with any background property<br>
+                            • Great for animated backgrounds
+                        </p>
+                    </div>
+                    <div class="example-item">
+                        <h4>✓ Advantages of mask-image:</h4>
+                        <p>
+                            • More fine-grained control<br>
+                            • Works with semi-transparent gradients<br>
+                            • Can mask other properties too<br>
+                            • Better for complex effects
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>💡 Tips:</strong> You can animate the background-position for a moving effect, or combine multiple gradients for more complex text effects. Always include vendor prefixes (-webkit-) for better browser support.
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 EXAMPLE 2: Display Specific Part of Image
+                 ========================================== -->
+            <div class="example-section">
+                <h2>Example 2: Display Specific Part of Image</h2>
+                
+                <div class="example-description">
+                    Using CSS masking, you can reveal only specific portions of an image or gradient. This technique is useful for creating focus effects, framing important content, or building creative layouts.
+                </div>
+
+                <div class="code-label">Masking Techniques for Image Parts</div>
+                <div class="code-block">
+/* Circle mask - Center focus */
+.circle-part {
+    background: linear-gradient(...);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, 
+        black 0%, black 40%, transparent 70%);
+    mask-image: radial-gradient(circle at 50% 50%, 
+        black 0%, black 40%, transparent 70%);
+}
+
+/* Linear gradient mask - Side reveal */
+.left-side {
+    background: linear-gradient(...);
+    -webkit-mask-image: linear-gradient(90deg, 
+        black 0%, black 40%, transparent 100%);
+    mask-image: linear-gradient(90deg, 
+        black 0%, black 40%, transparent 100%);
+}
+
+/* Polygon mask - Custom shape */
+.top-corner-part {
+    background: linear-gradient(...);
+    -webkit-mask-image: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%);
+    mask-image: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%);
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+/* SVG mask - Star shape */
+.star-shape {
+    background: linear-gradient(...);
+    -webkit-mask-image: url('data:image/svg+xml,...');
+    mask-image: url('data:image/svg+xml,...');
+    mask-size: contain;
+    mask-position: center;
+}
+                </div>
+
+                <div class="demo-container" style="min-height: auto; padding: 30px; background: white;">
+                    <div class="parts-grid">
+                        <div class="part-item">
+                            <div class="image-part circle-part">Circle</div>
+                            <div class="part-label">Circle Focus</div>
+                        </div>
+                        <div class="part-item">
+                            <div class="image-part top-corner-part">Pentagon</div>
+                            <div class="part-label">Pentagon Shape</div>
+                        </div>
+                        <div class="part-item">
+                            <div class="image-part diagonal-stripe">Diagonal</div>
+                            <div class="part-label">Diagonal Stripe</div>
+                        </div>
+                        <div class="part-item">
+                            <div class="image-part radial-burst">Burst</div>
+                            <div class="part-label">Radial Burst</div>
+                        </div>
+                        <div class="part-item">
+                            <div class="image-part left-side">Left</div>
+                            <div class="part-label">Left Side</div>
+                        </div>
+                        <div class="part-item">
+                            <div class="image-part bottom-right-corner">Corner</div>
+                            <div class="part-label">Bottom-Right Corner</div>
+                        </div>
+                        <div class="part-item">
+                            <div class="image-part circular-vignette">Vignette</div>
+                            <div class="part-label">Circular Vignette</div>
+                        </div>
+                        <div class="part-item">
+                            <div class="image-part star-shape">Star</div>
+                            <div class="part-label">Star Shape</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="examples-row">
+                    <div class="example-item">
+                        <h4>✓ Common Masking Methods:</h4>
+                        <p>
+                            • <strong>Radial Gradient:</strong> Circle/ellipse focus<br>
+                            • <strong>Linear Gradient:</strong> Fade from sides<br>
+                            • <strong>Polygon:</strong> Custom geometric shapes<br>
+                            • <strong>SVG:</strong> Complex icons/symbols
+                        </p>
+                    </div>
+                    <div class="example-item">
+                        <h4>✓ Use Cases:</h4>
+                        <p>
+                            • Image galleries with effects<br>
+                            • Focus highlighting on hero sections<br>
+                            • Creative portfolio displays<br>
+                            • Interactive image reveals<br>
+                            • Loading animations
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>💡 Performance Tips:</strong> Use simple masks (radial/linear gradients) for better performance. Complex SVG masks on large images can be resource-intensive. Always test on multiple devices and browsers for the best results.
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="example-section">
+                <h2>Best Practices & Browser Support</h2>
+                
+                <div class="examples-row">
+                    <div class="example-item">
+                        <h4>✓ Do This:</h4>
+                        <p>
+                            • Always use vendor prefixes (-webkit-)<br>
+                            • Test on multiple browsers<br>
+                            • Provide fallbacks for older browsers<br>
+                            • Use efficient mask images/gradients<br>
+                            • Consider performance impact
+                        </p>
+                    </div>
+                    <div class="example-item">
+                        <h4>✗ Avoid This:</h4>
+                        <p>
+                            • Complex masks on large elements<br>
+                            • Animating masks frequently<br>
+                            • Using masks on critical UI elements<br>
+                            • Forgetting vendor prefixes<br>
+                            • Masks on low-end devices
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>🌍 Browser Support:</strong> Chrome ✅ | Firefox ✅ | Safari ⚠️ (with -webkit-) | Edge ✅ | IE ❌
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 CSS Masking Examples | Created for Web Developers ❤️</p>
+        </footer>
+    </div>
+</body>
+</html>

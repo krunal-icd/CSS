@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Backgrounds CSS Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+        }
+
+        .example {
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .title {
+            padding: 20px;
+            background: #f9f9f9;
+            border-bottom: 2px solid #e0e0e0;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Example 1: Gradient + Color */
+        .gradient-color {
+            background: 
+                linear-gradient(135deg, rgba(255,0,0,0.8), rgba(0,0,255,0.8)),
+                #ffeb3b;
+        }
+
+        /* Example 2: Multiple Gradients */
+        .multi-gradient {
+            background:
+                linear-gradient(45deg, rgba(255,0,0,0.3) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255,0,0,0.3) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(255,0,0,0.3) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(255,0,0,0.3) 75%);
+            background-size: 30px 30px;
+            background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
+            background-color: #ffeb3b;
+        }
+
+        /* Example 3: Image + Gradient Overlay */
+        .image-overlay {
+            background-image:
+                linear-gradient(90deg, rgba(0,255,0,0.4), rgba(0,0,255,0.4)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%23ddd" width="100" height="100"/><circle cx="50" cy="50" r="30" fill="%23999"/></svg>');
+            background-size: cover, 100px 100px;
+            background-position: center, 0 0;
+        }
+
+        /* Example 4: Radial Gradient + Linear */
+        .radial-linear {
+            background:
+                radial-gradient(circle at 30% 50%, rgba(255,200,0,0.6), transparent 50%),
+                linear-gradient(to bottom, #87ceeb, #e0f6ff);
+            background-size: 100% 100%, 100% 100%;
+        }
+
+        /* Example 5: Stripes Pattern */
+        .stripes {
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    #ff6b6b,
+                    #ff6b6b 10px,
+                    #ffa07a 10px,
+                    #ffa07a 20px
+                );
+        }
+
+        /* Example 6: Checkerboard Pattern */
+        .checkerboard {
+            background:
+                linear-gradient(45deg, #ddd 25%, transparent 25%),
+                linear-gradient(-45deg, #ddd 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #ddd 75%),
+                linear-gradient(-45deg, transparent 75%, #ddd 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            background-color: white;
+        }
+
+        /* Example 7: Multiple Shadows with Gradients */
+        .nested-circles {
+            background:
+                radial-gradient(circle at 30% 30%, rgba(255,0,0,0.8), transparent 40%),
+                radial-gradient(circle at 70% 70%, rgba(0,0,255,0.8), transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(255,255,0,0.6), transparent 35%),
+                #111;
+        }
+
+        /* Example 8: Wavy Background */
+        .wavy {
+            background:
+                repeating-radial-gradient(
+                    circle at 0 0,
+                    #6b5b95 0,
+                    #6b5b95 10px,
+                    #88b0d3 10px,
+                    #88b0d3 20px
+                );
+        }
+
+        /* Example 9: Dots Pattern */
+        .dots {
+            background:
+                radial-gradient(circle, #ff6b6b 20%, transparent 20%);
+            background-size: 40px 40px;
+            background-color: #fff3e0;
+        }
+
+        /* Example 10: Complex Gradient Mix */
+        .complex {
+            background:
+                linear-gradient(135deg, transparent 30%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0.2) 70%, transparent 70%),
+                linear-gradient(-135deg, rgba(255,255,255,0.3) 30%, transparent 30%, transparent 70%, rgba(255,255,255,0.3) 70%),
+                linear-gradient(90deg, #ff6b6b, #ffa500, #ffeb3b, #90ee90, #00bfff, #8b00ff);
+            background-size: 60px 60px, 60px 60px, 100% 100%;
+        }
+
+        /* Example 11: Conic Gradient */
+        .conic {
+            background:
+                conic-gradient(from 0deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+        }
+
+        /* Example 12: Combination with Background-Blend-Mode */
+        .blend-mode {
+            background:
+                linear-gradient(45deg, rgba(255,0,0,0.7), rgba(0,0,255,0.7)),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(255,255,255,0.1) 20px,
+                    rgba(255,255,255,0.1) 40px
+                );
+            background-blend-mode: screen;
+            background-color: #4a4a4a;
+        }
+
+        .description {
+            padding: 15px 20px;
+            font-size: 0.9em;
+            color: #666;
+            background: #fafafa;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        code {
+            display: block;
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #ff6b6b;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Multiple Backgrounds in CSS</h1>
+
+        <section>
+            <h2>Basic Combinations</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="example gradient-color"></div>
+                    <div class="title">Gradient + Color</div>
+                    <div class="description">
+                        Linear gradient layered over a solid background color
+                        <code>linear-gradient() + color</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="example multi-gradient"></div>
+                    <div class="title">Multiple Gradients</div>
+                    <div class="description">
+                        Four diagonal gradients creating a diamond pattern
+                        <code>Multiple linear-gradients()</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="example image-overlay"></div>
+                    <div class="title">Image + Gradient Overlay</div>
+                    <div class="description">
+                        SVG image with gradient overlay for depth
+                        <code>linear-gradient() + image</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Pattern Designs</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="example stripes"></div>
+                    <div class="title">Stripes Pattern</div>
+                    <div class="description">
+                        45-degree striped pattern using repeating gradients
+                        <code>repeating-linear-gradient(45deg, ...)</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="example checkerboard"></div>
+                    <div class="title">Checkerboard</div>
+                    <div class="description">
+                        Classic checkerboard made with four gradients
+                        <code>Multiple repeating gradients with offset</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="example dots"></div>
+                    <div class="title">Dots Pattern</div>
+                    <div class="description">
+                        Repeating radial gradient creates dot pattern
+                        <code>repeating-radial-gradient(circle, ...)</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Advanced Effects</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="example radial-linear"></div>
+                    <div class="title">Radial + Linear</div>
+                    <div class="description">
+                        Radial gradient spotlight combined with linear background
+                        <code>radial-gradient() + linear-gradient()</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="example nested-circles"></div>
+                    <div class="title">Nested Circles</div>
+                    <div class="description">
+                        Multiple radial gradients at different positions
+                        <code>Multiple radial-gradient() circles</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="example wavy"></div>
+                    <div class="title">Wavy Effect</div>
+                    <div class="description">
+                        Repeating radial gradient creates wave pattern
+                        <code>repeating-radial-gradient()</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Complex Combinations</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="example complex"></div>
+                    <div class="title">Complex Mix</div>
+                    <div class="description">
+                        Multiple overlays with varying sizes and blend effects
+                        <code>Linear gradients + overlay pattern + color</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="example conic"></div>
+                    <div class="title">Conic Gradient Rainbow</div>
+                    <div class="description">
+                        Circular rainbow using conic gradient
+                        <code>conic-gradient(from 0deg, ...)</code>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="example blend-mode"></div>
+                    <div class="title">Blend Mode Mix</div>
+                    <div class="description">
+                        Multiple backgrounds with screen blend mode
+                        <code>background-blend-mode: screen</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Key CSS Properties</h2>
+            <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <h3 style="margin-bottom: 20px; color: #333;">Essential Syntax</h3>
+                <code style="background: #f5f5f5; padding: 20px; border-radius: 8px; color: #d63384;">
+/* Multiple backgrounds are comma-separated */
+background:
+    linear-gradient(135deg, red, blue),
+    radial-gradient(circle, yellow, green),
+    url('image.png'),
+    #color;
+
+/* Control sizing independently */
+background-size:
+    cover,
+    50% 50%,
+    100px 100px,
+    auto;
+
+/* Control positioning independently */
+background-position:
+    center,
+    top left,
+    50% 50%,
+    0 0;
+
+/* First layer appears on top, last layer at bottom */
+                </code>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

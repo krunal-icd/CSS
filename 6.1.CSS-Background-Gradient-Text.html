@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Text Examples</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background-color: #0f172a;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #e2e8f0;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+
+        .gradient-example {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Blue to Cyan Gradient */
+        .gradient-blue-cyan {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #0ea5e9, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Red to Orange Gradient */
+        .gradient-red-orange {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ef4444, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Purple to Pink Gradient */
+        .gradient-purple-pink {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Green to Emerald Gradient */
+        .gradient-green-emerald {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #22c55e, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Yellow to Red Gradient */
+        .gradient-yellow-red {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #fbbf24, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Diagonal Gradient */
+        .gradient-diagonal {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Rainbow Gradient */
+        .gradient-rainbow {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Animated Gradient */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .gradient-animated {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #0ea5e9, #06b6d4, #0ea5e9);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .label {
+            text-align: center;
+            color: #cbd5e1;
+            font-size: 0.9em;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gradient Text Examples</h1>
+
+    <div class="container">
+        <div class="gradient-example">
+            <div>
+                <div class="gradient-blue-cyan">Blue to Cyan</div>
+                <div class="label">Horizontal gradient</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="gradient-example">
+            <div>
+                <div class="gradient-red-orange">Red to Orange</div>
+                <div class="label">Warm gradient</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="gradient-example">
+            <div>
+                <div class="gradient-purple-pink">Purple to Pink</div>
+                <div class="label">Vibrant gradient</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="gradient-example">
+            <div>
+                <div class="gradient-green-emerald">Green to Emerald</div>
+                <div class="label">Fresh gradient</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="gradient-example">
+            <div>
+                <div class="gradient-yellow-red">Yellow to Red</div>
+                <div class="label">Sunset gradient</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="gradient-example">
+            <div>
+                <div class="gradient-diagonal">Diagonal Multi-Color</div>
+                <div class="label">135° angle, 3 colors</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="gradient-example">
+            <div>
+                <div class="gradient-rainbow">Rainbow Spectrum</div>
+                <div class="label">All 7 spectrum colors</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="gradient-example">
+            <div>
+                <div class="gradient-animated">Animated Gradient</div>
+                <div class="label">Smooth animation</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

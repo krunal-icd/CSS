@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Border Image Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+
+        .example {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .example h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .example p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .demo-box {
+            padding: 30px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        /* Example 1: Gradient Border */
+        .gradient-border {
+            border: 15px solid;
+            border-image: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1) 1;
+        }
+
+        /* Example 2: Image Border */
+        .image-border {
+            border: 15px solid transparent;
+            border-image-source: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"><rect fill="%23667eea" width="10" height="10"/><rect fill="%23764ba2" x="10" width="10" height="10"/><rect fill="%2364c5eb" x="20" width="10" height="10"/><rect y="10" fill="%23764ba2" width="10" height="10"/><rect y="10" x="10" fill="%23667eea" width="10" height="10"/><rect y="10" x="20" fill="%23764ba2" width="10" height="10"/></svg>');
+            border-image-slice: 10;
+            border-image-repeat: repeat;
+        }
+
+        /* Example 3: Solid Color Border with Slice */
+        .slice-border {
+            border: 20px solid;
+            border-image: linear-gradient(90deg, #f093fb, #f5576c, #4facfe, #00f2fe) 1;
+            border-image-slice: 20;
+        }
+
+        /* Example 4: Dashed Pattern Border */
+        .dashed-border {
+            border: 12px solid;
+            border-image: repeating-linear-gradient(
+                90deg,
+                #ff6b6b 0px,
+                #ff6b6b 10px,
+                transparent 10px,
+                transparent 20px
+            ) 1;
+        }
+
+        /* Example 5: Rounded Corner Effect */
+        .rounded-border {
+            border: 15px solid;
+            border-image: conic-gradient(from 0deg, #667eea, #764ba2, #667eea) 1;
+            border-radius: 15px;
+        }
+
+        /* Example 6: Multi-Color Border */
+        .multi-color-border {
+            border: 15px solid;
+            border-image: linear-gradient(
+                180deg,
+                #ff6b6b 0%,
+                #ff6b6b 25%,
+                #ffa502 25%,
+                #ffa502 50%,
+                #4ecdc4 50%,
+                #4ecdc4 75%,
+                #667eea 75%,
+                #667eea 100%
+            ) 1;
+        }
+
+        /* Example 7: 3D Effect Border */
+        .effect-3d-border {
+            border: 15px solid;
+            border-image: linear-gradient(135deg, #fff, #ddd, #666, #000) 1;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .comparison-box {
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+
+        .comparison-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .comparison-box p {
+            color: #666;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+
+        .small-demo {
+            border: 8px solid;
+            padding: 15px;
+            margin-top: 10px;
+            background: white;
+            text-align: center;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        /* Example 8: Angled Border */
+        .angled-border {
+            border: 15px solid;
+            border-image: linear-gradient(45deg, #667eea 0%, #764ba2 50%, #f093fb 100%) 1;
+            border-image-repeat: stretch;
+        }
+
+        @media (max-width: 600px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS Border-Image Practical Examples</h1>
+
+        <!-- Example 1 -->
+        <div class="example">
+            <h2>1. Gradient Border (Colorful)</h2>
+            <p>Creates a smooth gradient transition across the border. Great for modern, vibrant designs.</p>
+            <div class="demo-box gradient-border">
+                Gradient Border Example
+            </div>
+            <div class="code-block">
+border: 15px solid;<br>
+border-image: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1) 1;
+            </div>
+        </div>
+
+        <!-- Example 2 -->
+        <div class="example">
+            <h2>2. SVG Pattern Border</h2>
+            <p>Uses an SVG pattern for a repeating tile effect. Perfect for decorative borders.</p>
+            <div class="demo-box image-border">
+                SVG Pattern Border
+            </div>
+            <div class="code-block">
+border: 15px solid transparent;<br>
+border-image-source: url('data:image/svg+xml;...');<br>
+border-image-slice: 10;<br>
+border-image-repeat: repeat;
+            </div>
+        </div>
+
+        <!-- Example 3 -->
+        <div class="example">
+            <h2>3. Multi-Color Smooth Gradient</h2>
+            <p>A flowing gradient with multiple colors. Ideal for headers and featured content sections.</p>
+            <div class="demo-box slice-border">
+                Multi-Color Gradient Border
+            </div>
+            <div class="code-block">
+border: 20px solid;<br>
+border-image: linear-gradient(90deg, #f093fb, #f5576c, #4facfe, #00f2fe) 1;
+            </div>
+        </div>
+
+        <!-- Example 4 -->
+        <div class="example">
+            <h2>4. Dashed Pattern Border</h2>
+            <p>Creates a dashed/striped effect using gradients. Useful for attention-grabbing elements.</p>
+            <div class="demo-box dashed-border">
+                Dashed Pattern Border
+            </div>
+            <div class="code-block">
+border: 12px solid;<br>
+border-image: repeating-linear-gradient(<br>
+&nbsp;&nbsp;90deg,<br>
+&nbsp;&nbsp;#ff6b6b 0px, #ff6b6b 10px,<br>
+&nbsp;&nbsp;transparent 10px, transparent 20px<br>
+) 1;
+            </div>
+        </div>
+
+        <!-- Example 5 -->
+        <div class="example">
+            <h2>5. Conic Gradient (Rainbow Effect)</h2>
+            <p>Uses conic gradient for a rotating color effect. Creates a circular rainbow border.</p>
+            <div class="demo-box rounded-border">
+                Conic Gradient Border
+            </div>
+            <div class="code-block">
+border: 15px solid;<br>
+border-image: conic-gradient(from 0deg, #667eea, #764ba2, #667eea) 1;<br>
+border-radius: 15px;
+            </div>
+        </div>
+
+        <!-- Example 6 -->
+        <div class="example">
+            <h2>6. Striped Color Blocks</h2>
+            <p>Divides the border into distinct color bands. Good for status indicators or themed sections.</p>
+            <div class="demo-box multi-color-border">
+                Striped Color Blocks
+            </div>
+            <div class="code-block">
+border: 15px solid;<br>
+border-image: linear-gradient(180deg,<br>
+&nbsp;&nbsp;#ff6b6b 0%, #ff6b6b 25%,<br>
+&nbsp;&nbsp;#ffa502 25%, #ffa502 50%,<br>
+&nbsp;&nbsp;#4ecdc4 50%, #4ecdc4 75%,<br>
+&nbsp;&nbsp;#667eea 75%, #667eea 100%<br>
+) 1;
+            </div>
+        </div>
+
+        <!-- Example 7 -->
+        <div class="example">
+            <h2>7. 3D Shadow Effect</h2>
+            <p>Creates an embossed or 3D appearance using gradients from light to dark.</p>
+            <div class="demo-box effect-3d-border">
+                3D Effect Border
+            </div>
+            <div class="code-block">
+border: 15px solid;<br>
+border-image: linear-gradient(135deg, #fff, #ddd, #666, #000) 1;
+            </div>
+        </div>
+
+        <!-- Example 8 -->
+        <div class="example">
+            <h2>8. Angled Gradient Border</h2>
+            <p>A diagonal gradient creating a sophisticated, directional effect.</p>
+            <div class="demo-box angled-border">
+                Angled Gradient Border
+            </div>
+            <div class="code-block">
+border: 15px solid;<br>
+border-image: linear-gradient(45deg, #667eea 0%, #764ba2 50%, #f093fb 100%) 1;
+            </div>
+        </div>
+
+        <!-- Comparison -->
+        <div class="example">
+            <h2>Key Properties Explained</h2>
+            <div class="comparison">
+                <div class="comparison-box">
+                    <h3>border-image-source</h3>
+                    <p>Defines the image or gradient to use: linear-gradient(), radial-gradient(), url(), conic-gradient()</p>
+                </div>
+                <div class="comparison-box">
+                    <h3>border-image-slice</h3>
+                    <p>Divides the image into 9 regions. Value is in pixels or percentage. Example: 10 = 10px from edges</p>
+                </div>
+                <div class="comparison-box">
+                    <h3>border-image-repeat</h3>
+                    <p>How to fill the border: stretch (default), repeat, or round</p>
+                </div>
+                <div class="comparison-box">
+                    <h3>border-image-width</h3>
+                    <p>Width of the border image (defaults to border-width). Can be different values per side</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tips -->
+        <div class="example">
+            <h2>⚡ Pro Tips</h2>
+            <p style="margin-bottom: 10px;"><strong>1. Performance:</strong> Gradients are lighter than image files. Use them when possible.</p>
+            <p style="margin-bottom: 10px;"><strong>2. Compatibility:</strong> border-image doesn't work with border-radius on all browsers. Use caution.</p>
+            <p style="margin-bottom: 10px;"><strong>3. Fallback:</strong> Consider providing a solid border as fallback for older browsers.</p>
+            <p style="margin-bottom: 10px;"><strong>4. Animation:</strong> Border-images can't be animated directly, but you can animate the background or use multiple elements.</p>
+            <p><strong>5. SVG:</strong> Use SVG with data URIs for crisp, scalable patterns without external file requests.</p>
+        </div>
+    </div>
+</body>
+</html>
