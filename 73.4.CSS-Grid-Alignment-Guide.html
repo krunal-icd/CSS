@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Alignment Properties</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-radius: 4px;
+        }
+
+        .grid-demo {
+            background: #f9f9f9;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* ===== PLACE-ITEMS (Shorthand) ===== */
+        #place-items-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 150px 150px;
+            gap: 15px;
+            place-items: center;
+            min-height: 350px;
+            background: white;
+        }
+
+        #place-items-demo .item {
+            width: 60px;
+            height: 60px;
+            min-height: 60px;
+        }
+
+        /* ===== PLACE-SELF ===== */
+        #place-self-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 150px 150px;
+            gap: 15px;
+            min-height: 350px;
+        }
+
+        #place-self-demo .item:nth-child(1) {
+            place-self: start;
+            width: 80px;
+            height: 80px;
+            min-height: 80px;
+        }
+
+        #place-self-demo .item:nth-child(2) {
+            place-self: center;
+            width: 80px;
+            height: 80px;
+            min-height: 80px;
+        }
+
+        #place-self-demo .item:nth-child(3) {
+            place-self: end;
+            width: 80px;
+            height: 80px;
+            min-height: 80px;
+        }
+
+        #place-self-demo .item:nth-child(4) {
+            place-self: start center;
+            width: 80px;
+            height: 80px;
+            min-height: 80px;
+        }
+
+        #place-self-demo .item:nth-child(5) {
+            place-self: center center;
+            width: 80px;
+            height: 80px;
+            min-height: 80px;
+        }
+
+        #place-self-demo .item:nth-child(6) {
+            place-self: end end;
+            width: 80px;
+            height: 80px;
+            min-height: 80px;
+        }
+
+        /* ===== PLACE-CONTENT (Shorthand) ===== */
+        #place-content-demo1 {
+            display: grid;
+            grid-template-columns: repeat(2, 100px);
+            grid-template-rows: repeat(2, 100px);
+            gap: 10px;
+            place-content: start;
+            background: white;
+            min-height: 300px;
+        }
+
+        #place-content-demo2 {
+            display: grid;
+            grid-template-columns: repeat(2, 100px);
+            grid-template-rows: repeat(2, 100px);
+            gap: 10px;
+            place-content: center;
+            background: white;
+            min-height: 300px;
+        }
+
+        #place-content-demo3 {
+            display: grid;
+            grid-template-columns: repeat(2, 100px);
+            grid-template-rows: repeat(2, 100px);
+            gap: 10px;
+            place-content: end;
+            background: white;
+            min-height: 300px;
+        }
+
+        /* ===== ALIGN-ITEMS ===== */
+        #align-items-demo1 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 150px;
+            gap: 15px;
+            align-items: start;
+        }
+
+        #align-items-demo2 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 150px;
+            gap: 15px;
+            align-items: center;
+        }
+
+        #align-items-demo3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 150px;
+            gap: 15px;
+            align-items: end;
+        }
+
+        #align-items-demo4 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 150px;
+            gap: 15px;
+            align-items: stretch;
+        }
+
+        #align-items-demo1 .item,
+        #align-items-demo2 .item,
+        #align-items-demo3 .item,
+        #align-items-demo4 .item {
+            height: 80px;
+            min-height: 80px;
+        }
+
+        /* ===== ALIGN-SELF ===== */
+        #align-self-demo {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 150px;
+            gap: 15px;
+        }
+
+        #align-self-demo .item {
+            height: 80px;
+            min-height: 80px;
+        }
+
+        #align-self-demo .item:nth-child(1) {
+            align-self: start;
+        }
+
+        #align-self-demo .item:nth-child(2) {
+            align-self: center;
+        }
+
+        #align-self-demo .item:nth-child(3) {
+            align-self: end;
+        }
+
+        #align-self-demo .item:nth-child(4) {
+            align-self: stretch;
+            height: auto;
+            min-height: auto;
+        }
+
+        /* ===== ALIGN-CONTENT ===== */
+        #align-content-demo1 {
+            display: grid;
+            grid-template-columns: repeat(2, 80px);
+            grid-template-rows: repeat(2, 80px);
+            gap: 10px;
+            align-content: start;
+            min-height: 300px;
+        }
+
+        #align-content-demo2 {
+            display: grid;
+            grid-template-columns: repeat(2, 80px);
+            grid-template-rows: repeat(2, 80px);
+            gap: 10px;
+            align-content: center;
+            min-height: 300px;
+        }
+
+        #align-content-demo3 {
+            display: grid;
+            grid-template-columns: repeat(2, 80px);
+            grid-template-rows: repeat(2, 80px);
+            gap: 10px;
+            align-content: end;
+            min-height: 300px;
+        }
+
+        #align-content-demo4 {
+            display: grid;
+            grid-template-columns: repeat(2, 80px);
+            grid-template-rows: repeat(2, 80px);
+            gap: 10px;
+            align-content: space-between;
+            min-height: 300px;
+        }
+
+        /* ===== JUSTIFY-ITEMS ===== */
+        #justify-items-demo1 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 100px;
+            gap: 15px;
+            justify-items: start;
+        }
+
+        #justify-items-demo2 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 100px;
+            gap: 15px;
+            justify-items: center;
+        }
+
+        #justify-items-demo3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 100px;
+            gap: 15px;
+            justify-items: end;
+        }
+
+        #justify-items-demo4 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 100px;
+            gap: 15px;
+            justify-items: stretch;
+        }
+
+        #justify-items-demo1 .item,
+        #justify-items-demo2 .item,
+        #justify-items-demo3 .item {
+            width: 60px;
+            min-height: 60px;
+            height: 60px;
+        }
+
+        /* ===== JUSTIFY-SELF ===== */
+        #justify-self-demo {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 100px;
+            gap: 15px;
+        }
+
+        #justify-self-demo .item {
+            width: 60px;
+            min-height: 60px;
+            height: 60px;
+        }
+
+        #justify-self-demo .item:nth-child(1) {
+            justify-self: start;
+        }
+
+        #justify-self-demo .item:nth-child(2) {
+            justify-self: center;
+        }
+
+        #justify-self-demo .item:nth-child(3) {
+            justify-self: end;
+        }
+
+        #justify-self-demo .item:nth-child(4) {
+            justify-self: stretch;
+            width: auto;
+            min-height: 60px;
+            height: 60px;
+        }
+
+        /* ===== JUSTIFY-CONTENT ===== */
+        #justify-content-demo1 {
+            display: grid;
+            grid-template-columns: repeat(2, 80px);
+            grid-template-rows: 80px;
+            gap: 10px;
+            justify-content: start;
+            min-height: 150px;
+        }
+
+        #justify-content-demo2 {
+            display: grid;
+            grid-template-columns: repeat(2, 80px);
+            grid-template-rows: 80px;
+            gap: 10px;
+            justify-content: center;
+            min-height: 150px;
+        }
+
+        #justify-content-demo3 {
+            display: grid;
+            grid-template-columns: repeat(2, 80px);
+            grid-template-rows: 80px;
+            gap: 10px;
+            justify-content: end;
+            min-height: 150px;
+        }
+
+        #justify-content-demo4 {
+            display: grid;
+            grid-template-columns: repeat(2, 80px);
+            grid-template-rows: 80px;
+            gap: 10px;
+            justify-content: space-between;
+            min-height: 150px;
+        }
+
+        .demo-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .demo-group .grid-demo {
+            margin-bottom: 0;
+        }
+
+        .demo-label {
+            background: #667eea;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 CSS Grid Alignment Properties</h1>
+
+    <!-- PLACE-ITEMS -->
+    <div class="section">
+        <h2>place-items (Shorthand)</h2>
+        <p><strong>place-items</strong> is shorthand for <code>align-items</code> and <code>justify-items</code>. It centers or aligns all items in their grid cells.</p>
+        <div class="code-example">place-items: center; /* align-items: center + justify-items: center */</div>
+        <div class="grid-demo">
+            <div class="demo-label">place-items: center</div>
+            <div id="place-items-demo">
+                <div class="item">1</div>
+                <div class="item">2</div>
+                <div class="item">3</div>
+                <div class="item">4</div>
+                <div class="item">5</div>
+                <div class="item">6</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PLACE-SELF -->
+    <div class="section">
+        <h2>place-self (Individual Item)</h2>
+        <p><strong>place-self</strong> is shorthand for <code>align-self</code> and <code>justify-self</code>. It aligns individual items within their grid cells.</p>
+        <div class="code-example">
+.item:nth-child(1) { place-self: start; }<br>
+.item:nth-child(2) { place-self: center; }<br>
+.item:nth-child(3) { place-self: end; }
+        </div>
+        <div class="grid-demo">
+            <div class="demo-label">place-self: Various Values</div>
+            <div id="place-self-demo">
+                <div class="item">start</div>
+                <div class="item">center</div>
+                <div class="item">end</div>
+                <div class="item">start center</div>
+                <div class="item">center center</div>
+                <div class="item">end end</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PLACE-CONTENT -->
+    <div class="section">
+        <h2>place-content (Grid Alignment)</h2>
+        <p><strong>place-content</strong> is shorthand for <code>align-content</code> and <code>justify-content</code>. It aligns the entire grid content within the grid container.</p>
+        <div class="code-example">place-content: center; /* align-content: center + justify-content: center */</div>
+        <div class="demo-group">
+            <div class="grid-demo">
+                <div class="demo-label">place-content: start</div>
+                <div id="place-content-demo1">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                    <div class="item">4</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">place-content: center</div>
+                <div id="place-content-demo2">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                    <div class="item">4</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">place-content: end</div>
+                <div id="place-content-demo3">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                    <div class="item">4</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ALIGN-ITEMS -->
+    <div class="section">
+        <h2>align-items (Vertical Alignment)</h2>
+        <p><strong>align-items</strong> aligns all items vertically within their grid cells. Values: <code>start</code>, <code>center</code>, <code>end</code>, <code>stretch</code>.</p>
+        <div class="demo-group">
+            <div class="grid-demo">
+                <div class="demo-label">align-items: start</div>
+                <div id="align-items-demo1">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">align-items: center</div>
+                <div id="align-items-demo2">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">align-items: end</div>
+                <div id="align-items-demo3">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">align-items: stretch</div>
+                <div id="align-items-demo4">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ALIGN-SELF -->
+    <div class="section">
+        <h2>align-self (Individual Vertical Alignment)</h2>
+        <p><strong>align-self</strong> aligns individual items vertically within their grid cells, overriding <code>align-items</code>.</p>
+        <div class="code-example">
+.item:nth-child(1) { align-self: start; }<br>
+.item:nth-child(2) { align-self: center; }<br>
+.item:nth-child(3) { align-self: end; }<br>
+.item:nth-child(4) { align-self: stretch; }
+        </div>
+        <div class="grid-demo">
+            <div class="demo-label">align-self: Various Values</div>
+            <div id="align-self-demo">
+                <div class="item">start</div>
+                <div class="item">center</div>
+                <div class="item">end</div>
+                <div class="item">stretch</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ALIGN-CONTENT -->
+    <div class="section">
+        <h2>align-content (Vertical Grid Alignment)</h2>
+        <p><strong>align-content</strong> aligns the entire grid vertically within the grid container. Values: <code>start</code>, <code>center</code>, <code>end</code>, <code>space-between</code>, etc.</p>
+        <div class="demo-group">
+            <div class="grid-demo">
+                <div class="demo-label">align-content: start</div>
+                <div id="align-content-demo1">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                    <div class="item">4</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">align-content: center</div>
+                <div id="align-content-demo2">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                    <div class="item">4</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">align-content: end</div>
+                <div id="align-content-demo3">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                    <div class="item">4</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">align-content: space-between</div>
+                <div id="align-content-demo4">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                    <div class="item">4</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JUSTIFY-ITEMS -->
+    <div class="section">
+        <h2>justify-items (Horizontal Alignment)</h2>
+        <p><strong>justify-items</strong> aligns all items horizontally within their grid cells. Values: <code>start</code>, <code>center</code>, <code>end</code>, <code>stretch</code>.</p>
+        <div class="demo-group">
+            <div class="grid-demo">
+                <div class="demo-label">justify-items: start</div>
+                <div id="justify-items-demo1">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">justify-items: center</div>
+                <div id="justify-items-demo2">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">justify-items: end</div>
+                <div id="justify-items-demo3">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">justify-items: stretch</div>
+                <div id="justify-items-demo4">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                    <div class="item">3</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JUSTIFY-SELF -->
+    <div class="section">
+        <h2>justify-self (Individual Horizontal Alignment)</h2>
+        <p><strong>justify-self</strong> aligns individual items horizontally within their grid cells, overriding <code>justify-items</code>.</p>
+        <div class="code-example">
+.item:nth-child(1) { justify-self: start; }<br>
+.item:nth-child(2) { justify-self: center; }<br>
+.item:nth-child(3) { justify-self: end; }<br>
+.item:nth-child(4) { justify-self: stretch; }
+        </div>
+        <div class="grid-demo">
+            <div class="demo-label">justify-self: Various Values</div>
+            <div id="justify-self-demo">
+                <div class="item">start</div>
+                <div class="item">center</div>
+                <div class="item">end</div>
+                <div class="item">stretch</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JUSTIFY-CONTENT -->
+    <div class="section">
+        <h2>justify-content (Horizontal Grid Alignment)</h2>
+        <p><strong>justify-content</strong> aligns the entire grid horizontally within the grid container. Values: <code>start</code>, <code>center</code>, <code>end</code>, <code>space-between</code>, etc.</p>
+        <div class="demo-group">
+            <div class="grid-demo">
+                <div class="demo-label">justify-content: start</div>
+                <div id="justify-content-demo1">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">justify-content: center</div>
+                <div id="justify-content-demo2">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">justify-content: end</div>
+                <div id="justify-content-demo3">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                </div>
+            </div>
+            <div class="grid-demo">
+                <div class="demo-label">justify-content: space-between</div>
+                <div id="justify-content-demo4">
+                    <div class="item">1</div>
+                    <div class="item">2</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REFERENCE CHART -->
+    <div class="section">
+        <h2>📊 Quick Reference Chart</h2>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr style="background: #667eea; color: white;">
+                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Property</th>
+                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Type</th>
+                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Purpose</th>
+                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Scope</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background: #f9f9f9;">
+                    <td style="padding: 12px; border: 1px solid #ddd;"><code>place-items</code></td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Shorthand</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Align items in cells (both axes)</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Container</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #ddd;"><code>place-self</code></td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Shorthand</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Align item in cell (both axes)</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Item</td>
+                </tr>
+                <tr style="background: #f9f9f9;">
+                    <td style="padding: 12px; border: 1px solid #ddd;"><code>place-content</code></td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Shorthand</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Align grid in container (both axes)</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Container</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #ddd;"><code>align-items</code></td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Full</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Vertical alignment of items in cells</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Container</td>
+                </tr>
+                <tr style="background: #f9f9f9;">
+                    <td style="padding: 12px; border: 1px solid #ddd;"><code>align-self</code></td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Full</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Vertical alignment of individual item</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Item</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #ddd;"><code>align-content</code></td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Full</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Vertical alignment of grid in container</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Container</td>
+                </tr>
+                <tr style="background: #f9f9f9;">
+                    <td style="padding: 12px; border: 1px solid #ddd;"><code>justify-items</code></td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Full</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Horizontal alignment of items in cells</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Container</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #ddd;"><code>justify-self</code></td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Full</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Horizontal alignment of individual item</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Item</td>
+                </tr>
+                <tr style="background: #f9f9f9;">
+                    <td style="padding: 12px; border: 1px solid #ddd;"><code>justify-content</code></td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Full</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Horizontal alignment of grid in container</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Container</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
