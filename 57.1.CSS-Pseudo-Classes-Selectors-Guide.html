@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Pseudo-Classes - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.05rem;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin: 35px 0 20px 0;
+            font-size: 1.6rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.2rem;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .intro-section {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .intro-section strong {
+            color: #667eea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pseudo-section {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .pseudo-name {
+            font-family: 'Courier New', monospace;
+            background: #667eea;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: inline-block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .syntax-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .syntax-box .keyword { color: #569cd6; }
+        .syntax-box .selector { color: #9cdcfe; }
+        .syntax-box .property { color: #9cdcfe; }
+        .syntax-box .value { color: #ce9178; }
+        .syntax-box .comment { color: #6a9955; }
+
+        .demo-section {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .demo-html {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .use-cases {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .use-cases h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .use-cases ul {
+            list-style-position: inside;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .use-cases li {
+            margin-bottom: 8px;
+        }
+
+        .pseudo-category {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .category-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .category-card .icon {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .category-card .name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .category-card .desc {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .best-practices {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .best-practices h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .best-practices ul {
+            list-style-position: inside;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .best-practices li {
+            margin-bottom: 8px;
+        }
+
+        .browser-support {
+            background: #f3e5f5;
+            border: 1px solid #ce93d8;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .browser-support h4 {
+            color: #7b1fa2;
+            margin-bottom: 10px;
+        }
+
+        .browser-support p {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .support-badge {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+
+        .support-badge.partial {
+            background: #ff9800;
+        }
+
+        .support-badge.legacy {
+            background: #f44336;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 20px 40px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .code-inline {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            h3 {
+                font-size: 1rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            .pseudo-category {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Pseudo-Classes</h1>
+            <p>Complete Guide to State and Position Selectors</p>
+        </header>
+
+        <div class="content">
+            <div class="intro-section">
+                <p><strong>CSS Pseudo-Classes</strong> represent special states or positions of elements in the DOM. They allow you to select and style elements based on their state (interactive, checked, disabled), position in the document tree (:nth-child, :first-child), or relationship to other elements (:has). Pseudo-classes are powerful for creating interactive, responsive styles without JavaScript.</p>
+            </div>
+
+            <h2>Overview of CSS Pseudo-Classes</h2>
+            <p>Pseudo-classes are organized into several categories:</p>
+
+            <div class="pseudo-category">
+                <div class="category-card">
+                    <div class="icon">🎯</div>
+                    <div class="name">Interactive</div>
+                    <div class="desc">:hover, :focus, :active</div>
+                </div>
+                <div class="category-card">
+                    <div class="icon">🔗</div>
+                    <div class="name">Link</div>
+                    <div class="desc">:link, :visited</div>
+                </div>
+                <div class="category-card">
+                    <div class="icon">📋</div>
+                    <div class="name">Form</div>
+                    <div class="desc">:checked, :disabled, :enabled</div>
+                </div>
+                <div class="category-card">
+                    <div class="icon">#️⃣</div>
+                    <div class="name">Structural</div>
+                    <div class="desc">:nth-child, :first-child, :last-child</div>
+                </div>
+                <div class="category-card">
+                    <div class="icon">🚫</div>
+                    <div class="name">Negation</div>
+                    <div class="desc">:not, :is, :where</div>
+                </div>
+                <div class="category-card">
+                    <div class="icon">👨‍👧‍👦</div>
+                    <div class="name">Relational</div>
+                    <div class="desc">:has, :is-within</div>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pseudo-Class</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Browser Support</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="code-inline">:hover</span></td>
+                        <td>Interactive</td>
+                        <td>When user hovers over element</td>
+                        <td>All browsers</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:focus</span></td>
+                        <td>Interactive</td>
+                        <td>When element receives focus</td>
+                        <td>All browsers</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:active</span></td>
+                        <td>Interactive</td>
+                        <td>When element is activated (clicked)</td>
+                        <td>All browsers</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:link</span></td>
+                        <td>Link</td>
+                        <td>Unvisited links</td>
+                        <td>All browsers</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:visited</span></td>
+                        <td>Link</td>
+                        <td>Visited links</td>
+                        <td>All browsers</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:checked</span></td>
+                        <td>Form</td>
+                        <td>Checked checkbox/radio</td>
+                        <td>IE 9+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:disabled</span></td>
+                        <td>Form</td>
+                        <td>Disabled form element</td>
+                        <td>IE 9+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:enabled</span></td>
+                        <td>Form</td>
+                        <td>Enabled form element</td>
+                        <td>IE 9+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:first-child</span></td>
+                        <td>Structural</td>
+                        <td>First child element</td>
+                        <td>IE 7+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:last-child</span></td>
+                        <td>Structural</td>
+                        <td>Last child element</td>
+                        <td>IE 9+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:nth-child(n)</span></td>
+                        <td>Structural</td>
+                        <td>nth child element</td>
+                        <td>IE 9+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:nth-of-type(n)</span></td>
+                        <td>Structural</td>
+                        <td>nth element of type</td>
+                        <td>IE 9+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:only-child</span></td>
+                        <td>Structural</td>
+                        <td>Only child element</td>
+                        <td>IE 9+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:empty</span></td>
+                        <td>Structural</td>
+                        <td>Element with no children</td>
+                        <td>IE 9+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:not(selector)</span></td>
+                        <td>Negation</td>
+                        <td>Elements NOT matching selector</td>
+                        <td>IE 9+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:is(selector)</span></td>
+                        <td>Negation</td>
+                        <td>Matches any selector in list</td>
+                        <td>Chrome 88+, Firefox 78+</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:where(selector)</span></td>
+                        <td>Negation</td>
+                        <td>Like :is but 0 specificity</td>
+                        <td>Chrome 88+, Firefox 78+</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">:has(selector)</span></td>
+                        <td>Relational</td>
+                        <td>Parent selector (experimental)</td>
+                        <td>Chrome 105+, Safari 15.4+</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Interactive Pseudo-Classes -->
+            <div class="pseudo-section">
+                <div class="pseudo-name">:hover</div>
+                <h3>What It Does</h3>
+                <p>Applies styles when the user <span class="highlight">hovers over an element</span> with the mouse cursor.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">element:hover</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <div class="syntax-box">
+<span class="comment">/* Button hover effect */</span><br>
+<span class="selector">button:hover</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">#764ba2</span>;<br>
+&nbsp;&nbsp;<span class="property">transform</span>: <span class="value">scale(1.05)</span>;<br>
+&nbsp;&nbsp;<span class="property">box-shadow</span>: <span class="value">0 5px 15px rgba(0,0,0,0.2)</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Link hover effect */</span><br>
+<span class="selector">a:hover</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">text-decoration</span>: <span class="value">underline</span>;<br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">#667eea</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Button hover effects and color changes</li>
+                        <li>Link underlines and color transitions</li>
+                        <li>Revealing hidden elements on hover</li>
+                        <li>Scale and transform animations</li>
+                        <li>Menu dropdown activation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pseudo-section">
+                <div class="pseudo-name">:focus</div>
+                <h3>What It Does</h3>
+                <p>Applies styles when an element <span class="highlight">receives keyboard focus</span>. Essential for accessibility and keyboard navigation.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">element:focus</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">outline</span>: <span class="value">2px solid #667eea</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <div class="syntax-box">
+<span class="comment">/* Form input focus */</span><br>
+<span class="selector">input:focus</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">border</span>: <span class="value">2px solid #667eea</span>;<br>
+&nbsp;&nbsp;<span class="property">outline</span>: <span class="value">none</span>;<br>
+&nbsp;&nbsp;<span class="property">box-shadow</span>: <span class="value">0 0 0 3px rgba(102,126,234,0.1)</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Button focus */</span><br>
+<span class="selector">button:focus</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">outline</span>: <span class="value">2px solid #667eea</span>;<br>
+&nbsp;&nbsp;<span class="property">outline-offset</span>: <span class="value">2px</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Form input focus styling (borders, shadows)</li>
+                        <li>Button focus rings for accessibility</li>
+                        <li>Keyboard navigation visibility</li>
+                        <li>Screen reader compatibility</li>
+                        <li>Tab order indication</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pseudo-section">
+                <div class="pseudo-name">:active</div>
+                <h3>What It Does</h3>
+                <p>Applies styles when an element is <span class="highlight">being activated</span> (e.g., during a mouse click).</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">element:active</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Button press visual feedback</li>
+                        <li>Creating "pushed" button effect</li>
+                        <li>Link click animation</li>
+                        <li>Interactive form element feedback</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Structural Pseudo-Classes -->
+            <div class="pseudo-section">
+                <div class="pseudo-name">:first-child, :last-child</div>
+                <h3>What It Does</h3>
+                <p>Selects elements that are the <span class="highlight">first or last child</span> of their parent.</p>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <div class="syntax-box">
+<span class="comment">/* First list item */</span><br>
+<span class="selector">li:first-child</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">border-radius</span>: <span class="value">8px 8px 0 0</span>;<br>
+&nbsp;&nbsp;<span class="property">margin-top</span>: <span class="value">0</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Last list item */</span><br>
+<span class="selector">li:last-child</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">border-radius</span>: <span class="value">0 0 8px 8px</span>;<br>
+&nbsp;&nbsp;<span class="property">border-bottom</span>: <span class="value">none</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>List styling (rounded corners on edges)</li>
+                        <li>Removing borders/margins from first/last items</li>
+                        <li>Special styling for boundary elements</li>
+                        <li>Card collections and grids</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pseudo-section">
+                <div class="pseudo-name">:nth-child(n), :nth-of-type(n)</div>
+                <h3>What It Does</h3>
+                <p><span class="code-inline">:nth-child(n)</span> selects the <span class="highlight">nth child regardless of type</span>. <span class="code-inline">:nth-of-type(n)</span> selects the <span class="highlight">nth element of that specific type</span>.</p>
+
+                <h3>Syntax and Patterns</h3>
+                <div class="syntax-box">
+<span class="comment">/* Specific number */</span><br>
+<span class="selector">li:nth-child(3)</span> <span class="keyword">{</span> <span class="comment">/* 3rd child */</span><br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Every nth (2n = even, 2n+1 = odd) */</span><br>
+<span class="selector">li:nth-child(2n)</span> <span class="keyword">{</span> <span class="comment">/* Even items */</span><br>
+<span class="keyword">}</span><br>
+<br>
+<span class="selector">li:nth-child(2n+1)</span> <span class="keyword">{</span> <span class="comment">/* Odd items */</span><br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Group of n (every 3rd) */</span><br>
+<span class="selector">li:nth-child(3n)</span> <span class="keyword">{</span> <span class="comment">/* Every 3rd: 3, 6, 9, ... */</span><br>
+<span class="keyword">}</span>
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Zebra striping (alternating row colors)</li>
+                        <li>Every nth element styling</li>
+                        <li>Grid layout patterns</li>
+                        <li>List animations with staggered delays</li>
+                        <li>Dynamic column layouts</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pseudo-section">
+                <div class="pseudo-name">:not(selector)</div>
+                <h3>What It Does</h3>
+                <p>Selects elements that do <span class="highlight">NOT match the selector</span>.</p>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <div class="syntax-box">
+<span class="comment">/* All paragraphs except those with class "intro" */</span><br>
+<span class="selector">p:not(.intro)</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">#666</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* All buttons except disabled */</span><br>
+<span class="selector">button:not([disabled])</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">cursor</span>: <span class="value">pointer</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Exclusion-based styling</li>
+                        <li>Styling all but one element</li>
+                        <li>Margin reset patterns</li>
+                        <li>Conditional display logic</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pseudo-section">
+                <div class="pseudo-name">:is(), :where()</div>
+                <h3>What It Does</h3>
+                <p><span class="code-inline">:is()</span> matches any selector in the list. <span class="code-inline">:where()</span> is identical but has 0 specificity.</p>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <div class="syntax-box">
+<span class="comment">/* Instead of: h1, h2, h3, h4, h5, h6 { } */</span><br>
+<span class="selector">:is(h1, h2, h3, h4, h5, h6)</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">margin</span>: <span class="value">20px 0</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Match any button or link inside nav */</span><br>
+<span class="selector">nav :is(a, button)</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">white</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Grouping multiple selectors</li>
+                        <li>Reducing selector redundancy</li>
+                        <li>Complex selector simplification</li>
+                        <li>:where() for low-specificity resets</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pseudo-section">
+                <div class="pseudo-name">:has(selector)</div>
+                <h3>What It Does</h3>
+                <p>Selects elements that <span class="highlight">contain the specified selector</span> (parent selector). This is a powerful relational pseudo-class.</p>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <div class="syntax-box">
+<span class="comment">/* Article that contains an img */</span><br>
+<span class="selector">article:has(img)</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">#f9f9f9</span>;<br>
+&nbsp;&nbsp;<span class="property">padding</span>: <span class="value">20px</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Label containing checked input */</span><br>
+<span class="selector">label:has(input:checked)</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">#e8f5e9</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Parent styling based on children</li>
+                        <li>Conditional container styling</li>
+                        <li>Card styling based on content</li>
+                        <li>Complex layout patterns</li>
+                        <li>State management without JavaScript</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Form Pseudo-Classes -->
+            <div class="pseudo-section">
+                <div class="pseudo-name">:checked, :disabled, :enabled</div>
+                <h3>What It Does</h3>
+                <p>Form-related pseudo-classes for styling form controls based on their state.</p>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <div class="syntax-box">
+<span class="comment">/* Checked checkbox or radio */</span><br>
+<span class="selector">input:checked</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">#4caf50</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Disabled form controls */</span><br>
+<span class="selector">input:disabled, button:disabled</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">opacity</span>: <span class="value">0.5</span>;<br>
+&nbsp;&nbsp;<span class="property">cursor</span>: <span class="value">not-allowed</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Enabled form controls */</span><br>
+<span class="selector">input:enabled</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">cursor</span>: <span class="value">text</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Checkbox and radio button styling</li>
+                        <li>Disabled state indication</li>
+                        <li>Toggle switches</li>
+                        <li>Custom form control styling</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Best Practices</h2>
+            <div class="best-practices">
+                <h4>✓ Do's</h4>
+                <ul>
+                    <li><strong>Combine with element type</strong> - <span class="code-inline">button:hover</span> is better than <span class="code-inline">:hover</span></li>
+                    <li><strong>Use :focus for accessibility</strong> - Never remove focus indicators without replacing them</li>
+                    <li><strong>Test keyboard navigation</strong> - Ensure :focus styles are always visible</li>
+                    <li><strong>Use :nth-child() for patterns</strong> - Avoid multiple margin-bottom rules</li>
+                    <li><strong>Use :has() for parent styling</strong> - Replaces JavaScript selector patterns</li>
+                    <li><strong>Chain pseudo-classes</strong> - <span class="code-inline">a:link:hover</span> for specific link states</li>
+                </ul>
+            </div>
+
+            <div class="best-practices" style="background: #ffebee; border-left-color: #f44336;">
+                <h4 style="color: #c62828;">✗ Don'ts</h4>
+                <ul>
+                    <li><strong>Don't remove :focus styling</strong> - It's essential for keyboard users</li>
+                    <li><strong>Don't over-chain pseudo-classes</strong> - Too many chains reduce readability</li>
+                    <li><strong>Don't rely on :hover for mobile</strong> - Hover doesn't work on touch devices</li>
+                    <li><strong>Don't use :visited for styling links</strong> - Browser security restricts it heavily</li>
+                    <li><strong>Don't use pseudo-classes as JavaScript replacements</strong> - Use both together</li>
+                </ul>
+            </div>
+
+            <h2>Browser Support</h2>
+            <div class="browser-support">
+                <h4>Interactive Pseudo-Classes</h4>
+                <p><strong>:hover, :active, :focus, :link, :visited</strong></p>
+                <span class="support-badge">All Browsers</span>
+
+                <h4 style="margin-top: 15px;">Structural Pseudo-Classes</h4>
+                <p><strong>:first-child, :last-child, :nth-child, :nth-of-type, :only-child, :empty</strong></p>
+                <span class="support-badge">IE 9+</span>
+                <span class="support-badge">All Modern Browsers</span>
+
+                <h4 style="margin-top: 15px;">Form Pseudo-Classes</h4>
+                <p><strong>:checked, :disabled, :enabled</strong></p>
+                <span class="support-badge">IE 9+</span>
+                <span class="support-badge">All Modern Browsers</span>
+
+                <h4 style="margin-top: 15px;">Negation Pseudo-Classes</h4>
+                <p><strong>:not, :is, :where</strong></p>
+                <span class="support-badge">IE 9+</span>
+                <span class="support-badge partial">:is/:where - Chrome 88+</span>
+
+                <h4 style="margin-top: 15px;">Relational Pseudo-Classes</h4>
+                <p><strong>:has</strong></p>
+                <span class="support-badge partial">Chrome 105+, Safari 15.4+</span>
+                <span class="support-badge legacy">Firefox 121+ (experimental)</span>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Pseudo-Classes Guide. CSS Reference. <strong>Most have excellent browser support, with newer features being progressively adopted.</strong></p>
+        </footer>
+    </div>
+</body>
+</html>

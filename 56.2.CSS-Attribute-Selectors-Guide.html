@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Attribute Selectors - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h3 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .demo-area {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 120px;
+        }
+
+        .code-snippet {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+        }
+
+        .code-snippet .tag { color: #569cd6; }
+        .code-snippet .attr { color: #9cdcfe; }
+        .code-snippet .value { color: #ce9178; }
+        .code-snippet .text { color: #d4d4d4; }
+        .code-snippet .comment { color: #6a9955; }
+
+        .use-case {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        /* Example 1: Input Types */
+        .example-1 .demo-area input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .example-1 .demo-area input[type="email"] {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .example-1 .demo-area input[type="password"] {
+            border-color: #ff9800;
+            background: #fff3e0;
+        }
+
+        .example-1 .demo-area input[type="submit"] {
+            background: #4caf50;
+            color: white;
+            cursor: pointer;
+            border: none;
+            font-weight: 600;
+        }
+
+        .example-1 .demo-area input[type="submit"]:hover {
+            background: #45a049;
+        }
+
+        /* Example 2: Required Fields */
+        .example-2 .demo-area label {
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .example-2 .demo-area label > span {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .example-2 .demo-area input[required] {
+            border: 2px solid #667eea;
+            padding: 8px;
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .example-2 .demo-area input[required]::after {
+            content: " *";
+            color: red;
+        }
+
+        .example-2 .demo-area input:not([required]) {
+            border: 1px solid #ccc;
+            padding: 8px;
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        /* Example 3: Disabled Elements */
+        .example-3 .demo-area button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .example-3 .demo-area button:not([disabled]) {
+            background: #667eea;
+            color: white;
+        }
+
+        .example-3 .demo-area button:not([disabled]):hover {
+            background: #764ba2;
+        }
+
+        .example-3 .demo-area button[disabled] {
+            background: #ccc;
+            color: #999;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Example 4: External Links */
+        .example-4 .demo-area {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .example-4 .demo-area a {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .example-4 .demo-area a[href^="https"] {
+            background: #4caf50;
+            color: white;
+        }
+
+        .example-4 .demo-area a[href^="http"] {
+            background: #ff9800;
+            color: white;
+        }
+
+        .example-4 .demo-area a[href^="/"] {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Example 5: File Types */
+        .example-5 .demo-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .example-5 .demo-area a {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .example-5 .demo-area a[href$=".pdf"] {
+            background: #f44336;
+            color: white;
+        }
+
+        .example-5 .demo-area a[href$=".doc"],
+        .example-5 .demo-area a[href$=".docx"] {
+            background: #2196f3;
+            color: white;
+        }
+
+        .example-5 .demo-area a[href$=".xls"],
+        .example-5 .demo-area a[href$=".xlsx"] {
+            background: #4caf50;
+            color: white;
+        }
+
+        .example-5 .demo-area a[href$=".zip"] {
+            background: #9c27b0;
+            color: white;
+        }
+
+        .example-5 .demo-area a::before {
+            content: "📎 ";
+            margin-right: 5px;
+        }
+
+        /* Example 6: Data Attributes */
+        .example-6 .demo-area .card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .example-6 .demo-area [data-status="active"] {
+            border-color: #4caf50;
+            background: #f1f8f6;
+        }
+
+        .example-6 .demo-area [data-status="pending"] {
+            border-color: #ff9800;
+            background: #fff9f5;
+        }
+
+        .example-6 .demo-area [data-status="inactive"] {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .example-6 .demo-area .card::before {
+            content: attr(data-status);
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 10px;
+            text-transform: uppercase;
+        }
+
+        .example-6 .demo-area [data-status="active"]::before {
+            background: #4caf50;
+            color: white;
+        }
+
+        .example-6 .demo-area [data-status="pending"]::before {
+            background: #ff9800;
+            color: white;
+        }
+
+        .example-6 .demo-area [data-status="inactive"]::before {
+            background: #f44336;
+            color: white;
+        }
+
+        /* Example 7: Icon Selection */
+        .example-7 .demo-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .example-7 .demo-area a {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 15px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .example-7 .demo-area a::before {
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+
+        .example-7 .demo-area a[href*="facebook"]::before { content: "📘"; }
+        .example-7 .demo-area a[href*="twitter"]::before { content: "🐦"; }
+        .example-7 .demo-area a[href*="linkedin"]::before { content: "💼"; }
+        .example-7 .demo-area a[href*="github"]::before { content: "🐙"; }
+
+        /* Example 8: Form Validation States */
+        .example-8 .demo-area input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .example-8 .demo-area input[required]:valid {
+            border-color: #4caf50;
+            background: #f1f8f6;
+        }
+
+        .example-8 .demo-area input[required]:invalid {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        /* Example 9: Language Attributes */
+        .example-9 .demo-area p {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .example-9 .demo-area p[lang|="en"] {
+            border-left: 4px solid #667eea;
+        }
+
+        .example-9 .demo-area p[lang|="fr"] {
+            border-left: 4px solid #ff9800;
+        }
+
+        .example-9 .demo-area p[lang|="de"] {
+            border-left: 4px solid #4caf50;
+        }
+
+        /* Example 10: Title Attributes */
+        .example-10 .demo-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .example-10 .demo-area button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .example-10 .demo-area button[title] {
+            background: #667eea;
+            color: white;
+        }
+
+        .example-10 .demo-area button[title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            margin-bottom: 5px;
+        }
+
+        /* Example 11: Placeholder Attributes */
+        .example-11 .demo-area input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .example-11 .demo-area input[placeholder] {
+            background: #f9f9f9;
+            border-color: #667eea;
+        }
+
+        .example-11 .demo-area input[placeholder]::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Example 12: Case Insensitive */
+        .example-12 .demo-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .example-12 .demo-area input {
+            padding: 8px 12px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .example-12 .demo-area input[type="button" i] {
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            border: none;
+            font-weight: 600;
+        }
+
+        .example-12 .demo-area input[type="button" i]:hover {
+            background: #764ba2;
+        }
+
+        .footer {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .footer h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .quick-ref {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            text-align: left;
+        }
+
+        .ref-item {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .ref-item code {
+            background: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Attribute Selectors</h1>
+            <p>Practical Examples & Real-World Use Cases</p>
+        </header>
+
+        <div class="examples-grid">
+
+            <!-- Example 1: Input Types -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Input Type Styling</h3>
+                    <span class="badge">[type=value]</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style different input types with distinct colors and behaviors.</p>
+                    <div class="demo-area">
+                        <input type="text" placeholder="Regular text">
+                        <input type="email" placeholder="Email address">
+                        <input type="password" placeholder="Password">
+                        <input type="submit" value="Submit Form">
+                    </div>
+                    <div class="code-snippet">
+<span class="text">input[type="email"] {</span><br>
+&nbsp;&nbsp;<span class="text">border-color: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">background: #f0f4ff;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">input[type="password"] {</span><br>
+&nbsp;&nbsp;<span class="text">border-color: #ff9800;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">input[type="submit"] {</span><br>
+&nbsp;&nbsp;<span class="text">background: #4caf50;</span><br>
+&nbsp;&nbsp;<span class="text">color: white;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Visual differentiation of form input fields without adding classes.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 2: Required Fields -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Required Form Fields</h3>
+                    <span class="badge">[required]</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Highlight form fields that must be filled out.</p>
+                    <div class="demo-area">
+                        <label>
+                            <span>Full Name (Required)</span>
+                            <input type="text" required>
+                        </label>
+                        <label>
+                            <span>Phone (Optional)</span>
+                            <input type="tel">
+                        </label>
+                        <label>
+                            <span>Email (Required)</span>
+                            <input type="email" required>
+                        </label>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">input[required] {</span><br>
+&nbsp;&nbsp;<span class="text">border: 2px solid #667eea;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">input:not([required]) {</span><br>
+&nbsp;&nbsp;<span class="text">border: 1px solid #ccc;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Visual indicator for mandatory form fields using HTML attributes.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3: Disabled Elements -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Disabled State Styling</h3>
+                    <span class="badge">[disabled]</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style disabled buttons and inputs distinctly from active ones.</p>
+                    <div class="demo-area">
+                        <button>Save</button>
+                        <button>Edit</button>
+                        <button disabled>Delete</button>
+                        <button disabled>Archive</button>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">button:not([disabled]) {</span><br>
+&nbsp;&nbsp;<span class="text">background: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">color: white;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">button[disabled] {</span><br>
+&nbsp;&nbsp;<span class="text">background: #ccc;</span><br>
+&nbsp;&nbsp;<span class="text">cursor: not-allowed;</span><br>
+&nbsp;&nbsp;<span class="text">opacity: 0.6;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Conditional button styling without JavaScript.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4: External Links -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Link Protocol Detection</h3>
+                    <span class="badge">[href^=value]</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style external and internal links differently based on protocol.</p>
+                    <div class="demo-area">
+                        <a href="https://example.com">HTTPS External Link</a>
+                        <a href="http://example.com">HTTP External Link</a>
+                        <a href="/about">Local Page</a>
+                        <a href="/contact">Contact Page</a>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">a[href^="https"] {</span><br>
+&nbsp;&nbsp;<span class="text">background: #4caf50;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">a[href^="/"] {</span><br>
+&nbsp;&nbsp;<span class="text">background: #667eea;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Visual distinction between internal and external navigation.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 5: File Type Downloads -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Download File Types</h3>
+                    <span class="badge">[href$=value]</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Color-code download links based on file extension.</p>
+                    <div class="demo-area">
+                        <a href="document.pdf">Download PDF</a>
+                        <a href="spreadsheet.xlsx">Download Excel</a>
+                        <a href="word.docx">Download Word</a>
+                        <a href="archive.zip">Download ZIP</a>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">a[href$=".pdf"] {</span><br>
+&nbsp;&nbsp;<span class="text">background: #f44336;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">a[href$=".xlsx"] {</span><br>
+&nbsp;&nbsp;<span class="text">background: #4caf50;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">a[href$=".zip"] {</span><br>
+&nbsp;&nbsp;<span class="text">background: #9c27b0;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Visual file type indicators for downloads without JavaScript.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 6: Data Attributes -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Status Indicators</h3>
+                    <span class="badge">[data-attr=value]</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style elements based on custom data attribute values.</p>
+                    <div class="demo-area">
+                        <div class="card" data-status="active">Active User</div>
+                        <div class="card" data-status="pending">Pending Approval</div>
+                        <div class="card" data-status="inactive">Inactive Account</div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">[data-status="active"] {</span><br>
+&nbsp;&nbsp;<span class="text">border-color: #4caf50;</span><br>
+&nbsp;&nbsp;<span class="text">background: #f1f8f6;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">[data-status="pending"] {</span><br>
+&nbsp;&nbsp;<span class="text">border-color: #ff9800;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Status-based styling without requiring specific classes.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 7: Social Media Icons -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Social Media Links</h3>
+                    <span class="badge">[href*=value]</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Auto-generate platform icons based on URL patterns.</p>
+                    <div class="demo-area">
+                        <a href="https://facebook.com/company">Facebook</a>
+                        <a href="https://twitter.com/company">Twitter</a>
+                        <a href="https://linkedin.com/company/company">LinkedIn</a>
+                        <a href="https://github.com/company">GitHub</a>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">a[href*="facebook"]::before {</span><br>
+&nbsp;&nbsp;<span class="text">content: "📘 ";</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">a[href*="twitter"]::before {</span><br>
+&nbsp;&nbsp;<span class="text">content: "🐦 ";</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">a[href*="github"]::before {</span><br>
+&nbsp;&nbsp;<span class="text">content: "🐙 ";</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Dynamic social media icons without hardcoding.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 8: Form Validation -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Form Validation States</h3>
+                    <span class="badge">:valid/:invalid</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Visual feedback for valid and invalid form inputs.</p>
+                    <div class="demo-area">
+                        <input type="email" required placeholder="Valid email">
+                        <input type="email" required placeholder="Invalid email" value="notanemail">
+                        <input type="email" required placeholder="Another valid">
+                    </div>
+                    <div class="code-snippet">
+<span class="text">input[required]:valid {</span><br>
+&nbsp;&nbsp;<span class="text">border-color: #4caf50;</span><br>
+&nbsp;&nbsp;<span class="text">background: #f1f8f6;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">input[required]:invalid {</span><br>
+&nbsp;&nbsp;<span class="text">border-color: #f44336;</span><br>
+&nbsp;&nbsp;<span class="text">background: #ffebee;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Real-time form validation feedback using native HTML validation.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 9: Language Attributes -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Language-Based Styling</h3>
+                    <span class="badge">[lang|=value]</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style content based on language attributes.</p>
+                    <div class="demo-area">
+                        <p lang="en-US">Hello, this is American English.</p>
+                        <p lang="en-GB">Hello, this is British English.</p>
+                        <p lang="fr">Bonjour, c'est du français.</p>
+                        <p lang="de">Hallo, das ist Deutsch.</p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">p[lang|="en"] {</span><br>
+&nbsp;&nbsp;<span class="text">border-left: 4px solid #667eea;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">p[lang|="fr"] {</span><br>
+&nbsp;&nbsp;<span class="text">border-left: 4px solid #ff9800;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">p[lang|="de"] {</span><br>
+&nbsp;&nbsp;<span class="text">border-left: 4px solid #4caf50;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Multi-language website styling by language variants.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 10: Title Attributes -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Tooltip Styling</h3>
+                    <span class="badge">[title]</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style elements with tooltips differently from those without.</p>
+                    <div class="demo-area">
+                        <button title="Save your work">Save</button>
+                        <button title="Undo last action">Undo</button>
+                        <button title="Redo last action">Redo</button>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">button[title] {</span><br>
+&nbsp;&nbsp;<span class="text">background: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">color: white;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">button[title]:hover::after {</span><br>
+&nbsp;&nbsp;<span class="text">content: attr(title);</span><br>
+&nbsp;&nbsp;<span class="text">position: absolute;</span><br>
+&nbsp;&nbsp;<span class="text">background: #333;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Styling elements with help text or accessibility hints.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 11: Placeholder Attributes -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Input Placeholder Styling</h3>
+                    <span class="badge">[placeholder]</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style inputs with placeholder text distinctly from those without.</p>
+                    <div class="demo-area">
+                        <input placeholder="Enter your name">
+                        <input placeholder="Enter your email">
+                        <input placeholder="Enter message">
+                    </div>
+                    <div class="code-snippet">
+<span class="text">input[placeholder] {</span><br>
+&nbsp;&nbsp;<span class="text">background: #f9f9f9;</span><br>
+&nbsp;&nbsp;<span class="text">border: 2px solid #667eea;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">input[placeholder]::placeholder {</span><br>
+&nbsp;&nbsp;<span class="text">color: #999;</span><br>
+&nbsp;&nbsp;<span class="text">font-style: italic;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Styling text inputs with guidance text.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 12: Case Insensitive -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Case Insensitive Matching</h3>
+                    <span class="badge">[attr=value i]</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Match attributes regardless of capitalization using the i flag.</p>
+                    <div class="demo-area">
+                        <input type="button" value="Button">
+                        <input type="BUTTON" value="BUTTON">
+                        <input type="Button" value="Button">
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* Without i flag - only matches "button" */</span><br>
+<span class="text">input[type="button"] { ... }</span><br>
+<br>
+<span class="comment">/* With i flag - matches all variations */</span><br>
+<span class="text">input[type="button" i] {</span><br>
+&nbsp;&nbsp;<span class="text">background: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">color: white;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Handling inconsistent or user-generated attribute values.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);">
+            <h2 style="color: #667eea; margin-bottom: 20px;">Attribute Selector Reference</h2>
+            
+            <table style="width: 100%; border-collapse: collapse; background: white; margin: 20px 0;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">Selector</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">Example</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">What It Matches</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>[attr]</strong></td>
+                        <td style="padding: 15px;"><code>[required]</code></td>
+                        <td style="padding: 15px;">Any element with the attribute</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>[attr=value]</strong></td>
+                        <td style="padding: 15px;"><code>[type="email"]</code></td>
+                        <td style="padding: 15px;">Exact value match</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>[attr~=value]</strong></td>
+                        <td style="padding: 15px;"><code>[class~="active"]</code></td>
+                        <td style="padding: 15px;">Word-based match</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>[attr|=value]</strong></td>
+                        <td style="padding: 15px;"><code>[lang|="en"]</code></td>
+                        <td style="padding: 15px;">Prefix or exact match</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>[attr^=value]</strong></td>
+                        <td style="padding: 15px;"><code>[href^="https"]</code></td>
+                        <td style="padding: 15px;">Starts with</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>[attr$=value]</strong></td>
+                        <td style="padding: 15px;"><code>[src$=".png"]</code></td>
+                        <td style="padding: 15px;">Ends with</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>[attr*=value]</strong></td>
+                        <td style="padding: 15px;"><code>[title*="error"]</code></td>
+                        <td style="padding: 15px;">Contains</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 15px;"><strong>[attr operator i]</strong></td>
+                        <td style="padding: 15px;"><code>[type="button" i]</code></td>
+                        <td style="padding: 15px;">Case insensitive</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">Key Takeaways</h3>
+            <ul style="line-height: 1.8; color: #555;">
+                <li><strong>Presence [attr]:</strong> Select any element that has the attribute, regardless of value.</li>
+                <li><strong>Exact [attr=value]:</strong> Perfect for form input types and exact value matching.</li>
+                <li><strong>Word [attr~=value]:</strong> Best for space-separated values like class attributes.</li>
+                <li><strong>Prefix [attr|=value]:</strong> Ideal for language codes (en, en-US, en-GB).</li>
+                <li><strong>Starts With [attr^=value]:</strong> Great for protocol detection (https, http) or file paths.</li>
+                <li><strong>Ends With [attr$=value]:</strong> Perfect for file types (.pdf, .jpg, .zip).</li>
+                <li><strong>Contains [attr*=value]:</strong> Powerful for partial matches anywhere in the attribute.</li>
+                <li><strong>Case Insensitive (i):</strong> Use when matching user-generated or inconsistent values.</li>
+                <li><strong>Combination:</strong> Chain multiple attribute selectors for precise targeting without classes.</li>
+                <li><strong>Performance:</strong> Combine with element type (e.g., <code>input[type="email"]</code>) for better specificity.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <h3>Browser Compatibility</h3>
+            <div class="quick-ref">
+                <div class="ref-item">
+                    <strong>Basic [attr], [attr=value]</strong><br>
+                    IE 7+, All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>Substring [^$*]</strong><br>
+                    IE 7+, All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>Case Insensitive (i)</strong><br>
+                    Chrome 49+, Firefox 78+, Safari 9+
+                </div>
+                <div class="ref-item">
+                    <strong>Data Attributes</strong><br>
+                    IE 7+, All Modern Browsers
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

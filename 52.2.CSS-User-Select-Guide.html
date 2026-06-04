@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS User-Select - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .card-header h2 {
+            font-size: 1.4em;
+            margin-bottom: 5px;
+        }
+
+        .card-header p {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .demo-area {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px dashed #667eea;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            overflow-x: auto;
+            line-height: 1.4;
+            margin: 15px 0;
+        }
+
+        .info-badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .description {
+            font-size: 0.95em;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        /* ========== DEMO STYLES ========== */
+        .demo-auto {
+            user-select: auto;
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            text-align: center;
+            cursor: text;
+        }
+
+        .demo-none {
+            user-select: none;
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            text-align: center;
+            cursor: default;
+        }
+
+        .demo-text {
+            user-select: text;
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            text-align: center;
+            cursor: text;
+        }
+
+        .demo-all {
+            user-select: all;
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .demo-contain {
+            user-select: contain;
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            text-align: center;
+            cursor: text;
+        }
+
+        /* ========== EXAMPLE 1: Button ========== */
+        .demo-button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            user-select: none;
+            transition: transform 0.2s;
+        }
+
+        .demo-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* ========== EXAMPLE 2: Navigation ========== */
+        .demo-nav {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .demo-nav a {
+            padding: 10px 15px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            user-select: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .demo-nav a:hover {
+            background: #f0f0f0;
+        }
+
+        /* ========== EXAMPLE 3: Code Block ========== */
+        .demo-code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            user-select: all;
+            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        /* ========== EXAMPLE 4: Contact Info ========== */
+        .demo-contact {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #667eea;
+            user-select: all;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* ========== EXAMPLE 5: Card with Mixed Selection ========== */
+        .demo-card {
+            user-select: none;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+        }
+
+        .demo-card h3 {
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .demo-card p {
+            user-select: text;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        /* ========== EXAMPLE 6: Icon + Text ========== */
+        .demo-icon-text {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .demo-icon-text .icon {
+            font-size: 2em;
+        }
+
+        .demo-icon-text .text {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* ========== EXAMPLE 7: Table ========== */
+        .demo-table {
+            width: 100%;
+            border-collapse: collapse;
+            user-select: contain;
+        }
+
+        .demo-table th {
+            background: #667eea;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            user-select: none;
+        }
+
+        .demo-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            user-select: text;
+        }
+
+        .demo-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* ========== EXAMPLE 8: Label ========== */
+        .demo-label {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            font-weight: bold;
+            user-select: none;
+            cursor: default;
+        }
+
+        /* ========== EXAMPLE 9: Watermark ========== */
+        .demo-watermark {
+            position: relative;
+            padding: 30px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .demo-watermark-text {
+            font-size: 4em;
+            opacity: 0.1;
+            user-select: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        .demo-watermark-content {
+            position: relative;
+            z-index: 1;
+            user-select: text;
+        }
+
+        /* ========== EXAMPLE 10: Editable Area ========== */
+        .demo-editable {
+            padding: 15px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            min-height: 100px;
+            user-select: text;
+            cursor: text;
+            line-height: 1.6;
+        }
+
+        /* ========== EXAMPLE 11: Copy-Friendly ========== */
+        .demo-copyable {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            user-select: all;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .demo-copyable:hover {
+            background: #e8e8e8;
+        }
+
+        /* ========== EXAMPLE 12: Disabled Selection Override ========== */
+        .demo-no-select-parent {
+            user-select: none;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 6px;
+        }
+
+        .demo-no-select-parent p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .demo-no-select-parent .selectable {
+            user-select: text;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .info-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 12px;
+            padding: 12px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+            background: white;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-nav {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS User-Select Property</h1>
+            <p>12 Practical Interactive Examples</p>
+        </header>
+
+        <div class="examples-grid">
+            <!-- ========== EXAMPLE 1: auto ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>1. User-Select: Auto</h2>
+                    <p>Default behavior</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">user-select: auto</div>
+                    <div class="description">Default browser behavior. Text is selectable normally. Most common for article content.</div>
+                    <div class="demo-area">
+                        <div class="demo-auto">Try selecting this text - it works normally!</div>
+                    </div>
+                    <div class="code-block">user-select: auto;</div>
+                    <div class="info-text">✓ Normal text selection enabled</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 2: none ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>2. User-Select: None</h2>
+                    <p>Not selectable</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">user-select: none</div>
+                    <div class="description">Text cannot be selected. Perfect for buttons and UI elements where selection is unwanted.</div>
+                    <div class="demo-area">
+                        <div class="demo-none">Try selecting this text - it WON'T work! (user-select: none)</div>
+                    </div>
+                    <div class="code-block">user-select: none;</div>
+                    <div class="info-text">⚠️ Text selection prevented</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 3: text ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>3. User-Select: Text</h2>
+                    <p>Explicitly selectable</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">user-select: text</div>
+                    <div class="description">Explicitly enables selection, even if parent container prevents it. Override for important content.</div>
+                    <div class="demo-area">
+                        <div class="demo-text">This text IS selectable - explicitly set even in restricted containers!</div>
+                    </div>
+                    <div class="code-block">user-select: text;</div>
+                    <div class="info-text">✓ Selection explicitly enabled</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 4: all ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>4. User-Select: All</h2>
+                    <p>Select all on click</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">user-select: all</div>
+                    <div class="description">Click anywhere and entire text is selected at once. Great for code snippets and contact info.</div>
+                    <div class="demo-area">
+                        <div class="demo-all">👉 Click me to select ALL text at once!</div>
+                    </div>
+                    <div class="code-block">user-select: all;</div>
+                    <div class="info-text">⭐ One-click select all</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 5: contain ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>5. User-Select: Contain</h2>
+                    <p>Selection contained</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">user-select: contain</div>
+                    <div class="description">Selection is restricted within this element. Cannot extend beyond boundaries. Good for tables.</div>
+                    <div class="demo-area">
+                        <div class="demo-contain">Try selecting - it stays within this box!</div>
+                    </div>
+                    <div class="code-block">user-select: contain;</div>
+                    <div class="info-text">✓ Selection restricted to element</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 6: Button (Real-World) ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>6. Button (No Selection)</h2>
+                    <p>Interactive control</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">user-select: none</div>
+                    <div class="description">Buttons shouldn't have selectable text. Try clicking or dragging - no text highlighting.</div>
+                    <div class="demo-area">
+                        <button class="demo-button">Click Me!</button>
+                    </div>
+                    <div class="code-block">button {
+  user-select: none;
+}</div>
+                    <div class="info-text">✓ Professional button behavior</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 7: Navigation Menu ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>7. Navigation Menu</h2>
+                    <p>Menu links</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">user-select: none</div>
+                    <div class="description">Navigation menu items shouldn't be selectable. Prevents accidental selection when clicking.</div>
+                    <div class="demo-area">
+                        <div class="demo-nav">
+                            <a href="#">Home</a>
+                            <a href="#">About</a>
+                            <a href="#">Services</a>
+                            <a href="#">Contact</a>
+                        </div>
+                    </div>
+                    <div class="code-block">nav a {
+  user-select: none;
+}</div>
+                    <div class="info-text">✓ Polished navigation</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 8: Code Block ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>8. Code Block</h2>
+                    <p>Copyable code</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">user-select: all</div>
+                    <div class="description">Code is selectable with one click. Perfect for developers who want to copy code easily.</div>
+                    <div class="demo-area">
+                        <div class="demo-code">const hello = "world";
+console.log(hello);</div>
+                    </div>
+                    <div class="code-block">code, pre {
+  user-select: all;
+}</div>
+                    <div class="info-text">⭐ Developer-friendly</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 9: Contact Info ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>9. Email/Phone</h2>
+                    <p>Copyable contact</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">user-select: all</div>
+                    <div class="description">Contact information with one-click selection. Users can easily copy email or phone number.</div>
+                    <div class="demo-area">
+                        <div class="demo-contact">📧 hello@example.com</div>
+                    </div>
+                    <div class="code-block">.email, .phone {
+  user-select: all;
+}</div>
+                    <div class="info-text">✓ Easy one-click copy</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 10: Card with Mixed ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>10. Card (Mixed Selection)</h2>
+                    <p>Selective content</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Combination: none + text</div>
+                    <div class="description">Card title not selectable, but content text is. Demonstrates selective override.</div>
+                    <div class="demo-area">
+                        <div class="demo-card">
+                            <h3>Card Title</h3>
+                            <p>This paragraph IS selectable. You can copy this content but not the title.</p>
+                        </div>
+                    </div>
+                    <div class="code-block">.card { user-select: none; }
+.card p { user-select: text; }</div>
+                    <div class="info-text">✓ Selective control</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 11: Icon + Text ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>11. Icon with Label</h2>
+                    <p>Clickable item</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">user-select: none</div>
+                    <div class="description">Icon and label together without text selection. Great for list items and clickable elements.</div>
+                    <div class="demo-area">
+                        <div class="demo-icon-text">
+                            <div class="icon">⭐</div>
+                            <div class="text">Favorite Item</div>
+                        </div>
+                    </div>
+                    <div class="code-block">.icon-text {
+  user-select: none;
+}</div>
+                    <div class="info-text">✓ Clean interactive element</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 12: Disabled Override ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>12. Override Disabled</h2>
+                    <p>Selective enable</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Override: user-select: text</div>
+                    <div class="description">Parent prevents selection, but specific child content IS selectable. Shows selective override.</div>
+                    <div class="demo-area">
+                        <div class="demo-no-select-parent">
+                            <p>This text is NOT selectable (parent restriction)</p>
+                            <p class="selectable">But THIS text IS selectable (overridden)</p>
+                            <p>And this is NOT selectable again</p>
+                        </div>
+                    </div>
+                    <div class="code-block">.parent { user-select: none; }
+.parent .selectable { user-select: text; }</div>
+                    <div class="info-text">✓ Flexible control</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <h2>Quick Reference Guide</h2>
+            <p style="margin: 15px 0;">
+                <strong>user-select: auto</strong> - Default browser behavior<br>
+                <strong>user-select: none</strong> - Prevent selection (buttons, menus)<br>
+                <strong>user-select: text</strong> - Enable selection explicitly<br>
+                <strong>user-select: all</strong> - Select all on click (code, contact)<br>
+                <strong>user-select: contain</strong> - Selection confined to element
+            </p>
+            <p style="margin: 15px 0; font-size: 0.95em;">
+                ✓ Use <strong>none</strong> for UI elements and buttons<br>
+                ✓ Use <strong>all</strong> for copyable content (code, contact)<br>
+                ✓ Use <strong>text</strong> to override parent restrictions<br>
+                ✓ Use <strong>contain</strong> for tables and nested elements<br>
+                ✓ Include vendor prefixes for older browser support
+            </p>
+            <p>&copy; 2024 CSS User-Select Practical Examples | 12 Ready-to-Use Patterns</p>
+        </footer>
+    </div>
+</body>
+</html>

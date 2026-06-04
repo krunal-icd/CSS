@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Pseudo-Elements - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h3 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .demo-area {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 120px;
+        }
+
+        .code-snippet {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+        }
+
+        .code-snippet .tag { color: #569cd6; }
+        .code-snippet .attr { color: #9cdcfe; }
+        .code-snippet .value { color: #ce9178; }
+        .code-snippet .text { color: #d4d4d4; }
+        .code-snippet .comment { color: #6a9955; }
+
+        .use-case {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        /* Example 1: Before/After Decorative Icons */
+        .example-1 .demo-area .item {
+            padding: 10px 0;
+            margin: 10px 0;
+        }
+
+        .example-1 .demo-area .item::before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .example-1 .demo-area .warning::before {
+            content: "⚠ ";
+            color: #ff9800;
+        }
+
+        .example-1 .demo-area .error::before {
+            content: "✗ ";
+            color: #f44336;
+        }
+
+        /* Example 2: Before/After Content Insertion */
+        .example-2 .demo-area .quote {
+            font-style: italic;
+            color: #555;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .example-2 .demo-area .quote::before {
+            content: """ ;
+            font-size: 2em;
+            color: #667eea;
+            float: left;
+            margin-right: 5px;
+        }
+
+        .example-2 .demo-area .quote::after {
+            content: """;
+            font-size: 2em;
+            color: #667eea;
+        }
+
+        /* Example 3: First Letter Drop Cap */
+        .example-3 .demo-area p {
+            line-height: 1.8;
+            text-align: justify;
+            color: #555;
+        }
+
+        .example-3 .demo-area p::first-letter {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            float: left;
+            margin-right: 5px;
+            margin-top: 3px;
+        }
+
+        /* Example 4: First Line Highlight */
+        .example-4 .demo-area p {
+            line-height: 1.8;
+            color: #555;
+            margin: 15px 0;
+        }
+
+        .example-4 .demo-area p::first-line {
+            color: #764ba2;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Example 5: Selection Styling */
+        .example-5 .demo-area {
+            user-select: text;
+        }
+
+        .example-5 .demo-area p {
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .example-5 .demo-area p::selection {
+            background: #667eea;
+            color: white;
+        }
+
+        .example-5 .demo-area p::-moz-selection {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Example 6: Placeholder Styling */
+        .example-6 .demo-area input {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .example-6 .demo-area input::placeholder {
+            color: #999;
+            font-style: italic;
+            opacity: 0.7;
+        }
+
+        .example-6 .demo-area input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .example-6 .demo-area input:focus::placeholder {
+            color: #ccc;
+        }
+
+        /* Example 7: List Markers */
+        .example-7 .demo-area ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .example-7 .demo-area li {
+            padding: 10px 0;
+            margin: 5px 0;
+        }
+
+        .example-7 .demo-area li::before {
+            content: "→ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .example-7 .demo-area li::marker {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Example 8: Loading Animation */
+        .example-8 .demo-area .loader {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .example-8 .demo-area p {
+            margin-top: 20px;
+            color: #666;
+        }
+
+        /* Example 9: Before/After for Links */
+        .example-9 .demo-area a {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 5px;
+            text-decoration: none;
+            color: white;
+            background: #667eea;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .example-9 .demo-area a:hover {
+            background: #764ba2;
+        }
+
+        .example-9 .demo-area a::before {
+            content: "🔗 ";
+            margin-right: 5px;
+        }
+
+        .example-9 .demo-area a.external::after {
+            content: " ↗";
+            margin-left: 5px;
+        }
+
+        /* Example 10: Tooltip */
+        .example-10 .demo-area {
+            display: flex;
+            gap: 20px;
+        }
+
+        .example-10 .demo-area .tooltip {
+            position: relative;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .example-10 .demo-area .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 12px;
+            background: #333;
+            color: white;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            margin-bottom: 5px;
+        }
+
+        .example-10 .demo-area .tooltip::before {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #333;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            margin-bottom: -10px;
+        }
+
+        .example-10 .demo-area .tooltip:hover::after,
+        .example-10 .demo-area .tooltip:hover::before {
+            opacity: 1;
+        }
+
+        /* Example 11: Clearfix */
+        .example-11 .demo-area .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .example-11 .demo-area .box {
+            width: 48%;
+            float: left;
+            margin-right: 2%;
+            padding: 20px;
+            background: #f0f4ff;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .example-11 .demo-area .box:nth-child(2n) {
+            margin-right: 0;
+        }
+
+        /* Example 12: Counter with Before/After */
+        .example-12 .demo-area {
+            counter-reset: item-counter;
+        }
+
+        .example-12 .demo-area .list-item {
+            margin: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .example-12 .demo-area .list-item::before {
+            counter-increment: item-counter;
+            content: counter(item-counter);
+            position: absolute;
+            left: 0;
+            background: #667eea;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .footer {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .footer h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .quick-ref {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            text-align: left;
+        }
+
+        .ref-item {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .ref-item code {
+            background: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .example-10 .demo-area {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Pseudo-Elements</h1>
+            <p>Practical Examples & Real-World Use Cases</p>
+        </header>
+
+        <div class="examples-grid">
+
+            <!-- Example 1: Before/After Icons -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Status Icons</h3>
+                    <span class="badge">::before</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Add status icons before text using ::before.</p>
+                    <div class="demo-area">
+                        <div class="item">Operation completed successfully</div>
+                        <div class="item warning">Warning: Please review</div>
+                        <div class="item error">Error: Action failed</div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.item::before {</span><br>
+&nbsp;&nbsp;<span class="text">content: "✓ ";</span><br>
+&nbsp;&nbsp;<span class="text">color: #4caf50;</span><br>
+&nbsp;&nbsp;<span class="text">margin-right: 8px;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">.warning::before {</span><br>
+&nbsp;&nbsp;<span class="text">content: "⚠ ";</span><br>
+&nbsp;&nbsp;<span class="text">color: #ff9800;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Status indicators and alerts without extra HTML.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 2: Quote Marks -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Decorative Quote Marks</h3>
+                    <span class="badge">::before/:after</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Add decorative quotation marks before and after text.</p>
+                    <div class="demo-area">
+                        <div class="quote">
+                            The best way to predict the future is to invent it.
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.quote::before {</span><br>
+&nbsp;&nbsp;<span class="text">content: """ ;</span><br>
+&nbsp;&nbsp;<span class="text">font-size: 2em;</span><br>
+&nbsp;&nbsp;<span class="text">color: #667eea;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">.quote::after {</span><br>
+&nbsp;&nbsp;<span class="text">content: """;</span><br>
+&nbsp;&nbsp;<span class="text">font-size: 2em;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Decorative quotation styling for testimonials.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3: Drop Cap -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Drop Cap Typography</h3>
+                    <span class="badge">::first-letter</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Create elegant drop cap effect for first letter.</p>
+                    <div class="demo-area">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">p::first-letter {</span><br>
+&nbsp;&nbsp;<span class="text">font-size: 2.5em;</span><br>
+&nbsp;&nbsp;<span class="text">font-weight: bold;</span><br>
+&nbsp;&nbsp;<span class="text">color: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">float: left;</span><br>
+&nbsp;&nbsp;<span class="text">margin-right: 5px;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Editorial design and magazine-style typography.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4: First Line Highlight -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>First Line Styling</h3>
+                    <span class="badge">::first-line</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style the first line of text differently.</p>
+                    <div class="demo-area">
+                        <p>This is the first line of text that will be styled differently. It will appear in purple and bold. The rest of the paragraph continues with normal styling.</p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">p::first-line {</span><br>
+&nbsp;&nbsp;<span class="text">color: #764ba2;</span><br>
+&nbsp;&nbsp;<span class="text">font-weight: 600;</span><br>
+&nbsp;&nbsp;<span class="text">text-transform: uppercase;</span><br>
+&nbsp;&nbsp;<span class="text">letter-spacing: 1px;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Emphasis for article titles or introduction lines.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 5: Text Selection -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Custom Selection Color</h3>
+                    <span class="badge">::selection</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style highlighted text with custom colors. Try selecting text!</p>
+                    <div class="demo-area">
+                        <p>Select this text to see the custom selection color in action. The background will turn blue and the text white when highlighted.</p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">p::selection {</span><br>
+&nbsp;&nbsp;<span class="text">background: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">color: white;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">p::-moz-selection {</span><br>
+&nbsp;&nbsp;<span class="text">background: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">color: white;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Brand color implementation for text selection.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 6: Placeholder Styling -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Form Placeholders</h3>
+                    <span class="badge">::placeholder</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Custom styling for input placeholder text.</p>
+                    <div class="demo-area">
+                        <input placeholder="Your name here">
+                        <input placeholder="Your email address">
+                        <input placeholder="Enter your message">
+                    </div>
+                    <div class="code-snippet">
+<span class="text">input::placeholder {</span><br>
+&nbsp;&nbsp;<span class="text">color: #999;</span><br>
+&nbsp;&nbsp;<span class="text">font-style: italic;</span><br>
+&nbsp;&nbsp;<span class="text">opacity: 0.7;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">input:focus::placeholder {</span><br>
+&nbsp;&nbsp;<span class="text">color: #ccc;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Improved form input visibility and accessibility.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 7: List Markers -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Custom List Markers</h3>
+                    <span class="badge">::before</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Replace default bullets with custom symbols.</p>
+                    <div class="demo-area">
+                        <ul>
+                            <li>First feature included</li>
+                            <li>Second feature included</li>
+                            <li>Third feature included</li>
+                        </ul>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">li {</span><br>
+&nbsp;&nbsp;<span class="text">list-style: none;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">li::before {</span><br>
+&nbsp;&nbsp;<span class="text">content: "→ ";</span><br>
+&nbsp;&nbsp;<span class="text">color: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">font-weight: bold;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Custom styled lists for features and benefits.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 8: Loading Animation -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Loading Spinner</h3>
+                    <span class="badge">Animation</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Create animated loading indicator with ::before.</p>
+                    <div class="demo-area">
+                        <div class="loader"></div>
+                        <p>Loading...</p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.loader {</span><br>
+&nbsp;&nbsp;<span class="text">width: 50px;</span><br>
+&nbsp;&nbsp;<span class="text">height: 50px;</span><br>
+&nbsp;&nbsp;<span class="text">border: 4px solid #f3f3f3;</span><br>
+&nbsp;&nbsp;<span class="text">border-top: 4px solid #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">border-radius: 50%;</span><br>
+&nbsp;&nbsp;<span class="text">animation: spin 1s linear infinite;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Visual feedback for loading states.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 9: Link Indicators -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Link Indicators</h3>
+                    <span class="badge">::before/:after</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Add icons to links using ::before and ::after.</p>
+                    <div class="demo-area">
+                        <a href="#">Internal Link</a>
+                        <a href="#" class="external">External Link</a>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">a::before {</span><br>
+&nbsp;&nbsp;<span class="text">content: "🔗 ";</span><br>
+&nbsp;&nbsp;<span class="text">margin-right: 5px;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">a.external::after {</span><br>
+&nbsp;&nbsp;<span class="text">content: " ↗";</span><br>
+&nbsp;&nbsp;<span class="text">margin-left: 5px;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Visual indication of internal vs external links.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 10: Tooltips -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>CSS Tooltips</h3>
+                    <span class="badge">::after</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Create tooltips with ::after pseudo-element.</p>
+                    <div class="demo-area">
+                        <div class="tooltip" data-tooltip="Hover for tooltip">Hover me</div>
+                        <div class="tooltip" data-tooltip="Another tooltip">Another button</div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.tooltip::after {</span><br>
+&nbsp;&nbsp;<span class="text">content: attr(data-tooltip);</span><br>
+&nbsp;&nbsp;<span class="text">position: absolute;</span><br>
+&nbsp;&nbsp;<span class="text">bottom: 100%;</span><br>
+&nbsp;&nbsp;<span class="text">background: #333;</span><br>
+&nbsp;&nbsp;<span class="text">opacity: 0;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">.tooltip:hover::after {</span><br>
+&nbsp;&nbsp;<span class="text">opacity: 1;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Help text and tooltips without JavaScript.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 11: Clearfix -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Clearfix Floats</h3>
+                    <span class="badge">::after</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Clear floats using ::after pseudo-element.</p>
+                    <div class="demo-area">
+                        <div class="clearfix">
+                            <div class="box">Box 1</div>
+                            <div class="box">Box 2</div>
+                            <div class="box">Box 3</div>
+                            <div class="box">Box 4</div>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.clearfix::after {</span><br>
+&nbsp;&nbsp;<span class="text">content: "";</span><br>
+&nbsp;&nbsp;<span class="text">display: table;</span><br>
+&nbsp;&nbsp;<span class="text">clear: both;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Modern float clearing technique.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 12: Counters -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Auto-Numbering</h3>
+                    <span class="badge">counter()</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Auto-increment counters with ::before.</p>
+                    <div class="demo-area">
+                        <div class="list-item">First step</div>
+                        <div class="list-item">Second step</div>
+                        <div class="list-item">Third step</div>
+                        <div class="list-item">Fourth step</div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.demo-area {</span><br>
+&nbsp;&nbsp;<span class="text">counter-reset: item-counter;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">.list-item::before {</span><br>
+&nbsp;&nbsp;<span class="text">counter-increment: item-counter;</span><br>
+&nbsp;&nbsp;<span class="text">content: counter(item-counter);</span><br>
+&nbsp;&nbsp;<span class="text">background: #667eea;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Numbered step lists and walkthroughs.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);">
+            <h2 style="color: #667eea; margin-bottom: 20px;">Pseudo-Elements Reference</h2>
+            
+            <table style="width: 100%; border-collapse: collapse; background: white; margin: 20px 0;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">Pseudo-Element</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">Purpose</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>::before</strong></td>
+                        <td style="padding: 15px;">Insert content before element</td>
+                        <td style="padding: 15px;">Icons, labels, decorations</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>::after</strong></td>
+                        <td style="padding: 15px;">Insert content after element</td>
+                        <td style="padding: 15px;">Tooltips, clearfix, closing marks</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>::first-line</strong></td>
+                        <td style="padding: 15px;">Style first line of text</td>
+                        <td style="padding: 15px;">Typography, emphasis</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>::first-letter</strong></td>
+                        <td style="padding: 15px;">Style first character</td>
+                        <td style="padding: 15px;">Drop caps, editorial design</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>::selection</strong></td>
+                        <td style="padding: 15px;">Style selected text</td>
+                        <td style="padding: 15px;">Brand colors, UX</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>::placeholder</strong></td>
+                        <td style="padding: 15px;">Style input placeholder</td>
+                        <td style="padding: 15px;">Form inputs</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>::marker</strong></td>
+                        <td style="padding: 15px;">Style list bullets/numbers</td>
+                        <td style="padding: 15px;">Custom lists</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 15px;"><strong>::cue</strong></td>
+                        <td style="padding: 15px;">Style video captions</td>
+                        <td style="padding: 15px;">Media captions</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">Key Takeaways</h3>
+            <ul style="line-height: 1.8; color: #555;">
+                <li><strong>::before and ::after:</strong> Use the content property to insert text, icons, or images.</li>
+                <li><strong>content property:</strong> Required for ::before/::after to display. Can use text, url(), attr(), counter().</li>
+                <li><strong>::first-letter:</strong> Perfect for drop cap effects. Only works on block-level elements.</li>
+                <li><strong>::first-line:</strong> Style first line differently. Property support is limited.</li>
+                <li><strong>::selection:</strong> Customize text highlighting. Use both ::selection and ::-moz-selection.</li>
+                <li><strong>::placeholder:</strong> Style form input hints. Always provide proper labels.</li>
+                <li><strong>::marker:</strong> Style list bullets and numbers. Modern browsers only.</li>
+                <li><strong>Double colon syntax (::):</strong> Correct for pseudo-elements. Single colon is deprecated.</li>
+                <li><strong>Not in DOM:</strong> Pseudo-elements aren't selectable by JavaScript. Use data attributes instead.</li>
+                <li><strong>Powerful for decoration:</strong> Use for visual enhancements without adding extra HTML elements.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <h3>Browser Compatibility</h3>
+            <div class="quick-ref">
+                <div class="ref-item">
+                    <strong>::before, ::after</strong><br>
+                    IE 8+, All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>::first-line, ::first-letter</strong><br>
+                    IE 5.5+, All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>::selection</strong><br>
+                    All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>::placeholder</strong><br>
+                    All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>::marker, ::cue</strong><br>
+                    Chrome 86+, Firefox 68+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

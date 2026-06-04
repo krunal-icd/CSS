@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Counter Increment & Reset - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.05rem;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin: 35px 0 20px 0;
+            font-size: 1.6rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.2rem;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .intro-section {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .intro-section strong {
+            color: #667eea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .concept-section {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .syntax-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .syntax-box .keyword { color: #569cd6; }
+        .syntax-box .selector { color: #9cdcfe; }
+        .syntax-box .property { color: #9cdcfe; }
+        .syntax-box .value { color: #ce9178; }
+        .syntax-box .comment { color: #6a9955; }
+        .syntax-box .function { color: #dcdcaa; }
+
+        .demo-section {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .use-cases {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .use-cases h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .use-cases ul {
+            list-style-position: inside;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .use-cases li {
+            margin-bottom: 8px;
+        }
+
+        .best-practices {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .best-practices h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .best-practices ul {
+            list-style-position: inside;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .best-practices li {
+            margin-bottom: 8px;
+        }
+
+        .browser-support {
+            background: #f3e5f5;
+            border: 1px solid #ce93d8;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .browser-support h4 {
+            color: #7b1fa2;
+            margin-bottom: 10px;
+        }
+
+        .browser-support p {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .support-badge {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+
+        .support-badge.partial {
+            background: #ff9800;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 20px 40px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .code-inline {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            h3 {
+                font-size: 1rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Counter Increment & Reset</h1>
+            <p>Complete Guide to Automatic Numbering and Counting</p>
+        </header>
+
+        <div class="content">
+            <div class="intro-section">
+                <p><strong>CSS Counters</strong> allow you to <span class="highlight">automatically number elements</span> without hardcoding numbers in HTML. Using <span class="code-inline">counter-reset</span>, <span class="code-inline">counter-increment</span>, and the <span class="code-inline">counter()</span> function, you can create dynamic, automatic numbering for lists, headings, chapters, and more. This is perfect for table of contents, outlines, and structured documents.</p>
+            </div>
+
+            <h2>Core Concepts</h2>
+            <p>CSS counters work through three main components:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Purpose</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="code-inline">counter-reset</span></td>
+                        <td>Initialize a counter to a value (default 0)</td>
+                        <td><span class="code-inline">counter-reset: chapter 0;</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">counter-increment</span></td>
+                        <td>Increase counter by amount (default 1)</td>
+                        <td><span class="code-inline">counter-increment: chapter 1;</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">counter()</span> function</td>
+                        <td>Display counter value in content</td>
+                        <td><span class="code-inline">content: counter(chapter);</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">counters()</span> function</td>
+                        <td>Display nested counter values</td>
+                        <td><span class="code-inline">content: counters(section, ".");</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Counter-Reset -->
+            <div class="concept-section">
+                <h3>counter-reset Property</h3>
+                <p><span class="code-inline">counter-reset</span> initializes one or more counters. It should be applied to a parent element.</p>
+
+                <h4 style="margin: 20px 0 15px 0;">Syntax</h4>
+                <div class="syntax-box">
+<span class="comment">/* Reset single counter */</span><br>
+<span class="selector">body</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">counter-reset</span>: <span class="value">chapter</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Reset with initial value */</span><br>
+<span class="selector">body</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">counter-reset</span>: <span class="value">chapter 1</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Reset multiple counters */</span><br>
+<span class="selector">body</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">counter-reset</span>: <span class="value">chapter 1 section 0</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h4 style="margin: 20px 0 15px 0;">Important Notes</h4>
+                <ul style="line-height: 1.8; margin-left: 20px;">
+                    <li>Place on parent element (body, div, section)</li>
+                    <li>Default initial value is 0</li>
+                    <li>Reset happens before children are processed</li>
+                    <li>Can reset multiple counters in one declaration</li>
+                </ul>
+            </div>
+
+            <!-- Counter-Increment -->
+            <div class="concept-section">
+                <h3>counter-increment Property</h3>
+                <p><span class="code-inline">counter-increment</span> increases a counter value. Apply it to elements you want to count.</p>
+
+                <h4 style="margin: 20px 0 15px 0;">Syntax</h4>
+                <div class="syntax-box">
+<span class="comment">/* Increment by 1 (default) */</span><br>
+<span class="selector">h2</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">counter-increment</span>: <span class="value">chapter</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Increment by specific amount */</span><br>
+<span class="selector">h2</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">counter-increment</span>: <span class="value">chapter 2</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Increment multiple counters */</span><br>
+<span class="selector">li</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">counter-increment</span>: <span class="value">list-item 1 total 1</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h4 style="margin: 20px 0 15px 0;">Important Notes</h4>
+                <ul style="line-height: 1.8; margin-left: 20px;">
+                    <li>Default increment is 1</li>
+                    <li>Increment happens before content is processed</li>
+                    <li>Can increment multiple counters</li>
+                    <li>Can use negative values for decrementing</li>
+                </ul>
+            </div>
+
+            <!-- counter() Function -->
+            <div class="concept-section">
+                <h3>counter() Function</h3>
+                <p>The <span class="code-inline">counter()</span> function retrieves and displays the current counter value. Use with the <span class="code-inline">content</span> property.</p>
+
+                <h4 style="margin: 20px 0 15px 0;">Syntax</h4>
+                <div class="syntax-box">
+<span class="comment">/* Basic counter display */</span><br>
+<span class="selector">h2::before</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">content</span>: <span class="function">counter</span>(<span class="value">chapter</span>);<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* With text */</span><br>
+<span class="selector">h2::before</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">content</span>: <span class="value">"Chapter "</span> <span class="function">counter</span>(<span class="value">chapter</span>) <span class="value">": "</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* With style (decimal, roman, letter, etc.) */</span><br>
+<span class="selector">li::before</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">content</span>: <span class="function">counter</span>(<span class="value">item, lower-roman</span>);<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h4 style="margin: 20px 0 15px 0;">Counter Styles</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Style</th>
+                            <th>Output</th>
+                            <th>Example (1,2,3...)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="code-inline">decimal</span></td>
+                            <td>Numbers</td>
+                            <td>1, 2, 3</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code-inline">decimal-leading-zero</span></td>
+                            <td>Numbers with leading zero</td>
+                            <td>01, 02, 03</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code-inline">lower-roman</span></td>
+                            <td>Lowercase Roman numerals</td>
+                            <td>i, ii, iii</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code-inline">upper-roman</span></td>
+                            <td>Uppercase Roman numerals</td>
+                            <td>I, II, III</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code-inline">lower-alpha</span></td>
+                            <td>Lowercase letters</td>
+                            <td>a, b, c</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code-inline">upper-alpha</span></td>
+                            <td>Uppercase letters</td>
+                            <td>A, B, C</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- counters() Function (Nested) -->
+            <div class="concept-section">
+                <h3>counters() Function (Nested Counters)</h3>
+                <p>The <span class="code-inline">counters()</span> function displays hierarchical numbering like 1.1.1, 2.2.3, etc.</p>
+
+                <h4 style="margin: 20px 0 15px 0;">Syntax</h4>
+                <div class="syntax-box">
+<span class="comment">/* Display nested counters with separator */</span><br>
+<span class="selector">li::before</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">content</span>: <span class="function">counters</span>(<span class="value">item, "."</span>);<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* With style */</span><br>
+<span class="selector">li::before</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">content</span>: <span class="function">counters</span>(<span class="value">item, ".", decimal-leading-zero</span>);<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h4 style="margin: 20px 0 15px 0;">How Nested Counters Work</h4>
+                <ul style="line-height: 1.8; margin-left: 20px;">
+                    <li>Each nesting level has its own counter</li>
+                    <li>The separator joins all levels (e.g., "." creates 1.1.1)</li>
+                    <li>Perfect for outlines, nested lists, and hierarchical numbering</li>
+                    <li>Automatically handles nesting depth</li>
+                </ul>
+            </div>
+
+            <!-- Complete Workflow -->
+            <div class="concept-section">
+                <h3>Complete Workflow Example</h3>
+                <p>Here's a practical example combining all components:</p>
+
+                <div class="syntax-box">
+<span class="comment">/* 1. Reset counter on parent */</span><br>
+<span class="selector">body</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">counter-reset</span>: <span class="value">chapter</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* 2. Increment on each h2 */</span><br>
+<span class="selector">h2</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">counter-increment</span>: <span class="value">chapter</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* 3. Display counter in content */</span><br>
+<span class="selector">h2::before</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">content</span>: <span class="value">"Chapter "</span> <span class="function">counter</span>(<span class="value">chapter</span>) <span class="value">": "</span>;<br>
+&nbsp;&nbsp;<span class="property">margin-right</span>: <span class="value">10px</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <p style="margin-top: 15px;"><strong>Result:</strong> "Chapter 1: ", "Chapter 2: ", "Chapter 3: "...</p>
+            </div>
+
+            <h2>Best Practices</h2>
+            <div class="best-practices">
+                <h4>✓ Do's</h4>
+                <ul>
+                    <li><strong>Reset on parent container</strong> - Place counter-reset on body or section</li>
+                    <li><strong>Increment on child elements</strong> - Apply counter-increment to items to count</li>
+                    <li><strong>Use meaningful names</strong> - "chapter", "section", "item" instead of "c", "s"</li>
+                    <li><strong>Use counters() for nested lists</strong> - Perfect for outlines and hierarchies</li>
+                    <li><strong>Combine with ::before/::after</strong> - This is where counter() displays</li>
+                    <li><strong>Test nesting carefully</strong> - Each level needs proper reset/increment</li>
+                </ul>
+            </div>
+
+            <div class="best-practices" style="background: #ffebee; border-left-color: #f44336;">
+                <h4 style="color: #c62828;">✗ Don'ts</h4>
+                <ul>
+                    <li><strong>Don't reset on every element</strong> - Reset once at parent level</li>
+                    <li><strong>Don't increment non-target elements</strong> - Only count what you need</li>
+                    <li><strong>Don't use undefined counters</strong> - Always reset before incrementing</li>
+                    <li><strong>Don't forget counter-reset in nested scenarios</strong> - Each level needs its own</li>
+                    <li><strong>Don't use for semantic content</strong> - Counters are for presentation only</li>
+                </ul>
+            </div>
+
+            <h2>Browser Support</h2>
+            <div class="browser-support">
+                <h4>counter-reset and counter-increment</h4>
+                <span class="support-badge">IE 8+</span>
+                <span class="support-badge">All Modern Browsers</span>
+
+                <h4 style="margin-top: 15px;">counter() and counters() functions</h4>
+                <span class="support-badge">IE 8+</span>
+                <span class="support-badge">All Modern Browsers</span>
+
+                <h4 style="margin-top: 15px;">Counter styles (roman, alpha, etc.)</h4>
+                <span class="support-badge">All Modern Browsers</span>
+                <span class="support-badge partial">IE - Basic styles only</span>
+
+                <p style="margin-top: 15px;">Excellent browser support across all modern and legacy browsers.</p>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Counter Increment & Reset Guide. CSS Reference. <strong>Excellent browser support since IE 8.</strong></p>
+        </footer>
+    </div>
+</body>
+</html>

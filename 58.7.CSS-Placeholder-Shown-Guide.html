@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS :placeholder-shown - 12 Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .examples-grid {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .example-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .example h2 {
+            color: #667eea;
+            font-size: 1.6em;
+            margin: 0;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .example-tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .example-tag.form {
+            background: #28a745;
+        }
+
+        .example-tag.interactive {
+            background: #fd7e14;
+        }
+
+        .example-tag.validation {
+            background: #dc3545;
+        }
+
+        .example-tag.ux {
+            background: #17a2b8;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .demo-area {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+
+        .code-block .keyword {
+            color: #569cd6;
+        }
+
+        .code-block .property {
+            color: #9cdcfe;
+        }
+
+        .code-block .value {
+            color: #ce9178;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* ============ EXAMPLE 1: BASIC BORDER STATE ============ */
+        .example1-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .example1-input::placeholder {
+            color: #999;
+        }
+
+        .example1-input:placeholder-shown {
+            border-color: #17a2b8;
+            background: #f0f8fa;
+        }
+
+        .example1-input:not(:placeholder-shown) {
+            border-color: #28a745;
+            background: #f1f9f6;
+        }
+
+        .example1-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* ============ EXAMPLE 2: FLOATING LABEL ============ */
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .form-group-input {
+            width: 100%;
+            padding: 16px 12px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: inherit;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group-input::placeholder {
+            color: transparent;
+        }
+
+        .form-group-input:placeholder-shown {
+            border-color: #e0e0e0;
+        }
+
+        .form-group-input:not(:placeholder-shown) {
+            border-color: #667eea;
+        }
+
+        .form-group-input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group-label {
+            position: absolute;
+            top: 16px;
+            left: 12px;
+            font-size: 1em;
+            color: #999;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            transform-origin: top left;
+            background: white;
+            padding: 0 2px;
+        }
+
+        .form-group-input:not(:placeholder-shown) ~ .form-group-label,
+        .form-group-input:focus ~ .form-group-label {
+            top: 0;
+            font-size: 0.75em;
+            color: #667eea;
+            transform: translateY(-50%);
+        }
+
+        /* ============ EXAMPLE 3: SEARCH WITH CLEAR BUTTON ============ */
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 45px 12px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .search-input::placeholder {
+            color: #999;
+        }
+
+        .search-input:placeholder-shown {
+            border-color: #e0e0e0;
+        }
+
+        .search-input:not(:placeholder-shown) {
+            border-color: #667eea;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .clear-btn {
+            position: absolute;
+            right: 12px;
+            width: 28px;
+            height: 28px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:not(:placeholder-shown) ~ .clear-btn {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .clear-btn:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+
+        /* ============ EXAMPLE 4: HELP TEXT ============ */
+        .input-with-help {
+            position: relative;
+        }
+
+        .example4-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .example4-input:not(:placeholder-shown) {
+            border-color: #667eea;
+        }
+
+        .example4-input:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        .help-text {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 8px;
+            display: block;
+            opacity: 1;
+            transition: all 0.3s ease;
+            max-height: 200px;
+        }
+
+        .example4-input:not(:placeholder-shown) ~ .help-text {
+            display: none;
+            opacity: 0;
+            max-height: 0;
+        }
+
+        /* ============ EXAMPLE 5: ICON STATES ============ */
+        .input-with-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .example5-input {
+            width: 100%;
+            padding: 12px 40px 12px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .example5-input:not(:placeholder-shown) {
+            border-color: #28a745;
+        }
+
+        .state-icon {
+            position: absolute;
+            right: 12px;
+            font-size: 1.3em;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .example5-input:placeholder-shown ~ .state-icon.empty {
+            opacity: 1;
+            color: #999;
+        }
+
+        .example5-input:not(:placeholder-shown) ~ .state-icon.filled {
+            opacity: 1;
+            color: #28a745;
+        }
+
+        /* ============ EXAMPLE 6: EMAIL VALIDATION ============ */
+        .example6-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .example6-input:placeholder-shown {
+            border-color: #e0e0e0;
+            background: white;
+        }
+
+        .example6-input:not(:placeholder-shown):valid {
+            border-color: #28a745;
+            background: #f1f9f6;
+        }
+
+        .example6-input:not(:placeholder-shown):invalid {
+            border-color: #dc3545;
+            background: #fef5f5;
+        }
+
+        .example6-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        /* ============ EXAMPLE 7: BACKGROUND TRANSITIONS ============ */
+        .example7-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            font-size: 1em;
+            background: white;
+            transition: all 0.4s ease;
+        }
+
+        .example7-input:placeholder-shown {
+            background: #f8f9fa;
+            border-color: #e0e0e0;
+        }
+
+        .example7-input:focus {
+            background: #f0f4ff;
+            border-color: #764ba2;
+            box-shadow: inset 0 0 0 2px rgba(102, 126, 234, 0.1);
+        }
+
+        /* ============ EXAMPLE 8: TEXTAREA STYLING ============ */
+        .example8-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+
+        .example8-textarea::placeholder {
+            color: #999;
+        }
+
+        .example8-textarea:placeholder-shown {
+            border-color: #e0e0e0;
+            background: #f8f9fa;
+        }
+
+        .example8-textarea:not(:placeholder-shown) {
+            border-color: #667eea;
+            background: white;
+        }
+
+        .example8-textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* ============ EXAMPLE 9: LABEL WITH COLOR ============ */
+        .label-color-group {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .example9-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #999;
+            transition: all 0.3s ease;
+        }
+
+        .example9-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .example9-input:not(:placeholder-shown) ~ .example9-label,
+        .example9-input:focus ~ .example9-label {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .example9-input:not(:placeholder-shown) {
+            border-color: #667eea;
+        }
+
+        .example9-input:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        /* ============ EXAMPLE 10: PASSWORD WITH STRENGTH ============ */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .example10-input {
+            width: 100%;
+            padding: 12px 40px 12px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+        }
+
+        .example10-input:not(:placeholder-shown) {
+            border-color: #667eea;
+        }
+
+        .strength-indicator {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .example10-input:not(:placeholder-shown) ~ .strength-indicator {
+            opacity: 1;
+        }
+
+        .example10-input:placeholder-shown ~ .strength-indicator {
+            opacity: 0;
+        }
+
+        /* ============ EXAMPLE 11: BUTTON ACTIVATION ============ */
+        .input-button-group {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .example11-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .example11-input:not(:placeholder-shown) {
+            border-color: #667eea;
+        }
+
+        .example11-input:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        .submit-btn {
+            padding: 12px 24px;
+            background: #ccc;
+            color: #999;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: not-allowed;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .example11-input:not(:placeholder-shown) ~ .submit-btn {
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .example11-input:not(:placeholder-shown) ~ .submit-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        /* ============ EXAMPLE 12: MULTI-STATE FORM ============ */
+        .multi-form {
+            display: grid;
+            gap: 15px;
+        }
+
+        .form-field {
+            position: relative;
+        }
+
+        .example12-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .example12-input::placeholder {
+            color: transparent;
+        }
+
+        .example12-input:placeholder-shown {
+            border-color: #e0e0e0;
+            background: white;
+        }
+
+        .example12-input:not(:placeholder-shown) {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .example12-input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .field-label {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            font-size: 1em;
+            color: #999;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 0 2px;
+        }
+
+        .example12-input:not(:placeholder-shown) ~ .field-label,
+        .example12-input:focus ~ .field-label {
+            top: -8px;
+            font-size: 0.75em;
+            color: #667eea;
+        }
+
+        .submit-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .form-submit-btn {
+            flex: 1;
+            padding: 12px;
+            background: #ccc;
+            color: #999;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: not-allowed;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        /* Enable submit if any field has value */
+        .example12-input:not(:placeholder-shown) ~ * ~ .form-submit-btn,
+        .multi-form:has(.example12-input:not(:placeholder-shown)) .form-submit-btn {
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .form-submit-btn:hover:not(:disabled) {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .example h2 {
+                font-size: 1.3em;
+                min-width: auto;
+            }
+
+            .code-block {
+                font-size: 0.75em;
+            }
+
+            .input-button-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .submit-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+            }
+
+            .example {
+                padding: 15px;
+            }
+
+            .example h2 {
+                font-size: 1.1em;
+            }
+
+            .example-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .code-block {
+                font-size: 0.7em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS :placeholder-shown</h1>
+            <p class="subtitle">12 Practical Examples • Form Enhancement Patterns</p>
+        </header>
+
+        <div class="examples-grid">
+            <!-- EXAMPLE 1: BASIC BORDER STATE -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>1. Border State Change</h2>
+                    <span class="example-tag form">Form UX</span>
+                </div>
+                <p class="example-description">
+                    Change border color and background based on whether placeholder is shown (empty) or hidden (filled).
+                </p>
+                <div class="demo-area">
+                    <input type="text" class="example1-input" placeholder="Type something...">
+                </div>
+                <div class="code-block">
+<span class="keyword">input:placeholder-shown</span> {
+    border-color: #17a2b8;
+    background: #f0f8fa;
+}
+
+<span class="keyword">input:not(:placeholder-shown)</span> {
+    border-color: #28a745;
+    background: #f1f9f6;
+}
+
+<span class="keyword">input:focus</span> {
+    border-color: #667eea;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 2: FLOATING LABEL -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>2. Floating Label Animation</h2>
+                    <span class="example-tag ux">UX Pattern</span>
+                </div>
+                <p class="example-description">
+                    Animate label from inside the input to float above when user starts typing. Pure CSS floating label effect.
+                </p>
+                <div class="demo-area">
+                    <div class="form-group">
+                        <input type="text" class="form-group-input" placeholder="Enter your name">
+                        <label class="form-group-label">Full Name</label>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.label</span> {
+    position: absolute;
+    top: 16px;
+    transition: all 0.3s ease;
+}
+
+<span class="keyword">input:not(:placeholder-shown) ~ label</span> {
+    top: -8px;
+    font-size: 0.75em;
+    color: #667eea;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 3: SEARCH WITH CLEAR BUTTON -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>3. Search Clear Button</h2>
+                    <span class="example-tag interactive">Interactive</span>
+                </div>
+                <p class="example-description">
+                    Show a clear button that only appears when user has typed in the search field.
+                </p>
+                <div class="demo-area">
+                    <div class="search-wrapper">
+                        <input type="text" class="search-input" placeholder="Search...">
+                        <button class="clear-btn" onclick="this.previousElementSibling.value=''; this.previousElementSibling.focus();">×</button>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.clear-btn</span> {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+<span class="keyword">input:not(:placeholder-shown) ~ .clear-btn</span> {
+    opacity: 1;
+    pointer-events: auto;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 4: HELP TEXT -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>4. Conditional Help Text</h2>
+                    <span class="example-tag ux">UX Pattern</span>
+                </div>
+                <p class="example-description">
+                    Show help text only when the input is empty (placeholder visible). Hide when user starts typing.
+                </p>
+                <div class="demo-area">
+                    <div class="input-with-help">
+                        <input type="text" class="example4-input" placeholder="Enter email address">
+                        <p class="help-text">💡 Example: user@example.com</p>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.help-text</span> {
+    display: block;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+<span class="keyword">input:not(:placeholder-shown) ~ .help-text</span> {
+    display: none;
+    opacity: 0;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 5: ICON STATES -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>5. Icon State Indicators</h2>
+                    <span class="example-tag interactive">Interactive</span>
+                </div>
+                <p class="example-description">
+                    Display different icons based on input state - empty state icon vs. filled state icon.
+                </p>
+                <div class="demo-area">
+                    <div class="input-with-icon">
+                        <input type="text" class="example5-input" placeholder="Type to see icon change">
+                        <span class="state-icon empty">📝</span>
+                        <span class="state-icon filled">✓</span>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">input:placeholder-shown ~ .empty</span> {
+    opacity: 1;
+    color: #999;
+}
+
+<span class="keyword">input:not(:placeholder-shown) ~ .filled</span> {
+    opacity: 1;
+    color: #28a745;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 6: EMAIL VALIDATION FEEDBACK -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>6. Email Validation</h2>
+                    <span class="example-tag validation">Validation</span>
+                </div>
+                <p class="example-description">
+                    Show green border for valid email and red for invalid, no styling when empty (placeholder shown).
+                </p>
+                <div class="demo-area">
+                    <input type="email" class="example6-input" placeholder="Enter your email">
+                </div>
+                <div class="code-block">
+<span class="keyword">input:placeholder-shown</span> {
+    border-color: #e0e0e0;
+}
+
+<span class="keyword">input:not(:placeholder-shown):valid</span> {
+    border-color: #28a745;
+    background: #f1f9f6;
+}
+
+<span class="keyword">input:not(:placeholder-shown):invalid</span> {
+    border-color: #dc3545;
+    background: #fef5f5;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 7: BACKGROUND TRANSITIONS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>7. Smooth Background Transition</h2>
+                    <span class="example-tag ux">UX Pattern</span>
+                </div>
+                <p class="example-description">
+                    Subtle background color transitions between empty, filled, and focused states.
+                </p>
+                <div class="demo-area">
+                    <input type="text" class="example7-input" placeholder="Focus or type...">
+                </div>
+                <div class="code-block">
+<span class="keyword">input:placeholder-shown</span> {
+    background: #f8f9fa;
+}
+
+<span class="keyword">input:focus</span> {
+    background: #f0f4ff;
+}
+
+<span class="keyword">input:not(:placeholder-shown)</span> {
+    background: white;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 8: TEXTAREA STYLING -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>8. Textarea Enhancement</h2>
+                    <span class="example-tag form">Form Field</span>
+                </div>
+                <p class="example-description">
+                    Apply :placeholder-shown styling to textarea elements for multi-line input areas.
+                </p>
+                <div class="demo-area">
+                    <textarea class="example8-textarea" placeholder="Write your message here..."></textarea>
+                </div>
+                <div class="code-block">
+<span class="keyword">textarea:placeholder-shown</span> {
+    border-color: #e0e0e0;
+    background: #f8f9fa;
+}
+
+<span class="keyword">textarea:not(:placeholder-shown)</span> {
+    border-color: #667eea;
+    background: white;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 9: COORDINATED LABEL COLOR -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>9. Label Color Coordination</h2>
+                    <span class="example-tag ux">UX Pattern</span>
+                </div>
+                <p class="example-description">
+                    Change label color to match input state - gray when empty, blue when filled.
+                </p>
+                <div class="demo-area">
+                    <div class="label-color-group">
+                        <input type="text" class="example9-input" placeholder="Enter username">
+                        <label class="example9-label">Username</label>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">label</span> {
+    color: #999;
+    transition: all 0.3s ease;
+}
+
+<span class="keyword">input:not(:placeholder-shown) ~ label</span> {
+    color: #667eea;
+    font-weight: 600;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 10: PASSWORD INDICATOR -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>10. Password Strength Indicator</h2>
+                    <span class="example-tag form">Form Field</span>
+                </div>
+                <p class="example-description">
+                    Show/hide a visual indicator for password field state with different colors.
+                </p>
+                <div class="demo-area">
+                    <div class="password-wrapper">
+                        <input type="password" class="example10-input" placeholder="Enter password">
+                        <div class="strength-indicator" style="background: #28a745;"></div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.strength-indicator</span> {
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+<span class="keyword">input:not(:placeholder-shown) ~ .strength-indicator</span> {
+    opacity: 1;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 11: BUTTON ACTIVATION -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>11. Dynamic Button Enable/Disable</h2>
+                    <span class="example-tag interactive">Interactive</span>
+                </div>
+                <p class="example-description">
+                    Enable submit button only when user has entered text (placeholder hidden).
+                </p>
+                <div class="demo-area">
+                    <div class="input-button-group">
+                        <input type="text" class="example11-input" placeholder="Type something...">
+                        <button class="submit-btn">Submit</button>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.submit-btn</span> {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+<span class="keyword">input:not(:placeholder-shown) ~ .submit-btn</span> {
+    background: #667eea;
+    cursor: pointer;
+    pointer-events: auto;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 12: MULTI-FIELD FORM -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>12. Multi-Field Form</h2>
+                    <span class="example-tag form">Form Pattern</span>
+                </div>
+                <p class="example-description">
+                    Complete form with floating labels, validation, and state-based styling on all fields.
+                </p>
+                <div class="demo-area">
+                    <div class="multi-form">
+                        <div class="form-field">
+                            <input type="text" class="example12-input" placeholder="First Name">
+                            <label class="field-label">First Name</label>
+                        </div>
+                        <div class="form-field">
+                            <input type="email" class="example12-input" placeholder="Email Address">
+                            <label class="field-label">Email</label>
+                        </div>
+                        <div class="submit-group">
+                            <button class="form-submit-btn">Submit</button>
+                            <button class="form-submit-btn" style="background: #6c757d;">Reset</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">input:placeholder-shown ~ label</span> {
+    top: 12px;
+    color: #999;
+}
+
+<span class="keyword">input:not(:placeholder-shown) ~ label</span> {
+    top: -8px;
+    color: #667eea;
+    font-size: 0.75em;
+}
+
+<span class="keyword">input:not(:placeholder-shown) ~ .submit-btn</span> {
+    background: #667eea;
+    pointer-events: auto;
+}
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS :placeholder-shown • 12 Practical Examples</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Each example demonstrates form enhancement and user experience patterns</p>
+        </footer>
+    </div>
+</body>
+</html>

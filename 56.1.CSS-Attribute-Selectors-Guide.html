@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Attribute Selectors - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.05rem;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin: 35px 0 20px 0;
+            font-size: 1.6rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.2rem;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .intro-section {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .intro-section strong {
+            color: #667eea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .attribute-section {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .attribute-name {
+            font-family: 'Courier New', monospace;
+            background: #667eea;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: inline-block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .syntax-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .syntax-box .keyword { color: #569cd6; }
+        .syntax-box .selector { color: #9cdcfe; }
+        .syntax-box .property { color: #9cdcfe; }
+        .syntax-box .value { color: #ce9178; }
+        .syntax-box .comment { color: #6a9955; }
+
+        .demo-section {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .demo-html {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .demo-html code {
+            color: #333;
+        }
+
+        .visual-demo {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 4px;
+            min-height: 80px;
+        }
+
+        .element {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f0f4ff;
+            border: 1px solid #667eea;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .element.target {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            font-weight: 600;
+        }
+
+        .use-cases {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .use-cases h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .use-cases ul {
+            list-style-position: inside;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .use-cases li {
+            margin-bottom: 8px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .comparison-card .symbol {
+            font-size: 1.2rem;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 10px;
+            word-break: break-all;
+        }
+
+        .comparison-card .name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .comparison-card .desc {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .best-practices {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .best-practices h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .best-practices ul {
+            list-style-position: inside;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .best-practices li {
+            margin-bottom: 8px;
+        }
+
+        .browser-support {
+            background: #f3e5f5;
+            border: 1px solid #ce93d8;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .browser-support h4 {
+            color: #7b1fa2;
+            margin-bottom: 10px;
+        }
+
+        .browser-support p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .support-badge {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+
+        .support-badge.partial {
+            background: #ff9800;
+        }
+
+        .support-badge.legacy {
+            background: #f44336;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 20px 40px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .code-inline {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            h3 {
+                font-size: 1rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            .comparison-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Attribute Selectors</h1>
+            <p>Complete Guide to Selecting Elements by Attributes</p>
+        </header>
+
+        <div class="content">
+            <div class="intro-section">
+                <p><strong>CSS Attribute Selectors</strong> allow you to target HTML elements based on the presence or value of their attributes. They enable precise, flexible element selection without requiring additional classes or IDs. Attribute selectors are powerful for form styling, data attributes, and matching partial values.</p>
+            </div>
+
+            <h2>Overview of Attribute Selectors</h2>
+            <p>CSS provides eight types of attribute selectors, each serving different selection needs:</p>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="symbol">[attr]</div>
+                    <div class="name">Presence</div>
+                    <div class="desc">Has attribute</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="symbol">[attr=value]</div>
+                    <div class="name">Exact</div>
+                    <div class="desc">Exact match</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="symbol">[attr~=value]</div>
+                    <div class="name">Word</div>
+                    <div class="desc">Word match</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="symbol">[attr|=value]</div>
+                    <div class="name">Prefix</div>
+                    <div class="desc">Prefix match</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="symbol">[attr^=value]</div>
+                    <div class="name">Starts</div>
+                    <div class="desc">Starts with</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="symbol">[attr$=value]</div>
+                    <div class="name">Ends</div>
+                    <div class="desc">Ends with</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="symbol">[attr*=value]</div>
+                    <div class="name">Contains</div>
+                    <div class="desc">Contains</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="symbol">[attr i]</div>
+                    <div class="name">Case</div>
+                    <div class="desc">Case insensitive</div>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Selector</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                        <th>Matches</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="code-inline">[attr]</span></td>
+                        <td><strong>Presence</strong></td>
+                        <td>Has the attribute</td>
+                        <td><span class="code-inline">[disabled]</span></td>
+                        <td>Any element with disabled attribute</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">[attr=value]</span></td>
+                        <td><strong>Exact</strong></td>
+                        <td>Attribute equals value exactly</td>
+                        <td><span class="code-inline">[type="submit"]</span></td>
+                        <td>Exact match only</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">[attr~=value]</span></td>
+                        <td><strong>Word</strong></td>
+                        <td>Value is a word in the attribute</td>
+                        <td><span class="code-inline">[class~="active"]</span></td>
+                        <td>Word separated by spaces</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">[attr|=value]</span></td>
+                        <td><strong>Prefix</strong></td>
+                        <td>Value matches prefix or exact</td>
+                        <td><span class="code-inline">[lang|="en"]</span></td>
+                        <td>en or en-US, en-GB</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">[attr^=value]</span></td>
+                        <td><strong>Starts With</strong></td>
+                        <td>Attribute starts with value</td>
+                        <td><span class="code-inline">[href^="https"]</span></td>
+                        <td>Begins with "https"</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">[attr$=value]</span></td>
+                        <td><strong>Ends With</strong></td>
+                        <td>Attribute ends with value</td>
+                        <td><span class="code-inline">[src$=".png"]</span></td>
+                        <td>Ends with ".png"</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">[attr*=value]</span></td>
+                        <td><strong>Contains</strong></td>
+                        <td>Attribute contains value</td>
+                        <td><span class="code-inline">[title*="error"]</span></td>
+                        <td>Contains "error" anywhere</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">[attr operator i]</span></td>
+                        <td><strong>Case Insensitive</strong></td>
+                        <td>Case-insensitive matching</td>
+                        <td><span class="code-inline">[type="button" i]</span></td>
+                        <td>Matches BUTTON, Button, button</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Presence Attribute -->
+            <div class="attribute-section">
+                <div class="attribute-name">[attr] - Presence</div>
+                <h3>What It Does</h3>
+                <p>Selects any element that has the specified attribute, <span class="highlight">regardless of its value</span>.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">[attributeName]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <p><strong>HTML:</strong></p>
+                    <div class="demo-html">
+&lt;button&gt;Active&lt;/button&gt;<br>
+&lt;button disabled&gt;Disabled&lt;/button&gt;<br>
+&lt;button disabled&gt;Also Disabled&lt;/button&gt;
+                    </div>
+
+                    <p><strong>CSS:</strong></p>
+                    <div class="syntax-box">
+<span class="comment">/* Selects any button with disabled attribute */</span><br>
+<span class="selector">button[disabled]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">opacity</span>: <span class="value">0.5</span>;<br>
+&nbsp;&nbsp;<span class="property">cursor</span>: <span class="value">not-allowed</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+
+                    <p><strong>Result:</strong> Both disabled buttons are styled, regardless of disabled value.</p>
+                </div>
+
+                <h3>Why Use Presence Selector?</h3>
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Styling disabled form elements</li>
+                        <li>Styling form elements with required attribute</li>
+                        <li>Targeting elements with data attributes</li>
+                        <li>Styling elements with aria attributes</li>
+                        <li>Selecting elements with any title attribute</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Exact Value Attribute -->
+            <div class="attribute-section">
+                <div class="attribute-name">[attr=value] - Exact Match</div>
+                <h3>What It Does</h3>
+                <p>Selects elements where the attribute <span class="highlight">equals the value exactly</span>. This is case-sensitive.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">[attributeName="value"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <p><strong>HTML:</strong></p>
+                    <div class="demo-html">
+&lt;input type="text" placeholder="Name"&gt;<br>
+&lt;input type="email" placeholder="Email"&gt;<br>
+&lt;input type="submit" value="Submit"&gt;
+                    </div>
+
+                    <p><strong>CSS:</strong></p>
+                    <div class="syntax-box">
+<span class="comment">/* Only submit buttons */</span><br>
+<span class="selector">input[type="submit"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">#667eea</span>;<br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">white</span>;<br>
+&nbsp;&nbsp;<span class="property">cursor</span>: <span class="value">pointer</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+
+                    <p><strong>Result:</strong> Only the submit input is styled.</p>
+                </div>
+
+                <h3>Why Use Exact Match?</h3>
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Styling specific input types</li>
+                        <li>Targeting elements with specific data attribute values</li>
+                        <li>CSS-based state management</li>
+                        <li>Different styling for different link types</li>
+                        <li>Attribute-based conditional styling</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Word Match Attribute -->
+            <div class="attribute-section">
+                <div class="attribute-name">[attr~=value] - Word Match</div>
+                <h3>What It Does</h3>
+                <p>Selects elements where the attribute contains the value as a <span class="highlight">space-separated word</span>. Perfect for class attributes!</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">[attributeName~="value"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <p><strong>HTML:</strong></p>
+                    <div class="demo-html">
+&lt;div class="button primary"&gt;Primary&lt;/div&gt;<br>
+&lt;div class="button secondary"&gt;Secondary&lt;/div&gt;<br>
+&lt;div class="button-large"&gt;Large&lt;/div&gt;
+                    </div>
+
+                    <p><strong>CSS:</strong></p>
+                    <div class="syntax-box">
+<span class="comment">/* Matches class~="button" (word match) */</span><br>
+<span class="selector">[class~="button"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">display</span>: <span class="value">inline-block</span>;<br>
+&nbsp;&nbsp;<span class="property">padding</span>: <span class="value">10px 15px</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Note: .button-large NOT matched (not a word) */</span>
+                    </div>
+
+                    <p><strong>Result:</strong> First two divs matched (button is a word). Third not matched (button-large is one word).</p>
+                </div>
+
+                <h3>Why Use Word Match?</h3>
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Selecting elements with a class without using .class notation</li>
+                        <li>Matching space-separated attribute values</li>
+                        <li>Data attribute with multiple space-separated values</li>
+                        <li>Styling based on role attributes with multiple values</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Prefix Match Attribute -->
+            <div class="attribute-section">
+                <div class="attribute-name">[attr|=value] - Prefix Match</div>
+                <h3>What It Does</h3>
+                <p>Selects elements where the attribute <span class="highlight">starts with value followed by a hyphen</span>, or equals value exactly. Commonly used for language codes.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">[attributeName|="value"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <p><strong>HTML:</strong></p>
+                    <div class="demo-html">
+&lt;div lang="en"&gt;English&lt;/div&gt;<br>
+&lt;div lang="en-US"&gt;US English&lt;/div&gt;<br>
+&lt;div lang="en-GB"&gt;British English&lt;/div&gt;<br>
+&lt;div lang="fr"&gt;French&lt;/div&gt;
+                    </div>
+
+                    <p><strong>CSS:</strong></p>
+                    <div class="syntax-box">
+<span class="comment">/* Matches lang="en" or lang="en-*" */</span><br>
+<span class="selector">[lang|="en"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">font-style</span>: <span class="value">italic</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+
+                    <p><strong>Result:</strong> First three divs matched (en, en-US, en-GB). French not matched.</p>
+                </div>
+
+                <h3>Why Use Prefix Match?</h3>
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Language attribute targeting (lang="en-*")</li>
+                        <li>BEM-like naming conventions</li>
+                        <li>Semantic versioning in data attributes</li>
+                        <li>Country/region code matching</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Starts With Attribute -->
+            <div class="attribute-section">
+                <div class="attribute-name">[attr^=value] - Starts With</div>
+                <h3>What It Does</h3>
+                <p>Selects elements where the attribute <span class="highlight">starts with the value</span>. No hyphen required.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">[attributeName^="value"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <p><strong>HTML:</strong></p>
+                    <div class="demo-html">
+&lt;a href="https://example.com"&gt;Secure Link&lt;/a&gt;<br>
+&lt;a href="http://example.com"&gt;Regular Link&lt;/a&gt;<br>
+&lt;a href="/local"&gt;Local Link&lt;/a&gt;
+                    </div>
+
+                    <p><strong>CSS:</strong></p>
+                    <div class="syntax-box">
+<span class="comment">/* Only HTTPS links */</span><br>
+<span class="selector">a[href^="https"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">green</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* External links */</span><br>
+<span class="selector">a[href^="http"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">text-decoration</span>: <span class="value">underline</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+
+                    <p><strong>Result:</strong> First link is green. First two are underlined.</p>
+                </div>
+
+                <h3>Why Use Starts With?</h3>
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Styling external vs internal links (http/https vs /)</li>
+                        <li>Differentiating link types by protocol</li>
+                        <li>Data attribute prefix matching</li>
+                        <li>Icon selection based on URL patterns</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Ends With Attribute -->
+            <div class="attribute-section">
+                <div class="attribute-name">[attr$=value] - Ends With</div>
+                <h3>What It Does</h3>
+                <p>Selects elements where the attribute <span class="highlight">ends with the value</span>.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">[attributeName$="value"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <p><strong>HTML:</strong></p>
+                    <div class="demo-html">
+&lt;img src="image.png" alt="Photo"&gt;<br>
+&lt;img src="image.jpg" alt="Photo"&gt;<br>
+&lt;img src="image.svg" alt="Icon"&gt;
+                    </div>
+
+                    <p><strong>CSS:</strong></p>
+                    <div class="syntax-box">
+<span class="comment">/* PNG images */</span><br>
+<span class="selector">img[src$=".png"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">border</span>: <span class="value">2px solid #667eea</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* SVG images */</span><br>
+<span class="selector">img[src$=".svg"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">filter</span>: <span class="value">drop-shadow(0 0 2px)</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+
+                    <p><strong>Result:</strong> PNG image has blue border. SVG has drop shadow.</p>
+                </div>
+
+                <h3>Why Use Ends With?</h3>
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>File type detection (.png, .jpg, .pdf, .doc)</li>
+                        <li>Link target detection (#section, ?query)</li>
+                        <li>Email domain matching</li>
+                        <li>URL extension-based styling</li>
+                        <li>Dynamic icon assignment based on file type</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Contains Attribute -->
+            <div class="attribute-section">
+                <div class="attribute-name">[attr*=value] - Contains</div>
+                <h3>What It Does</h3>
+                <p>Selects elements where the attribute <span class="highlight">contains the value anywhere</span>.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">[attributeName*="value"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <p><strong>HTML:</strong></p>
+                    <div class="demo-html">
+&lt;input name="user_name" placeholder="Username"&gt;<br>
+&lt;input name="user_email" placeholder="Email"&gt;<br>
+&lt;input name="admin_id" placeholder="ID"&gt;
+                    </div>
+
+                    <p><strong>CSS:</strong></p>
+                    <div class="syntax-box">
+<span class="comment">/* Any input with "user" in name */</span><br>
+<span class="selector">input[name*="user"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">border</span>: <span class="value">2px solid #667eea</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+
+                    <p><strong>Result:</strong> First two inputs have blue border (both contain "user").</p>
+                </div>
+
+                <h3>Why Use Contains?</h3>
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Matching form inputs by name pattern</li>
+                        <li>Data attribute pattern matching</li>
+                        <li>Finding elements with partial class matches</li>
+                        <li>URL parameter detection</li>
+                        <li>Error/warning message styling</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Case Insensitive Attribute -->
+            <div class="attribute-section">
+                <div class="attribute-name">[attr operator i] - Case Insensitive</div>
+                <h3>What It Does</h3>
+                <p>Add the <span class="code-inline">i</span> flag to any attribute selector to make matching <span class="highlight">case-insensitive</span>.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">[attributeName="value" i]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <p><strong>HTML:</strong></p>
+                    <div class="demo-html">
+&lt;input type="text"&gt;<br>
+&lt;input type="TEXT"&gt;<br>
+&lt;input type="Text"&gt;
+                    </div>
+
+                    <p><strong>CSS:</strong></p>
+                    <div class="syntax-box">
+<span class="comment">/* Case sensitive - only matches "text" */</span><br>
+<span class="selector">input[type="text"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">border</span>: <span class="value">1px solid red</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Case insensitive - matches all variations */</span><br>
+<span class="selector">input[type="text" i]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">border</span>: <span class="value">1px solid green</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+
+                    <p><strong>Result:</strong> With <span class="code-inline">i</span> flag, all three inputs match.</p>
+                </div>
+
+                <h3>Why Use Case Insensitive?</h3>
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Handling inconsistent attribute casing</li>
+                        <li>Email domain matching (domains are case-insensitive)</li>
+                        <li>Protocol matching (HTTP, Http, http)</li>
+                        <li>Language code matching</li>
+                        <li>User input normalization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Combining Attribute Selectors</h2>
+            <p>You can combine multiple attribute selectors for powerful, specific targeting:</p>
+            <div class="syntax-box">
+<span class="comment">/* Select input that is both text type AND required */</span><br>
+<span class="selector">input[type="text"][required]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">border</span>: <span class="value">2px solid #667eea</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Select links with href containing "example" */</span><br>
+<span class="selector">a[href*="example"][target="_blank"]</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">green</span>;<br>
+<span class="keyword">}</span>
+            </div>
+
+            <h2>Best Practices</h2>
+            <div class="best-practices">
+                <h4>✓ Do's</h4>
+                <ul>
+                    <li><strong>Use attribute selectors for semantic HTML</strong> - They work with data-* attributes beautifully</li>
+                    <li><strong>Combine with other selectors</strong> - Use element type for better performance</li>
+                    <li><strong>Prefer exact matches when possible</strong> - More performant than contains</li>
+                    <li><strong>Use case-insensitive flag (i)</strong> - For user-generated or inconsistent attributes</li>
+                    <li><strong>Document your selectors</strong> - Attribute matching can be non-obvious</li>
+                </ul>
+            </div>
+
+            <div class="best-practices" style="background: #ffebee; border-left-color: #f44336;">
+                <h4 style="color: #c62828;">✗ Don'ts</h4>
+                <ul>
+                    <li><strong>Don't rely solely on attribute selectors</strong> - Classes are still better for explicit styling</li>
+                    <li><strong>Avoid overly broad contains selectors</strong> - They can match unintended elements</li>
+                    <li><strong>Don't assume attribute presence</strong> - Always verify with browser DevTools</li>
+                    <li><strong>Don't use without element type</strong> - Always include element for specificity management</li>
+                </ul>
+            </div>
+
+            <h2>Browser Support</h2>
+            <div class="browser-support">
+                <h4>Attribute Selector Support</h4>
+                <p><strong>Basic selectors [attr], [attr=value]:</strong> Universal support</p>
+                <span class="support-badge">IE 7+</span>
+                <span class="support-badge">All Modern Browsers</span>
+
+                <p style="margin-top: 15px;"><strong>Word and prefix [attr~=value], [attr|=value]:</strong> Universal support</p>
+                <span class="support-badge">IE 7+</span>
+                <span class="support-badge">All Modern Browsers</span>
+
+                <p style="margin-top: 15px;"><strong>Substring [attr^=value], [attr$=value], [attr*=value]:</strong> Modern browsers</p>
+                <span class="support-badge">IE 7+</span>
+                <span class="support-badge">All Modern Browsers</span>
+
+                <p style="margin-top: 15px;"><strong>Case insensitive (i flag):</strong> Modern browsers only</p>
+                <span class="support-badge">Chrome 49+</span>
+                <span class="support-badge">Firefox 78+</span>
+                <span class="support-badge">Safari 9+</span>
+                <span class="support-badge partial">IE 11 - Not Supported</span>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Attribute Selectors Guide. CSS Reference. <strong>Browser Support:</strong> IE 7+ for most selectors</p>
+        </footer>
+    </div>
+</body>
+</html>

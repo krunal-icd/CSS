@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Box-Decoration-Break Property - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 12px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin: 30px 0 15px 0;
+        }
+
+        h4 {
+            color: #667eea;
+            font-size: 1.1em;
+            margin: 20px 0 10px 0;
+        }
+
+        p, li {
+            font-size: 1em;
+            margin-bottom: 12px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        ul, ol {
+            margin-left: 28px;
+            margin-bottom: 20px;
+        }
+
+        .syntax-block {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .keyword { color: #ff79c6; }
+        .string { color: #f1fa8c; }
+        .property { color: #8be9fd; }
+        .value { color: #50fa7b; }
+        .comment { color: #6272a4; }
+
+        .demo-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 40px;
+            border-radius: 12px;
+            margin: 35px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .demo-title {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .property-table th {
+            background: #667eea;
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .property-table td {
+            padding: 15px 18px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .property-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+
+        .highlight {
+            background: #fff9e6;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .warning {
+            background: #ffe0e0;
+            border-left: 4px solid #f44336;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .success {
+            background: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .demo-box {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #667eea;
+            columns: 2;
+            gap: 20px;
+            column-fill: auto;
+        }
+
+        .demo-item {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            break-inside: avoid;
+        }
+
+        .clone-demo {
+            padding: 20px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            color: white;
+            border-radius: 6px;
+            font-weight: bold;
+            break-inside: avoid;
+        }
+
+        .slice-demo {
+            padding: 20px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            border-radius: 6px;
+            font-weight: bold;
+            break-inside: avoid;
+        }
+
+        .clone-demo {
+            box-decoration-break: clone;
+        }
+
+        .slice-demo {
+            box-decoration-break: slice;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 25px 0;
+        }
+
+        .comparison-card {
+            background: #f5f5f5;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .browser-support {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .browser-support h4 {
+            color: #ffc107;
+            margin-bottom: 18px;
+        }
+
+        .support-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .support-item {
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #4CAF50;
+            font-size: 0.95em;
+        }
+
+        .support-item.partial {
+            border-left-color: #ff9800;
+        }
+
+        .support-item.no {
+            border-left-color: #f44336;
+        }
+
+        .example-box {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .use-case-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .use-case-item {
+            background: #f5f5f5;
+            padding: 18px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .use-case-item strong {
+            color: #667eea;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 25px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        .code-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .code-comparison .code-example {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .code-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-box {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Box-Decoration-Break Property</h1>
+            <p>Complete Guide to Multi-Line Element Styling</p>
+        </header>
+
+        <div class="content">
+            <!-- Introduction -->
+            <section>
+                <h2>What is Box-Decoration-Break?</h2>
+                <p>The <span class="highlight">box-decoration-break</span> property specifies how the box decorations (borders, padding, background, margins) should be rendered when elements are broken across multiple lines, columns, or pages. It controls whether decorations are applied to each fragment or treated as a single continuous element.</p>
+
+                <div class="success">
+                    <strong>Key Purpose:</strong> Box-decoration-break gives you control over how inline elements spanning multiple lines display their styling. Choose between cloning decorations on each fragment or applying them continuously.
+                </div>
+
+                <p>This property is particularly useful when working with inline elements that wrap to multiple lines, multi-column layouts, or content spanning pages in print.</p>
+            </section>
+
+            <!-- Syntax Section -->
+            <section>
+                <h2>Syntax & Property Values</h2>
+
+                <h3>Basic Syntax</h3>
+                <div class="syntax-block">
+box-decoration-break: slice | clone;
+                </div>
+
+                <h3>All Box-Decoration-Break Values</h3>
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Description</th>
+                            <th>When to Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag">slice</span></td>
+                            <td>Decorations applied as if the element is not broken (default)</td>
+                            <td>Most common, continuous appearance</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag">clone</span></td>
+                            <td>Decorations are cloned on each fragment</td>
+                            <td>Highlighted text, special effects</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Understanding the Property -->
+            <section>
+                <h2>Understanding Box-Decoration-Break</h2>
+
+                <p>Box-decoration-break only affects inline elements that break across multiple lines. For block-level elements, this property has no effect.</p>
+
+                <h3>Visual Comparison</h3>
+                <div class="demo-section">
+                    <div class="demo-title">📦 Box-Decoration-Break: slice vs clone</div>
+
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>box-decoration-break: slice</h4>
+                            <p><strong>Default behavior.</strong> The background, border, and padding are treated as if the element is not broken. Decorations may be cut off at line breaks.</p>
+                            <p style="margin-top: 12px; font-size: 0.9em; color: #666;">Example: Text spanning two lines with a background. The background appears continuous, as if the text is one box.</p>
+                        </div>
+
+                        <div class="comparison-card">
+                            <h4>box-decoration-break: clone</h4>
+                            <p><strong>Cloning mode.</strong> Each fragment (each line) receives a complete copy of the decorations independently. Borders, padding, and background are applied to each line.</p>
+                            <p style="margin-top: 12px; font-size: 0.9em; color: #666;">Example: Each line of text gets its own background, padding, and borders.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Deep Dive: Each Value -->
+            <section>
+                <h2>Understanding Each Value</h2>
+
+                <h3>1. box-decoration-break: slice (Default)</h3>
+                <div class="example-box">
+                    <p><strong>What it does:</strong> Decorations are applied as if the element is a single continuous box, even if it breaks across lines. The decorations are "sliced" at the break points.</p>
+                </div>
+
+                <h4>Characteristics:</h4>
+                <ul>
+                    <li>Background and borders may appear cut off at line breaks</li>
+                    <li>Decorations span continuously across fragments</li>
+                    <li>Natural text-wrapping appearance</li>
+                    <li>Padding removed at break points</li>
+                </ul>
+
+                <h4>Example:</h4>
+                <div class="code-example">
+<span class="keyword">span</span> {
+  <span class="property">background</span>: <span class="value">#667eea</span>;
+  <span class="property">padding</span>: <span class="value">10px</span>;
+  <span class="property">border</span>: <span class="value">2px solid white</span>;
+  <span class="property">box-decoration-break</span>: <span class="value">slice</span>; <span class="comment">/* Default */</span>
+}
+                </div>
+
+                <hr style="margin: 40px 0; border: none; border-top: 2px solid #e0e0e0;">
+
+                <h3>2. box-decoration-break: clone</h3>
+                <div class="example-box">
+                    <p><strong>What it does:</strong> Each fragment of the broken element receives a complete copy of the box decorations. Every line gets full padding, borders, and background.</p>
+                </div>
+
+                <h4>Characteristics:</h4>
+                <ul>
+                    <li>Each fragment is independently styled</li>
+                    <li>Complete padding on all sides of each fragment</li>
+                    <li>Borders fully rendered on each fragment</li>
+                    <li>Creates a "highlighted" or "boxed" appearance on each line</li>
+                    <li>More visually distinct when breaking across lines</li>
+                </ul>
+
+                <h4>Example:</h4>
+                <div class="code-example">
+<span class="keyword">span</span> {
+  <span class="property">background</span>: <span class="value">#f093fb</span>;
+  <span class="property">padding</span>: <span class="value">10px</span>;
+  <span class="property">border</span>: <span class="value">2px solid white</span>;
+  <span class="property">box-decoration-break</span>: <span class="value">clone</span>;
+}
+                </div>
+            </section>
+
+            <!-- Interactive Demonstrations -->
+            <section>
+                <h2>Interactive Demonstrations</h2>
+                <p>Below you'll see how text wrapping behaves with each value:</p>
+
+                <div class="demo-section">
+                    <div class="demo-title">🎯 Comparing slice and clone</div>
+
+                    <h3 style="margin-top: 0; color: #667eea;">With Multi-Column Layout:</h3>
+                    
+                    <h4 style="margin-top: 20px;">box-decoration-break: clone</h4>
+                    <div class="demo-box" style="column-count: 2; gap: 30px;">
+                        <div class="clone-demo">Box 1 with styling</div>
+                        <div class="clone-demo">Box 2 with styling</div>
+                        <div class="clone-demo">Box 3 with styling</div>
+                        <div class="clone-demo">Box 4 with styling</div>
+                    </div>
+
+                    <h4 style="margin-top: 30px;">box-decoration-break: slice</h4>
+                    <div class="demo-box" style="column-count: 2; gap: 30px;">
+                        <div class="slice-demo">Box 1 with styling</div>
+                        <div class="slice-demo">Box 2 with styling</div>
+                        <div class="slice-demo">Box 3 with styling</div>
+                        <div class="slice-demo">Box 4 with styling</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Real-World Use Cases -->
+            <section>
+                <h2>Real-World Use Cases</h2>
+
+                <div class="use-case-list">
+                    <div class="use-case-item">
+                        <strong>✨ Highlighted Text</strong>
+                        <p>Use clone for search result highlights so each line gets its own background box.</p>
+                    </div>
+
+                    <div class="use-case-item">
+                        <strong>📰 Multi-Column Text</strong>
+                        <p>Use clone when emphasized text spans column breaks for consistent styling.</p>
+                    </div>
+
+                    <div class="use-case-item">
+                        <strong>🏷️ Inline Labels</strong>
+                        <p>Use clone for styled inline labels that wrap to ensure complete styling on each line.</p>
+                    </div>
+
+                    <div class="use-case-item">
+                        <strong>📄 Print Design</strong>
+                        <p>Use clone for styled text in print layouts to handle page breaks elegantly.</p>
+                    </div>
+
+                    <div class="use-case-item">
+                        <strong>🎨 Design Effects</strong>
+                        <p>Use clone for creative text effects with borders and backgrounds on wrapped text.</p>
+                    </div>
+
+                    <div class="use-case-item">
+                        <strong>📝 Text Decoration</strong>
+                        <p>Use clone for consistently styled inline code or keywords across line breaks.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Practical Examples -->
+            <section>
+                <h2>Practical Code Examples</h2>
+
+                <h3>Example 1: Highlighted Search Results</h3>
+                <div class="code-example">
+<span class="keyword">mark</span> {
+  <span class="property">background</span>: <span class="value">yellow</span>;
+  <span class="property">padding</span>: <span class="value">5px 8px</span>;
+  <span class="property">border-radius</span>: <span class="value">3px</span>;
+  <span class="property">box-decoration-break</span>: <span class="value">clone</span>;
+  <span class="comment">/* Each line gets complete highlight box */</span>
+}
+                </div>
+
+                <h3>Example 2: Inline Code Styling</h3>
+                <div class="code-example">
+<span class="keyword">code</span> {
+  <span class="property">background</span>: <span class="value">#f5f5f5</span>;
+  <span class="property">padding</span>: <span class="value">4px 8px</span>;
+  <span class="property">border-radius</span>: <span class="value">3px</span>;
+  <span class="property">border</span>: <span class="value">1px solid #ddd</span>;
+  <span class="property">box-decoration-break</span>: <span class="value">clone</span>;
+  <span class="comment">/* Code blocks styled consistently per line */</span>
+}
+                </div>
+
+                <h3>Example 3: Emphasized Text in Articles</h3>
+                <div class="code-example">
+<span class="keyword">em</span> {
+  <span class="property">background</span>: <span class="value">rgba(255, 235, 59, 0.3)</span>;
+  <span class="property">padding</span>: <span class="value">3px 6px</span>;
+  <span class="property">font-style</span>: <span class="value">italic</span>;
+  <span class="property">box-decoration-break</span>: <span class="value">clone</span>;
+}
+                </div>
+
+                <h3>Example 4: Linked Text</h3>
+                <div class="code-example">
+<span class="keyword">a</span> {
+  <span class="property">color</span>: <span class="value">#667eea</span>;
+  <span class="property">text-decoration</span>: <span class="value">underline</span>;
+  <span class="property">background</span>: <span class="value">rgba(102, 126, 234, 0.1)</span>;
+  <span class="property">padding</span>: <span class="value">2px 4px</span>;
+  <span class="property">box-decoration-break</span>: <span class="value">clone</span>;
+  <span class="comment">/* Styling applied consistently across wrapped lines */</span>
+}
+                </div>
+
+                <h3>Example 5: Multi-Column Print</h3>
+                <div class="code-example">
+<span class="keyword">article</span> {
+  <span class="property">columns</span>: <span class="value">2</span>;
+  <span class="property">column-gap</span>: <span class="value">40px</span>;
+}
+
+<span class="keyword">article span.highlight</span> {
+  <span class="property">background</span>: <span class="value">#ffffcc</span>;
+  <span class="property">padding</span>: <span class="value">5px</span>;
+  <span class="property">box-decoration-break</span>: <span class="value">clone</span>;
+  <span class="comment">/* Highlights work correctly across columns */</span>
+}
+                </div>
+            </section>
+
+            <!-- Browser Support -->
+            <section>
+                <h2>Browser Support</h2>
+                <div class="browser-support">
+                    <h4>CSS Box-Decoration-Break Compatibility</h4>
+                    <div class="support-list">
+                        <div class="support-item">Chrome: 12+</div>
+                        <div class="support-item">Firefox: 32+</div>
+                        <div class="support-item">Safari: 6.1+</div>
+                        <div class="support-item partial">Edge: 12+ (partial)</div>
+                        <div class="support-item">Opera: 15+</div>
+                        <div class="support-item no">IE: Not Supported</div>
+                        <div class="support-item">iOS Safari: 7+</div>
+                        <div class="support-item">Android: 4.4+</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>Note:</strong> Most modern browsers support both <span class="highlight">slice</span> and <span class="highlight">clone</span>. Internet Explorer does not support this property.
+                </div>
+            </section>
+
+            <!-- Vendor Prefixes -->
+            <section>
+                <h2>Vendor Prefixes</h2>
+                <p>For maximum compatibility with older browsers, include the <span class="highlight">-webkit-</span> prefix:</p>
+
+                <div class="code-example">
+<span class="keyword">span</span> {
+  <span class="property">-webkit-box-decoration-break</span>: <span class="value">clone</span>;
+  <span class="property">box-decoration-break</span>: <span class="value">clone</span>;
+}
+                </div>
+
+                <div class="info-box">
+                    <strong>Important:</strong> Safari and Chrome require the <span class="highlight">-webkit-</span> prefix for this property to work properly.
+                </div>
+            </section>
+
+            <!-- Best Practices -->
+            <section>
+                <h2>Best Practices & Tips</h2>
+
+                <div class="success">
+                    <strong>✓ Best Practices:</strong>
+                    <ul>
+                        <li>Use <span class="highlight">clone</span> for highlighted or emphasized inline text</li>
+                        <li>Use <span class="highlight">slice</span> for continuous background effects</li>
+                        <li>Include <span class="highlight">-webkit-</span> prefix for broader support</li>
+                        <li>Test with multi-column layouts and print styles</li>
+                        <li>Consider text wrapping behavior in your design</li>
+                        <li>Use with inline elements (span, em, strong, code, etc.)</li>
+                        <li>Combine with column-count for sophisticated layouts</li>
+                    </ul>
+                </div>
+
+                <div class="warning">
+                    <strong>⚠ Common Mistakes:</strong>
+                    <ul>
+                        <li>Using box-decoration-break on block elements (has no effect)</li>
+                        <li>Forgetting the -webkit- prefix for Safari/Chrome</li>
+                        <li>Not testing across different line-break scenarios</li>
+                        <li>Using with non-inline elements</li>
+                        <li>Expecting it to work in Internet Explorer</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- When Element Breaks Occur -->
+            <section>
+                <h2>When Elements Break</h2>
+
+                <h3>Elements break across:</h3>
+                <ul>
+                    <li><strong>Text Wrapping:</strong> Long inline text that wraps to multiple lines</li>
+                    <li><strong>Multi-Column Layouts:</strong> Content spanning across CSS columns</li>
+                    <li><strong>Page Breaks (Print):</strong> Content spanning page boundaries</li>
+                    <li><strong>Flex/Grid Wrapping:</strong> Elements wrapping in flexible containers</li>
+                </ul>
+
+                <h3>Box-decoration-break applies to:</h3>
+                <ul>
+                    <li>Background images and colors</li>
+                    <li>Border properties</li>
+                    <li>Padding and margins</li>
+                    <li>Box-shadow effects</li>
+                    <li>Border-radius</li>
+                </ul>
+            </section>
+
+            <!-- Comparison with Related Properties -->
+            <section>
+                <h2>Related Properties</h2>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>break-inside</h4>
+                        <p>Prevents element from breaking across columns, pages. Complementary to box-decoration-break.</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>column-count</h4>
+                        <p>Creates multi-column layout where box-decoration-break becomes relevant for styled inline content.</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>word-break</h4>
+                        <p>Controls where text breaks. Works together with box-decoration-break for text styling.</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>text-decoration</h4>
+                        <p>Applies underlines and overlines. Box-decoration-break doesn't affect text-decoration.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conclusion -->
+            <section>
+                <h2>Conclusion</h2>
+                <div class="success">
+                    <p><strong>Box-decoration-break</strong> is a powerful property for controlling how inline elements are styled when they span multiple lines or fragments. While its use cases are specific, it's essential for creating polished, professional-looking wrapped text and multi-column layouts.</p>
+                    <p style="margin-top: 15px;"><strong>Quick Decision Guide:</strong></p>
+                    <ul>
+                        <li><strong>Highlighted search results:</strong> Use <span class="highlight">clone</span></li>
+                        <li><strong>Inline code styling:</strong> Use <span class="highlight">clone</span></li>
+                        <li><strong>Emphasized text:</strong> Use <span class="highlight">clone</span></li>
+                        <li><strong>Continuous background:</strong> Use <span class="highlight">slice</span> (default)</li>
+                        <li><strong>Multi-column layouts:</strong> Usually <span class="highlight">clone</span></li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 CSS Box-Decoration-Break Complete Guide</p>
+            <p>Comprehensive reference for multi-line element styling in CSS</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Last Updated: May 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

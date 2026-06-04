@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Pseudo-Classes - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h3 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .demo-area {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 120px;
+        }
+
+        .code-snippet {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+        }
+
+        .code-snippet .tag { color: #569cd6; }
+        .code-snippet .attr { color: #9cdcfe; }
+        .code-snippet .value { color: #ce9178; }
+        .code-snippet .text { color: #d4d4d4; }
+        .code-snippet .comment { color: #6a9955; }
+
+        .use-case {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        /* Example 1: Button Hover */
+        .example-1 .demo-area button {
+            padding: 12px 24px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .example-1 .demo-area button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .example-1 .demo-area button:active {
+            transform: translateY(0);
+        }
+
+        /* Example 2: Focus States */
+        .example-2 .demo-area input {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .example-2 .demo-area input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: #f9f9f9;
+        }
+
+        /* Example 3: Visited Links */
+        .example-3 .demo-area a {
+            display: inline-block;
+            margin: 8px 10px 8px 0;
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .example-3 .demo-area a:link {
+            background: #667eea;
+            color: white;
+        }
+
+        .example-3 .demo-area a:visited {
+            background: #764ba2;
+            color: white;
+        }
+
+        .example-3 .demo-area a:hover {
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Example 4: Checked Inputs */
+        .example-4 .demo-area {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .example-4 .demo-area label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f5f5f5;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .example-4 .demo-area input[type="checkbox"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .example-4 .demo-area input[type="checkbox"]:checked + label,
+        .example-4 .demo-area label:has(input[type="checkbox"]:checked) {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding-left: 8px;
+        }
+
+        /* Example 5: First and Last Child */
+        .example-5 .demo-area ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .example-5 .demo-area li {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .example-5 .demo-area li:first-child {
+            background: #f0f4ff;
+            font-weight: 600;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .example-5 .demo-area li:last-child {
+            border-bottom: none;
+            border-radius: 0 0 8px 8px;
+            background: #f9f9f9;
+        }
+
+        /* Example 6: Nth-Child Zebra */
+        .example-6 .demo-area table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .example-6 .demo-area tr {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .example-6 .demo-area th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .example-6 .demo-area td {
+            padding: 12px;
+        }
+
+        .example-6 .demo-area tbody tr:nth-child(2n) {
+            background: #f9f9f9;
+        }
+
+        .example-6 .demo-area tbody tr:nth-child(2n+1) {
+            background: white;
+        }
+
+        .example-6 .demo-area tbody tr:hover {
+            background: #f0f4ff !important;
+        }
+
+        /* Example 7: Disabled State */
+        .example-7 .demo-area button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .example-7 .demo-area button:not([disabled]) {
+            background: #667eea;
+            color: white;
+        }
+
+        .example-7 .demo-area button:not([disabled]):hover {
+            background: #764ba2;
+        }
+
+        .example-7 .demo-area button[disabled] {
+            background: #ccc;
+            color: #999;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Example 8: Empty Elements */
+        .example-8 .demo-area .box {
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .example-8 .demo-area .box:empty {
+            background: #fff3cd;
+            border-color: #ffc107;
+            color: #ff9800;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .example-8 .demo-area .box:empty::after {
+            content: "Empty";
+        }
+
+        .example-8 .demo-area .box:not(:empty) {
+            background: #e8f5e9;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+
+        /* Example 9: Not Selector */
+        .example-9 .demo-area p {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .example-9 .demo-area p:not(.highlight) {
+            color: #666;
+            background: #f9f9f9;
+        }
+
+        .example-9 .demo-area p.highlight {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* Example 10: Is Selector */
+        .example-10 .demo-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .example-10 .demo-area button,
+        .example-10 .demo-area a {
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .example-10 .demo-area button:is(:hover, :focus),
+        .example-10 .demo-area a:is(:hover, :focus) {
+            background: #764ba2;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .example-10 .demo-area button,
+        .example-10 .demo-area a {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Example 11: Has Selector */
+        .example-11 .demo-area .card {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .example-11 .demo-area .card:has(img) {
+            background: #f0f4ff;
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .example-11 .demo-area .card img {
+            width: 100%;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        /* Example 12: Staggered Animation */
+        .example-12 .demo-area ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .example-12 .demo-area li {
+            padding: 12px 15px;
+            background: #667eea;
+            color: white;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            animation: slideIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .example-12 .demo-area li:nth-child(1) { animation-delay: 0s; }
+        .example-12 .demo-area li:nth-child(2) { animation-delay: 0.1s; }
+        .example-12 .demo-area li:nth-child(3) { animation-delay: 0.2s; }
+        .example-12 .demo-area li:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .footer {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .footer h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .quick-ref {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            text-align: left;
+        }
+
+        .ref-item {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .ref-item code {
+            background: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .example-10 .demo-area {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Pseudo-Classes</h1>
+            <p>Practical Examples & Real-World Use Cases</p>
+        </header>
+
+        <div class="examples-grid">
+
+            <!-- Example 1: Button Hover -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Button Hover Effects</h3>
+                    <span class="badge">:hover</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Interactive button with hover and active states.</p>
+                    <div class="demo-area">
+                        <button>Primary Button</button>
+                        <button>Secondary Button</button>
+                        <button>Action Button</button>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">button {</span><br>
+&nbsp;&nbsp;<span class="text">transition: all 0.3s ease;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">button:hover {</span><br>
+&nbsp;&nbsp;<span class="text">background: #764ba2;</span><br>
+&nbsp;&nbsp;<span class="text">transform: translateY(-2px);</span><br>
+&nbsp;&nbsp;<span class="text">box-shadow: 0 5px 15px rgba(...);</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">button:active {</span><br>
+&nbsp;&nbsp;<span class="text">transform: translateY(0);</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Interactive feedback for clickable buttons and controls.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 2: Focus States -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Form Input Focus</h3>
+                    <span class="badge">:focus</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Keyboard accessible form inputs with focus styling.</p>
+                    <div class="demo-area">
+                        <input placeholder="Name">
+                        <input placeholder="Email">
+                        <input placeholder="Message">
+                    </div>
+                    <div class="code-snippet">
+<span class="text">input:focus {</span><br>
+&nbsp;&nbsp;<span class="text">outline: none;</span><br>
+&nbsp;&nbsp;<span class="text">border-color: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">box-shadow: 0 0 0 3px rgba(102,126,234,0.1);</span><br>
+&nbsp;&nbsp;<span class="text">background: #f9f9f9;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Keyboard navigation indication and accessibility.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3: Link States -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Link States</h3>
+                    <span class="badge">:link/:visited</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Different styling for unvisited and visited links.</p>
+                    <div class="demo-area">
+                        <a href="https://example1.com">Unvisited Link 1</a>
+                        <a href="https://example2.com">Unvisited Link 2</a>
+                        <a href="https://example3.com">Unvisited Link 3</a>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">a:link {</span><br>
+&nbsp;&nbsp;<span class="text">background: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">color: white;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">a:visited {</span><br>
+&nbsp;&nbsp;<span class="text">background: #764ba2;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">a:hover {</span><br>
+&nbsp;&nbsp;<span class="text">box-shadow: 0 5px 15px rgba(...);</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Visual indication of link history.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4: Checked Inputs -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Checkbox Styling</h3>
+                    <span class="badge">:checked</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Custom styling for checked checkboxes.</p>
+                    <div class="demo-area">
+                        <label>
+                            <input type="checkbox">
+                            <span>Option 1</span>
+                        </label>
+                        <label>
+                            <input type="checkbox">
+                            <span>Option 2</span>
+                        </label>
+                        <label>
+                            <input type="checkbox">
+                            <span>Option 3</span>
+                        </label>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">input[type="checkbox"]:checked + label,</span><br>
+<span class="text">label:has(input[type="checkbox"]:checked) {</span><br>
+&nbsp;&nbsp;<span class="text">background: #e8f5e9;</span><br>
+&nbsp;&nbsp;<span class="text">border-left: 4px solid #4caf50;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Custom form control styling and visual feedback.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 5: First and Last Child -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>List Edge Styling</h3>
+                    <span class="badge">:first-child/:last-child</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Special styling for first and last list items.</p>
+                    <div class="demo-area">
+                        <ul>
+                            <li>First Item (Header)</li>
+                            <li>Middle Item</li>
+                            <li>Another Item</li>
+                            <li>Last Item (Footer)</li>
+                        </ul>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">li:first-child {</span><br>
+&nbsp;&nbsp;<span class="text">background: #f0f4ff;</span><br>
+&nbsp;&nbsp;<span class="text">font-weight: 600;</span><br>
+&nbsp;&nbsp;<span class="text">border-radius: 8px 8px 0 0;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">li:last-child {</span><br>
+&nbsp;&nbsp;<span class="text">background: #f9f9f9;</span><br>
+&nbsp;&nbsp;<span class="text">border-radius: 0 0 8px 8px;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> List styling with special edge treatment.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 6: Nth-Child Zebra -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Zebra Striping</h3>
+                    <span class="badge">:nth-child(2n)</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Alternating row colors for better readability.</p>
+                    <div class="demo-area">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>John Doe</td>
+                                    <td>john@example.com</td>
+                                    <td>Active</td>
+                                </tr>
+                                <tr>
+                                    <td>Jane Smith</td>
+                                    <td>jane@example.com</td>
+                                    <td>Active</td>
+                                </tr>
+                                <tr>
+                                    <td>Bob Johnson</td>
+                                    <td>bob@example.com</td>
+                                    <td>Inactive</td>
+                                </tr>
+                                <tr>
+                                    <td>Alice Brown</td>
+                                    <td>alice@example.com</td>
+                                    <td>Active</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">tbody tr:nth-child(2n) {</span><br>
+&nbsp;&nbsp;<span class="text">background: #f9f9f9;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">tbody tr:hover {</span><br>
+&nbsp;&nbsp;<span class="text">background: #f0f4ff;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Table data readability with alternating row colors.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 7: Disabled State -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Disabled Button States</h3>
+                    <span class="badge">:disabled</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Visual distinction between enabled and disabled buttons.</p>
+                    <div class="demo-area">
+                        <button>Active Button</button>
+                        <button disabled>Disabled Button 1</button>
+                        <button>Another Active</button>
+                        <button disabled>Disabled Button 2</button>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">button:not([disabled]) {</span><br>
+&nbsp;&nbsp;<span class="text">background: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">color: white;</span><br>
+&nbsp;&nbsp;<span class="text">cursor: pointer;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">button[disabled] {</span><br>
+&nbsp;&nbsp;<span class="text">background: #ccc;</span><br>
+&nbsp;&nbsp;<span class="text">cursor: not-allowed;</span><br>
+&nbsp;&nbsp;<span class="text">opacity: 0.6;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Form state management without JavaScript.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 8: Empty Elements -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Empty Element Handling</h3>
+                    <span class="badge">:empty</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Distinguish empty from filled containers.</p>
+                    <div class="demo-area">
+                        <div class="box"></div>
+                        <div class="box">Has Content</div>
+                        <div class="box"></div>
+                        <div class="box">Filled Box</div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.box:empty {</span><br>
+&nbsp;&nbsp;<span class="text">background: #fff3cd;</span><br>
+&nbsp;&nbsp;<span class="text">border-color: #ffc107;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">.box:empty::after {</span><br>
+&nbsp;&nbsp;<span class="text">content: "Empty";</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Placeholder styling for empty data containers.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 9: Not Selector -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Negation Selector</h3>
+                    <span class="badge">:not(selector)</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style all elements except those matching a selector.</p>
+                    <div class="demo-area">
+                        <p>Regular paragraph text</p>
+                        <p>Another regular paragraph</p>
+                        <p class="highlight">This one is highlighted!</p>
+                        <p>One more regular paragraph</p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">p:not(.highlight) {</span><br>
+&nbsp;&nbsp;<span class="text">color: #666;</span><br>
+&nbsp;&nbsp;<span class="text">background: #f9f9f9;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">p.highlight {</span><br>
+&nbsp;&nbsp;<span class="text">background: #fff3cd;</span><br>
+&nbsp;&nbsp;<span class="text">color: #333;</span><br>
+&nbsp;&nbsp;<span class="text">font-weight: 600;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Exclusion-based styling without multiple rules.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 10: Is Selector -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Is Selector Grouping</h3>
+                    <span class="badge">:is()</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Apply same styles to multiple selectors at once.</p>
+                    <div class="demo-area">
+                        <button>Button 1</button>
+                        <button>Button 2</button>
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* Instead of button:hover, a:hover {} */</span><br>
+<span class="text">button:is(:hover, :focus),</span><br>
+<span class="text">a:is(:hover, :focus) {</span><br>
+&nbsp;&nbsp;<span class="text">background: #764ba2;</span><br>
+&nbsp;&nbsp;<span class="text">transform: scale(1.05);</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Reducing selector redundancy and improving readability.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 11: Has Selector -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Has Selector (Parent)</h3>
+                    <span class="badge">:has()</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style parent elements based on their children.</p>
+                    <div class="demo-area">
+                        <div class="card">
+                            <h4>Text Only Card</h4>
+                            <p>This card has no image.</p>
+                        </div>
+                        <div class="card">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='80'%3E%3Crect fill='%23667eea' width='100' height='80'/%3E%3C/svg%3E" alt="image">
+                            <h4>Card with Image</h4>
+                            <p>This card has an image inside!</p>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.card:has(img) {</span><br>
+&nbsp;&nbsp;<span class="text">background: #f0f4ff;</span><br>
+&nbsp;&nbsp;<span class="text">border-color: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">box-shadow: 0 5px 15px rgba(...);</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Parent styling based on children content.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 12: Staggered Animation -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Staggered Animation</h3>
+                    <span class="badge">:nth-child()</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Animated list items with staggered delays.</p>
+                    <div class="demo-area">
+                        <ul>
+                            <li>Item 1 - Animates First</li>
+                            <li>Item 2 - Animates Second</li>
+                            <li>Item 3 - Animates Third</li>
+                            <li>Item 4 - Animates Last</li>
+                        </ul>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">li {</span><br>
+&nbsp;&nbsp;<span class="text">animation: slideIn 0.5s ease forwards;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">li:nth-child(1) { animation-delay: 0s; }</span><br>
+<span class="text">li:nth-child(2) { animation-delay: 0.1s; }</span><br>
+<span class="text">li:nth-child(3) { animation-delay: 0.2s; }</span><br>
+<span class="text">li:nth-child(4) { animation-delay: 0.3s; }</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Visually pleasing sequential animations.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);">
+            <h2 style="color: #667eea; margin-bottom: 20px;">Pseudo-Classes Reference</h2>
+            
+            <table style="width: 100%; border-collapse: collapse; background: white; margin: 20px 0;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">Pseudo-Class</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">Example</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">What It Does</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>:hover</strong></td>
+                        <td style="padding: 15px;"><code>button:hover</code></td>
+                        <td style="padding: 15px;">User hovers over element</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>:focus</strong></td>
+                        <td style="padding: 15px;"><code>input:focus</code></td>
+                        <td style="padding: 15px;">Element receives keyboard focus</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>:active</strong></td>
+                        <td style="padding: 15px;"><code>button:active</code></td>
+                        <td style="padding: 15px;">Element is being clicked/activated</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>:checked</strong></td>
+                        <td style="padding: 15px;"><code>input:checked</code></td>
+                        <td style="padding: 15px;">Checkbox or radio is checked</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>:disabled</strong></td>
+                        <td style="padding: 15px;"><code>button:disabled</code></td>
+                        <td style="padding: 15px;">Form control is disabled</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>:first-child</strong></td>
+                        <td style="padding: 15px;"><code>li:first-child</code></td>
+                        <td style="padding: 15px;">First child element</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>:last-child</strong></td>
+                        <td style="padding: 15px;"><code>li:last-child</code></td>
+                        <td style="padding: 15px;">Last child element</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>:nth-child(n)</strong></td>
+                        <td style="padding: 15px;"><code>li:nth-child(2n)</code></td>
+                        <td style="padding: 15px;">Every nth child (even, odd, pattern)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>:not(selector)</strong></td>
+                        <td style="padding: 15px;"><code>p:not(.intro)</code></td>
+                        <td style="padding: 15px;">All except matching selector</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>:is(selectors)</strong></td>
+                        <td style="padding: 15px;"><code>:is(h1, h2, h3)</code></td>
+                        <td style="padding: 15px;">Match any selector in list</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>:has(selector)</strong></td>
+                        <td style="padding: 15px;"><code>div:has(img)</code></td>
+                        <td style="padding: 15px;">Parent containing selector</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 15px;"><strong>:empty</strong></td>
+                        <td style="padding: 15px;"><code>div:empty</code></td>
+                        <td style="padding: 15px;">Element with no children</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">Key Takeaways</h3>
+            <ul style="line-height: 1.8; color: #555;">
+                <li><strong>:hover, :focus, :active:</strong> Essential for user interaction and accessibility.</li>
+                <li><strong>:first-child, :last-child:</strong> Perfect for edge element styling in lists and cards.</li>
+                <li><strong>:nth-child(n):</strong> Powerful for patterns - use 2n for even, 2n+1 for odd, 3n for every 3rd.</li>
+                <li><strong>:checked, :disabled:</strong> Form state styling without JavaScript.</li>
+                <li><strong>:not(selector):</strong> Exclusion-based styling for cleaner CSS.</li>
+                <li><strong>:is(), :where():</strong> Simplify multiple selectors - :is() has specificity, :where() doesn't.</li>
+                <li><strong>:has(selector):</strong> Modern parent selector - now supported in Chrome, Safari, Firefox.</li>
+                <li><strong>:empty:</strong> Identify and style containers with no content.</li>
+                <li><strong>Always include focus states:</strong> Essential for keyboard accessibility and WCAG compliance.</li>
+                <li><strong>Combine with CSS animations:</strong> Use :nth-child() for staggered delays in list animations.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <h3>Browser Compatibility</h3>
+            <div class="quick-ref">
+                <div class="ref-item">
+                    <strong>:hover, :focus, :active</strong><br>
+                    All Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>:first-child, :last-child</strong><br>
+                    IE 7+, All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>:nth-child, :nth-of-type</strong><br>
+                    IE 9+, All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>:checked, :disabled</strong><br>
+                    IE 9+, All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>:is, :where</strong><br>
+                    Chrome 88+, Firefox 78+, Safari 14.1+
+                </div>
+                <div class="ref-item">
+                    <strong>:has</strong><br>
+                    Chrome 105+, Safari 15.4+, Firefox 121+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

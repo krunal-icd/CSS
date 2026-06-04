@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Caret-Color Property - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-left: 4px solid #764ba2;
+            padding-left: 15px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .intro {
+            font-size: 1.1em;
+            color: #555;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 25px;
+        }
+
+        .reference-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .reference-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .reference-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .reference-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .reference-table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            border: 1px solid #333;
+        }
+
+        .syntax { color: #569cd6; font-weight: bold; }
+        .selector { color: #9cdcfe; }
+        .property { color: #9cdcfe; }
+        .value { color: #ce9178; }
+        .keyword { color: #569cd6; }
+        .comment { color: #6a9955; }
+        .unit { color: #b5cea8; }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .demo-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border: 2px solid #667eea;
+            padding: 25px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .demo-card:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .demo-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .demo-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #764ba2;
+            border-radius: 6px;
+            font-size: 1em;
+            margin: 10px 0;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .demo-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .demo-preview {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            min-height: 80px;
+            border: 1px solid #ddd;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .feature-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .do-dont-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .do-box, .dont-box {
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .do-box {
+            background: rgba(76, 175, 80, 0.05);
+            border-left-color: #4caf50;
+        }
+
+        .do-box h4 {
+            color: #4caf50;
+            margin-bottom: 10px;
+        }
+
+        .dont-box {
+            background: rgba(244, 67, 54, 0.05);
+            border-left-color: #f44336;
+        }
+
+        .dont-box h4 {
+            color: #f44336;
+            margin-bottom: 10px;
+        }
+
+        .browser-support {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .browser-item {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #667eea;
+        }
+
+        .browser-item strong {
+            display: block;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .support-yes {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .support-partial {
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        .support-no {
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        .accessibility-note {
+            background: rgba(33, 150, 243, 0.05);
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .accessibility-note strong {
+            color: #2196f3;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .use-case {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #764ba2;
+        }
+
+        .use-case strong {
+            color: #764ba2;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 12px;
+        }
+
+        .syntax-info {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+
+        .syntax-info code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .note-box {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .note-box strong {
+            color: #ff9800;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .do-dont-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS caret-color Property</h1>
+            <p>Complete Guide to Styling the Text Cursor in Input Fields and Contenteditable Elements</p>
+        </header>
+
+        <div class="section">
+            <h2>What is caret-color?</h2>
+            <div class="intro">
+                The <code>caret-color</code> property controls the color of the text cursor (caret) that appears in input fields, textareas, and contenteditable elements. It allows you to match the cursor color to your design system, improving visual consistency and user experience.
+            </div>
+
+            <h3>Key Characteristics:</h3>
+            <ul class="feature-list">
+                <li>Controls the text cursor color in interactive text elements</li>
+                <li>Works with input, textarea, and contenteditable elements</li>
+                <li>Accepts any valid CSS color value (hex, rgb, hsl, named colors, etc.)</li>
+                <li>Can be set to <code>auto</code> to use the default browser cursor</li>
+                <li>Inherited by child elements unless explicitly overridden</li>
+                <li>Does not affect the appearance of selected text (use ::selection for that)</li>
+                <li>Excellent browser support across modern browsers (Chrome 57+, Firefox 53+)</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Syntax and Values</h2>
+
+            <div class="syntax-info">
+                <h3>Basic Syntax</h3>
+                <div class="code-block">
+<span class="property">caret-color</span>: <span class="value">color</span> | <span class="keyword">auto</span>;
+                </div>
+            </div>
+
+            <table class="reference-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>auto</code></td>
+                        <td>Browser default cursor color (typically matches text color or is black)</td>
+                        <td><code>caret-color: auto;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;color&gt;</code></td>
+                        <td>Any valid CSS color value</td>
+                        <td><code>caret-color: #667eea;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>hex</code></td>
+                        <td>Hexadecimal color notation</td>
+                        <td><code>caret-color: #ff6b6b;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>rgb/rgba</code></td>
+                        <td>RGB or RGBA color notation</td>
+                        <td><code>caret-color: rgba(102, 126, 234, 0.8);</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>hsl/hsla</code></td>
+                        <td>HSL or HSLA color notation</td>
+                        <td><code>caret-color: hsl(250, 100%, 50%);</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>named colors</code></td>
+                        <td>CSS named color keywords</td>
+                        <td><code>caret-color: royalblue;</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Inheritance and Cascading</h3>
+            <div class="code-block">
+<span class="comment">/* Inherited by child elements */</span>
+<span class="selector">form</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+}
+
+<span class="selector">input</span> {
+    <span class="comment">/* Inherits #667eea from form */</span>
+}
+
+<span class="selector">input.special</span> {
+    <span class="property">caret-color</span>: <span class="value">#ff6b6b</span>; <span class="comment">/* Overrides inheritance */</span>
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Practical Examples</h2>
+
+            <h3>Basic Color Application</h3>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h4>Primary Brand Color</h4>
+                    <input type="text" class="demo-input" placeholder="Try typing here..." style="caret-color: #667eea;">
+                    <div class="code-block" style="font-size: 0.85em;">
+<span class="selector">input</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+}
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h4>Success Green</h4>
+                    <input type="text" class="demo-input" placeholder="Type here for green cursor..." style="caret-color: #4caf50;">
+                    <div class="code-block" style="font-size: 0.85em;">
+<span class="selector">input</span> {
+    <span class="property">caret-color</span>: <span class="value">#4caf50</span>;
+}
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h4>Warning Orange</h4>
+                    <input type="text" class="demo-input" placeholder="Orange cursor..." style="caret-color: #ff9800;">
+                    <div class="code-block" style="font-size: 0.85em;">
+<span class="selector">input</span> {
+    <span class="property">caret-color</span>: <span class="value">#ff9800</span>;
+}
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h4>Error Red</h4>
+                    <input type="text" class="demo-input" placeholder="Red cursor..." style="caret-color: #f44336;">
+                    <div class="code-block" style="font-size: 0.85em;">
+<span class="selector">input</span> {
+    <span class="property">caret-color</span>: <span class="value">#f44336</span>;
+}
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h4>RGBA with Transparency</h4>
+                    <input type="text" class="demo-input" placeholder="Semi-transparent cursor..." style="caret-color: rgba(102, 126, 234, 0.6);">
+                    <div class="code-block" style="font-size: 0.85em;">
+<span class="selector">input</span> {
+    <span class="property">caret-color</span>: <span class="value">rgba(102, 126, 234, 0.6)</span>;
+}
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h4>Browser Auto Default</h4>
+                    <input type="text" class="demo-input" placeholder="Default browser cursor..." style="caret-color: auto;">
+                    <div class="code-block" style="font-size: 0.85em;">
+<span class="selector">input</span> {
+    <span class="property">caret-color</span>: <span class="keyword">auto</span>;
+}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Context-Based Caret Colors</h2>
+
+            <h3>Input Types with Different Colors</h3>
+            <div class="code-block">
+<span class="selector">input[type="text"]</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+}
+
+<span class="selector">input[type="email"]</span> {
+    <span class="property">caret-color</span>: <span class="value">#2196f3</span>;
+}
+
+<span class="selector">input[type="password"]</span> {
+    <span class="property">caret-color</span>: <span class="value">#f44336</span>;
+}
+
+<span class="selector">input[type="search"]</span> {
+    <span class="property">caret-color</span>: <span class="value">#ff9800</span>;
+}
+            </div>
+
+            <h3>Form State-Based Colors</h3>
+            <div class="code-block">
+<span class="comment">/* Default state */</span>
+<span class="selector">input</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+}
+
+<span class="comment">/* Focus state - brighter */</span>
+<span class="selector">input:focus</span> {
+    <span class="property">caret-color</span>: <span class="value">#764ba2</span>;
+}
+
+<span class="comment">/* Valid state - green */</span>
+<span class="selector">input:valid</span> {
+    <span class="property">caret-color</span>: <span class="value">#4caf50</span>;
+}
+
+<span class="comment">/* Invalid state - red */</span>
+<span class="selector">input:invalid</span> {
+    <span class="property">caret-color</span>: <span class="value">#f44336</span>;
+}
+
+<span class="comment">/* Disabled state - gray */</span>
+<span class="selector">input:disabled</span> {
+    <span class="property">caret-color</span>: <span class="value">#999999</span>;
+}
+            </div>
+
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h4>Email Input (Blue Caret)</h4>
+                    <input type="email" class="demo-input" placeholder="Enter email..." style="caret-color: #2196f3;">
+                </div>
+
+                <div class="demo-card">
+                    <h4>Password Input (Red Caret)</h4>
+                    <input type="password" class="demo-input" placeholder="Enter password..." style="caret-color: #f44336;">
+                </div>
+
+                <div class="demo-card">
+                    <h4>Search Input (Orange Caret)</h4>
+                    <input type="search" class="demo-input" placeholder="Search..." style="caret-color: #ff9800;">
+                </div>
+
+                <div class="demo-card">
+                    <h4>Number Input (Purple Caret)</h4>
+                    <input type="number" class="demo-input" placeholder="Enter number..." style="caret-color: #9c27b0;">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Contenteditable Elements</h2>
+
+            <h3>Styling Contenteditable Divs</h3>
+            <div class="code-block">
+<span class="selector">div[contenteditable="true"]</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+    <span class="property">border</span>: <span class="value">2px solid #667eea</span>;
+    <span class="property">padding</span>: <span class="value">12px</span>;
+    <span class="property">border-radius</span>: <span class="value">6px</span>;
+}
+
+<span class="selector">div[contenteditable="true"]:focus</span> {
+    <span class="property">outline</span>: <span class="value">none</span>;
+    <span class="property">box-shadow</span>: <span class="value">0 0 0 3px rgba(102, 126, 234, 0.2)</span>;
+}
+            </div>
+
+            <div class="demo-card" style="margin: 20px 0;">
+                <h4>Contenteditable Element with Custom Caret</h4>
+                <div contenteditable="true" style="
+                    caret-color: #667eea;
+                    border: 2px solid #667eea;
+                    padding: 12px;
+                    border-radius: 6px;
+                    min-height: 100px;
+                    background: white;
+                ">Click here to edit text with custom purple cursor...</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Textarea with Custom Caret</h2>
+
+            <div class="code-block">
+<span class="selector">textarea</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+    <span class="property">border</span>: <span class="value">2px solid #667eea</span>;
+    <span class="property">padding</span>: <span class="value">12px</span>;
+    <span class="property">border-radius</span>: <span class="value">6px</span>;
+    <span class="property">font-family</span>: <span class="value">inherit</span>;
+    <span class="property">resize</span>: <span class="value">vertical</span>;
+}
+
+<span class="selector">textarea:focus</span> {
+    <span class="property">outline</span>: <span class="value">none</span>;
+    <span class="property">box-shadow</span>: <span class="value">0 0 0 3px rgba(102, 126, 234, 0.2)</span>;
+}
+            </div>
+
+            <div class="demo-card" style="margin: 20px 0;">
+                <h4>Textarea with Custom Caret</h4>
+                <textarea class="demo-input" style="
+                    caret-color: #667eea;
+                    border: 2px solid #667eea;
+                    min-height: 100px;
+                    resize: vertical;
+                " placeholder="Type your message here..."></textarea>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Advanced Techniques</h2>
+
+            <h3>Dark Mode with Matching Caret</h3>
+            <div class="code-block">
+<span class="comment">/* Dark mode styling */</span>
+<span class="keyword">@media</span> (<span class="property">prefers-color-scheme</span>: <span class="keyword">dark</span>) {
+    <span class="selector">input</span> {
+        <span class="property">background</span>: <span class="value">#2c3e50</span>;
+        <span class="property">color</span>: <span class="value">#ecf0f1</span>;
+        <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+        <span class="property">border</span>: <span class="value">2px solid #667eea</span>;
+    }
+}
+            </div>
+
+            <h3>Accessibility-Focused Caret</h3>
+            <div class="code-block">
+<span class="comment">/* High contrast mode support */</span>
+<span class="keyword">@media</span> (<span class="property">prefers-contrast</span>: <span class="keyword">more</span>) {
+    <span class="selector">input</span> {
+        <span class="property">caret-color</span>: <span class="value">#000000</span>; <span class="comment">/* Maximum contrast */</span>
+        <span class="property">border</span>: <span class="value">3px solid</span>;
+    }
+}
+            </div>
+
+            <h3>Brand-Specific Styling</h3>
+            <div class="code-block">
+<span class="comment">/* Define CSS variables for brand colors */</span>
+<span class="keyword">:root</span> {
+    <span class="property">--primary-color</span>: <span class="value">#667eea</span>;
+    <span class="property">--secondary-color</span>: <span class="value">#764ba2</span>;
+    <span class="property">--success-color</span>: <span class="value">#4caf50</span>;
+    <span class="property">--error-color</span>: <span class="value">#f44336</span>;
+}
+
+<span class="selector">input</span> {
+    <span class="property">caret-color</span>: <span class="keyword">var</span>(<span class="value">--primary-color</span>);
+}
+
+<span class="selector">input.success</span> {
+    <span class="property">caret-color</span>: <span class="keyword">var</span>(<span class="value">--success-color</span>);
+}
+
+<span class="selector">input.error</span> {
+    <span class="property">caret-color</span>: <span class="keyword">var</span>(<span class="value">--error-color</span>);
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Best Practices</h2>
+
+            <div class="do-dont-grid">
+                <div class="do-box">
+                    <h4>✓ DO</h4>
+                    <ul class="feature-list">
+                        <li>Use colors with sufficient contrast against the input background</li>
+                        <li>Match caret color to your brand identity</li>
+                        <li>Provide visual feedback with focus states</li>
+                        <li>Test on different backgrounds and dark modes</li>
+                        <li>Consider form validation states</li>
+                        <li>Keep consistency across similar input types</li>
+                    </ul>
+                </div>
+
+                <div class="dont-box">
+                    <h4>✗ DON'T</h4>
+                    <ul class="feature-list">
+                        <li>Use colors with low contrast (hard to see)</li>
+                        <li>Make caret color too different from visual design</li>
+                        <li>Ignore accessibility requirements</li>
+                        <li>Use non-standard or unclear colors</li>
+                        <li>Set the same caret color as the background</li>
+                        <li>Forget to consider color-blind users</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Accessibility Considerations</h2>
+
+            <div class="accessibility-note">
+                <strong>🎯 Accessibility Impact:</strong>
+                <p>The caret-color property can significantly improve accessibility when used thoughtfully:</p>
+                <ul class="feature-list">
+                    <li>Ensures visible cursor for low vision users</li>
+                    <li>Improves usability with high-contrast colors</li>
+                    <li>Supports color-blind friendly palettes</li>
+                    <li>Works with system preference media queries (prefers-color-scheme, prefers-contrast)</li>
+                    <li>Respects user system settings when set to "auto"</li>
+                </ul>
+            </div>
+
+            <h3>Inclusive Color Combinations</h3>
+            <div class="code-block">
+<span class="comment">/* Accessible color combination */</span>
+<span class="selector">input</span> {
+    <span class="property">background</span>: <span class="value">#ffffff</span>;
+    <span class="property">color</span>: <span class="value">#1a1a1a</span>;
+    <span class="property">caret-color</span>: <span class="value">#0066cc</span>; <span class="comment">/* High contrast */</span>
+}
+
+<span class="comment">/* Dark mode accessible */</span>
+<span class="keyword">@media</span> (<span class="property">prefers-color-scheme</span>: <span class="keyword">dark</span>) {
+    <span class="selector">input</span> {
+        <span class="property">background</span>: <span class="value">#1a1a1a</span>;
+        <span class="property">color</span>: <span class="value">#ffffff</span>;
+        <span class="property">caret-color</span>: <span class="value">#66b3ff</span>; <span class="comment">/* Light blue for dark bg */</span>
+    }
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Real-World Use Cases</h2>
+
+            <div class="use-case">
+                <strong>E-commerce Forms</strong>
+                <p>Use brand color carets to reinforce brand identity throughout the checkout process. Green carets for success states, red for invalid input.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>Code Editors and IDEs</strong>
+                <p>Match caret color to syntax highlighting theme for a cohesive editing experience. Many dev tools use bright colors (lime, cyan, yellow) for visibility.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>Chat Applications</strong>
+                <p>Use accent color carets that match the messaging interface design, providing visual consistency in compose areas.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>Search Interfaces</strong>
+                <p>Implement dynamic caret colors that change based on search context or results, providing subtle visual feedback.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>Accessibility-First Applications</strong>
+                <p>Use high-contrast carets for users with vision impairments, respecting system color preferences.</p>
+            </div>
+
+            <div class="use-case">
+                <strong>Form Validation</strong>
+                <p>Change caret colors based on validation state - green for valid, red for invalid, orange for warning.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Browser Support</h2>
+
+            <div class="browser-support">
+                <div class="browser-item">
+                    <strong>Chrome</strong>
+                    <span class="support-yes">57+</span>
+                </div>
+                <div class="browser-item">
+                    <strong>Firefox</strong>
+                    <span class="support-yes">53+</span>
+                </div>
+                <div class="browser-item">
+                    <strong>Safari</strong>
+                    <span class="support-yes">11.1+</span>
+                </div>
+                <div class="browser-item">
+                    <strong>Edge</strong>
+                    <span class="support-yes">79+</span>
+                </div>
+                <div class="browser-item">
+                    <strong>Opera</strong>
+                    <span class="support-yes">44+</span>
+                </div>
+                <div class="browser-item">
+                    <strong>Internet Explorer</strong>
+                    <span class="support-no">Not supported</span>
+                </div>
+            </div>
+
+            <div class="note-box">
+                <strong>💡 Note:</strong> caret-color has excellent browser support across all modern browsers, with the exception of Internet Explorer. For IE fallback, use the "auto" value which applies browser defaults.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Combining with Other Properties</h2>
+
+            <h3>Complete Input Styling</h3>
+            <div class="code-block">
+<span class="selector">input</span> {
+    <span class="property">padding</span>: <span class="value">12px 15px</span>;
+    <span class="property">border</span>: <span class="value">2px solid #667eea</span>;
+    <span class="property">border-radius</span>: <span class="value">6px</span>;
+    <span class="property">font-size</span>: <span class="value">16px</span>;
+    <span class="property">font-family</span>: <span class="value">inherit</span>;
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+    <span class="property">transition</span>: <span class="value">all 0.3s ease</span>;
+}
+
+<span class="selector">input:focus</span> {
+    <span class="property">outline</span>: <span class="value">none</span>;
+    <span class="property">border-color</span>: <span class="value">#764ba2</span>;
+    <span class="property">caret-color</span>: <span class="value">#764ba2</span>;
+    <span class="property">box-shadow</span>: <span class="value">0 0 0 3px rgba(102, 126, 234, 0.2)</span>;
+}
+
+<span class="selector">input::placeholder</span> {
+    <span class="property">color</span>: <span class="value">rgba(0, 0, 0, 0.4)</span>;
+}
+
+<span class="selector">input::selection</span> {
+    <span class="property">background</span>: <span class="value">rgba(102, 126, 234, 0.2)</span>;
+    <span class="property">color</span>: <span class="value">inherit</span>;
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Common Issues and Solutions</h2>
+
+            <h3>Issue: Caret Not Visible</h3>
+            <div class="code-block">
+<span class="comment">/* Problem: White caret on white background */</span>
+<span class="selector">input</span> {
+    <span class="property">background</span>: <span class="value">#ffffff</span>;
+    <span class="property">caret-color</span>: <span class="value">#ffffff</span>; <span class="comment">/* Can't see it! */</span>
+}
+
+<span class="comment">/* Solution: Use contrasting color */</span>
+<span class="selector">input</span> {
+    <span class="property">background</span>: <span class="value">#ffffff</span>;
+    <span class="property">caret-color</span>: <span class="value">#333333</span>; <span class="comment">/* Much better */</span>
+}
+            </div>
+
+            <h3>Issue: Caret Color Not Applied</h3>
+            <div class="code-block">
+<span class="comment">/* Problem: Using caret-color on non-text elements */</span>
+<span class="selector">div</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>; <span class="comment">/* Won't work! */</span>
+}
+
+<span class="comment">/* Solution: Use on input, textarea, or contenteditable */</span>
+<span class="selector">div[contenteditable="true"]</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>; <span class="comment">/* Works! */</span>
+}
+            </div>
+
+            <h3>Issue: Inherited Caret Color Unwanted</h3>
+            <div class="code-block">
+<span class="comment">/* Problem: All inputs inherit parent caret color */</span>
+<span class="selector">form</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+}
+
+<span class="comment">/* Solution: Override in specific input */</span>
+<span class="selector">input.special</span> {
+    <span class="property">caret-color</span>: <span class="value">#ff6b6b</span>; <span class="comment">/* Different color */</span>
+}
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Property Guide | caret-color Complete Reference</p>
+            <p>Comprehensive guide for styling text cursor colors in web forms and editable content</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Object-Fit - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .card-header h2 {
+            font-size: 1.4em;
+            margin-bottom: 5px;
+        }
+
+        .card-header p {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .demo-area {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px dashed #667eea;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            overflow-x: auto;
+            line-height: 1.4;
+            margin: 15px 0;
+        }
+
+        .control-panel {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+
+        button.small {
+            font-size: 0.8em;
+            padding: 6px 12px;
+        }
+
+        .info-badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .description {
+            font-size: 0.95em;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        /* ========== EXAMPLE 1: contain ========== */
+        .demo-contain {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: white;
+        }
+
+        /* ========== EXAMPLE 2: cover ========== */
+        .demo-cover {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: white;
+        }
+
+        /* ========== EXAMPLE 3: fill ========== */
+        .demo-fill {
+            width: 100%;
+            height: 200px;
+            object-fit: fill;
+            background: white;
+        }
+
+        /* ========== EXAMPLE 4: scale-down ========== */
+        .demo-scale-down {
+            width: 100%;
+            height: 200px;
+            object-fit: scale-down;
+            background: white;
+        }
+
+        /* ========== EXAMPLE 5: none ========== */
+        .demo-none {
+            width: 100%;
+            height: 200px;
+            object-fit: none;
+            background: white;
+        }
+
+        /* ========== EXAMPLE 6: Product Gallery ========== */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .product-item {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        /* ========== EXAMPLE 7: Hero Image ========== */
+        .hero-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 8px;
+        }
+
+        /* ========== EXAMPLE 8: Profile Pictures ========== */
+        .profile-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            border: 3px solid #667eea;
+        }
+
+        /* ========== EXAMPLE 9: Video Thumbnails ========== */
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .video-thumbnail:hover {
+            transform: scale(1.05);
+        }
+
+        /* ========== EXAMPLE 10: Aspect Ratio with object-fit ========== */
+        .aspect-ratio-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .aspect-ratio-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* ========== EXAMPLE 11: Object-Position Top ========== */
+        .position-top {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 4px;
+        }
+
+        /* ========== EXAMPLE 12: Object-Position Bottom ========== */
+        .position-bottom {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            object-position: bottom;
+            border-radius: 4px;
+        }
+
+        .info-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 12px;
+            padding: 12px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .size-info {
+            font-size: 0.85em;
+            color: #999;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-grid, .thumbnail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Object-Fit Property</h1>
+            <p>12 Practical Interactive Examples</p>
+        </header>
+
+        <div class="examples-grid">
+            <!-- ========== EXAMPLE 1: contain ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>1. Object-Fit: Contain</h2>
+                    <p>Fits completely, maintains aspect ratio</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">object-fit: contain</div>
+                    <div class="description">Image scales to fit completely inside container while maintaining aspect ratio. Empty space may appear (letter-boxing).</div>
+                    <div class="demo-area">
+                        <svg class="demo-contain" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="300" height="200" fill="#667eea"/>
+                            <text x="150" y="100" text-anchor="middle" dy="0.3em" fill="white" font-size="16" font-weight="bold">300×200 Image</text>
+                        </svg>
+                    </div>
+                    <div class="code-block">img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}</div>
+                    <div class="info-text">✓ Best for: Products, logos, UI elements</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 2: cover ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>2. Object-Fit: Cover</h2>
+                    <p>Covers container, maintains aspect ratio</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">object-fit: cover</div>
+                    <div class="description">Image scales to cover entire container while maintaining aspect ratio. Parts may be cropped (no empty space).</div>
+                    <div class="demo-area">
+                        <svg class="demo-cover" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="300" height="200" fill="#667eea"/>
+                            <text x="150" y="100" text-anchor="middle" dy="0.3em" fill="white" font-size="16" font-weight="bold">300×200 Image</text>
+                        </svg>
+                    </div>
+                    <div class="code-block">img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}</div>
+                    <div class="info-text">✓ Best for: Hero images, thumbnails, galleries</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 3: fill ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>3. Object-Fit: Fill</h2>
+                    <p>Stretches to fill container</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">object-fit: fill</div>
+                    <div class="description">Image stretches to completely fill container. Aspect ratio is ignored, which may cause distortion. Rarely recommended.</div>
+                    <div class="demo-area">
+                        <svg class="demo-fill" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="300" height="200" fill="#667eea"/>
+                            <text x="150" y="100" text-anchor="middle" dy="0.3em" fill="white" font-size="16" font-weight="bold">300×200 Image</text>
+                        </svg>
+                    </div>
+                    <div class="code-block">img {
+  width: 100%;
+  height: 200px;
+  object-fit: fill;
+}</div>
+                    <div class="info-text">⚠️ Use with caution: May distort images</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 4: scale-down ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>4. Object-Fit: Scale-Down</h2>
+                    <p>Smaller of contain or original size</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">object-fit: scale-down</div>
+                    <div class="description">Uses the smaller of contain or original size. Small images won't be enlarged; large images scale down. Never distorts.</div>
+                    <div class="demo-area">
+                        <svg class="demo-scale-down" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="300" height="200" fill="#667eea"/>
+                            <text x="150" y="100" text-anchor="middle" dy="0.3em" fill="white" font-size="16" font-weight="bold">300×200 Image</text>
+                        </svg>
+                    </div>
+                    <div class="code-block">img {
+  width: 100%;
+  height: 200px;
+  object-fit: scale-down;
+}</div>
+                    <div class="info-text">✓ Best for: Responsive images of varying sizes</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 5: none ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>5. Object-Fit: None</h2>
+                    <p>No scaling, original size maintained</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">object-fit: none</div>
+                    <div class="description">Image keeps original size, not scaled. May overflow container. Used with object-position for precise cropping.</div>
+                    <div class="demo-area">
+                        <svg class="demo-none" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="300" height="200" fill="#667eea"/>
+                            <text x="150" y="100" text-anchor="middle" dy="0.3em" fill="white" font-size="16" font-weight="bold">300×200 Image</text>
+                        </svg>
+                    </div>
+                    <div class="code-block">img {
+  width: 100%;
+  height: 200px;
+  object-fit: none;
+  object-position: 50% 50%;
+}</div>
+                    <div class="info-text">✓ Best for: Precise image positioning</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 6: Product Gallery ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>6. Product Gallery</h2>
+                    <p>E-commerce grid layout</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">object-fit: contain in grid</div>
+                    <div class="description">Products displayed in grid with consistent sizing. Object-fit: contain shows full product with white space.</div>
+                    <div class="demo-area">
+                        <div class="product-grid">
+                            <svg class="product-item" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#43e97b"/>
+                                <text x="100" y="100" text-anchor="middle" dy="0.3em" fill="white" font-size="12">Product 1</text>
+                            </svg>
+                            <svg class="product-item" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#38f9d7"/>
+                                <text x="100" y="100" text-anchor="middle" dy="0.3em" fill="white" font-size="12">Product 2</text>
+                            </svg>
+                            <svg class="product-item" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#667eea"/>
+                                <text x="100" y="100" text-anchor="middle" dy="0.3em" fill="white" font-size="12">Product 3</text>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="code-block">.product-item {
+  object-fit: contain;
+  padding: 10px;
+}</div>
+                    <div class="info-text">✓ Consistent product display with padding</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 7: Hero Image ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>7. Hero Banner Image</h2>
+                    <p>Full-width hero section</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">object-fit: cover + object-position</div>
+                    <div class="description">Hero image covers full width and height. Uses object-position: center to focus on middle of image.</div>
+                    <div class="demo-area">
+                        <svg class="hero-image" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="1200" height="400" fill="#667eea"/>
+                            <text x="600" y="200" text-anchor="middle" dy="0.3em" fill="white" font-size="24" font-weight="bold">Hero Banner 1200×400</text>
+                        </svg>
+                    </div>
+                    <div class="code-block">.hero-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  object-position: center;
+}</div>
+                    <div class="info-text">✓ Professional hero sections</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 8: Profile Pictures ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>8. Circular Profile Pictures</h2>
+                    <p>Avatar images</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">object-fit: cover + border-radius</div>
+                    <div class="description">Circular profile pictures with object-fit: cover to automatically crop to best fit within circle.</div>
+                    <div class="demo-area">
+                        <div class="profile-container">
+                            <svg class="profile-pic" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="300" fill="#f093fb"/>
+                            </svg>
+                            <svg class="profile-pic" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="300" fill="#f5576c"/>
+                            </svg>
+                            <svg class="profile-pic" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="300" fill="#764ba2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="code-block">.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}</div>
+                    <div class="info-text">✓ Always perfectly cropped avatars</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 9: Video Thumbnails ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>9. Video Thumbnails Grid</h2>
+                    <p>YouTube-style thumbnail layout</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">object-fit: cover in grid</div>
+                    <div class="description">Uniform thumbnail display with object-fit: cover. All thumbnails fill their space without distortion.</div>
+                    <div class="demo-area">
+                        <div class="thumbnail-grid">
+                            <svg class="video-thumbnail" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="300" height="400" fill="#667eea"/>
+                                <text x="150" y="200" text-anchor="middle" dy="0.3em" fill="white" font-size="12">Video 1</text>
+                            </svg>
+                            <svg class="video-thumbnail" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="300" height="400" fill="#764ba2"/>
+                                <text x="150" y="200" text-anchor="middle" dy="0.3em" fill="white" font-size="12">Video 2</text>
+                            </svg>
+                            <svg class="video-thumbnail" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="300" height="400" fill="#f093fb"/>
+                                <text x="150" y="200" text-anchor="middle" dy="0.3em" fill="white" font-size="12">Video 3</text>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="code-block">.video-thumbnail {
+  object-fit: cover;
+  border-radius: 4px;
+}</div>
+                    <div class="info-text">✓ Consistent video grid layouts</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 10: Aspect Ratio Box ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>10. Aspect Ratio Container</h2>
+                    <p>16:9 responsive box</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">aspect-ratio + object-fit</div>
+                    <div class="description">Responsive container with fixed aspect ratio (16:9). Object-fit: cover ensures image fills without distortion.</div>
+                    <div class="demo-area">
+                        <div class="aspect-ratio-container">
+                            <svg class="aspect-ratio-image" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="800" height="600" fill="#43e97b"/>
+                                <text x="400" y="300" text-anchor="middle" dy="0.3em" fill="white" font-size="20" font-weight="bold">16:9 Aspect Ratio</text>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="code-block">.container {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}</div>
+                    <div class="info-text">✓ Responsive video embeds & iframes</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 11: Object-Position Top ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>11. Crop Focus: Top</h2>
+                    <p>object-position: top</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">object-fit: cover + top position</div>
+                    <div class="description">Focus crop at top of image. Perfect for photos with faces or important content at the top.</div>
+                    <div class="demo-area">
+                        <svg class="position-top" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="400" height="600" fill="#f093fb"/>
+                            <text x="200" y="100" text-anchor="middle" dy="0.3em" fill="white" font-size="14" font-weight="bold">Top Focused</text>
+                            <text x="200" y="300" text-anchor="middle" dy="0.3em" fill="white" font-size="14">Middle</text>
+                            <text x="200" y="500" text-anchor="middle" dy="0.3em" fill="white" font-size="14">Bottom (cropped)</text>
+                        </svg>
+                    </div>
+                    <div class="code-block">img {
+  object-fit: cover;
+  object-position: top;
+}</div>
+                    <div class="info-text">✓ Face-focused image cropping</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 12: Object-Position Bottom ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>12. Crop Focus: Bottom</h2>
+                    <p>object-position: bottom</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">object-fit: cover + bottom position</div>
+                    <div class="description">Focus crop at bottom of image. Useful for product photos or landscape with horizon at bottom.</div>
+                    <div class="demo-area">
+                        <svg class="position-bottom" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="400" height="600" fill="#38f9d7"/>
+                            <text x="200" y="100" text-anchor="middle" dy="0.3em" fill="white" font-size="14">Top (cropped)</text>
+                            <text x="200" y="300" text-anchor="middle" dy="0.3em" fill="white" font-size="14">Middle</text>
+                            <text x="200" y="500" text-anchor="middle" dy="0.3em" fill="white" font-size="14" font-weight="bold">Bottom Focused</text>
+                        </svg>
+                    </div>
+                    <div class="code-block">img {
+  object-fit: cover;
+  object-position: bottom;
+}</div>
+                    <div class="info-text">✓ Landscape & horizon focus</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <h2>Quick Reference Guide</h2>
+            <p style="margin: 15px 0;">
+                <strong>object-fit: contain</strong> → Show entire image (letter-boxing OK)<br>
+                <strong>object-fit: cover</strong> → Fill container (cropping OK)<br>
+                <strong>object-fit: scale-down</strong> → Never enlarge small images<br>
+                <strong>object-fit: fill</strong> → Stretch to fit (⚠️ may distort)<br>
+                <strong>object-fit: none</strong> → Original size (may overflow)
+            </p>
+            <p style="margin: 15px 0; font-size: 0.95em;">
+                <strong>object-position:</strong> center | top | bottom | left | right | custom %<br>
+                ✓ Always set explicit width/height on images<br>
+                ✓ Combine with overflow: hidden to prevent overflow<br>
+                ✓ Use aspect-ratio CSS for responsive boxes
+            </p>
+            <p>&copy; 2024 CSS Object-Fit Practical Examples | 12 Ready-to-Use Patterns</p>
+        </footer>
+    </div>
+</body>
+</html>

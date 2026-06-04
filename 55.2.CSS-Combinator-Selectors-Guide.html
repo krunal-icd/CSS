@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Combinator Selectors - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h3 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .demo-area {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 120px;
+        }
+
+        .code-snippet {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+        }
+
+        .code-snippet .tag { color: #569cd6; }
+        .code-snippet .attr { color: #9cdcfe; }
+        .code-snippet .value { color: #ce9178; }
+        .code-snippet .text { color: #d4d4d4; }
+        .code-snippet .comment { color: #6a9955; }
+
+        .use-case {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        /* Example-specific styles */
+
+        /* Example 1: Child Combinator - Menu */
+        .example-1 .demo-area nav {
+            background: #333;
+            padding: 0;
+        }
+
+        .example-1 .demo-area nav > ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .example-1 .demo-area nav > ul > li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .example-1 .demo-area nav > ul > li > a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 0;
+        }
+
+        .example-1 .demo-area nav > ul > li > a:hover {
+            background: #667eea;
+        }
+
+        .example-1 .demo-area nav > ul > li ul {
+            list-style: none;
+            padding: 0;
+            display: none;
+            margin: 0;
+        }
+
+        .example-1 .demo-area nav > ul > li:hover > ul {
+            display: block;
+            position: absolute;
+            background: #444;
+            flex-direction: column;
+        }
+
+        .example-1 .demo-area nav > ul > li ul li a {
+            display: block;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .example-1 .demo-area nav > ul > li ul li a:hover {
+            background: #667eea;
+        }
+
+        /* Example 2: Adjacent Sibling - First Paragraph */
+        .example-2 .demo-area h2 {
+            color: #667eea;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .example-2 .demo-area h2 + p {
+            font-size: 1.05em;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .example-2 .demo-area p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        /* Example 3: General Sibling - Toggle */
+        .example-3 .demo-area input {
+            display: none;
+        }
+
+        .example-3 .demo-area label {
+            display: block;
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .example-3 .demo-area label:hover {
+            background: #764ba2;
+        }
+
+        .example-3 .demo-area input ~ .hidden {
+            display: none;
+        }
+
+        .example-3 .demo-area input:checked ~ .hidden {
+            display: block;
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 15px;
+            border-radius: 4px;
+            color: #2e7d32;
+        }
+
+        /* Example 4: Descendant - Container Styling */
+        .example-4 .demo-area .article {
+            padding: 0;
+        }
+
+        .example-4 .demo-area .article h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .example-4 .demo-area .article p {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .example-4 .demo-area .article em {
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        .example-4 .demo-area .inner-div {
+            margin-left: 20px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        /* Example 5: Child Combinator - List Items */
+        .example-5 .demo-area .list > ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .example-5 .demo-area .list > ul > li {
+            padding: 10px;
+            background: #f0f4ff;
+            border: 1px solid #667eea;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .example-5 .demo-area .list > ul > li ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-top: 8px;
+            padding-left: 20px;
+        }
+
+        .example-5 .demo-area .list > ul > li ul li {
+            background: transparent;
+            border: none;
+            padding: 3px;
+            margin: 3px 0;
+            padding-left: 0;
+        }
+
+        /* Example 6: Adjacent Sibling - Form Input */
+        .example-6 .demo-area form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .example-6 .demo-area label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .example-6 .demo-area input[type="text"],
+        .example-6 .demo-area input[type="email"] {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .example-6 .demo-area label + input {
+            border: 2px solid #667eea;
+            background: #f0f4ff;
+        }
+
+        .example-6 .demo-area label + input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 5px rgba(118, 75, 162, 0.3);
+        }
+
+        /* Example 7: General Sibling - Siblings After */
+        .example-7 .demo-area .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .example-7 .demo-area .highlight ~ p {
+            color: #764ba2;
+            font-weight: 500;
+        }
+
+        .example-7 .demo-area p {
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        /* Example 8: Child Combinator - Grid Layout */
+        .example-8 .demo-area .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .example-8 .demo-area .grid > div {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .example-8 .demo-area .grid > div:hover {
+            background: #764ba2;
+        }
+
+        .example-8 .demo-area .grid > div span {
+            color: #fff;
+        }
+
+        /* Example 9: Adjacent Sibling - Error Messages */
+        .example-9 .demo-area .input-group {
+            margin-bottom: 15px;
+        }
+
+        .example-9 .demo-area input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .example-9 .demo-area input.error + .error-msg {
+            color: #d32f2f;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .example-9 .demo-area input:not(.error) + .error-msg {
+            display: none;
+        }
+
+        .example-9 .demo-area .error-msg {
+            color: #666;
+        }
+
+        /* Example 10: Descendant - Link Styling */
+        .example-10 .demo-area .content {
+            padding: 15px;
+        }
+
+        .example-10 .demo-area .content a {
+            color: #667eea;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .example-10 .demo-area .content a:hover {
+            border-bottom-color: #667eea;
+        }
+
+        .example-10 .demo-area .content p {
+            margin-bottom: 10px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Example 11: General Sibling - Accordion */
+        .example-11 .demo-area input[type="radio"] {
+            display: none;
+        }
+
+        .example-11 .demo-area .accordion-label {
+            display: block;
+            background: #667eea;
+            color: white;
+            padding: 12px 15px;
+            margin: 5px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        .example-11 .demo-area .accordion-label:hover {
+            background: #764ba2;
+        }
+
+        .example-11 .demo-area input:checked ~ .accordion-content {
+            display: block;
+            background: #e8f5e9;
+            padding: 12px 15px;
+            border-radius: 4px;
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .example-11 .demo-area .accordion-content {
+            display: none;
+        }
+
+        /* Example 12: Child Combinator - Button Row */
+        .example-12 .demo-area .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .example-12 .demo-area .button-group > button {
+            flex: 1;
+            padding: 10px 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .example-12 .demo-area .button-group > button:hover {
+            background: #764ba2;
+        }
+
+        .example-12 .demo-area .button-group > button:first-child {
+            background: #4caf50;
+        }
+
+        .example-12 .demo-area .button-group > button:first-child:hover {
+            background: #45a049;
+        }
+
+        .example-12 .demo-area .button-group > button:last-child {
+            background: #f44336;
+        }
+
+        .example-12 .demo-area .button-group > button:last-child:hover {
+            background: #da190b;
+        }
+
+        .footer {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .footer h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .quick-ref {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            text-align: left;
+        }
+
+        .ref-item {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .ref-item code {
+            background: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .example-8 .demo-area .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .example-12 .demo-area .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Combinator Selectors</h1>
+            <p>Practical Examples & Real-World Use Cases</p>
+        </header>
+
+        <div class="examples-grid">
+
+            <!-- Example 1: Child Combinator - Navigation Menu -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Navigation Menu</h3>
+                    <span class="badge">Child ></span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Use child combinator to style only direct menu items, not nested submenus.</p>
+                    <div class="demo-area">
+                        <nav>
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Products</a></li>
+                                <li>
+                                    <a href="#">Services</a>
+                                    <ul>
+                                        <li><a href="#">Consulting</a></li>
+                                        <li><a href="#">Development</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* Only direct nav items */</span><br>
+<span class="text">nav > ul > li > a {</span><br>
+&nbsp;&nbsp;<span class="text">display: block;</span><br>
+&nbsp;&nbsp;<span class="text">color: white;</span><br>
+&nbsp;&nbsp;<span class="text">padding: 12px 18px;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="comment">/* Submenu only shows on hover */</span><br>
+<span class="text">nav > ul > li:hover > ul {</span><br>
+&nbsp;&nbsp;<span class="text">display: block;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Prevents submenu styling from affecting main menu items.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 2: Adjacent Sibling - First Paragraph After Heading -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>First Paragraph After Heading</h3>
+                    <span class="badge">Adjacent +</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style the first paragraph following a heading with special formatting.</p>
+                    <div class="demo-area">
+                        <h2>Section Title</h2>
+                        <p>This is the first paragraph after the heading - it gets special styling!</p>
+                        <p>This is a regular paragraph that follows.</p>
+                        <p>Another regular paragraph.</p>
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* Only first paragraph after h2 */</span><br>
+<span class="text">h2 + p {</span><br>
+&nbsp;&nbsp;<span class="text">font-size: 1.05em;</span><br>
+&nbsp;&nbsp;<span class="text">font-weight: 600;</span><br>
+&nbsp;&nbsp;<span class="text">color: #333;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Intro paragraphs that need special emphasis after section headers.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3: General Sibling - Show/Hide Toggle -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>CSS-Only Toggle</h3>
+                    <span class="badge">General ~</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Create an interactive toggle without JavaScript using the checkbox hack.</p>
+                    <div class="demo-area">
+                        <input type="checkbox" id="toggle1">
+                        <label for="toggle1">Click to reveal hidden content</label>
+                        <div class="hidden">
+                            ✓ Content is now visible! This is done with CSS using input:checked ~ selector.
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* Hide by default */</span><br>
+<span class="text">input ~ .hidden {</span><br>
+&nbsp;&nbsp;<span class="text">display: none;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="comment">/* Show when checked */</span><br>
+<span class="text">input:checked ~ .hidden {</span><br>
+&nbsp;&nbsp;<span class="text">display: block;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> CSS-only dropdowns, accordions, and toggles without JavaScript.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4: Descendant - Container Styling -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Container Text Styling</h3>
+                    <span class="badge">Descendant (space)</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Apply styles to all text elements nested within a container.</p>
+                    <div class="demo-area">
+                        <div class="article">
+                            <h3>Article Title</h3>
+                            <p>All <em>paragraphs and emphasized text</em> inside this article get styled consistently.</p>
+                            <div class="inner-div">
+                                <p>Even deeply nested paragraphs are affected by descendant selectors.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* Styles all p elements in article */</span><br>
+<span class="text">.article p {</span><br>
+&nbsp;&nbsp;<span class="text">color: #333;</span><br>
+&nbsp;&nbsp;<span class="text">line-height: 1.6;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="comment">/* Styles all em in article */</span><br>
+<span class="text">.article em {</span><br>
+&nbsp;&nbsp;<span class="text">color: #764ba2;</span><br>
+&nbsp;&nbsp;<span class="text">font-weight: 600;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Typography and text styling within article or content sections.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 5: Child Combinator - Nested Lists -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Nested List Items</h3>
+                    <span class="badge">Child ></span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Differentiate direct list items from nested ones using child combinator.</p>
+                    <div class="demo-area">
+                        <div class="list">
+                            <ul>
+                                <li>Main item 1
+                                    <ul>
+                                        <li>Sub-item 1a</li>
+                                        <li>Sub-item 1b</li>
+                                    </ul>
+                                </li>
+                                <li>Main item 2</li>
+                                <li>Main item 3
+                                    <ul>
+                                        <li>Sub-item 3a</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* Only direct list items */</span><br>
+<span class="text">.list > ul > li {</span><br>
+&nbsp;&nbsp;<span class="text">padding: 10px;</span><br>
+&nbsp;&nbsp;<span class="text">background: #f0f4ff;</span><br>
+&nbsp;&nbsp;<span class="text">border: 1px solid #667eea;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="comment">/* Nested items use default styling */</span><br>
+<span class="text">.list > ul > li ul li {</span><br>
+&nbsp;&nbsp;<span class="text">background: transparent;</span><br>
+&nbsp;&nbsp;<span class="text">border: none;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Multi-level navigation and hierarchical lists.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 6: Adjacent Sibling - Form Labels and Inputs -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Form Label & Input</h3>
+                    <span class="badge">Adjacent +</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style form inputs that immediately follow labels.</p>
+                    <div class="demo-area">
+                        <form>
+                            <label>Full Name</label>
+                            <input type="text" placeholder="John Doe">
+                            
+                            <label>Email Address</label>
+                            <input type="email" placeholder="john@example.com">
+                        </form>
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* Input immediately following label */</span><br>
+<span class="text">label + input {</span><br>
+&nbsp;&nbsp;<span class="text">border: 2px solid #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">background: #f0f4ff;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">label + input:focus {</span><br>
+&nbsp;&nbsp;<span class="text">border-color: #764ba2;</span><br>
+&nbsp;&nbsp;<span class="text">outline: none;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Styling form inputs based on their associated labels.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 7: General Sibling - Highlight Effect -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Paragraphs After Highlight</h3>
+                    <span class="badge">General ~</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style all paragraphs that follow a highlighted element.</p>
+                    <div class="demo-area">
+                        <p>This is a regular paragraph.</p>
+                        <div class="highlight">⚠️ Important Notice</div>
+                        <p>This paragraph follows the highlight - styled differently!</p>
+                        <p>So does this one.</p>
+                        <p>And this one too.</p>
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* All paragraphs after highlight */</span><br>
+<span class="text">.highlight ~ p {</span><br>
+&nbsp;&nbsp;<span class="text">color: #764ba2;</span><br>
+&nbsp;&nbsp;<span class="text">font-weight: 500;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Styling content after alerts, notices, or important sections.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 8: Child Combinator - Grid Layout -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Direct Child Grid Items</h3>
+                    <span class="badge">Child ></span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Apply grid styling only to direct children.</p>
+                    <div class="demo-area">
+                        <div class="grid">
+                            <div>Item 1</div>
+                            <div>Item 2</div>
+                            <div>Item 3</div>
+                            <div>Item 4</div>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* Only direct children of grid */</span><br>
+<span class="text">.grid > div {</span><br>
+&nbsp;&nbsp;<span class="text">background: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">color: white;</span><br>
+&nbsp;&nbsp;<span class="text">padding: 20px;</span><br>
+&nbsp;&nbsp;<span class="text">border-radius: 6px;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Grid or flexbox layouts where only immediate children should be styled.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 9: Adjacent Sibling - Error Messages -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Input Error Messages</h3>
+                    <span class="badge">Adjacent +</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Show error message immediately after invalid input.</p>
+                    <div class="demo-area">
+                        <div class="input-group">
+                            <input type="text" class="error" placeholder="Invalid input">
+                            <div class="error-msg">This field is required</div>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" placeholder="Valid input">
+                            <div class="error-msg">Error message</div>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* Show error for invalid inputs */</span><br>
+<span class="text">input.error + .error-msg {</span><br>
+&nbsp;&nbsp;<span class="text">color: #d32f2f;</span><br>
+&nbsp;&nbsp;<span class="text">display: block;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="comment">/* Hide for valid inputs */</span><br>
+<span class="text">input:not(.error) + .error-msg {</span><br>
+&nbsp;&nbsp;<span class="text">display: none;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Form validation and error message display.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 10: Descendant - Link Styling in Content -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Content Links</h3>
+                    <span class="badge">Descendant (space)</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style all links within a content container differently.</p>
+                    <div class="demo-area">
+                        <div class="content">
+                            <p>This is <a href="#">a link</a> in the content area.</p>
+                            <p>Another <a href="#">link example</a> to demonstrate descendant styling.</p>
+                            <p>Links get special styling within this container.</p>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* All links in content */</span><br>
+<span class="text">.content a {</span><br>
+&nbsp;&nbsp;<span class="text">color: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">text-decoration: none;</span><br>
+&nbsp;&nbsp;<span class="text">border-bottom: 1px solid transparent;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">.content a:hover {</span><br>
+&nbsp;&nbsp;<span class="text">border-bottom-color: #667eea;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Scoped link styling without affecting navigation or other areas.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 11: General Sibling - Accordion -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>CSS Accordion</h3>
+                    <span class="badge">General ~</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Build a CSS-only accordion using radio buttons and general sibling combinator.</p>
+                    <div class="demo-area">
+                        <div>
+                            <input type="radio" name="accordion" id="acc1" checked>
+                            <label class="accordion-label" for="acc1">Section 1</label>
+                            <div class="accordion-content">Content for section 1 appears here</div>
+                        </div>
+                        <div>
+                            <input type="radio" name="accordion" id="acc2">
+                            <label class="accordion-label" for="acc2">Section 2</label>
+                            <div class="accordion-content">Content for section 2 appears here</div>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* Content hidden by default */</span><br>
+<span class="text">input ~ .accordion-content {</span><br>
+&nbsp;&nbsp;<span class="text">display: none;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="comment">/* Show when checked */</span><br>
+<span class="text">input:checked ~ .accordion-content {</span><br>
+&nbsp;&nbsp;<span class="text">display: block;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Interactive accordions and expandable sections without JavaScript.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 12: Child Combinator - Button Groups -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Button Group</h3>
+                    <span class="badge">Child ></span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Style direct buttons in a button group container.</p>
+                    <div class="demo-area">
+                        <div class="button-group">
+                            <button>Save</button>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="comment">/* Only direct buttons */</span><br>
+<span class="text">.button-group > button {</span><br>
+&nbsp;&nbsp;<span class="text">flex: 1;</span><br>
+&nbsp;&nbsp;<span class="text">padding: 10px 15px;</span><br>
+&nbsp;&nbsp;<span class="text">background: #667eea;</span><br>
+&nbsp;&nbsp;<span class="text">color: white;</span><br>
+&nbsp;&nbsp;<span class="text">border: none;</span><br>
+&nbsp;&nbsp;<span class="text">border-radius: 4px;</span><br>
+&nbsp;&nbsp;<span class="text">cursor: pointer;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">.button-group > button:hover {</span><br>
+&nbsp;&nbsp;<span class="text">background: #764ba2;</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Styling action button rows without affecting nested components.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);">
+            <h2 style="color: #667eea; margin-bottom: 20px;">Combinator Reference Chart</h2>
+            
+            <table style="width: 100%; border-collapse: collapse; background: white; margin: 20px 0;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">Combinator</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">Example</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">What It Selects</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>Child (>)</strong></td>
+                        <td style="padding: 15px;"><code>div > p</code></td>
+                        <td style="padding: 15px;">Direct &lt;p&gt; children of &lt;div&gt;</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>Adjacent Sibling (+)</strong></td>
+                        <td style="padding: 15px;"><code>h2 + p</code></td>
+                        <td style="padding: 15px;">First &lt;p&gt; immediately after &lt;h2&gt;</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>General Sibling (~)</strong></td>
+                        <td style="padding: 15px;"><code>h2 ~ p</code></td>
+                        <td style="padding: 15px;">All &lt;p&gt; siblings following &lt;h2&gt;</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 15px;"><strong>Descendant (space)</strong></td>
+                        <td style="padding: 15px;"><code>div p</code></td>
+                        <td style="padding: 15px;">All &lt;p&gt; elements nested in &lt;div&gt;</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">Key Takeaways</h3>
+            <ul style="line-height: 1.8; color: #555;">
+                <li><strong>Child (>):</strong> Best for preventing styles from cascading deeper than intended. More performant than descendant selectors.</li>
+                <li><strong>Adjacent Sibling (+):</strong> Perfect for styling elements that immediately follow specific elements (e.g., first paragraph after heading).</li>
+                <li><strong>General Sibling (~):</strong> Enables CSS-only interactive patterns like toggles and accordions using the checkbox hack.</li>
+                <li><strong>Descendant (space):</strong> The most common combinator. Applies styles to all nested elements, useful for scoped typography.</li>
+                <li><strong>Combination:</strong> Chain combinators for powerful, precise selection without adding extra classes.</li>
+                <li><strong>Performance:</strong> Child combinators are faster than descendant selectors on large DOMs.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <h3>Browser Compatibility</h3>
+            <div class="quick-ref">
+                <div class="ref-item">
+                    <strong>Child (&gt;)</strong><br>
+                    IE 7+, All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>Adjacent (+)</strong><br>
+                    IE 7+, All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>General Sibling (~)</strong><br>
+                    IE 8+, All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>Descendant (space)</strong><br>
+                    IE 6+, All Browsers
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

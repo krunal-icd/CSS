@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Caret-Color Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            border-left: 4px solid #764ba2;
+            padding-left: 15px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .example-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border: 2px solid #667eea;
+            padding: 25px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .example-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .example-label {
+            color: #764ba2;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, textarea, div[contenteditable] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            margin: 10px 0;
+        }
+
+        input:focus, textarea:focus, div[contenteditable]:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+            border-color: #764ba2;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        div[contenteditable] {
+            min-height: 80px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+            border: 1px solid #333;
+        }
+
+        .syntax { color: #569cd6; font-weight: bold; }
+        .selector { color: #9cdcfe; }
+        .property { color: #9cdcfe; }
+        .value { color: #ce9178; }
+        .keyword { color: #569cd6; }
+        .comment { color: #6a9955; }
+
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .full-width-example {
+            margin: 30px 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .validation-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .validation-input:valid {
+            border-color: #4caf50;
+            caret-color: #4caf50;
+        }
+
+        .validation-input:invalid {
+            border-color: #f44336;
+            caret-color: #f44336;
+        }
+
+        .validation-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .dark-mode-demo {
+            background: #2c3e50;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .dark-mode-demo input {
+            background: #34495e;
+            color: #ecf0f1;
+            border-color: #667eea;
+            caret-color: #667eea;
+        }
+
+        .dark-mode-demo input::placeholder {
+            color: rgba(236, 240, 241, 0.5);
+        }
+
+        .icon-input-wrapper {
+            position: relative;
+            margin: 10px 0;
+        }
+
+        .icon-input-wrapper input {
+            padding-left: 40px;
+            width: 100%;
+        }
+
+        .icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .state-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .state-valid {
+            background: #4caf50;
+        }
+
+        .state-invalid {
+            background: #f44336;
+        }
+
+        .state-warning {
+            background: #ff9800;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-box {
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .comparison-box h5 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .toggle-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .note-box {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS caret-color Practical Examples</h1>
+            <p>Real-World Applications and Interactive Demonstrations</p>
+        </header>
+
+        <div class="section">
+            <h2>1. Brand Identity Form Inputs</h2>
+            <p>Match input cursor colors to your brand palette for visual consistency:</p>
+            <div class="example-grid">
+                <div class="example-card">
+                    <div class="example-label">Primary Brand Color</div>
+                    <input type="text" placeholder="Purple brand cursor..." style="caret-color: #667eea;">
+                    <div class="code-block">
+<span class="selector">input</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+}
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Secondary Brand Color</div>
+                    <input type="text" placeholder="Magenta brand cursor..." style="caret-color: #764ba2;">
+                    <div class="code-block">
+<span class="selector">input</span> {
+    <span class="property">caret-color</span>: <span class="value">#764ba2</span>;
+}
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Tertiary Brand Color</div>
+                    <input type="text" placeholder="Teal brand cursor..." style="caret-color: #20c997;">
+                    <div class="code-block">
+<span class="selector">input</span> {
+    <span class="property">caret-color</span>: <span class="value">#20c997</span>;
+}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Form Validation States</h2>
+            <p>Provide visual feedback through caret color changes based on validation state:</p>
+            <div class="example-grid">
+                <div class="example-card">
+                    <div class="example-label">Valid Email (Green Caret)</div>
+                    <input type="email" placeholder="valid@example.com" value="user@example.com" style="border-color: #4caf50; caret-color: #4caf50;">
+                    <div class="code-block">
+<span class="selector">input:valid</span> {
+    <span class="property">caret-color</span>: <span class="value">#4caf50</span>;
+    <span class="property">border-color</span>: <span class="value">#4caf50</span>;
+}
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Invalid Email (Red Caret)</div>
+                    <input type="email" placeholder="invalid" value="notanemail" style="border-color: #f44336; caret-color: #f44336;">
+                    <div class="code-block">
+<span class="selector">input:invalid</span> {
+    <span class="property">caret-color</span>: <span class="value">#f44336</span>;
+    <span class="property">border-color</span>: <span class="value">#f44336</span>;
+}
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Warning State (Orange Caret)</div>
+                    <input type="text" placeholder="Common password detected..." style="border-color: #ff9800; caret-color: #ff9800;">
+                    <div class="code-block">
+<span class="selector">input.warning</span> {
+    <span class="property">caret-color</span>: <span class="value">#ff9800</span>;
+    <span class="property">border-color</span>: <span class="value">#ff9800</span>;
+}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Input Type Specific Styling</h2>
+            <p>Different caret colors for different input types:</p>
+            <div class="example-grid">
+                <div class="example-card">
+                    <div class="example-label">Text Input (Blue)</div>
+                    <input type="text" placeholder="Type text..." style="caret-color: #2196f3;">
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Email Input (Cyan)</div>
+                    <input type="email" placeholder="Enter email..." style="caret-color: #00bcd4;">
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Password Input (Red)</div>
+                    <input type="password" placeholder="Enter password..." style="caret-color: #f44336;">
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Search Input (Orange)</div>
+                    <input type="search" placeholder="Search..." style="caret-color: #ff9800;">
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Number Input (Purple)</div>
+                    <input type="number" placeholder="Enter number..." style="caret-color: #9c27b0;">
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">URL Input (Teal)</div>
+                    <input type="url" placeholder="Enter URL..." style="caret-color: #009688;">
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="selector">input[type="text"]</span> { <span class="property">caret-color</span>: <span class="value">#2196f3</span>; }
+<span class="selector">input[type="email"]</span> { <span class="property">caret-color</span>: <span class="value">#00bcd4</span>; }
+<span class="selector">input[type="password"]</span> { <span class="property">caret-color</span>: <span class="value">#f44336</span>; }
+<span class="selector">input[type="search"]</span> { <span class="property">caret-color</span>: <span class="value">#ff9800</span>; }
+<span class="selector">input[type="number"]</span> { <span class="property">caret-color</span>: <span class="value">#9c27b0</span>; }
+<span class="selector">input[type="url"]</span> { <span class="property">caret-color</span>: <span class="value">#009688</span>; }
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Textarea with Custom Caret</h2>
+            <p>Apply custom caret colors to textarea elements for messages and long-form content:</p>
+            <div class="example-card full-width-example">
+                <div class="example-label">Comment Section</div>
+                <textarea placeholder="Share your thoughts here..." style="caret-color: #667eea;"></textarea>
+                <div class="code-block">
+<span class="selector">textarea</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+    <span class="property">border</span>: <span class="value">2px solid #667eea</span>;
+    <span class="property">padding</span>: <span class="value">12px</span>;
+    <span class="property">border-radius</span>: <span class="value">6px</span>;
+}
+
+<span class="selector">textarea:focus</span> {
+    <span class="property">caret-color</span>: <span class="value">#764ba2</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Contenteditable Elements</h2>
+            <p>Styled caret colors for contenteditable divs and rich text areas:</p>
+            <div class="example-grid">
+                <div class="example-card">
+                    <div class="example-label">Editable Note</div>
+                    <div contenteditable="true" style="
+                        caret-color: #667eea;
+                        border: 2px solid #667eea;
+                        padding: 12px;
+                        border-radius: 6px;
+                        min-height: 80px;
+                    ">Click here to edit this note with a custom purple cursor...</div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Rich Text Editor</div>
+                    <div contenteditable="true" style="
+                        caret-color: #764ba2;
+                        border: 2px dashed #764ba2;
+                        padding: 12px;
+                        border-radius: 6px;
+                        min-height: 80px;
+                    ">Start typing in this editable area to see the custom cursor...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. Focus State Transitions</h2>
+            <p>Change caret color on focus for enhanced visual feedback:</p>
+            <div class="example-card full-width-example">
+                <div class="example-label">Input That Changes Caret on Focus</div>
+                <input type="text" id="focusInput" placeholder="Focus this input to change caret color..." style="caret-color: #667eea;">
+                <div class="code-block">
+<span class="selector">input</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>; <span class="comment">/* Default */</span>
+    <span class="property">transition</span>: <span class="value">caret-color 0.3s ease</span>;
+}
+
+<span class="selector">input:focus</span> {
+    <span class="property">caret-color</span>: <span class="value">#764ba2</span>; <span class="comment">/* On focus */</span>
+}
+                </div>
+                <p style="margin-top: 15px; color: #666; font-size: 0.9em;">Try clicking the input - the cursor color shifts from purple to magenta on focus.</p>
+            </div>
+
+            <style>
+                #focusInput:focus {
+                    caret-color: #764ba2;
+                }
+            </style>
+        </div>
+
+        <div class="section">
+            <h2>7. Disabled State Styling</h2>
+            <p>Gray caret color for disabled form fields:</p>
+            <div class="example-grid">
+                <div class="example-card">
+                    <div class="example-label">Enabled Input (Active)</div>
+                    <input type="text" placeholder="This is enabled..." style="caret-color: #667eea;">
+                    <div class="code-block">
+<span class="selector">input:enabled</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+}
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Disabled Input (Inactive)</div>
+                    <input type="text" placeholder="This is disabled..." disabled style="caret-color: #999999; opacity: 0.6;">
+                    <div class="code-block">
+<span class="selector">input:disabled</span> {
+    <span class="property">caret-color</span>: <span class="value">#999999</span>;
+    <span class="property">opacity</span>: <span class="value">0.6</span>;
+}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>8. Dark Mode with Matching Caret</h2>
+            <p>Adaptive caret colors for dark mode compatibility:</p>
+            <div class="dark-mode-demo">
+                <div class="example-label" style="color: white;">Dark Mode Input</div>
+                <input type="text" placeholder="Dark mode cursor..." style="caret-color: #667eea;">
+                <input type="text" placeholder="Another dark mode input..." style="caret-color: #764ba2;">
+            </div>
+            <div class="code-block">
+<span class="keyword">@media</span> (<span class="property">prefers-color-scheme</span>: <span class="keyword">dark</span>) {
+    <span class="selector">input</span> {
+        <span class="property">background</span>: <span class="value">#34495e</span>;
+        <span class="property">color</span>: <span class="value">#ecf0f1</span>;
+        <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+        <span class="property">border</span>: <span class="value">2px solid #667eea</span>;
+    }
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>9. Form with Icon and Custom Caret</h2>
+            <p>Combine icons with matching custom caret colors:</p>
+            <div class="example-grid">
+                <div class="example-card">
+                    <div class="example-label">Email with Icon</div>
+                    <div class="icon-input-wrapper">
+                        <span class="icon">✉️</span>
+                        <input type="email" placeholder="your@email.com" style="caret-color: #2196f3;">
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Search with Icon</div>
+                    <div class="icon-input-wrapper">
+                        <span class="icon">🔍</span>
+                        <input type="search" placeholder="Search here..." style="caret-color: #ff9800;">
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Lock with Icon</div>
+                    <div class="icon-input-wrapper">
+                        <span class="icon">🔒</span>
+                        <input type="password" placeholder="Password" style="caret-color: #f44336;">
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">User with Icon</div>
+                    <div class="icon-input-wrapper">
+                        <span class="icon">👤</span>
+                        <input type="text" placeholder="Username" style="caret-color: #9c27b0;">
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Phone with Icon</div>
+                    <div class="icon-input-wrapper">
+                        <span class="icon">📱</span>
+                        <input type="tel" placeholder="+1 (555) 000-0000" style="caret-color: #009688;">
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-label">Location with Icon</div>
+                    <div class="icon-input-wrapper">
+                        <span class="icon">📍</span>
+                        <input type="text" placeholder="City, Country" style="caret-color: #4caf50;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>10. CSS Variables for Dynamic Caret Colors</h2>
+            <p>Use CSS variables for easy theming and color management:</p>
+            <div class="example-card full-width-example">
+                <div class="example-label">Theme-Aware Inputs</div>
+                <input type="text" placeholder="Primary theme input..." style="caret-color: var(--primary-color, #667eea);">
+                <input type="text" placeholder="Secondary theme input..." style="caret-color: var(--secondary-color, #764ba2);">
+                <input type="text" placeholder="Success theme input..." style="caret-color: var(--success-color, #4caf50);">
+                <div class="code-block">
+<span class="keyword">:root</span> {
+    <span class="property">--primary-color</span>: <span class="value">#667eea</span>;
+    <span class="property">--secondary-color</span>: <span class="value">#764ba2</span>;
+    <span class="property">--success-color</span>: <span class="value">#4caf50</span>;
+    <span class="property">--error-color</span>: <span class="value">#f44336</span>;
+}
+
+<span class="selector">input</span> {
+    <span class="property">caret-color</span>: <span class="keyword">var</span>(<span class="value">--primary-color</span>);
+}
+
+<span class="selector">input.success</span> {
+    <span class="property">caret-color</span>: <span class="keyword">var</span>(<span class="value">--success-color</span>);
+}
+
+<span class="selector">input.error</span> {
+    <span class="property">caret-color</span>: <span class="keyword">var</span>(<span class="value">--error-color</span>);
+}
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>11. Login Form Complete Example</h2>
+            <p>Full login form with carefully styled carets:</p>
+            <div class="example-card full-width-example">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="you@example.com" style="caret-color: #667eea;">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="••••••••" style="caret-color: #764ba2;">
+                </div>
+                <div class="form-group">
+                    <label>Remember me</label>
+                    <input type="checkbox" style="width: auto;">
+                </div>
+                <button class="toggle-button">Sign In</button>
+
+                <div class="code-block">
+<span class="selector">input[type="email"]</span> {
+    <span class="property">caret-color</span>: <span class="value">#667eea</span>;
+}
+
+<span class="selector">input[type="password"]</span> {
+    <span class="property">caret-color</span>: <span class="value">#764ba2</span>;
+}
+
+<span class="selector">input:focus</span> {
+    <span class="property">border-color</span>: <span class="value">currentColor</span>;
+    <span class="property">box-shadow</span>: <span class="value">0 0 0 3px rgba(102, 126, 234, 0.2)</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>12. Search Bar with Live Feedback</h2>
+            <p>Interactive search bar with custom caret styling:</p>
+            <div class="example-card full-width-example">
+                <div class="example-label">Live Search</div>
+                <div style="position: relative;">
+                    <div class="icon-input-wrapper">
+                        <span class="icon">🔍</span>
+                        <input type="search" id="searchInput" placeholder="Type to search..." style="caret-color: #ff9800;">
+                    </div>
+                    <div id="searchFeedback" style="margin-top: 10px; color: #666; font-size: 0.9em;"></div>
+                </div>
+                <div class="code-block">
+<span class="selector">input[type="search"]</span> {
+    <span class="property">caret-color</span>: <span class="value">#ff9800</span>;
+    <span class="property">border</span>: <span class="value">2px solid #ff9800</span>;
+}
+
+<span class="selector">input[type="search"]:focus</span> {
+    <span class="property">caret-color</span>: <span class="value">#f57c00</span>;
+    <span class="property">box-shadow</span>: <span class="value">0 0 0 3px rgba(255, 152, 0, 0.2)</span>;
+}
+                </div>
+            </div>
+
+            <script>
+                const searchInput = document.getElementById('searchInput');
+                const searchFeedback = document.getElementById('searchFeedback');
+
+                if (searchInput) {
+                    searchInput.addEventListener('input', function() {
+                        if (this.value.length > 0) {
+                            searchFeedback.textContent = `🔍 Searching for: "${this.value}"`;
+                        } else {
+                            searchFeedback.textContent = '';
+                        }
+                    });
+                }
+            </script>
+        </div>
+
+        <div class="section">
+            <h2>Key Takeaways</h2>
+            <ul class="feature-list">
+                <li>Use caret-color to reinforce brand identity throughout your forms</li>
+                <li>Match caret colors to validation states for better UX</li>
+                <li>Apply different colors to different input types for visual distinction</li>
+                <li>Ensure sufficient contrast between caret color and background</li>
+                <li>Test with both light and dark modes for accessibility</li>
+                <li>Use focus states to provide visual feedback to users</li>
+                <li>Consider using CSS variables for easy theme management</li>
+                <li>Combine with other CSS properties for complete form styling</li>
+                <li>Works on input, textarea, and contenteditable elements</li>
+                <li>Browser support is excellent across all modern browsers</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Property Guide | caret-color Practical Examples</p>
+            <p>Real-world applications and interactive demonstrations for styling text cursors</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Quotes Property - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h3 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .demo-area {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .code-snippet {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+        }
+
+        .code-snippet .tag { color: #569cd6; }
+        .code-snippet .attr { color: #9cdcfe; }
+        .code-snippet .value { color: #ce9178; }
+        .code-snippet .text { color: #d4d4d4; }
+
+        .use-case {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        /* Example-specific styles */
+
+        /* Example 1: Basic English Quotes */
+        .example-1 .demo-area q {
+            quotes: '"' '"' "'" "'";
+        }
+
+        .example-1 .demo-area q::before { content: open-quote; }
+        .example-1 .demo-area q::after { content: close-quote; }
+
+        /* Example 2: No Quotes */
+        .example-2 .demo-area q {
+            quotes: none;
+        }
+
+        .example-2 .demo-area q::before { content: none; }
+        .example-2 .demo-area q::after { content: none; }
+
+        /* Example 3: Custom Quotes */
+        .example-3 .demo-area q {
+            quotes: '❝' '❞' '❜' '❛';
+        }
+
+        .example-3 .demo-area q::before { content: open-quote; }
+        .example-3 .demo-area q::after { content: close-quote; }
+
+        /* Example 4: German Quotes */
+        .example-4 .demo-area q {
+            quotes: '„' '"' '‚' ''';
+            font-style: italic;
+        }
+
+        .example-4 .demo-area q::before { content: open-quote; }
+        .example-4 .demo-area q::after { content: close-quote; }
+
+        /* Example 5: French Quotes */
+        .example-5 .demo-area q {
+            quotes: '« ' ' »' '‹ ' ' ›';
+            font-weight: 500;
+        }
+
+        .example-5 .demo-area q::before { content: open-quote; }
+        .example-5 .demo-area q::after { content: close-quote; }
+
+        /* Example 6: Guillemets (French alternative) */
+        .example-6 .demo-area q {
+            quotes: '«' '»' '‹' '›';
+        }
+
+        .example-6 .demo-area q::before { content: open-quote; }
+        .example-6 .demo-area q::after { content: close-quote; }
+
+        /* Example 7: Japanese Quotes */
+        .example-7 .demo-area q {
+            quotes: '「' '」' '『' '』';
+            font-size: 1.1em;
+        }
+
+        .example-7 .demo-area q::before { content: open-quote; }
+        .example-7 .demo-area q::after { content: close-quote; }
+
+        /* Example 8: Nested Quotes */
+        .example-8 .demo-area q {
+            quotes: '"' '"' "'" "'";
+        }
+
+        .example-8 .demo-area q::before { content: open-quote; }
+        .example-8 .demo-area q::after { content: close-quote; }
+
+        /* Example 9: Blockquote with Quotes */
+        .example-9 .demo-area blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+            margin: 0;
+            font-style: italic;
+            color: #555;
+        }
+
+        .example-9 .demo-area q {
+            quotes: '"' '"' "'" "'";
+            font-weight: 600;
+        }
+
+        .example-9 .demo-area q::before { content: open-quote; }
+        .example-9 .demo-area q::after { content: close-quote; }
+
+        /* Example 10: Citation with Quotes */
+        .example-10 .demo-area .citation {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .example-10 .demo-area .citation q {
+            quotes: '"' '"' "'" "'";
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .example-10 .demo-area .citation q::before { content: open-quote; }
+        .example-10 .demo-area .citation q::after { content: close-quote; }
+
+        .example-10 .demo-area .attribution {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Example 11: Dialogue with Quotes */
+        .example-11 .demo-area .dialogue {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 6px;
+        }
+
+        .example-11 .demo-area .speaker {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .example-11 .demo-area q {
+            quotes: '"' '"' "'" "'";
+        }
+
+        .example-11 .demo-area q::before { content: open-quote; }
+        .example-11 .demo-area q::after { content: close-quote; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 30px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table th {
+            background: #f0f0f0;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .footer {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .footer h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .quick-ref {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            text-align: left;
+        }
+
+        .ref-item {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .ref-item code {
+            background: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Quotes Property</h1>
+            <p>Practical Examples & Real-World Use Cases</p>
+        </header>
+
+        <div class="examples-grid">
+
+            <!-- Example 1: Basic English Quotes -->
+            <div class="example-card example-1">
+                <div class="card-header">
+                    <h3>Basic English Quotes</h3>
+                    <span class="badge">Standard</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Default English quotation marks for primary and nested quotes.</p>
+                    <div class="demo-area">
+                        <p>She said, <q>I love <q>CSS quotes</q> for managing punctuation.</q></p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">q {</span><br>
+<span class="attr">  quotes:</span> <span class="value">'&quot;' '&quot;' &quot;'&quot; &quot;'&quot;</span>;<br>
+<span class="text">}</span><br>
+<br>
+<span class="text">q::before { content: open-quote; }</span><br>
+<span class="text">q::after { content: close-quote; }</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Default English quotations in articles, blog posts, and web content.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 2: No Quotes (Custom Handling) -->
+            <div class="example-card example-2">
+                <div class="card-header">
+                    <h3>No Quotes</h3>
+                    <span class="badge">Override</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Remove automatic quotation marks entirely for custom styling.</p>
+                    <div class="demo-area">
+                        <p>She said, <q>I prefer custom punctuation!</q></p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">q {</span><br>
+<span class="attr">  quotes:</span> <span class="value">none</span>;<br>
+<span class="text">}</span><br>
+<br>
+<span class="text">q::before { content: none; }</span><br>
+<span class="text">q::after { content: none; }</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> When you want to style quotes manually or use custom markers.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3: Custom Decorative Quotes -->
+            <div class="example-card example-3">
+                <div class="card-header">
+                    <h3>Decorative Quotes</h3>
+                    <span class="badge">Custom</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Use fancy Unicode characters for a more decorative appearance.</p>
+                    <div class="demo-area">
+                        <p><q>This is styled with decorative quotation marks.</q></p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">q {</span><br>
+<span class="attr">  quotes:</span> <span class="value">'❝' '❞' '❜' '❛'</span>;<br>
+<span class="text">}</span><br>
+<br>
+<span class="text">q::before { content: open-quote; }</span><br>
+<span class="text">q::after { content: close-quote; }</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Testimonials, featured quotes, or design-forward websites.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4: German Quotes -->
+            <div class="example-card example-4">
+                <div class="card-header">
+                    <h3>German Quotes</h3>
+                    <span class="badge">Language</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">German quotation style with „..." for main quotes and ‚...' for nested.</p>
+                    <div class="demo-area">
+                        <p><q>Das ist ein Beispiel mit deutschen Anführungszeichen.</q></p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">q {</span><br>
+<span class="attr">  quotes:</span> <span class="value">'„' '"' '‚' '''</span>;<br>
+<span class="text">}</span><br>
+<br>
+<span class="text">q::before { content: open-quote; }</span><br>
+<span class="text">q::after { content: close-quote; }</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> German language websites, multilingual content.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 5: French Quotes with Spacing -->
+            <div class="example-card example-5">
+                <div class="card-header">
+                    <h3>French Quotes (with spaces)</h3>
+                    <span class="badge">Language</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">French guillemets with built-in spacing (« and »).</p>
+                    <div class="demo-area">
+                        <p><q>Ceci est un exemple avec des guillemets français.</q></p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">q {</span><br>
+<span class="attr">  quotes:</span> <span class="value">'« ' ' »' '‹ ' ' ›'</span>;<br>
+<span class="text">}</span><br>
+<br>
+<span class="text">q::before { content: open-quote; }</span><br>
+<span class="text">q::after { content: close-quote; }</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> French-language content with proper typographic spacing.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 6: French Guillemets -->
+            <div class="example-card example-6">
+                <div class="card-header">
+                    <h3>French Guillemets</h3>
+                    <span class="badge">Language</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Traditional French guillemets without extra spacing.</p>
+                    <div class="demo-area">
+                        <p><q>Les guillemets français sont élégants.</q></p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">q {</span><br>
+<span class="attr">  quotes:</span> <span class="value">'«' '»' '‹' '›'</span>;<br>
+<span class="text">}</span><br>
+<br>
+<span class="text">q::before { content: open-quote; }</span><br>
+<span class="text">q::after { content: close-quote; }</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> French typography, design-focused French websites.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 7: Japanese Quotes -->
+            <div class="example-card example-7">
+                <div class="card-header">
+                    <h3>Japanese Quotes</h3>
+                    <span class="badge">Language</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Japanese quotation marks (角括弧) for proper CJK typesetting.</p>
+                    <div class="demo-area">
+                        <p><q>これは日本語の引用符の例です。</q></p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">q {</span><br>
+<span class="attr">  quotes:</span> <span class="value">'「' '」' '『' '』'</span>;<br>
+<span class="text">}</span><br>
+<br>
+<span class="text">q::before { content: open-quote; }</span><br>
+<span class="text">q::after { content: close-quote; }</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Japanese content, CJK language support.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 8: Nested Quotes -->
+            <div class="example-card example-8">
+                <div class="card-header">
+                    <h3>Nested Quotes</h3>
+                    <span class="badge">Complex</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Automatic quote switching at different nesting levels.</p>
+                    <div class="demo-area">
+                        <p>She said, <q>He told me <q>CSS quotes are awesome!</q></q></p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">q {</span><br>
+<span class="attr">  quotes:</span> <span class="value">'&quot;' '&quot;' &quot;'&quot; &quot;'&quot;</span>;<br>
+<span class="text">}</span><br>
+<br>
+<span class="text">q::before { content: open-quote; }</span><br>
+<span class="text">q::after { content: close-quote; }</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Direct speech in dialogue, nested quotations in articles.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 9: Blockquote with Quotes -->
+            <div class="example-card example-9">
+                <div class="card-header">
+                    <h3>Blockquote Integration</h3>
+                    <span class="badge">Semantic</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Using quotes within semantic blockquote elements.</p>
+                    <div class="demo-area">
+                        <blockquote>
+                            <q>The only way to do great work is to love what you do.</q>
+                        </blockquote>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">blockquote q {</span><br>
+<span class="attr">  quotes:</span> <span class="value">'&quot;' '&quot;' &quot;'&quot; &quot;'&quot;</span>;<br>
+<span class="text">}</span><br>
+<br>
+<span class="text">blockquote q::before { content: open-quote; }</span><br>
+<span class="text">blockquote q::after { content: close-quote; }</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Semantic markup with proper quote handling in blockquotes.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 10: Citation with Attribution -->
+            <div class="example-card example-10">
+                <div class="card-header">
+                    <h3>Citations & Attribution</h3>
+                    <span class="badge">Content</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Styled citations with automatic quote insertion and attribution.</p>
+                    <div class="demo-area">
+                        <div class="citation">
+                            <q>Design is not just what it looks like and feels like. Design is how it works.</q>
+                            <div class="attribution">— Steve Jobs</div>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.citation q {</span><br>
+<span class="attr">  quotes:</span> <span class="value">'&quot;' '&quot;' &quot;'&quot; &quot;'&quot;</span>;<br>
+<span class="text">}</span><br>
+<br>
+<span class="text">.citation q::before { content: open-quote; }</span><br>
+<span class="text">.citation q::after { content: close-quote; }</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Testimonials, featured quotes, inspiration sections.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 11: Dialogue Formatting -->
+            <div class="example-card example-11">
+                <div class="card-header">
+                    <h3>Dialogue Formatting</h3>
+                    <span class="badge">Content</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Consistent quote formatting for dialogue and conversations.</p>
+                    <div class="demo-area">
+                        <div class="dialogue">
+                            <div class="speaker">Alice:</div>
+                            <q>Have you used CSS quotes before?</q>
+                        </div>
+                        <div class="dialogue">
+                            <div class="speaker">Bob:</div>
+                            <q>Yes! They automatically handle nesting.</q>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.dialogue q {</span><br>
+<span class="attr">  quotes:</span> <span class="value">'&quot;' '&quot;' &quot;'&quot; &quot;'&quot;</span>;<br>
+<span class="text">}</span><br>
+<br>
+<span class="text">.dialogue q::before { content: open-quote; }</span><br>
+<span class="text">.dialogue q::after { content: close-quote; }</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Stories, interviews, conversational content, chat interfaces.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);">
+            <h2 style="color: #667eea; margin-bottom: 20px;">Quick Reference Guide</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Language</th>
+                        <th>Primary Quotes</th>
+                        <th>Nested Quotes</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>English</strong></td>
+                        <td>" "</td>
+                        <td>' '</td>
+                        <td>She said, "I love 'CSS quotes'!"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>German</strong></td>
+                        <td>„ "</td>
+                        <td>‚ '</td>
+                        <td>Er sagte, „Ich liebe 'CSS'!"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>French</strong></td>
+                        <td>« »</td>
+                        <td>‹ ›</td>
+                        <td>Il dit, « J'aime 'CSS' ! »</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Japanese</strong></td>
+                        <td>「 」</td>
+                        <td>『 』</td>
+                        <td>彼は「私は『CSS』が好きです」と言った。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>None</strong></td>
+                        <td colspan="2">none (no quotes)</td>
+                        <td>Manual quote handling</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">Key Takeaways</h3>
+            <ul style="line-height: 1.8; color: #555;">
+                <li><strong>Automatic Nesting:</strong> CSS quotes automatically alternate between primary and nested quote characters based on nesting depth.</li>
+                <li><strong>Language Support:</strong> The quotes property supports proper typographic conventions for multiple languages.</li>
+                <li><strong>Semantic HTML:</strong> Works with the &lt;q&gt; element using ::before and ::after pseudo-elements with open-quote and close-quote content.</li>
+                <li><strong>Fallback Behavior:</strong> Set quotes: none to prevent automatic insertion and style manually if needed.</li>
+                <li><strong>Browser Support:</strong> Excellent support across modern browsers (IE 8+, all current versions).</li>
+                <li><strong>Accessibility:</strong> Screen readers respect CSS quotes, making content more accessible when properly marked up.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <h3>Additional Resources</h3>
+            <div class="quick-ref">
+                <div class="ref-item">
+                    <strong>MDN Documentation</strong><br>
+                    <code>CSS Quotes Property</code> - Full specification and browser support
+                </div>
+                <div class="ref-item">
+                    <strong>HTML &lt;q&gt; Element</strong><br>
+                    Inline quotation markup for semantic content
+                </div>
+                <div class="ref-item">
+                    <strong>::before & ::after</strong><br>
+                    Pseudo-elements for content insertion with quotes
+                </div>
+                <div class="ref-item">
+                    <strong>Unicode Quotation Marks</strong><br>
+                    Comprehensive character reference for all languages
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

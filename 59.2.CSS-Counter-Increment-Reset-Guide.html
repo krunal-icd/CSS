@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Counter Increment & Reset - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h3 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .demo-area {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 120px;
+        }
+
+        .code-snippet {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+        }
+
+        .code-snippet .text { color: #d4d4d4; }
+        .code-snippet .comment { color: #6a9955; }
+
+        .use-case {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        /* Example 1: Simple List Numbering */
+        .example-1 .demo-area {
+            counter-reset: item;
+        }
+
+        .example-1 .demo-area ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .example-1 .demo-area li {
+            counter-increment: item;
+            padding: 10px 0 10px 30px;
+            position: relative;
+        }
+
+        .example-1 .demo-area li::before {
+            content: counter(item) ". ";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* Example 2: Roman Numerals */
+        .example-2 .demo-area {
+            counter-reset: chapter;
+        }
+
+        .example-2 .demo-area .chapter {
+            counter-increment: chapter;
+            padding: 10px;
+            margin: 10px 0;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .example-2 .demo-area .chapter::before {
+            content: "Chapter " counter(chapter, upper-roman) ": ";
+            font-weight: 600;
+            color: #667eea;
+            margin-right: 10px;
+        }
+
+        /* Example 3: Section Numbering */
+        .example-3 .demo-area {
+            counter-reset: section;
+        }
+
+        .example-3 .demo-area h4 {
+            counter-increment: section;
+            color: #667eea;
+        }
+
+        .example-3 .demo-area h4::before {
+            content: counter(section) ". ";
+        }
+
+        .example-3 .demo-area p {
+            color: #666;
+            margin: 10px 0;
+        }
+
+        /* Example 4: Nested Numbering */
+        .example-4 .demo-area {
+            counter-reset: section;
+        }
+
+        .example-4 .demo-area section {
+            margin-bottom: 20px;
+        }
+
+        .example-4 .demo-area h4 {
+            counter-increment: section;
+            counter-reset: subsection;
+        }
+
+        .example-4 .demo-area h4::before {
+            content: counter(section) ". ";
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .example-4 .demo-area .subsection {
+            counter-increment: subsection;
+            padding: 8px 0 8px 20px;
+            color: #555;
+        }
+
+        .example-4 .demo-area .subsection::before {
+            content: counter(section) "." counter(subsection) " ";
+            color: #764ba2;
+            font-weight: 500;
+        }
+
+        /* Example 5: Alphabetic Counter */
+        .example-5 .demo-area {
+            counter-reset: question;
+        }
+
+        .example-5 .demo-area .question {
+            counter-increment: question;
+            padding: 12px;
+            margin: 10px 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        .example-5 .demo-area .question::before {
+            content: counter(question, lower-alpha) ") ";
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        /* Example 6: Decimal with Leading Zero */
+        .example-6 .demo-area {
+            counter-reset: step;
+        }
+
+        .example-6 .demo-area .step {
+            counter-increment: step;
+            padding: 12px;
+            margin: 10px 0;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .example-6 .demo-area .step::before {
+            content: "Step " counter(step, decimal-leading-zero) ": ";
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        /* Example 7: Outline Format */
+        .example-7 .demo-area {
+            counter-reset: h1;
+        }
+
+        .example-7 .demo-area .toc-item {
+            padding: 8px 0;
+            margin-left: 20px;
+        }
+
+        .example-7 .demo-area .toc-item::before {
+            content: counters(outline, ".") " ";
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .example-7 .demo-area .level-1 {
+            counter-increment: h1;
+            counter-reset: h2;
+            margin-left: 0;
+            font-weight: 600;
+        }
+
+        .example-7 .demo-area .level-2 {
+            counter-increment: h2;
+            counter-reset: h3;
+            margin-left: 20px;
+        }
+
+        .example-7 .demo-area .level-3 {
+            counter-increment: h3;
+            margin-left: 40px;
+        }
+
+        /* Example 8: Table of Contents */
+        .example-8 .demo-area {
+            counter-reset: page;
+        }
+
+        .example-8 .demo-area .toc-entry {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dotted #ccc;
+        }
+
+        .example-8 .demo-area .toc-entry::after {
+            content: counter(page);
+            color: #666;
+        }
+
+        .example-8 .demo-area .chapter {
+            counter-increment: page;
+        }
+
+        /* Example 9: Equation Numbering */
+        .example-9 .demo-area {
+            counter-reset: equation;
+        }
+
+        .example-9 .demo-area .equation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin: 10px 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        .example-9 .demo-area .equation::after {
+            counter-increment: equation;
+            content: "(" counter(equation) ")";
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        /* Example 10: Scoreboard */
+        .example-10 .demo-area {
+            counter-reset: score;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .example-10 .demo-area .team {
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 6px;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .example-10 .demo-area .team::before {
+            content: "Team ";
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .example-10 .demo-area .point {
+            counter-increment: score;
+        }
+
+        .example-10 .demo-area .total::after {
+            content: "Total: " counter(score);
+            display: block;
+            margin-top: 10px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        /* Example 11: Progress Counter */
+        .example-11 .demo-area {
+            counter-reset: progress;
+        }
+
+        .example-11 .demo-area .task {
+            counter-increment: progress;
+            padding: 12px;
+            margin: 10px 0;
+            background: white;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .example-11 .demo-area .task::before {
+            content: "Task " counter(progress) ": ";
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        /* Example 12: Multi-level TOC */
+        .example-12 .demo-area {
+            counter-reset: major;
+        }
+
+        .example-12 .demo-area .major-section {
+            counter-increment: major;
+            counter-reset: minor;
+            padding: 10px 0;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .example-12 .demo-area .major-section::before {
+            content: counter(major) ". ";
+        }
+
+        .example-12 .demo-area .minor-section {
+            counter-increment: minor;
+            padding: 8px 0 8px 20px;
+            color: #555;
+        }
+
+        .example-12 .demo-area .minor-section::before {
+            content: counter(major) "." counter(minor) " ";
+            color: #764ba2;
+        }
+
+        .footer {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .footer h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .quick-ref {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            text-align: left;
+        }
+
+        .ref-item {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .ref-item code {
+            background: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Counter Increment & Reset</h1>
+            <p>Practical Examples & Real-World Use Cases</p>
+        </header>
+
+        <div class="examples-grid">
+
+            <!-- Example 1: Simple List -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Simple List Numbering</h3>
+                    <span class="badge">counter-reset</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Basic numbered list without default browser numbering.</p>
+                    <div class="demo-area">
+                        <ul>
+                            <li>First item in the list</li>
+                            <li>Second item here</li>
+                            <li>Third item example</li>
+                            <li>Fourth item shown</li>
+                        </ul>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.demo-area {</span><br>
+&nbsp;&nbsp;<span class="text">counter-reset: item;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">li {</span><br>
+&nbsp;&nbsp;<span class="text">counter-increment: item;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">li::before {</span><br>
+&nbsp;&nbsp;<span class="text">content: counter(item) ". ";</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Custom list numbering without HTML list-style.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 2: Roman Numerals -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Roman Numeral Chapters</h3>
+                    <span class="badge">counter-style</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Display chapter numbers as Roman numerals.</p>
+                    <div class="demo-area">
+                        <div class="chapter">Opening and Introduction</div>
+                        <div class="chapter">Background Information</div>
+                        <div class="chapter">Main Content Section</div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.demo-area {</span><br>
+&nbsp;&nbsp;<span class="text">counter-reset: chapter;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">.chapter::before {</span><br>
+&nbsp;&nbsp;<span class="text">content: "Chapter " counter(chapter, upper-roman) ": ";</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Book chapters or formal documents.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3: Section Numbering -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Section Numbering</h3>
+                    <span class="badge">h4 example</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Auto-number document sections.</p>
+                    <div class="demo-area">
+                        <h4>Introduction</h4>
+                        <p>Content for first section</p>
+                        <h4>Methodology</h4>
+                        <p>Content for second section</p>
+                        <h4>Results</h4>
+                        <p>Content for third section</p>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">body {</span><br>
+&nbsp;&nbsp;<span class="text">counter-reset: section;</span><br>
+<span class="text">}</span><br>
+<br>
+<span class="text">h4::before {</span><br>
+&nbsp;&nbsp;<span class="text">counter-increment: section;</span><br>
+&nbsp;&nbsp;<span class="text">content: counter(section) ". ";</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Automatic section numbering in documents.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4: Nested Numbering -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Nested Sections</h3>
+                    <span class="badge">counter-reset</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Multi-level section numbering (1.1, 1.2, etc).</p>
+                    <div class="demo-area">
+                        <section>
+                            <h4>Main Section</h4>
+                            <div class="subsection">Subsection A</div>
+                            <div class="subsection">Subsection B</div>
+                        </section>
+                        <section>
+                            <h4>Another Section</h4>
+                            <div class="subsection">Subsection A</div>
+                            <div class="subsection">Subsection B</div>
+                        </section>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">h4::before { content: counter(section) ". "; }</span><br>
+<br>
+<span class="text">.subsection::before {</span><br>
+&nbsp;&nbsp;<span class="text">content: counter(section) "." counter(subsection) " ";</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Nested outlines and hierarchical documents.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 5: Alphabetic Counter -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Alphabetic Questions</h3>
+                    <span class="badge">lower-alpha</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Letter-based numbering for questions or options.</p>
+                    <div class="demo-area">
+                        <div class="question">What is the main theme?</div>
+                        <div class="question">How does it apply?</div>
+                        <div class="question">What are the benefits?</div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.demo-area { counter-reset: question; }</span><br>
+<br>
+<span class="text">.question::before {</span><br>
+&nbsp;&nbsp;<span class="text">counter-increment: question;</span><br>
+&nbsp;&nbsp;<span class="text">content: counter(question, lower-alpha) ") ";</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Multiple choice questions or options.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 6: Leading Zero -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Step Counter with Leading Zero</h3>
+                    <span class="badge">decimal-leading-zero</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Steps numbered 01, 02, 03, etc.</p>
+                    <div class="demo-area">
+                        <div class="step">Prepare the environment</div>
+                        <div class="step">Install dependencies</div>
+                        <div class="step">Configure settings</div>
+                        <div class="step">Run the application</div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.step::before {</span><br>
+&nbsp;&nbsp;<span class="text">counter-increment: step;</span><br>
+&nbsp;&nbsp;<span class="text">content: "Step " counter(step, decimal-leading-zero) ": ";</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Installation guides and numbered procedures.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 7: Outline Format -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Outline Format</h3>
+                    <span class="badge">counters()</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Multi-level outline with dot separators.</p>
+                    <div class="demo-area">
+                        <div class="toc-item level-1">Introduction</div>
+                        <div class="toc-item level-2">Background</div>
+                        <div class="toc-item level-2">Scope</div>
+                        <div class="toc-item level-1">Methodology</div>
+                        <div class="toc-item level-2">Approach</div>
+                        <div class="toc-item level-3">Step 1</div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.level-1::before { content: counters(outline, ".") " "; }</span><br>
+<br>
+<span class="text">.level-1 { counter-reset: h2; }</span><br>
+<span class="text">.level-2 { counter-increment: h2; }</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Table of contents and document outlines.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 8: Table of Contents -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Table of Contents</h3>
+                    <span class="badge">Page numbers</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">TOC with auto-incremented page numbers.</p>
+                    <div class="demo-area">
+                        <div class="toc-entry chapter">Chapter 1: Introduction</div>
+                        <div class="toc-entry chapter">Chapter 2: Content</div>
+                        <div class="toc-entry chapter">Chapter 3: Conclusion</div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.demo-area { counter-reset: page; }</span><br>
+<br>
+<span class="text">.chapter { counter-increment: page; }</span><br>
+<br>
+<span class="text">.toc-entry::after {</span><br>
+&nbsp;&nbsp;<span class="text">content: counter(page);</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Generate page numbers for print documents.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 9: Equation Numbering -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Equation Numbering</h3>
+                    <span class="badge">Math docs</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Auto-number equations with references.</p>
+                    <div class="demo-area">
+                        <div class="equation">E = mc²</div>
+                        <div class="equation">F = ma</div>
+                        <div class="equation">a² + b² = c²</div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.demo-area { counter-reset: equation; }</span><br>
+<br>
+<span class="text">.equation::after {</span><br>
+&nbsp;&nbsp;<span class="text">counter-increment: equation;</span><br>
+&nbsp;&nbsp;<span class="text">content: "(" counter(equation) ")";</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Scientific and mathematical documents.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 10: Scoreboard -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Score Counter</h3>
+                    <span class="badge">Points</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Count total points dynamically.</p>
+                    <div class="demo-area">
+                        <div class="team">
+                            <div class="point">+10 points</div>
+                            <div class="point">+15 points</div>
+                            <div class="total"></div>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.team { counter-reset: score; }</span><br>
+<br>
+<span class="text">.point { counter-increment: score; }</span><br>
+<br>
+<span class="text">.total::after {</span><br>
+&nbsp;&nbsp;<span class="text">content: "Total: " counter(score);</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Games, quizzes, and scoring systems.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 11: Progress Counter -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Task Progress</h3>
+                    <span class="badge">Tasks</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Number tasks in a to-do list or project.</p>
+                    <div class="demo-area">
+                        <div class="task">Complete project planning</div>
+                        <div class="task">Research requirements</div>
+                        <div class="task">Design mockups</div>
+                        <div class="task">Develop prototype</div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.demo-area { counter-reset: progress; }</span><br>
+<br>
+<span class="text">.task::before {</span><br>
+&nbsp;&nbsp;<span class="text">counter-increment: progress;</span><br>
+&nbsp;&nbsp;<span class="text">content: "Task " counter(progress) ": ";</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Project management and task lists.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 12: Multi-level TOC -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h3>Hierarchical TOC</h3>
+                    <span class="badge">Multi-level</span>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Complex nested numbering structure.</p>
+                    <div class="demo-area">
+                        <div class="major-section">Part One</div>
+                        <div class="minor-section">Chapter 1</div>
+                        <div class="minor-section">Chapter 2</div>
+                        <div class="major-section">Part Two</div>
+                        <div class="minor-section">Chapter 3</div>
+                        <div class="minor-section">Chapter 4</div>
+                    </div>
+                    <div class="code-snippet">
+<span class="text">.demo-area { counter-reset: major; }</span><br>
+<br>
+<span class="text">.major-section { counter-reset: minor; }</span><br>
+<br>
+<span class="text">.minor-section::before {</span><br>
+&nbsp;&nbsp;<span class="text">counter-increment: minor;</span><br>
+&nbsp;&nbsp;<span class="text">content: counter(major) "." counter(minor);</span><br>
+<span class="text">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Books with parts, chapters, and sections.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);">
+            <h2 style="color: #667eea; margin-bottom: 20px;">Counter Reference</h2>
+            
+            <table style="width: 100%; border-collapse: collapse; background: white; margin: 20px 0;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">Counter Style</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">Output (1,2,3...)</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 2px solid #667eea;">Example Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>decimal</strong></td>
+                        <td style="padding: 15px;">1, 2, 3</td>
+                        <td style="padding: 15px;">Standard numbering</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>decimal-leading-zero</strong></td>
+                        <td style="padding: 15px;">01, 02, 03</td>
+                        <td style="padding: 15px;">Procedures and steps</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>lower-roman</strong></td>
+                        <td style="padding: 15px;">i, ii, iii</td>
+                        <td style="padding: 15px;">Book chapters</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>upper-roman</strong></td>
+                        <td style="padding: 15px;">I, II, III</td>
+                        <td style="padding: 15px;">Formal documents</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="padding: 15px;"><strong>lower-alpha</strong></td>
+                        <td style="padding: 15px;">a, b, c</td>
+                        <td style="padding: 15px;">Questions, options</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 15px;"><strong>upper-alpha</strong></td>
+                        <td style="padding: 15px;">A, B, C</td>
+                        <td style="padding: 15px;">Categories, lists</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">Key Takeaways</h3>
+            <ul style="line-height: 1.8; color: #555;">
+                <li><strong>counter-reset:</strong> Initialize counters on parent elements (body, section, div).</li>
+                <li><strong>counter-increment:</strong> Apply to elements you want to count (li, h2, .item).</li>
+                <li><strong>counter():</strong> Display single counter value with optional style.</li>
+                <li><strong>counters():</strong> Display nested counter hierarchy with separator (1.1.1).</li>
+                <li><strong>Styles available:</strong> decimal, roman (upper/lower), alpha (upper/lower), leading-zero.</li>
+                <li><strong>Reset for nesting:</strong> Each level needs its own counter-reset for proper hierarchy.</li>
+                <li><strong>No JavaScript needed:</strong> Pure CSS auto-numbering without any dependencies.</li>
+                <li><strong>Perfect for:</strong> Outlines, table of contents, equations, steps, and hierarchical documents.</li>
+                <li><strong>Browser support:</strong> Excellent support from IE 8+ to all modern browsers.</li>
+                <li><strong>Combine with ::before/::after:</strong> Use pseudo-elements to display counter values.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <h3>Browser Compatibility</h3>
+            <div class="quick-ref">
+                <div class="ref-item">
+                    <strong>counter-reset</strong><br>
+                    IE 8+, All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>counter-increment</strong><br>
+                    IE 8+, All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>counter() function</strong><br>
+                    IE 8+, All Modern Browsers
+                </div>
+                <div class="ref-item">
+                    <strong>counters() function</strong><br>
+                    IE 8+, All Modern Browsers
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

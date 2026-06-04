@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS :is() Pseudo-Class - 12 Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .examples-grid {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .example-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .example h2 {
+            color: #667eea;
+            font-size: 1.6em;
+            margin: 0;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .example-tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .example-tag.selector {
+            background: #28a745;
+        }
+
+        .example-tag.form {
+            background: #fd7e14;
+        }
+
+        .example-tag.interactive {
+            background: #17a2b8;
+        }
+
+        .example-tag.advanced {
+            background: #6f42c1;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .demo-area {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+
+        .code-block .keyword {
+            color: #569cd6;
+        }
+
+        .code-block .property {
+            color: #9cdcfe;
+        }
+
+        .code-block .value {
+            color: #ce9178;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* ========== EXAMPLE STYLES ========== */
+
+        /* Example 1: Headings */
+        :is(h1, h2, h3).demo-heading {
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .demo-heading-1 h1, .demo-heading-1 h2, .demo-heading-1 h3 {
+            margin: 10px 0;
+        }
+
+        /* Example 2: Form Elements */
+        :is(input, textarea, select).form-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        :is(input, textarea, select).form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Example 3: Buttons */
+        :is(button, a.btn).styled-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        :is(button, a.btn).styled-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Example 4: Interactive States */
+        :is(.interactive-item, .card, .panel):is(:hover, :focus) {
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .interactive-item, .card, .panel {
+            padding: 15px;
+            background: #f0f4ff;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Example 5: List Elements */
+        :is(ul, ol).styled-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        :is(ul, ol).styled-list :is(li, li::before) {
+            color: #667eea;
+        }
+
+        :is(ul, ol).styled-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        :is(ul, ol).styled-list li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Example 6: Text Elements */
+        :is(p, span, div).text-content {
+            line-height: 1.6;
+            color: #333;
+        }
+
+        :is(strong, em, .highlight).text-content {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* Example 7: Nested Context */
+        :is(header, nav, footer) :is(a, button, span) {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        :is(header, nav, footer) :is(a, button):hover {
+            color: #ffeb3b;
+            text-shadow: 0 0 10px rgba(255, 235, 59, 0.5);
+        }
+
+        .demo-context {
+            background: #667eea;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        .demo-context a, .demo-context button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: 500;
+        }
+
+        /* Example 8: Input Types */
+        :is([type="text"], [type="email"], [type="tel"]).input-field {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        :is([type="text"], [type="email"], [type="tel"]).input-field:focus {
+            border-color: #667eea;
+            box-shadow: inset 0 0 0 2px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Example 9: Pseudo-Classes */
+        :is(a, button, .link-item):is(:hover, :focus, :active) {
+            color: #764ba2;
+            text-decoration: underline;
+            transform: scale(1.05);
+        }
+
+        .pseudo-demo {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .link-item {
+            padding: 8px 12px;
+            background: #f0f4ff;
+            border: 1px solid #667eea;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #667eea;
+        }
+
+        /* Example 10: Multiple Conditions */
+        :is(article, section, main) :is(.featured, .highlighted) {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        /* Example 11: Attribute Combinations */
+        :is([data-priority="high"], [data-priority="critical"]) {
+            border: 2px solid #dc3545;
+            background: #ffebee;
+        }
+
+        :is([data-priority="medium"]) {
+            border: 2px solid #fd7e14;
+            background: #fff5e5;
+        }
+
+        :is([data-priority="low"]) {
+            border: 2px solid #28a745;
+            background: #e5f5e5;
+        }
+
+        .priority-item {
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        /* Example 12: Complex Nesting */
+        main :is(article, section) :is(header, .intro) :is(h2, h3, .title) {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        main :is(article, section) :is(p, .content) {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .complex-demo {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .example h2 {
+                font-size: 1.3em;
+            }
+
+            .code-block {
+                font-size: 0.75em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+            }
+
+            .example {
+                padding: 15px;
+            }
+
+            .example h2 {
+                font-size: 1.1em;
+            }
+
+            .code-block {
+                font-size: 0.7em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS :is() Pseudo-Class</h1>
+            <p class="subtitle">12 Practical Examples • Selector Simplification</p>
+        </header>
+
+        <div class="examples-grid">
+            <!-- EXAMPLE 1: HEADINGS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>1. Multiple Heading Levels</h2>
+                    <span class="example-tag selector">Headings</span>
+                </div>
+                <p class="example-description">
+                    Apply same styles to multiple heading levels using :is() instead of repetitive selectors.
+                </p>
+                <div class="demo-area">
+                    <h1 class="demo-heading">Heading 1</h1>
+                    <h2 class="demo-heading">Heading 2</h2>
+                    <h3 class="demo-heading">Heading 3</h3>
+                </div>
+                <div class="code-block">
+<span class="keyword">/* Without :is() - repetitive */</span>
+h1, h2, h3 {
+    <span class="property">color:</span> <span class="value">#667eea</span>;
+}
+
+<span class="keyword">/* With :is() - cleaner */</span>
+:is(h1, h2, h3) {
+    <span class="property">color:</span> <span class="value">#667eea</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 2: FORM ELEMENTS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>2. Form Input Elements</h2>
+                    <span class="example-tag form">Form</span>
+                </div>
+                <p class="example-description">
+                    Style all form inputs consistently with :is(). Try focusing on inputs to see the effect.
+                </p>
+                <div class="demo-area">
+                    <input type="text" class="form-input" placeholder="Text input">
+                    <textarea class="form-input" placeholder="Textarea"></textarea>
+                    <select class="form-input">
+                        <option>Select option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </div>
+                <div class="code-block">
+<span class="keyword">/* All form elements at once */</span>
+:is(input, textarea, select) {
+    <span class="property">padding:</span> <span class="value">10px</span>;
+    <span class="property">border:</span> <span class="value">2px solid #e0e0e0</span>;
+    <span class="property">border-radius:</span> <span class="value">6px</span>;
+}
+
+:is(input, textarea, select):focus {
+    <span class="property">border-color:</span> <span class="value">#667eea</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 3: BUTTONS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>3. Button & Link Styling</h2>
+                    <span class="example-tag interactive">Interactive</span>
+                </div>
+                <p class="example-description">
+                    Unify button and link styling with :is(). Hover over them to see the effect.
+                </p>
+                <div class="demo-area">
+                    <button class="styled-btn">Button Element</button>
+                    <a href="#" class="btn styled-btn">Link Button</a>
+                </div>
+                <div class="code-block">
+<span class="keyword">/* Style both buttons and links together */</span>
+:is(button, a.btn) {
+    <span class="property">padding:</span> <span class="value">12px 24px</span>;
+    <span class="property">background:</span> <span class="value">#667eea</span>;
+    <span class="property">color:</span> <span class="value">white</span>;
+}
+
+:is(button, a.btn):hover {
+    <span class="property">background:</span> <span class="value">#764ba2</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 4: INTERACTIVE STATES -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>4. Combined Pseudo-Classes</h2>
+                    <span class="example-tag interactive">Pseudo-classes</span>
+                </div>
+                <p class="example-description">
+                    Apply hover, focus, and active effects to multiple elements. Interact to see changes.
+                </p>
+                <div class="demo-area">
+                    <div class="interactive-item">Hover me!</div>
+                    <div class="card">I'm a card</div>
+                    <div class="panel">Interact with me</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">/* Multiple pseudo-classes with :is() */</span>
+:is(.item, .card, .panel):is(:hover, :focus) {
+    <span class="property">box-shadow:</span> <span class="value">0 8px 24px rgba(102, 126, 234, 0.2)</span>;
+    <span class="property">transform:</span> <span class="value">translateY(-3px)</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 5: LISTS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>5. List Styling</h2>
+                    <span class="example-tag selector">Lists</span>
+                </div>
+                <p class="example-description">
+                    Apply consistent styling to both ordered and unordered lists with :is().
+                </p>
+                <div class="demo-area">
+                    <ul class="styled-list">
+                        <li>First item</li>
+                        <li>Second item</li>
+                        <li>Third item</li>
+                    </ul>
+                    <ol class="styled-list" style="margin-top: 15px;">
+                        <li>First step</li>
+                        <li>Second step</li>
+                        <li>Third step</li>
+                    </ol>
+                </div>
+                <div class="code-block">
+<span class="keyword">/* Style both ul and ol */</span>
+:is(ul, ol) {
+    <span class="property">list-style:</span> <span class="value">none</span>;
+}
+
+:is(ul, ol) li {
+    <span class="property">padding-left:</span> <span class="value">25px</span>;
+    <span class="property">position:</span> <span class="value">relative</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 6: TEXT ELEMENTS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>6. Text Content Styling</h2>
+                    <span class="example-tag selector">Text</span>
+                </div>
+                <p class="example-description">
+                    Consistent styling for different text elements with :is().
+                </p>
+                <div class="demo-area">
+                    <p class="text-content">Regular paragraph with <strong>bold text</strong> and <em>emphasis</em></p>
+                    <span class="text-content">Span text with <span class="highlight">highlighted</span> content</span>
+                </div>
+                <div class="code-block">
+<span class="keyword">/* Group text elements */</span>
+:is(p, span, div) {
+    <span class="property">line-height:</span> <span class="value">1.6</span>;
+    <span class="property">color:</span> <span class="value">#333</span>;
+}
+
+:is(strong, em, .highlight) {
+    <span class="property">color:</span> <span class="value">#667eea</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 7: NESTED CONTEXT -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>7. Nested Context Styling</h2>
+                    <span class="example-tag advanced">Nesting</span>
+                </div>
+                <p class="example-description">
+                    Simplify context-specific styling. Elements in header, nav, footer all styled together.
+                </p>
+                <div class="demo-area">
+                    <header class="demo-context">
+                        <a href="#">Header Link</a>
+                        <button>Header Button</button>
+                    </header>
+                    <nav class="demo-context">
+                        <a href="#">Nav Link</a>
+                        <button>Nav Button</button>
+                    </nav>
+                    <footer class="demo-context">
+                        <a href="#">Footer Link</a>
+                        <button>Footer Button</button>
+                    </footer>
+                </div>
+                <div class="code-block">
+<span class="keyword">/* Without :is() - very repetitive */</span>
+header a, header button,
+nav a, nav button,
+footer a, footer button {
+    <span class="property">color:</span> <span class="value">white</span>;
+}
+
+<span class="keyword">/* With :is() - one line! */</span>
+:is(header, nav, footer) :is(a, button) {
+    <span class="property">color:</span> <span class="value">white</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 8: INPUT TYPES -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>8. Multiple Input Types</h2>
+                    <span class="example-tag form">Form Inputs</span>
+                </div>
+                <p class="example-description">
+                    Target specific input types with :is() for cleaner selectors.
+                </p>
+                <div class="demo-area">
+                    <input type="text" class="input-field" placeholder="Text input">
+                    <input type="email" class="input-field" placeholder="Email input">
+                    <input type="tel" class="input-field" placeholder="Phone input">
+                </div>
+                <div class="code-block">
+<span class="keyword">/* Group input types */</span>
+:is([type="text"], [type="email"], [type="tel"]) {
+    <span class="property">width:</span> <span class="value">100%</span>;
+    <span class="property">padding:</span> <span class="value">10px</span>;
+    <span class="property">border:</span> <span class="value">2px solid #e0e0e0</span>;
+}
+
+:is([type="text"], [type="email"], [type="tel"]):focus {
+    <span class="property">border-color:</span> <span class="value">#667eea</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 9: PSEUDO-CLASS COMBINATIONS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>9. Pseudo-Class Combinations</h2>
+                    <span class="example-tag interactive">Interactive</span>
+                </div>
+                <p class="example-description">
+                    Combine multiple pseudo-classes elegantly. Interact with items to see changes.
+                </p>
+                <div class="demo-area">
+                    <div class="pseudo-demo">
+                        <a href="#" class="link-item">Link 1</a>
+                        <button class="link-item">Button</button>
+                        <span class="link-item">Span Item</span>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">/* Combine multiple pseudo-classes */</span>
+:is(a, button, .link):is(:hover, :focus, :active) {
+    <span class="property">color:</span> <span class="value">#764ba2</span>;
+    <span class="property">text-decoration:</span> <span class="value">underline</span>;
+    <span class="property">transform:</span> <span class="value">scale(1.05)</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 10: MULTIPLE CONDITIONS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>10. Featured Content Highlighting</h2>
+                    <span class="example-tag selector">Conditions</span>
+                </div>
+                <p class="example-description">
+                    Target featured or highlighted content within specific sections using :is().
+                </p>
+                <div class="demo-area">
+                    <article>
+                        <div class="featured">This is featured content</div>
+                        <div class="highlighted">This is highlighted content</div>
+                    </article>
+                </div>
+                <div class="code-block">
+<span class="keyword">/* Highlight featured or highlighted items */</span>
+:is(article, section) :is(.featured, .highlighted) {
+    <span class="property">background:</span> <span class="value">#fff3cd</span>;
+    <span class="property">border-left:</span> <span class="value">4px solid #ffc107</span>;
+    <span class="property">padding:</span> <span class="value">15px</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 11: ATTRIBUTE SELECTORS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>11. Attribute-Based Priority</h2>
+                    <span class="example-tag advanced">Attributes</span>
+                </div>
+                <p class="example-description">
+                    Style elements based on data attributes using :is() for multiple attribute values.
+                </p>
+                <div class="demo-area">
+                    <div class="priority-item" data-priority="critical">Critical Priority</div>
+                    <div class="priority-item" data-priority="high">High Priority</div>
+                    <div class="priority-item" data-priority="medium">Medium Priority</div>
+                    <div class="priority-item" data-priority="low">Low Priority</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">/* Group attribute selectors */</span>
+:is([data-priority="high"], [data-priority="critical"]) {
+    <span class="property">border:</span> <span class="value">2px solid #dc3545</span>;
+    <span class="property">background:</span> <span class="value">#ffebee</span>;
+}
+
+:is([data-priority="medium"]) {
+    <span class="property">border:</span> <span class="value">2px solid #fd7e14</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 12: COMPLEX NESTING -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>12. Complex Nested Selectors</h2>
+                    <span class="example-tag advanced">Complex</span>
+                </div>
+                <p class="example-description">
+                    Deeply nested selectors become much simpler with multiple :is() combinations.
+                </p>
+                <div class="demo-area">
+                    <main>
+                        <article class="complex-demo">
+                            <header>
+                                <h2>Article Title</h2>
+                            </header>
+                            <p>Article content goes here with consistent styling.</p>
+                        </article>
+                        <section class="complex-demo">
+                            <div class="intro">
+                                <h3>Section Title</h3>
+                            </div>
+                            <div class="content">Section content styled the same way.</div>
+                        </section>
+                    </main>
+                </div>
+                <div class="code-block">
+<span class="keyword">/* Without :is() - very verbose */</span>
+main article header h2,
+main article .intro h3,
+main section header h2,
+main section .intro h3 {
+    <span class="property">color:</span> <span class="value">#667eea</span>;
+}
+
+<span class="keyword">/* With :is() - clean and readable */</span>
+main :is(article, section) :is(header, .intro) 
+  :is(h2, h3) {
+    <span class="property">color:</span> <span class="value">#667eea</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS :is() Pseudo-Class • 12 Practical Examples</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Each example demonstrates how :is() simplifies and cleans up CSS selectors</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Box-Decoration-Break - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .card-header h2 {
+            font-size: 1.4em;
+            margin-bottom: 5px;
+        }
+
+        .card-header p {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .demo-area {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px dashed #667eea;
+            min-height: 100px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            overflow-x: auto;
+            line-height: 1.4;
+            margin: 15px 0;
+        }
+
+        .info-badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .description {
+            font-size: 0.95em;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        /* ========== DEMO STYLES ========== */
+        .text-line {
+            width: 100%;
+            line-height: 1.8;
+            font-size: 1.1em;
+        }
+
+        /* ========== EXAMPLE 1: Slice (Default) ========== */
+        .slice-demo {
+            -webkit-box-decoration-break: slice;
+            box-decoration-break: slice;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            display: inline;
+        }
+
+        /* ========== EXAMPLE 2: Clone ========== */
+        .clone-demo {
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            display: inline;
+        }
+
+        /* ========== EXAMPLE 3: Highlight (Clone) ========== */
+        .highlight-clone {
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            background: #ffeb3b;
+            padding: 5px 8px;
+            border-radius: 3px;
+            display: inline;
+            font-weight: bold;
+        }
+
+        /* ========== EXAMPLE 4: Code Styling ========== */
+        .code-inline {
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            background: #f5f5f5;
+            padding: 4px 8px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+            font-family: 'Courier New', monospace;
+            display: inline;
+        }
+
+        /* ========== EXAMPLE 5: Emphasized Text ========== */
+        .emphasized-text {
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            background: rgba(102, 126, 234, 0.2);
+            padding: 3px 6px;
+            border-left: 3px solid #667eea;
+            display: inline;
+        }
+
+        /* ========== EXAMPLE 6: Badge Style ========== */
+        .badge-text {
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 12px;
+            display: inline;
+            font-weight: bold;
+        }
+
+        /* ========== EXAMPLE 7: Multi-Column Container ========== */
+        .column-container {
+            columns: 2;
+            column-gap: 30px;
+            line-height: 1.8;
+        }
+
+        .column-demo {
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: inline;
+        }
+
+        /* ========== EXAMPLE 8: Border Styling ========== */
+        .border-demo {
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 8px 12px;
+            border: 2px solid #667eea;
+            border-radius: 4px;
+            display: inline;
+        }
+
+        /* ========== EXAMPLE 9: Shadow Effect ========== */
+        .shadow-demo {
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+            display: inline;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* ========== EXAMPLE 10: Link Styling ========== */
+        .styled-link {
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 4px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            display: inline;
+            cursor: pointer;
+        }
+
+        .styled-link:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        /* ========== EXAMPLE 11: Mixed Decorations ========== */
+        .mixed-decoration {
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            background: #fff9c4;
+            padding: 6px 10px;
+            border: 1px dashed #fbc02d;
+            border-radius: 3px;
+            display: inline;
+            font-weight: bold;
+        }
+
+        .info-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 12px;
+            padding: 12px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .comparison-item p {
+            font-size: 0.9em;
+            color: #666;
+            margin: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+            background: white;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .column-container {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Box-Decoration-Break Property</h1>
+            <p>11 Practical Interactive Examples</p>
+        </header>
+
+        <div class="examples-grid">
+            <!-- ========== EXAMPLE 1: Slice (Default) ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>1. Slice (Default)</h2>
+                    <p>Continuous appearance</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">box-decoration-break: slice</div>
+                    <div class="description">Decorations appear as one continuous box, even when text wraps. This is the default behavior.</div>
+                    <div class="demo-area">
+                        <p class="text-line">
+                            <span class="slice-demo">This is a long piece of text with slice box-decoration-break that wraps across multiple lines and demonstrates how the background appears continuous.</span>
+                        </p>
+                    </div>
+                    <div class="code-block">box-decoration-break: slice;</div>
+                    <div class="info-text">✓ Natural continuous appearance</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 2: Clone ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>2. Clone</h2>
+                    <p>Individual line styling</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">box-decoration-break: clone</div>
+                    <div class="description">Each line of wrapped text gets its own complete set of decorations independently styled.</div>
+                    <div class="demo-area">
+                        <p class="text-line">
+                            <span class="clone-demo">This is a long piece of text with clone box-decoration-break where each line gets complete styling with padding and background.</span>
+                        </p>
+                    </div>
+                    <div class="code-block">box-decoration-break: clone;</div>
+                    <div class="info-text">⭐ Each line fully decorated</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 3: Highlighted Search Results ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>3. Search Highlight</h2>
+                    <p>Clone for highlights</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Real-world: Clone</div>
+                    <div class="description">Search result highlights using clone so each line of wrapped text gets its own highlighted box.</div>
+                    <div class="demo-area">
+                        <p class="text-line">
+                            The quick brown fox jumped over the <span class="highlight-clone">lazy dog in the meadow near the forest during the sunny afternoon</span> yesterday morning.
+                        </p>
+                    </div>
+                    <div class="code-block">mark {
+  box-decoration-break: clone;
+  background: yellow;
+  padding: 5px 8px;
+}</div>
+                    <div class="info-text">✓ Perfect for search results</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 4: Inline Code ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>4. Inline Code</h2>
+                    <p>Code styling</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Real-world: Clone</div>
+                    <div class="description">Inline code that wraps gets proper styling on each line with clone for consistent appearance.</div>
+                    <div class="demo-area">
+                        <p class="text-line">
+                            The variable <span class="code-inline">my_very_long_variable_name_that_demonstrates_wrapping_behavior</span> is defined in the component.
+                        </p>
+                    </div>
+                    <div class="code-block">code {
+  box-decoration-break: clone;
+  background: #f5f5f5;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+}</div>
+                    <div class="info-text">✓ Code styling preserved</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 5: Emphasized Text ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>5. Emphasized Text</h2>
+                    <p>Content emphasis</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Real-world: Clone</div>
+                    <div class="description">Emphasized important content with decorations that wrap nicely to multiple lines.</div>
+                    <div class="demo-area">
+                        <p class="text-line">
+                            This is <span class="emphasized-text">very important information that you need to pay attention to because it spans multiple lines and should maintain proper styling</span> throughout the text.
+                        </p>
+                    </div>
+                    <div class="code-block">em {
+  box-decoration-break: clone;
+  background: rgba(102, 126, 234, 0.2);
+  padding: 3px 6px;
+  border-left: 3px solid #667eea;
+}</div>
+                    <div class="info-text">✓ Content emphasis maintained</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 6: Badge/Label ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>6. Badge Labels</h2>
+                    <p>Inline badges</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Real-world: Clone</div>
+                    <div class="description">Inline badges styled with clone so wrapped text maintains the badge appearance on each line.</div>
+                    <div class="demo-area">
+                        <p class="text-line">
+                            This content includes <span class="badge-text">important badge label that wraps across multiple lines maintaining styling</span> for emphasis.
+                        </p>
+                    </div>
+                    <div class="code-block">.badge {
+  box-decoration-break: clone;
+  background: #667eea;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 12px;
+}</div>
+                    <div class="info-text">✓ Badge style consistent</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 7: Multi-Column Layout ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>7. Multi-Column Text</h2>
+                    <p>Columns with clone</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Real-world: Clone</div>
+                    <div class="description">Text styled with clone in a multi-column layout, so decorations work properly across column breaks.</div>
+                    <div class="demo-area">
+                        <div class="column-container">
+                            <span class="column-demo">This is styled text that spans across multiple columns in a sophisticated layout design</span> and continues seamlessly.
+                        </div>
+                    </div>
+                    <div class="code-block">article { columns: 2; }
+
+span {
+  box-decoration-break: clone;
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+}</div>
+                    <div class="info-text">✓ Column-aware styling</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 8: Border Styling ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>8. Border Styling</h2>
+                    <p>Bordered boxes</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Real-world: Clone</div>
+                    <div class="description">Text with borders that wrap, where each line gets complete border styling with clone.</div>
+                    <div class="demo-area">
+                        <p class="text-line">
+                            Important: <span class="border-demo">This text has a complete border on each line when it wraps to ensure visual consistency across all wrapped portions</span> of content.
+                        </p>
+                    </div>
+                    <div class="code-block">span {
+  box-decoration-break: clone;
+  border: 2px solid #667eea;
+  padding: 8px 12px;
+}</div>
+                    <div class="info-text">✓ Borders on each line</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 9: Shadow Effect ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>9. Shadow Effects</h2>
+                    <p>Box shadows</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Real-world: Clone</div>
+                    <div class="description">Text with box-shadow that applies independently to each line for a layered effect.</div>
+                    <div class="demo-area">
+                        <p class="text-line">
+                            <span class="shadow-demo">This text has a subtle shadow effect on each line creating a floating appearance as it wraps across multiple lines</span>
+                        </p>
+                    </div>
+                    <div class="code-block">span {
+  box-decoration-break: clone;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  padding: 8px 12px;
+}</div>
+                    <div class="info-text">✓ Shadows per line</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 10: Styled Links ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>10. Styled Links</h2>
+                    <p>Enhanced link styling</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Real-world: Clone</div>
+                    <div class="description">Links with background and padding that wrap properly with complete styling on each line.</div>
+                    <div class="demo-area">
+                        <p class="text-line">
+                            Learn more at <span class="styled-link">this-incredibly-long-documentation-link-that-demonstrates-wrapping-behavior-with-styling</span> for details.
+                        </p>
+                    </div>
+                    <div class="code-block">a {
+  box-decoration-break: clone;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 4px 8px;
+  border-radius: 3px;
+}</div>
+                    <div class="info-text">✓ Links fully styled</div>
+                </div>
+            </div>
+
+            <!-- ========== EXAMPLE 11: Mixed Decorations ========== -->
+            <div class="example-card">
+                <div class="card-header">
+                    <h2>11. Mixed Decorations</h2>
+                    <p>Background + border</p>
+                </div>
+                <div class="card-content">
+                    <div class="info-badge">Real-world: Clone</div>
+                    <div class="description">Combining multiple decorations (background, border, padding) with clone for complete styling on each line.</div>
+                    <div class="demo-area">
+                        <p class="text-line">
+                            <span class="mixed-decoration">This text uses multiple decorative properties including background color dashed border and padding that all apply to each wrapped line</span>
+                        </p>
+                    </div>
+                    <div class="code-block">span {
+  box-decoration-break: clone;
+  background: #fff9c4;
+  border: 1px dashed #fbc02d;
+  padding: 6px 10px;
+}</div>
+                    <div class="info-text">✓ All decorations included</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <h2>Quick Reference Guide</h2>
+            <p style="margin: 15px 0;">
+                <strong>box-decoration-break: slice</strong> - Continuous effect (default)<br>
+                <strong>box-decoration-break: clone</strong> - Each fragment styled independently
+            </p>
+            <p style="margin: 15px 0; font-size: 0.95em;">
+                ✓ Use <strong>clone</strong> for: Highlights, badges, emphasis, inline code<br>
+                ✓ Use <strong>slice</strong> for: Continuous backgrounds<br>
+                ✓ Include <strong>-webkit-</strong> prefix for Safari/Chrome<br>
+                ✓ Works with inline elements only (span, a, em, strong, code, etc.)<br>
+                ✓ Applies to: background, border, padding, box-shadow, border-radius
+            </p>
+            <p>&copy; 2024 CSS Box-Decoration-Break Practical Examples | 11 Ready-to-Use Patterns</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Pseudo-Elements - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.05rem;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin: 35px 0 20px 0;
+            font-size: 1.6rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.2rem;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .intro-section {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .intro-section strong {
+            color: #667eea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pseudo-section {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .pseudo-name {
+            font-family: 'Courier New', monospace;
+            background: #667eea;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: inline-block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .syntax-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .syntax-box .keyword { color: #569cd6; }
+        .syntax-box .selector { color: #9cdcfe; }
+        .syntax-box .property { color: #9cdcfe; }
+        .syntax-box .value { color: #ce9178; }
+        .syntax-box .comment { color: #6a9955; }
+
+        .demo-section {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .use-cases {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .use-cases h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .use-cases ul {
+            list-style-position: inside;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .use-cases li {
+            margin-bottom: 8px;
+        }
+
+        .pseudo-category {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .category-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .category-card .icon {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .category-card .name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .category-card .desc {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .best-practices {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .best-practices h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .best-practices ul {
+            list-style-position: inside;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .best-practices li {
+            margin-bottom: 8px;
+        }
+
+        .browser-support {
+            background: #f3e5f5;
+            border: 1px solid #ce93d8;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .browser-support h4 {
+            color: #7b1fa2;
+            margin-bottom: 10px;
+        }
+
+        .browser-support p {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .support-badge {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+
+        .support-badge.partial {
+            background: #ff9800;
+        }
+
+        .code-inline {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 20px 40px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            h3 {
+                font-size: 1rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            .pseudo-category {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Pseudo-Elements</h1>
+            <p>Complete Guide to Virtual Elements and Content Insertion</p>
+        </header>
+
+        <div class="content">
+            <div class="intro-section">
+                <p><strong>CSS Pseudo-Elements</strong> represent virtual elements that don't exist in the HTML markup. They allow you to style specific parts of an element (like the first line or first letter) or insert generated content using <span class="code-inline">::before</span> and <span class="code-inline">::after</span>. Unlike pseudo-classes which describe element states, pseudo-elements target actual parts of content or create new virtual content.</p>
+            </div>
+
+            <h2>Overview of CSS Pseudo-Elements</h2>
+            <p>Pseudo-elements are organized into several categories:</p>
+
+            <div class="pseudo-category">
+                <div class="category-card">
+                    <div class="icon">➕</div>
+                    <div class="name">Content</div>
+                    <div class="desc">::before, ::after</div>
+                </div>
+                <div class="category-card">
+                    <div class="icon">📝</div>
+                    <div class="name">Typography</div>
+                    <div class="desc">::first-line, ::first-letter</div>
+                </div>
+                <div class="category-card">
+                    <div class="icon">🎨</div>
+                    <div class="name">Styling</div>
+                    <div class="desc">::selection, ::marker</div>
+                </div>
+                <div class="category-card">
+                    <div class="icon">📋</div>
+                    <div class="name">Form</div>
+                    <div class="desc">::placeholder</div>
+                </div>
+                <div class="category-card">
+                    <div class="icon">🎬</div>
+                    <div class="name">Media</div>
+                    <div class="desc">::cue, ::backdrop</div>
+                </div>
+                <div class="category-card">
+                    <div class="icon">🖼️</div>
+                    <div class="name">Images</div>
+                    <div class="desc">::part, ::slotted</div>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pseudo-Element</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Browser Support</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="code-inline">::before</span></td>
+                        <td>Content</td>
+                        <td>Insert content before element</td>
+                        <td>IE 8+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">::after</span></td>
+                        <td>Content</td>
+                        <td>Insert content after element</td>
+                        <td>IE 8+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">::first-line</span></td>
+                        <td>Typography</td>
+                        <td>Style first line of text</td>
+                        <td>IE 5.5+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">::first-letter</span></td>
+                        <td>Typography</td>
+                        <td>Style first letter of text</td>
+                        <td>IE 5.5+, all modern</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">::selection</span></td>
+                        <td>Styling</td>
+                        <td>Style user-selected text</td>
+                        <td>All modern browsers</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">::placeholder</span></td>
+                        <td>Form</td>
+                        <td>Style input placeholder text</td>
+                        <td>All modern browsers</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">::marker</span></td>
+                        <td>Styling</td>
+                        <td>Style list item markers</td>
+                        <td>Chrome 86+, Firefox 68+</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-inline">::cue</span></td>
+                        <td>Media</td>
+                        <td>Style video captions</td>
+                        <td>Chrome 26+, Firefox 55+</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Before and After -->
+            <div class="pseudo-section">
+                <div class="pseudo-name">::before and ::after</div>
+                <h3>What It Does</h3>
+                <p><span class="code-inline">::before</span> creates a pseudo-element <span class="highlight">before the element's content</span>. <span class="code-inline">::after</span> creates one <span class="highlight">after the content</span>. Both use the <span class="code-inline">content</span> property to insert generated content.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">element::before</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">content</span>: <span class="value">"text"</span>;<br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Content Property Values</h3>
+                <div class="syntax-box">
+<span class="comment">/* Text content */</span><br>
+<span class="property">content</span>: <span class="value">"Hello World"</span>;<br>
+<br>
+<span class="comment">/* Empty (placeholder) */</span><br>
+<span class="property">content</span>: <span class="value">""</span>;<br>
+<br>
+<span class="comment">/* Image */</span><br>
+<span class="property">content</span>: <span class="value">url('image.png')</span>;<br>
+<br>
+<span class="comment">/* Attribute value */</span><br>
+<span class="property">content</span>: <span class="value">attr(data-label)</span>;<br>
+<br>
+<span class="comment">/* Counter */</span><br>
+<span class="property">content</span>: <span class="value">counter(counter-name)</span>;<br>
+<br>
+<span class="comment">/* Multiple values */</span><br>
+<span class="property">content</span>: <span class="value">" (" attr(href) ")"</span>;
+                </div>
+
+                <h3>Example Use Cases</h3>
+                <div class="use-cases">
+                    <h4>Common Applications</h4>
+                    <ul>
+                        <li>Decorative icons and symbols before/after text</li>
+                        <li>Adding quotation marks around quoted text</li>
+                        <li>Displaying URLs after links (printing)</li>
+                        <li>Creating clearfix for floats</li>
+                        <li>Building tooltips and popovers</li>
+                        <li>Creating decorative elements without extra HTML</li>
+                        <li>Numbering items with counters</li>
+                        <li>Loading animations and spinners</li>
+                    </ul>
+                </div>
+
+                <h3>Important Notes</h3>
+                <p>• <span class="code-inline">::before</span> and <span class="code-inline">::after</span> create inline boxes by default</p>
+                <p>• The <span class="code-inline">content</span> property is required; without it, nothing displays</p>
+                <p>• These elements can be styled with any CSS properties (colors, sizes, positioning)</p>
+                <p>• They don't appear in the DOM, so they won't be selected by JavaScript queries</p>
+                <p>• Useful for reducing HTML markup and keeping content semantic</p>
+            </div>
+
+            <!-- First-Line -->
+            <div class="pseudo-section">
+                <div class="pseudo-name">::first-line</div>
+                <h3>What It Does</h3>
+                <p>Applies styles to the <span class="highlight">first line of text</span> in a block-level element. The line length depends on viewport width and font size.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">element::first-line</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Allowed Properties</h3>
+                <p>Only certain CSS properties work with <span class="code-inline">::first-line</span>:</p>
+                <div class="syntax-box">
+<span class="comment">/* These work */</span><br>
+<span class="property">color</span>, <span class="property">background</span>, <span class="property">font-size</span>,<br>
+<span class="property">font-weight</span>, <span class="property">font-style</span>, <span class="property">text-transform</span>,<br>
+<span class="property">letter-spacing</span>, <span class="property">word-spacing</span>, <span class="property">line-height</span>
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Drop cap effect (larger first letter)</li>
+                        <li>Highlighting first line of paragraphs</li>
+                        <li>Different text styling for first line</li>
+                        <li>Editorial typography effects</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- First-Letter -->
+            <div class="pseudo-section">
+                <div class="pseudo-name">::first-letter</div>
+                <h3>What It Does</h3>
+                <p>Applies styles to the <span class="highlight">first letter of text</span>. Commonly used for drop caps effects in typography.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">element::first-letter</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">3em</span>;<br>
+&nbsp;&nbsp;<span class="property">float</span>: <span class="value">left</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="syntax-box">
+<span class="comment">/* Drop cap effect */</span><br>
+<span class="selector">p::first-letter</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">2em</span>;<br>
+&nbsp;&nbsp;<span class="property">font-weight</span>: <span class="value">bold</span>;<br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">#667eea</span>;<br>
+&nbsp;&nbsp;<span class="property">float</span>: <span class="value">left</span>;<br>
+&nbsp;&nbsp;<span class="property">margin-right</span>: <span class="value">5px</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Drop cap typography</li>
+                        <li>Highlighting first character</li>
+                        <li>Magazine-style article formatting</li>
+                        <li>Editorial design effects</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Selection -->
+            <div class="pseudo-section">
+                <div class="pseudo-name">::selection</div>
+                <h3>What It Does</h3>
+                <p>Applies styles to text that the user has <span class="highlight">selected/highlighted</span> with the mouse or keyboard.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">::selection</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">#667eea</span>;<br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">white</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Vendor prefix still needed for Firefox */</span><br>
+<span class="selector">::moz-selection</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">#667eea</span>;<br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">white</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Allowed Properties</h3>
+                <p>Only these properties can be used with <span class="code-inline">::selection</span>:</p>
+                <div class="syntax-box">
+<span class="property">color</span>, <span class="property">background</span>, <span class="property">background-color</span>,<br>
+<span class="property">text-shadow</span>, <span class="property">cursor</span> (limited)
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Brand color for text selection</li>
+                        <li>Accessible selection styling</li>
+                        <li>Custom highlight colors</li>
+                        <li>Improving visual feedback for users</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Placeholder -->
+            <div class="pseudo-section">
+                <div class="pseudo-name">::placeholder</div>
+                <h3>What It Does</h3>
+                <p>Styles the <span class="highlight">placeholder text</span> in form inputs (the hint text that appears before user input).</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">input::placeholder</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">#999</span>;<br>
+&nbsp;&nbsp;<span class="property">font-style</span>: <span class="value">italic</span>;<br>
+&nbsp;&nbsp;<span class="property">opacity</span>: <span class="value">0.7</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Important Notes</h3>
+                <p>• The <span class="code-inline">opacity</span> property must be set explicitly (default is 0.54)</p>
+                <p>• Use with caution as placeholder text is not a substitute for labels</p>
+                <p>• Always provide proper <span class="code-inline">&lt;label&gt;</span> elements for accessibility</p>
+                <p>• Vendor prefixes needed for some browsers (<span class="code-inline">-webkit-</span>, <span class="code-inline">-moz-</span>)</p>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Custom placeholder text styling</li>
+                        <li>Better form input accessibility</li>
+                        <li>Brand-consistent form inputs</li>
+                        <li>Improving placeholder visibility</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Marker -->
+            <div class="pseudo-section">
+                <div class="pseudo-name">::marker</div>
+                <h3>What It Does</h3>
+                <p>Styles the <span class="highlight">marker of list items</span> (bullets, numbers, etc.).</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">li::marker</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">#667eea</span>;<br>
+&nbsp;&nbsp;<span class="property">font-weight</span>: <span class="value">bold</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Custom bullet colors</li>
+                        <li>List number styling</li>
+                        <li>Brand-consistent lists</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Cue -->
+            <div class="pseudo-section">
+                <div class="pseudo-name">::cue</div>
+                <h3>What It Does</h3>
+                <p>Styles <span class="highlight">video captions and subtitles</span> in media players.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">video::cue</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">rgba(0, 0, 0, 0.8)</span>;<br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">white</span>;<br>
+&nbsp;&nbsp;<span class="property">font-family</span>: <span class="value">sans-serif</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Custom caption styling</li>
+                        <li>Brand-consistent subtitles</li>
+                        <li>Accessibility improvements</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Key Differences: Pseudo-Classes vs Pseudo-Elements</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Pseudo-Classes (:)</th>
+                        <th>Pseudo-Elements (::)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Syntax</td>
+                        <td>Single colon (:)</td>
+                        <td>Double colon (::)</td>
+                    </tr>
+                    <tr>
+                        <td>What they do</td>
+                        <td>Select element states</td>
+                        <td>Select virtual parts</td>
+                    </tr>
+                    <tr>
+                        <td>Example</td>
+                        <td>:hover, :focus, :nth-child()</td>
+                        <td>::before, ::after, ::first-line</td>
+                    </tr>
+                    <tr>
+                        <td>Purpose</td>
+                        <td>Interactive and structural</td>
+                        <td>Content and typography</td>
+                    </tr>
+                    <tr>
+                        <td>In DOM</td>
+                        <td>Select existing elements</td>
+                        <td>Create virtual elements</td>
+                    </tr>
+                    <tr>
+                        <td>Content property</td>
+                        <td>Not used</td>
+                        <td>Used with ::before/::after</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Best Practices</h2>
+            <div class="best-practices">
+                <h4>✓ Do's</h4>
+                <ul>
+                    <li><strong>Use ::before/::after for decorative content</strong> - Keeps content semantic</li>
+                    <li><strong>Remember ::after is for clearing floats</strong> - Classic clearfix technique</li>
+                    <li><strong>Use double colon syntax (::)</strong> - Single colon (:) is deprecated</li>
+                    <li><strong>Always provide fallbacks for content</strong> - Use attr() for dynamic values</li>
+                    <li><strong>Test with ::first-line/::first-letter carefully</strong> - They have limited property support</li>
+                    <li><strong>Combine pseudo-elements with pseudo-classes</strong> - <span class="code-inline">a::after:hover</span></li>
+                </ul>
+            </div>
+
+            <div class="best-practices" style="background: #ffebee; border-left-color: #f44336;">
+                <h4 style="color: #c62828;">✗ Don'ts</h4>
+                <ul>
+                    <li><strong>Don't use ::before/::after for critical content</strong> - Not in DOM, not selectable</li>
+                    <li><strong>Don't forget the content property</strong> - It's required for display</li>
+                    <li><strong>Don't overuse pseudo-elements</strong> - HTML elements are clearer for important content</li>
+                    <li><strong>Don't ignore browser support</strong> - Older pseudo-elements have better support</li>
+                    <li><strong>Don't expect pseudo-elements to be selectable by JS</strong> - Use data attributes instead</li>
+                </ul>
+            </div>
+
+            <h2>Browser Support</h2>
+            <div class="browser-support">
+                <h4>::before and ::after</h4>
+                <span class="support-badge">IE 8+</span>
+                <span class="support-badge">All Modern Browsers</span>
+
+                <h4 style="margin-top: 15px;">::first-line and ::first-letter</h4>
+                <span class="support-badge">IE 5.5+</span>
+                <span class="support-badge">All Modern Browsers</span>
+
+                <h4 style="margin-top: 15px;">::selection</h4>
+                <span class="support-badge">All Modern Browsers</span>
+                <span class="support-badge partial">IE 9+</span>
+
+                <h4 style="margin-top: 15px;">::placeholder</h4>
+                <span class="support-badge">All Modern Browsers</span>
+                <span class="support-badge partial">IE 10+</span>
+
+                <h4 style="margin-top: 15px;">::marker and ::cue</h4>
+                <span class="support-badge">Chrome 86+</span>
+                <span class="support-badge">Firefox 68+</span>
+                <span class="support-badge partial">Safari Limited</span>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Pseudo-Elements Guide. CSS Reference. <strong>Most have excellent browser support, especially ::before, ::after, ::first-line, and ::first-letter.</strong></p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Combinator Selectors - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.05rem;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin: 35px 0 20px 0;
+            font-size: 1.6rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.2rem;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .intro-section {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .intro-section strong {
+            color: #667eea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .combinator-section {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .combinator-name {
+            font-family: 'Courier New', monospace;
+            background: #667eea;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: inline-block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .syntax-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .syntax-box .keyword { color: #569cd6; }
+        .syntax-box .selector { color: #9cdcfe; }
+        .syntax-box .property { color: #9cdcfe; }
+        .syntax-box .value { color: #ce9178; }
+        .syntax-box .comment { color: #6a9955; }
+
+        .demo-section {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .demo-html {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .demo-html code {
+            color: #333;
+        }
+
+        .visual-demo {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 4px;
+            min-height: 100px;
+        }
+
+        .element {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f0f4ff;
+            border: 1px solid #667eea;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .element.target {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            font-weight: 600;
+        }
+
+        .element.nested {
+            margin-left: 20px;
+            background: #fff3e0;
+            border: 1px solid #ff9800;
+        }
+
+        .use-cases {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .use-cases h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .use-cases ul {
+            list-style-position: inside;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .use-cases li {
+            margin-bottom: 8px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .comparison-card .symbol {
+            font-size: 1.8rem;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .comparison-card .name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .comparison-card .desc {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .best-practices {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .best-practices h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .best-practices ul {
+            list-style-position: inside;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .best-practices li {
+            margin-bottom: 8px;
+        }
+
+        .accessibility-note {
+            background: #fff9c4;
+            border-left: 4px solid #fbc02d;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+
+        .accessibility-note strong {
+            color: #f57f17;
+        }
+
+        .browser-support {
+            background: #f3e5f5;
+            border: 1px solid #ce93d8;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .browser-support h4 {
+            color: #7b1fa2;
+            margin-bottom: 10px;
+        }
+
+        .browser-support p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .support-badge {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+
+        .support-badge.partial {
+            background: #ff9800;
+        }
+
+        .support-badge.legacy {
+            background: #f44336;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 20px 40px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            h3 {
+                font-size: 1rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Combinator Selectors</h1>
+            <p>Complete Guide to Selecting Related Elements</p>
+        </header>
+
+        <div class="content">
+            <div class="intro-section">
+                <p><strong>CSS Combinator Selectors</strong> allow you to select elements based on their relationship to other elements in the DOM. They connect two or more selectors to target elements with precision based on their hierarchy and position. Combinators are essential for writing efficient, maintainable CSS without adding extra classes.</p>
+            </div>
+
+            <h2>Overview of CSS Combinators</h2>
+            <p>There are four types of combinators in CSS, each serving a different purpose:</p>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="symbol">></div>
+                    <div class="name">Child</div>
+                    <div class="desc">Direct children only</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="symbol">+</div>
+                    <div class="name">Adjacent Sibling</div>
+                    <div class="desc">Next sibling element</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="symbol">~</div>
+                    <div class="name">General Sibling</div>
+                    <div class="desc">All following siblings</div>
+                </div>
+                <div class="comparison-card">
+                    <div class="symbol">&nbsp;</div>
+                    <div class="name">Descendant</div>
+                    <div class="desc">All nested elements</div>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Combinator</th>
+                        <th>Symbol</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Child</strong></td>
+                        <td><code>></code></td>
+                        <td>Selects direct children only</td>
+                        <td><code>div > p</code></td>
+                        <td>Target immediate offspring</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Adjacent Sibling</strong></td>
+                        <td><code>+</code></td>
+                        <td>Selects the next sibling element</td>
+                        <td><code>h2 + p</code></td>
+                        <td>Style first element after another</td>
+                    </tr>
+                    <tr>
+                        <td><strong>General Sibling</strong></td>
+                        <td><code>~</code></td>
+                        <td>Selects all following siblings</td>
+                        <td><code>h2 ~ p</code></td>
+                        <td>Style all related siblings</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Descendant</strong></td>
+                        <td><code>&nbsp;</code> (space)</td>
+                        <td>Selects all nested descendants</td>
+                        <td><code>div p</code></td>
+                        <td>Style any nested elements</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Child Combinator -->
+            <div class="combinator-section">
+                <div class="combinator-name">Child Combinator (>)</div>
+                <h3>What It Does</h3>
+                <p>The child combinator selects only <span class="highlight">direct children</span> of a specified element. It does not select grandchildren or deeper descendants.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">parent</span> <span class="keyword">></span> <span class="selector">child</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <p><strong>HTML:</strong></p>
+                    <div class="demo-html">
+<span class="keyword">&lt;div</span> <span class="property">class</span>=<span class="value">"container"</span><span class="keyword">&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">&lt;p&gt;</span>Child paragraph 1<span class="keyword">&lt;/p&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">&lt;div&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">&lt;p&gt;</span>Grandchild paragraph<span class="keyword">&lt;/p&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">&lt;/div&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">&lt;p&gt;</span>Child paragraph 2<span class="keyword">&lt;/p&gt;</span><br>
+<span class="keyword">&lt;/div&gt;</span>
+                    </div>
+
+                    <p><strong>CSS:</strong></p>
+                    <div class="syntax-box">
+<span class="comment">/* Selects only direct p children */</span><br>
+<span class="selector">.container</span> <span class="keyword">></span> <span class="selector">p</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">blue</span>;<br>
+&nbsp;&nbsp;<span class="property">font-weight</span>: <span class="value">bold</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+
+                    <p><strong>Result:</strong> Only "Child paragraph 1" and "Child paragraph 2" are styled. The grandchild paragraph is NOT selected.</p>
+                </div>
+
+                <h3>Why Use Child Combinator?</h3>
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Styling direct menu items without affecting nested submenus</li>
+                        <li>Targeting first-level list items in nested lists</li>
+                        <li>Styling immediate children of a container while preserving internal structure</li>
+                        <li>Creating layouts where only top-level elements are affected</li>
+                        <li>Avoiding unintended cascade to deeper nested elements</li>
+                    </ul>
+                </div>
+
+                <h3>Performance Note</h3>
+                <p>Child combinators are more efficient than descendant selectors because they stop after checking direct children, not traversing the entire DOM tree.</p>
+            </div>
+
+            <!-- Adjacent Sibling Combinator -->
+            <div class="combinator-section">
+                <div class="combinator-name">Adjacent Sibling Combinator (+)</div>
+                <h3>What It Does</h3>
+                <p>The adjacent sibling combinator selects an element that is <span class="highlight">immediately preceded</span> by another element. Both elements must share the same parent.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">element</span> <span class="keyword">+</span> <span class="selector">adjacent</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <p><strong>HTML:</strong></p>
+                    <div class="demo-html">
+<span class="keyword">&lt;h2&gt;</span>Section Title<span class="keyword">&lt;/h2&gt;</span><br>
+<span class="keyword">&lt;p&gt;</span>First paragraph after heading<span class="keyword">&lt;/p&gt;</span><br>
+<span class="keyword">&lt;p&gt;</span>Second paragraph<span class="keyword">&lt;/p&gt;</span><br>
+<span class="keyword">&lt;h2&gt;</span>Another Section<span class="keyword">&lt;/h2&gt;</span><br>
+<span class="keyword">&lt;p&gt;</span>Paragraph after second heading<span class="keyword">&lt;/p&gt;</span>
+                    </div>
+
+                    <p><strong>CSS:</strong></p>
+                    <div class="syntax-box">
+<span class="comment">/* Only the first paragraph after each h2 */</span><br>
+<span class="selector">h2</span> <span class="keyword">+</span> <span class="selector">p</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">1.1em</span>;<br>
+&nbsp;&nbsp;<span class="property">font-weight</span>: <span class="value">bold</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+
+                    <p><strong>Result:</strong> Only the two paragraphs that immediately follow an h2 are styled.</p>
+                </div>
+
+                <h3>Why Use Adjacent Sibling Combinator?</h3>
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Adding extra margin to the first paragraph after a heading</li>
+                        <li>Styling the first item in a list that follows a label</li>
+                        <li>Creating visual separation after section titles</li>
+                        <li>Styling elements that appear immediately after form labels</li>
+                        <li>Removing default margins between consecutive elements</li>
+                    </ul>
+                </div>
+
+                <h3>Key Difference from General Sibling</h3>
+                <p>The adjacent sibling only selects the <strong>next immediate</strong> element. Subsequent siblings are not selected unless they are adjacent to the first element.</p>
+            </div>
+
+            <!-- General Sibling Combinator -->
+            <div class="combinator-section">
+                <div class="combinator-name">General Sibling Combinator (~)</div>
+                <h3>What It Does</h3>
+                <p>The general sibling combinator selects <span class="highlight">all following sibling elements</span> that match the selector. They must share the same parent.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">element</span> <span class="keyword">~</span> <span class="selector">sibling</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <p><strong>HTML:</strong></p>
+                    <div class="demo-html">
+<span class="keyword">&lt;input</span> <span class="property">type</span>=<span class="value">"checkbox"</span> <span class="property">id</span>=<span class="value">"toggle"</span><span class="keyword">&gt;</span><br>
+<span class="keyword">&lt;label&gt;</span>Toggle options<span class="keyword">&lt;/label&gt;</span><br>
+<span class="keyword">&lt;div</span> <span class="property">class</span>=<span class="value">"options"</span><span class="keyword">&gt;</span>Hidden by default<span class="keyword">&lt;/div&gt;</span><br>
+<span class="keyword">&lt;p&gt;</span>Other content<span class="keyword">&lt;/p&gt;</span>
+                    </div>
+
+                    <p><strong>CSS:</strong></p>
+                    <div class="syntax-box">
+<span class="comment">/* Hide all siblings after unchecked input */</span><br>
+<span class="selector">input:not(:checked)</span> <span class="keyword">~</span> <span class="selector">div</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">display</span>: <span class="value">none</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Show when checked */</span><br>
+<span class="selector">input:checked</span> <span class="keyword">~</span> <span class="selector">div</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">display</span>: <span class="value">block</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+
+                    <p><strong>Result:</strong> The .options div is hidden initially, shown when the checkbox is checked.</p>
+                </div>
+
+                <h3>Why Use General Sibling Combinator?</h3>
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Creating CSS-only toggle patterns (checkbox hack)</li>
+                        <li>Styling all paragraphs after a heading</li>
+                        <li>Applying styles to multiple siblings based on a condition</li>
+                        <li>Creating interactive components without JavaScript</li>
+                        <li>Styling list items that follow a specific item</li>
+                    </ul>
+                </div>
+
+                <h3>Key Difference from Adjacent Sibling</h3>
+                <p>General sibling selects <strong>all following siblings</strong>, not just the first one. Use <code>~</code> for broader selection and <code>+</code> for precise adjacent selection.</p>
+            </div>
+
+            <!-- Descendant Combinator -->
+            <div class="combinator-section">
+                <div class="combinator-name">Descendant Combinator (space)</div>
+                <h3>What It Does</h3>
+                <p>The descendant combinator selects <span class="highlight">all nested elements</span> (children, grandchildren, great-grandchildren, etc.) that match the selector.</p>
+
+                <h3>Syntax</h3>
+                <div class="syntax-box">
+<span class="selector">ancestor</span> <span class="keyword">descendant</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">property</span>: <span class="value">value</span>;<br>
+<span class="keyword">}</span>
+                </div>
+
+                <h3>Example</h3>
+                <div class="demo-section">
+                    <p><strong>HTML:</strong></p>
+                    <div class="demo-html">
+<span class="keyword">&lt;article&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">&lt;p&gt;</span>Direct child paragraph<span class="keyword">&lt;/p&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">&lt;div&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">&lt;p&gt;</span>Nested paragraph<span class="keyword">&lt;/p&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">&lt;section&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">&lt;p&gt;</span>Deep nested paragraph<span class="keyword">&lt;/p&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">&lt;/section&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">&lt;/div&gt;</span><br>
+<span class="keyword">&lt;/article&gt;</span>
+                    </div>
+
+                    <p><strong>CSS:</strong></p>
+                    <div class="syntax-box">
+<span class="comment">/* Selects ALL p elements within article */</span><br>
+<span class="selector">article</span> <span class="selector">p</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">darkblue</span>;<br>
+<span class="keyword">}</span>
+                    </div>
+
+                    <p><strong>Result:</strong> All three paragraphs are styled, regardless of nesting depth.</p>
+                </div>
+
+                <h3>Why Use Descendant Combinator?</h3>
+                <div class="use-cases">
+                    <h4>Common Use Cases</h4>
+                    <ul>
+                        <li>Styling all text elements within a specific container</li>
+                        <li>Applying colors to all links within a section</li>
+                        <li>Creating scope-based styling (e.g., all links in navigation)</li>
+                        <li>Inheriting styles to nested structures</li>
+                        <li>Creating context-specific typography</li>
+                    </ul>
+                </div>
+
+                <h3>Performance Consideration</h3>
+                <p>Descendant selectors can be slower than child selectors because the browser must check all descendants, not just direct children. For better performance on large DOMs, prefer child selectors when possible.</p>
+            </div>
+
+            <h2>Combining Multiple Combinators</h2>
+            <p>You can chain combinators to create complex selectors:</p>
+            <div class="syntax-box">
+<span class="comment">/* Select p that is a child of div, which is a child of .container */</span><br>
+<span class="selector">.container</span> <span class="keyword">></span> <span class="selector">div</span> <span class="keyword">></span> <span class="selector">p</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">red</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Select p following h2 within article */</span><br>
+<span class="selector">article</span> <span class="selector">h2</span> <span class="keyword">+</span> <span class="selector">p</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">font-weight</span>: <span class="value">bold</span>;<br>
+<span class="keyword">}</span>
+            </div>
+
+            <h2>Best Practices</h2>
+            <div class="best-practices">
+                <h4>✓ Do's</h4>
+                <ul>
+                    <li><strong>Use combinators instead of classes</strong> when targeting predictable relationships to reduce HTML bloat</li>
+                    <li><strong>Prefer child combinators</strong> for better performance on large DOMs</li>
+                    <li><strong>Keep selectors readable</strong> - don't nest more than 2-3 levels deep</li>
+                    <li><strong>Use descendant selectors</strong> for broad styling within containers</li>
+                    <li><strong>Combine with pseudo-classes</strong> for powerful targeting (:hover, :focus, :checked, etc.)</li>
+                </ul>
+            </div>
+
+            <div class="best-practices" style="background: #ffebee; border-left-color: #f44336;">
+                <h4 style="color: #c62828;">✗ Don'ts</h4>
+                <ul>
+                    <li><strong>Avoid overly specific selectors</strong> - this makes CSS hard to override</li>
+                    <li><strong>Don't chain too many combinators</strong> - it reduces readability and flexibility</li>
+                    <li><strong>Avoid relying on HTML structure</strong> for critical styles - markup changes break CSS</li>
+                    <li><strong>Don't use combinators for every element</strong> - classes are better for explicit styling</li>
+                </ul>
+            </div>
+
+            <h2>Accessibility Considerations</h2>
+            <div class="accessibility-note">
+                <strong>Screen Reader Impact:</strong> CSS combinators don't affect screen readers directly, but improper HTML structure (which combinators depend on) can create accessibility issues. Always maintain proper semantic HTML hierarchy even when using combinators to target elements.
+            </div>
+
+            <div class="accessibility-note">
+                <strong>Focus Management:</strong> When using combinators with interactive elements (forms, buttons), ensure focus states are visible and keyboard navigation works correctly. Test with keyboard-only navigation.
+            </div>
+
+            <h2>Browser Support</h2>
+            <div class="browser-support">
+                <h4>CSS Combinator Support</h4>
+                <p><strong>Child combinator (>):</strong> Universal support across all browsers</p>
+                <span class="support-badge">Chrome 1+</span>
+                <span class="support-badge">Firefox 1+</span>
+                <span class="support-badge">Safari 1+</span>
+                <span class="support-badge">IE 7+</span>
+
+                <p style="margin-top: 15px;"><strong>Adjacent sibling (+):</strong> Universal support across all browsers</p>
+                <span class="support-badge">Chrome 1+</span>
+                <span class="support-badge">Firefox 1+</span>
+                <span class="support-badge">Safari 1+</span>
+                <span class="support-badge">IE 7+</span>
+
+                <p style="margin-top: 15px;"><strong>General sibling (~):</strong> Wide support with IE 8+ requirement</p>
+                <span class="support-badge">Chrome 10+</span>
+                <span class="support-badge">Firefox 3.5+</span>
+                <span class="support-badge">Safari 3.2+</span>
+                <span class="support-badge">IE 8+</span>
+
+                <p style="margin-top: 15px;"><strong>Descendant combinator (space):</strong> Universal support across all browsers</p>
+                <span class="support-badge">Chrome 1+</span>
+                <span class="support-badge">Firefox 1+</span>
+                <span class="support-badge">Safari 1+</span>
+                <span class="support-badge">IE 6+</span>
+            </div>
+
+            <h2>Real-World Example: Navigation Menu</h2>
+            <p>A practical example combining multiple combinators:</p>
+            <div class="syntax-box">
+<span class="comment">/* Main navigation items */</span><br>
+<span class="selector">nav</span> <span class="keyword">></span> <span class="selector">ul</span> <span class="keyword">></span> <span class="selector">li</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">display</span>: <span class="value">inline-block</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Links in navigation */</span><br>
+<span class="selector">nav</span> <span class="selector">a</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">color</span>: <span class="value">white</span>;<br>
+&nbsp;&nbsp;<span class="property">text-decoration</span>: <span class="value">none</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Hover effect on direct nav links */</span><br>
+<span class="selector">nav</span> <span class="keyword">></span> <span class="selector">ul</span> <span class="keyword">></span> <span class="selector">li</span> <span class="keyword">></span> <span class="selector">a:hover</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">rgba(0,0,0,0.2)</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Submenu styling */</span><br>
+<span class="selector">nav</span> <span class="keyword">></span> <span class="selector">ul</span> <span class="keyword">></span> <span class="selector">li</span> <span class="keyword">></span> <span class="selector">ul</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">display</span>: <span class="value">none</span>;<br>
+<span class="keyword">}</span><br>
+<br>
+<span class="comment">/* Show submenu on hover */</span><br>
+<span class="selector">nav</span> <span class="keyword">></span> <span class="selector">ul</span> <span class="keyword">></span> <span class="selector">li:hover</span> <span class="keyword">></span> <span class="selector">ul</span> <span class="keyword">{</span><br>
+&nbsp;&nbsp;<span class="property">display</span>: <span class="value">block</span>;<br>
+<span class="keyword">}</span>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CSS Combinator Selectors Guide. CSS Reference. <strong>Browser Support:</strong> All modern browsers and IE 7+</p>
+        </footer>
+    </div>
+</body>
+</html>
