@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Font-Style Property - Complete Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Open+Sans:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #ff6b6b;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #ee5a6f;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            background: #ffe0e0;
+            padding: 15px;
+            border-left: 4px solid #ff6b6b;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .demo-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .style-demo {
+            margin: 15px 0;
+            padding: 12px 15px;
+            background: white;
+            border-left: 4px solid #ff6b6b;
+            border-radius: 4px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.05em;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .style-card {
+            padding: 20px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .style-card h4 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .style-card .sample {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.3em;
+            margin: 15px 0;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .style-card .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 8px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+
+        .prose-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .prose-item {
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .prose-item h5 {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .prose-item p {
+            line-height: 1.8;
+        }
+
+        .usage-example {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #ee5a6f;
+        }
+
+        .usage-example h5 {
+            color: #ee5a6f;
+            margin-bottom: 10px;
+        }
+
+        .normal-style { font-style: normal; }
+        .italic-style { font-style: italic; }
+        .oblique-style { font-style: oblique; }
+
+        .visual-comparison {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .comparison-row {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            gap: 20px;
+        }
+
+        .comparison-label {
+            width: 120px;
+            font-weight: 600;
+            color: #ff6b6b;
+            text-align: right;
+        }
+
+        .comparison-sample {
+            flex: 1;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.1em;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .pros {
+            background: #e8f5e9;
+            padding: 15px;
+            border-left: 4px solid #4caf50;
+            border-radius: 4px;
+        }
+
+        .cons {
+            background: #ffebee;
+            padding: 15px;
+            border-left: 4px solid #f44336;
+            border-radius: 4px;
+        }
+
+        .pros h4,
+        .cons h4 {
+            margin-bottom: 10px;
+        }
+
+        .pros ul,
+        .cons ul {
+            margin-left: 20px;
+        }
+
+        .pros li,
+        .cons li {
+            margin: 5px 0;
+        }
+
+        .html-elements {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .element-example {
+            margin: 15px 0;
+            padding: 10px;
+            background: white;
+            border-left: 4px solid #ff6b6b;
+            border-radius: 4px;
+        }
+
+        .element-example code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .real-world-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .example-card {
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .example-card h5 {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .example-card .demo-text {
+            font-family: 'Open Sans', sans-serif;
+            margin: 10px 0;
+        }
+
+        .browser-support {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .browser-item {
+            padding: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .browser-item strong {
+            display: block;
+            color: #ff6b6b;
+            margin-bottom: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .prose-comparison,
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .comparison-label {
+                text-align: left;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Font-Style Property</h1>
+            <p>Master italics, oblique, and text styling techniques</p>
+        </header>
+
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <h2>1. Introduction to Font-Style</h2>
+            <div class="description">
+                The <span class="highlight">font-style</span> property specifies whether text should be displayed in italics, oblique, or normal. It's used to emphasize text and add semantic meaning to content, complementing font-weight for visual hierarchy.
+            </div>
+
+            <h3>Syntax</h3>
+            <div class="code-block">
+font-style: normal | italic | oblique | inherit;
+
+/* Examples */
+font-style: normal;
+font-style: italic;
+font-style: oblique;
+font-style: oblique 10deg;     /* Angle specification (CSS Fonts Level 4) */
+            </div>
+
+            <h3>Key Points</h3>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>Three main values: normal, italic, and oblique</li>
+                <li>Impacts text emphasis and visual hierarchy</li>
+                <li>Semantic importance for meaningful markup</li>
+                <li>Font-style and font-weight work together</li>
+                <li>Inherited from parent elements by default</li>
+                <li>Can affect readability in large quantities</li>
+                <li>Important for accessibility and structure</li>
+            </ul>
+        </div>
+
+        <!-- Section 2: Font-Style Values -->
+        <div class="section">
+            <h2>2. Font-Style Values Explained</h2>
+
+            <h3>The Three Main Values</h3>
+            <div class="style-grid">
+                <div class="style-card">
+                    <h4>Normal</h4>
+                    <div class="sample normal-style">Sample</div>
+                    <p>Upright, default text style. Used for all regular content.</p>
+                    <div class="code">font-style: normal;</div>
+                </div>
+                <div class="style-card">
+                    <h4>Italic</h4>
+                    <div class="sample italic-style">Sample</div>
+                    <p>Slanted design from font designer. Most common emphasis.</p>
+                    <div class="code">font-style: italic;</div>
+                </div>
+                <div class="style-card">
+                    <h4>Oblique</h4>
+                    <div class="sample oblique-style">Sample</div>
+                    <p>Algorithmically slanted. Rarely used, browser-synthesized.</p>
+                    <div class="code">font-style: oblique;</div>
+                </div>
+            </div>
+
+            <h3>Detailed Comparison Table</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Description</th>
+                        <th>Use Case</th>
+                        <th>Appearance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>normal</strong></td>
+                        <td>Upright, default style</td>
+                        <td>Regular body text, default state</td>
+                        <td>Vertical, no slant</td>
+                    </tr>
+                    <tr>
+                        <td><strong>italic</strong></td>
+                        <td>Designed slanted variant</td>
+                        <td>Emphasis, citations, terms, highlights</td>
+                        <td>Slanted to the right, custom design</td>
+                    </tr>
+                    <tr>
+                        <td><strong>oblique</strong></td>
+                        <td>Algorithmically slanted</td>
+                        <td>Fallback when italic unavailable</td>
+                        <td>Mechanically slanted, less elegant</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Italic vs Oblique: The Difference</h3>
+            <div class="visual-comparison">
+                <h4 style="color: #ff6b6b; margin-bottom: 20px;">Visual Comparison</h4>
+                <div class="comparison-row">
+                    <div class="comparison-label">Normal</div>
+                    <div class="comparison-sample normal-style">The quick brown fox jumps over the lazy dog</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-label">Italic</div>
+                    <div class="comparison-sample italic-style">The quick brown fox jumps over the lazy dog</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-label">Oblique</div>
+                    <div class="comparison-sample oblique-style">The quick brown fox jumps over the lazy dog</div>
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Key Difference:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Italic</strong> - A true design variant with custom letterforms (a, f, g differ from normal)</li>
+                    <li><strong>Oblique</strong> - Just a mechanical slant applied to normal letterforms</li>
+                    <li>Italic is preferred when available (more elegant)</li>
+                    <li>Oblique is browser-generated and less refined</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 3: Practical Usage -->
+        <div class="section">
+            <h2>3. Practical Usage Examples</h2>
+
+            <h3>Common HTML Elements That Use Italic</h3>
+            <div class="html-elements">
+                <div class="element-example">
+                    <strong>&lt;em&gt; tag</strong> - Semantic emphasis<br>
+                    <code>&lt;p&gt;This is &lt;em&gt;emphasized&lt;/em&gt; text.&lt;/p&gt;</code>
+                    <div class="style-demo" style="margin-top: 10px;">This is <em>emphasized</em> text.</div>
+                </div>
+
+                <div class="element-example">
+                    <strong>&lt;i&gt; tag</strong> - Italic presentation<br>
+                    <code>&lt;p&gt;Scientific name: &lt;i&gt;Homo sapiens&lt;/i&gt;&lt;/p&gt;</code>
+                    <div class="style-demo" style="margin-top: 10px;">Scientific name: <i>Homo sapiens</i></div>
+                </div>
+
+                <div class="element-example">
+                    <strong>&lt;cite&gt; tag</strong> - Citation/reference<br>
+                    <code>&lt;p&gt;From &lt;cite&gt;The Great Gatsby&lt;/cite&gt;&lt;/p&gt;</code>
+                    <div class="style-demo" style="margin-top: 10px;">From <cite>The Great Gatsby</cite></div>
+                </div>
+
+                <div class="element-example">
+                    <strong>&lt;var&gt; tag</strong> - Variables in code<br>
+                    <code>&lt;code&gt;The variable &lt;var&gt;x&lt;/var&gt; equals 5&lt;/code&gt;</code>
+                    <div class="style-demo" style="margin-top: 10px;">The variable <var>x</var> equals 5</div>
+                </div>
+            </div>
+
+            <h3>CSS Usage Examples</h3>
+            <div class="code-block">
+/* Default styles */
+em, i, cite {
+    font-style: italic;
+}
+
+/* Custom emphasis classes */
+.highlight {
+    font-style: italic;
+    font-weight: 600;
+}
+
+/* Blockquote styling */
+blockquote {
+    font-style: italic;
+    border-left: 4px solid #ccc;
+    padding-left: 20px;
+    margin: 20px 0;
+}
+
+/* Headings with subtle emphasis */
+h1, h2, h3 {
+    font-style: normal;
+}
+
+/* Secondary text */
+.subtitle {
+    font-style: italic;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Code and technical terms */
+code, kbd, var {
+    font-style: italic;
+}
+
+/* Links with emphasis */
+a.featured {
+    font-style: italic;
+    font-weight: 600;
+}
+            </div>
+        </div>
+
+        <!-- Section 4: Semantic vs Presentation -->
+        <div class="section">
+            <h2>4. Semantic Meaning: &lt;em&gt; vs &lt;i&gt;</h2>
+
+            <h3>Understanding the Difference</h3>
+            <div class="prose-comparison">
+                <div class="prose-item">
+                    <h5>&lt;em&gt; - Semantic Emphasis</h5>
+                    <p><strong>Purpose:</strong> Emphasizes text with meaning</p>
+                    <p><strong>When to use:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>Emotional emphasis</li>
+                        <li>Important information</li>
+                        <li>Stress in speech</li>
+                        <li>Added emphasis vs normal text</li>
+                    </ul>
+                    <p style="margin-top: 10px; font-style: italic;">I <em>really</em> enjoyed that movie!</p>
+                </div>
+                <div class="prose-item">
+                    <h5>&lt;i&gt; - Presentational Italic</h5>
+                    <p><strong>Purpose:</strong> Styling without semantic meaning</p>
+                    <p><strong>When to use:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>Scientific names</li>
+                        <li>Foreign language phrases</li>
+                        <li>Book/movie titles</li>
+                        <li>Definitions or terms</li>
+                    </ul>
+                    <p style="margin-top: 10px;">The species <i>Canis lupus</i> is the wolf.</p>
+                </div>
+            </div>
+
+            <h3>HTML Markup Examples</h3>
+            <div class="code-block">
+<!-- Using &lt;em&gt; for emotional emphasis -->
+&lt;p&gt;I was &lt;em&gt;very&lt;/em&gt; impressed with the performance.&lt;/p&gt;
+
+<!-- Using &lt;i&gt; for citations/titles -->
+&lt;p&gt;I just finished reading &lt;i&gt;To Kill a Mockingbird&lt;/i&gt;.&lt;/p&gt;
+
+<!-- Using &lt;i&gt; for scientific names -->
+&lt;p&gt;The common name is wolf, scientific name: &lt;i&gt;Canis lupus&lt;/i&gt;&lt;/p&gt;
+
+<!-- Using &lt;em&gt; for emphasis in speech -->
+&lt;p&gt;Don't forget to &lt;em&gt;always&lt;/em&gt; backup your files.&lt;/p&gt;
+
+<!-- Combining emphasis and presentation -->
+&lt;p&gt;This &lt;em&gt;particular&lt;/em&gt; edition of &lt;i&gt;Jane Eyre&lt;/i&gt; is valuable.&lt;/p&gt;
+            </div>
+
+            <div class="note">
+                <strong>Accessibility Tip:</strong> Screen readers interpret &lt;em&gt; and &lt;i&gt; differently. Use &lt;em&gt; for meaningful emphasis and &lt;i&gt; for presentation only. Always rely on markup semantics, not just CSS styling.
+            </div>
+        </div>
+
+        <!-- Section 5: Real-World Applications -->
+        <div class="section">
+            <h2>5. Real-World Applications</h2>
+
+            <h3>Blog Posts & Articles</h3>
+            <div class="demo-container">
+                <h3 style="margin-bottom: 15px;">Blog Post Example</h3>
+                <p style="margin-bottom: 10px;">The term <i>artificial intelligence</i> was first coined by John McCarthy in 1956. <em>However</em>, the concept had been explored earlier by philosophers and mathematicians.</p>
+                <p>In his groundbreaking book <i>Superintelligence</i>, Nick Bostrom explores the potential risks of <em>advanced</em> AI systems.</p>
+            </div>
+
+            <h3>Technical Documentation</h3>
+            <div class="demo-container">
+                <h3 style="margin-bottom: 15px;">Code Documentation Example</h3>
+                <p>The <code>font-style</code> property accepts three values: <code>normal</code>, <code>italic</code>, and <code>oblique</code>. The <i>italic</i> value is the most commonly used for semantic emphasis.</p>
+                <p>When using <em>custom fonts</em>, ensure that both <code>normal</code> and <code>italic</code> variants are defined in your <code>@font-face</code> rules.</p>
+            </div>
+
+            <h3>Legal & Formal Documents</h3>
+            <div class="demo-container">
+                <h3 style="margin-bottom: 15px;">Legal Document Example</h3>
+                <p><em>Whereas</em> the parties agree to the terms and conditions set forth herein; and</p>
+                <p><em>Whereas</em> both parties acknowledge their understanding of this <i>Agreement</i>;</p>
+                <p>Now, therefore, <em>in consideration</em> of the mutual covenants herein, the parties agree as follows:</p>
+            </div>
+
+            <h3>Product Descriptions</h3>
+            <div class="demo-container">
+                <h3 style="margin-bottom: 15px;">E-commerce Example</h3>
+                <p><strong>Premium Leather Wallet</strong></p>
+                <p>This classic wallet features genuine <i>Italian leather</i> with handcrafted details. <em>Perfect</em> for the discerning gentleman. Features RFID protection and a <i>lifetime warranty</i> on craftsmanship.</p>
+            </div>
+        </div>
+
+        <!-- Section 6: Font-Style with Font-Weight -->
+        <div class="section">
+            <h2>6. Combining Font-Style with Font-Weight</h2>
+
+            <h3>Combined Styling Examples</h3>
+            <div class="code-block">
+/* Italic with bold - strong emphasis */
+.strong-emphasis {
+    font-style: italic;
+    font-weight: bold;
+}
+
+/* Light italic - subtle styling */
+.subtle-italic {
+    font-style: italic;
+    font-weight: 300;
+}
+
+/* Italic headings */
+h2.subtitle {
+    font-style: italic;
+    font-weight: 600;
+}
+
+/* Italic with weight for visual hierarchy */
+em { font-style: italic; }
+strong em { 
+    font-style: italic;
+    font-weight: bold;
+}
+            </div>
+
+            <h3>Visual Examples of Combinations</h3>
+            <div class="style-grid">
+                <div class="style-card">
+                    <h4>Normal + Normal</h4>
+                    <div class="sample" style="font-style: normal; font-weight: 400;">Sample Text</div>
+                    <p style="font-size: 0.9em;">Default appearance</p>
+                </div>
+                <div class="style-card">
+                    <h4>Italic + Normal</h4>
+                    <div class="sample" style="font-style: italic; font-weight: 400;">Sample Text</div>
+                    <p style="font-size: 0.9em;">Emphasis only</p>
+                </div>
+                <div class="style-card">
+                    <h4>Normal + Bold</h4>
+                    <div class="sample" style="font-style: normal; font-weight: 700;">Sample Text</div>
+                    <p style="font-size: 0.9em;">Weight emphasis</p>
+                </div>
+                <div class="style-card">
+                    <h4>Italic + Bold</h4>
+                    <div class="sample" style="font-style: italic; font-weight: 700;">Sample Text</div>
+                    <p style="font-size: 0.9em;">Maximum emphasis</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Font Support & @font-face -->
+        <div class="section">
+            <h2>7. Font-Style Support in @font-face</h2>
+
+            <h3>Defining Italic Variants</h3>
+            <div class="code-block">
+/* Define normal font */
+@font-face {
+    font-family: 'MyFont';
+    src: url('myfont-regular.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 400;
+}
+
+/* Define italic variant */
+@font-face {
+    font-family: 'MyFont';
+    src: url('myfont-italic.woff2') format('woff2');
+    font-style: italic;
+    font-weight: 400;
+}
+
+/* Define bold italic variant */
+@font-face {
+    font-family: 'MyFont';
+    src: url('myfont-bolditalic.woff2') format('woff2');
+    font-style: italic;
+    font-weight: 700;
+}
+
+/* Now use in CSS */
+body { 
+    font-family: 'MyFont';
+    font-style: normal;
+}
+
+em {
+    font-style: italic;  /* Uses myfont-italic.woff2 */
+}
+
+strong em {
+    font-style: italic;
+    font-weight: 700;  /* Uses myfont-bolditalic.woff2 */
+}
+            </div>
+
+            <div class="warning">
+                <strong>Important:</strong> If you define italic in @font-face with font-style: normal, browsers won't automatically use it when font-style: italic is requested. Always match the @font-face font-style to how you'll use it in CSS.
+            </div>
+
+            <h3>Google Fonts Example</h3>
+            <div class="code-block">
+<!-- Import both normal and italic variants -->
+&lt;link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"&gt;
+
+/* CSS - browser automatically uses correct variant */
+body { font-family: 'Open Sans', sans-serif; }
+em { font-style: italic; }
+strong { font-weight: 700; }
+strong em { font-weight: 700; font-style: italic; }
+            </div>
+        </div>
+
+        <!-- Section 8: Readability Considerations -->
+        <div class="section">
+            <h2>8. Readability & Best Practices</h2>
+
+            <h3>When to Use Italic</h3>
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>✅ Good Uses for Italic</h4>
+                    <ul>
+                        <li>Single words or short phrases</li>
+                        <li>Titles of books, movies, shows</li>
+                        <li>Scientific names</li>
+                        <li>Foreign language words</li>
+                        <li>Emphasized text in prose</li>
+                        <li>Introductory phrases</li>
+                        <li>Legal/formal documents</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>❌ Avoid Italic For</h4>
+                    <ul>
+                        <li>Large paragraphs (reduces readability)</li>
+                        <li>Body text on small screens</li>
+                        <li>Headings in all caps</li>
+                        <li>Multiple lines continuously</li>
+                        <li>Low contrast text</li>
+                        <li>Small font sizes (< 14px)</li>
+                        <li>Monospace/code fonts</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Readability Best Practices</h3>
+            <ul style="margin-left: 20px; margin-top: 10px; font-size: 1.05em;">
+                <li>✅ Use italic sparingly for maximum impact</li>
+                <li>✅ Combine italic with adequate font-size (14px+)</li>
+                <li>✅ Maintain good color contrast with italic text</li>
+                <li>✅ Use italic for entire sentences only occasionally</li>
+                <li>✅ Pair italic with slightly increased line-height for readability</li>
+                <li>✅ Test italic rendering on multiple devices</li>
+                <li>✅ Use proper semantic HTML (&lt;em&gt;, &lt;i&gt;, &lt;cite&gt;)</li>
+                <li>❌ Never use italic for large blocks of body text</li>
+                <li>❌ Don't use italic for links unless necessary</li>
+                <li>❌ Don't combine italic with very light font-weight</li>
+            </ul>
+        </div>
+
+        <!-- Section 9: Browser Support -->
+        <div class="section">
+            <h2>9. Browser Support</h2>
+
+            <h3>Font-Style Support Across Browsers</h3>
+            <div class="browser-support">
+                <div class="browser-item">
+                    <strong>Chrome</strong>
+                    ✅ Full Support
+                </div>
+                <div class="browser-item">
+                    <strong>Firefox</strong>
+                    ✅ Full Support
+                </div>
+                <div class="browser-item">
+                    <strong>Safari</strong>
+                    ✅ Full Support
+                </div>
+                <div class="browser-item">
+                    <strong>Edge</strong>
+                    ✅ Full Support
+                </div>
+                <div class="browser-item">
+                    <strong>IE 6+</strong>
+                    ✅ Full Support
+                </div>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>IE</th>
+                        <th>Chrome</th>
+                        <th>Firefox</th>
+                        <th>Safari</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>font-style: normal</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                    </tr>
+                    <tr>
+                        <td><strong>font-style: italic</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                    </tr>
+                    <tr>
+                        <td><strong>font-style: oblique</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                    </tr>
+                    <tr>
+                        <td><strong>@font-face italic</strong></td>
+                        <td>✅ 5+</td>
+                        <td>✅ All</td>
+                        <td>✅ 3.6+</td>
+                        <td>✅ 3.1+</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note">
+                <strong>Excellent News:</strong> Font-style has near-universal browser support. You can safely use italic styling across all modern and legacy browsers without concerns.
+            </div>
+        </div>
+
+        <!-- Section 10: Common Issues -->
+        <div class="section">
+            <h2>10. Common Issues & Solutions</h2>
+
+            <h3>Issue 1: Italic Font Not Displaying</h3>
+            <div class="code-block">
+/* Problem: No italic variant defined in @font-face */
+@font-face {
+    font-family: 'MyFont';
+    src: url('myfont.woff2');
+    /* Missing italic variant */
+}
+
+em { font-style: italic; } /* Browser synthesizes poor quality italic */
+
+/* Solution: Define italic variant */
+@font-face {
+    font-family: 'MyFont';
+    src: url('myfont-regular.woff2');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MyFont';
+    src: url('myfont-italic.woff2');
+    font-style: italic;
+}
+            </div>
+
+            <h3>Issue 2: &lt;em&gt; Not Showing as Italic</h3>
+            <div class="code-block">
+/* Problem: Browser default overridden */
+em { font-style: normal; } /* ❌ Removes italic styling */
+
+/* Solution: Don't override unless intentional */
+em { font-style: italic; } /* ✅ Maintains semantic meaning */
+
+/* Or restore with CSS reset */
+em { font-style: italic !important; }
+            </div>
+
+            <h3>Issue 3: Italic Hard to Read on Mobile</h3>
+            <div class="code-block">
+/* Problem: Italic too small on mobile */
+em {
+    font-style: italic;
+    font-size: 12px;  /* Too small! */
+}
+
+/* Solution: Increase size for small screens */
+em {
+    font-style: italic;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    em {
+        font-size: 16px;  /* Larger on mobile */
+    }
+}
+            </div>
+
+            <h3>Issue 4: Oblique Not Rendering as Expected</h3>
+            <div class="code-block">
+/* Problem: Requesting unsupported oblique angle */
+.text { font-style: oblique 20deg; } /* May not work everywhere */
+
+/* Solution: Use standard values */
+.text { font-style: oblique; } /* Browser-default angle */
+/* Or use italic for broader support */
+.text { font-style: italic; }
+            </div>
+        </div>
+
+        <!-- Section 11: Best Practices -->
+        <div class="section">
+            <h2>11. Font-Style Best Practices</h2>
+
+            <h3>Complete Implementation Checklist</h3>
+            <ul style="margin-left: 20px; margin-top: 10px; font-size: 1.05em;">
+                <li>✅ Use &lt;em&gt; for semantic emphasis</li>
+                <li>✅ Use &lt;i&gt; for presentational styling (titles, foreign words)</li>
+                <li>✅ Always define italic variants in @font-face</li>
+                <li>✅ Test italic rendering at actual font sizes</li>
+                <li>✅ Use italic sparingly for maximum impact</li>
+                <li>✅ Combine italic with adequate font-size (14px+)</li>
+                <li>✅ Maintain high contrast with italic text</li>
+                <li>✅ Match font-style in @font-face to CSS usage</li>
+                <li>✅ Use italic for single words or short phrases</li>
+                <li>✅ Test on mobile and small screens</li>
+                <li>❌ Don't use italic for large text blocks</li>
+                <li>❌ Don't override semantic &lt;em&gt; styling</li>
+                <li>❌ Don't use oblique when italic is available</li>
+                <li>❌ Don't combine italic with very light font weights</li>
+                <li>❌ Don't forget to include italic variants in Google Fonts imports</li>
+            </ul>
+        </div>
+
+        <!-- Section 12: CSS Reset & Consistency -->
+        <div class="section">
+            <h2>12. CSS Reset & Consistency</h2>
+
+            <h3>Recommended Font-Style Reset</h3>
+            <div class="code-block">
+/* Global font-style management */
+html {
+    font-style: normal;
+}
+
+/* Semantic HTML elements */
+em, strong em {
+    font-style: italic;
+}
+
+/* Presentational elements */
+i, cite, var, dfn {
+    font-style: italic;
+}
+
+/* Ensure other elements stay normal */
+p, div, span {
+    font-style: normal;
+}
+
+/* Override unwanted italic from inheritance */
+.no-italic {
+    font-style: normal;
+}
+
+/* Explicitly italic when needed */
+.italic {
+    font-style: italic;
+}
+
+/* Code should rarely be italic */
+code, kbd, pre, samp {
+    font-style: normal;
+}
+            </div>
+
+            <h3>Complete Typography Initialization</h3>
+            <div class="code-block">
+/* Modern CSS typography setup */
+:root {
+    /* Font stack with italic support */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 
+                   Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    font-style: normal;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Typography hierarchy */
+h1, h2, h3, h4, h5, h6 {
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+/* Emphasis */
+em {
+    font-style: italic;
+    font-weight: inherit;
+}
+
+strong {
+    font-weight: 700;
+    font-style: normal;
+}
+
+strong em, b em {
+    font-style: italic;
+    font-weight: 700;
+}
+
+/* Semantic text formatting */
+i { font-style: italic; }
+cite { font-style: italic; }
+var { font-style: italic; }
+dfn { font-style: italic; }
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS Font-Style Property Guide | Complete Reference</p>
+            <p>Master italic styling, semantic HTML, and typography best practices</p>
+        </footer>
+    </div>
+</body>
+</html>

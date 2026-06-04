@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Border-Radius - Complete Interactive Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .example {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .example-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .example-number {
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .example-content {
+            padding: 30px;
+        }
+
+        .example-description {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .example-label {
+            color: #999;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .example-demo {
+            background: #f8f9fa;
+            border: 2px dashed #e9ecef;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
+            position: relative;
+        }
+
+        .demo-element {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .code-line {
+            display: block;
+            padding: 4px 0;
+        }
+
+        .keyword { color: #f92672; }
+        .property { color: #a6e22e; }
+        .value { color: #66d9ef; }
+        .comment { color: #75715e; }
+
+        .tech-details {
+            background: #f0f4ff;
+            padding: 12px 15px;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        /* Example 1: Basic Rounded Card */
+        .ex1 {
+            border-radius: 10px;
+        }
+
+        /* Example 2: Perfect Circle Avatar */
+        .ex2 {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+        }
+
+        /* Example 3: Pill-Shaped Button */
+        .ex3 {
+            border-radius: 25px;
+            width: 180px;
+            height: 50px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .ex3:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Example 4: Semi-Circular Top */
+        .ex4 {
+            border-radius: 0 0 50px 50px;
+            width: 150px;
+            height: 120px;
+        }
+
+        /* Example 5: Asymmetrical Corners */
+        .ex5 {
+            border-radius: 40px 10px 40px 10px;
+        }
+
+        /* Example 6: Oval/Elliptical Shape */
+        .ex6 {
+            border-radius: 50%;
+            width: 130px;
+            height: 80px;
+        }
+
+        /* Example 7: Corner Border Style */
+        .ex7 {
+            border-radius: 15px;
+            border: 3px solid #667eea;
+            background: white;
+            color: #667eea;
+        }
+
+        /* Example 8: Individual Corners */
+        .ex8 {
+            border-top-left-radius: 30px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 30px;
+            border-bottom-left-radius: 10px;
+        }
+
+        /* Example 9: Animated Shape */
+        .ex9 {
+            border-radius: 20px;
+            transition: border-radius 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .ex9:hover {
+            border-radius: 50%;
+        }
+
+        /* Example 10: Complex Elliptical */
+        .ex10 {
+            border-radius: 50px 20px / 30px 15px;
+        }
+
+        /* Example 11: Rounded Input Field */
+        .ex11-input {
+            width: 200px;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .ex11-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Example 12: Image Rounded Corners */
+        .ex12 {
+            border-radius: 12px;
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* Example 13: Tooltip Style */
+        .ex13 {
+            border-radius: 6px;
+            background: #333;
+            color: white;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            max-width: 180px;
+        }
+
+        /* Example 14: Multi-Level Design */
+        .ex14-outer {
+            border-radius: 20px;
+            background: #f0f0f0;
+            padding: 15px;
+            width: 150px;
+        }
+
+        .ex14-inner {
+            border-radius: 12px;
+            background: white;
+            padding: 15px;
+            text-align: center;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Example 15: Responsive Percentage */
+        .ex15 {
+            border-radius: 2% 3% 4% 5%;
+            width: 100%;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        .slider-group {
+            margin-bottom: 15px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .slider-input {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .slider-input::-webkit-slider-thumb:hover {
+            background: #764ba2;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+        }
+
+        .slider-input::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .slider-input::-moz-range-thumb:hover {
+            background: #764ba2;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .use-case {
+            background: rgba(255,255,255,0.1);
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-top: 12px;
+            font-size: 0.9em;
+            color: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .example-demo {
+                min-height: 160px;
+            }
+        }
+
+        .comparison-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .comparison-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .comparison-item {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-value {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .comparison-desc {
+            color: #555;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 CSS Border-Radius</h1>
+            <p>Complete Interactive Guide - 15 Practical Examples</p>
+        </header>
+
+        <!-- Comparison Section -->
+        <div class="comparison-section">
+            <h2 class="comparison-title">Quick Reference - Common Values</h2>
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <div class="comparison-value">0px</div>
+                    <div class="comparison-desc">Sharp corners (default)</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="comparison-value">5px</div>
+                    <div class="comparison-desc">Subtle rounding</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="comparison-value">10px</div>
+                    <div class="comparison-desc">Most common (cards)</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="comparison-value">20px</div>
+                    <div class="comparison-desc">Pronounced rounding</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="comparison-value">25px</div>
+                    <div class="comparison-desc">Pill-shaped buttons</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="comparison-value">50%</div>
+                    <div class="comparison-desc">Perfect circle/oval</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="examples-grid">
+            <!-- Example 1: Basic Rounded Card -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">1</span>
+                    <span>Basic Rounded Card</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        The most common use case - a card component with subtle rounded corners for modern appearance.
+                    </p>
+                    <p class="example-label">Interactive Demo:</p>
+                    <div class="example-demo">
+                        <div class="demo-element ex1">Card</div>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">border-radius:</span> <span class="value">10px</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Blog cards, product listings, testimonials, content containers
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 2: Perfect Circle Avatar -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">2</span>
+                    <span>Perfect Circle Avatar</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Create a perfect circle by setting border-radius to 50% with equal width and height.
+                    </p>
+                    <p class="example-label">Interactive Demo:</p>
+                    <div class="example-demo">
+                        <div class="demo-element ex2">Avatar</div>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">width:</span> <span class="value">100px</span>;<br/>
+                        <span class="keyword">height:</span> <span class="value">100px</span>;<br/>
+                        <span class="keyword">border-radius:</span> <span class="value">50%</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> User profiles, team members, avatar icons, profile pictures
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3: Pill-Shaped Button -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">3</span>
+                    <span>Pill-Shaped Button</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Modern button styling with high border-radius and smooth hover effect. Hover to see the effect!
+                    </p>
+                    <p class="example-label">Interactive Demo (Hover):</p>
+                    <div class="example-demo">
+                        <button class="demo-element ex3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white;">Click Me</button>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">border-radius:</span> <span class="value">25px</span>;<br/>
+                        <span class="keyword">padding:</span> <span class="value">12px 30px</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Call-to-action buttons, primary actions, navigation items
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4: Semi-Circular Top -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">4</span>
+                    <span>Semi-Circular Top (Individual)</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Use individual border-radius properties to round only specific corners for creative effects.
+                    </p>
+                    <p class="example-label">Interactive Demo:</p>
+                    <div class="example-demo">
+                        <div class="demo-element ex4">Semi</div>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">border-radius:</span> <span class="value">0 0 50px 50px</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Hero sections, decorative dividers, section containers
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 5: Asymmetrical Corners -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">5</span>
+                    <span>Asymmetrical Corners</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Create unique, attention-grabbing designs by alternating corner radius values.
+                    </p>
+                    <p class="example-label">Interactive Demo:</p>
+                    <div class="example-demo">
+                        <div class="demo-element ex5">Unique</div>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">border-radius:</span> <span class="value">40px 10px 40px 10px</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Feature boxes, creative layouts, branded designs
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 6: Oval/Elliptical Shape -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">6</span>
+                    <span>Oval/Elliptical Shape</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Create elliptical shapes using border-radius: 50% on non-square elements for badges.
+                    </p>
+                    <p class="example-label">Interactive Demo:</p>
+                    <div class="example-demo">
+                        <div class="demo-element ex6">Badge</div>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">width:</span> <span class="value">130px</span>; <span class="keyword">height:</span> <span class="value">80px</span>;<br/>
+                        <span class="keyword">border-radius:</span> <span class="value">50%</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Badges, labels, decorative elements, notification bubbles
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 7: Corner Border Style -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">7</span>
+                    <span>Corner-Only Border</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Combine border-radius with borders for a modern, highlighted section effect.
+                    </p>
+                    <p class="example-label">Interactive Demo:</p>
+                    <div class="example-demo">
+                        <div class="demo-element ex7" style="background: white; color: #667eea;">Bordered</div>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">border-radius:</span> <span class="value">15px</span>;<br/>
+                        <span class="keyword">border:</span> <span class="value">2px solid #667eea</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Quote boxes, highlighted sections, alert boxes, input fields
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 8: Individual Corner Styling -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">8</span>
+                    <span>Individual Corner Properties</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Use specific border-radius properties for each corner with precise control over each one.
+                    </p>
+                    <p class="example-label">Interactive Demo:</p>
+                    <div class="example-demo">
+                        <div class="demo-element ex8">Custom</div>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">border-top-left-radius:</span> <span class="value">30px</span>;<br/>
+                        <span class="keyword">border-top-right-radius:</span> <span class="value">10px</span>;<br/>
+                        <span class="keyword">border-bottom-right-radius:</span> <span class="value">30px</span>;<br/>
+                        <span class="keyword">border-bottom-left-radius:</span> <span class="value">10px</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Unique branded designs, creative layouts, complex shapes
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 9: Animated Border-Radius -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">9</span>
+                    <span>Animated Shape (Hover)</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Create smooth transitions between different border-radius values on hover for interactive effects.
+                    </p>
+                    <p class="example-label">Interactive Demo (Hover):</p>
+                    <div class="example-demo">
+                        <div class="demo-element ex9">Hover Me</div>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">transition:</span> <span class="value">border-radius 0.3s ease</span>;<br/>
+                        <span class="keyword">border-radius:</span> <span class="value">20px</span>;<br/>
+                        <span class="keyword">}:hover {</span><br/>
+                        <span class="keyword">border-radius:</span> <span class="value">50%</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Interactive buttons, hover effects, animated UI elements
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 10: Complex Elliptical -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">10</span>
+                    <span>Complex Elliptical Radii</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Use slash syntax to specify different horizontal and vertical radii for complex shapes.
+                    </p>
+                    <p class="example-label">Interactive Demo:</p>
+                    <div class="example-demo">
+                        <div class="demo-element ex10">Ellipse</div>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">border-radius:</span> <span class="value">50px 20px / 30px 15px</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Advanced geometric designs, artistic layouts, creative elements
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 11: Rounded Input Field -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">11</span>
+                    <span>Rounded Input Field</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Modern form design with rounded input fields and focus state styling. Click to see focus effect!
+                    </p>
+                    <p class="example-label">Interactive Demo (Click):</p>
+                    <div class="example-demo">
+                        <input type="text" class="ex11-input" placeholder="Click to focus...">
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">border-radius:</span> <span class="value">8px</span>;<br/>
+                        <span class="keyword">border:</span> <span class="value">2px solid #ddd</span>;<br/>
+                        <span class="keyword">padding:</span> <span class="value">12px 15px</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Form inputs, search bars, text areas, modern forms
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 12: Image with Rounded Corners -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">12</span>
+                    <span>Image Rounded Corners</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Rounded corners on images with shadow for gallery and portfolio applications.
+                    </p>
+                    <p class="example-label">Interactive Demo:</p>
+                    <div class="example-demo">
+                        <div class="demo-element ex12"></div>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">border-radius:</span> <span class="value">12px</span>;<br/>
+                        <span class="keyword">overflow:</span> <span class="value">hidden</span>;<br/>
+                        <span class="keyword">box-shadow:</span> <span class="value">0 4px 12px rgba(0,0,0,0.15)</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Photo galleries, portfolio images, product photos, images collections
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 13: Tooltip Style -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">13</span>
+                    <span>Tooltip Style</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Subtle rounded corners on tooltips and contextual information elements for clean appearance.
+                    </p>
+                    <p class="example-label">Interactive Demo:</p>
+                    <div class="example-demo">
+                        <div class="ex13">Hover for tooltip information</div>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">border-radius:</span> <span class="value">6px</span>;<br/>
+                        <span class="keyword">background:</span> <span class="value">#333</span>;<br/>
+                        <span class="keyword">padding:</span> <span class="value">8px 12px</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Tooltips, help text, popovers, contextual information
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 14: Multi-Level Design -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">14</span>
+                    <span>Multi-Level Rounded Design</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Nested containers with different border-radius values create layered, sophisticated designs.
+                    </p>
+                    <p class="example-label">Interactive Demo:</p>
+                    <div class="example-demo">
+                        <div class="ex14-outer">
+                            <div class="ex14-inner">Nested</div>
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">.outer {</span><br/>
+                        &nbsp;&nbsp;<span class="keyword">border-radius:</span> <span class="value">20px</span>; <span class="comment">/* Outer */</span><br/>
+                        <span class="keyword">}</span><br/>
+                        <span class="keyword">.inner {</span><br/>
+                        &nbsp;&nbsp;<span class="keyword">border-radius:</span> <span class="value">12px</span>; <span class="comment">/* Inner */</span><br/>
+                        <span class="keyword">}</span>
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Complex layouts, card systems, nested components, layered design
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 15: Responsive Percentage -->
+            <div class="example">
+                <div class="example-header">
+                    <span class="example-number">15</span>
+                    <span>Responsive Percentage-Based</span>
+                </div>
+                <div class="example-content">
+                    <p class="example-description">
+                        Using percentages allows corners to scale responsively with the element size and screen changes.
+                    </p>
+                    <p class="example-label">Interactive Demo:</p>
+                    <div class="example-demo">
+                        <div class="demo-element ex15">Responsive</div>
+                    </div>
+                    <div class="code-block">
+                        <span class="keyword">border-radius:</span> <span class="value">2% 3% 4% 5%</span>;
+                    </div>
+                    <div class="use-case">
+                        <strong>Use Case:</strong> Responsive designs, fluid layouts, mobile-first development
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slider Control Example -->
+        <div class="comparison-section">
+            <h2 class="comparison-title">🎮 Interactive Border-Radius Controller</h2>
+            <p style="margin-bottom: 20px; color: #555;">Adjust the slider to see real-time border-radius changes:</p>
+            <div class="controls">
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Border Radius Value</span>
+                        <span id="radiusValue">30px</span>
+                    </div>
+                    <input type="range" id="radiusSlider" class="slider-input" min="0" max="150" value="30">
+                </div>
+                <div style="margin-top: 30px; display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                        <div id="controlBox" style="width: 100%; height: 150px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 30px; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);"></div>
+                    </div>
+                    <div style="flex: 1; min-width: 200px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                        <div style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 0.9em;">
+                            <span style="color: #f92672;">border-radius:</span> <span id="codeDisplay" style="color: #66d9ef;">30px</span>;
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>CSS Border-Radius Complete Guide</strong></p>
+            <p>Master rounded corners for modern, professional web designs</p>
+            <p style="font-size: 0.9em; margin-top: 20px; opacity: 0.8;">
+                📚 For more information, visit: <strong>MDN Web Docs - CSS border-radius</strong>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Interactive slider control
+        const slider = document.getElementById('radiusSlider');
+        const radiusValue = document.getElementById('radiusValue');
+        const controlBox = document.getElementById('controlBox');
+        const codeDisplay = document.getElementById('codeDisplay');
+
+        slider.addEventListener('input', (e) => {
+            const value = e.target.value;
+            radiusValue.textContent = value + 'px';
+            controlBox.style.borderRadius = value + 'px';
+            codeDisplay.textContent = value + 'px';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Clear Property - Practical Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            background: #f0f4ff;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .example-box {
+            border: 2px dashed #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            background: #fafbff;
+            border-radius: 4px;
+        }
+
+        /* Float Examples */
+        .demo-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .float-left {
+            float: left;
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-right: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .float-right {
+            float: right;
+            width: 200px;
+            height: 120px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            margin-left: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .clear-left {
+            clear: left;
+        }
+
+        .clear-right {
+            clear: right;
+        }
+
+        .clear-both {
+            clear: both;
+        }
+
+        .demo-text {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .syntax-highlight {
+            color: #f5576c;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            margin-top: 40px;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Clear Property</h1>
+            <p>Master the art of controlling floated elements</p>
+        </header>
+
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <h2>1. Introduction to the Clear Property</h2>
+            <div class="description">
+                The <span class="highlight">clear</span> property specifies on which sides of an element floating elements are not allowed to float. It's used to prevent content from wrapping around floated elements.
+            </div>
+
+            <h3>Syntax</h3>
+            <div class="code-block">
+clear: left | right | both | none | inherit;
+            </div>
+
+            <h3>Values</h3>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li><strong>left</strong> - No floating elements allowed on the left side</li>
+                <li><strong>right</strong> - No floating elements allowed on the right side</li>
+                <li><strong>both</strong> - No floating elements allowed on either side</li>
+                <li><strong>none</strong> - Default; floating elements allowed on both sides</li>
+                <li><strong>inherit</strong> - Inherits the clear value from its parent</li>
+            </ul>
+        </div>
+
+        <!-- Section 2: Basic Examples -->
+        <div class="section">
+            <h2>2. Practical Examples</h2>
+
+            <h3>Example 1: No Clear (Problem)</h3>
+            <div class="description">
+                Without using clear, text wraps around floated elements, which might not be desired.
+            </div>
+            <div class="code-block">
+&lt;div style="float: left; width: 200px; height: 150px; background: #667eea;"&gt;
+    Floated Box
+&lt;/div&gt;
+&lt;p&gt;This text wraps around the floated element...&lt;/p&gt;
+            </div>
+            <div class="demo-container">
+                <div class="float-left">Floated Box</div>
+                <p class="demo-text">This text wraps around the floated element. Without the clear property, content continues to flow alongside the float. This can create interesting layouts, but sometimes you want to force content below the float instead of beside it.</p>
+            </div>
+
+            <h3>Example 2: Using clear: left</h3>
+            <div class="description">
+                The <span class="highlight">clear: left</span> moves content below any left-floated elements.
+            </div>
+            <div class="code-block">
+&lt;div style="float: left; width: 200px; height: 150px; background: #667eea;"&gt;
+    Left Float
+&lt;/div&gt;
+&lt;p style="clear: left;"&gt;This paragraph is cleared...&lt;/p&gt;
+            </div>
+            <div class="demo-container">
+                <div class="float-left">Left Float</div>
+                <p class="demo-text clear-left">This paragraph uses <strong>clear: left</strong> so it starts below the floated element on the left.</p>
+            </div>
+
+            <h3>Example 3: Using clear: right</h3>
+            <div class="description">
+                The <span class="highlight">clear: right</span> moves content below any right-floated elements.
+            </div>
+            <div class="code-block">
+&lt;div style="float: right; width: 200px; height: 120px; background: #f5576c;"&gt;
+    Right Float
+&lt;/div&gt;
+&lt;p style="clear: right;"&gt;This paragraph is cleared...&lt;/p&gt;
+            </div>
+            <div class="demo-container">
+                <div class="float-right">Right Float</div>
+                <p class="demo-text clear-right">This paragraph uses <strong>clear: right</strong> so it starts below the floated element on the right.</p>
+            </div>
+
+            <h3>Example 4: Using clear: both</h3>
+            <div class="description">
+                The <span class="highlight">clear: both</span> is the most common usage - it clears both left and right floats.
+            </div>
+            <div class="code-block">
+&lt;div style="float: left; width: 150px;"&gt;Left&lt;/div&gt;
+&lt;div style="float: right; width: 150px;"&gt;Right&lt;/div&gt;
+&lt;p style="clear: both;"&gt;This paragraph is below both floats...&lt;/p&gt;
+            </div>
+            <div class="demo-container">
+                <div style="float: left; width: 150px; height: 80px; background: #667eea; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 4px;">Left Float</div>
+                <div style="float: right; width: 150px; height: 80px; background: #f5576c; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 4px;">Right Float</div>
+                <p class="demo-text clear-both">This paragraph uses <strong>clear: both</strong> and sits below both floated elements.</p>
+            </div>
+        </div>
+
+        <!-- Section 3: Common Use Cases -->
+        <div class="section">
+            <h2>3. Common Use Cases</h2>
+
+            <h3>Use Case 1: Two-Column Layout with Footer</h3>
+            <div class="code-block">
+&lt;div style="float: left; width: 60%;"&gt;
+    Main Content
+&lt;/div&gt;
+&lt;div style="float: right; width: 40%;"&gt;
+    Sidebar
+&lt;/div&gt;
+&lt;footer style="clear: both;"&gt;
+    Footer always below both columns
+&lt;/footer&gt;
+            </div>
+
+            <h3>Use Case 2: Image with Text Separation</h3>
+            <div class="code-block">
+&lt;img src="image.jpg" style="float: left;" /&gt;
+&lt;p&gt;Text wraps around image...&lt;/p&gt;
+&lt;h2 style="clear: left;"&gt;Next Section&lt;/h2&gt;
+&lt;p&gt;This section starts cleanly below the image&lt;/p&gt;
+            </div>
+
+            <h3>Use Case 3: Gallery Layout</h3>
+            <div class="code-block">
+&lt;div style="float: left; width: 33.33%;"&gt;Image 1&lt;/div&gt;
+&lt;div style="float: left; width: 33.33%;"&gt;Image 2&lt;/div&gt;
+&lt;div style="float: left; width: 33.33%;"&gt;Image 3&lt;/div&gt;
+&lt;div style="clear: both;"&gt;&lt;/div&gt; &lt;!-- Clear for next row --&gt;
+            </div>
+        </div>
+
+        <!-- Section 4: Clearfix Technique -->
+        <div class="section">
+            <h2>4. The Clearfix Technique</h2>
+            <div class="description">
+                A parent container with only floated children can collapse. The clearfix technique solves this using a pseudo-element.
+            </div>
+
+            <h3>HTML</h3>
+            <div class="code-block">
+&lt;div class="clearfix"&gt;
+    &lt;div style="float: left;"&gt;Box 1&lt;/div&gt;
+    &lt;div style="float: left;"&gt;Box 2&lt;/div&gt;
+&lt;/div&gt;
+            </div>
+
+            <h3>CSS (Clearfix Method)</h3>
+            <div class="code-block">
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+            </div>
+
+            <div class="note">
+                <strong>Why this works:</strong> The ::after pseudo-element creates an invisible element at the end of the container with clear: both, which forces the parent to expand to contain all floated children.
+            </div>
+        </div>
+
+        <!-- Section 5: Comparison Table -->
+        <div class="section">
+            <h2>5. Clear Property Values Comparison</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Description</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>none</strong></td>
+                        <td>Default. Element can float to the left and right of floated elements.</td>
+                        <td>Allowing text wrapping around floats</td>
+                    </tr>
+                    <tr>
+                        <td><strong>left</strong></td>
+                        <td>Element must be placed below any floated element on the left.</td>
+                        <td>Clearing only left-floated elements</td>
+                    </tr>
+                    <tr>
+                        <td><strong>right</strong></td>
+                        <td>Element must be placed below any floated element on the right.</td>
+                        <td>Clearing only right-floated elements</td>
+                    </tr>
+                    <tr>
+                        <td><strong>both</strong></td>
+                        <td>Element must be placed below all floated elements on both sides.</td>
+                        <td>Most common - layout control</td>
+                    </tr>
+                    <tr>
+                        <td><strong>inherit</strong></td>
+                        <td>Inherits the clear value from its parent element.</td>
+                        <td>Maintaining consistent clearing behavior</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 6: Modern Alternatives -->
+        <div class="section">
+            <h2>6. Modern Alternatives</h2>
+            <div class="warning">
+                <strong>Note:</strong> While the clear property still works, modern CSS layouts prefer Flexbox and CSS Grid for most layout tasks.
+            </div>
+
+            <h3>Flexbox Alternative</h3>
+            <div class="code-block">
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.sidebar {
+    flex: 0 0 30%;
+}
+.main {
+    flex: 0 0 70%;
+}
+            </div>
+
+            <h3>CSS Grid Alternative</h3>
+            <div class="code-block">
+.container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 20px;
+}
+.sidebar {
+    grid-column: 1;
+}
+.main {
+    grid-column: 2;
+}
+            </div>
+
+            <div class="note">
+                <strong>Best Practice:</strong> Use Flexbox or Grid for new projects. Use clear only for maintaining legacy code or simple text-wrapping scenarios.
+            </div>
+        </div>
+
+        <!-- Section 7: Browser Support -->
+        <div class="section">
+            <h2>7. Browser Support & Tips</h2>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>✅ Supported in all modern browsers (Chrome, Firefox, Safari, Edge)</li>
+                <li>✅ IE 6+</li>
+                <li>✅ Mobile browsers</li>
+            </ul>
+
+            <h3>Best Practices</h3>
+            <ul style="margin-left: 20px; margin-top: 15px;">
+                <li>Always use <span class="highlight">clear: both</span> unless you have a specific reason to use left or right</li>
+                <li>Consider using Flexbox or Grid for new layouts instead of floats</li>
+                <li>Use the clearfix technique to prevent container collapse</li>
+                <li>Test your layout across different browsers and screen sizes</li>
+                <li>Use clear selectively; excessive clearing can lead to unwanted spacing</li>
+            </ul>
+        </div>
+
+        <!-- Section 8: Interactive Examples -->
+        <div class="section">
+            <h2>8. Complete Example: Multi-Column Layout</h2>
+            <div class="code-block">
+&lt;!-- HTML --&gt;
+&lt;div class="layout"&gt;
+    &lt;aside style="float: left; width: 25%;"&gt;
+        &lt;h3&gt;Sidebar&lt;/h3&gt;
+        &lt;p&gt;Left column content...&lt;/p&gt;
+    &lt;/aside&gt;
+    
+    &lt;main style="float: right; width: 75%;"&gt;
+        &lt;h3&gt;Main Content&lt;/h3&gt;
+        &lt;p&gt;Main column content...&lt;/p&gt;
+    &lt;/main&gt;
+    
+    &lt;footer style="clear: both;"&gt;
+        &lt;p&gt;Footer appears below all floats&lt;/p&gt;
+    &lt;/footer&gt;
+&lt;/div&gt;
+            </div>
+
+            <div class="code-block">
+/* CSS */
+.layout {
+    width: 100%;
+}
+
+.layout aside {
+    background: #667eea;
+    color: white;
+    padding: 20px;
+    margin-right: 20px;
+}
+
+.layout main {
+    background: #f5f5f5;
+    padding: 20px;
+}
+
+.layout footer {
+    background: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS Clear Property Guide | Last Updated: 2024</p>
+            <p>Perfect for learning modern CSS layout techniques</p>
+        </footer>
+    </div>
+</body>
+</html>

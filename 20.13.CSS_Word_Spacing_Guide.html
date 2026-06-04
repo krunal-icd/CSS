@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Word-Spacing Mastery Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .intro-section {
+            padding: 40px;
+            background: linear-gradient(to right, #f5f7fa 0%, #c3cfe2 100%);
+            border-bottom: 3px solid #667eea;
+        }
+
+        .intro-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .intro-section p {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        .definition-box {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .definition-box strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            border-left: 4px solid #667eea;
+        }
+
+        .section-title {
+            background: #f5f7fa;
+            padding: 30px 40px;
+            border-bottom: 2px solid #667eea;
+            margin-top: 30px;
+        }
+
+        .section-title h2 {
+            color: #667eea;
+            font-size: 1.8em;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 25px;
+            padding: 40px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);
+            transform: translateY(-5px);
+        }
+
+        .example-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .example-card h3 {
+            color: #667eea;
+            margin-bottom: 12px;
+            font-size: 1.4em;
+        }
+
+        .example-card p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .example-preview {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #e0e0e0;
+            min-height: 120px;
+        }
+
+        .preview-content {
+            font-size: 1em;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .code-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 18px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .code-small {
+            background: #f5f5f5;
+            padding: 12px;
+            border-left: 3px solid #667eea;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            color: #333;
+            word-break: break-all;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+
+        /* Word-Spacing Examples */
+        .ws-normal {
+            word-spacing: normal;
+        }
+
+        .ws-0 {
+            word-spacing: 0;
+        }
+
+        .ws-2 {
+            word-spacing: 0.1em;
+        }
+
+        .ws-4 {
+            word-spacing: 0.2em;
+        }
+
+        .ws-6 {
+            word-spacing: 0.3em;
+        }
+
+        .ws-8 {
+            word-spacing: 0.4em;
+        }
+
+        .ws-negative {
+            word-spacing: -0.05em;
+        }
+
+        .ws-loose {
+            word-spacing: 0.5em;
+        }
+
+        .ws-combined {
+            word-spacing: 0.15em;
+            letter-spacing: 0.05em;
+        }
+
+        .ws-justified {
+            text-align: justify;
+            word-spacing: 0.1em;
+        }
+
+        .ws-responsive {
+            word-spacing: clamp(0.05em, 0.5vw, 0.2em);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        .tips {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .tips strong {
+            color: #856404;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .warning strong {
+            color: #721c24;
+        }
+
+        .implementation-section {
+            padding: 40px;
+            background: #f8f9fa;
+        }
+
+        .implementation-section h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .steps {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .steps ol {
+            margin-left: 25px;
+        }
+
+        .steps li {
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .steps strong {
+            color: #667eea;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .use-case {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .use-case strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        footer {
+            background: #667eea;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        .comparison-visual {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .visual-item {
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+        }
+
+        .visual-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .example-preview {
+                min-height: 100px;
+            }
+
+            .preview-content {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>💬 CSS Word-Spacing Mastery Guide</h1>
+            <p>Master Space Between Words for Professional Typography & Readability</p>
+        </header>
+
+        <!-- Introduction Section -->
+        <div class="intro-section">
+            <h2>📖 Understanding CSS Word-Spacing</h2>
+            <p>
+                Word-spacing controls the horizontal space between words in text. It's a powerful tool for improving 
+                readability, creating visual emphasis, and establishing design aesthetics. Combined with letter-spacing and 
+                line-height, word-spacing forms the foundation of professional typography.
+            </p>
+
+            <div class="definition-box">
+                <strong>What is Word-Spacing?</strong>
+                <p style="margin-top: 10px;">
+                    Word-spacing increases or decreases the space between words. Normal spacing (0) keeps browser defaults, 
+                    while positive values add breathing room, and negative values compress words together. The right word-spacing 
+                    dramatically improves text clarity, creates visual hierarchy, and affects how content is perceived.
+                </p>
+            </div>
+
+            <p>
+                <strong>Key Concept:</strong> Word-spacing is different from letter-spacing (character-level) and line-height 
+                (vertical spacing). Together, these three properties create a complete typography system for professional designs.
+            </p>
+
+            <div class="code-block">
+/* Word-Spacing Syntax & Units */
+word-spacing: normal;         /* Browser default spacing */
+word-spacing: 0;              /* Remove additional spacing */
+word-spacing: 0.1em;          /* Relative to font-size */
+word-spacing: 4px;            /* Fixed pixels */
+word-spacing: -0.05em;        /* Negative: compress words */
+word-spacing: 0.1rem;         /* Relative to root font-size */
+
+/* Advanced */
+word-spacing: clamp(0.05em, 0.5vw, 0.2em);  /* Responsive scaling */
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Units & Recommendations:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><span class="highlight">em</span> - Recommended: scales with font-size automatically</li>
+                    <li><span class="highlight">px</span> - Fixed spacing (doesn't scale)</li>
+                    <li><span class="highlight">rem</span> - Relative to root (consistent across page)</li>
+                    <li><span class="highlight">vw</span> - Responsive to viewport width (modern)</li>
+                    <li><span class="highlight">clamp()</span> - Fluid responsive spacing (best practice)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 10 Word-Spacing Examples -->
+        <div class="section-title">
+            <h2>🎨 10 Professional Word-Spacing Examples</h2>
+        </div>
+
+        <div class="examples-grid">
+            <!-- Example 1: Normal (Default) -->
+            <div class="example-card">
+                <span class="example-number">1</span>
+                <h3>Normal (Default)</h3>
+                <p>Browser default spacing. Baseline for all other comparisons.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-normal">
+                        This is a sample text with normal word spacing applied. Each word maintains consistent distance from the next word which is the browser default behavior.
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">word-spacing: normal;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Standard body text, baseline state
+                </div>
+            </div>
+
+            <!-- Example 2: Zero Spacing -->
+            <div class="example-card">
+                <span class="example-number">2</span>
+                <h3>Zero Spacing</h3>
+                <p>Removes any additional spacing. Tightly packed words.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-0">
+                        This is a sample text with zero word spacing applied. Words appear compressed together without extra breathing room between them.
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">word-spacing: 0;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Reset inherited spacing, compact layouts
+                </div>
+            </div>
+
+            <!-- Example 3: Subtle Increase (0.1em) -->
+            <div class="example-card">
+                <span class="example-number">3</span>
+                <h3>Subtle Increase (0.1em)</h3>
+                <p>Slight increase for improved readability and clarity. Standard professional choice.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-2">
+                        This is a sample text with subtle word spacing increase. The extra spacing improves readability without looking excessive or artificial.
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">word-spacing: 0.1em;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Body text, improved readability - RECOMMENDED
+                </div>
+            </div>
+
+            <!-- Example 4: Moderate Increase (0.2em) -->
+            <div class="example-card">
+                <span class="example-number">4</span>
+                <h3>Moderate Increase (0.2em)</h3>
+                <p>Noticeable spacing for better clarity and visual breathing room.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-4">
+                        This is a sample text with moderate word spacing increase. The extra breathing room significantly improves readability for longer passages of text.
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">word-spacing: 0.2em;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Articles, accessibility, dyslexia-friendly
+                </div>
+            </div>
+
+            <!-- Example 5: Generous Spacing (0.3em) ⭐ -->
+            <div class="example-card">
+                <span class="example-number">5</span>
+                <h3>Generous Spacing (0.3em) ⭐</h3>
+                <p>Comfortable open spacing for premium feel and excellent readability.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-6">
+                        This is a sample text with generous word spacing. The open layout creates an airy, premium feeling while maintaining excellent readability throughout.
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">word-spacing: 0.3em;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Premium designs, headings - EXCELLENT BALANCE
+                </div>
+            </div>
+
+            <!-- Example 6: Extra Wide (0.4em) -->
+            <div class="example-card">
+                <span class="example-number">6</span>
+                <h3>Extra Wide (0.4em)</h3>
+                <p>Very generous spacing for dramatic visual impact and luxury feel.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-8">
+                        This is a sample text with extra wide word spacing. Words appear distinctly separated creating a spacious and luxurious visual presentation.
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">word-spacing: 0.4em;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Luxury branding, creative layouts, statements
+                </div>
+            </div>
+
+            <!-- Example 7: Negative Spacing (-0.05em) -->
+            <div class="example-card">
+                <span class="example-number">7</span>
+                <h3>Negative Spacing (-0.05em)</h3>
+                <p>Compressed spacing for compact, efficient layouts and headlines.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-negative">
+                        This is a sample text with negative word spacing applied. Words appear compressed together creating a tighter more compact visual appearance.
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">word-spacing: -0.05em;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Headlines, compact designs, high impact
+                </div>
+            </div>
+
+            <!-- Example 8: Loose Spacing (0.5em) -->
+            <div class="example-card">
+                <span class="example-number">8</span>
+                <h3>Loose Spacing (0.5em)</h3>
+                <p>Very loose spacing for artistic or special design purposes.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-loose">
+                        This is a sample text with loose word spacing. The very generous separation between words creates a distinctive artistic and open aesthetic appearance.
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">word-spacing: 0.5em;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Art-focused designs, poetic layouts
+                </div>
+            </div>
+
+            <!-- Example 9: Combined with Letter-Spacing -->
+            <div class="example-card">
+                <span class="example-number">9</span>
+                <h3>Word + Letter Spacing Combined</h3>
+                <p>Both properties together for complete control over text spacing and rhythm.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-combined">
+                        This is a sample text with combined word and letter spacing. The balanced approach creates both horizontal and character-level spacing for professional appearance.
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">word-spacing: 0.15em;<br>letter-spacing: 0.05em;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Professional typography, premium designs
+                </div>
+            </div>
+
+            <!-- Example 10: Responsive Spacing -->
+            <div class="example-card">
+                <span class="example-number">10</span>
+                <h3>Responsive Spacing (clamp)</h3>
+                <p>Fluid spacing that scales with viewport. Modern best practice.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-responsive">
+                        This is a sample text with responsive word spacing that automatically adjusts based on viewport width. Works perfectly across all device sizes and screen dimensions.
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">word-spacing: clamp(0.05em, 0.5vw, 0.2em);</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Responsive designs, all screen sizes
+                </div>
+            </div>
+        </div>
+
+        <!-- Word-Spacing Values Reference -->
+        <div class="section-title">
+            <h2>📊 Word-Spacing Values Quick Reference</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Value (em)</th>
+                        <th>Pixel Equivalent (16px)</th>
+                        <th>Appearance</th>
+                        <th>Best Use</th>
+                        <th>Feel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>-0.05</strong></td>
+                        <td>-0.8px</td>
+                        <td style="word-spacing: -0.05em;">Compressed tight</td>
+                        <td>Headlines, compact</td>
+                        <td>⚡ Energetic, compact</td>
+                    </tr>
+                    <tr>
+                        <td><strong>0 (normal)</strong></td>
+                        <td>0px</td>
+                        <td style="word-spacing: 0;">Normal default</td>
+                        <td>Body text, default</td>
+                        <td>📝 Standard, neutral</td>
+                    </tr>
+                    <tr>
+                        <td><strong>0.05</strong></td>
+                        <td>0.8px</td>
+                        <td style="word-spacing: 0.05em;">Slightly wider</td>
+                        <td>Subtle improvement</td>
+                        <td>✨ Refined, improved</td>
+                    </tr>
+                    <tr>
+                        <td><strong>0.1</strong></td>
+                        <td>1.6px</td>
+                        <td style="word-spacing: 0.1em;">Readable comfortable</td>
+                        <td>Body text - STANDARD</td>
+                        <td>✅ Professional, readable</td>
+                    </tr>
+                    <tr>
+                        <td><strong>0.2</strong></td>
+                        <td>3.2px</td>
+                        <td style="word-spacing: 0.2em;">Notably spaced</td>
+                        <td>Articles, accessibility</td>
+                        <td>📖 Open, clear</td>
+                    </tr>
+                    <tr>
+                        <td><strong>0.3</strong></td>
+                        <td>4.8px</td>
+                        <td style="word-spacing: 0.3em;">Generous spaced</td>
+                        <td>Premium, headings</td>
+                        <td>💎 Luxurious, airy</td>
+                    </tr>
+                    <tr>
+                        <td><strong>0.4</strong></td>
+                        <td>6.4px</td>
+                        <td style="word-spacing: 0.4em;">Very widely separated</td>
+                        <td>Luxury branding</td>
+                        <td>👑 Premium, spacious</td>
+                    </tr>
+                    <tr>
+                        <td><strong>0.5</strong></td>
+                        <td>8px</td>
+                        <td style="word-spacing: 0.5em;">Extremely spaced</td>
+                        <td>Artistic layouts</td>
+                        <td>🎨 Creative, artistic</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Comparison: Word-Spacing vs Letter-Spacing -->
+        <div class="section-title">
+            <h2>🔍 Word-Spacing vs Letter-Spacing vs Line-Height</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Affects</th>
+                        <th>Use Case</th>
+                        <th>Typical Value</th>
+                        <th>Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>word-spacing</strong></td>
+                        <td>Space between words</td>
+                        <td>Improve word clarity</td>
+                        <td>0 to 0.3em</td>
+                        <td>Horizontal separation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>letter-spacing</strong></td>
+                        <td>Space between characters</td>
+                        <td>Character-level control</td>
+                        <td>0 to 0.1em</td>
+                        <td>Fine typography tuning</td>
+                    </tr>
+                    <tr>
+                        <td><strong>line-height</strong></td>
+                        <td>Space between lines</td>
+                        <td>Vertical readability</td>
+                        <td>1.4 to 1.8</td>
+                        <td>Paragraph breathing room</td>
+                    </tr>
+                    <tr>
+                        <td><strong>All Three Combined</strong></td>
+                        <td>Complete text spacing</td>
+                        <td>Professional typography</td>
+                        <td>See examples</td>
+                        <td>Optimal readability + aesthetics</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>💡 Pro Tip - The Typography Trio:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><span class="highlight">Line-height</span> controls vertical spacing (typically 1.6)</li>
+                    <li><span class="highlight">Word-spacing</span> controls horizontal word separation (typically 0.1em)</li>
+                    <li><span class="highlight">Letter-spacing</span> controls character-level spacing (typically 0.05em)</li>
+                    <li>Together they create professional, readable typography</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Use Cases Section -->
+        <div class="section-title">
+            <h2>🎯 Word-Spacing Use Cases & Best Practices</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <div class="use-case-grid">
+                <div class="use-case">
+                    <strong>📝 Body Text (Paragraphs)</strong>
+                    Use <span class="highlight">0 to 0.1em</span>. Improves readability without excessive spacing. Standard: 0.05em for comfortable reading.
+                </div>
+
+                <div class="use-case">
+                    <strong>🎯 Headlines (H1)</strong>
+                    Use <span class="highlight">0.05em to 0.2em</span>. Increases visual impact and hierarchy. Depends on font size and design.
+                </div>
+
+                <div class="use-case">
+                    <strong>🏷️ Subheadings (H2/H3)</strong>
+                    Use <span class="highlight">0.05em to 0.15em</span>. Slightly more than body text for visual distinction and hierarchy.
+                </div>
+
+                <div class="use-case">
+                    <strong>♿ Accessibility & Dyslexia-Friendly</strong>
+                    Use <span class="highlight">0.15em to 0.3em</span>. Generous spacing significantly improves readability for users with reading difficulties.
+                </div>
+
+                <div class="use-case">
+                    <strong>💼 Luxury Branding</strong>
+                    Use <span class="highlight">0.2em to 0.4em</span>. Extra spacing conveys premium, high-end aesthetic and elegance throughout design.
+                </div>
+
+                <div class="use-case">
+                    <strong>📱 Mobile Responsive</strong>
+                    Use <span class="highlight">clamp(0.05em, 0.5vw, 0.2em)</span>. Automatically scales with viewport for optimal appearance on all screens.
+                </div>
+
+                <div class="use-case">
+                    <strong>🎬 Buttons & CTAs</strong>
+                    Use <span class="highlight">0.05em to 0.15em</span>. Slightly increased spacing makes text more prominent and easier to read in interactive elements.
+                </div>
+
+                <div class="use-case">
+                    <strong>📰 Articles & Long-form Content</strong>
+                    Use <span class="highlight">0.08em to 0.15em</span>. Improved word separation reduces eye strain during extended reading sessions.
+                </div>
+
+                <div class="use-case">
+                    <strong>🏢 Professional/Corporate</strong>
+                    Use <span class="highlight">0.05em to 0.1em</span>. Subtle but noticeable improvement for formal, business-focused design and content.
+                </div>
+
+                <div class="use-case">
+                    <strong>✨ Poetry & Creative Text</strong>
+                    Use <span class="highlight">0.3em to 0.5em+</span>. Generous spacing creates artistic presentation and visual rhythm for creative content.
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Guide -->
+        <div class="implementation-section">
+            <h2>🚀 How to Implement in Elementor & CSS</h2>
+            
+            <div class="steps">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Method 1: Elementor UI (Easiest)</h3>
+                <ol>
+                    <li><strong>Select Text Element</strong> - Click heading, paragraph, or text widget</li>
+                    <li><strong>Open Style Tab</strong> - Find Typography section in the right panel</li>
+                    <li><strong>Find Word Spacing</strong> - Look for "Word Spacing" control (usually below letter-spacing)</li>
+                    <li><strong>Adjust Slider or Input</strong> - Enter value like 0.1em or use slider</li>
+                    <li><strong>Preview Changes</strong> - See real-time updates in editor</li>
+                    <li><strong>Fine-tune Value</strong> - Test different values for perfect balance</li>
+                    <li><strong>Save & Update</strong> - Publish changes to page</li>
+                </ol>
+            </div>
+
+            <div class="steps">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Method 2: Custom CSS (Advanced)</h3>
+                <ol>
+                    <li><strong>Select Element</strong> - Click text widget to modify</li>
+                    <li><strong>Go to Advanced Tab</strong> - Scroll down in left panel</li>
+                    <li><strong>Custom CSS Section</strong> - Find and open "Custom CSS"</li>
+                    <li><strong>Add Code</strong> - Type <code style="background: #f5f5f5; padding: 2px 6px;">word-spacing: 0.1em;</code></li>
+                    <li><strong>Update & Verify</strong> - Click Update and preview on different devices</li>
+                </ol>
+            </div>
+
+            <div class="code-block">
+/* Complete CSS Implementation Examples */
+
+/* Example 1: Standard Body Text */
+p, body, .text-content {
+    word-spacing: 0.05em;
+    letter-spacing: 0;
+    line-height: 1.6;
+}
+
+/* Example 2: Readable Paragraph */
+article p, .article-text {
+    word-spacing: 0.1em;
+    letter-spacing: 0;
+    line-height: 1.8;
+}
+
+/* Example 3: Main Heading */
+h1, .main-heading {
+    word-spacing: 0.1em;
+    letter-spacing: 0.05em;
+    line-height: 1.3;
+    font-weight: 600;
+}
+
+/* Example 4: Subheading */
+h2, h3, .subheading {
+    word-spacing: 0.08em;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+}
+
+/* Example 5: All Caps Text */
+.all-caps {
+    word-spacing: 0.15em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* Example 6: Accessibility Text */
+.accessible-text, .dyslexia-friendly {
+    word-spacing: 0.2em;
+    letter-spacing: 0.05em;
+    line-height: 1.8;
+    font-size: 1.1em;
+}
+
+/* Example 7: Luxury/Premium */
+.luxury-text, .premium {
+    word-spacing: 0.2em;
+    letter-spacing: 0.08em;
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+/* Example 8: Button Text */
+button, .btn, a.button {
+    word-spacing: 0.05em;
+    letter-spacing: 0.02em;
+    font-weight: 600;
+}
+
+/* Example 9: Responsive Typography Stack */
+p {
+    word-spacing: clamp(0.05em, 0.5vw, 0.15em);
+    letter-spacing: clamp(0, 0.3vw, 0.05em);
+    line-height: clamp(1.5, 1.2vw, 1.8);
+}
+
+/* Example 10: Mobile Adjustments */
+@media (max-width: 768px) {
+    p {
+        word-spacing: 0.08em;     /* Increase on small screens */
+        letter-spacing: 0;
+        line-height: 1.7;
+    }
+    
+    h1 {
+        word-spacing: 0.08em;
+        letter-spacing: 0.03em;
+    }
+}
+            </div>
+
+            <div class="tips">
+                <strong>💡 Implementation Pro Tips:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Use em units:</strong> They scale proportionally with font-size changes</li>
+                    <li><strong>Test with actual content:</strong> Word spacing impact varies with text length</li>
+                    <li><strong>Combine with line-height:</strong> Wider word-spacing works better with taller lines</li>
+                    <li><strong>Use clamp() for responsive:</strong> Automatically scales between min and max</li>
+                    <li><strong>Adjust for different fonts:</strong> Some fonts look better with specific spacing</li>
+                    <li><strong>Test print styles:</strong> Spacing affects document readability when printed</li>
+                    <li><strong>Mobile consideration:</strong> Small screens may need increased spacing for clarity</li>
+                    <li><strong>Combine with letter-spacing:</strong> Both together create complete control</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Common Mistakes to Avoid:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>❌ Excessive word-spacing on body text - makes reading difficult</li>
+                    <li>❌ Using px instead of em - doesn't scale with font-size</li>
+                    <li>❌ Same spacing for all text sizes - adjust proportionally to size</li>
+                    <li>❌ Ignoring line-height - wide spacing needs taller lines</li>
+                    <li>❌ Not testing on mobile - spacing may become too wide on small screens</li>
+                    <li>❌ Extreme negative values - can make text unreadable</li>
+                    <li>❌ Forgetting justified text considerations - word-spacing affects justified text differently</li>
+                </ul>
+            </div>
+
+            <div class="info-box" style="margin-top: 25px;">
+                <strong>🔧 Advanced Techniques:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Use <span class="highlight">clamp()</span> function for fluid responsive spacing without media queries</li>
+                    <li>Combine word-spacing with letter-spacing for complete character-level control</li>
+                    <li>Use CSS variables (custom properties) for easy theme switching</li>
+                    <li>Apply different spacing to different font-weight levels for hierarchy</li>
+                    <li>Use with text-align: justify carefully - spacing affects justification</li>
+                    <li>Animate word-spacing on hover for interactive effects</li>
+                    <li>Use with text-decoration properties for balanced typography</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Comparison Chart -->
+        <div class="section-title">
+            <h2>📈 Visual Word-Spacing Comparison</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+                <strong style="color: #667eea; display: block; margin-bottom: 20px;">Progression from Negative to Extreme Spacing:</strong>
+                
+                <div style="margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 5px;">
+                    <span style="color: #666; font-size: 0.85em;">-0.05em (Compressed):</span><br>
+                    <span style="word-spacing: -0.05em; font-size: 1em; line-height: 1.6;">Words appear squeezed together creating a compact tight appearance</span>
+                </div>
+
+                <div style="margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 5px;">
+                    <span style="color: #666; font-size: 0.85em;">0em (Normal):</span><br>
+                    <span style="word-spacing: 0; font-size: 1em; line-height: 1.6;">Words maintain standard browser default spacing without modifications</span>
+                </div>
+
+                <div style="margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 5px;">
+                    <span style="color: #666; font-size: 0.85em;">0.1em (Subtle):</span><br>
+                    <span style="word-spacing: 0.1em; font-size: 1em; line-height: 1.6;">Words have slightly increased spacing for improved professional readability</span>
+                </div>
+
+                <div style="margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 5px;">
+                    <span style="color: #666; font-size: 0.85em;">0.2em (Moderate):</span><br>
+                    <span style="word-spacing: 0.2em; font-size: 1em; line-height: 1.6;">Words are noticeably separated with comfortable breathing room for clarity</span>
+                </div>
+
+                <div style="margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 5px;">
+                    <span style="color: #666; font-size: 0.85em;">0.3em (Generous):</span><br>
+                    <span style="word-spacing: 0.3em; font-size: 1em; line-height: 1.6;">Words appear well-separated creating an open luxurious premium appearance</span>
+                </div>
+
+                <div style="padding: 15px; background: #f9f9f9; border-radius: 5px;">
+                    <span style="color: #666; font-size: 0.85em;">0.4em+ (Extreme):</span><br>
+                    <span style="word-spacing: 0.4em; font-size: 1em; line-height: 1.6;">Dramatic wide separation suitable for artistic creative layouts only</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Browser Support -->
+        <div class="section-title">
+            <h2>🌐 Browser Support & Compatibility</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Chrome</th>
+                        <th>Firefox</th>
+                        <th>Safari</th>
+                        <th>Edge</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>word-spacing: value</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>Universal support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Negative values</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>Fully supported</td>
+                    </tr>
+                    <tr>
+                        <td><strong>em/rem units</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>Recommended units</td>
+                    </tr>
+                    <tr>
+                        <td><strong>clamp() function</strong></td>
+                        <td>✅ 79+</td>
+                        <td>✅ 75+</td>
+                        <td>✅ 13.1+</td>
+                        <td>✅ 79+</td>
+                        <td>Modern browsers (95%+)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>px units</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>Supported (not recommended)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>✅ Best Practice for Compatibility:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Use <span class="highlight">em</span> units for best compatibility and scalability</li>
+                    <li>Use <span class="highlight">clamp()</span> for modern browsers with fallback</li>
+                    <li>Test on major browsers before deployment</li>
+                    <li>Provide reasonable defaults for older browsers</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 CSS Word-Spacing Mastery Guide | Professional Typography Control & Design Excellence</p>
+            <p style="margin-top: 10px; opacity: 0.9;">Master word spacing to elevate typography and create professional, readable, accessible designs</p>
+        </footer>
+    </div>
+</body>
+</html>

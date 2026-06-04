@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS text-orientation - 12 Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .examples-grid {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .example-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .example h2 {
+            color: #667eea;
+            font-size: 1.6em;
+            margin: 0;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .example-tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .example-tag.vertical {
+            background: #28a745;
+        }
+
+        .example-tag.direction {
+            background: #fd7e14;
+        }
+
+        .example-tag.table {
+            background: #17a2b8;
+        }
+
+        .example-tag.mixed {
+            background: #6f42c1;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .demo-area {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+
+        .code-block .keyword {
+            color: #569cd6;
+        }
+
+        .code-block .property {
+            color: #9cdcfe;
+        }
+
+        .code-block .value {
+            color: #ce9178;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* ========== VERTICAL TEXT EXAMPLES ========== */
+
+        /* Example 1: Mixed Orientation */
+        .vertical-mixed-1 {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* Example 2: Upright Orientation */
+        .vertical-upright-2 {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            font-size: 1.3em;
+            color: #764ba2;
+        }
+
+        /* Example 3: Sideways Orientation */
+        .vertical-sideways-3 {
+            writing-mode: vertical-rl;
+            text-orientation: sideways;
+            font-size: 1.2em;
+            color: #28a745;
+        }
+
+        /* Example 4: Left-to-Right Vertical */
+        .vertical-lr-4 {
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            font-size: 1.3em;
+            color: #17a2b8;
+        }
+
+        /* Example 5: Table Headers */
+        .table-5 {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .table-5 th {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            background: #667eea;
+            color: white;
+            padding: 15px 5px;
+            width: 50px;
+            height: 150px;
+            font-weight: 600;
+        }
+
+        .table-5 td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        .table-5 tr:hover {
+            background: #f0f4ff;
+        }
+
+        /* Example 6: Mixed CJK and Latin */
+        .mixed-script-6 {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 1.2em;
+            line-height: 2;
+            color: #333;
+            letter-spacing: 0.1em;
+        }
+
+        /* Example 7: Artistic Text */
+        .artistic-7 {
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            letter-spacing: 0.3em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Example 8: Rotated Labels */
+        .rotated-label-8 {
+            writing-mode: vertical-rl;
+            text-orientation: sideways;
+            transform: rotate(180deg);
+            font-size: 1em;
+            font-weight: 600;
+            color: #764ba2;
+        }
+
+        /* Example 9: Card Stack */
+        .card-stack-9 {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .card-9 {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Example 10: Navigation Menu */
+        .nav-10 {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-item-10 {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            background: #f0f4ff;
+            border: 2px solid #667eea;
+            padding: 15px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .nav-item-10:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Example 11: Text with Different Modes */
+        .comparison-11 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            justify-items: center;
+        }
+
+        .mode-vertical-rl-11 {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 1.1em;
+            color: #667eea;
+            font-weight: bold;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mode-vertical-lr-11 {
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            font-size: 1.1em;
+            color: #764ba2;
+            font-weight: bold;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Example 12: Complete Layout */
+        .layout-12 {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .sidebar-12 {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            background: #667eea;
+            color: white;
+            padding: 20px 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content-12 {
+            background: #f0f4ff;
+            border: 2px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .example h2 {
+                font-size: 1.3em;
+            }
+
+            .code-block {
+                font-size: 0.75em;
+            }
+
+            .demo-area {
+                min-height: 200px;
+            }
+
+            .layout-12 {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-11 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+            }
+
+            .example {
+                padding: 15px;
+            }
+
+            .example h2 {
+                font-size: 1.1em;
+            }
+
+            .code-block {
+                font-size: 0.7em;
+            }
+
+            .demo-area {
+                min-height: 150px;
+            }
+
+            .card-stack-9 {
+                gap: 10px;
+            }
+
+            .card-9 {
+                min-height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS text-orientation Property</h1>
+            <p class="subtitle">12 Practical Examples • Vertical Text & Character Orientation</p>
+        </header>
+
+        <div class="examples-grid">
+            <!-- EXAMPLE 1: MIXED ORIENTATION -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>1. Mixed Orientation (Default)</h2>
+                    <span class="example-tag vertical">Mixed</span>
+                </div>
+                <p class="example-description">
+                    Default mixed orientation - most characters upright but certain characters rotate. Perfect for CJK text.
+                </p>
+                <div class="demo-area">
+                    <div class="vertical-mixed-1">Vertical Text 2024</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">element</span> {
+    <span class="property">writing-mode:</span> <span class="value">vertical-rl</span>;
+    <span class="property">text-orientation:</span> <span class="value">mixed</span>;
+}
+
+<span class="keyword">Result:</span> Most chars upright, numbers/Latin rotate
+                </div>
+            </div>
+
+            <!-- EXAMPLE 2: UPRIGHT ORIENTATION -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>2. Upright Orientation</h2>
+                    <span class="example-tag vertical">Upright</span>
+                </div>
+                <p class="example-description">
+                    All characters display upright in their normal orientation. Requires specific fonts.
+                </p>
+                <div class="demo-area">
+                    <div class="vertical-upright-2">Upright Text</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">element</span> {
+    <span class="property">writing-mode:</span> <span class="value">vertical-rl</span>;
+    <span class="property">text-orientation:</span> <span class="value">upright</span>;
+}
+
+<span class="keyword">Result:</span> All characters in normal orientation
+                </div>
+            </div>
+
+            <!-- EXAMPLE 3: SIDEWAYS ORIENTATION -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>3. Sideways Orientation</h2>
+                    <span class="example-tag direction">Sideways</span>
+                </div>
+                <p class="example-description">
+                    Text rotates 90 degrees counterclockwise. Useful for labels and annotations.
+                </p>
+                <div class="demo-area">
+                    <div class="vertical-sideways-3">Sideways Text</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">element</span> {
+    <span class="property">writing-mode:</span> <span class="value">vertical-rl</span>;
+    <span class="property">text-orientation:</span> <span class="value">sideways</span>;
+}
+
+<span class="keyword">Result:</span> Text rotates -90° (counterclockwise)
+                </div>
+            </div>
+
+            <!-- EXAMPLE 4: VERTICAL LEFT-TO-RIGHT -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>4. Vertical Left-to-Right</h2>
+                    <span class="example-tag direction">LR Mode</span>
+                </div>
+                <p class="example-description">
+                    Vertical text flowing from left to right (alternative vertical writing mode).
+                </p>
+                <div class="demo-area">
+                    <div class="vertical-lr-4">Vertical LR Text</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">element</span> {
+    <span class="property">writing-mode:</span> <span class="value">vertical-lr</span>;
+    <span class="property">text-orientation:</span> <span class="value">mixed</span>;
+}
+
+<span class="keyword">Result:</span> Text flows left-to-right vertically
+                </div>
+            </div>
+
+            <!-- EXAMPLE 5: TABLE HEADERS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>5. Vertical Table Headers</h2>
+                    <span class="example-tag table">Table</span>
+                </div>
+                <p class="example-description">
+                    Compact table headers with vertical text. Perfect for narrow columns with long header names.
+                </p>
+                <div class="demo-area">
+                    <table class="table-5">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Item A</td>
+                                <td>5</td>
+                                <td>$10</td>
+                                <td>$50</td>
+                            </tr>
+                            <tr>
+                                <td>Item B</td>
+                                <td>3</td>
+                                <td>$15</td>
+                                <td>$45</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="code-block">
+<span class="keyword">th</span> {
+    <span class="property">writing-mode:</span> <span class="value">vertical-rl</span>;
+    <span class="property">text-orientation:</span> <span class="value">mixed</span>;
+    <span class="property">width:</span> <span class="value">50px</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 6: MIXED CJK AND LATIN -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>6. Mixed CJK & Latin Characters</h2>
+                    <span class="example-tag mixed">Mixed Script</span>
+                </div>
+                <p class="example-description">
+                    Handles mixing Chinese/Japanese with English text. Latin text rotates, CJK stays upright.
+                </p>
+                <div class="demo-area">
+                    <div class="mixed-script-6">漢字 ABC 文字 123 テキスト XYZ 日本語</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">element</span> {
+    <span class="property">writing-mode:</span> <span class="value">vertical-rl</span>;
+    <span class="property">text-orientation:</span> <span class="value">mixed</span>;
+}
+
+<span class="keyword">Result:</span> CJK upright, Latin/numbers rotate
+                </div>
+            </div>
+
+            <!-- EXAMPLE 7: ARTISTIC VERTICAL TEXT -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>7. Artistic Vertical Design</h2>
+                    <span class="example-tag vertical">Artistic</span>
+                </div>
+                <p class="example-description">
+                    Large, spaced vertical text for creative layouts and design purposes.
+                </p>
+                <div class="demo-area">
+                    <div class="artistic-7">DESIGN</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">element</span> {
+    <span class="property">writing-mode:</span> <span class="value">vertical-lr</span>;
+    <span class="property">text-orientation:</span> <span class="value">mixed</span>;
+    <span class="property">font-size:</span> <span class="value">2em</span>;
+    <span class="property">letter-spacing:</span> <span class="value">0.3em</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 8: ROTATED LABELS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>8. Rotated Annotation Labels</h2>
+                    <span class="example-tag direction">Labels</span>
+                </div>
+                <p class="example-description">
+                    Sideways text with rotation for annotations and callouts that read right-to-left.
+                </p>
+                <div class="demo-area">
+                    <div class="rotated-label-8">← Important Label</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">label</span> {
+    <span class="property">writing-mode:</span> <span class="value">vertical-rl</span>;
+    <span class="property">text-orientation:</span> <span class="value">sideways</span>;
+    <span class="property">transform:</span> <span class="value">rotate(180deg)</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 9: CARD STACK -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>9. Vertical Card Stack</h2>
+                    <span class="example-tag vertical">Cards</span>
+                </div>
+                <p class="example-description">
+                    Series of cards with vertical text orientation. Great for galleries and portfolios.
+                </p>
+                <div class="demo-area">
+                    <div class="card-stack-9">
+                        <div class="card-9">Card 1</div>
+                        <div class="card-9">Card 2</div>
+                        <div class="card-9">Card 3</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.card</span> {
+    <span class="property">writing-mode:</span> <span class="value">vertical-rl</span>;
+    <span class="property">text-orientation:</span> <span class="value">mixed</span>;
+    <span class="property">background:</span> <span class="value">gradient</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 10: NAVIGATION MENU -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>10. Vertical Navigation Menu</h2>
+                    <span class="example-tag direction">Navigation</span>
+                </div>
+                <p class="example-description">
+                    Interactive navigation with upright vertical text. Hover for interactive effects.
+                </p>
+                <div class="demo-area">
+                    <div class="nav-10">
+                        <div class="nav-item-10">Home</div>
+                        <div class="nav-item-10">About</div>
+                        <div class="nav-item-10">Services</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.nav-item</span> {
+    <span class="property">writing-mode:</span> <span class="value">vertical-rl</span>;
+    <span class="property">text-orientation:</span> <span class="value">upright</span>;
+    <span class="property">transition:</span> <span class="value">all 0.3s</span>;
+}
+
+<span class="keyword">.nav-item:hover</span> {
+    <span class="property">background:</span> <span class="value">#667eea</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 11: MODE COMPARISON -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>11. Mode Comparison (RL vs LR)</h2>
+                    <span class="example-tag vertical">Comparison</span>
+                </div>
+                <p class="example-description">
+                    Side-by-side comparison of vertical-rl (right-left) and vertical-lr (left-right) modes.
+                </p>
+                <div class="demo-area">
+                    <div class="comparison-11">
+                        <div class="mode-vertical-rl-11">Right to Left</div>
+                        <div class="mode-vertical-lr-11">Left to Right</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">/* Right-to-Left Vertical */</span>
+writing-mode: vertical-rl;
+
+<span class="keyword">/* Left-to-Right Vertical */</span>
+writing-mode: vertical-lr;
+
+<span class="keyword">Both with text-orientation: mixed</span>
+                </div>
+            </div>
+
+            <!-- EXAMPLE 12: COMPLETE LAYOUT -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>12. Complete Vertical Layout</h2>
+                    <span class="example-tag vertical">Layout</span>
+                </div>
+                <p class="example-description">
+                    Complete layout combining vertical sidebar with horizontal content area.
+                </p>
+                <div class="demo-area">
+                    <div class="layout-12">
+                        <div class="sidebar-12">Navigation</div>
+                        <div class="content-12">
+                            <strong>Main Content Area</strong><br>
+                            This demonstrates a complete layout with vertical text in the sidebar and horizontal content in the main area.
+                        </div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">/* Vertical Sidebar */</span>
+.sidebar {
+    <span class="property">writing-mode:</span> <span class="value">vertical-rl</span>;
+    <span class="property">text-orientation:</span> <span class="value">mixed</span>;
+}
+
+<span class="keyword">/* Horizontal Content */</span>
+.content {
+    <span class="property">writing-mode:</span> <span class="value">horizontal-tb</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS text-orientation • 12 Practical Examples</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Each example demonstrates vertical text orientation in different scenarios and layouts</p>
+        </footer>
+    </div>
+</body>
+</html>

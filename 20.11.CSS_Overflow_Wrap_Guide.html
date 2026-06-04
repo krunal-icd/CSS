@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Overflow-Wrap Mastery Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .intro-section {
+            padding: 40px;
+            background: linear-gradient(to right, #f5f7fa 0%, #c3cfe2 100%);
+            border-bottom: 3px solid #667eea;
+        }
+
+        .intro-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .intro-section p {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        .definition-box {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .definition-box strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            border-left: 4px solid #667eea;
+        }
+
+        .section-title {
+            background: #f5f7fa;
+            padding: 30px 40px;
+            border-bottom: 2px solid #667eea;
+            margin-top: 30px;
+        }
+
+        .section-title h2 {
+            color: #667eea;
+            font-size: 1.8em;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 25px;
+            padding: 40px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);
+            transform: translateY(-5px);
+        }
+
+        .example-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .example-card h3 {
+            color: #667eea;
+            margin-bottom: 12px;
+            font-size: 1.4em;
+        }
+
+        .example-card p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .example-preview {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #e0e0e0;
+            min-height: 100px;
+            word-wrap: break-word;
+        }
+
+        .preview-content {
+            font-size: 0.95em;
+            color: #333;
+        }
+
+        .code-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 18px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .code-small {
+            background: #f5f5f5;
+            padding: 12px;
+            border-left: 3px solid #667eea;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            color: #333;
+            word-break: break-all;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+
+        /* Overflow-Wrap Examples */
+        .wrap-normal {
+            width: 200px;
+            overflow-wrap: normal;
+            background: #f0f0f0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .wrap-break-word {
+            width: 200px;
+            overflow-wrap: break-word;
+            background: #f0f0f0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .wrap-anywhere {
+            width: 200px;
+            overflow-wrap: anywhere;
+            background: #f0f0f0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .wrap-hyphenation {
+            width: 200px;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            background: #f0f0f0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            lang: en;
+        }
+
+        .wrap-word-break {
+            width: 200px;
+            word-break: break-all;
+            background: #f0f0f0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .wrap-keep-all {
+            width: 200px;
+            word-break: keep-all;
+            background: #f0f0f0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .wrap-url {
+            width: 250px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            background: #f0f0f0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.85em;
+        }
+
+        .wrap-email {
+            width: 200px;
+            overflow-wrap: break-word;
+            background: #f0f0f0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .wrap-cjk {
+            width: 150px;
+            word-break: break-word;
+            background: #f0f0f0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .wrap-responsive {
+            width: 100%;
+            max-width: 300px;
+            overflow-wrap: break-word;
+            background: #f0f0f0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        .tips {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .tips strong {
+            color: #856404;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .warning strong {
+            color: #721c24;
+        }
+
+        .implementation-section {
+            padding: 40px;
+            background: #f8f9fa;
+        }
+
+        .implementation-section h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .steps {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .steps ol {
+            margin-left: 25px;
+        }
+
+        .steps li {
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .steps strong {
+            color: #667eea;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .use-case {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .use-case strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .property-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .property-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .property-box strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        footer {
+            background: #667eea;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .wrap-normal,
+            .wrap-break-word,
+            .wrap-anywhere,
+            .wrap-hyphenation,
+            .wrap-word-break,
+            .wrap-keep-all,
+            .wrap-url,
+            .wrap-email,
+            .wrap-cjk,
+            .wrap-responsive {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>📦 CSS Overflow-Wrap Mastery Guide</h1>
+            <p>Master Word Wrapping & Long Content Handling for Responsive Design</p>
+        </header>
+
+        <!-- Introduction Section -->
+        <div class="intro-section">
+            <h2>📖 Understanding CSS Overflow-Wrap</h2>
+            <p>
+                Overflow-wrap specifies whether the browser should insert line breaks inside words to prevent text from 
+                overflowing its container. Combined with word-break and hyphens, it's essential for handling long URLs, 
+                email addresses, code snippets, and any unbreakable content in responsive layouts.
+            </p>
+
+            <div class="definition-box">
+                <strong>What is Overflow-Wrap?</strong>
+                <p style="margin-top: 10px;">
+                    Overflow-wrap controls how the browser handles words that are too long for their container. It determines 
+                    whether the word should break mid-word (overflow-wrap: break-word) or overflow the container (overflow-wrap: normal). 
+                    This property is critical for creating robust, responsive designs that handle unexpected content gracefully.
+                </p>
+            </div>
+
+            <p>
+                <strong>Key Concept:</strong> Overflow-wrap lets you choose between breaking words to fit containers or allowing 
+                them to overflow. The right choice depends on your content type and design requirements.
+            </p>
+
+            <div class="code-block">
+/* Overflow-Wrap Syntax */
+overflow-wrap: normal;        /* Default - don't break words */
+overflow-wrap: break-word;    /* Break long words to fit container */
+overflow-wrap: anywhere;      /* Break at any point if needed (CSS 3) */
+
+/* Related Properties */
+word-break: normal;           /* Language-based breaking */
+word-break: break-all;        /* Break anywhere, including CJK */
+word-break: keep-all;         /* Don't break CJK words */
+
+hyphens: none;                /* No hyphenation */
+hyphens: manual;              /* Only break at hyphen-character */
+hyphens: auto;                /* Auto hyphenation (language-aware) */
+            </div>
+
+            <div class="info-box">
+                <strong>⚠️ Important Differences:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><span class="highlight">overflow-wrap</span> - Breaks long words when they don't fit</li>
+                    <li><span class="highlight">word-break</span> - Controls breaking behavior (language-aware vs. character-based)</li>
+                    <li><span class="highlight">hyphens</span> - Adds or suppresses hyphenation marks</li>
+                    <li><span class="highlight">white-space</span> - Controls wrapping behavior (nowrap prevents all wrapping)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 10 Overflow-Wrap Examples -->
+        <div class="section-title">
+            <h2>🎨 10 Professional Overflow-Wrap Examples</h2>
+        </div>
+
+        <div class="examples-grid">
+            <!-- Example 1: Normal (Default) -->
+            <div class="example-card">
+                <span class="example-number">1</span>
+                <h3>Normal (Default)</h3>
+                <p>Words don't break. Long content overflows the container. Shows baseline behavior.</p>
+                <div class="example-preview">
+                    <div class="preview-content wrap-normal">
+                        Supercalifragilisticexpialidocious overflowsthecontainer completely
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">width: 200px;<br>overflow-wrap: normal;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Baseline comparison or when overflow is acceptable
+                </div>
+            </div>
+
+            <!-- Example 2: Break-Word (Most Common) -->
+            <div class="example-card">
+                <span class="example-number">2</span>
+                <h3>Break-Word ⭐ (Most Common)</h3>
+                <p>Long words break mid-word to fit container. Professional and responsive-friendly.</p>
+                <div class="example-preview">
+                    <div class="preview-content wrap-break-word">
+                        Supercalifragilisticexpialidocious nowbreakstofitin container
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">width: 200px;<br>overflow-wrap: break-word;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Most text elements. Prevents overflow. RECOMMENDED
+                </div>
+            </div>
+
+            <!-- Example 3: Anywhere (CSS 3) -->
+            <div class="example-card">
+                <span class="example-number">3</span>
+                <h3>Anywhere (Newer Standard)</h3>
+                <p>Break at any point, including between words. More aggressive than break-word.</p>
+                <div class="example-preview">
+                    <div class="preview-content wrap-anywhere">
+                        Supercalifragilisticexpialidocious can break anywhere including between words
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">width: 200px;<br>overflow-wrap: anywhere;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Aggressive wrapping needed. Modern browsers only
+                </div>
+            </div>
+
+            <!-- Example 4: With Hyphenation -->
+            <div class="example-card">
+                <span class="example-number">4</span>
+                <h3>Break-Word + Hyphenation</h3>
+                <p>Break long words with hyphens. Language-aware automatic hyphenation. More elegant.</p>
+                <div class="example-preview">
+                    <div class="preview-content wrap-hyphenation" lang="en">
+                        Supercalifragilisticexpialidocious hyphenation breaks words more elegantly
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">width: 200px;<br>overflow-wrap: break-word;<br>hyphens: auto;<br>lang: en;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Typography-focused designs. News sites, articles
+                </div>
+            </div>
+
+            <!-- Example 5: Word-Break All -->
+            <div class="example-card">
+                <span class="example-number">5</span>
+                <h3>Word-Break: Break-All</h3>
+                <p>Break at any character, even between words. Useful for CJK languages and code.</p>
+                <div class="example-preview">
+                    <div class="preview-content wrap-word-break">
+                        This text can break at any character position without respecting word boundaries
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">width: 200px;<br>word-break: break-all;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> CJK text, code snippets, technical content
+                </div>
+            </div>
+
+            <!-- Example 6: Keep-All (CJK) -->
+            <div class="example-card">
+                <span class="example-number">6</span>
+                <h3>Word-Break: Keep-All</h3>
+                <p>Don't break CJK words. Perfect for Chinese, Japanese, Korean text.</p>
+                <div class="example-preview">
+                    <div class="preview-content wrap-keep-all">
+                        这是一个很长的中文句子不会在字符之间中断
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">width: 200px;<br>word-break: keep-all;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> CJK languages (Chinese, Japanese, Korean)
+                </div>
+            </div>
+
+            <!-- Example 7: URLs and Links -->
+            <div class="example-card">
+                <span class="example-number">7</span>
+                <h3>Long URLs</h3>
+                <p>Break long URLs without destroying structure. Critical for mobile layouts.</p>
+                <div class="example-preview">
+                    <div class="preview-content wrap-url">
+                        https://www.example.com/very/long/path/to/resource/with/many/segments
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">width: 250px;<br>overflow-wrap: break-word;<br>word-break: break-word;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Link displays, URL paths, API endpoints
+                </div>
+            </div>
+
+            <!-- Example 8: Email Addresses -->
+            <div class="example-card">
+                <span class="example-number">8</span>
+                <h3>Email Addresses</h3>
+                <p>Handle long email addresses gracefully on mobile devices.</p>
+                <div class="example-preview">
+                    <div class="preview-content wrap-email">
+                        verylongemailaddress.withmanysegments@example-domain.co.uk
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">width: 200px;<br>overflow-wrap: break-word;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Contact information, user profiles, emails
+                </div>
+            </div>
+
+            <!-- Example 9: Code Snippets -->
+            <div class="example-card">
+                <span class="example-number">9</span>
+                <h3>Code Snippets</h3>
+                <p>Display code with proper wrapping while preserving readability.</p>
+                <div class="example-preview">
+                    <div class="preview-content wrap-url" style="font-size: 0.8em;">
+                        const veryLongVariableNameThatExceedsContainerWidthConsiderably = 42;
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">width: 250px;<br>overflow-wrap: break-word;<br>word-break: break-all;<br>font-family: monospace;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Code blocks, technical documentation
+                </div>
+            </div>
+
+            <!-- Example 10: Responsive Text -->
+            <div class="example-card">
+                <span class="example-number">10</span>
+                <h3>Responsive with Break-Word</h3>
+                <p>Flexible width with overflow-wrap for any screen size. Production-ready.</p>
+                <div class="example-preview">
+                    <div class="preview-content wrap-responsive">
+                        Verylongwordthatwillbreakresponsivelyacrossalldevicewidths automatically adjusts
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">width: 100%;<br>max-width: 300px;<br>overflow-wrap: break-word;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Responsive layouts, fluid content containers
+                </div>
+            </div>
+        </div>
+
+        <!-- Property Comparison -->
+        <div class="section-title">
+            <h2>🔍 Overflow-Wrap vs Word-Break vs Hyphens</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Value</th>
+                        <th>Behavior</th>
+                        <th>Use Case</th>
+                        <th>Browser Support</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="3"><strong>overflow-wrap</strong></td>
+                        <td><code>normal</code></td>
+                        <td>Don't break words</td>
+                        <td>Baseline/no breaking needed</td>
+                        <td>✅ All</td>
+                    </tr>
+                    <tr>
+                        <td><code>break-word</code></td>
+                        <td>Break long words to fit</td>
+                        <td>Most text elements - RECOMMENDED</td>
+                        <td>✅ All</td>
+                    </tr>
+                    <tr>
+                        <td><code>anywhere</code></td>
+                        <td>Break anywhere (aggressive)</td>
+                        <td>Maximum wrapping needed</td>
+                        <td>✅ Modern (92%+)</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3"><strong>word-break</strong></td>
+                        <td><code>normal</code></td>
+                        <td>Default line breaking rules</td>
+                        <td>Standard text</td>
+                        <td>✅ All</td>
+                    </tr>
+                    <tr>
+                        <td><code>break-all</code></td>
+                        <td>Break at any character</td>
+                        <td>CJK text, code</td>
+                        <td>✅ All</td>
+                    </tr>
+                    <tr>
+                        <td><code>keep-all</code></td>
+                        <td>Don't break CJK words</td>
+                        <td>CJK language support</td>
+                        <td>✅ All</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3"><strong>hyphens</strong></td>
+                        <td><code>none</code></td>
+                        <td>No hyphenation</td>
+                        <td>No hyphens wanted</td>
+                        <td>✅ All</td>
+                    </tr>
+                    <tr>
+                        <td><code>manual</code></td>
+                        <td>Break at &shy; character</td>
+                        <td>Explicit hyphenation points</td>
+                        <td>✅ All</td>
+                    </tr>
+                    <tr>
+                        <td><code>auto</code></td>
+                        <td>Automatic hyphenation</td>
+                        <td>Typography-focused design</td>
+                        <td>✅ Most (89%+)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Use Cases Section -->
+        <div class="section-title">
+            <h2>🎯 Real-World Use Cases</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <div class="use-case-grid">
+                <div class="use-case">
+                    <strong>📝 Body Text & Articles</strong>
+                    Use <span class="highlight">overflow-wrap: break-word</span> with <span class="highlight">hyphens: auto</span> for elegant hyphenation. Language-aware and professional.
+                </div>
+
+                <div class="use-case">
+                    <strong>🔗 URLs & Links</strong>
+                    Use <span class="highlight">overflow-wrap: break-word</span> + <span class="highlight">word-break: break-word</span> for URLs. Prevents layout breaking on mobile.
+                </div>
+
+                <div class="use-case">
+                    <strong>✉️ Email Addresses</strong>
+                    Use <span class="highlight">overflow-wrap: break-word</span> for long emails. Add tooltip to show full address on hover.
+                </div>
+
+                <div class="use-case">
+                    <strong>💻 Code Snippets</strong>
+                    Use <span class="highlight">word-break: break-all</span> for code. Monospace font and code highlighting for readability.
+                </div>
+
+                <div class="use-case">
+                    <strong>🌏 CJK Content (Chinese, Japanese, Korean)</strong>
+                    Use <span class="highlight">word-break: break-all</span> or <span class="highlight">keep-all</span> depending on language. Language-aware breaking.
+                </div>
+
+                <div class="use-case">
+                    <strong>📱 Mobile Responsive Design</strong>
+                    Use <span class="highlight">overflow-wrap: break-word</span> with max-width containers. Critical for small screens.
+                </div>
+
+                <div class="use-case">
+                    <strong>📊 Data Tables</strong>
+                    Use <span class="highlight">overflow-wrap: break-word</span> for cells. Prevents table layout distortion on narrow columns.
+                </div>
+
+                <div class="use-case">
+                    <strong>💬 User Comments</strong>
+                    Use <span class="highlight">overflow-wrap: break-word</span> with max-width. Handles unpredictable user input gracefully.
+                </div>
+
+                <div class="use-case">
+                    <strong>🏷️ Product Descriptions</strong>
+                    Use <span class="highlight">overflow-wrap: break-word</span>. Maintains layout consistency across products.
+                </div>
+
+                <div class="use-case">
+                    <strong>🔐 Credentials & Tokens</strong>
+                    Use <span class="highlight">word-break: break-all</span> with monospace. Long API keys and tokens need aggressive breaking.
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Guide -->
+        <div class="implementation-section">
+            <h2>🚀 How to Implement in Elementor & CSS</h2>
+            
+            <div class="steps">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Method 1: Elementor UI</h3>
+                <ol>
+                    <li><strong>Select Text Element</strong> - Click heading, paragraph, or rich text widget</li>
+                    <li><strong>Go to Advanced Tab</strong> - Scroll down in the right panel</li>
+                    <li><strong>Find Custom CSS</strong> - Located at the bottom of Advanced section</li>
+                    <li><strong>Add CSS Code</strong> - Copy any example from the 10 provided</li>
+                    <li><strong>Test Content</strong> - Add long URLs, emails, or code snippets to test</li>
+                    <li><strong>Preview Mobile</strong> - Check responsiveness on narrow screens</li>
+                    <li><strong>Update & Publish</strong> - Save changes to the page</li>
+                </ol>
+            </div>
+
+            <div class="code-block">
+/* Complete CSS Implementation Examples */
+
+/* Example 1: Standard Text (Recommended) */
+p, .text-content {
+    overflow-wrap: break-word;
+    word-wrap: break-word;  /* IE fallback */
+    word-break: break-word;
+}
+
+/* Example 2: Text with Hyphenation */
+p {
+    overflow-wrap: break-word;
+    hyphens: auto;
+    lang: en;
+}
+
+/* Example 3: URLs and Links */
+a, .url-text {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    display: inline-block;
+}
+
+/* Example 4: Code Blocks */
+code, pre, .code-snippet {
+    word-break: break-all;
+    overflow-wrap: break-word;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+/* Example 5: Table Cells */
+td, th {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Example 6: CJK Language */
+.cjk-text {
+    word-break: break-all;
+}
+
+/* Example 7: Responsive Container */
+.container {
+    width: 100%;
+    max-width: 600px;
+    overflow-wrap: break-word;
+}
+
+/* Example 8: Comment/Input Field */
+.comment, textarea {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    width: 100%;
+}
+
+/* Example 9: Email Display */
+.email-address {
+    overflow-wrap: break-word;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+/* Example 10: Mobile-First Responsive */
+@media (max-width: 768px) {
+    p, .text-content {
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+    
+    code, .code-snippet {
+        word-break: break-all;
+        font-size: 0.85em;
+    }
+}
+            </div>
+
+            <div class="tips">
+                <strong>💡 Implementation Pro Tips:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Use overflow-wrap: break-word as default:</strong> Safe for all text elements</li>
+                    <li><strong>Combine with hyphens: auto:</strong> For more elegant breaking with hyphens</li>
+                    <li><strong>Add lang attribute:</strong> Required for language-aware hyphenation to work</li>
+                    <li><strong>Test with real content:</strong> Long URLs, emails, or code to verify wrapping</li>
+                    <li><strong>Include word-wrap fallback:</strong> For older IE browsers (word-wrap: break-word)</li>
+                    <li><strong>Use word-break: break-all for code:</strong> More aggressive than overflow-wrap</li>
+                    <li><strong>Apply to parent container:</strong> Let children inherit the wrapping behavior</li>
+                    <li><strong>Consider max-width:</strong> Constrain content width for optimal readability</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Common Implementation Mistakes:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>❌ Using word-break: break-all everywhere - too aggressive, breaks normal text strangely</li>
+                    <li>❌ Forgetting overflow-wrap on text containers - content still overflows</li>
+                    <li>❌ Not setting max-width - text can become too narrow before wrapping triggers</li>
+                    <li>❌ Using hyphens: auto without lang attribute - hyphenation may not work</li>
+                    <li>❌ Combining word-break and overflow-wrap incorrectly - conflicting behavior</li>
+                    <li>❌ Not testing on mobile - wrapping behavior changes with viewport width</li>
+                    <li>❌ Applying to white-space: nowrap elements - overflow-wrap won't work</li>
+                </ul>
+            </div>
+
+            <div class="info-box" style="margin-top: 25px;">
+                <strong>🔧 Advanced Techniques:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Use <span class="highlight">hyphens: manual</span> with <span class="highlight">&shy;</span> (soft hyphen) for control</li>
+                    <li>Combine with <span class="highlight">word-spacing</span> for better spacing control</li>
+                    <li>Use <span class="highlight">letter-spacing</span> with code text for better readability</li>
+                    <li>Apply <span class="highlight">-webkit-hyphens</span> for Safari compatibility</li>
+                    <li>Use CSS custom properties for easy theme switching</li>
+                    <li>Layer multiple font stacks for different scripts (Latin, CJK, Arabic)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Browser Support Reference -->
+        <div class="section-title">
+            <h2>🌐 Browser Support & Compatibility</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Chrome</th>
+                        <th>Firefox</th>
+                        <th>Safari</th>
+                        <th>Edge</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>overflow-wrap: normal</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>Universal support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>overflow-wrap: break-word</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>Universal support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>overflow-wrap: anywhere</strong></td>
+                        <td>✅ 76+</td>
+                        <td>✅ 67+</td>
+                        <td>✅ 13.1+</td>
+                        <td>✅ 79+</td>
+                        <td>Modern browsers only</td>
+                    </tr>
+                    <tr>
+                        <td><strong>word-break: break-all</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>Universal support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>word-break: keep-all</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ 5+</td>
+                        <td>✅ All</td>
+                        <td>Good support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>hyphens: auto</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ 5.1+</td>
+                        <td>✅ All</td>
+                        <td>Requires lang attribute</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>Fallback Strategy for Old Browsers:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Always include <span class="highlight">word-wrap: break-word</span> before overflow-wrap</li>
+                    <li>Test on IE 11 if your audience requires it</li>
+                    <li>Use feature detection with CSS @supports for newer properties</li>
+                    <li>Provide reasonable defaults for browsers that don't support advanced wrapping</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Quick Decision Tree -->
+        <div class="section-title">
+            <h2>🎯 Quick Decision Tree: Which Property to Use?</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <div style="background: white; padding: 25px; border-radius: 8px; border-left: 4px solid #667eea; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+                <strong style="color: #667eea; display: block; margin-bottom: 15px;">Is your content mostly normal text?</strong>
+                <div style="margin-left: 20px; margin-bottom: 20px;">
+                    ✅ YES → Use <span class="highlight">overflow-wrap: break-word</span> + <span class="highlight">hyphens: auto</span><br>
+                    ❌ NO → Go to next question
+                </div>
+
+                <strong style="color: #667eea; display: block; margin-bottom: 15px;">Do you have CJK text (Chinese, Japanese, Korean)?</strong>
+                <div style="margin-left: 20px; margin-bottom: 20px;">
+                    ✅ YES → Use <span class="highlight">word-break: break-all</span> or <span class="highlight">keep-all</span><br>
+                    ❌ NO → Go to next question
+                </div>
+
+                <strong style="color: #667eea; display: block; margin-bottom: 15px;">Do you have URLs, code, or unbreakable long strings?</strong>
+                <div style="margin-left: 20px; margin-bottom: 20px;">
+                    ✅ YES → Use <span class="highlight">overflow-wrap: break-word</span> + <span class="highlight">word-break: break-word</span><br>
+                    ❌ NO → Go to next question
+                </div>
+
+                <strong style="color: #667eea; display: block; margin-bottom: 15px;">Do you need maximum aggressive wrapping?</strong>
+                <div style="margin-left: 20px;">
+                    ✅ YES → Use <span class="highlight">overflow-wrap: anywhere</span><br>
+                    ❌ NO → You have your answer!
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 CSS Overflow-Wrap Mastery Guide | Professional Content Wrapping & Responsive Design</p>
+            <p style="margin-top: 10px; opacity: 0.9;">Master word wrapping for responsive layouts that handle any content gracefully</p>
+        </footer>
+    </div>
+</body>
+</html>

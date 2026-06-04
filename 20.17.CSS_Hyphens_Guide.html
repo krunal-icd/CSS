@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Hyphens Property Mastery Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .intro-section {
+            padding: 40px;
+            background: linear-gradient(to right, #f5f7fa 0%, #c3cfe2 100%);
+            border-bottom: 3px solid #667eea;
+        }
+
+        .intro-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .intro-section p {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        .definition-box {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .definition-box strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            border-left: 4px solid #667eea;
+        }
+
+        .section-title {
+            background: #f5f7fa;
+            padding: 30px 40px;
+            border-bottom: 2px solid #667eea;
+            margin-top: 30px;
+        }
+
+        .section-title h2 {
+            color: #667eea;
+            font-size: 1.8em;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 25px;
+            padding: 40px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);
+            transform: translateY(-5px);
+        }
+
+        .example-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .example-card h3 {
+            color: #667eea;
+            margin-bottom: 12px;
+            font-size: 1.4em;
+        }
+
+        .example-card p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .example-preview {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #e0e0e0;
+            min-height: 100px;
+            width: 250px;
+        }
+
+        .preview-content {
+            font-size: 0.95em;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .code-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 18px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .code-small {
+            background: #f5f5f5;
+            padding: 12px;
+            border-left: 3px solid #667eea;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            color: #333;
+            word-break: break-all;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+
+        /* Hyphens Examples */
+        .hyph-none {
+            hyphens: none;
+        }
+
+        .hyph-manual {
+            hyphens: manual;
+        }
+
+        .hyph-auto-en {
+            hyphens: auto;
+            lang: en;
+        }
+
+        .hyph-auto-de {
+            hyphens: auto;
+            lang: de;
+        }
+
+        .hyph-auto-fr {
+            hyphens: auto;
+            lang: fr;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        .tips {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .tips strong {
+            color: #856404;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .warning strong {
+            color: #721c24;
+        }
+
+        .implementation-section {
+            padding: 40px;
+            background: #f8f9fa;
+        }
+
+        .implementation-section h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .steps {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .steps ol {
+            margin-left: 25px;
+        }
+
+        .steps li {
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .steps strong {
+            color: #667eea;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .use-case {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .use-case strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        footer {
+            background: #667eea;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .example-preview {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>📖 CSS Hyphens Property Mastery Guide</h1>
+            <p>Master Automatic & Manual Hyphenation for Professional Typography</p>
+        </header>
+
+        <!-- Introduction Section -->
+        <div class="intro-section">
+            <h2>📚 Understanding CSS Hyphens</h2>
+            <p>
+                The hyphens property controls how hyphenation is handled when text wraps to multiple lines. It enables automatic 
+                language-aware word breaking with hyphens, manual hyphenation point control, or complete hyphenation suppression. 
+                Essential for justified text, narrow columns, narrow containers, and professional typography.
+            </p>
+
+            <div class="definition-box">
+                <strong>What is the Hyphens Property?</strong>
+                <p style="margin-top: 10px;">
+                    Hyphens specifies whether words should be hyphenated when they break across line boundaries. Three main values: 
+                    <strong>none</strong> (no hyphenation), <strong>manual</strong> (only at soft hyphens), and <strong>auto</strong> 
+                    (language-aware automatic hyphenation). Requires lang attribute for language-specific behavior.
+                </p>
+            </div>
+
+            <p>
+                <strong>Key Concept:</strong> Hyphens improves text flow in constrained spaces by breaking long words intelligently. 
+                Auto hyphenation is language-aware—English breaks differently than German or French.
+            </p>
+
+            <div class="code-block">
+/* Hyphens Syntax */
+hyphens: none;                /* No hyphenation (default) */
+hyphens: manual;              /* Only break at soft hyphens (&shy;) */
+hyphens: auto;                /* Language-aware auto hyphenation */
+
+/* Vendor Prefixes (for older browsers) */
+-webkit-hyphens: auto;        /* Safari, older Chrome */
+-moz-hyphens: auto;           /* Firefox */
+-ms-hyphens: auto;            /* IE 10+, Edge */
+hyphens: auto;                /* Standard */
+
+/* Soft Hyphen (manual break point) */
+&lt;p&gt;supercalifragilistic&shy;expialidocious&lt;/p&gt;
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Requirements for Hyphens:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><span class="highlight">lang attribute</span> - MUST be set on element or parent (e.g., lang="en")</li>
+                    <li><span class="highlight">hyphens: auto</span> - Requires language to be specified</li>
+                    <li><span class="highlight">Container width</span> - Text must be constrained to trigger wrapping</li>
+                    <li><span class="highlight">Word-breaking properties</span> - May need overflow-wrap: break-word</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 10 Hyphens Examples -->
+        <div class="section-title">
+            <h2>🎨 10 Professional Hyphenation Examples</h2>
+        </div>
+
+        <div class="examples-grid">
+            <!-- Example 1: None (No Hyphenation) -->
+            <div class="example-card">
+                <span class="example-number">1</span>
+                <h3>None (No Hyphenation)</h3>
+                <p>Disables all hyphenation. Words don't break mid-word.</p>
+                <div class="example-preview">
+                    <div class="preview-content hyph-none">
+                        Supercalifragilisticexpialidocious overflowsthecontainer
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">hyphens: none;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Headings, UI, when visual consistency matters more than flow
+                </div>
+            </div>
+
+            <!-- Example 2: Manual (Soft Hyphens) -->
+            <div class="example-card">
+                <span class="example-number">2</span>
+                <h3>Manual (Soft Hyphens)</h3>
+                <p>Only breaks at explicit soft hyphens (&shy;). Full control.</p>
+                <div class="example-preview">
+                    <div class="preview-content hyph-manual">
+                        Supercalifragilistic&shy;expialidocious breaks only at marked points
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">hyphens: manual;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Specialized terminology, brand names, exact control needed
+                </div>
+            </div>
+
+            <!-- Example 3: Auto English -->
+            <div class="example-card">
+                <span class="example-number">3</span>
+                <h3>Auto (English) ⭐</h3>
+                <p>Automatic language-aware hyphenation for English text.</p>
+                <div class="example-preview">
+                    <div class="preview-content hyph-auto-en">
+                        Supercalifragilisticexpialidocious automatically hyphenates based on English language rules
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">hyphens: auto;<br>lang: en;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Body text, articles, justified text - MOST COMMON
+                </div>
+            </div>
+
+            <!-- Example 4: Auto German -->
+            <div class="example-card">
+                <span class="example-number">4</span>
+                <h3>Auto (German)</h3>
+                <p>German hyphenation rules for long compound words.</p>
+                <div class="example-preview">
+                    <div class="preview-content hyph-auto-de">
+                        Donaudampfschifffahrtsgesellschaftskapitän wird automatisch nach deutschen Regeln getrennt
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">hyphens: auto;<br>lang: de;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> German content, long compound words
+                </div>
+            </div>
+
+            <!-- Example 5: Auto French -->
+            <div class="example-card">
+                <span class="example-number">5</span>
+                <h3>Auto (French)</h3>
+                <p>French hyphenation with language-specific rules.</p>
+                <div class="example-preview">
+                    <div class="preview-content hyph-auto-fr">
+                        L'hippopotame extraordinaire se divise selon les règles typographiques françaises correctement
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">hyphens: auto;<br>lang: fr;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> French content, multilingual sites
+                </div>
+            </div>
+
+            <!-- Example 6: Justified Text with Hyphens -->
+            <div class="example-card">
+                <span class="example-number">6</span>
+                <h3>Justified + Hyphens</h3>
+                <p>Hyphenation improves text justification significantly.</p>
+                <div class="example-preview">
+                    <div class="preview-content hyph-auto-en" style="text-align: justify;">
+                        Antidisestablishmentarianism affects typographical considerations significantly affecting layout quality
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">text-align: justify;<br>hyphens: auto;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Justified text, newspapers, magazines, professional documents
+                </div>
+            </div>
+
+            <!-- Example 7: Narrow Column -->
+            <div class="example-card">
+                <span class="example-number">7</span>
+                <h3>Narrow Column Layout</h3>
+                <p>Hyphens essential in multi-column layouts.</p>
+                <div class="example-preview">
+                    <div style="column-count: 2; column-gap: 10px; hyphens: auto;" lang="en">
+                        <div class="preview-content">
+                            Incomprehensibility and uncharacteristically require hyphenation for proper column flow
+                        </div>
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">column-count: 2;<br>hyphens: auto;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Multi-column layouts, newspaper-style pages
+                </div>
+            </div>
+
+            <!-- Example 8: Accessibility Enhancement -->
+            <div class="example-card">
+                <span class="example-number">8</span>
+                <h3>Accessibility + Hyphens</h3>
+                <p>Combines hyphenation with larger spacing for dyslexia-friendly design.</p>
+                <div class="example-preview">
+                    <div class="preview-content hyph-auto-en" style="word-spacing: 0.15em; letter-spacing: 0.05em; line-height: 1.8;">
+                        Antidisestablishmentarianism demonstrates accessibility principles combined with hyphenation
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">hyphens: auto;<br>word-spacing: 0.15em;<br>letter-spacing: 0.05em;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Accessible design, dyslexia-friendly content
+                </div>
+            </div>
+
+            <!-- Example 9: Mobile Responsive -->
+            <div class="example-card">
+                <span class="example-number">9</span>
+                <h3>Mobile Responsive Hyphens</h3>
+                <p>Adaptive hyphenation for different screen sizes.</p>
+                <div class="example-preview">
+                    <div class="preview-content hyph-auto-en" style="width: 100%; max-width: 250px;">
+                        Characterization and internationalization require hyphenation on mobile screens
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">hyphens: auto;<br>@media (max-width: 600px) {<br>  hyphens: auto;<br>}</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Responsive design, mobile-first layouts
+                </div>
+            </div>
+
+            <!-- Example 10: Mixed Languages -->
+            <div class="example-card">
+                <span class="example-number">10</span>
+                <h3>Mixed Language Content</h3>
+                <p>Different lang attributes enable language-specific hyphenation.</p>
+                <div class="example-preview">
+                    <div style="display: grid; gap: 10px;">
+                        <div class="preview-content hyph-auto-en" lang="en">
+                            <strong>English:</strong> Internationalization affects hyphenation
+                        </div>
+                        <div class="preview-content hyph-auto-de" lang="de">
+                            <strong>German:</strong> Donaudampfschifffahrtsgesellschaft
+                        </div>
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">:lang(en) { hyphens: auto; }<br>:lang(de) { hyphens: auto; }</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> International sites, multilingual content
+                </div>
+            </div>
+        </div>
+
+        <!-- Hyphens Values Comparison -->
+        <div class="section-title">
+            <h2>📊 Hyphens Values & Behavior</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Hyphenation Behavior</th>
+                        <th>Requires Lang</th>
+                        <th>Best Use</th>
+                        <th>Browser Support</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>none</strong></td>
+                        <td>No hyphenation, words overflow</td>
+                        <td>❌ No</td>
+                        <td>Headings, UI elements</td>
+                        <td>✅ Universal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>manual</strong></td>
+                        <td>Only at soft hyphens (&shy;)</td>
+                        <td>❌ No</td>
+                        <td>Specialized terms, brand names</td>
+                        <td>✅ Universal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>auto</strong></td>
+                        <td>Language-aware auto hyphenation</td>
+                        <td>✅ Yes (required)</td>
+                        <td>Body text, articles - RECOMMENDED</td>
+                        <td>✅ Most (not IE11)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>initial</strong></td>
+                        <td>Reset to browser default (usually none)</td>
+                        <td>❌ No</td>
+                        <td>Reset inherited hyphens</td>
+                        <td>✅ Universal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>inherit</strong></td>
+                        <td>Use parent element value</td>
+                        <td>Depends</td>
+                        <td>Cascading styles</td>
+                        <td>✅ Universal</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Supported Languages for Auto Hyphenation -->
+        <div class="section-title">
+            <h2>🌐 Languages Supported for Auto Hyphenation</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Language</th>
+                        <th>Code</th>
+                        <th>Auto Hyphenation</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>English</strong></td>
+                        <td>en, en-US, en-GB</td>
+                        <td>✅ Excellent</td>
+                        <td>Well-supported, mature implementation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>German</strong></td>
+                        <td>de, de-DE, de-AT</td>
+                        <td>✅ Excellent</td>
+                        <td>Long compound words handled well</td>
+                    </tr>
+                    <tr>
+                        <td><strong>French</strong></td>
+                        <td>fr, fr-FR</td>
+                        <td>✅ Excellent</td>
+                        <td>Good support for French typography</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Spanish</strong></td>
+                        <td>es, es-ES</td>
+                        <td>✅ Good</td>
+                        <td>Widely supported</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Italian</strong></td>
+                        <td>it, it-IT</td>
+                        <td>✅ Good</td>
+                        <td>Supported in most browsers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dutch</strong></td>
+                        <td>nl, nl-NL</td>
+                        <td>✅ Good</td>
+                        <td>Similar to German/English</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Swedish</strong></td>
+                        <td>sv, sv-SE</td>
+                        <td>✅ Good</td>
+                        <td>Nordic language support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Danish</strong></td>
+                        <td>da, da-DK</td>
+                        <td>✅ Good</td>
+                        <td>Nordic language support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Norwegian</strong></td>
+                        <td>no, nb, nn</td>
+                        <td>✅ Good</td>
+                        <td>Nordic language support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Polish</strong></td>
+                        <td>pl, pl-PL</td>
+                        <td>⚠️ Limited</td>
+                        <td>Basic support in modern browsers</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>💡 Additional Supported Languages:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Czech (cs), Slovak (sk), Hungarian (hu)</li>
+                    <li>Russian (ru), Ukrainian (uk), Serbian (sr)</li>
+                    <li>Greek (el), Portuguese (pt, pt-BR, pt-PT)</li>
+                    <li>Turkish (tr), Romanian (ro)</li>
+                    <li>Many others depending on browser engine</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Use Cases Section -->
+        <div class="section-title">
+            <h2>🎯 Real-World Use Cases & Best Practices</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <div class="use-case-grid">
+                <div class="use-case">
+                    <strong>📄 Justified Text</strong>
+                    Use <span class="highlight">hyphens: auto</span> with <span class="highlight">text-align: justify</span>. Improves text flow significantly and eliminates large word gaps.
+                </div>
+
+                <div class="use-case">
+                    <strong>📰 Newspaper/Magazine</strong>
+                    Use <span class="highlight">hyphens: auto</span> with multi-column layout. Essential for professional typography in print and web.
+                </div>
+
+                <div class="use-case">
+                    <strong>📱 Mobile Responsive</strong>
+                    Use <span class="highlight">hyphens: auto</span> on narrow screens. Prevents awkward word overflow on small devices.
+                </div>
+
+                <div class="use-case">
+                    <strong>📚 Articles & Blog Posts</strong>
+                    Use <span class="highlight">hyphens: auto</span> for body text. Improves typography and readability in constrained widths.
+                </div>
+
+                <div class="use-case">
+                    <strong>🧑‍🦯 Accessibility Design</strong>
+                    Use <span class="highlight">hyphens: auto</span> with <span class="highlight">hyphens: manual</span> fallback. Improves dyslexia-friendly reading.
+                </div>
+
+                <div class="use-case">
+                    <strong>🏢 Technical Documentation</strong>
+                    Use <span class="highlight">hyphens: manual</span> for precise control. Prevents breaking of technical terms or class names.
+                </div>
+
+                <div class="use-case">
+                    <strong>🎨 Design Mockups</strong>
+                    Use <span class="highlight">hyphens: none</span> initially for clean layouts. Add hyphens when content is finalized.
+                </div>
+
+                <div class="use-case">
+                    <strong>🌍 Multilingual Sites</strong>
+                    Use language-specific hyphens with <span class="highlight">:lang() selectors</span>. Different languages need different rules.
+                </div>
+
+                <div class="use-case">
+                    <strong>⚖️ Legal/Contract Text</strong>
+                    Use <span class="highlight">hyphens: manual</span> for absolute control. Legal precision sometimes requires no automatic breaking.
+                </div>
+
+                <div class="use-case">
+                    <strong>🔤 E-readers & EPUBs</strong>
+                    Use <span class="highlight">hyphens: auto</span> for reflow support. Text will be reformatted by reader, so auto hyphenation helps.
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Guide -->
+        <div class="implementation-section">
+            <h2>🚀 How to Implement Hyphens</h2>
+            
+            <div class="steps">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Step 1: Set Language Attribute</h3>
+                <ol>
+                    <li><strong>Add lang to HTML element:</strong> &lt;html lang="en"&gt; or specific element</li>
+                    <li><strong>Required for auto hyphenation:</strong> Without lang, hyphens: auto won't work</li>
+                    <li><strong>Override per element:</strong> Can set different lang on nested elements</li>
+                </ol>
+            </div>
+
+            <div class="steps">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Step 2: Set Hyphens Property</h3>
+                <ol>
+                    <li><strong>For auto hyphenation:</strong> hyphens: auto;</li>
+                    <li><strong>For manual control:</strong> hyphens: manual;</li>
+                    <li><strong>To disable:</strong> hyphens: none;</li>
+                    <li><strong>Include vendor prefixes:</strong> -webkit-, -moz-, -ms-</li>
+                </ol>
+            </div>
+
+            <div class="code-block">
+/* Complete Hyphens Implementation */
+
+/* Basic body text with hyphens */
+body {
+    lang: en;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+}
+
+/* Language-specific hyphens */
+:lang(en) {
+    hyphens: auto;
+}
+
+:lang(de) {
+    hyphens: auto;
+    /* German allows more aggressive breaking */
+}
+
+:lang(fr) {
+    hyphens: auto;
+}
+
+/* Justified text with hyphens */
+.justified {
+    text-align: justify;
+    hyphens: auto;
+    overflow-wrap: break-word;
+}
+
+/* Multi-column with hyphens */
+.columns {
+    column-count: 2;
+    column-gap: 2em;
+    hyphens: auto;
+}
+
+/* Accessibility with hyphens */
+.accessible-text {
+    hyphens: auto;
+    line-height: 1.8;
+    word-spacing: 0.15em;
+    letter-spacing: 0.05em;
+}
+
+/* Mobile responsive hyphens */
+@media (max-width: 600px) {
+    body {
+        hyphens: auto;  /* More aggressive on mobile */
+    }
+    
+    .narrow-column {
+        hyphens: auto;
+    }
+}
+
+/* Manual hyphenation with soft hyphens */
+.manual-hyphens {
+    hyphens: manual;
+}
+
+/* No hyphenation for headings */
+h1, h2, h3 {
+    hyphens: none;
+}
+
+/* Technical terms - manual only */
+.code-reference {
+    hyphens: manual;
+    font-family: monospace;
+}
+            </div>
+
+            <div class="tips">
+                <strong>💡 Implementation Pro Tips:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Always set lang attribute:</strong> Required for hyphens: auto to work properly</li>
+                    <li><strong>Include vendor prefixes:</strong> Use -webkit-, -moz-, -ms- for browser compatibility</li>
+                    <li><strong>Test with real content:</strong> Hyphenation behavior varies by language and browser</li>
+                    <li><strong>Combine with overflow-wrap:</strong> For maximum text flow control</li>
+                    <li><strong>Use with text-align: justify:</strong> Hyphens dramatically improves justified text</li>
+                    <li><strong>Apply to container, not inline:</strong> Works better on block-level elements</li>
+                    <li><strong>Disable for headings:</strong> Most headings shouldn't have hyphens</li>
+                    <li><strong>Consider performance:</strong> Hyphenation calculation can affect rendering</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Common Mistakes to Avoid:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>❌ Using hyphens: auto without lang attribute - won't work</li>
+                    <li>❌ Forgetting vendor prefixes - inconsistent browser support</li>
+                    <li>❌ Applying hyphens to inline elements - behavior may be unpredictable</li>
+                    <li>❌ Using hyphens on navigation/UI - breaks layout and UX</li>
+                    <li>❌ Not testing hyphenation - breaks look different in each browser</li>
+                    <li>❌ Disabling word-break completely - limits hyphenation effectiveness</li>
+                    <li>❌ Using manual hyphens everywhere - labor-intensive and hard to maintain</li>
+                </ul>
+            </div>
+
+            <div class="info-box" style="margin-top: 25px;">
+                <strong>🔧 Advanced Techniques:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Combine <span class="highlight">hyphens: auto</span> with <span class="highlight">overflow-wrap: break-word</span></li>
+                    <li>Use <span class="highlight">:lang() selector</span> for language-specific hyphenation rules</li>
+                    <li>Apply different hyphens values to different breakpoints with media queries</li>
+                    <li>Use soft hyphens (&shy;) strategically for manual control when needed</li>
+                    <li>Consider <span class="highlight">word-spacing</span> and <span class="highlight">letter-spacing</span> alongside hyphens</li>
+                    <li>Test hyphenation across different fonts - breaking points vary</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- HTML Soft Hyphen Reference -->
+        <div class="section-title">
+            <h2>🔧 Soft Hyphen Reference</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <div class="definition-box">
+                <strong>What is a Soft Hyphen (&shy;)?</strong>
+                <p style="margin-top: 10px;">
+                    The soft hyphen (HTML: <span style="background: #f0f0f0; padding: 2px 4px;">&amp;shy;</span>, 
+                    Unicode: U+00AD) specifies an optional break point where a word can be hyphenated if needed. 
+                    It only displays the hyphen if the text actually breaks at that point.
+                </p>
+            </div>
+
+            <div class="code-block">
+<!-- Using Soft Hyphens -->
+&lt;p&gt;
+    Supercalifragilistic&shy;expialidocious is a very long word.
+&lt;/p&gt;
+
+&lt;p&gt;
+    Internationalization&shy;specialization&shy;implementation requires careful placement.
+&lt;/p&gt;
+
+&lt;!-- Multiple break points --&gt;
+&lt;p&gt;
+    Antidis&shy;establish&shy;mentari&shy;anism demonstrates strategic hyphenation.
+&lt;/p&gt;
+
+&lt;!-- In code snippets --&gt;
+&lt;code&gt;
+    very&shy;LongClassNameThatExceedsLineWidth
+&lt;/code&gt;
+            </div>
+
+            <div class="info-box">
+                <strong>💡 When to Use Soft Hyphens:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Specialized technical terms where auto hyphenation is unreliable</li>
+                    <li>Brand names or proper nouns that need controlled breaking</li>
+                    <li>Very long compound words in specialized documents</li>
+                    <li>URLs or email addresses where breaking must be precise</li>
+                    <li>Code snippets with long identifiers</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Browser Support -->
+        <div class="section-title">
+            <h2>🌐 Browser Support & Compatibility</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Chrome</th>
+                        <th>Firefox</th>
+                        <th>Safari</th>
+                        <th>Edge</th>
+                        <th>IE 11</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>hyphens: none</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>hyphens: manual</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>hyphens: auto</strong></td>
+                        <td>✅ 55+</td>
+                        <td>✅ 43+</td>
+                        <td>✅ 5.1+</td>
+                        <td>✅ 12+</td>
+                        <td>⚠️ No</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Soft hyphens (&shy;)</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>-webkit-hyphens</strong></td>
+                        <td>✅ Needed</td>
+                        <td>N/A</td>
+                        <td>✅ Needed</td>
+                        <td>⚠️ Legacy</td>
+                        <td>N/A</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>✅ Compatibility Best Practices:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Always include vendor prefixes (-webkit-, -moz-, -ms-) for hyphens: auto</li>
+                    <li>IE 11 doesn't support hyphens: auto - provide fallback</li>
+                    <li>Soft hyphens (&shy;) have universal support - safe to use everywhere</li>
+                    <li>Test hyphens across browsers - rendering differs</li>
+                    <li>Provide non-hyphenated fallback for critical content</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 CSS Hyphens Property Mastery Guide | Professional Typography & Text Flow Control</p>
+            <p style="margin-top: 10px; opacity: 0.9;">Master hyphenation for professional typography, improved readability, and optimized text flow</p>
+        </footer>
+    </div>
+</body>
+</html>

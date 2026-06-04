@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Box-Shadow Complete Implementation Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.85;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.95em;
+            opacity: 0.7;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+            margin-bottom: 50px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .example-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .example-card h3 {
+            color: #0f3460;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .demo-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 40px 20px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
+        }
+
+        .demo-box {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        .code-snippet {
+            background: #2d3748;
+            color: #e2e8f0;
+            border-left: 4px solid #667eea;
+            padding: 14px;
+            margin: 15px 0;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+
+        .description {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.7;
+            margin-top: 12px;
+        }
+
+        .info-tag {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        /* Shadow Examples */
+        .shadow-1 {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .shadow-2 {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .shadow-3 {
+            box-shadow: 
+                0 1px 2px rgba(0, 0, 0, 0.05),
+                0 4px 6px rgba(0, 0, 0, 0.05),
+                0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .shadow-4 {
+            box-shadow: 
+                2px 2px 5px rgba(0, 0, 0, 0.1),
+                4px 4px 10px rgba(0, 0, 0, 0.15),
+                8px 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .shadow-5 {
+            box-shadow: 
+                -5px -5px 15px rgba(255, 255, 255, 0.1),
+                5px 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .shadow-6 {
+            box-shadow: 
+                inset 0 2px 4px rgba(255, 255, 255, 0.6),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .shadow-7 {
+            box-shadow: 0 0 0 3px #667eea, 0 0 0 6px rgba(102, 126, 234, 0.3);
+        }
+
+        .shadow-8 {
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.2),
+                0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .shadow-9 {
+            box-shadow: 
+                0 10px 30px rgba(102, 126, 234, 0.3),
+                0 0 60px rgba(102, 126, 234, 0.15);
+        }
+
+        .shadow-10 {
+            box-shadow: 
+                0 1px 3px rgba(0, 0, 0, 0.12),
+                0 1px 2px rgba(0, 0, 0, 0.24),
+                0 8px 16px rgba(0, 0, 0, 0.15),
+                0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .interactive-demo {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .interactive-demo h2 {
+            color: #0f3460;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        .shadow-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .shadow-preview-item {
+            text-align: center;
+        }
+
+        .shadow-preview-box {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .shadow-preview-label {
+            font-size: 0.85em;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .tip-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+            color: #92400e;
+            line-height: 1.8;
+        }
+
+        .tip-box strong {
+            color: #b45309;
+        }
+
+        .syntax-breakdown {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-family: 'Monaco', monospace;
+        }
+
+        .syntax-breakdown strong {
+            color: #0c4a6e;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            margin-top: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer h2 {
+            margin-bottom: 20px;
+            font-size: 1.6em;
+        }
+
+        .footer p {
+            opacity: 0.85;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: #0f3460;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .shadow-preview-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎭 CSS Box-Shadow Complete Guide</h1>
+            <p>Master 10 Essential Shadow Techniques for Modern Web Design</p>
+            <p class="subtitle">Interactive examples, syntax breakdown, and implementation strategies</p>
+        </header>
+
+        <div class="examples-grid">
+            <!-- Example 1: Subtle Soft Shadow -->
+            <div class="example-card">
+                <h3>1. Subtle Soft Shadow</h3>
+                <div class="demo-container">
+                    <div class="demo-box shadow-1">Subtle</div>
+                </div>
+                <div class="code-snippet">box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);</div>
+                <p class="description">A light, delicate shadow perfect for hover effects and UI elements. Creates depth without being intrusive.</p>
+                <span class="info-tag">Best for: Buttons, cards</span>
+            </div>
+
+            <!-- Example 2: Medium Elevation Shadow -->
+            <div class="example-card">
+                <h3>2. Medium Elevation</h3>
+                <div class="demo-container">
+                    <div class="demo-box shadow-2">Medium</div>
+                </div>
+                <div class="code-snippet">box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);</div>
+                <p class="description">Moderate shadow creating clear elevation. Ideal for floating elements and modals that need presence.</p>
+                <span class="info-tag">Best for: Modals, cards</span>
+            </div>
+
+            <!-- Example 3: Layered Multi-Shadow -->
+            <div class="example-card">
+                <h3>3. Layered Multi-Shadow</h3>
+                <div class="demo-container">
+                    <div class="demo-box shadow-3">Layered</div>
+                </div>
+                <div class="code-snippet">box-shadow: 0 1px 2px rgba(0,0,0,0.05),<br/>0 4px 6px rgba(0,0,0,0.05),<br/>0 10px 25px rgba(0,0,0,0.1);</div>
+                <p class="description">Multiple shadows at different distances create sophisticated depth. Professional material design approach.</p>
+                <span class="info-tag">Best for: Premium designs</span>
+            </div>
+
+            <!-- Example 4: Deep Directional Shadow -->
+            <div class="example-card">
+                <h3>4. Deep Directional</h3>
+                <div class="demo-container">
+                    <div class="demo-box shadow-4">3D Effect</div>
+                </div>
+                <div class="code-snippet">box-shadow: 2px 2px 5px rgba(0,0,0,0.1),<br/>4px 4px 10px rgba(0,0,0,0.15),<br/>8px 8px 20px rgba(0,0,0,0.2);</div>
+                <p class="description">Offset shadows creating strong 3D effect. Multiple layers build dramatic depth and dimension.</p>
+                <span class="info-tag">Best for: Cards, containers</span>
+            </div>
+
+            <!-- Example 5: Neumorphic Shadow -->
+            <div class="example-card">
+                <h3>5. Neumorphic Shadow</h3>
+                <div class="demo-container">
+                    <div class="demo-box shadow-5">Neumorphic</div>
+                </div>
+                <div class="code-snippet">box-shadow: -5px -5px 15px rgba(255,255,255,0.1),<br/>5px 5px 15px rgba(0,0,0,0.3);</div>
+                <p class="description">Dual shadow (light and dark) creating modern neumorphic effect. Trendy, sophisticated design.</p>
+                <span class="info-tag">Best for: Modern UI</span>
+            </div>
+
+            <!-- Example 6: Inset Shadow -->
+            <div class="example-card">
+                <h3>6. Inset Shadow</h3>
+                <div class="demo-container">
+                    <div class="demo-box shadow-6">Inset</div>
+                </div>
+                <div class="code-snippet">box-shadow: inset 0 2px 4px rgba(255,255,255,0.6),<br/>inset 0 -2px 4px rgba(0,0,0,0.1);</div>
+                <p class="description">Shadow inside the element creating recessed or embossed effect. Perfect for input fields and buttons.</p>
+                <span class="info-tag">Best for: Inputs, buttons</span>
+            </div>
+
+            <!-- Example 7: Ring/Outline Shadow -->
+            <div class="example-card">
+                <h3>7. Ring/Outline Shadow</h3>
+                <div class="demo-container">
+                    <div class="demo-box shadow-7">Ring</div>
+                </div>
+                <div class="code-snippet">box-shadow: 0 0 0 3px #667eea,<br/>0 0 0 6px rgba(102,126,234,0.3);</div>
+                <p class="description">Multiple ring shadows creating focus states and emphasis. Excellent for focus indicators.</p>
+                <span class="info-tag">Best for: Focus states</span>
+            </div>
+
+            <!-- Example 8: Double Layer Shadow -->
+            <div class="example-card">
+                <h3>8. Double Layer Shadow</h3>
+                <div class="demo-container">
+                    <div class="demo-box shadow-8">Double</div>
+                </div>
+                <div class="code-snippet">box-shadow: 0 5px 15px rgba(0,0,0,0.2),<br/>0 15px 35px rgba(0,0,0,0.15);</div>
+                <p class="description">Two distinct shadows at different distances creating elegant layering. Sophisticated depth perception.</p>
+                <span class="info-tag">Best for: Hero sections</span>
+            </div>
+
+            <!-- Example 9: Glowing Shadow -->
+            <div class="example-card">
+                <h3>9. Glowing Shadow</h3>
+                <div class="demo-container">
+                    <div class="demo-box shadow-9">Glow</div>
+                </div>
+                <div class="code-snippet">box-shadow: 0 10px 30px rgba(102,126,234,0.3),<br/>0 0 60px rgba(102,126,234,0.15);</div>
+                <p class="description">Colored glow effect creating ethereal, floating appearance. Perfect for featured elements and CTAs.</p>
+                <span class="info-tag">Best for: CTAs, featured</span>
+            </div>
+
+            <!-- Example 10: Complex Professional Shadow -->
+            <div class="example-card">
+                <h3>10. Complex Professional</h3>
+                <div class="demo-container">
+                    <div class="demo-box shadow-10">Pro</div>
+                </div>
+                <div class="code-snippet">box-shadow: 0 1px 3px rgba(0,0,0,0.12),<br/>0 1px 2px rgba(0,0,0,0.24),<br/>0 8px 16px rgba(0,0,0,0.15),<br/>0 20px 40px rgba(0,0,0,0.1);</div>
+                <p class="description">Multiple layered shadows for professional typography and complex elevation. Google Material Design inspired.</p>
+                <span class="info-tag">Best for: Enterprise apps</span>
+            </div>
+        </div>
+
+        <!-- Syntax Breakdown -->
+        <div class="interactive-demo">
+            <h2>📐 Box-Shadow Syntax Breakdown</h2>
+            
+            <div class="syntax-breakdown">
+                <strong>box-shadow: [inset] X Y [blur] [spread] [color];</strong><br><br>
+                • <strong>inset</strong> - Optional: shadow inside the element<br>
+                • <strong>X</strong> - Horizontal offset (positive = right)<br>
+                • <strong>Y</strong> - Vertical offset (positive = down)<br>
+                • <strong>blur</strong> - Blur radius (larger = softer)<br>
+                • <strong>spread</strong> - Spread radius (enlarges shadow)<br>
+                • <strong>color</strong> - Shadow color (with alpha for transparency)
+            </div>
+
+            <h2 style="margin-top: 40px; margin-bottom: 20px;">🎨 Quick Reference Samples</h2>
+            <div class="shadow-preview-grid">
+                <div class="shadow-preview-item">
+                    <div class="shadow-preview-box shadow-1"></div>
+                    <div class="shadow-preview-label">Subtle</div>
+                </div>
+                <div class="shadow-preview-item">
+                    <div class="shadow-preview-box shadow-2"></div>
+                    <div class="shadow-preview-label">Medium</div>
+                </div>
+                <div class="shadow-preview-item">
+                    <div class="shadow-preview-box shadow-3"></div>
+                    <div class="shadow-preview-label">Layered</div>
+                </div>
+                <div class="shadow-preview-item">
+                    <div class="shadow-preview-box shadow-4"></div>
+                    <div class="shadow-preview-label">Deep 3D</div>
+                </div>
+                <div class="shadow-preview-item">
+                    <div class="shadow-preview-box shadow-5"></div>
+                    <div class="shadow-preview-label">Neumorphic</div>
+                </div>
+                <div class="shadow-preview-item">
+                    <div class="shadow-preview-box shadow-8"></div>
+                    <div class="shadow-preview-label">Double</div>
+                </div>
+                <div class="shadow-preview-item">
+                    <div class="shadow-preview-box shadow-9"></div>
+                    <div class="shadow-preview-label">Glow</div>
+                </div>
+                <div class="shadow-preview-item">
+                    <div class="shadow-preview-box shadow-10"></div>
+                    <div class="shadow-preview-label">Professional</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Pro Tips for Box-Shadows:</strong><br>
+            ✓ Layer multiple shadows for depth and sophistication<br>
+            ✓ Use rgba() for better transparency control<br>
+            ✓ Keep blur radius 2-3x larger than spread for natural shadows<br>
+            ✓ Test shadows at different screen sizes and zoom levels<br>
+            ✓ Combine with transitions for smooth hover effects<br>
+            ✓ Use inset shadows for interactive feedback<br>
+            ✓ Colored shadows create branded, modern designs
+        </div>
+
+        <div class="footer">
+            <h2>Implementation Guide</h2>
+            <p><strong>In Regular CSS:</strong> Copy the code snippets directly into your stylesheets</p>
+            <p><strong>In Elementor:</strong> Go to Design tab → Advanced → Custom CSS → Add the box-shadow code</p>
+            <p><strong>For Hover Effects:</strong> Create a hover state and adjust the shadow for interactive feedback</p>
+            <p><strong>Browser Support:</strong> ✓ All modern browsers | ✓ IE 9+ | ✓ Mobile browsers</p>
+        </div>
+    </div>
+</body>
+</html>

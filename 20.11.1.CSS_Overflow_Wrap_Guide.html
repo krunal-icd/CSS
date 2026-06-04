@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS overflow-wrap - Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .example h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .description {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .demo {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+
+        .code-label {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .demo-box {
+            border: 2px dashed #ddd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            background: white;
+        }
+
+        .demo-title {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #f0f4ff;
+        }
+
+        .comparison-item h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .comparison-item .result {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #333;
+            word-break: break-all;
+            min-height: 100px;
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+
+        .property-table th,
+        .property-table td {
+            border: 2px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .property-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .property-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .property-table tr:hover {
+            background: #f0f4ff;
+        }
+
+        .value-cell {
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .url-demo {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            border: 2px dashed #ddd;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #0066cc;
+            text-decoration: underline;
+        }
+
+        .email-demo {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 2px dashed #ddd;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #333;
+        }
+
+        .code-block {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 2px dashed #ddd;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #333;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .highlight strong {
+            color: #856404;
+        }
+
+        .tips-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+            color: #0c5460;
+        }
+
+        .tips-box strong {
+            color: #0c5460;
+        }
+
+        .width-container {
+            width: 200px;
+            border: 2px solid #667eea;
+            padding: 10px;
+            background: white;
+        }
+
+        .width-container-narrow {
+            width: 150px;
+            border: 2px solid #667eea;
+            padding: 10px;
+            background: white;
+        }
+
+        .width-container-chat {
+            width: 250px;
+            border: 2px solid #667eea;
+            padding: 10px;
+            background: white;
+        }
+
+        .chat-message {
+            background: #e8eef7;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .example {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS overflow-wrap</h1>
+            <p>Practical Real-World Examples</p>
+        </header>
+
+        <!-- Example 1: Long Words in Chat -->
+        <div class="example">
+            <h2>1. Chat Message with Long Words</h2>
+            <p class="description">
+                User sends a message with long unbreakable words. Without overflow-wrap, text overflows the container. With overflow-wrap, it breaks at word boundaries.
+            </p>
+            <div class="demo">
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <h3>Without overflow-wrap</h3>
+                        <div class="width-container-chat" style="overflow-wrap: normal;">
+                            <div class="chat-message">
+                                Check this out: supercalifragilisticexpialidocioushahahaha!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comparison-item">
+                        <h3>With overflow-wrap: break-word</h3>
+                        <div class="width-container-chat" style="overflow-wrap: break-word;">
+                            <div class="chat-message">
+                                Check this out: supercalifragilisticexpialidocioushahahaha!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.chat-message {
+  overflow-wrap: break-word;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 2: URLs in Containers -->
+        <div class="example">
+            <h2>2. Long URLs in Fixed-Width Container</h2>
+            <p class="description">
+                URLs are naturally long and unbreakable. Without overflow-wrap, they overflow. With it, they break cleanly at word boundaries.
+            </p>
+            <div class="demo">
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <h3>Without overflow-wrap</h3>
+                        <div class="width-container" style="overflow-wrap: normal;">
+                            <div class="demo-title">Result:</div>
+                            <div class="url-demo" style="overflow: auto;">
+                                https://www.example.com/very/long/path/to/page?query=parameter&another=value
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comparison-item">
+                        <h3>With overflow-wrap: break-word</h3>
+                        <div class="width-container" style="overflow-wrap: break-word;">
+                            <div class="demo-title">Result:</div>
+                            <div class="url-demo" style="overflow-wrap: break-word;">
+                                https://www.example.com/very/long/path/to/page?query=parameter&another=value
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.url-container {
+  overflow-wrap: break-word;
+  word-break: break-all; /* Optional: break within words too */
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 3: Email Addresses -->
+        <div class="example">
+            <h2>3. Long Email Addresses</h2>
+            <p class="description">
+                Email addresses in user profiles or contact lists can be quite long. overflow-wrap ensures they wrap gracefully.
+            </p>
+            <div class="demo">
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <h3>Without overflow-wrap</h3>
+                        <div class="width-container-narrow" style="overflow-wrap: normal;">
+                            <div class="demo-title">Email:</div>
+                            <div class="email-demo">
+                                verylongemailaddresswithmanycharacters@verylongdomainname.com
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comparison-item">
+                        <h3>With overflow-wrap: break-word</h3>
+                        <div class="width-container-narrow" style="overflow-wrap: break-word;">
+                            <div class="demo-title">Email:</div>
+                            <div class="email-demo" style="overflow-wrap: break-word;">
+                                verylongemailaddresswithmanycharacters@verylongdomainname.com
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.email {
+  overflow-wrap: break-word;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 4: Code Snippets -->
+        <div class="example">
+            <h2>4. Code Snippets and Terminal Output</h2>
+            <p class="description">
+                Long code lines or command output can exceed container width. overflow-wrap helps display them properly.
+            </p>
+            <div class="demo">
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <h3>Without overflow-wrap</h3>
+                        <div class="width-container" style="overflow-wrap: normal; overflow: auto;">
+                            <div class="demo-title">Terminal:</div>
+                            <div class="code-block" style="overflow-wrap: normal;">
+const veryLongVariableNameThatIsHardToRead = "This is a very long string that doesn't fit in the container";
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comparison-item">
+                        <h3>With overflow-wrap: break-word</h3>
+                        <div class="width-container" style="overflow-wrap: break-word;">
+                            <div class="demo-title">Terminal:</div>
+                            <div class="code-block" style="overflow-wrap: break-word;">
+const veryLongVariableNameThatIsHardToRead = "This is a very long string that doesn't fit in the container";
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.code-block {
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 5: Product Names in Grid -->
+        <div class="example">
+            <h2>5. Product Names in E-Commerce Grid</h2>
+            <p class="description">
+                Product cards with limited width need proper text wrapping for long product names.
+            </p>
+            <div class="demo">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                    <div style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #f0f4ff;">
+                        <div style="height: 100px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 6px; margin-bottom: 10px;"></div>
+                        <div style="overflow-wrap: normal;">
+                            <div style="font-weight: 600; color: #333; margin-bottom: 5px;">Product</div>
+                            <div style="font-size: 0.85rem; color: #666;">SuperMegaAwesomeProductWithVeryLongNameThatDescribesEverything</div>
+                            <div style="color: #667eea; font-weight: 600; margin-top: 10px;">$99.99</div>
+                        </div>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #f0f4ff;">
+                        <div style="height: 100px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 6px; margin-bottom: 10px;"></div>
+                        <div style="overflow-wrap: break-word;">
+                            <div style="font-weight: 600; color: #333; margin-bottom: 5px;">Product</div>
+                            <div style="font-size: 0.85rem; color: #666; overflow-wrap: break-word;">SuperMegaAwesomeProductWithVeryLongNameThatDescribesEverything</div>
+                            <div style="color: #667eea; font-weight: 600; margin-top: 10px;">$99.99</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.product-name {
+  overflow-wrap: break-word;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 6: Comments in Social Media -->
+        <div class="example">
+            <h2>6. Social Media Comments with Mentions</h2>
+            <p class="description">
+                Comments with @mentions, hashtags, or user-generated content need proper wrapping.
+            </p>
+            <div class="demo">
+                <div style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #ddd;">
+                    <div style="margin-bottom: 20px;">
+                        <div style="font-weight: 600; color: #333; margin-bottom: 5px;">@johnsmith</div>
+                        <div style="color: #666; font-size: 0.95rem; overflow-wrap: break-word; word-wrap: break-word;">
+                            Check out my new project at https://github.com/user/repository/project/withverylongpathname and don't forget to add @anothername to see their amazing work!
+                        </div>
+                        <div style="color: #999; font-size: 0.85rem; margin-top: 8px;">2 hours ago</div>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                        <div style="font-weight: 600; color: #333; margin-bottom: 5px;">@anothername</div>
+                        <div style="color: #666; font-size: 0.95rem; overflow-wrap: break-word;">
+                            Thanks! Here's the documentation: verylongdocumentationurlwithmanyparametersandexamplecode.pdf
+                        </div>
+                        <div style="color: #999; font-size: 0.85rem; margin-top: 8px;">1 hour ago</div>
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.comment-text {
+  overflow-wrap: break-word;
+  word-break: normal;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 7: Data Tables -->
+        <div class="example">
+            <h2>7. Data Tables with Long Content</h2>
+            <p class="description">
+                Tables with long text values in cells need overflow-wrap to maintain layout integrity.
+            </p>
+            <div class="demo">
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#001</td>
+                            <td style="overflow-wrap: break-word;">Thisisaverylongdescriptionwithoutanyspacesthatcouldbreaknormally</td>
+                            <td>Active</td>
+                        </tr>
+                        <tr>
+                            <td>#002</td>
+                            <td style="overflow-wrap: break-word;">https://example.com/very/long/url/with/many/parameters?query=value&another=test</td>
+                            <td>Pending</td>
+                        </tr>
+                        <tr>
+                            <td>#003</td>
+                            <td style="overflow-wrap: break-word;">UserGeneratedContentWithUnexpectedlyLongWordsLikeSupercalifragilisticexpialidocious</td>
+                            <td>Completed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>table td {
+  overflow-wrap: break-word;
+  word-break: normal;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 8: Mobile Response Design -->
+        <div class="example">
+            <h2>8. Mobile Responsive Design</h2>
+            <p class="description">
+                Mobile screens have limited width. overflow-wrap is essential for responsive text handling.
+            </p>
+            <div class="demo">
+                <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #f0f4ff;">
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">Mobile Notification</div>
+                        <div style="font-size: 0.9rem; overflow-wrap: break-word; line-height: 1.5;">
+                            Your package from theverylongsendernamethatdoesntfiteasily.com has been delivered! Order ID: 20260519VERYLONGORDERNUMBERWITHLOTSOFDIGITS
+                        </div>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #999; background: #f8f9fa; padding: 10px; border-radius: 6px; border-left: 3px solid #667eea;">
+                        💡 Mobile width: 320px - Text must wrap gracefully
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>/* Mobile-first approach */
+body {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* For containers */
+p, div, span {
+  overflow-wrap: break-word;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 9: Anywhere vs Break-Word Comparison -->
+        <div class="example">
+            <h2>9. overflow-wrap: anywhere vs break-word</h2>
+            <p class="description">
+                Understand the difference between "break-word" and "anywhere" values. The main difference is in how they interact with word-spacing.
+            </p>
+            <div class="demo">
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Behavior</th>
+                            <th>Best For</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="value-cell">normal</span></td>
+                            <td>Only breaks at normal word boundaries. Text overflows if word is too long.</td>
+                            <td>Traditional layouts where overflow is acceptable</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">break-word</span></td>
+                            <td>Breaks long unbreakable words to prevent overflow. Respects word spacing.</td>
+                            <td>Most common use case (URLs, emails, long words)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">anywhere</span></td>
+                            <td>Breaks at any point if needed. Can break very aggressively.</td>
+                            <td>When you must fit text at all costs (rare)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="code">
+                <div class="code-label">Comparison</div>
+                <code>/* break-word: More conservative, respects word spacing */
+p { overflow-wrap: break-word; }
+
+/* anywhere: More aggressive, breaks anywhere needed */
+p { overflow-wrap: anywhere; }
+
+/* Recommended: Use break-word for most cases */</code>
+            </div>
+        </div>
+
+        <!-- Example 10: With word-break Property -->
+        <div class="example">
+            <h2>10. Combining with word-break Property</h2>
+            <p class="description">
+                overflow-wrap and word-break can work together for maximum control over text wrapping behavior.
+            </p>
+            <div class="demo">
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>CSS</th>
+                            <th>Behavior</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="value-cell">overflow-wrap: break-word;</span></td>
+                            <td>Breaks long words only if they exceed container width</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">word-break: break-all;</span></td>
+                            <td>Breaks words at any character if needed (very aggressive)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">word-break: break-word;</span></td>
+                            <td>Similar to overflow-wrap: break-word (deprecated, use overflow-wrap)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="value-cell">overflow-wrap + word-break</span></td>
+                            <td>Combined: overflow-wrap: break-word; word-break: break-all;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="code">
+                <div class="code-label">Common Pattern</div>
+                <code>/* Conservative: breaks only if necessary */
+.text {
+  overflow-wrap: break-word;
+}
+
+/* Aggressive: breaks at any point */
+.text {
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+/* For CJK languages (Chinese, Japanese, Korean) */
+.text {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 11: Text Input Fields -->
+        <div class="example">
+            <h2>11. Paste Long Text into Input Fields</h2>
+            <p class="description">
+                Users paste long URLs, emails, or code into input fields. Proper overflow-wrap handling prevents layout breaking.
+            </p>
+            <div class="demo">
+                <div style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #ddd;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #333;">
+                        Paste a long URL:
+                    </label>
+                    <input type="text" placeholder="https://example.com/very/long/url..." style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 0.9rem; overflow-wrap: break-word; word-wrap: break-word;" value="https://www.example.com/very/long/path/to/page?query=parameter&another=value&third=test">
+                    <div style="margin-top: 15px; font-size: 0.85rem; color: #999;">
+                        With overflow-wrap: break-word applied, long pasted text breaks cleanly
+                    </div>
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>input, textarea {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}</code>
+            </div>
+        </div>
+
+        <!-- Example 12: Breadcrumb Navigation -->
+        <div class="example">
+            <h2>12. Breadcrumb Navigation with Long Paths</h2>
+            <p class="description">
+                Breadcrumb paths can become very long, especially for deep folder hierarchies. overflow-wrap helps maintain layout.
+            </p>
+            <div class="demo">
+                <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 15px;">
+                    <div style="font-size: 0.9rem; color: #667eea; overflow-wrap: break-word;">
+                        Home / Documents / Projects / VeryLongProjectNameWithManyCharactersDescribingTheProject / Subfolder / NestedSubfolderWithAnotherLongName / ActualFile.txt
+                    </div>
+                </div>
+                <div style="background: #f0f4ff; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <strong>Result:</strong> Long breadcrumb wraps gracefully within its container without breaking layout
+                </div>
+            </div>
+            <div class="code">
+                <div class="code-label">CSS</div>
+                <code>.breadcrumb {
+  overflow-wrap: break-word;
+  word-break: normal;
+}</code>
+            </div>
+        </div>
+
+        <!-- Key Takeaways -->
+        <div class="example">
+            <h2>Key Takeaways</h2>
+            <div class="highlight">
+                <strong>When to use overflow-wrap:</strong>
+                <ul style="margin-top: 10px; margin-left: 20px; color: #555; line-height: 2;">
+                    <li>Long URLs that might overflow their container</li>
+                    <li>Email addresses in narrow columns</li>
+                    <li>User-generated content with potential long words</li>
+                    <li>Code snippets or terminal output</li>
+                    <li>Mobile-responsive design (recommended for all text)</li>
+                    <li>Chat applications with messages</li>
+                    <li>Data tables with variable content length</li>
+                </ul>
+            </div>
+
+            <div class="tips-box">
+                <strong>💡 Best Practice:</strong> Apply overflow-wrap: break-word to body or use it globally for consistent text wrapping behavior across your entire site. It's safe to use on all text elements.
+            </div>
+
+            <div class="code">
+                <div class="code-label">Global CSS (Recommended)</div>
+                <code>/* Apply to all text content for consistent wrapping */
+body, html {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* Or more selectively */
+p, div, span, td, li {
+  overflow-wrap: break-word;
+}</code>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Text-Indent Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border-left: 5px solid #667eea;
+        }
+
+        .intro-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .intro-section p {
+            margin-bottom: 12px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .table-of-contents {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .table-of-contents h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .table-of-contents ol {
+            margin-left: 25px;
+            columns: 2;
+            gap: 30px;
+        }
+
+        .table-of-contents li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .example-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            background: white;
+        }
+
+        .example-card:hover {
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.2);
+            transform: translateY(-6px);
+        }
+
+        .example-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .example-header h3 {
+            margin-bottom: 3px;
+            font-size: 1.1em;
+        }
+
+        .example-number {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-right: 8px;
+        }
+
+        .example-description {
+            font-size: 0.9em;
+            opacity: 0.95;
+        }
+
+        .example-preview {
+            padding: 30px;
+            background: #f9f9f9;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #e0e0e0;
+        }
+
+        .preview-content {
+            width: 100%;
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            font-size: 0.95em;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .indent-marker {
+            display: block;
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .indent-marker::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e74c3c;
+            opacity: 0.5;
+        }
+
+        .indent-ruler {
+            display: flex;
+            margin-bottom: 10px;
+            padding: 5px 0;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        .indent-tick {
+            flex: 1;
+            text-align: center;
+            border-right: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        .indent-tick:last-child {
+            border-right: none;
+        }
+
+        .indent-tick::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 5px;
+            background: #888;
+        }
+
+        .example-code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            border-top: 1px solid #444;
+        }
+
+        .code-label {
+            display: block;
+            color: #888;
+            font-size: 0.75em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        /* Syntax highlighting */
+        .keyword { color: #66d9ef; }
+        .property { color: #a1efe4; }
+        .value { color: #e6db74; }
+        .comment { color: #75715e; }
+
+        /* Text Indent Examples */
+        .ti-0 { text-indent: 0; }
+        .ti-20 { text-indent: 20px; }
+        .ti-40 { text-indent: 40px; }
+        .ti-negative { text-indent: -40px; padding-left: 40px; }
+        .ti-1em { text-indent: 1em; }
+        .ti-2em { text-indent: 2em; }
+        .ti-percent { text-indent: 20%; }
+        .ti-hanging { hanging-punctuation: first; text-indent: -0.5em; padding-left: 0.5em; }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f5f7fa;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Advanced Section */
+        .advanced-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border-left: 5px solid #f39c12;
+        }
+
+        .advanced-section h2 {
+            color: #f39c12;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .advanced-section h3 {
+            color: #d68910;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .advanced-section p, .advanced-section li {
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .advanced-section ul, .advanced-section ol {
+            margin-left: 25px;
+        }
+
+        .advanced-section li {
+            margin-bottom: 8px;
+        }
+
+        .demo-box {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+
+        /* Use Cases Section */
+        .use-cases {
+            background: #f0f7ff;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border-left: 5px solid #3498db;
+        }
+
+        .use-cases h2 {
+            color: #3498db;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .use-case-item {
+            margin-bottom: 20px;
+        }
+
+        .use-case-item h3 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .use-case-item p {
+            color: #555;
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        .use-case-example {
+            background: white;
+            padding: 12px;
+            border-left: 3px solid #3498db;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        /* Browser Support */
+        .browser-support {
+            background: #e8f4f8;
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .browser-support h3 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .browser-support p {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .support-badge {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .support-partial {
+            background: #f39c12;
+        }
+
+        /* Tips Section */
+        .tips-section {
+            background: #fffbea;
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .tips-section h3 {
+            color: #f39c12;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .tips-section ul {
+            margin-left: 25px;
+            color: #555;
+        }
+
+        .tips-section li {
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+
+        /* Visual Comparison */
+        .visual-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .comparison-item {
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .comparison-label {
+            font-weight: 600;
+            font-size: 0.9em;
+            color: #333;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-of-contents ol {
+                columns: 1;
+            }
+
+            .comparison-table {
+                font-size: 0.9em;
+            }
+
+            .comparison-table th, .comparison-table td {
+                padding: 10px;
+            }
+
+            .content, header {
+                padding: 20px;
+            }
+
+            .visual-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>CSS Text-Indent Complete Guide</h1>
+            <p>Master text indentation with practical examples and use cases</p>
+        </header>
+
+        <div class="content">
+            <!-- Introduction -->
+            <div class="intro-section">
+                <h2>What is text-indent?</h2>
+                <p>The <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">text-indent</code> CSS property specifies the horizontal indentation of the first line of text in a block element. It's commonly used for paragraph formatting, creating hanging indents, and implementing design patterns.</p>
+                <p>Text-indent can use positive values to indent inward, negative values to create hanging indents (outdent), and can be specified in various units: pixels, ems, percentages, or other length values. This guide covers all applications and best practices.</p>
+            </div>
+
+            <!-- Table of Contents -->
+            <div class="table-of-contents">
+                <h3>Text-Indent Overview</h3>
+                <ol>
+                    <li><strong>Positive indentation</strong> - Indent first line</li>
+                    <li><strong>Negative indentation</strong> - Hanging indents</li>
+                    <li><strong>Unit types</strong> - px, em, %, etc.</li>
+                    <li><strong>Zero indentation</strong> - Reset to default</li>
+                    <li><strong>Hanging punctuation</strong> - Advanced techniques</li>
+                    <li><strong>Drop caps effect</strong> - Stylistic indenting</li>
+                    <li><strong>List indentation</strong> - Custom bullet lists</li>
+                    <li><strong>Accessible indenting</strong> - User experience</li>
+                    <li><strong>Responsive indentation</strong> - Mobile-friendly</li>
+                    <li><strong>Real-world use cases</strong> - Practical applications</li>
+                </ol>
+            </div>
+
+            <!-- Comparison Table -->
+            <div style="margin-bottom: 40px;">
+                <h2 style="color: #333; margin-bottom: 20px; font-size: 1.5em;">Text-Indent Values Reference</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Value Type</th>
+                            <th>Example</th>
+                            <th>Effect</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Positive pixels</strong></td>
+                            <td>20px, 40px</td>
+                            <td>Indents first line inward</td>
+                            <td>Paragraph indentation, fixed indents</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Positive em</strong></td>
+                            <td>1em, 1.5em</td>
+                            <td>Indents relative to font size</td>
+                            <td>Scalable indentation, responsive</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Positive percent</strong></td>
+                            <td>10%, 20%</td>
+                            <td>Indents relative to container width</td>
+                            <td>Flexible indentation, responsive</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Negative pixels</strong></td>
+                            <td>-20px, -40px</td>
+                            <td>Outdents (hanging indent)</td>
+                            <td>Hanging bullets, special formatting</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Negative em</strong></td>
+                            <td>-1em, -0.5em</td>
+                            <td>Hanging indent, scalable</td>
+                            <td>Responsive hanging indents</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zero</strong></td>
+                            <td>0</td>
+                            <td>No indentation (default)</td>
+                            <td>Reset indentation, override</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Examples Grid -->
+            <div class="examples-grid">
+                <!-- Example 1: No Indent -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">1</span>text-indent: 0</h3>
+                        <p class="example-description">Default, no indentation</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content ti-0">
+                            <p>This is a paragraph with no text indentation. The first line starts at the left edge like normal text flow. This is the default behavior for most HTML elements.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-indent</span>: <span class="value">0</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 2: Positive Pixels -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">2</span>text-indent: 20px</h3>
+                        <p class="example-description">Indent first line 20px</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content ti-20">
+                            <p>This paragraph has a 20 pixel indent on the first line. This creates a small visual separation from the left edge. Useful for traditional paragraph formatting.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-indent</span>: <span class="value">20px</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 3: Larger Indent -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">3</span>text-indent: 40px</h3>
+                        <p class="example-description">Significant indentation</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content ti-40">
+                            <p>This paragraph has a 40 pixel indent on the first line. This creates a more noticeable visual separation. Used when you want prominent indentation between paragraphs.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-indent</span>: <span class="value">40px</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 4: Em-Based Indent -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">4</span>text-indent: 1em</h3>
+                        <p class="example-description">Scalable indentation</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content ti-1em">
+                            <p>This paragraph uses 1em indentation. Since em is relative to font size, this indent scales with the text. Perfect for responsive design and accessibility.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-indent</span>: <span class="value">1em</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 5: Percentage Indent -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">5</span>text-indent: 20%</h3>
+                        <p class="example-description">Percentage of container width</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content ti-percent">
+                            <p>This paragraph uses 20% indentation. Since percentage is relative to container width, it adjusts based on how wide the container is. Highly responsive.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-indent</span>: <span class="value">20%</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 6: Hanging Indent -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">6</span>Hanging Indent: -40px</h3>
+                        <p class="example-description">Outdent with padding</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content ti-negative">
+                            <p>This paragraph uses a negative text-indent of -40px with padding-left: 40px. This creates a hanging indent effect where the first line extends beyond the rest. Perfect for citations and lists.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-indent</span>: <span class="value">-40px</span>;<br>
+<span class="property">padding-left</span>: <span class="value">40px</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 7: 2em Indent -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">7</span>text-indent: 2em</h3>
+                        <p class="example-description">Two em units indent</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content ti-2em">
+                            <p>This paragraph has a 2em indent. This is approximately the width of two capital 'M' characters. Great for traditional book-style formatting with prominent indents.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-indent</span>: <span class="value">2em</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 8: Blockquote -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">8</span>Blockquote Indent</h3>
+                        <p class="example-description">Professional quote formatting</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content" style="background: #f0f4ff; border-left: 4px solid #667eea; padding: 20px; text-indent: 0;">
+                            <p style="font-size: 0.95em; line-height: 1.8; color: #555; margin: 0; font-style: italic;">"The CSS text-indent property is a powerful tool for controlling paragraph formatting and creating professional layouts. Understanding its nuances opens up many design possibilities."</p>
+                            <p style="text-align: right; margin-top: 10px; font-size: 0.9em; color: #888;">— CSS Expert</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+blockquote {<br>
+&nbsp;&nbsp;<span class="property">padding-left</span>: <span class="value">20px</span>;<br>
+&nbsp;&nbsp;<span class="property">border-left</span>: <span class="value">4px solid #667eea</span>;<br>
+&nbsp;&nbsp;<span class="property">text-indent</span>: <span class="value">0</span>;<br>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 9: Bibliography Entry -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">9</span>Bibliography Hanging</h3>
+                        <p class="example-description">Citation formatting</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content ti-negative" style="font-size: 0.9em;">
+                            <p>Smith, J., Johnson, M., & Williams, K. (2024). The Complete Guide to Web Typography. Journal of Digital Design, 45(3), 123-145.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+.citation {<br>
+&nbsp;&nbsp;<span class="property">text-indent</span>: <span class="value">-2em</span>;<br>
+&nbsp;&nbsp;<span class="property">padding-left</span>: <span class="value">2em</span>;<br>
+&nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">0.9em</span>;<br>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 10: Custom List -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">10</span>Custom Bullet List</h3>
+                        <p class="example-description">List with hanging indent</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content" style="list-style: none; padding: 0;">
+                            <ul style="list-style: none; margin: 0; padding: 0;">
+                                <li style="text-indent: -1.5em; padding-left: 1.5em; margin-bottom: 10px;">✓ First list item with hanging indent for custom bullet formatting</li>
+                                <li style="text-indent: -1.5em; padding-left: 1.5em; margin-bottom: 10px;">✓ Second list item properly aligned with the first</li>
+                                <li style="text-indent: -1.5em; padding-left: 1.5em;">✓ Third item continues the pattern seamlessly</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+li {<br>
+&nbsp;&nbsp;<span class="property">text-indent</span>: <span class="value">-1.5em</span>;<br>
+&nbsp;&nbsp;<span class="property">padding-left</span>: <span class="value">1.5em</span>;<br>
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Section -->
+            <div class="advanced-section">
+                <h2>Advanced Text-Indent Techniques</h2>
+
+                <h3>1. Responsive Indentation with Media Queries</h3>
+                <p>Adjust indentation based on screen size:</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px; line-height: 1.6;">
+                    p {<br>
+                    &nbsp;&nbsp;<span class="property">text-indent</span>: <span class="value">0</span>; <span class="comment">/* Mobile */</span><br>
+                    }<br><br>
+                    @media (min-width: 768px) {<br>
+                    &nbsp;&nbsp;p { <span class="property">text-indent</span>: <span class="value">1em</span>; } <span class="comment">/* Tablet */</span><br>
+                    }<br><br>
+                    @media (min-width: 1200px) {<br>
+                    &nbsp;&nbsp;p { <span class="property">text-indent</span>: <span class="value">2em</span>; } <span class="comment">/* Desktop */</span><br>
+                    }
+                    </code>
+                </div>
+
+                <h3>2. Drop Cap Effect Using Text-Indent and Float</h3>
+                <p>Create magazine-style drop caps:</p>
+                <div class="demo-box">
+                    <strong>HTML & CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px; line-height: 1.6;">
+                    &lt;p&gt;&lt;span class="dropcap"&gt;T&lt;/span&gt;his is the paragraph...&lt;/p&gt;<br><br>
+                    .dropcap {<br>
+                    &nbsp;&nbsp;<span class="property">float</span>: <span class="value">left</span>;<br>
+                    &nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">3em</span>;<br>
+                    &nbsp;&nbsp;<span class="property">font-weight</span>: <span class="value">bold</span>;<br>
+                    &nbsp;&nbsp;<span class="property">line-height</span>: <span class="value">1</span>;<br>
+                    &nbsp;&nbsp;<span class="property">padding-right</span>: <span class="value">8px</span>;<br>
+                    &nbsp;&nbsp;<span class="property">color</span>: <span class="value">#667eea</span>;<br>
+                    }<br><br>
+                    p { <span class="property">text-indent</span>: <span class="value">0</span>; }
+                    </code>
+                </div>
+
+                <h3>3. Hanging Indent with Smooth Transition</h3>
+                <p>Animate indent changes:</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px; line-height: 1.6;">
+                    p {<br>
+                    &nbsp;&nbsp;<span class="property">text-indent</span>: <span class="value">0</span>;<br>
+                    &nbsp;&nbsp;<span class="property">transition</span>: <span class="value">text-indent 0.3s ease</span>;<br>
+                    }<br><br>
+                    p:hover {<br>
+                    &nbsp;&nbsp;<span class="property">text-indent</span>: <span class="value">1.5em</span>;<br>
+                    }
+                    </code>
+                </div>
+
+                <h3>4. Text-Indent with Direction Property</h3>
+                <p>RTL text indentation:</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px; line-height: 1.6;">
+                    .rtl-text {<br>
+                    &nbsp;&nbsp;<span class="property">direction</span>: <span class="value">rtl</span>;<br>
+                    &nbsp;&nbsp;<span class="property">text-indent</span>: <span class="value">1em</span>; <span class="comment">/* Indents from right */</span><br>
+                    &nbsp;&nbsp;<span class="property">text-align</span>: <span class="value">right</span>;<br>
+                    }
+                    </code>
+                </div>
+
+                <h3>5. Multi-Line Indentation Control</h3>
+                <p>Control only first line vs. all lines:</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px; line-height: 1.6;">
+                    <span class="comment">/* First line only */</span><br>
+                    p {<br>
+                    &nbsp;&nbsp;<span class="property">text-indent</span>: <span class="value">1.5em</span>;<br>
+                    }<br><br>
+                    <span class="comment">/* All lines with padding */</span><br>
+                    p {<br>
+                    &nbsp;&nbsp;<span class="property">padding-left</span>: <span class="value">1.5em</span>; <span class="comment">/* Indent all */</span><br>
+                    &nbsp;&nbsp;<span class="property">text-indent</span>: <span class="value">-1.5em</span>; <span class="comment">/* Remove from first */</span><br>
+                    }
+                    </code>
+                </div>
+
+                <h3>6. Combining with Line-Height for Tight Control</h3>
+                <p>Fine-tune indentation spacing:</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px; line-height: 1.6;">
+                    p {<br>
+                    &nbsp;&nbsp;<span class="property">text-indent</span>: <span class="value">1.5em</span>;<br>
+                    &nbsp;&nbsp;<span class="property">line-height</span>: <span class="value">1.8</span>;<br>
+                    &nbsp;&nbsp;<span class="property">margin-bottom</span>: <span class="value">1em</span>;<br>
+                    &nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">1rem</span>;<br>
+                    }
+                    </code>
+                </div>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="use-cases">
+                <h2>Real-World Use Cases</h2>
+
+                <div class="use-case-item">
+                    <h3>📖 Traditional Paragraph Formatting</h3>
+                    <p>Indent first line of paragraphs like printed books:</p>
+                    <div class="use-case-example">
+                        <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">
+                        article p { text-indent: 1.5em; margin-bottom: 1em; }
+                        </code>
+                    </div>
+                </div>
+
+                <div class="use-case-item">
+                    <h3>📚 Academic Papers & Citations</h3>
+                    <p>Hanging indent for bibliography entries:</p>
+                    <div class="use-case-example">
+                        <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">
+                        .citation { text-indent: -2em; padding-left: 2em; }
+                        </code>
+                    </div>
+                </div>
+
+                <div class="use-case-item">
+                    <h3>🎯 Custom Bullet Points</h3>
+                    <p>Align custom bullets using hanging indent:</p>
+                    <div class="use-case-example">
+                        <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">
+                        li { text-indent: -1.5em; padding-left: 1.5em; }
+                        </code>
+                    </div>
+                </div>
+
+                <div class="use-case-item">
+                    <h3>💬 Nested Comments</h3>
+                    <p>Indent threaded comments for visual hierarchy:</p>
+                    <div class="use-case-example">
+                        <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">
+                        .comment-level-2 { text-indent: 1em; padding-left: 1em; }
+                        </code>
+                    </div>
+                </div>
+
+                <div class="use-case-item">
+                    <h3>📰 News Articles</h3>
+                    <p>Indent article body for professional layout:</p>
+                    <div class="use-case-example">
+                        <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">
+                        .article-body p { text-indent: 1em; }
+                        </code>
+                    </div>
+                </div>
+
+                <div class="use-case-item">
+                    <h3>📖 E-book Formatting</h3>
+                    <p>Create book-like paragraph styling:</p>
+                    <div class="use-case-example">
+                        <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">
+                        .ebook p { text-indent: 2em; margin-bottom: 0; }
+                        </code>
+                    </div>
+                </div>
+
+                <div class="use-case-item">
+                    <h3>🏷️ Definition Lists</h3>
+                    <p>Hang terms for easy reference:</p>
+                    <div class="use-case-example">
+                        <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">
+                        dd { text-indent: -1.5em; padding-left: 1.5em; }
+                        </code>
+                    </div>
+                </div>
+
+                <div class="use-case-item">
+                    <h3>✍️ Legal Documents</h3>
+                    <p>Indent clauses and numbered sections:</p>
+                    <div class="use-case-example">
+                        <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">
+                        .clause { text-indent: 2em; padding: 1em 0; }
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browser Support -->
+            <div class="browser-support">
+                <h3>🌐 Browser Support</h3>
+                <p><strong>text-indent (all values):</strong> <span class="support-badge">All browsers</span> (100% support since CSS1)</p>
+                <p><strong>Positive values (px, em, %):</strong> <span class="support-badge">All browsers</span></p>
+                <p><strong>Negative values (hanging indent):</strong> <span class="support-badge">All browsers</span></p>
+                <p><strong>Calc() with text-indent:</strong> <span class="support-badge">All modern browsers</span></p>
+                <p style="margin-top: 15px;"><strong>Best Practice:</strong> text-indent is universally supported with zero compatibility concerns. Focus on responsive design and accessibility instead.</p>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="tips-section">
+                <h3>💡 Best Practices & Tips</h3>
+                <ul>
+                    <li><strong>Use em for scalability:</strong> Em units scale with font size, making indentation responsive and accessible.</li>
+                    <li><strong>Combine with padding:</strong> Use padding-left with negative text-indent for hanging indents.</li>
+                    <li><strong>Test readability:</strong> Excessive indentation reduces readability. Keep it subtle for body text.</li>
+                    <li><strong>Be consistent:</strong> Apply the same indentation pattern throughout your document for visual cohesion.</li>
+                    <li><strong>Consider mobile:</strong> Large indents on mobile can waste valuable screen space. Use media queries to reduce on small screens.</li>
+                    <li><strong>Percentage caution:</strong> Percentage indents are relative to container width, not font size. Use em for better scaling.</li>
+                    <li><strong>Hanging indent use:</strong> Perfect for citations, custom lists, and outdented bullets.</li>
+                    <li><strong>Zero out inherited:</strong> Some elements inherit text-indent. Explicitly set text-indent: 0 when needed.</li>
+                    <li><strong>Print-friendly:</strong> Text-indent is print-friendly and respected by most print stylesheets.</li>
+                    <li><strong>RTL consideration:</strong> Indentation direction follows text direction. Test with right-to-left languages.</li>
+                </ul>
+            </div>
+
+            <!-- Accessibility & Performance -->
+            <div style="background: #f0f7ff; border-left: 5px solid #3498db; padding: 30px; border-radius: 8px; margin-bottom: 40px;">
+                <h2 style="color: #3498db; margin-bottom: 20px; font-size: 1.5em;">♿ Accessibility & Performance</h2>
+                
+                <h3 style="color: #2c3e50; margin-bottom: 10px; font-size: 1.1em;">Impact on Readability:</h3>
+                <p style="color: #555; margin-bottom: 15px; line-height: 1.8;">Text-indent affects visual presentation but not semantic meaning. Screen readers read content normally regardless of indentation. However, large indents can reduce usable space, affecting mobile users.</p>
+
+                <h3 style="color: #2c3e50; margin-bottom: 10px; font-size: 1.1em;">Negative Indent & Overflow:</h3>
+                <p style="color: #555; margin-bottom: 15px; line-height: 1.8;">Large negative indents without padding can cause text to overflow its container. Always pair negative text-indent with appropriate padding-left to prevent content spillage.</p>
+
+                <h3 style="color: #2c3e50; margin-bottom: 10px; font-size: 1.1em;">Performance:</h3>
+                <p style="color: #555; margin-bottom: 15px; line-height: 1.8;">Text-indent has zero performance impact. It's a native CSS property with no layout recalculation overhead. Safe to use liberally without concerns.</p>
+
+                <h3 style="color: #2c3e50; margin-bottom: 10px; font-size: 1.1em;">Best Practices:</h3>
+                <ul style="margin-left: 25px; color: #555;">
+                    <li>Use em or percentage units for responsive, accessible indentation</li>
+                    <li>Test on mobile devices to ensure indents don't waste screen space</li>
+                    <li>Always pair negative text-indent with padding to prevent overflow</li>
+                    <li>Use 0 to remove inherited indentation when appropriate</li>
+                    <li>Keep indentation subtle: 1-2em is usually sufficient</li>
+                    <li>Test with screen readers to verify content is accessible</li>
+                    <li>Consider hiding text with text-indent: -9999px (outdated method, use visibility: hidden instead)</li>
+                </ul>
+            </div>
+
+            <!-- Common Mistakes -->
+            <div style="background: #fff3cd; border-left: 5px solid #ffc107; padding: 30px; border-radius: 8px; margin-bottom: 40px;">
+                <h2 style="color: #856404; margin-bottom: 20px; font-size: 1.5em;">⚠️ Common Mistakes</h2>
+                
+                <h3 style="color: #856404; margin-bottom: 10px; font-size: 1.1em;">❌ Negative Indent Without Padding</h3>
+                <p style="color: #856404; margin-bottom: 15px;"><strong>Problem:</strong> Text overflows container and becomes hidden or unreadable.</p>
+                <p style="color: #856404;"><strong>Solution:</strong> Always pair negative text-indent with padding-left: p { text-indent: -1.5em; padding-left: 1.5em; }</p>
+
+                <h3 style="color: #856404; margin-bottom: 10px; font-size: 1.1em;">❌ Excessive Indentation</h3>
+                <p style="color: #856404; margin-bottom: 15px;"><strong>Problem:</strong> Large indents reduce available space and hurt readability, especially on mobile.</p>
+                <p style="color: #856404;"><strong>Solution:</strong> Keep indents modest (1-2em). Use media queries to reduce on small screens.</p>
+
+                <h3 style="color: #856404; margin-bottom: 10px; font-size: 1.1em;">❌ Using Percentage on Small Containers</h3>
+                <p style="color: #856404; margin-bottom: 15px;"><strong>Problem:</strong> 20% of 100px is 20px; might be too much or unpredictable.</p>
+                <p style="color: #856404;"><strong>Solution:</strong> Use em or fixed px for consistent, predictable indentation.</p>
+
+                <h3 style="color: #856404; margin-bottom: 10px; font-size: 1.1em;">❌ Using for Text Hiding (Outdated)</h3>
+                <p style="color: #856404; margin-bottom: 0;"><strong>Problem:</strong> text-indent: -9999px was used to hide text but creates accessibility issues and performance problems.</p>
+                <p style="color: #856404;"><strong>Solution:</strong> Use visibility: hidden, display: none, or aria-hidden="true" for modern text hiding.</p>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 CSS Text-Indent Complete Guide | Master Text Indentation</p>
+        </footer>
+    </div>
+</body>
+</html>

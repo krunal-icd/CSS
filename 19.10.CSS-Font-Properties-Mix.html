@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Font Properties - Complete Mix Examples</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Barlow:ital,wdth,wght@0,75;0,100;0,400;0,600;1,75;1,100;1,400;1,600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #764ba2;
+            padding-bottom: 10px;
+            font-size: 1.8em;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .example-box {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .example-display {
+            background: white;
+            padding: 25px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .property-table th,
+        .property-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .property-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .property-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        /* Example 1: Professional Blog */
+        .blog-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            font-style: normal;
+            color: #1a1a1a;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .blog-subtitle {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.3em;
+            font-weight: 600;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .blog-body {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.1em;
+            font-weight: 400;
+            font-style: normal;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .blog-body em {
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        .blog-body strong {
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        /* Example 2: Modern UI */
+        .ui-headline {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 2em;
+            font-weight: 700;
+            font-style: normal;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .ui-subheading {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.2em;
+            font-weight: 600;
+            font-style: normal;
+            color: #34495e;
+            margin-bottom: 15px;
+        }
+
+        .ui-text {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.95em;
+            font-weight: 400;
+            font-style: normal;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Example 3: Luxury/Elegant */
+        .luxury-header {
+            font-family: 'Playfair Display', serif;
+            font-size: 3em;
+            font-weight: 700;
+            font-style: normal;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .luxury-caption {
+            font-family: 'Crimson Text', serif;
+            font-size: 0.9em;
+            font-weight: 400;
+            font-style: italic;
+            color: #999;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .luxury-body {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.15em;
+            font-weight: 400;
+            font-style: normal;
+            color: #2a2a2a;
+            line-height: 1.9;
+            max-width: 600px;
+        }
+
+        /* Example 4: Technical Documentation */
+        .tech-title {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 2.2em;
+            font-weight: 700;
+            font-style: normal;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .tech-section {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.3em;
+            font-weight: 600;
+            font-style: normal;
+            color: #2563eb;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .tech-code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            font-weight: 400;
+            font-style: normal;
+            color: #374151;
+            background: #f3f4f6;
+            padding: 3px 6px;
+            border-radius: 3px;
+        }
+
+        .tech-text {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1em;
+            font-weight: 400;
+            font-style: normal;
+            color: #374151;
+            line-height: 1.7;
+        }
+
+        /* Example 5: Small Caps & Variants */
+        .variant-heading {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.8em;
+            font-weight: 600;
+            font-style: normal;
+            font-variant: small-caps;
+            color: #667eea;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .variant-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.1em;
+            font-weight: 400;
+            font-style: normal;
+            font-variant-ligatures: common-ligatures;
+            font-variant-numeric: oldstyle-nums;
+            color: #333;
+        }
+
+        /* Example 6: Responsive Condensed */
+        .condensed-heading {
+            font-family: 'Barlow', sans-serif;
+            font-size: 2em;
+            font-weight: 600;
+            font-style: normal;
+            font-stretch: condensed;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .expanded-heading {
+            font-family: 'Barlow', sans-serif;
+            font-size: 2em;
+            font-weight: 600;
+            font-style: normal;
+            font-stretch: expanded;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        /* Grid for comparison */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .comparison-card .sample {
+            padding: 15px;
+            background: white;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .sample-text-1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        .sample-text-2 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1em;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .sample-text-3 {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.2em;
+            font-weight: 600;
+            font-variant: small-caps;
+        }
+
+        .sample-text-4 {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.3em;
+            font-weight: 500;
+            font-stretch: condensed;
+        }
+
+        .sample-text-5 {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.3em;
+            font-weight: 500;
+            font-stretch: expanded;
+        }
+
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: white;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        .interactive-demo {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .interactive-demo input,
+        .interactive-demo select {
+            margin: 10px 5px 10px 0;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .interactive-display {
+            margin-top: 15px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 4px;
+            min-height: 100px;
+            border-left: 4px solid #667eea;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Font Properties Mix</h1>
+            <p>Complete Examples Using All Font Properties Together</p>
+        </header>
+
+        <!-- Example 1: Professional Blog -->
+        <div class="section">
+            <h2>1. Professional Blog Typography</h2>
+            <p style="margin-bottom: 20px;">Combining font-family, font-size, font-weight, and font-style for blog content:</p>
+
+            <div class="example-box">
+                <div class="example-display">
+                    <div class="blog-title">The Art of Web Design</div>
+                    <div class="blog-subtitle">A Journey Through Modern Typography</div>
+                    <div class="blog-body">
+                        <p style="margin-bottom: 15px;">Web design has evolved dramatically over the past decade. <em>Today's designers</em> must understand typography deeply to create <strong>engaging and readable</strong> experiences. The interplay between font families, sizes, weights, and styles determines how users perceive and interact with content.</p>
+                        <p>Each property serves a distinct purpose: font-family establishes the typeface personality, font-size controls readability, font-weight creates emphasis and hierarchy, and font-style adds nuance and meaning to words.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+/* Title */
+.blog-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Subtitle */
+.blog-subtitle {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.3em;
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Body Text */
+.blog-body {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1em;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.8;
+}
+
+/* Emphasis */
+.blog-body em {
+    font-style: italic;
+    font-weight: 600;
+}
+
+.blog-body strong {
+    font-weight: 600;
+}
+            </div>
+        </div>
+
+        <!-- Example 2: Modern UI Design -->
+        <div class="section">
+            <h2>2. Modern UI/UX Design</h2>
+            <p style="margin-bottom: 20px;">Clean, minimal typography for modern interfaces:</p>
+
+            <div class="example-box">
+                <div class="example-display">
+                    <div class="ui-headline">Welcome to Modern Design</div>
+                    <div class="ui-subheading">Create beautiful user experiences</div>
+                    <div class="ui-text">
+                        <p>Modern user interface design prioritizes clarity and accessibility. Using consistent font properties across your interface ensures a cohesive user experience. This example demonstrates how to use sans-serif fonts with varying weights and sizes to create visual hierarchy and guide user attention.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+/* Headline */
+.ui-headline {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 2em;
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Subheading */
+.ui-subheading {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.2em;
+    font-weight: 600;
+    font-style: normal;
+}
+
+/* Body Text */
+.ui-text {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.95em;
+    font-weight: 400;
+    font-style: normal;
+}
+            </div>
+        </div>
+
+        <!-- Example 3: Luxury/Elegant Design -->
+        <div class="section">
+            <h2>3. Luxury & Elegant Typography</h2>
+            <p style="margin-bottom: 20px;">High-end design combining serifs, spacing, and sophisticated styling:</p>
+
+            <div class="example-box">
+                <div class="example-display">
+                    <div style="text-align: center;">
+                        <div class="luxury-header">Elegance</div>
+                        <div class="luxury-caption">Premium Experience</div>
+                        <div class="luxury-body">
+                            <p>In the realm of luxury design, typography speaks volumes. Every character carries weight and meaning. The choice of serif fonts, precise spacing, and deliberate use of weights and styles convey sophistication and refinement. This is typography as an art form.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+/* Luxury Header */
+.luxury-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 3em;
+    font-weight: 700;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+/* Caption */
+.luxury-caption {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9em;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 2px;
+}
+
+/* Body */
+.luxury-body {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.15em;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.9;
+}
+            </div>
+        </div>
+
+        <!-- Example 4: Technical Documentation -->
+        <div class="section">
+            <h2>4. Technical Documentation</h2>
+            <p style="margin-bottom: 20px;">Typography for technical content with code and emphasis:</p>
+
+            <div class="example-box">
+                <div class="example-display">
+                    <div class="tech-title">Getting Started with CSS</div>
+                    <div class="tech-section">Introduction</div>
+                    <div class="tech-text">
+                        <p style="margin-bottom: 15px;">CSS (Cascading Style Sheets) is used to style and layout web pages. The <span class="tech-code">font-family</span> property specifies the typeface, while <span class="tech-code">font-size</span> controls the text size. Use <span class="tech-code">font-weight</span> for boldness and <span class="tech-code">font-style</span> for italics.</p>
+                    </div>
+                    <div class="tech-section">Properties</div>
+                    <div class="tech-text">
+                        <p>The six main font properties work together to create complete typography control: font-family, font-size, font-weight, font-style, font-variant, and font-stretch.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+/* Title */
+.tech-title {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 2.2em;
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Section Heading */
+.tech-section {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.3em;
+    font-weight: 600;
+    font-style: normal;
+}
+
+/* Inline Code */
+.tech-code {
+    font-family: 'Courier New', monospace;
+    font-size: 0.95em;
+    font-weight: 400;
+}
+
+/* Body Text */
+.tech-text {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    font-style: normal;
+}
+            </div>
+        </div>
+
+        <!-- Example 5: Font Variants & Features -->
+        <div class="section">
+            <h2>5. Advanced Font Features</h2>
+            <p style="margin-bottom: 20px;">Using font-variant, font-variant-ligatures, and font-variant-numeric:</p>
+
+            <div class="example-box">
+                <div class="example-display">
+                    <div class="variant-heading">Chapter One: The Beginning</div>
+                    <div class="variant-text">
+                        <p style="margin-bottom: 15px;">Published in 1999, this groundbreaking work influenced over 50 million readers. The fine literature examines the subtle connections within our world. Numbers like 12,345 and 67,890 are rendered in their finest form.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+/* Small Caps Heading */
+.variant-heading {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.8em;
+    font-weight: 600;
+    font-style: normal;
+    font-variant: small-caps;
+}
+
+/* Advanced Typographic Features */
+.variant-text {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1em;
+    font-weight: 400;
+    font-style: normal;
+    font-variant-ligatures: common-ligatures;
+    font-variant-numeric: oldstyle-nums;
+}
+            </div>
+        </div>
+
+        <!-- Example 6: Font Stretch -->
+        <div class="section">
+            <h2>6. Font-Stretch: Condensed & Expanded</h2>
+            <p style="margin-bottom: 20px;">Using font-stretch for responsive and space-efficient typography:</p>
+
+            <div class="example-box">
+                <div class="example-display">
+                    <div class="condensed-heading">CONDENSED: Space-Efficient Headline</div>
+                    <p style="margin-bottom: 20px; font-size: 0.9em; color: #666;">Uses condensed width for efficient space usage</p>
+                    <div class="expanded-heading">EXPANDED: Bold Prominent Headline</div>
+                    <p style="font-size: 0.9em; color: #666;">Uses expanded width for maximum impact</p>
+                </div>
+            </div>
+
+            <h3>CSS Code:</h3>
+            <div class="code-block">
+/* Condensed */
+.condensed-heading {
+    font-family: 'Barlow', sans-serif;
+    font-size: 2em;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: condensed;
+}
+
+/* Expanded */
+.expanded-heading {
+    font-family: 'Barlow', sans-serif;
+    font-size: 2em;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: expanded;
+}
+
+/* Responsive Example */
+h1 {
+    font-family: 'Barlow', sans-serif;
+    font-size: clamp(1.5em, 5vw, 3em);
+    font-stretch: clamp(75%, 10vw - 50px, 100%);
+}
+            </div>
+        </div>
+
+        <!-- Comparison Grid -->
+        <div class="section">
+            <h2>7. Property Combinations Reference</h2>
+            <p style="margin-bottom: 20px;">Quick reference for different typography scenarios:</p>
+
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Font-Family</th>
+                        <th>Font-Size</th>
+                        <th>Font-Weight</th>
+                        <th>Font-Style</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Main Headline</strong></td>
+                        <td>Serif (Playfair)</td>
+                        <td>2.5em - 3em</td>
+                        <td>700 (Bold)</td>
+                        <td>Normal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Subtitle</strong></td>
+                        <td>Serif (Crimson)</td>
+                        <td>1.3em - 1.5em</td>
+                        <td>600 (Semibold)</td>
+                        <td>Italic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Body Text</strong></td>
+                        <td>Serif (Crimson)</td>
+                        <td>1em - 1.1em</td>
+                        <td>400 (Normal)</td>
+                        <td>Normal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>UI Headline</strong></td>
+                        <td>Sans-serif (Open Sans)</td>
+                        <td>2em</td>
+                        <td>700 (Bold)</td>
+                        <td>Normal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>UI Subheading</strong></td>
+                        <td>Sans-serif (Open Sans)</td>
+                        <td>1.2em</td>
+                        <td>600 (Semibold)</td>
+                        <td>Normal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Emphasis</strong></td>
+                        <td>Same as parent</td>
+                        <td>Same as parent</td>
+                        <td>600 - 700</td>
+                        <td>Italic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Small Caps</strong></td>
+                        <td>Sans-serif</td>
+                        <td>0.9em - 1em</td>
+                        <td>600 - 700</td>
+                        <td>Normal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Condensed (Mobile)</strong></td>
+                        <td>Variable (Barlow)</td>
+                        <td>1.5em - 1.8em</td>
+                        <td>600</td>
+                        <td>Normal</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Complete Font Shorthand -->
+        <div class="section">
+            <h2>8. Font Shorthand Property</h2>
+            <p style="margin-bottom: 20px;">The <span class="highlight">font</span> shorthand combines multiple font properties:</p>
+
+            <div class="example-box">
+                <h3>Syntax:</h3>
+                <div class="code-block">
+font: [ &lt;font-style&gt; || &lt;font-variant&gt; || &lt;font-weight&gt; ] 
+       &lt;font-size&gt; [ / &lt;line-height&gt; ] 
+       &lt;font-family&gt;;
+                </div>
+
+                <h3>Examples:</h3>
+                <div class="code-block">
+/* Simple */
+font: bold 1.2em Arial, sans-serif;
+
+/* Complete */
+font: italic bold 1.2em/1.5 'Crimson Text', serif;
+
+/* With variant */
+font: small-caps 600 1.1em 'Open Sans', sans-serif;
+
+/* Professional Blog */
+font: italic 600 1.3em/1.6 'Crimson Text', serif;
+
+/* Modern UI */
+font: 500 0.95em/1.6 'Open Sans', sans-serif;
+
+/* Luxury Design */
+font: normal 1.15em/1.9 'Playfair Display', serif;
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Note:</strong> When using the font shorthand, font-size and font-family are required. Other properties can be included in any order before the size. Line-height is optional and comes after font-size.
+            </div>
+        </div>
+
+        <!-- Best Practices -->
+        <div class="section">
+            <h2>9. Best Practices for Font Properties</h2>
+
+            <h3>✅ Do's:</h3>
+            <ul style="margin: 15px 0 15px 20px; line-height: 2;">
+                <li>Use font families that complement each other (serif for body, sans-serif for UI)</li>
+                <li>Maintain consistent font stacks across your project</li>
+                <li>Use font-weight (600-700) for emphasis instead of artificial bolding</li>
+                <li>Combine font-size and line-height for better readability</li>
+                <li>Use font-variant for professional typography (small-caps, ligatures)</li>
+                <li>Use responsive techniques (clamp, media queries) for font properties</li>
+                <li>Test typography across different devices and browsers</li>
+                <li>Use variable fonts for flexible, efficient typography</li>
+                <li>Maintain adequate contrast between font weights for hierarchy</li>
+                <li>Use semantic HTML with appropriate font styling</li>
+            </ul>
+
+            <h3>❌ Don'ts:</h3>
+            <ul style="margin: 15px 0 15px 20px; line-height: 2;">
+                <li>Don't mix too many font families (limit to 2-3 max)</li>
+                <li>Don't use very light weights (< 300) for body text</li>
+                <li>Don't skip fallback fonts in your font stack</li>
+                <li>Don't use italic for semantic emphasis alone (combine with weight)</li>
+                <li>Don't forget about readability when choosing sizes and weights</li>
+                <li>Don't ignore line-height when setting font-size</li>
+                <li>Don't use extreme font-stretch values excessively</li>
+                <li>Don't forget to test with actual content and users</li>
+            </ul>
+        </div>
+
+        <!-- Complete Implementation Example -->
+        <div class="section">
+            <h2>10. Complete Implementation Template</h2>
+            <p style="margin-bottom: 20px;">Ready-to-use CSS template combining all font properties:</p>
+
+            <div class="code-block">
+/* ==========================================
+   COMPLETE FONT PROPERTY SETUP
+   ========================================== */
+
+/* Import web fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+/* Base typography */
+html {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+body {
+    font-weight: 400;
+    font-style: normal;
+    color: #333;
+}
+
+/* Headings */
+h1 {
+    font: bold 2.5em/1.2 'Playfair Display', serif;
+}
+
+h2 {
+    font: 600 1.8em/1.3 'Playfair Display', serif;
+}
+
+h3 {
+    font: 600 1.3em/1.4 'Open Sans', sans-serif;
+}
+
+/* Body text */
+p {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1em;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.8;
+}
+
+/* Emphasis */
+strong {
+    font-weight: 600;
+    font-style: normal;
+}
+
+em {
+    font-weight: 400;
+    font-style: italic;
+}
+
+strong em {
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Advanced features */
+blockquote {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.2em;
+    font-weight: 400;
+    font-style: italic;
+    font-variant: small-caps;
+}
+
+code, pre {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    font-weight: 400;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1 { font-size: 1.8em; }
+    h2 { font-size: 1.4em; }
+    p { font-size: 1em; }
+}
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>CSS Font Properties Mix - Complete Guide</strong></p>
+            <p>Master combining font-family, font-size, font-weight, font-style, font-variant, and font-stretch</p>
+            <p style="margin-top: 20px; opacity: 0.8;">All properties working together create beautiful, functional typography</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>CSS text-box-trim & text-box-edge Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border: #e0e0e0;
+            --accent: #667eea;
+            --accent-dark: #764ba2;
+            --success: #28a745;
+            --warning: #ff9800;
+            --danger: #dc3545;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #1e1e1e;
+                --bg-secondary: #2d2d2d;
+                --text-primary: #e0e0e0;
+                --text-secondary: #b0b0b0;
+                --border: #444444;
+                --accent: #bb86fc;
+                --accent-dark: #3dd5f3;
+                --success: #4caf50;
+                --warning: #ffb74d;
+                --danger: #ef5350;
+                --shadow: rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px var(--shadow);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .section h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: var(--accent-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        code {
+            background: var(--bg-primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--danger);
+        }
+
+        pre {
+            background: var(--bg-primary);
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        /* ===== DEMO STYLES ===== */
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .demo-box {
+            padding: 20px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+
+        .demo-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--shadow);
+            border-color: var(--accent);
+        }
+
+        .demo-box h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .demo-box p {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+        }
+
+        /* ===== TEXT-BOX-TRIM DEMOS ===== */
+
+        .comparison-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            border: 2px solid var(--border);
+            padding: 20px;
+            border-radius: 8px;
+            background: var(--bg-primary);
+        }
+
+        .comparison-item h5 {
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .demo-text-normal {
+            font-size: 2em;
+            line-height: 1.2;
+            border: 1px dashed var(--accent);
+            padding: 10px;
+            background: color-mix(in srgb, var(--accent) 10%, transparent);
+        }
+
+        .demo-text-trimmed {
+            font-size: 2em;
+            line-height: 1.2;
+            border: 1px dashed var(--accent);
+            padding: 10px;
+            background: color-mix(in srgb, var(--accent) 10%, transparent);
+            text-box-trim: trim-start;
+            text-box-edge: leading;
+        }
+
+        .demo-text-trimmed-both {
+            font-size: 2em;
+            line-height: 1.2;
+            border: 1px dashed var(--accent);
+            padding: 10px;
+            background: color-mix(in srgb, var(--accent) 10%, transparent);
+            text-box-trim: trim-both;
+            text-box-edge: leading cap alphabetic;
+        }
+
+        .alignment-demo {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .alignment-item {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-primary);
+        }
+
+        .alignment-demo-text {
+            font-size: 1.5em;
+            line-height: 1.4;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* ===== COMPARISON TABLE ===== */
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: var(--accent);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table tr:hover {
+            background: var(--bg-primary);
+        }
+
+        /* ===== BROWSER SUPPORT ===== */
+
+        .browser-support {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .browser {
+            background: var(--bg-primary);
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid var(--border);
+        }
+
+        .browser.experimental {
+            background: color-mix(in srgb, var(--warning) 20%, transparent);
+            border-color: var(--warning);
+        }
+
+        .browser strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .browser small {
+            display: block;
+            opacity: 0.8;
+        }
+
+        /* ===== UTILITY STYLES ===== */
+
+        .note {
+            background: color-mix(in srgb, var(--accent) 20%, transparent);
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background: color-mix(in srgb, var(--warning) 20%, transparent);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .pros {
+            background: color-mix(in srgb, var(--success) 20%, transparent);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .cons {
+            background: color-mix(in srgb, var(--danger) 20%, transparent);
+            border-left: 4px solid var(--danger);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        /* ===== RESPONSIVE ===== */
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-section {
+                grid-template-columns: 1fr;
+            }
+
+            .alignment-demo {
+                flex-direction: column;
+            }
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9em;
+            border-top: 1px solid var(--border);
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS text-box-trim & text-box-edge</h1>
+        <p class="subtitle">Complete Guide to Precise Text Box Control</p>
+
+        <!-- ===== SECTION 1: Introduction ===== -->
+        <div class="section">
+            <h2>1. What are text-box-trim & text-box-edge?</h2>
+            <p>The <code>text-box-trim</code> and <code>text-box-edge</code> CSS properties allow precise control over the whitespace around text. They define which part of the text line's content area is used for metric calculations and rendering.</p>
+
+            <h3>Key Characteristics:</h3>
+            <ul>
+                <li>Control text box boundaries and metrics</li>
+                <li>Remove unwanted whitespace above/below text</li>
+                <li>Improve typographic precision and alignment</li>
+                <li>Enable exact spacing between text elements</li>
+                <li>Part of the CSS Text Module Level 4</li>
+                <li>Still experimental in most browsers</li>
+            </ul>
+
+            <h3>What Problem Do They Solve?</h3>
+            <p>Fonts include built-in whitespace (ascenders, descenders, line-height adjustments). These properties let you trim that whitespace to achieve perfect alignment and spacing.</p>
+
+            <h3>Basic Syntax:</h3>
+            <pre>/* Trim text box */
+text-box-trim: none | trim-start | trim-end | trim-both;
+
+/* Define edge metrics */
+text-box-edge: leading | text | cap | ex;
+
+/* Combined usage */
+h1 {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+}</pre>
+
+            <div class="warning">
+                <strong>⚠️ Experimental:</strong> These properties are still experimental and not widely supported. Use with caution in production.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 2: text-box-trim Values ===== -->
+        <div class="section">
+            <h2>2. text-box-trim Values</h2>
+
+            <h3>Available Values:</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Value</th>
+                    <th>Description</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td><code>none</code></td>
+                    <td>No trimming (default)</td>
+                    <td>Standard text rendering</td>
+                </tr>
+                <tr>
+                    <td><code>trim-start</code></td>
+                    <td>Trim whitespace at start of text</td>
+                    <td>Remove top spacing</td>
+                </tr>
+                <tr>
+                    <td><code>trim-end</code></td>
+                    <td>Trim whitespace at end of text</td>
+                    <td>Remove bottom spacing</td>
+                </tr>
+                <tr>
+                    <td><code>trim-both</code></td>
+                    <td>Trim whitespace at both start and end</td>
+                    <td>Precise alignment, remove all extra space</td>
+                </tr>
+            </table>
+
+            <h3>Visual Comparison:</h3>
+            <div class="comparison-section">
+                <div class="comparison-item">
+                    <h5>Default (none)</h5>
+                    <div class="demo-text-normal">
+                        Normal Text
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9em;">
+                        Includes all font metrics whitespace
+                    </p>
+                </div>
+                <div class="comparison-item">
+                    <h5>text-box-trim: trim-start</h5>
+                    <div class="demo-text-trimmed">
+                        Normal Text
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9em;">
+                        Top whitespace removed
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 3: text-box-edge Values ===== -->
+        <div class="section">
+            <h2>3. text-box-edge Values</h2>
+
+            <h3>Understanding text-box-edge:</h3>
+            <p>The <code>text-box-edge</code> property defines which line metrics are used as the reference for the text box edges. It works with <code>text-box-trim</code> to determine what gets trimmed.</p>
+
+            <h3>Available Keywords:</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Keyword</th>
+                    <th>Refers To</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>leading</code></td>
+                    <td>Line start</td>
+                    <td>First baseline of line</td>
+                </tr>
+                <tr>
+                    <td><code>text</code></td>
+                    <td>Text content height</td>
+                    <td>Actual glyphs bounding box</td>
+                </tr>
+                <tr>
+                    <td><code>cap</code></td>
+                    <td>Cap height</td>
+                    <td>Height of capital letters</td>
+                </tr>
+                <tr>
+                    <td><code>ex</code></td>
+                    <td>X-height</td>
+                    <td>Height of lowercase 'x'</td>
+                </tr>
+            </table>
+
+            <h3>Combining Values:</h3>
+            <pre>/* Multiple values for start and end */
+text-box-edge: leading text;
+text-box-edge: cap alphabetic;
+text-box-edge: leading cap;
+text-box-edge: ex text;</pre>
+        </div>
+
+        <!-- ===== SECTION 4: Practical Examples ===== -->
+        <div class="section">
+            <h2>4. Practical Examples</h2>
+
+            <h3>Example 1: Perfect Heading Alignment</h3>
+            <pre>h1 {
+    font-size: 2.5em;
+    line-height: 1.2;
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    margin: 20px 0; /* Now exactly 20px */
+}</pre>
+
+            <h3>Example 2: Tight Card Titles</h3>
+            <pre>.card h3 {
+    text-box-trim: trim-start;
+    text-box-edge: leading cap;
+    margin-bottom: 10px;
+}</pre>
+
+            <h3>Example 3: Button Text Centering</h3>
+            <pre>button {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    /* Text now perfectly centered vertically */
+}</pre>
+
+            <h3>Example 4: Precise List Item Spacing</h3>
+            <pre>li {
+    text-box-trim: trim-both;
+    text-box-edge: text;
+    line-height: 1.5;
+}</pre>
+
+            <h3>Example 5: Label Alignment</h3>
+            <pre>label {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    display: inline-block;
+    /* Now aligns perfectly with input fields */
+}</pre>
+
+            <div class="note">
+                <strong>Note:</strong> These examples show intended usage. Results may vary depending on browser support.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 5: Use Cases ===== -->
+        <div class="section">
+            <h2>5. Real-World Use Cases</h2>
+
+            <h3>Use Case 1: Typography System</h3>
+            <pre>/* Typographic scale with perfect spacing */
+.typography {
+    --line-height: 1.5;
+}
+
+.typography h1 {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    margin: 1rem 0; /* Now exact */
+}
+
+.typography h2 {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    margin: 0.75rem 0;
+}
+
+.typography p {
+    text-box-trim: trim-both;
+    text-box-edge: text;
+}</pre>
+
+            <h3>Use Case 2: Design System Components</h3>
+            <pre>/* Card component */
+.card__title {
+    text-box-trim: trim-start;
+    text-box-edge: leading cap;
+}
+
+/* Button with text */
+.button {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    padding: 10px 16px;
+}</pre>
+
+            <h3>Use Case 3: Consistent Form Labels</h3>
+            <pre>form {
+    --label-height: 20px;
+}
+
+label {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    height: var(--label-height);
+    line-height: var(--label-height);
+}</pre>
+
+            <h3>Use Case 4: Grid and Flex Alignment</h3>
+            <pre>.grid {
+    display: grid;
+    gap: 20px;
+}
+
+.grid-item {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    /* Text aligns perfectly in grid cells */
+}</pre>
+
+            <h3>Use Case 5: Baseline Alignment</h3>
+            <pre>.inline-elements {
+    display: flex;
+    align-items: baseline;
+}
+
+.inline-elements span {
+    text-box-trim: trim-both;
+    text-box-edge: alphabetic;
+    /* All elements align on same baseline */
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 6: Technical Details ===== -->
+        <div class="section">
+            <h2>6. How It Works (Technical Details)</h2>
+
+            <h3>Text Box Metrics:</h3>
+            <p>Each font has built-in metrics that define:</p>
+            <ul>
+                <li><strong>Ascender height:</strong> How high letters like 'h' go</li>
+                <li><strong>Cap height:</strong> Height of capital letters</li>
+                <li><strong>X-height:</strong> Height of lowercase 'x'</li>
+                <li><strong>Descender depth:</strong> How low letters like 'g' go</li>
+                <li><strong>Line-height:</strong> Space allocated per line</li>
+            </ul>
+
+            <h3>Default Behavior:</h3>
+            <pre>/* By default, text includes all this space */
+element {
+    /* Line-height adds: ascender + cap + descender + extra */
+    line-height: 1.5;
+}</pre>
+
+            <h3>With text-box-trim:</h3>
+            <pre>/* Removes the extra whitespace */
+element {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    /* Now only includes capital and lowercase glyphs */
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 7: Browser Support ===== -->
+        <div class="section">
+            <h2>7. Browser Support & Status</h2>
+
+            <div class="browser-support">
+                <div class="browser experimental">
+                    <strong>Chrome</strong><br>Experimental<br><small>Behind flag</small>
+                </div>
+                <div class="browser experimental">
+                    <strong>Firefox</strong><br>No Support<br><small>Not implemented</small>
+                </div>
+                <div class="browser experimental">
+                    <strong>Safari</strong><br>No Support<br><small>Not implemented</small>
+                </div>
+                <div class="browser experimental">
+                    <strong>Edge</strong><br>Experimental<br><small>Behind flag</small>
+                </div>
+            </div>
+
+            <h3>Current Status:</h3>
+            <div class="warning">
+                <strong>⚠️ Experimental Features:</strong> These properties are part of CSS Text Module Level 4, but browser support is very limited. They may change before final standardization.
+            </div>
+
+            <h3>Checking Support:</h3>
+            <pre>/* Feature detection */
+@supports (text-box-trim: trim-both) {
+    h1 {
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
+    }
+}
+
+/* Fallback styling */
+h1 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 8: Comparison with Alternatives ===== -->
+        <div class="section">
+            <h2>8. Alternative Approaches</h2>
+
+            <h3>Before text-box-trim:</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Approach</th>
+                    <th>How It Works</th>
+                    <th>Pros</th>
+                    <th>Cons</th>
+                </tr>
+                <tr>
+                    <td>Negative margins</td>
+                    <td>Use margin-top: -0.2em</td>
+                    <td>Works now</td>
+                    <td>Guess-and-check, not precise</td>
+                </tr>
+                <tr>
+                    <td>Line-height: 1</td>
+                    <td>Compress line height</td>
+                    <td>Reduces space</td>
+                    <td>Affects text layout</td>
+                </tr>
+                <tr>
+                    <td>CSS Grid</td>
+                    <td>Align in grid cells</td>
+                    <td>Works well</td>
+                    <td>Requires grid structure</td>
+                </tr>
+                <tr>
+                    <td>text-box-trim</td>
+                    <td>Native text trimming</td>
+                    <td>Precise, native</td>
+                    <td>Limited browser support</td>
+                </tr>
+            </table>
+
+            <h3>Migration Path:</h3>
+            <pre>/* Old way - still needed for fallback */
+h1 {
+    margin-top: -0.2em;
+    margin-bottom: 1rem;
+}
+
+/* New way - use when supported */
+@supports (text-box-trim: trim-both) {
+    h1 {
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 9: Best Practices ===== -->
+        <div class="section">
+            <h2>9. Best Practices & Tips</h2>
+
+            <h3>✓ Do's:</h3>
+            <div class="pros">
+                <ul>
+                    <li>Use @supports for feature detection</li>
+                    <li>Provide fallback styles</li>
+                    <li>Test with different fonts</li>
+                    <li>Combine with line-height adjustments</li>
+                    <li>Use cap edge for headings</li>
+                    <li>Use text edge for body content</li>
+                    <li>Document your choices</li>
+                </ul>
+            </div>
+
+            <h3>✗ Don'ts:</h3>
+            <div class="cons">
+                <ul>
+                    <li>Don't rely solely on text-box-trim yet</li>
+                    <li>Don't use without fallbacks</li>
+                    <li>Don't assume all browsers support it</li>
+                    <li>Don't use trim-both carelessly</li>
+                    <li>Don't ignore font metric differences</li>
+                    <li>Don't use in production without testing</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 10: Quick Reference ===== -->
+        <div class="section">
+            <h2>10. Quick Reference</h2>
+
+            <h3>All Values:</h3>
+            <pre>/* text-box-trim values */
+text-box-trim: none;           /* No trimming (default) */
+text-box-trim: trim-start;     /* Trim top */
+text-box-trim: trim-end;       /* Trim bottom */
+text-box-trim: trim-both;      /* Trim both sides */
+
+/* text-box-edge keywords */
+text-box-edge: leading;        /* Line start */
+text-box-edge: text;           /* Text content */
+text-box-edge: cap;            /* Capital letter height */
+text-box-edge: ex;             /* X-height */
+
+/* Combined usage */
+element {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+}</pre>
+
+            <h3>Common Patterns:</h3>
+            <pre>/* For headings */
+h1, h2, h3 {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+}
+
+/* For body text */
+p {
+    text-box-trim: trim-both;
+    text-box-edge: text;
+}
+
+/* For buttons */
+button {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+}
+
+/* With fallback */
+@supports (text-box-trim: trim-both) {
+    element {
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
+    }
+}</pre>
+
+            <h3>Checklist:</h3>
+            <ul>
+                <li>✓ Check browser support</li>
+                <li>✓ Use @supports query</li>
+                <li>✓ Provide fallback styles</li>
+                <li>✓ Test with different fonts</li>
+                <li>✓ Verify line-height compatibility</li>
+                <li>✓ Test on multiple devices</li>
+                <li>✓ Document your implementation</li>
+            </ul>
+        </div>
+
+        <!-- ===== SECTION 11: Future Outlook ===== -->
+        <div class="section">
+            <h2>11. Future & Standardization</h2>
+
+            <h3>Specification Status:</h3>
+            <p>These properties are part of the <strong>CSS Text Module Level 4</strong> specification, which is still in development. Their exact behavior and naming may change before finalization.</p>
+
+            <h3>Expected Evolution:</h3>
+            <ul>
+                <li>Chrome leading implementation (already experimental)</li>
+                <li>Firefox adoption planned</li>
+                <li>Safari support to follow</li>
+                <li>Possible syntax refinements</li>
+                <li>Integration with CSS Grid and Flexbox</li>
+            </ul>
+
+            <h3>How to Stay Updated:</h3>
+            <ul>
+                <li>Monitor W3C CSS Text Module Level 4</li>
+                <li>Check browser release notes</li>
+                <li>Follow CSS working group discussions</li>
+                <li>Test in browser pre-release versions</li>
+            </ul>
+
+            <div class="note">
+                <strong>Recommendation:</strong> Watch this feature's development, but use progressive enhancement for now. Great for future-proofing your CSS!
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS text-box-trim & text-box-edge Complete Guide | Created for Web Development Learning</p>
+            <p>For more information, visit <a href="https://drafts.csswg.org/css-text-4/#text-box-edges">CSS Text Module Level 4</a></p>
+        </footer>
+    </div>
+</body>
+</html>

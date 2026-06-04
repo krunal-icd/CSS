@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elementor CSS Text Shadow Implementation Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .intro-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .intro-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .intro-section p {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .example-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .example-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .example-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .example-card p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .example-preview {
+            background: white;
+            padding: 30px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ddd;
+        }
+
+        .code-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .code-small {
+            background: #f5f5f5;
+            padding: 10px;
+            border-left: 3px solid #667eea;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            color: #333;
+            word-break: break-all;
+        }
+
+        /* Text Shadow Examples */
+        .shadow-1 {
+            font-size: 2em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .shadow-2 {
+            font-size: 2em;
+            font-weight: bold;
+            text-shadow: 3px 3px 0px #e74c3c, 6px 6px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        .shadow-3 {
+            font-size: 2em;
+            font-weight: bold;
+            text-shadow: 
+                -1px -1px 0 #667eea,
+                1px -1px 0 #764ba2,
+                -1px 1px 0 #764ba2,
+                1px 1px 0 #667eea;
+            color: white;
+        }
+
+        .shadow-4 {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+            text-shadow: 
+                0 1px 3px rgba(0, 0, 0, 0.3),
+                0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+
+        .shadow-5 {
+            font-size: 2em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .shadow-6 {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2c3e50;
+            text-shadow: 
+                0 0 10px rgba(255, 107, 107, 0.8),
+                0 0 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .shadow-7 {
+            font-size: 2em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 
+                0 4px 6px rgba(0, 0, 0, 0.4),
+                0 1px 3px rgba(0, 0, 0, 0.2);
+            background: #34495e;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .shadow-8 {
+            font-size: 2em;
+            font-weight: bold;
+            color: #f39c12;
+            text-shadow: 
+                1px 1px 2px #34495e,
+                2px 2px 4px rgba(0, 0, 0, 0.3),
+                3px 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .shadow-9 {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            text-shadow: 
+                0 0 5px rgba(102, 126, 234, 0.5),
+                0 0 10px rgba(118, 75, 162, 0.4),
+                0 0 15px rgba(102, 126, 234, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .shadow-10 {
+            font-size: 2em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 
+                -2px -2px 4px rgba(0, 0, 0, 0.5),
+                2px 2px 4px rgba(255, 255, 255, 0.3),
+                0 0 10px rgba(102, 126, 234, 0.4);
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .implementation-section {
+            padding: 40px;
+            background: #f8f9fa;
+            border-top: 2px solid #667eea;
+        }
+
+        .implementation-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .steps {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .steps ol {
+            margin-left: 20px;
+        }
+
+        .steps li {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .steps strong {
+            color: #667eea;
+        }
+
+        .tips {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .tips strong {
+            color: #856404;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .browser-support {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .example-preview {
+                min-height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🎨 Elementor CSS Text Shadow Implementation Guide</h1>
+            <p>Master 10 Professional Text Shadow Effects for Your Website</p>
+        </header>
+
+        <!-- Introduction Section -->
+        <div class="intro-section">
+            <h2>📖 Introduction to CSS Text Shadows</h2>
+            <p>
+                CSS text-shadow is a powerful property that adds depth and visual interest to your text. In Elementor, 
+                you can apply text shadows through the Advanced tab of any text widget. This guide showcases 10 professional 
+                examples that you can implement immediately.
+            </p>
+            <p>
+                <strong>CSS Syntax:</strong>
+            </p>
+            <div class="code-block">
+text-shadow: [horizontal-offset] [vertical-offset] [blur-radius] [color], [additional shadows];
+            </div>
+            <div class="browser-support">
+                <strong>✓ Browser Support:</strong> All modern browsers (Chrome, Firefox, Safari, Edge). IE 10+
+            </div>
+        </div>
+
+        <!-- Examples Grid -->
+        <div class="examples-grid">
+            <!-- Example 1: Simple Shadow -->
+            <div class="example-card">
+                <span class="example-number">1</span>
+                <h3>Simple Shadow</h3>
+                <p>A basic, subtle shadow perfect for adding depth without overwhelming your text.</p>
+                <div class="example-preview">
+                    <span class="shadow-1">Simple Shadow</span>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);</div>
+            </div>
+
+            <!-- Example 2: Double Layer Shadow -->
+            <div class="example-card">
+                <span class="example-number">2</span>
+                <h3>Double Layer Shadow</h3>
+                <p>A bold effect with layered shadows for a more dramatic appearance.</p>
+                <div class="example-preview">
+                    <span class="shadow-2">Layered Shadow</span>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">text-shadow: 3px 3px 0px #e74c3c, 6px 6px 0px rgba(0, 0, 0, 0.2);</div>
+            </div>
+
+            <!-- Example 3: Neon Outline -->
+            <div class="example-card">
+                <span class="example-number">3</span>
+                <h3>Neon Outline</h3>
+                <p>Create a neon-like effect with colored outlines around your text.</p>
+                <div class="example-preview">
+                    <span class="shadow-3">Neon Text</span>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">text-shadow: -1px -1px 0 #667eea, 1px -1px 0 #764ba2, -1px 1px 0 #764ba2, 1px 1px 0 #667eea;</div>
+            </div>
+
+            <!-- Example 4: Soft Glow -->
+            <div class="example-card">
+                <span class="example-number">4</span>
+                <h3>Soft Glow</h3>
+                <p>A gentle glowing effect that adds elegance to your headings.</p>
+                <div class="example-preview">
+                    <span class="shadow-4">Soft Glow</span>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(52, 152, 219, 0.3);</div>
+            </div>
+
+            <!-- Example 5: Gradient Background Shadow -->
+            <div class="example-card">
+                <span class="example-number">5</span>
+                <h3>Gradient Background Shadow</h3>
+                <p>Shadow with gradient background for a premium look.</p>
+                <div class="example-preview">
+                    <span class="shadow-5">Gradient Shadow</span>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);</div>
+            </div>
+
+            <!-- Example 6: Glow Effect -->
+            <div class="example-card">
+                <span class="example-number">6</span>
+                <h3>Glow Effect</h3>
+                <p>A radiant glow that makes text stand out with a vibrant aura.</p>
+                <div class="example-preview">
+                    <span class="shadow-6">Glowing Text</span>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">text-shadow: 0 0 10px rgba(255, 107, 107, 0.8), 0 0 20px rgba(255, 107, 107, 0.6);</div>
+            </div>
+
+            <!-- Example 7: Deep Shadow -->
+            <div class="example-card">
+                <span class="example-number">7</span>
+                <h3>Deep Shadow</h3>
+                <p>Professional depth effect ideal for call-to-action buttons and headlines.</p>
+                <div class="example-preview">
+                    <span class="shadow-7">Deep Shadow</span>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">text-shadow: 0 4px 6px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.2);</div>
+            </div>
+
+            <!-- Example 8: Triple Layer -->
+            <div class="example-card">
+                <span class="example-number">8</span>
+                <h3>Triple Layer Shadow</h3>
+                <p>Three layers of shadow for maximum depth and dimension.</p>
+                <div class="example-preview">
+                    <span class="shadow-8">Triple Layer</span>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">text-shadow: 1px 1px 2px #34495e, 2px 2px 4px rgba(0, 0, 0, 0.3), 3px 3px 6px rgba(0, 0, 0, 0.2);</div>
+            </div>
+
+            <!-- Example 9: Neon Blue Glow -->
+            <div class="example-card">
+                <span class="example-number">9</span>
+                <h3>Neon Blue Glow</h3>
+                <p>Modern neon effect with multiple blur layers and letter spacing.</p>
+                <div class="example-preview">
+                    <span class="shadow-9">Neon Glow</span>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">text-shadow: 0 0 5px rgba(102, 126, 234, 0.5), 0 0 10px rgba(118, 75, 162, 0.4), 0 0 15px rgba(102, 126, 234, 0.3);</div>
+            </div>
+
+            <!-- Example 10: Premium 3D Effect -->
+            <div class="example-card">
+                <span class="example-number">10</span>
+                <h3>Premium 3D Effect</h3>
+                <p>Sophisticated 3D effect combining multiple shadow layers for luxury feel.</p>
+                <div class="example-preview">
+                    <span class="shadow-10">Premium 3D</span>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">text-shadow: -2px -2px 4px rgba(0, 0, 0, 0.5), 2px 2px 4px rgba(255, 255, 255, 0.3), 0 0 10px rgba(102, 126, 234, 0.4);</div>
+            </div>
+        </div>
+
+        <!-- Implementation Section -->
+        <div class="implementation-section">
+            <h2>🚀 How to Implement in Elementor</h2>
+            
+            <div class="steps">
+                <h3 style="color: #333; margin-bottom: 15px;">Step-by-Step Instructions:</h3>
+                <ol>
+                    <li><strong>Select Your Text Widget</strong> - Click on any text, heading, or rich text element in your Elementor editor</li>
+                    <li><strong>Open Advanced Tab</strong> - In the left panel, scroll down and click the "Advanced" tab</li>
+                    <li><strong>Find Custom CSS</strong> - Look for the "Custom CSS" section at the bottom of the Advanced tab</li>
+                    <li><strong>Add the CSS</strong> - Paste the text-shadow property into the custom CSS field</li>
+                    <li><strong>Update & Preview</strong> - Click "Update" and view your changes in real-time</li>
+                </ol>
+            </div>
+
+            <div class="tips">
+                <strong>💡 Pro Tips:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Combine multiple shadows by separating them with commas for layered effects</li>
+                    <li>Use rgba() for transparency to create more natural-looking shadows</li>
+                    <li>Test shadows on different background colors to ensure readability</li>
+                    <li>Keep blur-radius values between 2-20px for professional results</li>
+                    <li>Use negative values for offsets to create shadows above or to the left</li>
+                    <li>For mobile responsiveness, consider reducing shadow complexity on small screens</li>
+                </ul>
+            </div>
+
+            <div class="browser-support" style="margin-top: 20px;">
+                <strong>🎯 Use Cases:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Headings:</strong> Examples 1, 4, 7 work best for main titles</li>
+                    <li><strong>Call-to-Action:</strong> Examples 5, 7, 10 are ideal for buttons</li>
+                    <li><strong>Creative Headers:</strong> Examples 3, 6, 9 for modern designs</li>
+                    <li><strong>Subtle Enhancement:</strong> Example 1 for body text emphasis</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 Elementor CSS Text Shadow Implementation Guide | Created with ❤️ for Elementor Users</p>
+        </footer>
+    </div>
+</body>
+</html>

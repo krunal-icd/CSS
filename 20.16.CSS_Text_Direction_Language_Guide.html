@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Text Direction & Language Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .intro-section {
+            padding: 40px;
+            background: linear-gradient(to right, #f5f7fa 0%, #c3cfe2 100%);
+            border-bottom: 3px solid #667eea;
+        }
+
+        .intro-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .intro-section p {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        .definition-box {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .definition-box strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            border-left: 4px solid #667eea;
+        }
+
+        .section-title {
+            background: #f5f7fa;
+            padding: 30px 40px;
+            border-bottom: 2px solid #667eea;
+            margin-top: 30px;
+        }
+
+        .section-title h2 {
+            color: #667eea;
+            font-size: 1.8em;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 25px;
+            padding: 40px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);
+            transform: translateY(-5px);
+        }
+
+        .example-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .example-card h3 {
+            color: #667eea;
+            margin-bottom: 12px;
+            font-size: 1.4em;
+        }
+
+        .example-card p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .example-preview {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #e0e0e0;
+            min-height: 100px;
+        }
+
+        .preview-content {
+            font-size: 1em;
+            color: #333;
+        }
+
+        .code-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 18px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .code-small {
+            background: #f5f5f5;
+            padding: 12px;
+            border-left: 3px solid #667eea;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            color: #333;
+            word-break: break-all;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+
+        /* Direction Examples */
+        .dir-ltr {
+            direction: ltr;
+            text-align: left;
+        }
+
+        .dir-rtl {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .dir-auto {
+            direction: auto;
+        }
+
+        /* Language Examples */
+        .lang-en {
+            lang: en;
+            hyphens: auto;
+        }
+
+        .lang-ar {
+            lang: ar;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .lang-he {
+            lang: he;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .lang-zh {
+            lang: zh;
+            hyphens: manual;
+        }
+
+        .lang-ja {
+            lang: ja;
+            hyphens: auto;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        .tips {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .tips strong {
+            color: #856404;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .warning strong {
+            color: #721c24;
+        }
+
+        .implementation-section {
+            padding: 40px;
+            background: #f8f9fa;
+        }
+
+        .implementation-section h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .steps {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .steps ol {
+            margin-left: 25px;
+        }
+
+        .steps li {
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .steps strong {
+            color: #667eea;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .use-case {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .use-case strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .bidi-box {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: monospace;
+            border: 1px solid #ddd;
+        }
+
+        footer {
+            background: #667eea;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .example-preview {
+                min-height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🌍 CSS Text Direction & Language Guide</h1>
+            <p>Master Bidirectional Text, RTL/LTR, & Multi-Language Typography</p>
+        </header>
+
+        <!-- Introduction Section -->
+        <div class="intro-section">
+            <h2>📖 Understanding Text Direction & Language</h2>
+            <p>
+                CSS direction property controls text directionality (left-to-right or right-to-left), while language attributes 
+                enable language-specific styling and typography. Essential for building truly international websites that support 
+                Arabic, Hebrew, Persian, Urdu, CJK languages, and more. Proper implementation ensures accessibility and professional 
+                appearance across all cultures.
+            </p>
+
+            <div class="definition-box">
+                <strong>What are Direction & Language Properties?</strong>
+                <p style="margin-top: 10px;">
+                    <strong>Direction:</strong> Controls text flow - left-to-right (LTR) for English, German, etc., or right-to-left (RTL) 
+                    for Arabic, Hebrew, Persian. Auto-detection is possible.<br><br>
+                    <strong>Language:</strong> Specified via HTML lang attribute or CSS lang pseudo-selector. Enables language-specific 
+                    typography like hyphenation, word breaking, and font selection.
+                </p>
+            </div>
+
+            <p>
+                <strong>Key Concept:</strong> Direction controls text flow, language controls typography behavior. Together they 
+                create proper support for all world languages and writing systems.
+            </p>
+
+            <div class="code-block">
+/* Direction Syntax */
+direction: ltr;               /* Left-to-right (default) */
+direction: rtl;               /* Right-to-left */
+direction: auto;              /* Auto-detect from content */
+
+/* HTML Language Attribute */
+&lt;html lang="en"&gt;           /* English */
+&lt;html lang="ar"&gt;           /* Arabic */
+&lt;html lang="he"&gt;           /* Hebrew */
+&lt;html lang="zh"&gt;           /* Chinese */
+&lt;html lang="ja"&gt;           /* Japanese */
+
+/* CSS Language Selector */
+:lang(en) { hyphens: auto; }
+:lang(ar) { direction: rtl; }
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Global Writing Systems:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><span class="highlight">LTR (Left-to-Right)</span> - English, German, French, Spanish, Chinese, Japanese, Korean</li>
+                    <li><span class="highlight">RTL (Right-to-Left)</span> - Arabic, Hebrew, Persian, Urdu, Pashto</li>
+                    <li><span class="highlight">Bidirectional (BiDi)</span> - Mixed LTR and RTL in same text</li>
+                    <li><span class="highlight">Auto-Detection</span> - direction: auto detects from content</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 10 Examples -->
+        <div class="section-title">
+            <h2>🌐 10 Professional Text Direction & Language Examples</h2>
+        </div>
+
+        <div class="examples-grid">
+            <!-- Example 1: English LTR -->
+            <div class="example-card">
+                <span class="example-number">1</span>
+                <h3>English (LTR - Default)</h3>
+                <p>Standard left-to-right text. Most common writing system globally.</p>
+                <div class="example-preview">
+                    <div class="preview-content dir-ltr" lang="en">
+                        This is English text flowing from left to right. It's the default direction for most Western languages and technical documentation.
+                    </div>
+                </div>
+                <div class="code-label">HTML & CSS Code:</div>
+                <div class="code-small">&lt;div lang="en" dir="ltr"&gt;<br>English text here<br>&lt;/div&gt;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> English, German, French, Spanish, most content
+                </div>
+            </div>
+
+            <!-- Example 2: Arabic RTL -->
+            <div class="example-card">
+                <span class="example-number">2</span>
+                <h3>Arabic (RTL)</h3>
+                <p>Right-to-left text for Semitic languages. Essential for Middle East content.</p>
+                <div class="example-preview">
+                    <div class="preview-content dir-rtl" lang="ar">
+                        هذا نص باللغة العربية يتدفق من اليمين إلى اليسار. إنه اتجاه الكتابة الأساسي للغة العربية والعديد من اللغات السامية.
+                    </div>
+                </div>
+                <div class="code-label">HTML & CSS Code:</div>
+                <div class="code-small">&lt;div lang="ar" dir="rtl"&gt;<br>النص العربي هنا<br>&lt;/div&gt;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Arabic, Hebrew, Persian, Urdu content
+                </div>
+            </div>
+
+            <!-- Example 3: Hebrew RTL -->
+            <div class="example-card">
+                <span class="example-number">3</span>
+                <h3>Hebrew (RTL)</h3>
+                <p>Hebrew text flowing right-to-left with proper bidirectional handling.</p>
+                <div class="example-preview">
+                    <div class="preview-content dir-rtl" lang="he">
+                        זה טקסט בעברית זורם מימין לשמאל. זה כיוון הכתיבה הבסיסי של שפות שונות בעולם.
+                    </div>
+                </div>
+                <div class="code-label">HTML & CSS Code:</div>
+                <div class="code-small">&lt;div lang="he" dir="rtl"&gt;<br>הטקסט העברי כאן<br>&lt;/div&gt;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Hebrew content, Israeli websites
+                </div>
+            </div>
+
+            <!-- Example 4: Chinese (Simplified) -->
+            <div class="example-card">
+                <span class="example-number">4</span>
+                <h3>Chinese - Simplified (LTR)</h3>
+                <p>Simplified Chinese text, left-to-right flow with proper language support.</p>
+                <div class="example-preview">
+                    <div class="preview-content dir-ltr" lang="zh-Hans">
+                        这是简体中文文本，从左到右流动。这是中文的标准写作方向。中文是世界上使用最广泛的语言之一。
+                    </div>
+                </div>
+                <div class="code-label">HTML & CSS Code:</div>
+                <div class="code-small">&lt;div lang="zh-Hans" dir="ltr"&gt;<br>简体中文文本<br>&lt;/div&gt;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Mainland China, Singapore, simplified Chinese
+                </div>
+            </div>
+
+            <!-- Example 5: Japanese (LTR) -->
+            <div class="example-card">
+                <span class="example-number">5</span>
+                <h3>Japanese (LTR)</h3>
+                <p>Japanese text with proper language attributes for typography.</p>
+                <div class="example-preview">
+                    <div class="preview-content dir-ltr" lang="ja">
+                        これは日本語のテキストです。左から右へ流れます。日本語の標準的な書き方です。現代日本語のほとんどはこの方向で書かれています。
+                    </div>
+                </div>
+                <div class="code-label">HTML & CSS Code:</div>
+                <div class="code-small">&lt;div lang="ja" dir="ltr"&gt;<br>日本語のテキスト<br>&lt;/div&gt;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Japanese content, Japan/global Japanese audience
+                </div>
+            </div>
+
+            <!-- Example 6: Korean (LTR) -->
+            <div class="example-card">
+                <span class="example-number">6</span>
+                <h3>Korean (LTR)</h3>
+                <p>Korean text written left-to-right using Hangul alphabet.</p>
+                <div class="example-preview">
+                    <div class="preview-content dir-ltr" lang="ko">
+                        이것은 한국어 텍스트입니다. 왼쪽에서 오른쪽으로 흐릅니다. 한국어의 표준적인 쓰기 방향입니다. 현대 한국어는 주로 이 방향으로 작성됩니다.
+                    </div>
+                </div>
+                <div class="code-label">HTML & CSS Code:</div>
+                <div class="code-small">&lt;div lang="ko" dir="ltr"&gt;<br>한국어 텍스트<br>&lt;/div&gt;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Korean content, South Korea, North Korea
+                </div>
+            </div>
+
+            <!-- Example 7: Bidirectional Text -->
+            <div class="example-card">
+                <span class="example-number">7</span>
+                <h3>Bidirectional (Mixed LTR/RTL) ⭐</h3>
+                <p>Mix of Arabic and English in same paragraph - proper BiDi handling.</p>
+                <div class="example-preview">
+                    <div class="preview-content dir-auto">
+                        <div style="direction: rtl; text-align: right;">
+                            هذا نص عربي يحتوي على كلمات إنجليزية مثل "Unicode" و "HTML5" مدمجة فيه.
+                        </div>
+                    </div>
+                </div>
+                <div class="code-label">HTML & CSS Code:</div>
+                <div class="code-small">&lt;div dir="auto"&gt;<br>Mixed content with Arabic and English<br>&lt;/div&gt;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Mixed language content, international forums
+                </div>
+            </div>
+
+            <!-- Example 8: Auto Direction Detection -->
+            <div class="example-card">
+                <span class="example-number">8</span>
+                <h3>Auto Direction Detection</h3>
+                <p>Browser automatically detects direction from first strong character.</p>
+                <div class="example-preview">
+                    <div class="preview-content" style="direction: auto;">
+                        <div style="margin-bottom: 10px;">English text that flows left to right.</div>
+                        <div>النص العربي يتدفق من اليمين إلى اليسار.</div>
+                    </div>
+                </div>
+                <div class="code-label">HTML & CSS Code:</div>
+                <div class="code-small">&lt;div dir="auto"&gt;<br>Auto-detects direction automatically<br>&lt;/div&gt;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> User-generated content, comments, dynamic text
+                </div>
+            </div>
+
+            <!-- Example 9: CSS :lang() Selector -->
+            <div class="example-card">
+                <span class="example-number">9</span>
+                <h3>CSS :lang() Selector</h3>
+                <p>Language-specific styling using CSS :lang() pseudo-class.</p>
+                <div class="example-preview">
+                    <div style="padding: 15px; background: #f0f0f0; border-radius: 5px;">
+                        <p lang="en" style="margin-bottom: 10px;">English text with language-specific hyphenation.</p>
+                        <p lang="de">Deutscher Text mit sprachspezifischer Silbentrennung.</p>
+                    </div>
+                </div>
+                <div class="code-label">HTML & CSS Code:</div>
+                <div class="code-small">:lang(en) { hyphens: auto; }<br>:lang(de) { hyphens: auto; }</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Language-specific typography styling
+                </div>
+            </div>
+
+            <!-- Example 10: Complete Multilingual Site -->
+            <div class="example-card">
+                <span class="example-number">10</span>
+                <h3>Multilingual Website</h3>
+                <p>Complete implementation with multiple languages on same page.</p>
+                <div class="example-preview">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div style="padding: 10px; background: #f0f0f0; border-radius: 5px; text-align: left; direction: ltr;">
+                            <strong style="color: #667eea;">English:</strong><br>
+                            <small>Professional website content</small>
+                        </div>
+                        <div style="padding: 10px; background: #f0f0f0; border-radius: 5px; text-align: right; direction: rtl;">
+                            <strong style="color: #667eea;">العربية:</strong><br>
+                            <small>محتوى موقع احترافي</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-label">HTML & CSS Code:</div>
+                <div class="code-small">&lt;html lang="en" dir="ltr"&gt;<br>...&lt;div lang="ar" dir="rtl"&gt;...&lt;/div&gt;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> International sites, global companies
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction & Language Reference Table -->
+        <div class="section-title">
+            <h2>📊 Language Code Reference & Direction Chart</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Language</th>
+                        <th>Code</th>
+                        <th>Direction</th>
+                        <th>Region(s)</th>
+                        <th>Script System</th>
+                        <th>Special Considerations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>English</strong></td>
+                        <td>en</td>
+                        <td>LTR</td>
+                        <td>Worldwide</td>
+                        <td>Latin</td>
+                        <td>Default, widely supported</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Arabic</strong></td>
+                        <td>ar</td>
+                        <td>RTL</td>
+                        <td>Middle East, North Africa</td>
+                        <td>Arabic</td>
+                        <td>BiDi, connected letters, context-sensitive forms</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hebrew</strong></td>
+                        <td>he</td>
+                        <td>RTL</td>
+                        <td>Israel</td>
+                        <td>Hebrew</td>
+                        <td>BiDi, requires proper text direction handling</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Persian/Farsi</strong></td>
+                        <td>fa</td>
+                        <td>RTL</td>
+                        <td>Iran, Afghanistan</td>
+                        <td>Persian/Arabic</td>
+                        <td>Similar to Arabic with unique characters</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Urdu</strong></td>
+                        <td>ur</td>
+                        <td>RTL</td>
+                        <td>Pakistan, India</td>
+                        <td>Perso-Arabic</td>
+                        <td>Similar structure to Persian/Arabic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chinese (Simplified)</strong></td>
+                        <td>zh-Hans</td>
+                        <td>LTR</td>
+                        <td>Mainland China</td>
+                        <td>Han (CJK)</td>
+                        <td>CJK text, word-break considerations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chinese (Traditional)</strong></td>
+                        <td>zh-Hant</td>
+                        <td>LTR</td>
+                        <td>Taiwan, Hong Kong</td>
+                        <td>Han (CJK)</td>
+                        <td>More complex characters than simplified</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Japanese</strong></td>
+                        <td>ja</td>
+                        <td>LTR (modern)</td>
+                        <td>Japan</td>
+                        <td>Han + Hiragana + Katakana</td>
+                        <td>Mix of three scripts, hyphenation support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Korean</strong></td>
+                        <td>ko</td>
+                        <td>LTR</td>
+                        <td>South Korea, North Korea</td>
+                        <td>Hangul</td>
+                        <td>Alphabetic CJK, fully phonetic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>German</strong></td>
+                        <td>de</td>
+                        <td>LTR</td>
+                        <td>Germany, Austria, Switzerland</td>
+                        <td>Latin + diacritics</td>
+                        <td>Long words, hyphenation important</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Direction & Language Comparison -->
+        <div class="section-title">
+            <h2>🔍 Direction Property Values Explained</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Direction Value</th>
+                        <th>Flow Direction</th>
+                        <th>Text Alignment</th>
+                        <th>Use Cases</th>
+                        <th>Browser Support</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ltr</strong> (left-to-right)</td>
+                        <td>Left → Right</td>
+                        <td>Text aligns left</td>
+                        <td>English, most Western languages, CJK</td>
+                        <td>✅ Universal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>rtl</strong> (right-to-left)</td>
+                        <td>Right → Left</td>
+                        <td>Text aligns right</td>
+                        <td>Arabic, Hebrew, Persian, Urdu</td>
+                        <td>✅ Universal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>auto</strong></td>
+                        <td>Auto-detected</td>
+                        <td>Based on first strong char</td>
+                        <td>Mixed content, user input</td>
+                        <td>✅ Universal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>initial</strong></td>
+                        <td>Browser default</td>
+                        <td>HTML default (LTR)</td>
+                        <td>Reset to HTML lang attribute</td>
+                        <td>✅ Universal</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Implementation Guide -->
+        <div class="implementation-section">
+            <h2>🚀 How to Implement Direction & Language</h2>
+            
+            <div class="steps">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Step 1: Set HTML Language Attribute</h3>
+                <ol>
+                    <li><strong>Add lang to html element:</strong> Always specify primary language on &lt;html&gt; tag</li>
+                    <li><strong>Use correct language code:</strong> en for English, ar for Arabic, zh-Hans for simplified Chinese</li>
+                    <li><strong>This affects:</strong> Spell-check, font selection, hyphenation, text-to-speech</li>
+                </ol>
+            </div>
+
+            <div class="code-block">
+<!-- Correct: Language on HTML Element -->
+&lt;html lang="en" dir="ltr"&gt;
+    &lt;head&gt;...&lt;/head&gt;
+    &lt;body&gt;...&lt;/body&gt;
+&lt;/html&gt;
+
+<!-- Arabic Website -->
+&lt;html lang="ar" dir="rtl"&gt;
+    &lt;head&gt;...&lt;/head&gt;
+    &lt;body&gt;...&lt;/body&gt;
+&lt;/html&gt;
+
+<!-- Japanese Website -->
+&lt;html lang="ja" dir="ltr"&gt;
+    &lt;head&gt;...&lt;/head&gt;
+    &lt;body&gt;...&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <div class="steps">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Step 2: Set Direction CSS</h3>
+                <ol>
+                    <li><strong>For LTR (default):</strong> Use direction: ltr or leave default</li>
+                    <li><strong>For RTL:</strong> Set direction: rtl; AND text-align: right;</li>
+                    <li><strong>For mixed content:</strong> Use direction: auto;</li>
+                </ol>
+            </div>
+
+            <div class="code-block">
+/* LTR Styling */
+html[lang="en"],
+html[lang="ja"],
+html[lang="zh"] {
+    direction: ltr;
+    text-align: left;
+}
+
+/* RTL Styling */
+html[lang="ar"],
+html[lang="he"],
+html[lang="fa"] {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Reversed margins/padding for RTL */
+html[dir="rtl"] {
+    margin-left: auto;
+    margin-right: 0;
+    padding-left: auto;
+    padding-right: 20px;
+}
+
+/* For LTR */
+html[dir="ltr"] {
+    margin-left: 0;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: auto;
+}
+            </div>
+
+            <div class="steps">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Step 3: Language-Specific Typography</h3>
+                <ol>
+                    <li><strong>Use :lang() selector:</strong> Apply language-specific rules</li>
+                    <li><strong>Hyphenation:</strong> hyphens: auto for different languages</li>
+                    <li><strong>Font selection:</strong> Different fonts for different scripts</li>
+                </ol>
+            </div>
+
+            <div class="code-block">
+/* Language-Specific Styling */
+
+/* English hyphenation */
+:lang(en) {
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+}
+
+/* German (longer words) */
+:lang(de) {
+    hyphens: auto;
+    word-break: break-word;
+}
+
+/* Arabic specific */
+:lang(ar) {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Arabic Typesetting', 'Simplified Arabic', sans-serif;
+    word-break: break-all;
+}
+
+/* Chinese specific */
+:lang(zh) {
+    word-break: break-all;
+    font-family: 'SimSun', 'Microsoft YaHei', sans-serif;
+}
+
+/* Japanese specific */
+:lang(ja) {
+    font-family: 'Hiragino Sans', 'MS Gothic', sans-serif;
+    hyphens: auto;
+}
+
+/* Hebrew */
+:lang(he) {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Arial Hebrew', 'Calibri', sans-serif;
+}
+            </div>
+
+            <div class="tips">
+                <strong>💡 Implementation Pro Tips:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Always set lang on html:</strong> Foundation for all language-specific behavior</li>
+                    <li><strong>Combine direction + text-align:</strong> Both needed for proper RTL layout</li>
+                    <li><strong>Use margin/padding resets for RTL:</strong> Flip them automatically</li>
+                    <li><strong>Test with actual content:</strong> Different languages render differently</li>
+                    <li><strong>Use :lang() selector:</strong> More reliable than lang attribute selector</li>
+                    <li><strong>Font stacks for language:</strong> Include language-specific fonts first</li>
+                    <li><strong>BiDi content requires testing:</strong> Mixed LTR/RTL needs special attention</li>
+                    <li><strong>Mobile consideration:</strong> RTL layouts need reverse navigation/UI</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Common Mistakes to Avoid:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>❌ Setting direction without text-align - breaks alignment</li>
+                    <li>❌ Wrong language code - affects spell-check and font selection</li>
+                    <li>❌ Forgetting HTML lang attribute - only sets CSS direction</li>
+                    <li>❌ Not reversing margins/padding for RTL - creates layout issues</li>
+                    <li>❌ Using direction on body instead of html - affects nested content</li>
+                    <li>❌ Mixing LTR/RTL without dir="auto" - creates display problems</li>
+                    <li>❌ Not testing with native speakers - subtle issues may exist</li>
+                </ul>
+            </div>
+
+            <div class="info-box" style="margin-top: 25px;">
+                <strong>🔧 Advanced Techniques:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Use <span class="highlight">dir="auto"</span> on user-generated content for BiDi support</li>
+                    <li>Use <span class="highlight">unicode-bidi: isolate</span> for nested different-direction text</li>
+                    <li>Use CSS custom properties to switch layouts for theme switching</li>
+                    <li>Use <span class="highlight">[dir] attribute selectors</span> for direction-specific styling</li>
+                    <li>Create <span class="highlight">logical properties</span> that adapt to direction automatically</li>
+                    <li>Use media queries + direction detection JavaScript for responsive RTL</li>
+                    <li>Test with screen readers for accessibility in all languages</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Complete Example -->
+        <div class="section-title">
+            <h2>💻 Complete Multilingual Site Example</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en" dir="ltr"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Multilingual Site&lt;/title&gt;
+    &lt;style&gt;
+        /* Base styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* Language-specific fonts */
+        :lang(ar) { font-family: 'Arial Unicode MS', 'Arabic Typesetting', sans-serif; }
+        :lang(he) { font-family: 'Arial Unicode MS', 'Arial Hebrew', sans-serif; }
+        :lang(zh) { font-family: 'Noto Sans CJK SC', 'SimSun', sans-serif; }
+        :lang(ja) { font-family: 'Noto Sans JP', 'Hiragino Sans', sans-serif; }
+
+        /* Direction */
+        html[dir="ltr"] { direction: ltr; text-align: left; }
+        html[dir="rtl"] { direction: rtl; text-align: right; }
+
+        /* RTL adjustments */
+        html[dir="rtl"] nav { margin-right: 0; margin-left: auto; }
+        html[dir="rtl"] .sidebar { float: right; margin-right: 20px; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;nav&gt;...&lt;/nav&gt;
+    
+    &lt;!-- English section --&gt;
+    &lt;section lang="en" dir="ltr"&gt;
+        Welcome to our multilingual website!
+    &lt;/section&gt;
+    
+    &lt;!-- Arabic section --&gt;
+    &lt;section lang="ar" dir="rtl"&gt;
+        أهلا وسهلا بك في موقعنا متعدد اللغات!
+    &lt;/section&gt;
+    
+    &lt;!-- Japanese section --&gt;
+    &lt;section lang="ja" dir="ltr"&gt;
+        多言語ウェブサイトへようこそ！
+    &lt;/section&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+        </div>
+
+        <!-- Browser Support -->
+        <div class="section-title">
+            <h2>🌐 Browser Support & Compatibility</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Chrome</th>
+                        <th>Firefox</th>
+                        <th>Safari</th>
+                        <th>Edge</th>
+                        <th>IE 11</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>direction property</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>lang attribute</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>:lang() selector</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>⚠️ Limited</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RTL text rendering</strong></td>
+                        <td>✅ Excellent</td>
+                        <td>✅ Excellent</td>
+                        <td>✅ Good</td>
+                        <td>✅ Excellent</td>
+                        <td>⚠️ Basic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BiDi (mixed LTR/RTL)</strong></td>
+                        <td>✅ Excellent</td>
+                        <td>✅ Excellent</td>
+                        <td>✅ Good</td>
+                        <td>✅ Excellent</td>
+                        <td>⚠️ Issues</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>✅ Best Practices for Compatibility:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Direction and lang attributes supported universally - always safe to use</li>
+                    <li>Use :lang() selector for language-specific CSS with fallbacks</li>
+                    <li>Test on actual devices in target markets</li>
+                    <li>Provide fallback fonts for all language groups</li>
+                    <li>Test with screen readers in multiple languages</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 CSS Text Direction & Language Guide | Professional Multilingual & Bidirectional Text Support</p>
+            <p style="margin-top: 10px; opacity: 0.9;">Master direction and language for truly international websites that serve all users</p>
+        </footer>
+    </div>
+</body>
+</html>

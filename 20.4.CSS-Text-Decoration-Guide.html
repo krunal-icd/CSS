@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Text-Decoration Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border-left: 5px solid #667eea;
+        }
+
+        .intro-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .intro-section p {
+            margin-bottom: 12px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .table-of-contents {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .table-of-contents h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .table-of-contents ol {
+            margin-left: 25px;
+            columns: 2;
+            gap: 30px;
+        }
+
+        .table-of-contents li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .example-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            background: white;
+        }
+
+        .example-card:hover {
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.2);
+            transform: translateY(-6px);
+        }
+
+        .example-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .example-header h3 {
+            margin-bottom: 3px;
+            font-size: 1.1em;
+        }
+
+        .example-number {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-right: 8px;
+        }
+
+        .example-description {
+            font-size: 0.9em;
+            opacity: 0.95;
+        }
+
+        .example-preview {
+            padding: 30px;
+            background: #f9f9f9;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #e0e0e0;
+        }
+
+        .preview-content {
+            width: 100%;
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+        }
+
+        .example-code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            border-top: 1px solid #444;
+        }
+
+        .code-label {
+            display: block;
+            color: #888;
+            font-size: 0.75em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        /* Syntax highlighting */
+        .keyword { color: #66d9ef; }
+        .property { color: #a1efe4; }
+        .value { color: #e6db74; }
+        .comment { color: #75715e; }
+
+        /* Text Decoration Examples */
+        .td-none { text-decoration: none; }
+        .td-underline { text-decoration: underline; }
+        .td-overline { text-decoration: overline; }
+        .td-line-through { text-decoration: line-through; }
+        .td-blink { text-decoration: blink; }
+
+        .td-solid { text-decoration: underline; text-decoration-style: solid; }
+        .td-double { text-decoration: underline; text-decoration-style: double; }
+        .td-dotted { text-decoration: underline; text-decoration-style: dotted; }
+        .td-dashed { text-decoration: underline; text-decoration-style: dashed; }
+        .td-wavy { text-decoration: underline; text-decoration-style: wavy; }
+
+        .td-color-red { text-decoration: underline; text-decoration-color: #e74c3c; }
+        .td-color-blue { text-decoration: underline; text-decoration-color: #3498db; }
+        .td-color-green { text-decoration: underline; text-decoration-color: #27ae60; }
+
+        .td-thick { text-decoration: underline; text-decoration-thickness: 3px; }
+        .td-thin { text-decoration: underline; text-decoration-thickness: 1px; }
+
+        .td-offset { text-decoration: underline; text-underline-offset: 8px; }
+
+        .td-custom {
+            text-decoration: underline overline line-through;
+            text-decoration-color: #667eea;
+            text-decoration-thickness: 2px;
+        }
+
+        .td-hover {
+            transition: text-decoration-color 0.3s ease;
+            text-decoration: underline;
+            text-decoration-color: #e0e0e0;
+            cursor: pointer;
+        }
+
+        .td-hover:hover {
+            text-decoration-color: #667eea;
+        }
+
+        .td-animated {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: underline;
+            text-decoration-color: #667eea;
+            animation: gradient-animation 3s ease infinite;
+        }
+
+        @keyframes gradient-animation {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f5f7fa;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Advanced Section */
+        .advanced-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border-left: 5px solid #f39c12;
+        }
+
+        .advanced-section h2 {
+            color: #f39c12;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .advanced-section h3 {
+            color: #d68910;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .advanced-section p, .advanced-section li {
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .advanced-section ul, .advanced-section ol {
+            margin-left: 25px;
+        }
+
+        .advanced-section li {
+            margin-bottom: 8px;
+        }
+
+        .demo-box {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+
+        /* Browser Support */
+        .browser-support {
+            background: #e8f4f8;
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .browser-support h3 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .browser-support p {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .support-badge {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .support-partial {
+            background: #f39c12;
+        }
+
+        /* Tips Section */
+        .tips-section {
+            background: #fffbea;
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .tips-section h3 {
+            color: #f39c12;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .tips-section ul {
+            margin-left: 25px;
+            color: #555;
+        }
+
+        .tips-section li {
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+
+        /* Accessibility */
+        .accessibility-section {
+            background: #f0f7ff;
+            border-left: 5px solid #3498db;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .accessibility-section h2 {
+            color: #3498db;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .accessibility-section p {
+            color: #555;
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-of-contents ol {
+                columns: 1;
+            }
+
+            .comparison-table {
+                font-size: 0.9em;
+            }
+
+            .comparison-table th, .comparison-table td {
+                padding: 10px;
+            }
+
+            .content, header {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>CSS Text-Decoration Complete Guide</h1>
+            <p>Master all text decoration properties with practical examples</p>
+        </header>
+
+        <div class="content">
+            <!-- Introduction -->
+            <div class="intro-section">
+                <h2>What is text-decoration?</h2>
+                <p>The <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">text-decoration</code> CSS property is a shorthand that decorates text with a line. It includes underlines, overlines, line-through, and more advanced styling options introduced in CSS 3.</p>
+                <p>Modern CSS provides individual properties to control decoration style, color, thickness, and offset, giving you fine-grained control over text appearance. This guide covers all properties and real-world use cases.</p>
+            </div>
+
+            <!-- Table of Contents -->
+            <div class="table-of-contents">
+                <h3>Text-Decoration Properties Overview</h3>
+                <ol>
+                    <li><strong>text-decoration-line</strong> - Type of decoration</li>
+                    <li><strong>text-decoration-style</strong> - Line style</li>
+                    <li><strong>text-decoration-color</strong> - Decoration color</li>
+                    <li><strong>text-decoration-thickness</strong> - Line thickness</li>
+                    <li><strong>text-underline-offset</strong> - Distance from text</li>
+                    <li><strong>text-decoration-skip</strong> - Skip characters</li>
+                    <li><strong>Shorthand: text-decoration</strong> - Combined property</li>
+                    <li><strong>Multiple decorations</strong> - Multiple lines</li>
+                    <li><strong>Interactive effects</strong> - Hover animations</li>
+                    <li><strong>Advanced techniques</strong> - Custom styling</li>
+                </ol>
+            </div>
+
+            <!-- Comparison Table -->
+            <div style="margin-bottom: 40px;">
+                <h2 style="color: #333; margin-bottom: 20px; font-size: 1.5em;">Text-Decoration-Line Values</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>none</strong></td>
+                            <td>No decoration (default)</td>
+                            <td style="text-decoration: none;">No decoration</td>
+                            <td>Remove default link underline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>underline</strong></td>
+                            <td>Line below text</td>
+                            <td style="text-decoration: underline;">Underlined text</td>
+                            <td>Hyperlinks, emphasis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>overline</strong></td>
+                            <td>Line above text</td>
+                            <td style="text-decoration: overline;">Overlined text</td>
+                            <td>Special emphasis, headings</td>
+                        </tr>
+                        <tr>
+                            <td><strong>line-through</strong></td>
+                            <td>Line through text</td>
+                            <td style="text-decoration: line-through;">Struck text</td>
+                            <td>Deleted content, pricing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>underline overline</strong></td>
+                            <td>Multiple decorations</td>
+                            <td style="text-decoration: underline overline;">Double decoration</td>
+                            <td>Strong emphasis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>blink</strong></td>
+                            <td>Blinking text (deprecated)</td>
+                            <td style="text-decoration: blink;">Blink (not supported)</td>
+                            <td>Avoid - deprecated</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Examples Grid -->
+            <div class="examples-grid">
+                <!-- Example 1: None -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">1</span>text-decoration: none</h3>
+                        <p class="example-description">No decoration (default)</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content">
+                            <p style="text-decoration: none; color: #667eea; font-size: 1.2em; margin: 0;">No Decoration</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">none</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 2: Underline -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">2</span>text-decoration: underline</h3>
+                        <p class="example-description">Basic underline</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content">
+                            <p style="text-decoration: underline; font-size: 1.2em; margin: 0;">Underlined Text</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">underline</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 3: Overline -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">3</span>text-decoration: overline</h3>
+                        <p class="example-description">Line above text</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content">
+                            <p style="text-decoration: overline; font-size: 1.2em; margin: 0;">Overlined Text</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">overline</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 4: Line-Through -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">4</span>text-decoration: line-through</h3>
+                        <p class="example-description">Strikethrough text</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content">
+                            <p style="text-decoration: line-through; font-size: 1.2em; margin: 0;">Struck Text</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">line-through</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 5: Decoration Style - Solid -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">5</span>text-decoration-style: solid</h3>
+                        <p class="example-description">Solid line decoration</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content">
+                            <p style="text-decoration: underline; text-decoration-style: solid; font-size: 1.2em; margin: 0;">Solid Line</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">underline</span>;<br>
+<span class="property">text-decoration-style</span>: <span class="value">solid</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 6: Decoration Style - Double -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">6</span>text-decoration-style: double</h3>
+                        <p class="example-description">Double line decoration</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content">
+                            <p style="text-decoration: underline; text-decoration-style: double; font-size: 1.2em; margin: 0;">Double Line</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">underline</span>;<br>
+<span class="property">text-decoration-style</span>: <span class="value">double</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 7: Decoration Style - Dotted -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">7</span>text-decoration-style: dotted</h3>
+                        <p class="example-description">Dotted line decoration</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content">
+                            <p style="text-decoration: underline; text-decoration-style: dotted; font-size: 1.2em; margin: 0;">Dotted Line</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">underline</span>;<br>
+<span class="property">text-decoration-style</span>: <span class="value">dotted</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 8: Decoration Style - Dashed -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">8</span>text-decoration-style: dashed</h3>
+                        <p class="example-description">Dashed line decoration</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content">
+                            <p style="text-decoration: underline; text-decoration-style: dashed; font-size: 1.2em; margin: 0;">Dashed Line</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">underline</span>;<br>
+<span class="property">text-decoration-style</span>: <span class="value">dashed</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 9: Decoration Style - Wavy -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">9</span>text-decoration-style: wavy</h3>
+                        <p class="example-description">Wavy line decoration</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content">
+                            <p style="text-decoration: underline; text-decoration-style: wavy; font-size: 1.2em; margin: 0;">Wavy Line</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">underline</span>;<br>
+<span class="property">text-decoration-style</span>: <span class="value">wavy</span>;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 10: Decoration Color -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">10</span>text-decoration-color</h3>
+                        <p class="example-description">Custom decoration color</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content">
+                            <p style="text-decoration: underline; text-decoration-color: #e74c3c; font-size: 1.2em; margin: 0;">Colored Underline</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">underline</span>;<br>
+<span class="property">text-decoration-color</span>: <span class="value">#e74c3c</span>;
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Styles Section -->
+            <div style="margin-bottom: 40px;">
+                <h2 style="color: #333; margin-bottom: 20px; font-size: 1.5em;">Advanced Text-Decoration Styles</h2>
+                
+                <div class="examples-grid">
+                    <!-- Thickness -->
+                    <div class="example-card">
+                        <div class="example-header">
+                            <h3><span class="example-number">A</span>text-decoration-thickness</h3>
+                            <p class="example-description">Line thickness control</p>
+                        </div>
+                        <div class="example-preview">
+                            <div class="preview-content">
+                                <p style="text-decoration: underline; text-decoration-thickness: 3px; font-size: 1.2em; margin: 0;">Thick Underline</p>
+                            </div>
+                        </div>
+                        <div class="example-code">
+                            <span class="code-label">CSS:</span>
+                            <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">underline</span>;<br>
+<span class="property">text-decoration-thickness</span>: <span class="value">3px</span>;
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Offset -->
+                    <div class="example-card">
+                        <div class="example-header">
+                            <h3><span class="example-number">B</span>text-underline-offset</h3>
+                            <p class="example-description">Distance from text</p>
+                        </div>
+                        <div class="example-preview">
+                            <div class="preview-content">
+                                <p style="text-decoration: underline; text-underline-offset: 8px; font-size: 1.2em; margin: 0;">Offset Underline</p>
+                            </div>
+                        </div>
+                        <div class="example-code">
+                            <span class="code-label">CSS:</span>
+                            <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">underline</span>;<br>
+<span class="property">text-underline-offset</span>: <span class="value">8px</span>;
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Multiple Decorations -->
+                    <div class="example-card">
+                        <div class="example-header">
+                            <h3><span class="example-number">C</span>Multiple Decorations</h3>
+                            <p class="example-description">Combine multiple lines</p>
+                        </div>
+                        <div class="example-preview">
+                            <div class="preview-content">
+                                <p style="text-decoration: underline overline; font-size: 1.2em; margin: 0;">Multiple Lines</p>
+                            </div>
+                        </div>
+                        <div class="example-code">
+                            <span class="code-label">CSS:</span>
+                            <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">underline overline</span>;
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hover Effect -->
+                    <div class="example-card">
+                        <div class="example-header">
+                            <h3><span class="example-number">D</span>Hover Animation</h3>
+                            <p class="example-description">Interactive decoration (hover me!)</p>
+                        </div>
+                        <div class="example-preview">
+                            <div class="preview-content">
+                                <p class="td-hover" style="font-size: 1.2em; margin: 0;">Hover for Color Change</p>
+                            </div>
+                        </div>
+                        <div class="example-code">
+                            <span class="code-label">CSS:</span>
+                            <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">underline</span>;<br>
+<span class="property">transition</span>: <span class="value">text-decoration-color 0.3s</span>;<br><br>
+&:hover {<br>
+&nbsp;&nbsp;<span class="property">text-decoration-color</span>: <span class="value">#667eea</span>;<br>
+}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gradient Combination -->
+                    <div class="example-card">
+                        <div class="example-header">
+                            <h3><span class="example-number">E</span>Gradient + Underline</h3>
+                            <p class="example-description">Gradient text with underline</p>
+                        </div>
+                        <div class="example-preview">
+                            <div class="preview-content">
+                                <p style="background: linear-gradient(90deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: underline; text-decoration-color: #667eea; font-size: 1.2em; margin: 0;">Gradient Text</p>
+                            </div>
+                        </div>
+                        <div class="example-code">
+                            <span class="code-label">CSS:</span>
+                            <div class="code-block">
+<span class="property">background</span>: <span class="value">linear-gradient(...)</span>;<br>
+<span class="property">-webkit-background-clip</span>: <span class="value">text</span>;<br>
+<span class="property">text-decoration</span>: <span class="value">underline</span>;
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- All Combined -->
+                    <div class="example-card">
+                        <div class="example-header">
+                            <h3><span class="example-number">F</span>All Properties Combined</h3>
+                            <p class="example-description">Complete customization</p>
+                        </div>
+                        <div class="example-preview">
+                            <div class="preview-content">
+                                <p style="text-decoration: underline overline line-through; text-decoration-color: #667eea; text-decoration-thickness: 2px; text-decoration-style: wavy; font-size: 1.2em; margin: 0;">Full Styling</p>
+                            </div>
+                        </div>
+                        <div class="example-code">
+                            <span class="code-label">CSS:</span>
+                            <div class="code-block">
+<span class="property">text-decoration</span>: <span class="value">underline</span>;<br>
+<span class="property">text-decoration-color</span>: <span class="value">#667eea</span>;<br>
+<span class="property">text-decoration-thickness</span>: <span class="value">2px</span>;<br>
+<span class="property">text-decoration-style</span>: <span class="value">wavy</span>;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Section -->
+            <div class="advanced-section">
+                <h2>Advanced Text-Decoration Techniques</h2>
+
+                <h3>1. Custom Link Styling</h3>
+                <p>Create unique link styles without removing the underline:</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px; line-height: 1.6;">
+                    a {<br>
+                    &nbsp;&nbsp;color: #667eea;<br>
+                    &nbsp;&nbsp;text-decoration: underline wavy;<br>
+                    &nbsp;&nbsp;text-decoration-color: rgba(102, 126, 234, 0.5);<br>
+                    &nbsp;&nbsp;text-underline-offset: 4px;<br>
+                    &nbsp;&nbsp;transition: all 0.3s ease;<br>
+                    }<br><br>
+                    a:hover {<br>
+                    &nbsp;&nbsp;text-decoration-color: #667eea;<br>
+                    &nbsp;&nbsp;text-decoration-thickness: 2px;<br>
+                    }
+                    </code>
+                </div>
+
+                <h3>2. Text-Decoration-Skip for Better Control</h3>
+                <p>Control where decorations skip (spaces, punctuation, etc.):</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px; line-height: 1.6;">
+                    p {<br>
+                    &nbsp;&nbsp;text-decoration: underline;<br>
+                    &nbsp;&nbsp;text-decoration-skip: spaces; <span style="color: #75715e;">/* Skip spaces */</span><br>
+                    }
+                    </code>
+                </div>
+
+                <h3>3. Emphasis with Multiple Decorations</h3>
+                <p>Create strong emphasis with layered decorations:</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px; line-height: 1.6;">
+                    .emphasis {<br>
+                    &nbsp;&nbsp;text-decoration: underline overline;<br>
+                    &nbsp;&nbsp;text-decoration-color: #f39c12;<br>
+                    &nbsp;&nbsp;text-decoration-thickness: 3px;<br>
+                    &nbsp;&nbsp;font-weight: bold;<br>
+                    }
+                    </code>
+                </div>
+
+                <h3>4. Deleted Text (E-commerce)</h3>
+                <p>Show original prices with strikethrough:</p>
+                <div class="demo-box">
+                    <strong>HTML & CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px; line-height: 1.6;">
+                    &lt;del&gt;$99.99&lt;/del&gt; $49.99<br><br>
+                    del {<br>
+                    &nbsp;&nbsp;text-decoration: line-through;<br>
+                    &nbsp;&nbsp;text-decoration-color: #e74c3c;<br>
+                    &nbsp;&nbsp;opacity: 0.7;<br>
+                    &nbsp;&nbsp;margin-right: 10px;<br>
+                    }
+                    </code>
+                </div>
+
+                <h3>5. Wavy Underline for Spelling Errors</h3>
+                <p>Mimic browser spell-check styling:</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px; line-height: 1.6;">
+                    .spelling-error {<br>
+                    &nbsp;&nbsp;text-decoration: underline wavy #e74c3c;<br>
+                    &nbsp;&nbsp;text-underline-offset: 2px;<br>
+                    }
+                    </code>
+                </div>
+
+                <h3>6. Animated Underline on Scroll</h3>
+                <p>Advanced: Animated underline effect (requires JavaScript for scroll detection):</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px; line-height: 1.6;">
+                    @keyframes underline-grow {<br>
+                    &nbsp;&nbsp;from {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;text-decoration-thickness: 1px;<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;to {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;text-decoration-thickness: 4px;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    .animated-link {<br>
+                    &nbsp;&nbsp;text-decoration: underline;<br>
+                    &nbsp;&nbsp;animation: underline-grow 0.5s ease-out forwards;<br>
+                    }
+                    </code>
+                </div>
+            </div>
+
+            <!-- Browser Support -->
+            <div class="browser-support">
+                <h3>🌐 Browser Support</h3>
+                <p><strong>text-decoration (basic):</strong> <span class="support-badge">All browsers</span></p>
+                <p><strong>text-decoration-line, color, style:</strong> <span class="support-badge">Chrome 57+, Firefox 36+, Safari 12+, Edge 79+</span></p>
+                <p><strong>text-decoration-thickness:</strong> <span class="support-badge">Chrome 87+, Firefox 70+, Safari 12.1+, Edge 87+</span></p>
+                <p><strong>text-underline-offset:</strong> <span class="support-badge">Chrome 87+, Firefox 70+, Safari 12.1+, Edge 87+</span></p>
+                <p><strong>text-decoration-skip-ink:</strong> <span class="support-badge support-partial">Chrome 64+, Firefox 55+, Safari 15.4+</span></p>
+                <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ccc;"><strong>Fallback Strategy:</strong> Use basic <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">text-decoration</code> values as default, then enhance with modern properties.</p>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="tips-section">
+                <h3>💡 Best Practices & Tips</h3>
+                <ul>
+                    <li><strong>Use for emphasis:</strong> Underlines draw attention and highlight important text sections.</li>
+                    <li><strong>Reserve strikethrough:</strong> Use line-through for deleted or outdated content, not just for styling.</li>
+                    <li><strong>Color contrast:</strong> Ensure decoration color has sufficient contrast against the background for readability.</li>
+                    <li><strong>Style consistency:</strong> Apply consistent text-decoration styles across your site for a professional appearance.</li>
+                    <li><strong>Avoid overuse:</strong> Multiple decorations can look cluttered. Use sparingly for maximum impact.</li>
+                    <li><strong>Offset for clarity:</strong> Use <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">text-underline-offset</code> to create space between text and underline for better readability.</li>
+                    <li><strong>Wavy for errors:</strong> Reserve wavy underlines for spell-check and validation errors.</li>
+                    <li><strong>Interactive feedback:</strong> Change decoration on hover/focus to provide visual feedback to users.</li>
+                    <li><strong>Links accessibility:</strong> Don't remove underlines from links entirely; users expect them to be underlined.</li>
+                    <li><strong>Test visibility:</strong> Ensure decorations remain visible on all screen sizes and backgrounds.</li>
+                </ul>
+            </div>
+
+            <!-- Accessibility Section -->
+            <div class="accessibility-section">
+                <h2>♿ Accessibility Considerations</h2>
+                <p><strong>Color alone:</strong> Don't rely solely on text-decoration color to convey information. Users with color blindness may not distinguish different colors. Combine with other visual indicators or text labels.</p>
+                <p><strong>Contrast requirements:</strong> Text-decoration color should have a contrast ratio of at least 4.5:1 against the background per WCAG guidelines. Use tools like WebAIM Contrast Checker to verify.</p>
+                <p><strong>Underlines on links:</strong> Keep underlines on links (or at least make them visible on focus) to help users identify interactive elements, especially for people with cognitive disabilities.</p>
+                <p><strong>Semantic HTML:</strong> Use semantic tags like <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">&lt;del&gt;</code>, <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">&lt;ins&gt;</code>, <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">&lt;s&gt;</code>, and <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">&lt;u&gt;</code> along with CSS for meaning and styling.</p>
+                <p><strong>Focus indicators:</strong> Always provide visible focus indicators for keyboard navigation. Text-decoration changes can serve as focus indicators.</p>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 CSS Text-Decoration Complete Guide | Master Text Decoration for Web Design</p>
+        </footer>
+    </div>
+</body>
+</html>

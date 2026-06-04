@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS White-Space Mastery Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .intro-section {
+            padding: 40px;
+            background: linear-gradient(to right, #f5f7fa 0%, #c3cfe2 100%);
+            border-bottom: 3px solid #667eea;
+        }
+
+        .intro-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .intro-section p {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        .definition-box {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .definition-box strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            border-left: 4px solid #667eea;
+        }
+
+        .section-title {
+            background: #f5f7fa;
+            padding: 30px 40px;
+            border-bottom: 2px solid #667eea;
+            margin-top: 30px;
+        }
+
+        .section-title h2 {
+            color: #667eea;
+            font-size: 1.8em;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 25px;
+            padding: 40px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);
+            transform: translateY(-5px);
+        }
+
+        .example-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .example-card h3 {
+            color: #667eea;
+            margin-bottom: 12px;
+            font-size: 1.4em;
+        }
+
+        .example-card p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .example-preview {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #e0e0e0;
+            min-height: 100px;
+            font-family: monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+
+        .preview-content {
+            color: #333;
+        }
+
+        .code-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 18px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .code-small {
+            background: #f5f5f5;
+            padding: 12px;
+            border-left: 3px solid #667eea;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            color: #333;
+            word-break: break-all;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+
+        /* White-Space Examples */
+        .ws-normal {
+            white-space: normal;
+        }
+
+        .ws-nowrap {
+            white-space: nowrap;
+        }
+
+        .ws-pre {
+            white-space: pre;
+        }
+
+        .ws-pre-wrap {
+            white-space: pre-wrap;
+        }
+
+        .ws-pre-line {
+            white-space: pre-line;
+        }
+
+        .ws-break-spaces {
+            white-space: break-spaces;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        .tips {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .tips strong {
+            color: #856404;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .warning strong {
+            color: #721c24;
+        }
+
+        .implementation-section {
+            padding: 40px;
+            background: #f8f9fa;
+        }
+
+        .implementation-section h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .steps {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .steps ol {
+            margin-left: 25px;
+        }
+
+        .steps li {
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .steps strong {
+            color: #667eea;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .use-case {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .use-case strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        footer {
+            background: #667eea;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .example-preview {
+                min-height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>⬜ CSS White-Space Mastery Guide</h1>
+            <p>Master Whitespace Handling for Perfect Text Formatting & Code Display</p>
+        </header>
+
+        <!-- Introduction Section -->
+        <div class="intro-section">
+            <h2>📖 Understanding CSS White-Space</h2>
+            <p>
+                White-space controls how whitespace characters (spaces, tabs, line breaks) are handled in text. It's essential 
+                for code display, preserving formatting, handling text wrapping, and controlling how text flows in containers. 
+                From preserving exact spacing to flexible text wrapping, white-space is fundamental to typography control.
+            </p>
+
+            <div class="definition-box">
+                <strong>What is White-Space?</strong>
+                <p style="margin-top: 10px;">
+                    White-space is a CSS property that determines how whitespace (spaces, tabs, newlines) is treated in text. 
+                    It controls whether lines wrap, whether multiple spaces collapse, and whether line breaks are preserved. 
+                    Critical for code blocks, poetry, preformatted text, and maintaining exact text formatting.
+                </p>
+            </div>
+
+            <p>
+                <strong>Key Concept:</strong> White-space has six main values: normal (default wrapping), nowrap (no wrapping), 
+                pre (preserve all), pre-wrap (preserve + wrap), pre-line (preserve lines, wrap text), and break-spaces (newest).
+            </p>
+
+            <div class="code-block">
+/* White-Space Syntax */
+white-space: normal;         /* Default: collapse spaces, wrap text */
+white-space: nowrap;         /* No wrapping, collapse spaces */
+white-space: pre;            /* Preserve all spaces and line breaks */
+white-space: pre-wrap;       /* Preserve spaces, wrap text */
+white-space: pre-line;       /* Collapse spaces, preserve line breaks */
+white-space: break-spaces;   /* Preserve spaces, wrap, trailing spaces */
+            </div>
+
+            <div class="info-box">
+                <strong>💡 When Each Value is Used:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><span class="highlight">normal</span> - Standard text wrapping (default)</li>
+                    <li><span class="highlight">nowrap</span> - Single line, no wrapping</li>
+                    <li><span class="highlight">pre</span> - Code display, exact formatting</li>
+                    <li><span class="highlight">pre-wrap</span> - Code + wrapping support</li>
+                    <li><span class="highlight">pre-line</span> - Preserve line breaks, wrap text</li>
+                    <li><span class="highlight">break-spaces</span> - Edge case: trailing spaces matter</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 10 White-Space Examples -->
+        <div class="section-title">
+            <h2>🎨 10 Professional White-Space Examples</h2>
+        </div>
+
+        <div class="examples-grid">
+            <!-- Example 1: Normal (Default) -->
+            <div class="example-card">
+                <span class="example-number">1</span>
+                <h3>Normal (Default) ⭐</h3>
+                <p>Default behavior: collapses spaces, wraps text at container edge.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-normal">This    is    a    text    with    multiple    spaces    and    will    wrap    to    the    next    line    when    it    reaches    the    container    width    limit.</div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">white-space: normal;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Standard body text, paragraphs - DEFAULT
+                </div>
+            </div>
+
+            <!-- Example 2: Nowrap -->
+            <div class="example-card">
+                <span class="example-number">2</span>
+                <h3>Nowrap</h3>
+                <p>Forces text to single line, prevents wrapping. Collapses spaces.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-nowrap">This    is    a    text    that    will    not    wrap    to    the    next    line    no    matter    how    wide    the    text    becomes.</div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">white-space: nowrap;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Menu items, navigation, table headers
+                </div>
+            </div>
+
+            <!-- Example 3: Pre (Preformatted) -->
+            <div class="example-card">
+                <span class="example-number">3</span>
+                <h3>Pre (Preformatted)</h3>
+                <p>Preserves all spaces, tabs, and line breaks exactly. No wrapping.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-pre">function hello() {
+    console.log(  "Hello  World"  );
+    return   true;
+}</div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">white-space: pre;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Code blocks, ASCII art, exact formatting
+                </div>
+            </div>
+
+            <!-- Example 4: Pre-Wrap -->
+            <div class="example-card">
+                <span class="example-number">4</span>
+                <h3>Pre-Wrap</h3>
+                <p>Preserves spaces and line breaks, but wraps text when needed.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-pre-wrap">function longFunctionName() {
+    const veryLongVariableName = "This is a very long string that might need to wrap to next line";
+    console.log(  veryLongVariableName  );
+}</div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">white-space: pre-wrap;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Code blocks with wrapping, formatted text
+                </div>
+            </div>
+
+            <!-- Example 5: Pre-Line -->
+            <div class="example-card">
+                <span class="example-number">5</span>
+                <h3>Pre-Line</h3>
+                <p>Preserves line breaks, collapses spaces, wraps text as needed.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-pre-line">Line 1   with    multiple   spaces
+Line 2   with    more    spacing
+Line 3   that will wrap if it exceeds the container width limit</div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">white-space: pre-line;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Poem/poetry, addresses, line-separated content
+                </div>
+            </div>
+
+            <!-- Example 6: Break-Spaces (Modern) -->
+            <div class="example-card">
+                <span class="example-number">6</span>
+                <h3>Break-Spaces (Modern)</h3>
+                <p>Like pre-wrap but treats trailing spaces as significant.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-break-spaces">Text   with   spaces   
+preserved   and   wrapped
+when needed.</div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">white-space: break-spaces;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Edge case: when trailing spaces matter
+                </div>
+            </div>
+
+            <!-- Example 7: Code Display -->
+            <div class="example-card">
+                <span class="example-number">7</span>
+                <h3>Code Display with Pre</h3>
+                <p>Perfect for displaying code with exact indentation preserved.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-pre" style="background: #2d2d2d; color: #f8f8f2; padding: 10px; border-radius: 4px;">// JavaScript function
+const users = [
+  { name: 'Alice', age: 25 },
+  { name: 'Bob', age: 30 }
+];</div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">white-space: pre;<br>font-family: monospace;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Code snippets, technical documentation
+                </div>
+            </div>
+
+            <!-- Example 8: Navigation with Nowrap -->
+            <div class="example-card">
+                <span class="example-number">8</span>
+                <h3>Menu Item with Nowrap</h3>
+                <p>Prevents menu items from breaking to multiple lines.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-nowrap" style="background: #667eea; color: white; padding: 8px 12px; border-radius: 4px; display: inline-block;">
+                        Home    About    Services    Contact    Blog
+                    </div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">white-space: nowrap;<br>display: inline-block;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Navigation, breadcrumbs, labels
+                </div>
+            </div>
+
+            <!-- Example 9: Address with Pre-Line -->
+            <div class="example-card">
+                <span class="example-number">9</span>
+                <h3>Address/Poetry with Pre-Line</h3>
+                <p>Preserves line structure while allowing text to wrap.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-pre-line">123 Main Street
+New York, NY 10001
+United States
+Phone: +1 (555) 123-4567</div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">white-space: pre-line;</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Addresses, poetry, structured line content
+                </div>
+            </div>
+
+            <!-- Example 10: Flexible Content -->
+            <div class="example-card">
+                <span class="example-number">10</span>
+                <h3>Flexible Content Mix</h3>
+                <p>Switch based on content type using classes and media queries.</p>
+                <div class="example-preview">
+                    <div class="preview-content ws-normal">This content adapts based on screen size and content type. It wraps naturally when needed and maintains readability across all devices.</div>
+                </div>
+                <div class="code-label">CSS Code:</div>
+                <div class="code-small">/* Default - responsive */
+white-space: normal;
+
+@media (max-width: 480px) {
+  /* Adjust if needed */
+  word-break: break-word;
+}</div>
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>When to use:</strong> Adaptive layouts, responsive design
+                </div>
+            </div>
+        </div>
+
+        <!-- White-Space Values Comparison -->
+        <div class="section-title">
+            <h2>📊 White-Space Values Comprehensive Comparison</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Spaces</th>
+                        <th>Tabs</th>
+                        <th>Line Breaks</th>
+                        <th>Wrapping</th>
+                        <th>Best Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>normal</strong></td>
+                        <td>Collapse</td>
+                        <td>Collapse</td>
+                        <td>Collapse</td>
+                        <td>✅ Yes</td>
+                        <td>Standard text - DEFAULT</td>
+                    </tr>
+                    <tr>
+                        <td><strong>nowrap</strong></td>
+                        <td>Collapse</td>
+                        <td>Collapse</td>
+                        <td>Collapse</td>
+                        <td>❌ No</td>
+                        <td>Single-line content</td>
+                    </tr>
+                    <tr>
+                        <td><strong>pre</strong></td>
+                        <td>Preserve</td>
+                        <td>Preserve</td>
+                        <td>Preserve</td>
+                        <td>❌ No</td>
+                        <td>Exact formatting, code</td>
+                    </tr>
+                    <tr>
+                        <td><strong>pre-wrap</strong></td>
+                        <td>Preserve</td>
+                        <td>Preserve</td>
+                        <td>Preserve</td>
+                        <td>✅ Yes</td>
+                        <td>Code with wrapping</td>
+                    </tr>
+                    <tr>
+                        <td><strong>pre-line</strong></td>
+                        <td>Collapse</td>
+                        <td>Collapse</td>
+                        <td>Preserve</td>
+                        <td>✅ Yes</td>
+                        <td>Poetry, addresses</td>
+                    </tr>
+                    <tr>
+                        <td><strong>break-spaces</strong></td>
+                        <td>Preserve</td>
+                        <td>Preserve</td>
+                        <td>Preserve</td>
+                        <td>✅ Yes</td>
+                        <td>Trailing spaces matter</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Use Cases Section -->
+        <div class="section-title">
+            <h2>🎯 Real-World Use Cases & Best Practices</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <div class="use-case-grid">
+                <div class="use-case">
+                    <strong>📝 Body Text & Paragraphs</strong>
+                    Use <span class="highlight">normal</span>. Default behavior. Collapses extra spaces, allows natural wrapping for readability.
+                </div>
+
+                <div class="use-case">
+                    <strong>💻 Code Blocks & Snippets</strong>
+                    Use <span class="highlight">pre or pre-wrap</span>. Preserves indentation and formatting essential for code display.
+                </div>
+
+                <div class="use-case">
+                    <strong>🔗 Navigation & Menus</strong>
+                    Use <span class="highlight">nowrap</span>. Prevents menu items from breaking into multiple lines. Essential for navigation bars.
+                </div>
+
+                <div class="use-case">
+                    <strong>📍 Addresses & Contact Info</strong>
+                    Use <span class="highlight">pre-line</span>. Preserves line structure while allowing text to wrap on narrow screens.
+                </div>
+
+                <div class="use-case">
+                    <strong>✍️ Poetry & Literary Text</strong>
+                    Use <span class="highlight">pre-line</span>. Maintains line breaks while allowing flexible wrapping for responsive design.
+                </div>
+
+                <div class="use-case">
+                    <strong>📋 Preformatted Text</strong>
+                    Use <span class="highlight">pre</span>. Preserves exact spacing, tabs, indentation. Perfect for ASCII art or technical display.
+                </div>
+
+                <div class="use-case">
+                    <strong>🏷️ Labels & Badges</strong>
+                    Use <span class="highlight">nowrap</span>. Keeps labels compact. Prevents awkward line breaks in UI elements.
+                </div>
+
+                <div class="use-case">
+                    <strong>📱 Responsive Design</strong>
+                    Use <span class="highlight">normal with overflow-wrap</span>. Allows text to wrap naturally while handling long words gracefully.
+                </div>
+
+                <div class="use-case">
+                    <strong>🖥️ Terminal/Console Output</strong>
+                    Use <span class="highlight">pre or pre-wrap</span>. Preserves exact formatting like actual terminal output. Font: monospace.
+                </div>
+
+                <div class="use-case">
+                    <strong>📄 User Comments/Input</strong>
+                    Use <span class="highlight">pre-wrap</span>. Preserves line breaks from user input while allowing safe wrapping.
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Guide -->
+        <div class="implementation-section">
+            <h2>🚀 How to Implement in Elementor & CSS</h2>
+            
+            <div class="steps">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Method 1: Elementor UI</h3>
+                <ol>
+                    <li><strong>Select Text Element</strong> - Click heading, paragraph, or text widget</li>
+                    <li><strong>Open Advanced Tab</strong> - Scroll down in left panel</li>
+                    <li><strong>Custom CSS</strong> - Find "Custom CSS" section at bottom</li>
+                    <li><strong>Add Code</strong> - Type <code style="background: #f5f5f5; padding: 2px 6px;">white-space: pre;</code></li>
+                    <li><strong>Preview & Adjust</strong> - See changes in real-time</li>
+                    <li><strong>Save & Update</strong> - Publish to live page</li>
+                </ol>
+            </div>
+
+            <div class="code-block">
+/* Complete CSS Implementation Examples */
+
+/* Example 1: Standard Body Text */
+p, body, .text-content {
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+/* Example 2: Code Block Display */
+code, pre, .code-snippet {
+    white-space: pre;
+    font-family: 'Courier New', monospace;
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+/* Example 3: Code with Wrapping */
+.code-wrap {
+    white-space: pre-wrap;
+    font-family: monospace;
+}
+
+/* Example 4: Navigation Menu */
+nav, .nav-menu {
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+/* Example 5: Menu Item */
+.nav-item, .breadcrumb {
+    white-space: nowrap;
+    display: inline-block;
+}
+
+/* Example 6: Address Display */
+.address, .contact-info {
+    white-space: pre-line;
+}
+
+/* Example 7: Poetry/Verse */
+.poetry, .verse, .lyrics {
+    white-space: pre-line;
+    line-height: 1.8;
+}
+
+/* Example 8: Preformatted Text */
+.preformatted {
+    white-space: pre;
+    font-family: monospace;
+}
+
+/* Example 9: User Input Display */
+.user-comment, textarea {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Example 10: Terminal Output */
+.terminal, .console {
+    white-space: pre;
+    background: #1a1a1a;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+/* Example 11: Responsive Code Block */
+@media (max-width: 768px) {
+    code, pre, .code-snippet {
+        white-space: pre-wrap;  /* Allow wrapping on mobile */
+        font-size: 0.85em;
+    }
+}
+
+/* Example 12: Flexible Text */
+.flexible-text {
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+            </div>
+
+            <div class="tips">
+                <strong>💡 Implementation Pro Tips:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Use pre for code:</strong> Preserves indentation critical for code readability</li>
+                    <li><strong>Use nowrap for single-line content:</strong> Navigation, labels, badges</li>
+                    <li><strong>Combine with font-family: monospace:</strong> For code, preformatted text, terminal</li>
+                    <li><strong>Add overflow-wrap: break-word:</strong> Handle long unbreakable words</li>
+                    <li><strong>Test on mobile:</strong> Narrow screens may require different white-space handling</li>
+                    <li><strong>Pre-wrap for user content:</strong> Preserves line breaks while allowing safe wrapping</li>
+                    <li><strong>Use media queries:</strong> Adjust white-space behavior for responsive design</li>
+                    <li><strong>Combine with overflow properties:</strong> Control scrolling behavior for constrained content</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Common Mistakes to Avoid:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>❌ Using white-space: pre for body text - creates unexpected line breaks</li>
+                    <li>❌ Forgetting overflow properties - content can overflow container</li>
+                    <li>❌ Nowrap without overflow handling - text can overflow container edge</li>
+                    <li>❌ Pre-wrap on everything - wastes space, defeats responsive design</li>
+                    <li>❌ Not testing different content types - behavior varies significantly</li>
+                    <li>❌ Ignoring mobile - very different behavior needed on small screens</li>
+                    <li>❌ Combining conflicting properties - white-space + text-overflow interactions</li>
+                </ul>
+            </div>
+
+            <div class="info-box" style="margin-top: 25px;">
+                <strong>🔧 Advanced Techniques:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Combine <span class="highlight">white-space: pre-wrap</span> with <span class="highlight">overflow-x: auto</span> for scrollable code</li>
+                    <li>Use <span class="highlight">white-space: nowrap</span> with <span class="highlight">text-overflow: ellipsis</span> for truncation</li>
+                    <li>Apply <span class="highlight">word-break: break-all</span> after white-space for more control</li>
+                    <li>Use CSS custom properties to switch white-space values by theme</li>
+                    <li>Combine with highlight.js or Prism for syntax highlighting on code</li>
+                    <li>Use media queries to adjust white-space for responsive design</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Browser Support -->
+        <div class="section-title">
+            <h2>🌐 Browser Support & Compatibility</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Chrome</th>
+                        <th>Firefox</th>
+                        <th>Safari</th>
+                        <th>Edge</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>normal</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>Universal support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>nowrap</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>Universal support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>pre</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>Universal support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>pre-wrap</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>Universal support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>pre-line</strong></td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>Universal support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>break-spaces</strong></td>
+                        <td>✅ 76+</td>
+                        <td>✅ 69+</td>
+                        <td>✅ 13.1+</td>
+                        <td>✅ 79+</td>
+                        <td>Modern browsers only</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>✅ Compatibility Best Practices:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>First 5 values (normal-pre-line) have <strong>universal support</strong> - safe to use everywhere</li>
+                    <li><span class="highlight">break-spaces</span> is newest - provide fallback to pre-wrap for older browsers</li>
+                    <li>No vendor prefixes needed - standardized across all browsers</li>
+                    <li>Test on target browsers before deployment</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Quick Reference Decision Tree -->
+        <div class="section-title">
+            <h2>🎯 Quick Decision Tree: Which Value to Use?</h2>
+        </div>
+
+        <div style="padding: 40px;">
+            <div style="background: white; padding: 25px; border-radius: 8px; border-left: 4px solid #667eea; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+                <strong style="color: #667eea; display: block; margin-bottom: 15px;">Is this body text or paragraphs?</strong>
+                <div style="margin-left: 20px; margin-bottom: 20px;">
+                    ✅ YES → Use <span class="highlight">normal</span> (DEFAULT)<br>
+                    ❌ NO → Go to next question
+                </div>
+
+                <strong style="color: #667eea; display: block; margin-bottom: 15px;">Is this code or preformatted text?</strong>
+                <div style="margin-left: 20px; margin-bottom: 20px;">
+                    ✅ YES → Use <span class="highlight">pre</span> or <span class="highlight">pre-wrap</span><br>
+                    ❌ NO → Go to next question
+                </div>
+
+                <strong style="color: #667eea; display: block; margin-bottom: 15px;">Is this a single-line element (menu, label)?</strong>
+                <div style="margin-left: 20px; margin-bottom: 20px;">
+                    ✅ YES → Use <span class="highlight">nowrap</span><br>
+                    ❌ NO → Go to next question
+                </div>
+
+                <strong style="color: #667eea; display: block; margin-bottom: 15px;">Is this poetry or structured line content (address)?</strong>
+                <div style="margin-left: 20px; margin-bottom: 20px;">
+                    ✅ YES → Use <span class="highlight">pre-line</span><br>
+                    ❌ NO → Go to next question
+                </div>
+
+                <strong style="color: #667eea; display: block; margin-bottom: 15px;">Does trailing whitespace matter?</strong>
+                <div style="margin-left: 20px;">
+                    ✅ YES → Use <span class="highlight">break-spaces</span><br>
+                    ❌ NO → You have your answer!
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 CSS White-Space Mastery Guide | Professional Whitespace Control & Text Formatting</p>
+            <p style="margin-top: 10px; opacity: 0.9;">Master white-space to create perfect text formatting, code display, and responsive layouts</p>
+        </footer>
+    </div>
+</body>
+</html>

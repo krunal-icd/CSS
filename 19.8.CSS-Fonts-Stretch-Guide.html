@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Font-Stretch Property - Complete Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wdth@75;100&family=Barlow:wdth@75;100&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #4facfe;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #4facfe;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #00f2fe;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            background: #e0f7ff;
+            padding: 15px;
+            border-left: 4px solid #4facfe;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .demo-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .stretch-demo {
+            margin: 15px 0;
+            padding: 12px 15px;
+            background: white;
+            border-left: 4px solid #4facfe;
+            border-radius: 4px;
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #4facfe;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .stretch-scale {
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .scale-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            gap: 20px;
+        }
+
+        .scale-label {
+            width: 140px;
+            font-weight: 600;
+            color: #4facfe;
+            font-size: 0.9em;
+        }
+
+        .scale-demo {
+            flex: 1;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.2em;
+        }
+
+        .stretch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stretch-card {
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .stretch-card h4 {
+            color: #4facfe;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .stretch-card .sample {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.3em;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .stretch-card .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75em;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-col {
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .comparison-col h5 {
+            color: #4facfe;
+            margin-bottom: 10px;
+        }
+
+        .comparison-col .demo {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.1em;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .pros {
+            background: #e8f5e9;
+            padding: 15px;
+            border-left: 4px solid #4caf50;
+            border-radius: 4px;
+        }
+
+        .cons {
+            background: #ffebee;
+            padding: 15px;
+            border-left: 4px solid #f44336;
+            border-radius: 4px;
+        }
+
+        .pros h4,
+        .cons h4 {
+            margin-bottom: 10px;
+        }
+
+        .pros ul,
+        .cons ul {
+            margin-left: 20px;
+        }
+
+        .pros li,
+        .cons li {
+            margin: 5px 0;
+        }
+
+        .usage-example {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #00f2fe;
+        }
+
+        .usage-example h5 {
+            color: #00f2fe;
+            margin-bottom: 10px;
+        }
+
+        .real-world-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .real-world-card {
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .real-world-card h5 {
+            color: #4facfe;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .real-world-card .demo {
+            font-family: 'Barlow', sans-serif;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        .browser-support {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .browser-item {
+            padding: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .browser-item strong {
+            display: block;
+            color: #4facfe;
+            margin-bottom: 5px;
+        }
+
+        .variable-font-demo {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .variable-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            gap: 15px;
+        }
+
+        .variable-label {
+            width: 120px;
+            font-weight: 600;
+            color: #4facfe;
+            font-size: 0.9em;
+        }
+
+        .variable-sample {
+            flex: 1;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 3px;
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-row,
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+
+            .scale-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .scale-label {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Font-Stretch Property</h1>
+            <p>Master condensed, normal, and expanded font widths</p>
+        </header>
+
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <h2>1. Introduction to Font-Stretch</h2>
+            <div class="description">
+                The <span class="highlight">font-stretch</span> property controls the width of text by selecting between condensed, normal, and expanded variants. It enables responsive typography that adapts to different layouts and screen sizes, particularly useful for variable fonts.
+            </div>
+
+            <h3>Syntax</h3>
+            <div class="code-block">
+/* Keyword values */
+font-stretch: normal | ultra-condensed | extra-condensed | condensed 
+              | semi-condensed | semi-expanded | expanded | extra-expanded 
+              | ultra-expanded | inherit;
+
+/* Percentage values (0-200%) */
+font-stretch: 75%;
+font-stretch: 100%;
+font-stretch: 125%;
+
+/* Examples */
+font-stretch: condensed;
+font-stretch: 90%;
+font-stretch: expanded;
+            </div>
+
+            <h3>Key Points</h3>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>Keyword values: 9 predefined stretches (ultra-condensed to ultra-expanded)</li>
+                <li>Percentage values: 0% to 200% for fine-grained control</li>
+                <li>Requires font support for specific stretch values</li>
+                <li>Essential for responsive typography</li>
+                <li>Works seamlessly with variable fonts</li>
+                <li>Improves space efficiency and readability</li>
+                <li>Can create dynamic layouts</li>
+                <li>Inherited from parent elements by default</li>
+            </ul>
+        </div>
+
+        <!-- Section 2: Font-Stretch Values -->
+        <div class="section">
+            <h2>2. Font-Stretch Values Explained</h2>
+
+            <h3>Keyword Values Overview</h3>
+            <div class="description">
+                Font-stretch provides 9 predefined values representing increasing levels of condensing or expansion, centered around 100% (normal).
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Keyword</th>
+                        <th>Percentage</th>
+                        <th>Description</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>ultra-condensed</code></td>
+                        <td>50%</td>
+                        <td>Extremely narrow width</td>
+                        <td>Space constraints, tight layouts</td>
+                    </tr>
+                    <tr>
+                        <td><code>extra-condensed</code></td>
+                        <td>62.5%</td>
+                        <td>Very narrow width</td>
+                        <td>Compressed headlines, dense content</td>
+                    </tr>
+                    <tr>
+                        <td><code>condensed</code></td>
+                        <td>75%</td>
+                        <td>Narrow width</td>
+                        <td>Headlines, efficient space usage</td>
+                    </tr>
+                    <tr>
+                        <td><code>semi-condensed</code></td>
+                        <td>87.5%</td>
+                        <td>Slightly narrow width</td>
+                        <td>Subtle space saving, body text alternatives</td>
+                    </tr>
+                    <tr>
+                        <td><code>normal</code></td>
+                        <td>100%</td>
+                        <td>Default, standard width</td>
+                        <td>Most common, general use</td>
+                    </tr>
+                    <tr>
+                        <td><code>semi-expanded</code></td>
+                        <td>112.5%</td>
+                        <td>Slightly wide width</td>
+                        <td>Improved readability, emphasis</td>
+                    </tr>
+                    <tr>
+                        <td><code>expanded</code></td>
+                        <td>125%</td>
+                        <td>Wide width</td>
+                        <td>Display text, prominence</td>
+                    </tr>
+                    <tr>
+                        <td><code>extra-expanded</code></td>
+                        <td>162.5%</td>
+                        <td>Very wide width</td>
+                        <td>Bold statements, large displays</td>
+                    </tr>
+                    <tr>
+                        <td><code>ultra-expanded</code></td>
+                        <td>200%</td>
+                        <td>Extremely wide width</td>
+                        <td>Maximum impact, special effects</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Font-Stretch Scale Visual Demonstration</h3>
+            <div class="stretch-scale">
+                <div class="scale-item">
+                    <div class="scale-label">ultra-condensed</div>
+                    <div class="scale-demo" style="font-stretch: ultra-condensed;">The Quick Brown Fox</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-label">extra-condensed</div>
+                    <div class="scale-demo" style="font-stretch: extra-condensed;">The Quick Brown Fox</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-label">condensed</div>
+                    <div class="scale-demo" style="font-stretch: condensed;">The Quick Brown Fox</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-label">semi-condensed</div>
+                    <div class="scale-demo" style="font-stretch: semi-condensed;">The Quick Brown Fox</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-label">normal</div>
+                    <div class="scale-demo" style="font-stretch: normal;">The Quick Brown Fox</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-label">semi-expanded</div>
+                    <div class="scale-demo" style="font-stretch: semi-expanded;">The Quick Brown Fox</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-label">expanded</div>
+                    <div class="scale-demo" style="font-stretch: expanded;">The Quick Brown Fox</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-label">extra-expanded</div>
+                    <div class="scale-demo" style="font-stretch: extra-expanded;">The Quick Brown Fox</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-label">ultra-expanded</div>
+                    <div class="scale-demo" style="font-stretch: ultra-expanded;">The Quick Brown Fox</div>
+                </div>
+            </div>
+
+            <h3>Percentage Values</h3>
+            <div class="code-block">
+/* Using percentage values for precise control */
+font-stretch: 50%;      /* Ultra-condensed equivalent */
+font-stretch: 75%;      /* Condensed equivalent */
+font-stretch: 100%;     /* Normal (default) */
+font-stretch: 125%;     /* Expanded equivalent */
+font-stretch: 200%;     /* Ultra-expanded equivalent */
+
+/* Fine-tuning specific widths */
+.headline {
+    font-stretch: 85%;  /* Between semi-condensed and condensed */
+}
+
+.display {
+    font-stretch: 130%; /* Between expanded and extra-expanded */
+}
+            </div>
+
+            <div class="note">
+                <strong>Percentage Precision:</strong> Percentage values allow granular control, especially useful with variable fonts. Not all fixed fonts support percentage values—they may round to the nearest supported keyword.
+            </div>
+        </div>
+
+        <!-- Section 3: Practical Usage -->
+        <div class="section">
+            <h2>3. Practical Usage Examples</h2>
+
+            <h3>Responsive Headlines</h3>
+            <div class="code-block">
+/* Headlines that adapt to viewport size */
+h1 {
+    font-family: 'Barlow', sans-serif;
+    font-size: 3em;
+    font-stretch: normal;  /* Default on desktop */
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-stretch: condensed;  /* Narrower on tablet */
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-stretch: extra-condensed;  /* Extra narrow on mobile */
+        font-size: 1.5em;
+    }
+}
+            </div>
+
+            <h3>Variable Font Responsive Typography</h3>
+            <div class="code-block">
+/* Smooth stretch transitions with variable fonts */
+h1 {
+    font-family: 'Barlow', sans-serif;
+    font-size: clamp(1.5em, 5vw, 3em);
+    font-stretch: clamp(75%, 5vw - 50px, 100%);  /* Scales with viewport */
+}
+
+/* Dynamic width based on content */
+.card {
+    font-size: 1.2em;
+    font-stretch: 100%;
+}
+
+.card:hover {
+    font-stretch: expanded;  /* Expand on interaction */
+}
+            </div>
+
+            <h3>Space Optimization</h3>
+            <div class="code-block">
+/* Efficient space usage */
+.sidebar {
+    font-stretch: semi-condensed;  /* Save horizontal space */
+}
+
+.narrow-column {
+    font-stretch: condensed;  /* Very tight space */
+}
+
+.wide-column {
+    font-stretch: normal;  /* Comfortable reading */
+}
+
+/* Data table with constrained width */
+table {
+    font-stretch: semi-condensed;
+}
+
+table strong {
+    font-stretch: normal;  /* Restore for emphasis */
+}
+            </div>
+
+            <h3>Visual Hierarchy</h3>
+            <div class="code-block">
+/* Create hierarchy with stretch values */
+.primary-headline {
+    font-stretch: expanded;  /* Most important, widest */
+    font-size: 2.5em;
+}
+
+.secondary-headline {
+    font-stretch: semi-expanded;  /* Secondary emphasis */
+    font-size: 1.8em;
+}
+
+.tertiary-headline {
+    font-stretch: normal;  /* Tertiary level */
+    font-size: 1.3em;
+}
+
+.body-text {
+    font-stretch: semi-condensed;  /* Efficient reading */
+    font-size: 1em;
+}
+            </div>
+        </div>
+
+        <!-- Section 4: Responsive Design -->
+        <div class="section">
+            <h2>4. Font-Stretch in Responsive Design</h2>
+
+            <h3>Mobile-First Approach</h3>
+            <div class="code-block">
+/* Start narrow on mobile */
+html {
+    font-family: 'Barlow', sans-serif;
+}
+
+h1 {
+    font-stretch: condensed;  /* Mobile: narrow */
+    font-size: 1.5em;
+}
+
+/* Expand gradually on larger screens */
+@media (min-width: 768px) {
+    h1 {
+        font-stretch: semi-condensed;
+        font-size: 2em;
+    }
+}
+
+@media (min-width: 1024px) {
+    h1 {
+        font-stretch: normal;
+        font-size: 2.5em;
+    }
+}
+
+@media (min-width: 1440px) {
+    h1 {
+        font-stretch: expanded;
+        font-size: 3em;
+    }
+}
+            </div>
+
+            <h3>Fluid Font-Stretch with clamp()</h3>
+            <div class="code-block">
+/* Smooth scaling without media queries */
+h1 {
+    font-family: 'Barlow', sans-serif;
+    font-size: clamp(1.5em, 5vw, 3em);
+    
+    /* Font-stretch from condensed (75%) to expanded (125%) */
+    font-stretch: clamp(75%, 10vw - 30px, 125%);
+}
+
+/* More aggressive condensing on mobile */
+.caption {
+    font-size: clamp(0.8em, 2vw, 1em);
+    font-stretch: clamp(50%, 3vw, 100%);  /* Ultra-condensed to normal */
+}
+
+/* Expansion for emphasis */
+.highlight {
+    font-size: 1.1em;
+    font-stretch: clamp(100%, 5vw, 150%);  /* Normal to extra-expanded */
+}
+            </div>
+
+            <h3>Container Queries (Modern Approach)</h3>
+            <div class="code-block">
+/* Stretch based on container width */
+@container (max-width: 300px) {
+    .headline {
+        font-stretch: ultra-condensed;
+    }
+}
+
+@container (max-width: 500px) {
+    .headline {
+        font-stretch: condensed;
+    }
+}
+
+@container (max-width: 800px) {
+    .headline {
+        font-stretch: semi-condensed;
+    }
+}
+
+@container (min-width: 800px) {
+    .headline {
+        font-stretch: normal;
+    }
+}
+            </div>
+        </div>
+
+        <!-- Section 5: Variable Fonts -->
+        <div class="section">
+            <h2>5. Font-Stretch with Variable Fonts</h2>
+
+            <h3>Why Variable Fonts Matter</h3>
+            <div class="description">
+                Variable fonts include a continuous range of stretch values, enabling smooth transitions and fine-tuned typography without loading multiple font files.
+            </div>
+
+            <h3>Variable Font Setup</h3>
+            <div class="code-block">
+/* Import variable font with width axis */
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wdth@75;100&display=swap');
+
+/* Or use variable font from CDN */
+@font-face {
+    font-family: 'MyFont';
+    src: url('myfont-variable.woff2') format('woff2-variations');
+}
+
+/* Use any stretch value with variable fonts */
+h1 {
+    font-family: 'Barlow', sans-serif;
+    font-stretch: 85%;  /* Precise value - works smoothly */
+}
+
+.headline {
+    font-family: 'Barlow', sans-serif;
+    font-stretch: 110%;  /* Any value between 75% and 100%+ */
+}
+            </div>
+
+            <h3>Dynamic Stretch with Variable Fonts</h3>
+            <div class="code-block">
+/* Smooth animation with variable fonts */
+.text {
+    font-family: 'Barlow', sans-serif;
+    font-stretch: 100%;
+    transition: font-stretch 0.3s ease;
+}
+
+.text:hover {
+    font-stretch: 130%;  /* Smooth expansion on hover */
+}
+
+/* Responsive stretch with viewport width */
+h1 {
+    font-family: 'Barlow', sans-serif;
+    font-size: clamp(1.5em, 5vw, 3em);
+    
+    /* Scale stretch from 75% (mobile) to 120% (desktop) */
+    font-stretch: clamp(75%, 20vw, 120%);
+}
+
+/* Multi-axis variable font control */
+.premium-text {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
+    font-stretch: 110%;  /* Combine with weight axis */
+    font-size: 1.2em;
+}
+            </div>
+
+            <div class="note">
+                <strong>Variable Font Benefits:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Single file replaces multiple font weights and widths</li>
+                    <li>Smooth transitions between stretch values</li>
+                    <li>Precise pixel-perfect control</li>
+                    <li>Reduced file size and HTTP requests</li>
+                    <li>Responsive typography at scale</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 6: Font-Stretch Support -->
+        <div class="section">
+            <h2>6. Font-Stretch Support & Limitations</h2>
+
+            <h3>Browser Compatibility</h3>
+            <div class="browser-support">
+                <div class="browser-item">
+                    <strong>Chrome</strong>
+                    ✅ Full Support
+                </div>
+                <div class="browser-item">
+                    <strong>Firefox</strong>
+                    ✅ Full Support
+                </div>
+                <div class="browser-item">
+                    <strong>Safari</strong>
+                    ✅ Full Support
+                </div>
+                <div class="browser-item">
+                    <strong>Edge</strong>
+                    ✅ Full Support
+                </div>
+                <div class="browser-item">
+                    <strong>IE 11</strong>
+                    ✅ Keywords
+                </div>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>IE</th>
+                        <th>Chrome</th>
+                        <th>Firefox</th>
+                        <th>Safari</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Keyword values</strong></td>
+                        <td>✅ 11+</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                        <td>✅ All</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Percentage values</strong></td>
+                        <td>❌ No</td>
+                        <td>✅ 88+</td>
+                        <td>✅ 78+</td>
+                        <td>✅ 12.1+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Variable fonts</strong></td>
+                        <td>❌ No</td>
+                        <td>✅ 62+</td>
+                        <td>✅ 62+</td>
+                        <td>✅ 10.1+</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Font Support Requirements</h3>
+            <div class="warning">
+                <strong>Important:</strong> Font-stretch only works if the font family includes variants for the requested stretch values. Not all fonts support condensed or expanded variants.
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Font</th>
+                        <th>Condensed</th>
+                        <th>Normal</th>
+                        <th>Expanded</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Barlow (Variable)</strong></td>
+                        <td>✅ 75%</td>
+                        <td>✅ 100%</td>
+                        <td>❌</td>
+                        <td>Good for condensed designs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Roboto (Variable)</strong></td>
+                        <td>✅</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                        <td>Full width range support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Inter</strong></td>
+                        <td>❌</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>No width axis</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Helvetica Neue</strong></td>
+                        <td>✅</td>
+                        <td>✅</td>
+                        <td>Limited</td>
+                        <td>System font with variants</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Fallback Behavior</h3>
+            <div class="code-block">
+/* Graceful degradation */
+h1 {
+    font-family: 'Barlow', Arial, sans-serif;
+    font-stretch: condensed;  /* Works with Barlow, ignored for Arial */
+}
+
+/* Feature detection with @supports */
+@supports (font-stretch: condensed) {
+    h1 {
+        font-stretch: condensed;  /* Use if supported */
+    }
+}
+
+/* Fallback using @supports not() */
+@supports not (font-stretch: condensed) {
+    h1 {
+        font-size: 0.9em;  /* Simulate condensing with smaller size */
+        letter-spacing: -0.02em;
+    }
+}
+            </div>
+        </div>
+
+        <!-- Section 7: Real-World Applications -->
+        <div class="section">
+            <h2>7. Real-World Applications</h2>
+
+            <h3>News & Publishing</h3>
+            <div class="demo-container">
+                <h4 style="margin-bottom: 15px; color: #4facfe;">Headline on Different Widths</h4>
+                <h2 style="font-family: 'Barlow', sans-serif; font-stretch: condensed; margin-bottom: 10px;">Breaking News: Important Update Available Today</h2>
+                <p style="font-size: 0.9em; color: #666;">Uses condensed stretch to fit narrow column</p>
+            </div>
+
+            <h3>Responsive Dashboard</h3>
+            <div class="demo-container">
+                <h4 style="margin-bottom: 15px; color: #4facfe;">Dashboard Metrics</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div style="padding: 10px; background: #f5f5f5; border-radius: 4px;">
+                        <div style="font-family: 'Barlow', sans-serif; font-stretch: semi-condensed; font-weight: 600; font-size: 0.9em;">Revenue</div>
+                        <div style="font-family: 'Barlow', sans-serif; font-stretch: semi-condensed; font-size: 1.5em; margin-top: 5px;">$45,230</div>
+                    </div>
+                    <div style="padding: 10px; background: #f5f5f5; border-radius: 4px;">
+                        <div style="font-family: 'Barlow', sans-serif; font-stretch: semi-condensed; font-weight: 600; font-size: 0.9em;">Users</div>
+                        <div style="font-family: 'Barlow', sans-serif; font-stretch: semi-condensed; font-size: 1.5em; margin-top: 5px;">12,548</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Magazine Layout</h3>
+            <div class="demo-container">
+                <h4 style="margin-bottom: 15px; color: #4facfe;">Article Preview</h4>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                    <div>
+                        <h3 style="font-family: 'Barlow', sans-serif; font-stretch: expanded; margin-bottom: 10px;">Featured Article Title</h3>
+                        <p style="font-family: 'Barlow', sans-serif; font-stretch: normal; line-height: 1.8;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                    </div>
+                    <div>
+                        <p style="font-family: 'Barlow', sans-serif; font-stretch: condensed; font-size: 0.9em;">Secondary content fits efficiently in narrow sidebar space.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Best Practices -->
+        <div class="section">
+            <h2>8. Font-Stretch Best Practices</h2>
+
+            <h3>Implementation Guidelines</h3>
+            <ul style="margin-left: 20px; margin-top: 10px; font-size: 1.05em;">
+                <li>✅ Use for responsive typography on variable fonts</li>
+                <li>✅ Combine with font-size for visual hierarchy</li>
+                <li>✅ Test font support before implementation</li>
+                <li>✅ Use clamp() for smooth scaling</li>
+                <li>✅ Provide fallbacks for unsupported fonts</li>
+                <li>✅ Use @supports for feature detection</li>
+                <li>✅ Limit stretch range for readability (75%-125%)</li>
+                <li>✅ Document stretch values in design systems</li>
+                <li>✅ Test across browsers and devices</li>
+                <li>✅ Consider performance with animations</li>
+                <li>❌ Don't overuse extreme values (ultra-condensed, ultra-expanded)</li>
+                <li>❌ Don't use stretch on small text</li>
+                <li>❌ Don't forget fallback fonts</li>
+                <li>❌ Don't animate stretch excessively</li>
+                <li>❌ Don't ignore readability for design</li>
+            </ul>
+
+            <h3>Recommended Font-Stretch Strategy</h3>
+            <div class="code-block">
+/* Complete implementation pattern */
+:root {
+    --font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    font-stretch: normal;
+}
+
+/* Responsive hierarchy with stretch */
+h1 {
+    font-size: clamp(1.5em, 5vw, 3em);
+    font-stretch: clamp(75%, 10vw - 50px, 100%);
+    font-weight: 700;
+}
+
+h2 {
+    font-size: clamp(1.25em, 4vw, 2em);
+    font-stretch: clamp(87.5%, 8vw - 40px, 100%);
+    font-weight: 600;
+}
+
+h3 {
+    font-size: clamp(1.1em, 3vw, 1.5em);
+    font-stretch: clamp(100%, 5vw - 30px, 112.5%);
+    font-weight: 600;
+}
+
+/* Narrow sidebar */
+.sidebar {
+    font-stretch: semi-condensed;
+}
+
+/* Space-constrained table */
+table {
+    font-stretch: condensed;
+}
+
+/* Feature detection fallback */
+@supports not (font-stretch: condensed) {
+    h1 { font-size: 0.95em; }
+    h2 { font-size: 0.92em; }
+    .sidebar { letter-spacing: -0.02em; }
+}
+            </div>
+        </div>
+
+        <!-- Section 9: Common Pitfalls -->
+        <div class="section">
+            <h2>9. Common Issues & Solutions</h2>
+
+            <h3>Issue 1: Font-Stretch Not Working</h3>
+            <div class="code-block">
+/* Problem: Font doesn't support stretch */
+h1 {
+    font-family: Arial, sans-serif;
+    font-stretch: condensed;  /* No effect - Arial doesn't support it */
+}
+
+/* Solution: Use a font that supports stretch */
+h1 {
+    font-family: 'Barlow', Arial, sans-serif;
+    font-stretch: condensed;  /* Works with Barlow */
+}
+
+/* Check support */
+@supports (font-stretch: condensed) {
+    h1 { font-stretch: condensed; }
+}
+            </div>
+
+            <h3>Issue 2: Percentage Values Not Supported</h3>
+            <div class="code-block">
+/* Problem: IE or older browsers don't support percentages */
+h1 {
+    font-stretch: 85%;  /* Might not work in older browsers */
+}
+
+/* Solution: Use keywords as fallback */
+h1 {
+    font-stretch: semi-condensed;  /* Fallback */
+    font-stretch: 85%;  /* Modern browsers use this */
+}
+
+/* Or detect support */
+@supports (font-stretch: 85%) {
+    h1 { font-stretch: 85%; }
+}
+            </div>
+
+            <h3>Issue 3: Readability Compromised</h3>
+            <div class="code-block">
+/* Problem: Extreme stretch hurts readability */
+body {
+    font-stretch: ultra-condensed;  /* Too narrow, hard to read */
+}
+
+/* Solution: Stay within reasonable range */
+body {
+    font-stretch: semi-condensed;  /* 87.5% - still readable */
+}
+
+/* Use extreme values only for display */
+.headline {
+    font-stretch: ultra-condensed;  /* Only for short headlines */
+}
+
+.body-text {
+    font-stretch: semi-condensed;  /* Readable for extended text */
+}
+            </div>
+
+            <h3>Issue 4: Animation Performance</h3>
+            <div class="code-block">
+/* Problem: Animating stretch causes reflow */
+.text {
+    animation: expand 1s ease-in-out infinite;
+}
+
+@keyframes expand {
+    0%, 100% { font-stretch: normal; }
+    50% { font-stretch: expanded; }
+}  /* Causes layout recalculation each frame */
+
+/* Solution: Limit animation usage */
+.hover-effect:hover {
+    font-stretch: 110%;
+    transition: font-stretch 0.3s ease;
+}  /* Only animate on interaction */
+
+/* Or use transform instead */
+.text {
+    transition: transform 0.3s ease;
+}
+
+.text:hover {
+    transform: scaleX(1.1);  /* More performant */
+}
+            </div>
+        </div>
+
+        <!-- Section 10: Quick Reference -->
+        <div class="section">
+            <h2>10. Quick Reference & Cheat Sheet</h2>
+
+            <h3>Font-Stretch Values Quick Reference</h3>
+            <div class="code-block">
+/* Condensed (narrower) */
+font-stretch: ultra-condensed;   /* 50% */
+font-stretch: extra-condensed;   /* 62.5% */
+font-stretch: condensed;         /* 75% */
+font-stretch: semi-condensed;    /* 87.5% */
+
+/* Normal (default) */
+font-stretch: normal;            /* 100% */
+
+/* Expanded (wider) */
+font-stretch: semi-expanded;     /* 112.5% */
+font-stretch: expanded;          /* 125% */
+font-stretch: extra-expanded;    /* 162.5% */
+font-stretch: ultra-expanded;    /* 200% */
+
+/* Custom percentages (with variable fonts) */
+font-stretch: 80%;
+font-stretch: 110%;
+            </div>
+
+            <h3>Common Combinations</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Use Case</th>
+                        <th>Stretch Value</th>
+                        <th>Font-Size</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mobile Headline</td>
+                        <td>condensed</td>
+                        <td>1.5em - 2em</td>
+                    </tr>
+                    <tr>
+                        <td>Desktop Headline</td>
+                        <td>normal to expanded</td>
+                        <td>2.5em - 3em</td>
+                    </tr>
+                    <tr>
+                        <td>Body Text</td>
+                        <td>semi-condensed to normal</td>
+                        <td>1em</td>
+                    </tr>
+                    <tr>
+                        <td>Narrow Sidebar</td>
+                        <td>semi-condensed</td>
+                        <td>0.95em</td>
+                    </tr>
+                    <tr>
+                        <td>Data Table</td>
+                        <td>condensed</td>
+                        <td>0.9em</td>
+                    </tr>
+                    <tr>
+                        <td>Display/Hero</td>
+                        <td>expanded</td>
+                        <td>3em+</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Responsive Formula</h3>
+            <div class="code-block">
+/* Universal responsive stretch formula */
+h1 {
+    /* Size: from 1.5em (mobile) to 3em (desktop) */
+    font-size: clamp(1.5em, 5vw, 3em);
+    
+    /* Stretch: from 75% (mobile) to 100% (desktop) */
+    font-stretch: clamp(75%, 20vw, 100%);
+    
+    /* Alternative: inverse stretch */
+    font-stretch: clamp(100%, 150% - 10vw, 125%);
+}
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS Font-Stretch Property Guide | Complete Reference</p>
+            <p>Master responsive typography with condensed, normal, and expanded font widths</p>
+        </footer>
+    </div>
+</body>
+</html>

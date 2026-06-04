@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Text-Align Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border-left: 5px solid #667eea;
+        }
+
+        .intro-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .intro-section p {
+            margin-bottom: 12px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .table-of-contents {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .table-of-contents h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .table-of-contents ol {
+            margin-left: 25px;
+            columns: 2;
+            gap: 30px;
+        }
+
+        .table-of-contents li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .table-of-contents a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .table-of-contents a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .example-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            background: white;
+        }
+
+        .example-card:hover {
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.2);
+            transform: translateY(-6px);
+        }
+
+        .example-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .example-header h3 {
+            margin-bottom: 3px;
+            font-size: 1.1em;
+        }
+
+        .example-number {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-right: 8px;
+        }
+
+        .example-description {
+            font-size: 0.9em;
+            opacity: 0.95;
+        }
+
+        .example-preview {
+            padding: 40px;
+            background: #f9f9f9;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #e0e0e0;
+            border-radius: 0;
+        }
+
+        .preview-content {
+            width: 100%;
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .example-code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            border-top: 1px solid #444;
+        }
+
+        .code-label {
+            display: block;
+            color: #888;
+            font-size: 0.75em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        /* Syntax highlighting */
+        .keyword { color: #66d9ef; }
+        .property { color: #a1efe4; }
+        .value { color: #e6db74; }
+        .comment { color: #75715e; }
+
+        /* Text Align Examples */
+        .align-left {
+            text-align: left;
+        }
+
+        .align-right {
+            text-align: right;
+        }
+
+        .align-center {
+            text-align: center;
+        }
+
+        .align-justify {
+            text-align: justify;
+        }
+
+        .align-start {
+            text-align: start;
+        }
+
+        .align-end {
+            text-align: end;
+        }
+
+        .text-align-match-parent {
+            text-align: match-parent;
+        }
+
+        /* Multi-column example */
+        .multi-column-example {
+            columns: 2;
+            column-gap: 20px;
+            text-align: justify;
+        }
+
+        /* Vertical align examples */
+        .vertical-example {
+            display: inline-block;
+            width: 100%;
+        }
+
+        .vertical-align-baseline {
+            vertical-align: baseline;
+        }
+
+        .vertical-align-top {
+            vertical-align: top;
+        }
+
+        .vertical-align-middle {
+            vertical-align: middle;
+        }
+
+        .vertical-align-bottom {
+            vertical-align: bottom;
+        }
+
+        /* RTL Example */
+        .rtl-example {
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* Responsive Example */
+        .responsive-example {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .responsive-item {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        /* Inline vs Block */
+        .inline-text {
+            display: inline;
+            text-align: center;
+        }
+
+        .block-text {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Advanced Section */
+        .advanced-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border-left: 5px solid #f39c12;
+        }
+
+        .advanced-section h2 {
+            color: #f39c12;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .advanced-section h3 {
+            color: #d68910;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .advanced-section p, .advanced-section li {
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .advanced-section ul, .advanced-section ol {
+            margin-left: 25px;
+        }
+
+        .advanced-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f5f7fa;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Browser Support */
+        .browser-support {
+            background: #e8f4f8;
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .browser-support h3 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .browser-support p {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .support-badge {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .support-partial {
+            background: #f39c12;
+        }
+
+        /* Tips Section */
+        .tips-section {
+            background: #fffbea;
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .tips-section h3 {
+            color: #f39c12;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .tips-section ul {
+            margin-left: 25px;
+            color: #555;
+        }
+
+        .tips-section li {
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+
+        .demo-box {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-of-contents ol {
+                columns: 1;
+            }
+
+            .comparison-table {
+                font-size: 0.9em;
+            }
+
+            .comparison-table th, .comparison-table td {
+                padding: 10px;
+            }
+
+            .content, header {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>CSS Text-Align Complete Guide</h1>
+            <p>Master all text alignment properties with practical examples</p>
+        </header>
+
+        <div class="content">
+            <!-- Introduction -->
+            <div class="intro-section">
+                <h2>What is text-align?</h2>
+                <p>The <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">text-align</code> CSS property sets the horizontal alignment of inline or inline-block content within a block container. It's one of the most fundamental properties for controlling text layout on web pages.</p>
+                <p>This guide covers all possible text-align values, real-world use cases, and best practices for implementing text alignment in your projects.</p>
+            </div>
+
+            <!-- Table of Contents -->
+            <div class="table-of-contents">
+                <h3>Quick Reference</h3>
+                <ol>
+                    <li><strong>left</strong> - Align text to the left</li>
+                    <li><strong>right</strong> - Align text to the right</li>
+                    <li><strong>center</strong> - Center text horizontally</li>
+                    <li><strong>justify</strong> - Stretch text to fill container</li>
+                    <li><strong>start</strong> - Align to start of text direction</li>
+                    <li><strong>end</strong> - Align to end of text direction</li>
+                    <li><strong>match-parent</strong> - Match parent's alignment</li>
+                    <li><strong>RTL Text Alignment</strong> - Right-to-left languages</li>
+                    <li><strong>Responsive Alignment</strong> - Mobile-friendly text</li>
+                    <li><strong>Vertical Alignment</strong> - Text positioning</li>
+                </ol>
+            </div>
+
+            <!-- Comparison Table -->
+            <div style="margin-bottom: 40px;">
+                <h2 style="color: #333; margin-bottom: 20px; font-size: 1.5em;">Text-Align Values Comparison</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Description</th>
+                            <th>Use Case</th>
+                            <th>Browser Support</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>left</strong></td>
+                            <td>Aligns text to the left edge</td>
+                            <td>Body text, paragraphs</td>
+                            <td><span class="support-badge">All</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>right</strong></td>
+                            <td>Aligns text to the right edge</td>
+                            <td>Headers, quotes, RTL text</td>
+                            <td><span class="support-badge">All</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>center</strong></td>
+                            <td>Aligns text to the center</td>
+                            <td>Titles, headings, CTAs</td>
+                            <td><span class="support-badge">All</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>justify</strong></td>
+                            <td>Stretches text to fill width</td>
+                            <td>Magazine layouts, print</td>
+                            <td><span class="support-badge">All</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>start</strong></td>
+                            <td>Aligns to start of text direction</td>
+                            <td>Multilingual support</td>
+                            <td><span class="support-badge">Modern</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>end</strong></td>
+                            <td>Aligns to end of text direction</td>
+                            <td>Multilingual support</td>
+                            <td><span class="support-badge">Modern</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>match-parent</strong></td>
+                            <td>Inherits parent alignment</td>
+                            <td>Nested elements</td>
+                            <td><span class="support-badge support-partial">Modern</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Examples Grid -->
+            <div class="examples-grid">
+                <!-- Example 1: Left -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">1</span>text-align: left</h3>
+                        <p class="example-description">Standard left alignment</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content align-left">
+                            <p>This text is aligned to the left. This is the default alignment for most web content and is the most common choice for body text and paragraphs.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+.<span class="keyword">container</span> {<br>
+&nbsp;&nbsp;<span class="property">text-align</span>: <span class="value">left</span>;<br>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 2: Right -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">2</span>text-align: right</h3>
+                        <p class="example-description">Right alignment</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content align-right">
+                            <p>This text is aligned to the right. Use this for quotes, captions, or when designing for right-to-left languages.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+.<span class="keyword">container</span> {<br>
+&nbsp;&nbsp;<span class="property">text-align</span>: <span class="value">right</span>;<br>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 3: Center -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">3</span>text-align: center</h3>
+                        <p class="example-description">Center alignment</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content align-center">
+                            <p>This text is centered. Perfect for headings, titles, and call-to-action buttons.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+.<span class="keyword">container</span> {<br>
+&nbsp;&nbsp;<span class="property">text-align</span>: <span class="value">center</span>;<br>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 4: Justify -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">4</span>text-align: justify</h3>
+                        <p class="example-description">Justified alignment</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content align-justify">
+                            <p>This text is justified, meaning it stretches to fill the entire width of the container. Justified text aligns both the left and right margins. This creates a clean, formal look commonly seen in print publications and magazines.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+.<span class="keyword">container</span> {<br>
+&nbsp;&nbsp;<span class="property">text-align</span>: <span class="value">justify</span>;<br>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 5: Start -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">5</span>text-align: start</h3>
+                        <p class="example-description">Start direction alignment</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content align-start">
+                            <p>This text aligns to the start of the text direction. For LTR (left-to-right) it's left, for RTL (right-to-left) it's right.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+.<span class="keyword">container</span> {<br>
+&nbsp;&nbsp;<span class="property">text-align</span>: <span class="value">start</span>;<br>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 6: End -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">6</span>text-align: end</h3>
+                        <p class="example-description">End direction alignment</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content align-end">
+                            <p>This text aligns to the end of the text direction. For LTR it's right, for RTL it's left. Best for multilingual sites.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+.<span class="keyword">container</span> {<br>
+&nbsp;&nbsp;<span class="property">text-align</span>: <span class="value">end</span>;<br>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 7: RTL -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">7</span>RTL Text (Arabic/Hebrew)</h3>
+                        <p class="example-description">Right-to-left language support</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content rtl-example">
+                            <p>مرحبا بك - هذا نص باللغة العربية. يتم محاذاة النص من اليمين إلى اليسار.</p>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">HTML & CSS:</span>
+                        <div class="code-block">
+&lt<span class="keyword">p</span> <span class="property">dir</span>=<span class="value">"rtl"</span>&gt;<span class="comment">Arabic text</span>&lt/<span class="keyword">p</span>&gt;<br><br>
+.<span class="keyword">container</span> {<br>
+&nbsp;&nbsp;<span class="property">direction</span>: <span class="value">rtl</span>;<br>
+&nbsp;&nbsp;<span class="property">text-align</span>: <span class="value">right</span>;<br>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 8: Match Parent -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">8</span>text-align: match-parent</h3>
+                        <p class="example-description">Inherit parent alignment</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content align-center" style="text-align: center;">
+                            <div style="text-align: match-parent;">
+                                <p>This text matches its parent's alignment (center). Useful for nested elements.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+.<span class="keyword">child</span> {<br>
+&nbsp;&nbsp;<span class="property">text-align</span>: <span class="value">match-parent</span>;<br>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 9: Responsive -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">9</span>Responsive Alignment</h3>
+                        <p class="example-description">Mobile-friendly alignment</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content">
+                            <div class="responsive-example">
+                                <div class="responsive-item">Left on Mobile</div>
+                                <div class="responsive-item">Center on Tablet</div>
+                                <div class="responsive-item">Right on Desktop</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+@<span class="keyword">media</span> (max-width: 768px) {<br>
+&nbsp;&nbsp;<span class="property">text-align</span>: <span class="value">left</span>;<br>
+}<br>
+@<span class="keyword">media</span> (max-width: 1024px) {<br>
+&nbsp;&nbsp;<span class="property">text-align</span>: <span class="value">center</span>;<br>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 10: Multiple Elements -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><span class="example-number">10</span>Mixed Alignment</h3>
+                        <p class="example-description">Different alignments for different elements</p>
+                    </div>
+                    <div class="example-preview">
+                        <div class="preview-content">
+                            <div style="text-align: center; margin-bottom: 10px; font-weight: bold; color: #667eea;">
+                                Centered Title
+                            </div>
+                            <div style="text-align: left; margin-bottom: 10px; color: #555; font-size: 0.9em;">
+                                Left-aligned body text. This is the paragraph content that describes the main information.
+                            </div>
+                            <div style="text-align: right; color: #888; font-size: 0.85em;">
+                                — Right-aligned quote
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-code">
+                        <span class="code-label">CSS:</span>
+                        <div class="code-block">
+h1 { <span class="property">text-align</span>: <span class="value">center</span>; }<br>
+p { <span class="property">text-align</span>: <span class="value">left</span>; }<br>
+blockquote { <span class="property">text-align</span>: <span class="value">right</span>; }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Section -->
+            <div class="advanced-section">
+                <h2>Advanced Text Alignment Techniques</h2>
+
+                <h3>1. Text-Align with Flexbox</h3>
+                <p>While <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">text-align</code> doesn't affect flex items, you can achieve similar effects with <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">justify-content</code>:</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px;">
+                    .flex-container {<br>
+                    &nbsp;&nbsp;display: flex;<br>
+                    &nbsp;&nbsp;justify-content: center; <span style="color: #75715e;">/* Centers flex items */</span><br>
+                    }
+                    </code>
+                </div>
+
+                <h3>2. Text-Align with CSS Grid</h3>
+                <p>Grid offers <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">justify-items</code> and <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">place-items</code> for horizontal alignment:</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px;">
+                    .grid-container {<br>
+                    &nbsp;&nbsp;display: grid;<br>
+                    &nbsp;&nbsp;place-items: center; <span style="color: #75715e;">/* Centers both horizontally and vertically */</span><br>
+                    }
+                    </code>
+                </div>
+
+                <h3>3. Text-Align with Justify-Content</h3>
+                <p>For inline elements, you can use <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">text-align</code>. For block elements, use <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">margin: auto</code> with width:</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px;">
+                    .center-block {<br>
+                    &nbsp;&nbsp;margin-left: auto;<br>
+                    &nbsp;&nbsp;margin-right: auto;<br>
+                    &nbsp;&nbsp;width: fit-content;<br>
+                    }
+                    </code>
+                </div>
+
+                <h3>4. Vertical Text Alignment</h3>
+                <p>The <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">vertical-align</code> property works only on inline or table-cell elements:</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px;">
+                    .inline-text {<br>
+                    &nbsp;&nbsp;display: inline-block;<br>
+                    &nbsp;&nbsp;vertical-align: middle;<br>
+                    &nbsp;&nbsp;height: 100px;<br>
+                    }
+                    </code>
+                </div>
+
+                <h3>5. Justify with Text-Align-Last</h3>
+                <p>Control alignment of the last line in justified text:</p>
+                <div class="demo-box">
+                    <strong>CSS:</strong><br>
+                    <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px; display: block; margin-top: 8px;">
+                    p {<br>
+                    &nbsp;&nbsp;text-align: justify;<br>
+                    &nbsp;&nbsp;text-align-last: center; <span style="color: #75715e;">/* Last line is centered */</span><br>
+                    }
+                    </code>
+                </div>
+            </div>
+
+            <!-- Browser Support -->
+            <div class="browser-support">
+                <h3>🌐 Browser Support</h3>
+                <p><strong>Basic Values (left, right, center, justify):</strong> <span class="support-badge">All browsers</span></p>
+                <p><strong>Modern Values (start, end, match-parent):</strong> <span class="support-badge support-partial">Chrome 27+, Firefox 43+, Safari 16+</span></p>
+                <p><strong>Text-Align-Last:</strong> <span class="support-badge support-partial">Chrome 35+, Firefox 49+, Safari 16+</span></p>
+                <p><strong>Vertical-Align:</strong> <span class="support-badge">All browsers (inline/table-cell only)</span></p>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="tips-section">
+                <h3>💡 Best Practices & Tips</h3>
+                <ul>
+                    <li><strong>Readability First:</strong> Left-aligned text is easiest to read. Use other alignments sparingly for emphasis.</li>
+                    <li><strong>Justified Text Warning:</strong> Justified text can create large gaps between words. Use <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">hyphens: auto</code> and <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">word-break: break-word</code> to improve appearance.</li>
+                    <li><strong>Mobile Responsiveness:</strong> Consider changing text alignment on mobile devices. Center or left-align for better mobile UX.</li>
+                    <li><strong>RTL Languages:</strong> Use <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">dir="rtl"</code> in HTML and <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">direction: rtl</code> in CSS for Arabic, Hebrew, etc.</li>
+                    <li><strong>Use start/end:</strong> Prefer <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">start</code> and <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 6px; border-radius: 3px;">end</code> for multilingual sites for automatic direction handling.</li>
+                    <li><strong>Consistency:</strong> Maintain consistent text alignment throughout your design for a professional look.</li>
+                    <li><strong>Context Matters:</strong> Headlines are often centered or right-aligned, body text is usually left-aligned.</li>
+                    <li><strong>Performance:</strong> Text alignment doesn't impact performance, but excessive justify can affect rendering on mobile devices.</li>
+                </ul>
+            </div>
+
+            <!-- Common Use Cases -->
+            <div style="background: #f0f4ff; padding: 30px; border-radius: 8px; margin-bottom: 40px; border-left: 5px solid #667eea;">
+                <h2 style="color: #667eea; margin-bottom: 20px; font-size: 1.5em;">Common Use Cases</h2>
+                
+                <h3 style="color: #555; margin-top: 15px; margin-bottom: 10px; font-size: 1.1em;">🎯 Headings & Titles</h3>
+                <p style="color: #555; margin-bottom: 15px;">Center-align for emphasis and visual hierarchy. Creates a focal point on the page.</p>
+
+                <h3 style="color: #555; margin-top: 15px; margin-bottom: 10px; font-size: 1.1em;">📄 Body Text</h3>
+                <p style="color: #555; margin-bottom: 15px;">Left-align for optimal readability. The natural reading direction for LTR languages.</p>
+
+                <h3 style="color: #555; margin-top: 15px; margin-bottom: 10px; font-size: 1.1em;">💬 Testimonials & Quotes</h3>
+                <p style="color: #555; margin-bottom: 15px;">Center or right-align for distinction. Makes quotes stand out from regular text.</p>
+
+                <h3 style="color: #555; margin-top: 15px; margin-bottom: 10px; font-size: 1.1em;">📚 Magazine/Print Layout</h3>
+                <p style="color: #555; margin-bottom: 15px;">Justify for professional appearance. Create balanced, uniform columns.</p>
+
+                <h3 style="color: #555; margin-top: 15px; margin-bottom: 10px; font-size: 1.1em;">🔘 Buttons & CTAs</h3>
+                <p style="color: #555; margin-bottom: 15px;">Center-align for prominence. Draws user attention and encourages action.</p>
+
+                <h3 style="color: #555; margin-top: 15px; margin-bottom: 10px; font-size: 1.1em;">🌍 Multilingual Sites</h3>
+                <p style="color: #555; margin-bottom: 0;">Use start/end values for automatic RTL/LTR handling.</p>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 CSS Text-Align Complete Guide | Master Text Alignment for Web Design</p>
+        </footer>
+    </div>
+</body>
+</html>
