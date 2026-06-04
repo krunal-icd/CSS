@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Inset Property Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .tutorial-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .tutorial-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .tutorial-section h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .inset-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 18px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            border-left: 4px solid #667eea;
+        }
+
+        .code-block code {
+            display: block;
+        }
+
+        .keyword { color: #f472b6; }
+        .property { color: #60a5fa; }
+        .value { color: #34d399; }
+        .comment { color: #6b7280; }
+
+        .example-box {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .example-box h4 {
+            color: #1f2937;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .example-box p {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        /* Visual Examples */
+        .demo-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
+            border: 2px dashed #999;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .demo-element {
+            position: absolute;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+
+        .demo-element-red {
+            background: linear-gradient(135deg, #ef4444, #991b1b);
+        }
+
+        .demo-element-green {
+            background: linear-gradient(135deg, #22c55e, #166534);
+        }
+
+        .demo-element-blue {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+        }
+
+        .demo-element-orange {
+            background: linear-gradient(135deg, #f97316, #c2410c);
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .demo-item {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 15px;
+        }
+
+        .demo-item h4 {
+            color: #1f2937;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .demo-item .demo-container {
+            margin: 10px 0;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1e40af;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #991b1b;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #166534;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: #1f2937;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .property-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            border-left: 3px solid #667eea;
+            text-align: center;
+        }
+
+        .property-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #1f2937;
+            font-size: 0.95em;
+        }
+
+        .property-item code {
+            background: #f3f4f6;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            color: #667eea;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .use-case-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .use-case-item h4 {
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .use-case-item p {
+            font-size: 0.85em;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        footer {
+            background: #f3f4f6;
+            padding: 25px;
+            text-align: center;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .syntax-breakdown {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .syntax-breakdown strong {
+            color: #1f2937;
+            display: block;
+            margin: 8px 0 4px 0;
+        }
+
+        .syntax-breakdown code {
+            background: #fff7ed;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #92400e;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            color: #4b5563;
+        }
+
+        ul li, ol li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        li strong {
+            color: #1f2937;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .value-examples {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .value-card {
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .value-card code {
+            background: #f3f4f6;
+            padding: 4px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            color: #667eea;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .real-world-demo {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            position: relative;
+            min-height: 200px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-item.good {
+            border-left: 4px solid #22c55e;
+        }
+
+        .comparison-item.bad {
+            border-left: 4px solid #ef4444;
+        }
+
+        .comparison-item strong {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 1200px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .use-case-grid,
+            .property-grid,
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .value-examples {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📍 CSS Inset Property</h1>
+            <p>Master the Shorthand for Positioning</p>
+            <p class="subtitle">Control top, right, bottom, left in one property</p>
+        </header>
+
+        <div class="content">
+            <!-- Inset Basics -->
+            <div class="tutorial-section">
+                <h2>
+                    <span class="inset-badge">INSET</span>
+                    What is Inset?
+                </h2>
+                <p>The CSS <code>inset</code> property is a shorthand that sets all four positioning properties at once: <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>left</code>.</p>
+
+                <h3>Why Use Inset?</h3>
+                <ul>
+                    <li><strong>Less code:</strong> Replace 4 properties with 1</li>
+                    <li><strong>More readable:</strong> Simpler syntax</li>
+                    <li><strong>Consistency:</strong> Same pattern as margin/padding</li>
+                    <li><strong>Easier maintenance:</strong> Update all positions together</li>
+                </ul>
+
+                <h3>Basic Syntax</h3>
+                <div class="code-block">
+                    <code><span class="keyword">element</span> {<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">value</span>;<br/>
+}</code>
+                </div>
+
+                <div class="info-box">
+                    <strong>ℹ️ Note:</strong> The inset property only works with positioned elements (position: absolute, relative, fixed, sticky).
+                </div>
+            </div>
+
+            <!-- Inset Values -->
+            <div class="tutorial-section">
+                <h2>📐 Inset Values</h2>
+                <p>The inset property accepts 1 to 4 values, following the same pattern as margin and padding.</p>
+
+                <h3>Value Patterns</h3>
+                <div class="syntax-breakdown">
+                    <strong>1 value:</strong>
+                    <code>inset: 20px;</code>
+                    <p style="margin-top: 5px; color: #666;">All sides: top, right, bottom, left = 20px</p>
+                </div>
+
+                <div class="syntax-breakdown">
+                    <strong>2 values:</strong>
+                    <code>inset: 20px 30px;</code>
+                    <p style="margin-top: 5px; color: #666;">Vertical (top, bottom) = 20px, Horizontal (left, right) = 30px</p>
+                </div>
+
+                <div class="syntax-breakdown">
+                    <strong>3 values:</strong>
+                    <code>inset: 10px 20px 30px;</code>
+                    <p style="margin-top: 5px; color: #666;">Top = 10px, Left/Right = 20px, Bottom = 30px</p>
+                </div>
+
+                <div class="syntax-breakdown">
+                    <strong>4 values:</strong>
+                    <code>inset: 10px 20px 30px 40px;</code>
+                    <p style="margin-top: 5px; color: #666;">Top = 10px, Right = 20px, Bottom = 30px, Left = 40px</p>
+                </div>
+
+                <h3>Value Examples</h3>
+                <div class="value-examples">
+                    <div class="value-card">
+                        <code>inset: 0;</code>
+                        <p style="font-size: 0.8em; color: #666; margin-top: 5px;">Fill entire container</p>
+                    </div>
+                    <div class="value-card">
+                        <code>inset: 10px;</code>
+                        <p style="font-size: 0.8em; color: #666; margin-top: 5px;">10px from all sides</p>
+                    </div>
+                    <div class="value-card">
+                        <code>inset: 10px auto;</code>
+                        <p style="font-size: 0.8em; color: #666; margin-top: 5px;">Center horizontally</p>
+                    </div>
+                    <div class="value-card">
+                        <code>inset: auto 20px;</code>
+                        <p style="font-size: 0.8em; color: #666; margin-top: 5px;">Center vertically</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inset vs Individual Properties -->
+            <div class="tutorial-section full-width">
+                <h2>🔄 Inset vs Individual Properties</h2>
+
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <strong>✅ Using inset (Shorthand)</strong>
+                        <div class="code-block" style="margin-top: 10px;">
+                            <code><span class="keyword">.overlay</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">absolute</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">20px</span>;<br/>
+}</code>
+                        </div>
+                    </div>
+                    <div class="comparison-item">
+                        <strong>❌ Individual Properties (Verbose)</strong>
+                        <div class="code-block" style="margin-top: 10px;">
+                            <code><span class="keyword">.overlay</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">absolute</span>;<br/>
+&nbsp;&nbsp;<span class="property">top</span>: <span class="value">20px</span>;<br/>
+&nbsp;&nbsp;<span class="property">right</span>: <span class="value">20px</span>;<br/>
+&nbsp;&nbsp;<span class="property">bottom</span>: <span class="value">20px</span>;<br/>
+&nbsp;&nbsp;<span class="property">left</span>: <span class="value">20px</span>;<br/>
+}</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <strong>✨ Result:</strong> Both produce identical output, but inset is cleaner and easier to maintain!
+                </div>
+            </div>
+
+            <!-- Visual Examples -->
+            <div class="tutorial-section full-width">
+                <h2>🎨 Visual Examples</h2>
+
+                <h3>Example 1: Overlay with inset: 0</h3>
+                <div class="example-box">
+                    <h4>inset: 0 - Fills entire container</h4>
+                    <div class="demo-container">
+                        <div class="demo-element" style="inset: 0;">
+                            inset: 0
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <code><span class="keyword">.overlay</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">absolute</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">0</span>;<br/>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">rgba(0,0,0,0.5)</span>;<br/>
+}</code>
+                    </div>
+                </div>
+
+                <h3>Example 2: Padding with inset: 20px</h3>
+                <div class="example-box">
+                    <h4>inset: 20px - 20px from all sides</h4>
+                    <div class="demo-container">
+                        <div class="demo-element demo-element-red" style="inset: 20px;">
+                            inset: 20px
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <code><span class="keyword">.box</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">absolute</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">20px</span>;<br/>
+}</code>
+                    </div>
+                </div>
+
+                <h3>Example 3: Centered with inset: auto</h3>
+                <div class="example-box">
+                    <h4>inset: 50px auto - Centered horizontally with 50px vertical offset</h4>
+                    <div class="demo-container">
+                        <div class="demo-element demo-element-green" style="inset: 50px auto; width: 120px; height: 80px;">
+                            inset: 50px auto
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <code><span class="keyword">.centered</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">absolute</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">50px auto</span>;<br/>
+&nbsp;&nbsp;<span class="property">width</span>: <span class="value">120px</span>;<br/>
+}</code>
+                    </div>
+                </div>
+
+                <h3>Example 4: Different sides with inset: 10px 20px 30px 40px</h3>
+                <div class="example-box">
+                    <h4>inset: 10px 20px 30px 40px - Different offsets</h4>
+                    <div class="demo-container">
+                        <div class="demo-element demo-element-blue" style="inset: 10px 20px 30px 40px;">
+                            T:10 R:20 B:30 L:40
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <code><span class="keyword">.custom</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">absolute</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">10px 20px 30px 40px</span>;<br/>
+}</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-World Examples -->
+            <div class="tutorial-section full-width">
+                <h2>💼 Real-World Use Cases</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <h4>📱 Modal Overlay</h4>
+                        <p>Use inset: 0 to create a full-screen overlay for modals and dialogs.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🎯 Fixed Navigation</h4>
+                        <p>Position fixed headers/footers with inset: 0 and height control.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🖼️ Image Gallery</h4>
+                        <p>Overlay captions on images with inset and background transparency.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🔔 Floating Badges</h4>
+                        <p>Position notification badges in corners with specific inset values.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🎨 Content Frames</h4>
+                        <p>Create framed content areas with consistent padding using inset.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>✨ Visual Effects</h4>
+                        <p>Layer multiple elements with different inset values for depth.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practical Example: Modal -->
+            <div class="tutorial-section full-width">
+                <h2>🎯 Practical Example: Modal Dialog</h2>
+                <p>Complete implementation of a centered modal with overlay.</p>
+
+                <h3>HTML Structure</h3>
+                <div class="code-block">
+                    <code><span class="keyword">&lt;div</span> <span class="property">class</span>=<span class="value">"modal-container"</span><span class="keyword">&gt;</span><br/>
+&nbsp;&nbsp;<span class="keyword">&lt;div</span> <span class="property">class</span>=<span class="value">"modal-overlay"</span><span class="keyword">&gt;&lt;/div&gt;</span><br/>
+&nbsp;&nbsp;<span class="keyword">&lt;div</span> <span class="property">class</span>=<span class="value">"modal-box"</span><span class="keyword">&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">&lt;h2&gt;</span>Confirm Action<span class="keyword">&lt;/h2&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">&lt;p&gt;</span>Are you sure?<span class="keyword">&lt;/p&gt;</span><br/>
+&nbsp;&nbsp;<span class="keyword">&lt;/div&gt;</span><br/>
+<span class="keyword">&lt;/div&gt;</span></code>
+                </div>
+
+                <h3>CSS with Inset</h3>
+                <div class="code-block">
+                    <code><span class="keyword">.modal-container</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">fixed</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">0</span>; <span class="comment">/* Full screen */</span><br/>
+&nbsp;&nbsp;<span class="property">display</span>: <span class="value">flex</span>;<br/>
+&nbsp;&nbsp;<span class="property">align-items</span>: <span class="value">center</span>;<br/>
+&nbsp;&nbsp;<span class="property">justify-content</span>: <span class="value">center</span>;<br/>
+&nbsp;&nbsp;<span class="property">z-index</span>: <span class="value">1000</span>;<br/>
+}<br/><br/>
+<span class="keyword">.modal-overlay</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">absolute</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">0</span>; <span class="comment">/* Cover entire container */</span><br/>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">rgba(0, 0, 0, 0.5)</span>;<br/>
+}<br/><br/>
+<span class="keyword">.modal-box</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">relative</span>;<br/>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">white</span>;<br/>
+&nbsp;&nbsp;<span class="property">padding</span>: <span class="value">30px</span>;<br/>
+&nbsp;&nbsp;<span class="property">border-radius</span>: <span class="value">8px</span>;<br/>
+&nbsp;&nbsp;<span class="property">min-width</span>: <span class="value">300px</span>;<br/>
+&nbsp;&nbsp;<span class="property">box-shadow</span>: <span class="value">0 10px 40px rgba(0,0,0,0.2)</span>;<br/>
+}</code>
+                </div>
+
+                <div class="demo-container" style="height: 300px;">
+                    <div class="demo-element" style="inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
+                        <div style="background: white; padding: 30px; border-radius: 8px; color: #333; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+                            <h3 style="margin-bottom: 10px;">Modal Dialog</h3>
+                            <p>This is a centered modal using inset: 0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browser Support -->
+            <div class="tutorial-section full-width">
+                <h2>✅ Browser Support</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                            <th>Support Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>inset property</strong></td>
+                            <td>✅ 87+</td>
+                            <td>✅ 66+</td>
+                            <td>✅ 14.1+</td>
+                            <td>✅ 87+</td>
+                            <td>Excellent (95%+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>inset: 0</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>Universal</td>
+                        </tr>
+                        <tr>
+                            <td><strong>inset with auto</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>Universal</td>
+                        </tr>
+                        <tr>
+                            <td><strong>inset with variables</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>Universal</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="success-box">
+                    <strong>✨ Broad Support:</strong> The inset property has excellent browser support. Safe for production use on modern browsers!
+                </div>
+            </div>
+
+            <!-- Properties Comparison -->
+            <div class="tutorial-section full-width">
+                <h2>🔄 Inset with Position Values</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Position Value</th>
+                            <th>Use Case</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>position: absolute</strong></td>
+                            <td>Element removed from flow, positioned relative to nearest positioned ancestor</td>
+                            <td>Overlays, tooltips, modals</td>
+                        </tr>
+                        <tr>
+                            <td><strong>position: relative</strong></td>
+                            <td>Element positioned relative to its normal position, stays in flow</td>
+                            <td>Adjusting element position within layout</td>
+                        </tr>
+                        <tr>
+                            <td><strong>position: fixed</strong></td>
+                            <td>Element positioned relative to viewport, stays in place on scroll</td>
+                            <td>Fixed headers, footers, sticky elements</td>
+                        </tr>
+                        <tr>
+                            <td><strong>position: sticky</strong></td>
+                            <td>Hybrid - relative until scroll threshold, then fixed</td>
+                            <td>Sticky navigation, headers</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Advanced Patterns -->
+            <div class="tutorial-section full-width">
+                <h2>⚡ Advanced Patterns</h2>
+
+                <h3>Pattern 1: Fill Container</h3>
+                <div class="code-block">
+                    <code><span class="keyword">.fill</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">absolute</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">0</span>; <span class="comment">/* Fill entire container */</span><br/>
+}</code>
+                </div>
+
+                <h3>Pattern 2: Center Both Axes</h3>
+                <div class="code-block">
+                    <code><span class="keyword">.centered</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">absolute</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">0 auto</span>; <span class="comment">/* Center horizontally & vertically */</span><br/>
+&nbsp;&nbsp;<span class="property">width</span>: <span class="value">200px</span>;<br/>
+&nbsp;&nbsp;<span class="property">height</span>: <span class="value">200px</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Pattern 3: Fixed Edges with Padding</h3>
+                <div class="code-block">
+                    <code><span class="keyword">.inset-padding</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">absolute</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">10px 15px</span>; <span class="comment">/* Different padding */</span><br/>
+}</code>
+                </div>
+
+                <h3>Pattern 4: CSS Variables</h3>
+                <div class="code-block">
+                    <code><span class="keyword">:root</span> {<br/>
+&nbsp;&nbsp;<span class="property">--spacing</span>: <span class="value">20px</span>;<br/>
+}<br/><br/>
+<span class="keyword">.element</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">absolute</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="property">var</span>(<span class="value">--spacing</span>);<br/>
+}</code>
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="tutorial-section full-width">
+                <h2>🏆 Best Practices & Tips</h2>
+
+                <div class="grid-2">
+                    <div>
+                        <h3>✅ Do:</h3>
+                        <ul>
+                            <li><strong>Use inset for positioning:</strong> Cleaner than 4 properties</li>
+                            <li><strong>Combine with fixed/absolute:</strong> Use with position property</li>
+                            <li><strong>Use for overlays:</strong> inset: 0 is perfect for full-screen</li>
+                            <li><strong>Apply auto values:</strong> For centering with inset</li>
+                            <li><strong>Use CSS variables:</strong> For maintainable inset values</li>
+                            <li><strong>Document inset usage:</strong> Explain positioning logic</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>❌ Don't:</h3>
+                        <ul>
+                            <li><strong>Forget position property:</strong> Inset requires positioning context</li>
+                            <li><strong>Mix inset with individual properties:</strong> Use one approach</li>
+                            <li><strong>Use inset without z-index:</strong> Clarify stacking context</li>
+                            <li><strong>Assume responsive:</strong> Test on different viewports</li>
+                            <li><strong>Use inset on static elements:</strong> Won't work without position</li>
+                            <li><strong>Ignore browser support:</strong> Check target browser versions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Important:</strong> The inset property ONLY works with positioned elements (position: absolute, relative, fixed, sticky). On static positioned elements, it has no effect!
+                </div>
+            </div>
+
+            <!-- Common Pitfalls -->
+            <div class="tutorial-section full-width">
+                <h2>⚠️ Common Pitfalls & Solutions</h2>
+
+                <h3>Pitfall 1: Inset Not Working</h3>
+                <p><strong>Problem:</strong> inset values have no effect on element.</p>
+                <p><strong>Solution:</strong> Add position property</p>
+                <div class="code-block">
+                    <code><span class="comment">/* ❌ Won't work */</span><br/>
+<span class="keyword">.box</span> { <span class="property">inset</span>: <span class="value">20px</span>; }<br/><br/>
+<span class="comment">/* ✅ Works */</span><br/>
+<span class="keyword">.box</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">absolute</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">20px</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Pitfall 2: Conflicting with Width/Height</h3>
+                <p><strong>Problem:</strong> Element stretches unexpectedly.</p>
+                <p><strong>Solution:</strong> Specify width and height for fixed size</p>
+                <div class="code-block">
+                    <code><span class="keyword">.centered-box</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">absolute</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">0</span>; <span class="comment">/* Without size, fills container */</span><br/>
+&nbsp;&nbsp;<span class="property">width</span>: <span class="value">300px</span>; <span class="comment">/* Fix width */</span><br/>
+&nbsp;&nbsp;<span class="property">height</span>: <span class="value">200px</span>; <span class="comment">/* Fix height */</span><br/>
+}</code>
+                </div>
+
+                <h3>Pitfall 3: Z-index Not Working</h3>
+                <p><strong>Problem:</strong> Element appears behind other content.</p>
+                <p><strong>Solution:</strong> Set z-index and check stacking context</p>
+                <div class="code-block">
+                    <code><span class="keyword">.overlay</span> {<br/>
+&nbsp;&nbsp;<span class="property">position</span>: <span class="value">fixed</span>;<br/>
+&nbsp;&nbsp;<span class="property">inset</span>: <span class="value">0</span>;<br/>
+&nbsp;&nbsp;<span class="property">z-index</span>: <span class="value">1000</span>; <span class="comment">/* Higher value */</span><br/>
+}</code>
+                </div>
+            </div>
+
+            <!-- Checklist -->
+            <div class="tutorial-section full-width">
+                <h2>📋 Implementation Checklist</h2>
+                <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #e5e7eb;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Setup</strong></h4>
+                            <ul style="list-style: none; margin: 0; color: #666;">
+                                <li style="padding: 5px 0;">☐ Add position property</li>
+                                <li style="padding: 5px 0;">☐ Choose inset value(s)</li>
+                                <li style="padding: 5px 0;">☐ Set z-index if needed</li>
+                                <li style="padding: 5px 0;">☐ Specify dimensions if required</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Testing</strong></h4>
+                            <ul style="list-style: none; margin: 0; color: #666;">
+                                <li style="padding: 5px 0;">☐ Verify on all browsers</li>
+                                <li style="padding: 5px 0;">☐ Check mobile layouts</li>
+                                <li style="padding: 5px 0;">☐ Test stacking order</li>
+                                <li style="padding: 5px 0;">☐ Validate responsiveness</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div>
+                                <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Common Uses</strong></h4>
+                                <ul style="list-style: none; margin: 0; color: #666;">
+                                    <li style="padding: 5px 0;">☐ Full-screen overlays</li>
+                                    <li style="padding: 5px 0;">☐ Centered modals</li>
+                                    <li style="padding: 5px 0;">☐ Fixed headers/footers</li>
+                                    <li style="padding: 5px 0;">☐ Corner badges</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Optimization</strong></h4>
+                                <ul style="list-style: none; margin: 0; color: #666;">
+                                    <li style="padding: 5px 0;">☐ Use CSS variables</li>
+                                    <li style="padding: 5px 0;">☐ Minimize z-index values</li>
+                                    <li style="padding: 5px 0;">☐ Document layout intent</li>
+                                    <li style="padding: 5px 0;">☐ Consider performance</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>CSS Inset Property Tutorial</strong></p>
+            <p>Master the shorthand for positioning with top, right, bottom, left</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Browser Support: Excellent (95%+) | Production Ready ✅</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Break Properties Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .tutorial-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .tutorial-section.break-before {
+            border-left-color: #3b82f6;
+        }
+
+        .tutorial-section.break-after {
+            border-left-color: #ef4444;
+        }
+
+        .tutorial-section.break-inside {
+            border-left-color: #8b5cf6;
+        }
+
+        .tutorial-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tutorial-section h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .break-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge-before {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-after {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-inside {
+            background: #ede9fe;
+            color: #581c87;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 18px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            border-left: 4px solid #667eea;
+        }
+
+        .code-block.before-code {
+            border-left-color: #3b82f6;
+        }
+
+        .code-block.after-code {
+            border-left-color: #ef4444;
+        }
+
+        .code-block.inside-code {
+            border-left-color: #8b5cf6;
+        }
+
+        .code-block code {
+            display: block;
+        }
+
+        .keyword { color: #f472b6; }
+        .property { color: #60a5fa; }
+        .value { color: #34d399; }
+        .comment { color: #6b7280; }
+
+        .example-box {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .example-box h4 {
+            color: #1f2937;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .example-box p {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .break-demo {
+            background: white;
+            border: 3px solid #ddd;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            column-count: 2;
+            column-gap: 20px;
+            min-height: 200px;
+        }
+
+        .demo-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 6px;
+            break-inside: avoid;
+        }
+
+        .demo-item-with-break {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 6px;
+            break-inside: auto;
+        }
+
+        .column-layout {
+            column-count: 2;
+            column-gap: 30px;
+            column-rule: 1px solid #ddd;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1e40af;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #991b1b;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #166534;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: #1f2937;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .property-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            border-left: 3px solid #667eea;
+        }
+
+        .property-item.before {
+            border-left-color: #3b82f6;
+        }
+
+        .property-item.after {
+            border-left-color: #ef4444;
+        }
+
+        .property-item.inside {
+            border-left-color: #8b5cf6;
+        }
+
+        .property-item strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #1f2937;
+            font-size: 1em;
+        }
+
+        .property-item code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            color: #667eea;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .property-item p {
+            font-size: 0.85em;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .use-case-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .use-case-item h4 {
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .use-case-item p {
+            font-size: 0.85em;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        footer {
+            background: #f3f4f6;
+            padding: 25px;
+            text-align: center;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .syntax-breakdown {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .syntax-breakdown strong {
+            color: #1f2937;
+            display: block;
+            margin: 8px 0 4px 0;
+        }
+
+        .syntax-breakdown code {
+            background: #fff7ed;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #92400e;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            color: #4b5563;
+        }
+
+        ul li, ol li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        li strong {
+            color: #1f2937;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .comparison-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .comparison-item.before {
+            border-top: 4px solid #3b82f6;
+        }
+
+        .comparison-item.after {
+            border-top: 4px solid #ef4444;
+        }
+
+        .comparison-item.inside {
+            border-top: 4px solid #8b5cf6;
+        }
+
+        .comparison-item strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        .comparison-item ul {
+            margin-left: 20px;
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .comparison-item li {
+            margin-bottom: 5px;
+        }
+
+        .visual-demo {
+            background: linear-gradient(135deg, #f5f7fa, #e9ecef);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #dee2e6;
+        }
+
+        .visual-demo-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+        }
+
+        .visual-demo-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .column-text {
+            column-count: 2;
+            column-gap: 20px;
+            line-height: 1.6;
+            font-size: 0.9em;
+            color: #1f2937;
+        }
+
+        .break-line {
+            position: relative;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            margin: 20px 0;
+            border-radius: 1px;
+        }
+
+        @media (max-width: 1200px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .use-case-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔗 CSS Break Properties</h1>
+            <p>Master break-before, break-after, break-inside</p>
+            <p class="subtitle">Control content breaks in columns, pages, and regions</p>
+        </header>
+
+        <div class="content">
+            <!-- Break Overview -->
+            <div class="tutorial-section">
+                <h2>📋 What Are Break Properties?</h2>
+                <p>CSS break properties control where content breaks across multiple containers: columns, pages (print), regions, and pagination. They ensure optimal layout without awkward breaks.</p>
+
+                <h3>Three Properties</h3>
+                <ul>
+                    <li><strong>break-before:</strong> Force break before element</li>
+                    <li><strong>break-after:</strong> Force break after element</li>
+                    <li><strong>break-inside:</strong> Prevent breaks inside element</li>
+                </ul>
+
+                <h3>Common Use Cases</h3>
+                <ul>
+                    <li>Multi-column layouts (magazine style)</li>
+                    <li>Print documents (page breaks)</li>
+                    <li>Preventing heading separation from content</li>
+                    <li>Keeping cards/boxes whole</li>
+                    <li>Pagination control</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>ℹ️ Overview:</strong> Break properties work with columns (column-count), pages (print), and regions. They're similar to page-break properties but more modern.
+                </div>
+            </div>
+
+            <!-- Break Before -->
+            <div class="tutorial-section break-before">
+                <h2>
+                    <span class="break-badge badge-before">BEFORE</span>
+                    break-before
+                </h2>
+                <p>Forces a break before an element. Starts the element on a new page, column, or region.</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block before-code">
+                    <code><span class="keyword">h2</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-before</span>: <span class="value">always</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Common Values</h3>
+                <ul>
+                    <li><strong>auto:</strong> Default, natural breaks (default)</li>
+                    <li><strong>always:</strong> Force break before element</li>
+                    <li><strong>avoid:</strong> Avoid break if possible</li>
+                    <li><strong>left:</strong> Break to odd page (print)</li>
+                    <li><strong>right:</strong> Break to even page (print)</li>
+                    <li><strong>page:</strong> Break between pages</li>
+                    <li><strong>column:</strong> Break between columns</li>
+                </ul>
+
+                <h3>Practical Example</h3>
+                <div class="code-block before-code">
+                    <code><span class="comment">/* New page for each chapter */</span><br/>
+<span class="keyword">h1</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-before</span>: <span class="value">always</span>;<br/>
+}<br/><br/>
+<span class="comment">/* Avoid break before paragraphs */</span><br/>
+<span class="keyword">p</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-before</span>: <span class="value">avoid</span>;<br/>
+}</code>
+                </div>
+
+                <div class="success-box">
+                    <strong>✨ Use When:</strong> You want to force a new page or column before an element, like starting a new chapter or section.
+                </div>
+            </div>
+
+            <!-- Break After -->
+            <div class="tutorial-section break-after">
+                <h2>
+                    <span class="break-badge badge-after">AFTER</span>
+                    break-after
+                </h2>
+                <p>Forces a break after an element. Creates space after the element, starting new content on a new page or column.</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block after-code">
+                    <code><span class="keyword">section</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-after</span>: <span class="value">always</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Common Values</h3>
+                <ul>
+                    <li><strong>auto:</strong> Natural breaks (default)</li>
+                    <li><strong>always:</strong> Force break after element</li>
+                    <li><strong>avoid:</strong> Avoid breaking after</li>
+                    <li><strong>left:</strong> Break to odd page</li>
+                    <li><strong>right:</strong> Break to even page</li>
+                    <li><strong>page:</strong> Break between pages</li>
+                    <li><strong>column:</strong> Break between columns</li>
+                </ul>
+
+                <h3>Practical Example</h3>
+                <div class="code-block after-code">
+                    <code><span class="comment">/* Full page for introductions */</span><br/>
+<span class="keyword">.introduction</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-after</span>: <span class="value">always</span>;<br/>
+}<br/><br/>
+<span class="comment">/* New column after image galleries */</span><br/>
+<span class="keyword">.gallery</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-after</span>: <span class="value">column</span>;<br/>
+}</code>
+                </div>
+
+                <div class="success-box">
+                    <strong>✨ Use When:</strong> You want content after this element to start fresh on a new page or column, like after a title block or section ending.
+                </div>
+            </div>
+
+            <!-- Break Inside -->
+            <div class="tutorial-section break-inside">
+                <h2>
+                    <span class="break-badge badge-inside">INSIDE</span>
+                    break-inside
+                </h2>
+                <p>Prevents breaks inside an element. Keeps the element whole, not split across pages or columns.</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block inside-code">
+                    <code><span class="keyword">.card</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-inside</span>: <span class="value">avoid</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Common Values</h3>
+                <ul>
+                    <li><strong>auto:</strong> Allow natural breaks inside (default)</li>
+                    <li><strong>avoid:</strong> Prevent breaks inside element</li>
+                    <li><strong>avoid-page:</strong> Prevent page breaks only</li>
+                    <li><strong>avoid-column:</strong> Prevent column breaks only</li>
+                </ul>
+
+                <h3>Practical Example</h3>
+                <div class="code-block inside-code">
+                    <code><span class="comment">/* Keep cards whole */</span><br/>
+<span class="keyword">.card</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-inside</span>: <span class="value">avoid</span>;<br/>
+}<br/><br/>
+<span class="comment">/* Keep tables on same page */</span><br/>
+<span class="keyword">table</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-inside</span>: <span class="value">avoid</span>;<br/>
+}<br/><br/>
+<span class="comment">/* Allow breaks inside quotes */</span><br/>
+<span class="keyword">blockquote</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-inside</span>: <span class="value">auto</span>;<br/>
+}</code>
+                </div>
+
+                <div class="success-box">
+                    <strong>✨ Use When:</strong> You want to keep elements together, like keeping a card from being split across columns or a heading from being separated from its content.
+                </div>
+            </div>
+
+            <!-- Comparison Grid -->
+            <div class="tutorial-section full-width">
+                <h2>🔍 Quick Comparison</h2>
+                <div class="comparison-grid">
+                    <div class="comparison-item before">
+                        <strong>break-before</strong>
+                        <ul>
+                            <li>Forces break BEFORE</li>
+                            <li>Starts element fresh</li>
+                            <li>New page/column</li>
+                            <li>Used for: Headings, sections</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item after">
+                        <strong>break-after</strong>
+                        <ul>
+                            <li>Forces break AFTER</li>
+                            <li>Ends element section</li>
+                            <li>Next content fresh</li>
+                            <li>Used for: Blocks, sections</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item inside">
+                        <strong>break-inside</strong>
+                        <ul>
+                            <li>PREVENTS breaks</li>
+                            <li>Keeps element whole</li>
+                            <li>No splitting</li>
+                            <li>Used for: Cards, tables</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property Reference Table -->
+            <div class="tutorial-section full-width">
+                <h2>📊 Property Values Reference</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>break-before</th>
+                            <th>break-after</th>
+                            <th>break-inside</th>
+                            <th>Effect</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>auto</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>Default, natural breaks</td>
+                        </tr>
+                        <tr>
+                            <td><strong>always</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>❌ No</td>
+                            <td>Force break</td>
+                        </tr>
+                        <tr>
+                            <td><strong>avoid</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>Prevent break if possible</td>
+                        </tr>
+                        <tr>
+                            <td><strong>left</strong></td>
+                            <td>✅ Yes (print)</td>
+                            <td>✅ Yes (print)</td>
+                            <td>❌ No</td>
+                            <td>Odd page (print)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>right</strong></td>
+                            <td>✅ Yes (print)</td>
+                            <td>✅ Yes (print)</td>
+                            <td>❌ No</td>
+                            <td>Even page (print)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>page</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>❌ No</td>
+                            <td>Page break only</td>
+                        </tr>
+                        <tr>
+                            <td><strong>column</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>❌ No</td>
+                            <td>Column break only</td>
+                        </tr>
+                        <tr>
+                            <td><strong>avoid-page</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>Avoid page breaks</td>
+                        </tr>
+                        <tr>
+                            <td><strong>avoid-column</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>Avoid column breaks</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Multi-Column Layout Example -->
+            <div class="tutorial-section full-width">
+                <h2>📰 Multi-Column Layout Example</h2>
+                <p>Break properties work great with CSS multi-column layouts. Keep cards whole across columns.</p>
+
+                <h3>CSS Implementation</h3>
+                <div class="code-block">
+                    <code><span class="comment">/* Magazine-style layout */</span><br/>
+<span class="keyword">.magazine</span> {<br/>
+&nbsp;&nbsp;<span class="property">column-count</span>: <span class="value">3</span>;<br/>
+&nbsp;&nbsp;<span class="property">column-gap</span>: <span class="value">20px</span>;<br/>
+&nbsp;&nbsp;<span class="property">column-rule</span>: <span class="value">1px solid #ddd</span>;<br/>
+}<br/><br/>
+<span class="comment">/* Keep article headers at top of column */</span><br/>
+<span class="keyword">h2</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-after</span>: <span class="value">avoid</span>;<br/>
+}<br/><br/>
+<span class="comment">/* Keep article boxes whole */</span><br/>
+<span class="keyword">.article</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-inside</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">white</span>;<br/>
+&nbsp;&nbsp;<span class="property">padding</span>: <span class="value">15px</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin</span>: <span class="value">10px 0</span>;<br/>
+&nbsp;&nbsp;<span class="property">border</span>: <span class="value">1px solid #e0e0e0</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Visual Example</h3>
+                <div class="example-box">
+                    <h4>Magazine Layout with break-inside: avoid</h4>
+                    <div class="break-demo">
+                        <div class="demo-item">Article 1: Longer content that stays together without being split across columns</div>
+                        <div class="demo-item">Article 2: Another complete item kept whole</div>
+                        <div class="demo-item">Article 3: Third article box stays intact</div>
+                        <div class="demo-item">Article 4: Fourth article without breaking</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Print Document Example -->
+            <div class="tutorial-section full-width">
+                <h2>🖨️ Print Document Example</h2>
+                <p>Break properties are essential for print-friendly documents. Control where pages break.</p>
+
+                <h3>Print CSS Implementation</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="comment">/* Chapter on new page */</span><br/>
+&nbsp;&nbsp;<span class="keyword">h1</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">break-before</span>: <span class="value">always</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">break-after</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Section on new page */</span><br/>
+&nbsp;&nbsp;<span class="keyword">h2</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">break-before</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">break-after</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Keep tables whole */</span><br/>
+&nbsp;&nbsp;<span class="keyword">table</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">break-inside</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Keep card content together */</span><br/>
+&nbsp;&nbsp;.<span class="keyword">info-box</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">break-inside</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Paragraph orphans/widows */</span><br/>
+&nbsp;&nbsp;<span class="keyword">p</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">break-inside</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">orphans</span>: <span class="value">2</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">widows</span>: <span class="value">2</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <div class="info-box">
+                    <strong>ℹ️ Tip:</strong> Combine break properties with orphans/widows for professional multi-page documents. Always test in print preview!
+                </div>
+            </div>
+
+            <!-- Real-World Use Cases -->
+            <div class="tutorial-section full-width">
+                <h2>🎯 Real-World Use Cases</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <h4>📰 Magazine Layout</h4>
+                        <p>Use break-inside: avoid to keep article cards from splitting across columns.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📄 Reports</h4>
+                        <p>Use break-before: always for chapters and break-inside: avoid for tables.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📋 Documents</h4>
+                        <p>Prevent headers from splitting from content with break-after: avoid.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🎨 Product Cards</h4>
+                        <p>Keep product cards whole in multi-column grids with break-inside: avoid.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📚 E-books</h4>
+                        <p>Control page breaks in chapters and sections for better reading flow.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📊 Data Tables</h4>
+                        <p>Prevent table splitting across pages with break-inside: avoid.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browser Support -->
+            <div class="tutorial-section full-width">
+                <h2>✅ Browser Support</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                            <th>Support Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>break-before</strong></td>
+                            <td>✅ 50+</td>
+                            <td>✅ 65+</td>
+                            <td>✅ 13+</td>
+                            <td>✅ 79+</td>
+                            <td>Excellent (95%+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>break-after</strong></td>
+                            <td>✅ 50+</td>
+                            <td>✅ 65+</td>
+                            <td>✅ 13+</td>
+                            <td>✅ 79+</td>
+                            <td>Excellent (95%+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>break-inside</strong></td>
+                            <td>✅ 50+</td>
+                            <td>✅ 65+</td>
+                            <td>✅ 13+</td>
+                            <td>✅ 79+</td>
+                            <td>Excellent (95%+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Column context</strong></td>
+                            <td>✅ Full</td>
+                            <td>✅ Full</td>
+                            <td>✅ Full</td>
+                            <td>✅ Full</td>
+                            <td>Excellent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Page context</strong></td>
+                            <td>✅ Print</td>
+                            <td>✅ Print</td>
+                            <td>✅ Print</td>
+                            <td>✅ Print</td>
+                            <td>Excellent</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="success-box">
+                    <strong>✨ Broad Support:</strong> Break properties have excellent browser support across all modern browsers. Safe for production use!
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="tutorial-section full-width">
+                <h2>🏆 Best Practices & Tips</h2>
+
+                <div class="grid-2">
+                    <div>
+                        <h3>✅ Do:</h3>
+                        <ul>
+                            <li><strong>Use break-inside: avoid for cards:</strong> Keep design elements whole</li>
+                            <li><strong>Use break-after: avoid for headers:</strong> Keep heading with content</li>
+                            <li><strong>Test with column-count:</strong> Preview multi-column layouts</li>
+                            <li><strong>Combine with print media:</strong> Optimize document breaks</li>
+                            <li><strong>Test in print preview:</strong> Verify page breaks look good</li>
+                            <li><strong>Use avoid sparingly:</strong> Too many can force awkward gaps</li>
+                            <li><strong>Consider readability:</strong> Breaks should improve layout flow</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>❌ Don't:</h3>
+                        <ul>
+                            <li><strong>Force breaks everywhere:</strong> Can create excessive gaps</li>
+                            <li><strong>Ignore column layout:</strong> Test both print and columns</li>
+                            <li><strong>Use always on everything:</strong> Causes poor pagination</li>
+                            <li><strong>Forget fallbacks:</strong> Not all browsers support all values</li>
+                            <li><strong>Assume it works:</strong> Test on real printers/displays</li>
+                            <li><strong>Combine conflicting breaks:</strong> Contradictory rules are ignored</li>
+                            <li><strong>Overlook performance:</strong> Many breaks can affect rendering</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Important:</strong> Always test break properties in both screen and print contexts. Different browsers handle breaks differently, especially with complex layouts.
+                </div>
+            </div>
+
+            <!-- Advanced Patterns -->
+            <div class="tutorial-section full-width">
+                <h2>⚡ Advanced Patterns</h2>
+
+                <h3>Pattern 1: Prevent Orphaned Headings</h3>
+                <div class="code-block">
+                    <code><span class="comment">/* Keep heading with at least some content */</span><br/>
+<span class="keyword">h2</span>, <span class="keyword">h3</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-after</span>: <span class="value">avoid</span>; <span class="comment">/* Don't separate from content */</span><br/>
+&nbsp;&nbsp;<span class="property">page-break-after</span>: <span class="value">avoid</span>; <span class="comment">/* Legacy support */</span><br/>
+}</code>
+                </div>
+
+                <h3>Pattern 2: Magazine Grid Layout</h3>
+                <div class="code-block">
+                    <code><span class="keyword">.article-grid</span> {<br/>
+&nbsp;&nbsp;<span class="property">column-count</span>: <span class="value">3</span>;<br/>
+&nbsp;&nbsp;<span class="property">column-gap</span>: <span class="value">20px</span>;<br/>
+}<br/><br/>
+<span class="keyword">.article-grid article</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-inside</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin-bottom</span>: <span class="value">20px</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Pattern 3: Multi-Page Document</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="keyword">h1</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">break-before</span>: <span class="value">always</span>; <span class="comment">/* Chapter on new page */</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">break-after</span>: <span class="value">avoid</span>; <span class="comment">/* Stay with content */</span><br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="keyword">table</span>, <span class="keyword">figure</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">break-inside</span>: <span class="value">avoid</span>; <span class="comment">/* Keep intact */</span><br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Pattern 4: Responsive Breaks</h3>
+                <div class="code-block">
+                    <code><span class="comment">/* Column breaks on large screens */</span><br/>
+<span class="at-rule">@media</span> (<span class="property">min-width</span>: <span class="value">1200px</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">.card-grid</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">column-count</span>: <span class="value">3</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<span class="keyword">.card</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">break-inside</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+            </div>
+
+            <!-- Common Pitfalls -->
+            <div class="tutorial-section full-width">
+                <h2>⚠️ Common Pitfalls & Solutions</h2>
+
+                <h3>Pitfall 1: Excessive Gaps from Too Many Breaks</h3>
+                <p><strong>Problem:</strong> Using break-before/after: always on many elements creates too much empty space.</p>
+                <p><strong>Solution:</strong> Use avoid and let natural breaks happen</p>
+                <div class="code-block">
+                    <code><span class="comment">/* ❌ Creates excessive gaps */</span><br/>
+<span class="keyword">p</span> { <span class="property">break-before</span>: <span class="value">always</span>; }<br/><br/>
+<span class="comment">/* ✅ Better: natural breaks */</span><br/>
+<span class="keyword">p</span> { <span class="property">break-inside</span>: <span class="value">avoid</span>; }</code>
+                </div>
+
+                <h3>Pitfall 2: Not Testing Column Layout</h3>
+                <p><strong>Problem:</strong> Breaks work differently in columns vs pages.</p>
+                <p><strong>Solution:</strong> Test with column-count and column-gap properties</p>
+
+                <h3>Pitfall 3: Browser Inconsistency</h3>
+                <p><strong>Problem:</strong> Different browsers handle breaks differently, especially with complex layouts.</p>
+                <p><strong>Solution:</strong> Include legacy page-break properties for compatibility</p>
+                <div class="code-block">
+                    <code><span class="keyword">.element</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-inside</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;<span class="property">page-break-inside</span>: <span class="value">avoid</span>; <span class="comment">/* Legacy fallback */</span><br/>
+}</code>
+                </div>
+
+                <h3>Pitfall 4: Conflicting Break Rules</h3>
+                <p><strong>Problem:</strong> Setting break-before: always and break-inside: avoid on same element.</p>
+                <p><strong>Solution:</strong> Apply breaks to different elements</p>
+                <div class="code-block">
+                    <code><span class="comment">/* ❌ Conflicting */</span><br/>
+<span class="keyword">section</span> {<br/>
+&nbsp;&nbsp;<span class="property">break-before</span>: <span class="value">always</span>;<br/>
+&nbsp;&nbsp;<span class="property">break-inside</span>: <span class="value">avoid</span>;<br/>
+}<br/><br/>
+<span class="comment">/* ✅ Better: clear roles */</span><br/>
+<span class="keyword">h2</span> { <span class="property">break-before</span>: <span class="value">always</span>; }<br/>
+<span class="keyword">.card</span> { <span class="property">break-inside</span>: <span class="value">avoid</span>; }</code>
+                </div>
+            </div>
+
+            <!-- Checklist -->
+            <div class="tutorial-section full-width">
+                <h2>📋 Implementation Checklist</h2>
+                <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #e5e7eb;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Content Structure</strong></h4>
+                            <ul style="list-style: none; margin: 0;">
+                                <li style="padding: 5px 0;">☐ Identify break points</li>
+                                <li style="padding: 5px 0;">☐ Find orphaned headings</li>
+                                <li style="padding: 5px 0;">☐ Locate tables/figures</li>
+                                <li style="padding: 5px 0;">☐ Mark card containers</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>CSS Implementation</strong></h4>
+                            <ul style="list-style: none; margin: 0;">
+                                <li style="padding: 5px 0;">☐ Add break properties</li>
+                                <li style="padding: 5px 0;">☐ Include legacy fallbacks</li>
+                                <li style="padding: 5px 0;">☐ Test in all contexts</li>
+                                <li style="padding: 5px 0;">☐ Verify on real printer</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div>
+                                <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Multi-Column Context</strong></h4>
+                                <ul style="list-style: none; margin: 0;">
+                                    <li style="padding: 5px 0;">☐ Set column-count</li>
+                                    <li style="padding: 5px 0;">☐ Use break-inside: avoid on cards</li>
+                                    <li style="padding: 5px 0;">☐ Test column width</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Print Context</strong></h4>
+                                <ul style="list-style: none; margin: 0;">
+                                    <li style="padding: 5px 0;">☐ Use @media print</li>
+                                    <li style="padding: 5px 0;">☐ Set page breaks</li>
+                                    <li style="padding: 5px 0;">☐ Test print preview</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>CSS Break Properties Tutorial</strong></p>
+            <p>Master break-before, break-after, break-inside for perfect layouts</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Column & Print Support: Excellent ✅ | Production Ready 🚀</p>
+        </footer>
+    </div>
+</body>
+</html>

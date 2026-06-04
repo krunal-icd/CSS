@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS scroll-behavior Property - Complete Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .feature-status {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .syntax-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .example-grid {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .example-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .example-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .example-card code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #764ba2;
+            font-size: 0.9em;
+        }
+
+        .key-points {
+            background: #e8f4f8;
+            border-left: 4px solid #17a2b8;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .key-points h4 {
+            color: #17a2b8;
+            margin-bottom: 10px;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .key-points li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .browser-support {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px;
+            color: #555;
+        }
+
+        .comparison-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .tag.smooth {
+            background: #28a745;
+        }
+
+        .tag.interaction {
+            background: #fd7e14;
+        }
+
+        .tag.performance {
+            background: #17a2b8;
+        }
+
+        .demo-button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .demo-button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            header {
+                padding: 25px;
+            }
+
+            .comparison-table {
+                font-size: 0.9em;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            h2 {
+                font-size: 1.2em;
+            }
+
+            h3 {
+                font-size: 1.1em;
+            }
+
+            .section {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .syntax-box {
+                font-size: 0.85em;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS scroll-behavior Property</h1>
+            <p class="subtitle">Smooth Scrolling & Navigation Effects</p>
+            <div class="feature-status">
+                <div class="status-badge">✓ Smooth Scrolling</div>
+                <div class="status-badge">✓ Navigation Links</div>
+                <div class="status-badge">✓ Auto Scrolling</div>
+            </div>
+        </header>
+
+        <div class="section">
+            <h2>What is scroll-behavior?</h2>
+            <p>
+                The <code>scroll-behavior</code> CSS property specifies how the browser should behave when navigating to a target element via anchor links or the <code>scrollIntoView()</code> JavaScript method. It controls whether scrolling happens instantly or animates smoothly over a duration.
+            </p>
+            <div class="key-points">
+                <h4>Core Concept:</h4>
+                <ul>
+                    <li>Controls scrolling animation when jumping to anchors (#id)</li>
+                    <li>Works with both HTML anchor navigation and JavaScript <code>scrollIntoView()</code></li>
+                    <li>Applies to the root element (html) for document-level scrolling</li>
+                    <li>Can be set on individual scrollable containers (overflow elements)</li>
+                    <li>Creates smooth user experience without JavaScript libraries</li>
+                    <li>Respects user's motion preferences (prefers-reduced-motion)</li>
+                </ul>
+            </div>
+            <div class="browser-support">
+                <strong>Browser Support:</strong> Modern browsers (Chrome 61+, Firefox 36+, Safari 15.4+, Edge 79+). Requires fallback for older browsers.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Property Values</h2>
+            
+            <h3>auto (Default)</h3>
+            <p>Instant scrolling without animation. Navigation jumps directly to target.</p>
+            <div class="syntax-box">
+html {
+    scroll-behavior: auto;  /* Jump instantly to target */
+}
+
+/* Result: Immediate navigation to anchor, no animation */
+            </div>
+
+            <h3>smooth</h3>
+            <p>Animated scrolling. Navigation smoothly animates to target over browser-determined duration.</p>
+            <div class="syntax-box">
+html {
+    scroll-behavior: smooth;  /* Smooth animated scrolling */
+}
+
+/* Result: Animated navigation with easing */
+            </div>
+
+            <h3>Using scroll-behavior in CSS</h3>
+            <div class="syntax-box">
+/* Apply to entire document */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Apply to specific scrollable container */
+.scrollable-container {
+    scroll-behavior: smooth;
+    height: 500px;
+    overflow-y: auto;
+}
+
+/* Disable animation for users with motion sensitivity */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+            </div>
+
+            <h3>Combining with JavaScript</h3>
+            <div class="syntax-box">
+/* CSS enables smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* JavaScript scrollIntoView() respects the CSS property */
+const element = document.getElementById('target');
+element.scrollIntoView(); /* Uses smooth behavior from CSS */
+
+/* JavaScript can override with options */
+element.scrollIntoView({ 
+    behavior: 'smooth',      /* or 'auto' */
+    block: 'start'           /* or 'center', 'end', 'nearest' */
+});
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Common Use Cases</h2>
+            
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>Table of Contents Navigation</h4>
+                    <p>Smooth scrolling from table of contents links to document sections.</p>
+                    <div class="syntax-box">
+html {
+    scroll-behavior: smooth;
+}
+
+/* TOC links scroll smoothly to sections */
+&lt;a href="#section-1"&gt;Section 1&lt;/a&gt;
+&lt;a href="#section-2"&gt;Section 2&lt;/a&gt;
+
+&lt;section id="section-1"&gt;...&lt;/section&gt;
+&lt;section id="section-2"&gt;...&lt;/section&gt;
+                    </div>
+                    <span class="tag smooth">Navigation</span>
+                </div>
+
+                <div class="example-card">
+                    <h4>"Back to Top" Button</h4>
+                    <p>Smooth scrolling animation when returning to page top.</p>
+                    <div class="syntax-box">
+html {
+    scroll-behavior: smooth;
+}
+
+/* Button scrolls smoothly to top */
+&lt;a href="#top" class="back-to-top"&gt;↑ Back to Top&lt;/a&gt;
+
+&lt;html id="top"&gt;
+                    </div>
+                    <span class="tag smooth">UX Enhancement</span>
+                </div>
+
+                <div class="example-card">
+                    <h4>Single Page Application Navigation</h4>
+                    <p>Smooth scrolling between different page sections in SPAs.</p>
+                    <div class="syntax-box">
+html {
+    scroll-behavior: smooth;
+}
+
+/* Anchor navigation in single page app */
+router.navigate('/page#section-1');
+
+/* Smooth scroll applied automatically */
+                    </div>
+                    <span class="tag interaction">SPA</span>
+                </div>
+
+                <div class="example-card">
+                    <h4>Scrollable Container Navigation</h4>
+                    <p>Smooth scrolling within overflow containers.</p>
+                    <div class="syntax-box">
+.carousel {
+    scroll-behavior: smooth;
+    overflow-x: auto;
+}
+
+/* CSS buttons or links scroll items */
+&lt;a href="#item-3"&gt;Jump to Item 3&lt;/a&gt;
+&lt;div class="carousel"&gt;
+    &lt;div id="item-1"&gt;...&lt;/div&gt;
+    &lt;div id="item-3"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+                    </div>
+                    <span class="tag interaction">Carousel</span>
+                </div>
+
+                <div class="example-card">
+                    <h4>Smooth Anchor Navigation</h4>
+                    <p>Multiple anchor links with unified smooth behavior.</p>
+                    <div class="syntax-box">
+html {
+    scroll-behavior: smooth;
+}
+
+/* All anchor navigation is smooth */
+&lt;nav&gt;
+    &lt;a href="#features"&gt;Features&lt;/a&gt;
+    &lt;a href="#pricing"&gt;Pricing&lt;/a&gt;
+    &lt;a href="#contact"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;
+                    </div>
+                    <span class="tag smooth">Website</span>
+                </div>
+
+                <div class="example-card">
+                    <h4>Accessibility Consideration</h4>
+                    <p>Respect user motion preferences for accessibility.</p>
+                    <div class="syntax-box">
+html {
+    scroll-behavior: smooth;
+}
+
+/* Disable for users sensitive to motion */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+                    </div>
+                    <span class="tag performance">Accessible</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Real-World Scenarios</h2>
+            
+            <h3>Scenario 1: Documentation Website</h3>
+            <p>Smooth navigation in technical documentation with multiple sections:</p>
+            <div class="syntax-box">
+/* Enable smooth scrolling for entire documentation */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Navigation menu */
+&lt;nav class="toc"&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href="#introduction"&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#installation"&gt;Installation&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#usage"&gt;Usage&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#api"&gt;API Reference&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+
+/* Sections with smooth scroll target */
+&lt;section id="introduction"&gt;...&lt;/section&gt;
+&lt;section id="installation"&gt;...&lt;/section&gt;
+            </div>
+
+            <h3>Scenario 2: Landing Page with Fixed Navigation</h3>
+            <p>Smooth scrolling from sticky navigation to different page sections:</p>
+            <div class="syntax-box">
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fixed navigation bar */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Smooth scroll to sections from nav */
+&lt;nav&gt;
+    &lt;a href="#features"&gt;Features&lt;/a&gt;
+    &lt;a href="#pricing"&gt;Pricing&lt;/a&gt;
+    &lt;a href="#testimonials"&gt;Testimonials&lt;/a&gt;
+    &lt;a href="#contact"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;section id="features"&gt;...&lt;/section&gt;
+&lt;section id="pricing"&gt;...&lt;/section&gt;
+            </div>
+
+            <h3>Scenario 3: Mobile-Friendly Navigation</h3>
+            <p>Smooth scrolling on mobile with hamburger menu:</p>
+            <div class="syntax-box">
+html {
+    scroll-behavior: smooth;
+}
+
+/* Mobile hamburger menu */
+&lt;nav id="mobile-menu"&gt;
+    &lt;a href="#section-1"&gt;Section 1&lt;/a&gt;
+    &lt;a href="#section-2"&gt;Section 2&lt;/a&gt;
+    &lt;a href="#section-3"&gt;Section 3&lt;/a&gt;
+&lt;/nav&gt;
+
+/* Smooth scroll works automatically on click */
+/* Optional: Close menu after navigation with JavaScript */
+            </div>
+
+            <h3>Scenario 4: Horizontal Scroll Container</h3>
+            <p>Smooth scrolling within horizontal carousels or galleries:</p>
+            <div class="syntax-box">
+.carousel {
+    scroll-behavior: smooth;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+}
+
+.carousel-item {
+    scroll-snap-align: start;
+}
+
+/* Navigation buttons scroll items smoothly */
+&lt;div class="carousel"&gt;
+    &lt;div id="item-1" class="carousel-item"&gt;...&lt;/div&gt;
+    &lt;div id="item-2" class="carousel-item"&gt;...&lt;/div&gt;
+    &lt;div id="item-3" class="carousel-item"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;a href="#item-1"&gt;Item 1&lt;/a&gt;
+&lt;a href="#item-2"&gt;Item 2&lt;/a&gt;
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Best Practices</h2>
+            
+            <div class="key-points">
+                <h4>✓ DO:</h4>
+                <ul>
+                    <li><strong>Enable smooth scrolling globally:</strong> Apply to html for site-wide effect</li>
+                    <li><strong>Respect motion preferences:</strong> Use @media (prefers-reduced-motion: reduce)</li>
+                    <li><strong>Combine with scroll-snap:</strong> Create snapping and smooth behavior together</li>
+                    <li><strong>Provide visual feedback:</strong> Highlight active navigation sections</li>
+                    <li><strong>Use meaningful anchors:</strong> IDs should clearly describe targets</li>
+                    <li><strong>Test on multiple browsers:</strong> Verify support and behavior consistency</li>
+                    <li><strong>Consider performance:</strong> Usually minimal impact, but test heavy pages</li>
+                </ul>
+            </div>
+
+            <div class="key-points" style="background: #f8d7da; border-color: #721c24; color: #721c24;">
+                <h4 style="color: #721c24;">✗ DON'T:</h4>
+                <ul style="color: #721c24;">
+                    <li><strong>Ignore accessibility:</strong> Respect prefers-reduced-motion media query</li>
+                    <li><strong>Override user preferences:</strong> Don't force smooth on users who want auto</li>
+                    <li><strong>Combine with auto-scroll scripts:</strong> May conflict with user expectations</li>
+                    <li><strong>Use on pages with extensive content jumping:</strong> Can cause disorientation</li>
+                    <li><strong>Forget fallback for older browsers:</strong> Provide meaningful experience in IE 11</li>
+                    <li><strong>Mix smooth and auto inconsistently:</strong> Use unified approach across site</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Browser Support & Compatibility</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Browser</th>
+                        <th>Support</th>
+                        <th>Version</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chrome</td>
+                        <td>✓ Full</td>
+                        <td>61+</td>
+                        <td>Full smooth-scroll support</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td>✓ Full</td>
+                        <td>36+</td>
+                        <td>Early support</td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>✓ Full</td>
+                        <td>15.4+</td>
+                        <td>Recently added</td>
+                    </tr>
+                    <tr>
+                        <td>Edge</td>
+                        <td>✓ Full</td>
+                        <td>79+</td>
+                        <td>Chromium-based</td>
+                    </tr>
+                    <tr>
+                        <td>IE 11</td>
+                        <td>✗ None</td>
+                        <td>N/A</td>
+                        <td>Defaults to auto behavior</td>
+                    </tr>
+                    <tr>
+                        <td>Mobile Browsers</td>
+                        <td>✓ Mostly</td>
+                        <td>Recent</td>
+                        <td>Good support on modern devices</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>JavaScript Integration</h2>
+            
+            <h3>scrollIntoView() Method</h3>
+            <p>Programmatically scroll elements into view with smooth animation:</p>
+            <div class="syntax-box">
+/* Basic scrollIntoView - uses CSS scroll-behavior */
+const element = document.getElementById('target');
+element.scrollIntoView();
+
+/* With behavior options */
+element.scrollIntoView({
+    behavior: 'smooth',  /* or 'auto' */
+    block: 'start',      /* or 'center', 'end', 'nearest' */
+    inline: 'nearest'    /* or 'start', 'center', 'end' */
+});
+
+/* Example: Scroll item to center */
+document.getElementById('item-5').scrollIntoView({
+    behavior: 'smooth',
+    block: 'center'
+});
+            </div>
+
+            <h3>scroll() Method with options</h3>
+            <div class="syntax-box">
+/* Smooth scroll to position */
+window.scroll({
+    top: 1000,
+    behavior: 'smooth'
+});
+
+/* Scroll container smoothly */
+const container = document.querySelector('.scrollable');
+container.scroll({
+    left: 500,
+    top: 0,
+    behavior: 'smooth'
+});
+            </div>
+
+            <h3>Intersection Observer for Animation Triggers</h3>
+            <p>Combine scroll-behavior with Intersection Observer for enhanced effects:</p>
+            <div class="syntax-box">
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+        }
+    });
+});
+
+document.querySelectorAll('.animate-on-scroll').forEach(element => {
+    observer.observe(element);
+});
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Accessibility & Motion Preferences</h2>
+            
+            <h3>Respecting prefers-reduced-motion</h3>
+            <p>Important for users with vestibular disorders or motion sensitivity:</p>
+            <div class="syntax-box">
+/* Default: smooth scrolling enabled */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Respect user's motion sensitivity preference */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* Also apply to other animations */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+            </div>
+
+            <h3>Testing Motion Preferences</h3>
+            <p>Detect user preferences in JavaScript:</p>
+            <div class="syntax-box">
+const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+).matches;
+
+if (prefersReducedMotion) {
+    // Use auto scrolling behavior
+    document.documentElement.style.scrollBehavior = 'auto';
+} else {
+    // Use smooth scrolling
+    document.documentElement.style.scrollBehavior = 'smooth';
+}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Key Takeaways</h2>
+            
+            <div class="key-points">
+                <ul>
+                    <li>
+                        <strong>Two Values:</strong> auto (default) for instant scrolling, smooth for animated scrolling
+                    </li>
+                    <li>
+                        <strong>Global Scope:</strong> Apply to html element for document-level smooth scrolling
+                    </li>
+                    <li>
+                        <strong>Container Scope:</strong> Apply to individual overflow elements for local smooth scrolling
+                    </li>
+                    <li>
+                        <strong>Anchor Navigation:</strong> Works automatically with href="#id" links
+                    </li>
+                    <li>
+                        <strong>JavaScript Integration:</strong> scrollIntoView() and scroll() methods respect CSS property
+                    </li>
+                    <li>
+                        <strong>Accessibility Critical:</strong> Always respect prefers-reduced-motion for user health
+                    </li>
+                    <li>
+                        <strong>Modern Browser Support:</strong> Available in all modern browsers, graceful fallback in older ones
+                    </li>
+                    <li>
+                        <strong>Performance Impact:</strong> Minimal - just animation easing on navigation
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS scroll-behavior Property • Complete Smooth Scrolling Guide</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Created with ❤️ for modern CSS education</p>
+        </footer>
+    </div>
+</body>
+</html>

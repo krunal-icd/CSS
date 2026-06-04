@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS scroll-snap - 12 Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .examples-grid {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .example-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .example h2 {
+            color: #667eea;
+            font-size: 1.6em;
+            margin: 0;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .example-tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .example-tag.horizontal {
+            background: #28a745;
+        }
+
+        .example-tag.vertical {
+            background: #fd7e14;
+        }
+
+        .example-tag.snap {
+            background: #dc3545;
+        }
+
+        .example-tag.smooth {
+            background: #17a2b8;
+        }
+
+        .example-tag.advanced {
+            background: #6f42c1;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .demo-area {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 0;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+
+        .code-block .keyword {
+            color: #569cd6;
+        }
+
+        .code-block .property {
+            color: #9cdcfe;
+        }
+
+        .code-block .value {
+            color: #ce9178;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* ========== SCROLL SNAP EXAMPLES ========== */
+
+        /* Example 1: Horizontal Carousel */
+        .carousel-1 {
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            overflow-x: auto;
+            display: flex;
+            height: 250px;
+            gap: 10px;
+            padding: 10px;
+            scroll-padding-left: 10px;
+        }
+
+        .carousel-1::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .carousel-1::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+
+        .carousel-1::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .carousel-item-1 {
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
+            flex-shrink: 0;
+            width: 200px;
+            height: 230px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        /* Example 2: Start-Aligned Carousel */
+        .carousel-2 {
+            scroll-snap-type: x mandatory;
+            overflow-x: auto;
+            display: flex;
+            height: 200px;
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .carousel-item-2 {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            flex-shrink: 0;
+            width: 150px;
+            height: 170px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Example 3: Proximity Carousel */
+        .carousel-3 {
+            scroll-snap-type: x proximity;
+            overflow-x: auto;
+            display: flex;
+            height: 200px;
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .carousel-item-3 {
+            scroll-snap-align: center;
+            scroll-snap-stop: normal;
+            flex-shrink: 0;
+            width: 180px;
+            height: 170px;
+            background: linear-gradient(135deg, #fd7e14 0%, #ff9f43 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Example 4: Vertical Snap List */
+        .snap-list-4 {
+            scroll-snap-type: y mandatory;
+            overflow-y: auto;
+            height: 300px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+        }
+
+        .snap-item-4 {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            padding: 20px;
+            min-height: 100px;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* Example 5: Gallery with Full Height */
+        .gallery-5 {
+            scroll-snap-type: x mandatory;
+            overflow-x: auto;
+            display: flex;
+            height: 300px;
+            scroll-padding: 0;
+        }
+
+        .gallery-item-5 {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        /* Example 6: Image Carousel */
+        .image-carousel-6 {
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            overflow-x: auto;
+            display: flex;
+            height: 250px;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .image-item-6 {
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
+            flex-shrink: 0;
+            width: 200px;
+            height: 230px;
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Example 7: Vertical Sections */
+        .sections-7 {
+            scroll-snap-type: y mandatory;
+            overflow-y: auto;
+            height: 300px;
+            border: 2px solid #667eea;
+        }
+
+        .section-item-7 {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            min-height: 150px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-bottom: 3px solid rgba(255,255,255,0.2);
+        }
+
+        /* Example 8: Product Grid */
+        .product-grid-8 {
+            scroll-snap-type: both mandatory;
+            overflow: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-scroll, 150px);
+            height: 350px;
+            gap: 15px;
+            padding: 15px;
+            align-content: start;
+        }
+
+        .product-item-8 {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Example 9: Hero Carousel */
+        .hero-carousel-9 {
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            overflow-x: auto;
+            display: flex;
+            height: 280px;
+        }
+
+        .hero-item-9 {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3em;
+            font-weight: bold;
+            position: relative;
+        }
+
+        /* Example 10: End-Aligned Items */
+        .carousel-10 {
+            scroll-snap-type: x mandatory;
+            overflow-x: auto;
+            display: flex;
+            height: 200px;
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .carousel-item-10 {
+            scroll-snap-align: end;
+            scroll-snap-stop: always;
+            flex-shrink: 0;
+            width: 160px;
+            height: 170px;
+            background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Example 11: Mixed Stop Types */
+        .carousel-11 {
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            overflow-x: auto;
+            display: flex;
+            height: 200px;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .carousel-item-11 {
+            flex-shrink: 0;
+            width: 140px;
+            height: 180px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            scroll-snap-align: center;
+        }
+
+        .carousel-item-11.always {
+            scroll-snap-stop: always;
+            border: 3px solid white;
+        }
+
+        .carousel-item-11.normal {
+            scroll-snap-stop: normal;
+            opacity: 0.7;
+        }
+
+        /* Example 12: Touch Slides */
+        .slides-12 {
+            scroll-snap-type: x mandatory;
+            touch-action: manipulation;
+            overflow-x: auto;
+            display: flex;
+            height: 250px;
+        }
+
+        .slide-item-12 {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .slide-number {
+            font-size: 0.8em;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .example h2 {
+                font-size: 1.3em;
+            }
+
+            .code-block {
+                font-size: 0.75em;
+            }
+
+            .carousel-1, .carousel-2, .carousel-3,
+            .carousel-10, .carousel-11, .image-carousel-6,
+            .hero-carousel-9, .slides-12 {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+            }
+
+            .example {
+                padding: 15px;
+            }
+
+            .example h2 {
+                font-size: 1.1em;
+            }
+
+            .code-block {
+                font-size: 0.7em;
+            }
+
+            .carousel-1, .carousel-2, .carousel-3,
+            .carousel-10, .carousel-11, .image-carousel-6,
+            .hero-carousel-9, .slides-12 {
+                height: 150px;
+            }
+
+            .carousel-item-1, .carousel-item-2, .carousel-item-3 {
+                width: 140px;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS scroll-snap Properties</h1>
+            <p class="subtitle">12 Practical Examples • Snap Scrolling Implementations</p>
+        </header>
+
+        <div class="examples-grid">
+            <!-- EXAMPLE 1: CENTER-ALIGNED CAROUSEL -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>1. Center-Aligned Carousel</h2>
+                    <span class="example-tag horizontal">Horizontal</span>
+                </div>
+                <p class="example-description">
+                    Mandatory snapping with center alignment. Each item centers in view when you stop scrolling. Try dragging horizontally!
+                </p>
+                <div class="demo-area">
+                    <div class="carousel-1">
+                        <div class="carousel-item-1">Item 1</div>
+                        <div class="carousel-item-1">Item 2</div>
+                        <div class="carousel-item-1">Item 3</div>
+                        <div class="carousel-item-1">Item 4</div>
+                        <div class="carousel-item-1">Item 5</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.carousel</span> {
+    <span class="property">scroll-snap-type:</span> <span class="value">x mandatory</span>;
+    <span class="property">scroll-behavior:</span> <span class="value">smooth</span>;
+    <span class="property">overflow-x:</span> <span class="value">auto</span>;
+}
+
+<span class="keyword">.item</span> {
+    <span class="property">scroll-snap-align:</span> <span class="value">center</span>;
+    <span class="property">scroll-snap-stop:</span> <span class="value">always</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 2: START-ALIGNED CAROUSEL -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>2. Start-Aligned Carousel</h2>
+                    <span class="example-tag horizontal">Horizontal</span>
+                </div>
+                <p class="example-description">
+                    Items snap to the start (left edge) of container. Useful for lists and product galleries.
+                </p>
+                <div class="demo-area">
+                    <div class="carousel-2">
+                        <div class="carousel-item-2">Item 1</div>
+                        <div class="carousel-item-2">Item 2</div>
+                        <div class="carousel-item-2">Item 3</div>
+                        <div class="carousel-item-2">Item 4</div>
+                        <div class="carousel-item-2">Item 5</div>
+                        <div class="carousel-item-2">Item 6</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.carousel</span> {
+    <span class="property">scroll-snap-type:</span> <span class="value">x mandatory</span>;
+    <span class="property">overflow-x:</span> <span class="value">auto</span>;
+}
+
+<span class="keyword">.item</span> {
+    <span class="property">scroll-snap-align:</span> <span class="value">start</span>;
+    <span class="property">scroll-snap-stop:</span> <span class="value">always</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 3: PROXIMITY SNAPPING -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>3. Proximity Snapping</h2>
+                    <span class="example-tag smooth">Smooth</span>
+                </div>
+                <p class="example-description">
+                    Browser MAY snap only if close to snap point. More flexible than mandatory snapping for faster scrolling.
+                </p>
+                <div class="demo-area">
+                    <div class="carousel-3">
+                        <div class="carousel-item-3">Item 1</div>
+                        <div class="carousel-item-3">Item 2</div>
+                        <div class="carousel-item-3">Item 3</div>
+                        <div class="carousel-item-3">Item 4</div>
+                        <div class="carousel-item-3">Item 5</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.carousel</span> {
+    <span class="property">scroll-snap-type:</span> <span class="value">x proximity</span>;
+    <span class="property">overflow-x:</span> <span class="value">auto</span>;
+}
+
+<span class="keyword">.item</span> {
+    <span class="property">scroll-snap-align:</span> <span class="value">center</span>;
+    <span class="property">scroll-snap-stop:</span> <span class="value">normal</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 4: VERTICAL SNAP LIST -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>4. Vertical Snap List</h2>
+                    <span class="example-tag vertical">Vertical</span>
+                </div>
+                <p class="example-description">
+                    Vertical scrolling with snap points. Items snap to top when you finish scrolling.
+                </p>
+                <div class="demo-area">
+                    <div class="snap-list-4">
+                        <div class="snap-item-4">Item 1</div>
+                        <div class="snap-item-4">Item 2</div>
+                        <div class="snap-item-4">Item 3</div>
+                        <div class="snap-item-4">Item 4</div>
+                        <div class="snap-item-4">Item 5</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.list</span> {
+    <span class="property">scroll-snap-type:</span> <span class="value">y mandatory</span>;
+    <span class="property">overflow-y:</span> <span class="value">auto</span>;
+    <span class="property">height:</span> <span class="value">300px</span>;
+}
+
+<span class="keyword">.item</span> {
+    <span class="property">scroll-snap-align:</span> <span class="value">start</span>;
+    <span class="property">scroll-snap-stop:</span> <span class="value">always</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 5: FULL-HEIGHT GALLERY -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>5. Full-Height Gallery</h2>
+                    <span class="example-tag snap">Full Screen</span>
+                </div>
+                <p class="example-description">
+                    Full-width images snapping to container edges. Perfect for portfolio or image galleries.
+                </p>
+                <div class="demo-area">
+                    <div class="gallery-5">
+                        <div class="gallery-item-5">Slide 1</div>
+                        <div class="gallery-item-5">Slide 2</div>
+                        <div class="gallery-item-5">Slide 3</div>
+                        <div class="gallery-item-5">Slide 4</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.gallery</span> {
+    <span class="property">scroll-snap-type:</span> <span class="value">x mandatory</span>;
+    <span class="property">overflow-x:</span> <span class="value">auto</span>;
+}
+
+<span class="keyword">.image</span> {
+    <span class="property">scroll-snap-align:</span> <span class="value">start</span>;
+    <span class="property">scroll-snap-stop:</span> <span class="value">always</span>;
+    <span class="property">width:</span> <span class="value">100%</span>;
+    <span class="property">height:</span> <span class="value">100%</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 6: IMAGE CAROUSEL -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>6. Image Carousel with Shadows</h2>
+                    <span class="example-tag horizontal">Carousel</span>
+                </div>
+                <p class="example-description">
+                    Polished carousel with shadows and smooth scrolling. Center-aligned for featured content.
+                </p>
+                <div class="demo-area">
+                    <div class="image-carousel-6">
+                        <div class="image-item-6">Image 1</div>
+                        <div class="image-item-6">Image 2</div>
+                        <div class="image-item-6">Image 3</div>
+                        <div class="image-item-6">Image 4</div>
+                        <div class="image-item-6">Image 5</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.carousel</span> {
+    <span class="property">scroll-snap-type:</span> <span class="value">x mandatory</span>;
+    <span class="property">scroll-behavior:</span> <span class="value">smooth</span>;
+    <span class="property">overflow-x:</span> <span class="value">auto</span>;
+}
+
+<span class="keyword">.image</span> {
+    <span class="property">scroll-snap-align:</span> <span class="value">center</span>;
+    <span class="property">scroll-snap-stop:</span> <span class="value">always</span>;
+    <span class="property">box-shadow:</span> <span class="value">0 4px 12px rgba(0,0,0,0.1)</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 7: FULL-HEIGHT SECTIONS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>7. Full-Height Sections</h2>
+                    <span class="example-tag vertical">Sections</span>
+                </div>
+                <p class="example-description">
+                    Each section takes full container height. Perfect for presentation slides or stories.
+                </p>
+                <div class="demo-area">
+                    <div class="sections-7">
+                        <div class="section-item-7">Section 1</div>
+                        <div class="section-item-7">Section 2</div>
+                        <div class="section-item-7">Section 3</div>
+                        <div class="section-item-7">Section 4</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.sections</span> {
+    <span class="property">scroll-snap-type:</span> <span class="value">y mandatory</span>;
+    <span class="property">overflow-y:</span> <span class="value">auto</span>;
+    <span class="property">height:</span> <span class="value">300px</span>;
+}
+
+<span class="keyword">.section</span> {
+    <span class="property">scroll-snap-align:</span> <span class="value">start</span>;
+    <span class="property">scroll-snap-stop:</span> <span class="value">always</span>;
+    <span class="property">min-height:</span> <span class="value">150px</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 8: PRODUCT GRID -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>8. 2D Product Grid</h2>
+                    <span class="example-tag advanced">2D Snap</span>
+                </div>
+                <p class="example-description">
+                    Snap scrolling in both horizontal and vertical directions. Useful for product catalogs.
+                </p>
+                <div class="demo-area">
+                    <div class="product-grid-8">
+                        <div class="product-item-8">P1</div>
+                        <div class="product-item-8">P2</div>
+                        <div class="product-item-8">P3</div>
+                        <div class="product-item-8">P4</div>
+                        <div class="product-item-8">P5</div>
+                        <div class="product-item-8">P6</div>
+                        <div class="product-item-8">P7</div>
+                        <div class="product-item-8">P8</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.grid</span> {
+    <span class="property">scroll-snap-type:</span> <span class="value">both mandatory</span>;
+    <span class="property">overflow:</span> <span class="value">auto</span>;
+    <span class="property">display:</span> <span class="value">grid</span>;
+}
+
+<span class="keyword">.product</span> {
+    <span class="property">scroll-snap-align:</span> <span class="value">start</span>;
+    <span class="property">scroll-snap-stop:</span> <span class="value">always</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 9: HERO CAROUSEL -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>9. Hero Banner Carousel</h2>
+                    <span class="example-tag horizontal">Hero</span>
+                </div>
+                <p class="example-description">
+                    Full-width hero banners with smooth snapping. Ideal for landing pages and promotions.
+                </p>
+                <div class="demo-area">
+                    <div class="hero-carousel-9">
+                        <div class="hero-item-9">Banner 1</div>
+                        <div class="hero-item-9">Banner 2</div>
+                        <div class="hero-item-9">Banner 3</div>
+                        <div class="hero-item-9">Banner 4</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.hero-carousel</span> {
+    <span class="property">scroll-snap-type:</span> <span class="value">x mandatory</span>;
+    <span class="property">scroll-behavior:</span> <span class="value">smooth</span>;
+    <span class="property">overflow-x:</span> <span class="value">auto</span>;
+}
+
+<span class="keyword">.hero</span> {
+    <span class="property">scroll-snap-align:</span> <span class="value">start</span>;
+    <span class="property">scroll-snap-stop:</span> <span class="value">always</span>;
+    <span class="property">width:</span> <span class="value">100%</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 10: END-ALIGNED ITEMS -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>10. End-Aligned Carousel</h2>
+                    <span class="example-tag horizontal">End Align</span>
+                </div>
+                <p class="example-description">
+                    Items snap to the end (right edge) of container. Useful for right-to-left layouts.
+                </p>
+                <div class="demo-area">
+                    <div class="carousel-10">
+                        <div class="carousel-item-10">Item 1</div>
+                        <div class="carousel-item-10">Item 2</div>
+                        <div class="carousel-item-10">Item 3</div>
+                        <div class="carousel-item-10">Item 4</div>
+                        <div class="carousel-item-10">Item 5</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.carousel</span> {
+    <span class="property">scroll-snap-type:</span> <span class="value">x mandatory</span>;
+    <span class="property">overflow-x:</span> <span class="value">auto</span>;
+}
+
+<span class="keyword">.item</span> {
+    <span class="property">scroll-snap-align:</span> <span class="value">end</span>;
+    <span class="property">scroll-snap-stop:</span> <span class="value">always</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 11: MIXED STOP TYPES -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>11. Mixed scroll-snap-stop</h2>
+                    <span class="example-tag snap">Featured</span>
+                </div>
+                <p class="example-description">
+                    Featured items (solid border) always snap, others (faded) can be skipped during fast scrolling. White borders mark mandatory stop points.
+                </p>
+                <div class="demo-area">
+                    <div class="carousel-11">
+                        <div class="carousel-item-11 always">Featured</div>
+                        <div class="carousel-item-11 normal">Skip</div>
+                        <div class="carousel-item-11 always">Featured</div>
+                        <div class="carousel-item-11 normal">Skip</div>
+                        <div class="carousel-item-11 always">Featured</div>
+                        <div class="carousel-item-11 normal">Skip</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.featured</span> {
+    <span class="property">scroll-snap-stop:</span> <span class="value">always</span>;
+    <span class="property">border:</span> <span class="value">3px solid white</span>;
+}
+
+<span class="keyword">.normal</span> {
+    <span class="property">scroll-snap-stop:</span> <span class="value">normal</span>;
+    <span class="property">opacity:</span> <span class="value">0.7</span>;
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 12: TOUCH-OPTIMIZED SLIDES -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>12. Mobile Touch Slides</h2>
+                    <span class="example-tag smooth">Touch</span>
+                </div>
+                <p class="example-description">
+                    Optimized for touch devices with natural scrolling. Perfect for mobile-first applications.
+                </p>
+                <div class="demo-area">
+                    <div class="slides-12">
+                        <div class="slide-item-12">
+                            Slide 1
+                            <div class="slide-number">Swipe to navigate</div>
+                        </div>
+                        <div class="slide-item-12">
+                            Slide 2
+                            <div class="slide-number">Touch optimized</div>
+                        </div>
+                        <div class="slide-item-12">
+                            Slide 3
+                            <div class="slide-number">Full width</div>
+                        </div>
+                        <div class="slide-item-12">
+                            Slide 4
+                            <div class="slide-number">Pure CSS</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">.slides</span> {
+    <span class="property">scroll-snap-type:</span> <span class="value">x mandatory</span>;
+    <span class="property">touch-action:</span> <span class="value">manipulation</span>;
+    <span class="property">overflow-x:</span> <span class="value">auto</span>;
+}
+
+<span class="keyword">.slide</span> {
+    <span class="property">scroll-snap-align:</span> <span class="value">start</span>;
+    <span class="property">scroll-snap-stop:</span> <span class="value">always</span>;
+    <span class="property">width:</span> <span class="value">100%</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS scroll-snap Properties • 12 Practical Examples</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Each example demonstrates snap scrolling in different scenarios. Try scrolling/dragging each carousel!</p>
+        </footer>
+    </div>
+</body>
+</html>

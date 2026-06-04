@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Scrollbar Properties Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .tutorial-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            border-left: 4px solid #667eea;
+        }
+
+        .tutorial-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .tutorial-section h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .code-block code {
+            display: block;
+        }
+
+        .keyword { color: #ff79c6; }
+        .property { color: #8be9fd; }
+        .value { color: #50fa7b; }
+        .comment { color: #6272a4; }
+
+        .example-box {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            min-height: 200px;
+            overflow: hidden;
+        }
+
+        .example-box h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        /* Scrollbar Color Examples */
+        #scroll-color-1 {
+            scrollbar-color: #667eea #f0f0f0;
+            height: 150px;
+            overflow-y: scroll;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+        }
+
+        #scroll-color-2 {
+            scrollbar-color: #ff6b6b #ffe0e0;
+            height: 150px;
+            overflow-y: scroll;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+        }
+
+        #scroll-color-3 {
+            scrollbar-color: #50fa7b #1a1a1a;
+            height: 150px;
+            overflow-y: scroll;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+        }
+
+        /* Scrollbar Width Examples */
+        #scroll-width-thin {
+            scrollbar-width: thin;
+            height: 150px;
+            overflow-y: scroll;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+            scrollbar-color: #667eea #e0e0e0;
+        }
+
+        #scroll-width-auto {
+            scrollbar-width: auto;
+            height: 150px;
+            overflow-y: scroll;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+            scrollbar-color: #764ba2 #e0e0e0;
+        }
+
+        /* Scrollbar Gutter Example */
+        #scroll-gutter-auto {
+            scrollbar-gutter: auto;
+            height: 150px;
+            overflow-y: scroll;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+            scrollbar-color: #ff79c6 #f0f0f0;
+        }
+
+        #scroll-gutter-stable {
+            scrollbar-gutter: stable;
+            height: 150px;
+            overflow-y: scroll;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+            scrollbar-color: #50fa7b #f0f0f0;
+        }
+
+        .sample-text {
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .sample-text p {
+            margin-bottom: 10px;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .support-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .support-table th,
+        .support-table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .support-table th {
+            background: #667eea;
+            color: white;
+        }
+
+        .support-table tr:nth-child(even) {
+            background: #f5f5f5;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .comparison-item {
+            background: white;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .comparison-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 1024px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Scrollbar Properties</h1>
+            <p>Master scrollbar-color, scrollbar-width, and scrollbar-gutter</p>
+        </header>
+
+        <div class="content">
+            <!-- scrollbar-color Tutorial -->
+            <div class="tutorial-section">
+                <h2>scrollbar-color</h2>
+                <p>Controls the colors of the scrollbar thumb and track. Only works with the scrollbar-width property.</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block">
+                    <code><span class="property">scrollbar-color</span>: <span class="value">track-color</span> | <span class="value">thumb-color</span>;</code>
+                </div>
+
+                <h3>Values</h3>
+                <ul style="margin-left: 20px; color: #333;">
+                    <li><strong>track-color:</strong> Background color of the scrollbar track</li>
+                    <li><strong>thumb-color:</strong> Color of the scrollable thumb</li>
+                    <li><strong>auto:</strong> Default browser colors (default)</li>
+                </ul>
+
+                <h3>Example 1: Blue Theme</h3>
+                <div class="example-box">
+                    <h4>scrollbar-color: #667eea #f0f0f0;</h4>
+                    <div id="scroll-color-1">
+                        <div class="sample-text">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <p>Scroll down to see the custom colored scrollbar in action!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Example 2: Red Theme</h3>
+                <div class="example-box">
+                    <h4>scrollbar-color: #ff6b6b #ffe0e0;</h4>
+                    <div id="scroll-color-2">
+                        <div class="sample-text">
+                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+                            <p>Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.</p>
+                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Example 3: Dark Theme</h3>
+                <div class="example-box">
+                    <h4>scrollbar-color: #50fa7b #1a1a1a;</h4>
+                    <div id="scroll-color-3">
+                        <div class="sample-text">
+                            <p>Sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                            <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>
+                            <p>Nisi ut aliquid ex ea commodi consequatur. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae.</p>
+                            <p>Consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>ℹ️ Note:</strong> scrollbar-color only works with scrollbar-width set to 'thin' or 'auto'. It doesn't work with webkit-based scrollbar pseudoelements.
+                </div>
+            </div>
+
+            <!-- scrollbar-width Tutorial -->
+            <div class="tutorial-section">
+                <h2>scrollbar-width</h2>
+                <p>Sets the thickness of the scrollbar. Works with standard scrollbars only, not webkit pseudo-elements.</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block">
+                    <code><span class="property">scrollbar-width</span>: <span class="keyword">auto</span> | <span class="keyword">thin</span> | <span class="keyword">none</span>;</code>
+                </div>
+
+                <h3>Values</h3>
+                <ul style="margin-left: 20px; color: #333;">
+                    <li><strong>auto:</strong> Default scrollbar width (usually 15-17px) (default)</li>
+                    <li><strong>thin:</strong> Thin scrollbar (usually 8-12px)</li>
+                    <li><strong>none:</strong> Scrollbar is hidden but content is still scrollable</li>
+                </ul>
+
+                <h3>Example: Thin Scrollbar</h3>
+                <div class="example-box">
+                    <h4>scrollbar-width: thin;</h4>
+                    <div id="scroll-width-thin">
+                        <div class="sample-text">
+                            <p>This scrollbar is set to 'thin'. Notice how it takes up less space compared to the default width.</p>
+                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
+                            <p>Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
+                            <p>Et harum quidem rerum facilis est et expedita distinctio nam libero tempore, cum soluta nobis est eligendi optio.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Example: Auto Scrollbar (Default)</h3>
+                <div class="example-box">
+                    <h4>scrollbar-width: auto;</h4>
+                    <div id="scroll-width-auto">
+                        <div class="sample-text">
+                            <p>This scrollbar uses the default 'auto' width. It's typically thicker than the 'thin' option.</p>
+                            <p>Cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
+                            <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae itaque earum.</p>
+                            <p>Rerum necessitatibus saepe eveniet ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Warning:</strong> Using scrollbar-width: none removes the scrollbar but keeps the element scrollable. This can make navigation less obvious to users. Consider usability!
+                </div>
+            </div>
+
+            <!-- scrollbar-gutter Tutorial -->
+            <div class="tutorial-section">
+                <h2>scrollbar-gutter</h2>
+                <p>Reserves space for the scrollbar, preventing content shift when scrollbars appear/disappear.</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block">
+                    <code><span class="property">scrollbar-gutter</span>: <span class="keyword">auto</span> | <span class="keyword">stable</span>;</code>
+                </div>
+
+                <h3>Values</h3>
+                <ul style="margin-left: 20px; color: #333;">
+                    <li><strong>auto:</strong> Scrollbar space taken from content when needed (default)</li>
+                    <li><strong>stable:</strong> Always reserves space for scrollbar, prevents layout shift</li>
+                    <li><strong>stable both-edges:</strong> Reserves space on both sides (not widely supported)</li>
+                </ul>
+
+                <h3>Example: auto (Content Shifts)</h3>
+                <div class="example-box">
+                    <h4>scrollbar-gutter: auto; (Default Behavior)</h4>
+                    <div id="scroll-gutter-auto">
+                        <div class="sample-text">
+                            <p><strong>Notice:</strong> When you scroll, the content may shift horizontally as the scrollbar appears.</p>
+                            <p>This happens because the scrollbar takes up space from the content width when it appears.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                            <p>Ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Example: stable (No Content Shift)</h3>
+                <div class="example-box">
+                    <h4>scrollbar-gutter: stable; (Space Always Reserved)</h4>
+                    <div id="scroll-gutter-stable">
+                        <div class="sample-text">
+                            <p><strong>Notice:</strong> The content does NOT shift when scrolling because space is reserved.</p>
+                            <p>The scrollbar-gutter property ensures a fixed layout, improving user experience.</p>
+                            <p>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+                            <p>In voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>ℹ️ Tip:</strong> scrollbar-gutter is excellent for single-page applications where content changes dynamically. It prevents jarring layout shifts!
+                </div>
+            </div>
+
+            <!-- Browser Support Table -->
+            <div class="tutorial-section full-width">
+                <h2>Browser Support Comparison</h2>
+                <table class="support-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>scrollbar-color</strong></td>
+                            <td>64+</td>
+                            <td>64+</td>
+                            <td>15.1+</td>
+                            <td>79+</td>
+                            <td>Standard CSS, not webkit pseudo-elements</td>
+                        </tr>
+                        <tr>
+                            <td><strong>scrollbar-width</strong></td>
+                            <td>77+</td>
+                            <td>64+</td>
+                            <td>15.1+</td>
+                            <td>79+</td>
+                            <td>Excellent browser support</td>
+                        </tr>
+                        <tr>
+                            <td><strong>scrollbar-gutter</strong></td>
+                            <td>101+</td>
+                            <td>103+</td>
+                            <td>17+</td>
+                            <td>101+</td>
+                            <td>Newer property, still gaining adoption</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Practical Examples -->
+            <div class="tutorial-section full-width">
+                <h2>Practical Implementation Guide</h2>
+
+                <h3>Example 1: Complete Custom Scrollbar</h3>
+                <div class="code-block">
+                    <code><span class="keyword">div</span> {<br/>
+&nbsp;&nbsp;<span class="property">scrollbar-width</span>: <span class="value">thin</span>;<br/>
+&nbsp;&nbsp;<span class="property">scrollbar-color</span>: <span class="value">#667eea #f0f0f0</span>;<br/>
+&nbsp;&nbsp;<span class="property">overflow-y</span>: <span class="value">scroll</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Example 2: Prevent Layout Shift</h3>
+                <div class="code-block">
+                    <code><span class="keyword">body</span> {<br/>
+&nbsp;&nbsp;<span class="property">scrollbar-gutter</span>: <span class="value">stable</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Example 3: Dark Mode Scrollbar</h3>
+                <div class="code-block">
+                    <code><span class="keyword">html</span> {<br/>
+&nbsp;&nbsp;<span class="property">scrollbar-color</span>: <span class="value">#888 #222</span>;<br/>
+&nbsp;&nbsp;<span class="property">scrollbar-width</span>: <span class="value">thin</span>;<br/>
+}<br/><br/>
+<span class="comment">/* Fallback for webkit browsers */</span><br/>
+<span class="keyword">::-webkit-scrollbar</span> {<br/>
+&nbsp;&nbsp;<span class="property">width</span>: <span class="value">10px</span>;<br/>
+}<br/>
+<span class="keyword">::-webkit-scrollbar-track</span> {<br/>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">#222</span>;<br/>
+}<br/>
+<span class="keyword">::-webkit-scrollbar-thumb</span> {<br/>
+&nbsp;&nbsp;<span class="property">background</span>: <span class="value">#888</span>;<br/>
+}</code>
+                </div>
+
+                <div class="info-box">
+                    <strong>ℹ️ Tip:</strong> Combine scrollbar-color/scrollbar-width with webkit pseudo-elements for broader browser compatibility across all scrollbar customization needs.
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="tutorial-section full-width">
+                <h2>Properties Comparison</h2>
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <strong>scrollbar-color</strong>
+                        <div>
+                            <p><strong>Purpose:</strong> Color customization</p>
+                            <p><strong>Values:</strong> 2 colors (track, thumb)</p>
+                            <p><strong>Default:</strong> auto</p>
+                            <p><strong>Requires:</strong> scrollbar-width property</p>
+                        </div>
+                    </div>
+                    <div class="comparison-item">
+                        <strong>scrollbar-width</strong>
+                        <div>
+                            <p><strong>Purpose:</strong> Size customization</p>
+                            <p><strong>Values:</strong> auto, thin, none</p>
+                            <p><strong>Default:</strong> auto</p>
+                            <p><strong>Note:</strong> Limited size control</p>
+                        </div>
+                    </div>
+                    <div class="comparison-item">
+                        <strong>scrollbar-gutter</strong>
+                        <div>
+                            <p><strong>Purpose:</strong> Layout stability</p>
+                            <p><strong>Values:</strong> auto, stable</p>
+                            <p><strong>Default:</strong> auto</p>
+                            <p><strong>Benefit:</strong> Prevents content shift</p>
+                        </div>
+                    </div>
+                    <div class="comparison-item">
+                        <strong>::-webkit-scrollbar</strong>
+                        <div>
+                            <p><strong>Purpose:</strong> Advanced customization</p>
+                            <p><strong>Support:</strong> Chrome, Safari, Edge</p>
+                            <p><strong>Benefits:</strong> More control</p>
+                            <p><strong>Note:</strong> Non-standard pseudo-element</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="tutorial-section full-width">
+                <h2>Best Practices & Tips</h2>
+                
+                <h3>✅ Do:</h3>
+                <ul style="margin-left: 20px; color: #333;">
+                    <li>Use scrollbar-gutter: stable on main container to prevent layout shift</li>
+                    <li>Ensure good contrast between thumb and track colors for accessibility</li>
+                    <li>Test across different browsers for consistency</li>
+                    <li>Combine CSS scrollbar properties with webkit fallbacks</li>
+                    <li>Use thin scrollbars for modern, minimal designs</li>
+                </ul>
+
+                <h3>❌ Don't:</h3>
+                <ul style="margin-left: 20px; color: #333;">
+                    <li>Use scrollbar-width: none without providing an alternative for scrolling indication</li>
+                    <li>Create low-contrast scrollbars that are hard to see</li>
+                    <li>Assume webkit properties work everywhere (always use standard CSS fallback)</li>
+                    <li>Hide scrollbars on touch devices without alternative scroll indicators</li>
+                    <li>Make scrollbars too thin for comfortable interaction</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>♿ Accessibility Note:</strong> Always ensure scrollbars are visible and easily recognizable. People with motor impairments may need larger, more visible scrollbars. Consider user preferences!
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS Scrollbar Properties Tutorial | Created with ❤️ | Updated 2026</p>
+            <p>Browser support information based on caniuse.com</p>
+        </footer>
+    </div>
+</body>
+</html>

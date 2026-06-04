@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Min() Max() Clamp() Functions Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .tutorial-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            border-left: 5px solid #2a5298;
+        }
+
+        .tutorial-section.min-fn {
+            border-left-color: #3b82f6;
+        }
+
+        .tutorial-section.max-fn {
+            border-left-color: #ef4444;
+        }
+
+        .tutorial-section.clamp-fn {
+            border-left-color: #8b5cf6;
+        }
+
+        .tutorial-section h2 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tutorial-section h3 {
+            color: #2a5298;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .function-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge-min {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-max {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-clamp {
+            background: #ede9fe;
+            color: #581c87;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 18px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .code-block.max-code {
+            border-left-color: #ef4444;
+        }
+
+        .code-block.clamp-code {
+            border-left-color: #8b5cf6;
+        }
+
+        .code-block code {
+            display: block;
+        }
+
+        .keyword { color: #f472b6; }
+        .property { color: #60a5fa; }
+        .value { color: #34d399; }
+        .comment { color: #6b7280; }
+        .function { color: #fbbf24; }
+
+        .example-box {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .example-box h4 {
+            color: #1f2937;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .example-box p {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        /* Min Function Examples */
+        .min-demo-1 {
+            width: min(100%, 500px);
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .min-demo-2 {
+            font-size: min(5vw, 32px);
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .min-demo-3 {
+            margin: min(10%, 40px);
+            padding: 20px;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        /* Max Function Examples */
+        .max-demo-1 {
+            width: max(50%, 300px);
+            background: linear-gradient(135deg, #ef4444, #991b1b);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .max-demo-2 {
+            padding: max(1rem, 5%);
+            background: linear-gradient(135deg, #ef4444, #991b1b);
+            color: white;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .max-demo-3 {
+            gap: max(1rem, 2vw);
+            display: flex;
+            flex-wrap: wrap;
+            background: linear-gradient(135deg, #ef4444, #991b1b);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+        }
+
+        .max-demo-3 > div {
+            flex: 1;
+            min-width: 150px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* Clamp Function Examples */
+        .clamp-demo-1 {
+            width: clamp(300px, 50%, 800px);
+            background: linear-gradient(135deg, #8b5cf6, #581c87);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .clamp-demo-2 {
+            font-size: clamp(1rem, 2.5vw, 3rem);
+            background: linear-gradient(135deg, #8b5cf6, #581c87);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .clamp-demo-3 {
+            padding: clamp(1rem, 5%, 3rem);
+            margin: clamp(0.5rem, 2vw, 2rem);
+            background: linear-gradient(135deg, #8b5cf6, #581c87);
+            color: white;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1e40af;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #991b1b;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #166534;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: #1f2937;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .comparison-item.min-item {
+            border-color: #3b82f6;
+            border-top: 4px solid #3b82f6;
+        }
+
+        .comparison-item.max-item {
+            border-color: #ef4444;
+            border-top: 4px solid #ef4444;
+        }
+
+        .comparison-item.clamp-item {
+            border-color: #8b5cf6;
+            border-top: 4px solid #8b5cf6;
+        }
+
+        .comparison-item strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        .comparison-item ul {
+            margin-left: 20px;
+            color: #4b5563;
+            font-size: 0.9em;
+        }
+
+        .comparison-item li {
+            margin-bottom: 6px;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .use-case-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .use-case-item h4 {
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .use-case-item code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            color: #7c3aed;
+        }
+
+        .use-case-item p {
+            font-size: 0.9em;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .responsive-demo {
+            background: linear-gradient(135deg, #dbeafe, #f3e8ff);
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .responsive-demo p {
+            color: #1f2937;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .responsive-element {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            border: 2px dashed #9333ea;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        footer {
+            background: #f3f4f6;
+            padding: 25px;
+            text-align: center;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .syntax-breakdown {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .syntax-breakdown strong {
+            color: #1f2937;
+            display: block;
+            margin: 8px 0 4px 0;
+        }
+
+        .syntax-breakdown code {
+            background: #fff7ed;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #92400e;
+        }
+
+        @media (max-width: 1200px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .use-case-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        ul {
+            margin-left: 20px;
+            color: #4b5563;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        li strong {
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS min(), max(), clamp()</h1>
+            <p>Master Dynamic Sizing Functions</p>
+            <p class="subtitle">Responsive design made simple with mathematical functions</p>
+        </header>
+
+        <div class="content">
+            <!-- MIN Function -->
+            <div class="tutorial-section min-fn">
+                <h2>
+                    <span class="function-badge badge-min">MIN</span>
+                    min() Function
+                </h2>
+                <p>Returns the smallest value from a list of options. Uses the minimum of provided values.</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block">
+                    <code><span class="property">property</span>: <span class="function">min</span>(<span class="value">value1</span>, <span class="value">value2</span>, <span class="value">...</span>);</code>
+                </div>
+
+                <h3>How It Works</h3>
+                <p>Compares values and picks the smallest. Perfect for setting maximum widths responsively.</p>
+
+                <h3>Example 1: Responsive Width</h3>
+                <div class="example-box">
+                    <h4>width: min(100%, 500px);</h4>
+                    <p>Takes 100% of container, but never larger than 500px</p>
+                    <div class="min-demo-1">Box with min(100%, 500px)</div>
+                </div>
+
+                <h3>Example 2: Responsive Font Size</h3>
+                <div class="example-box">
+                    <h4>font-size: min(5vw, 32px);</h4>
+                    <p>Font scales with viewport, but capped at 32px</p>
+                    <div class="min-demo-2">Responsive Font with min()</div>
+                </div>
+
+                <h3>Example 3: Responsive Margin</h3>
+                <div class="example-box">
+                    <h4>margin: min(10%, 40px);</h4>
+                    <p>Margin is 10% of parent, but never more than 40px</p>
+                    <div class="min-demo-3">Box with min(10%, 40px)</div>
+                </div>
+
+                <h3>Use Cases</h3>
+                <ul>
+                    <li><strong>Max widths:</strong> Prevent elements from being too wide</li>
+                    <li><strong>Font size caps:</strong> Limit scaling on large screens</li>
+                    <li><strong>Spacing limits:</strong> Cap padding/margin growth</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💡 Tip:</strong> Use min() to ensure responsive elements don't exceed ideal sizes on large screens.
+                </div>
+            </div>
+
+            <!-- MAX Function -->
+            <div class="tutorial-section max-fn">
+                <h2>
+                    <span class="function-badge badge-max">MAX</span>
+                    max() Function
+                </h2>
+                <p>Returns the largest value from a list of options. Uses the maximum of provided values.</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block max-code">
+                    <code><span class="property">property</span>: <span class="function">max</span>(<span class="value">value1</span>, <span class="value">value2</span>, <span class="value">...</span>);</code>
+                </div>
+
+                <h3>How It Works</h3>
+                <p>Compares values and picks the largest. Perfect for setting minimum sizes responsively.</p>
+
+                <h3>Example 1: Minimum Width</h3>
+                <div class="example-box">
+                    <h4>width: max(50%, 300px);</h4>
+                    <p>Takes 50% of container, but never smaller than 300px</p>
+                    <div class="max-demo-1">Box with max(50%, 300px)</div>
+                </div>
+
+                <h3>Example 2: Responsive Padding</h3>
+                <div class="example-box">
+                    <h4>padding: max(1rem, 5%);</h4>
+                    <p>Padding scales with viewport, but minimum 1rem</p>
+                    <div class="max-demo-2">Box with max(1rem, 5%)</div>
+                </div>
+
+                <h3>Example 3: Flexible Gaps</h3>
+                <div class="example-box">
+                    <h4>gap: max(1rem, 2vw);</h4>
+                    <p>Gap grows with viewport, but minimum 1rem</p>
+                    <div class="max-demo-3">
+                        <div>Item 1</div>
+                        <div>Item 2</div>
+                        <div>Item 3</div>
+                    </div>
+                </div>
+
+                <h3>Use Cases</h3>
+                <ul>
+                    <li><strong>Min widths:</strong> Prevent elements from being too small</li>
+                    <li><strong>Font size floors:</strong> Ensure minimum readability</li>
+                    <li><strong>Spacing minimums:</strong> Guarantee breathing room</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💡 Tip:</strong> Use max() to ensure elements maintain minimum sizes on small screens.
+                </div>
+            </div>
+
+            <!-- CLAMP Function -->
+            <div class="tutorial-section clamp-fn">
+                <h2>
+                    <span class="function-badge badge-clamp">CLAMP</span>
+                    clamp() Function
+                </h2>
+                <p>Sets a value between minimum and maximum bounds. The "Goldilocks" function - not too small, not too big.</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block clamp-code">
+                    <code><span class="property">property</span>: <span class="function">clamp</span>(<span class="value">min</span>, <span class="value">preferred</span>, <span class="value">max</span>);</code>
+                </div>
+
+                <h3>How It Works</h3>
+                <p>Takes three parameters: minimum, preferred value (usually fluid), and maximum. Perfect for truly responsive design.</p>
+
+                <h3>Example 1: Flexible Width</h3>
+                <div class="example-box">
+                    <h4>width: clamp(300px, 50%, 800px);</h4>
+                    <p>Width is 50%, but between 300px minimum and 800px maximum</p>
+                    <div class="clamp-demo-1">Box with clamp(300px, 50%, 800px)</div>
+                </div>
+
+                <h3>Example 2: Fluid Typography</h3>
+                <div class="example-box">
+                    <h4>font-size: clamp(1rem, 2.5vw, 3rem);</h4>
+                    <p>Font scales smoothly between 1rem and 3rem based on viewport</p>
+                    <div class="clamp-demo-2">Responsive Typography with clamp()</div>
+                </div>
+
+                <h3>Example 3: Dynamic Spacing</h3>
+                <div class="example-box">
+                    <h4>padding: clamp(1rem, 5%, 3rem);</h4>
+                    <p>Padding grows and shrinks responsively within bounds</p>
+                    <div class="clamp-demo-3">Box with dynamic padding</div>
+                </div>
+
+                <h3>Use Cases</h3>
+                <ul>
+                    <li><strong>Fluid typography:</strong> Perfect responsive font scaling</li>
+                    <li><strong>Container widths:</strong> Set bounds on flexible layouts</li>
+                    <li><strong>Scaling elements:</strong> Icons, buttons, spacing all scale nicely</li>
+                </ul>
+
+                <div class="success-box">
+                    <strong>✨ Pro Tip:</strong> clamp() is the best choice for creating truly responsive designs with minimal media queries.
+                </div>
+            </div>
+
+            <!-- Quick Comparison -->
+            <div class="tutorial-section full-width">
+                <h2>Quick Comparison</h2>
+                <div class="comparison-grid">
+                    <div class="comparison-item min-item">
+                        <strong>min()</strong>
+                        <ul>
+                            <li>Selects smallest value</li>
+                            <li>Sets maximum limits</li>
+                            <li>2+ parameters</li>
+                            <li>Use: Cap growth</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item max-item">
+                        <strong>max()</strong>
+                        <ul>
+                            <li>Selects largest value</li>
+                            <li>Sets minimum limits</li>
+                            <li>2+ parameters</li>
+                            <li>Use: Floor values</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item clamp-item">
+                        <strong>clamp()</strong>
+                        <ul>
+                            <li>Bounds values</li>
+                            <li>Min, preferred, max</li>
+                            <li>Exactly 3 parameters</li>
+                            <li>Use: Fluid scaling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Comparison Table -->
+            <div class="tutorial-section full-width">
+                <h2>Detailed Function Comparison</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>min()</th>
+                            <th>max()</th>
+                            <th>clamp()</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Purpose</strong></td>
+                            <td>Find smallest value</td>
+                            <td>Find largest value</td>
+                            <td>Constrain between bounds</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Parameters</strong></td>
+                            <td>2 or more</td>
+                            <td>2 or more</td>
+                            <td>Exactly 3</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Best For</strong></td>
+                            <td>Maximum limits (caps)</td>
+                            <td>Minimum limits (floors)</td>
+                            <td>Responsive scaling</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Example</strong></td>
+                            <td>width: min(100%, 500px)</td>
+                            <td>width: max(50%, 300px)</td>
+                            <td>width: clamp(300px, 50%, 800px)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Syntax</strong></td>
+                            <td>min(v1, v2, ...)</td>
+                            <td>max(v1, v2, ...)</td>
+                            <td>clamp(min, pref, max)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Browser Support</strong></td>
+                            <td>95%+ modern browsers</td>
+                            <td>95%+ modern browsers</td>
+                            <td>95%+ modern browsers</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Practical Examples -->
+            <div class="tutorial-section full-width">
+                <h2>Real-World Use Cases</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <h4>📱 Responsive Typography</h4>
+                        <code>font-size: clamp(1rem, 5vw, 3rem);</code>
+                        <p>Font size scales smoothly from 1rem to 3rem as viewport changes, without media queries.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📦 Container Queries</h4>
+                        <code>width: clamp(300px, 100%, 1200px);</code>
+                        <p>Container width adapts to parent while respecting min/max bounds.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🎨 Flexible Padding</h4>
+                        <code>padding: clamp(1rem, 5%, 3rem);</code>
+                        <p>Padding scales with viewport while maintaining visual comfort.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🔤 Font Scale Cap</h4>
+                        <code>font-size: min(4vw, 2.5rem);</code>
+                        <p>Font grows on large screens but caps at 2.5rem for readability.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📏 Minimum Width</h4>
+                        <code>width: max(50%, 300px);</code>
+                        <p>Element takes 50% space but never shrinks below 300px.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🎁 Gap Spacing</h4>
+                        <code>gap: clamp(1rem, 3vw, 2rem);</code>
+                        <p>Grid gap scales responsively between comfortable bounds.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Implementation Guide -->
+            <div class="tutorial-section full-width">
+                <h2>Implementation Guide</h2>
+
+                <h3>Basic Syntax Breakdown</h3>
+                <div class="syntax-breakdown">
+                    <strong>min(value1, value2)</strong>
+                    <p>→ Returns whichever is smaller. Use to SET MAXIMUM LIMITS.</p>
+                    <code>Example: width: min(100%, 500px) // Never wider than 500px</code>
+                </div>
+
+                <div class="syntax-breakdown">
+                    <strong>max(value1, value2)</strong>
+                    <p>→ Returns whichever is larger. Use to SET MINIMUM LIMITS.</p>
+                    <code>Example: padding: max(1rem, 5%) // Never less than 1rem</code>
+                </div>
+
+                <div class="syntax-breakdown">
+                    <strong>clamp(minimum, preferred, maximum)</strong>
+                    <p>→ Clamps preferred value between min and max. Use for RESPONSIVE SCALING.</p>
+                    <code>Example: font-size: clamp(1rem, 2.5vw, 3rem) // Scales but stays in bounds</code>
+                </div>
+
+                <h3>Common Patterns</h3>
+                <div class="code-block">
+                    <code><span class="comment">/* Responsive padding */</span><br/>
+<span class="keyword">.container</span> {<br/>
+&nbsp;&nbsp;<span class="property">padding</span>: <span class="function">clamp</span>(<span class="value">1rem</span>, <span class="value">5%</span>, <span class="value">3rem</span>);<br/>
+}<br/><br/>
+<span class="comment">/* Fluid font sizing */</span><br/>
+<span class="keyword">h1</span> {<br/>
+&nbsp;&nbsp;<span class="property">font-size</span>: <span class="function">clamp</span>(<span class="value">1.5rem</span>, <span class="value">5vw</span>, <span class="value">3.5rem</span>);<br/>
+}<br/><br/>
+<span class="comment">/* Responsive gaps */</span><br/>
+<span class="keyword">.grid</span> {<br/>
+&nbsp;&nbsp;<span class="property">display</span>: <span class="value">grid</span>;<br/>
+&nbsp;&nbsp;<span class="property">gap</span>: <span class="function">clamp</span>(<span class="value">1rem</span>, <span class="value">2vw</span>, <span class="value">2rem</span>);<br/>
+}<br/><br/>
+<span class="comment">/* Max width with min limit */</span><br/>
+<span class="keyword">img</span> {<br/>
+&nbsp;&nbsp;<span class="property">width</span>: <span class="function">min</span>(<span class="value">100%</span>, <span class="value">600px</span>);<br/>
+}</code>
+                </div>
+            </div>
+
+            <!-- Browser Support -->
+            <div class="tutorial-section full-width">
+                <h2>Browser Support & Compatibility</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Function</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                            <th>Overall Support</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>min()</strong></td>
+                            <td>79+</td>
+                            <td>75+</td>
+                            <td>11.1+</td>
+                            <td>79+</td>
+                            <td>✅ Excellent (95%+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>max()</strong></td>
+                            <td>79+</td>
+                            <td>75+</td>
+                            <td>11.1+</td>
+                            <td>79+</td>
+                            <td>✅ Excellent (95%+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>clamp()</strong></td>
+                            <td>79+</td>
+                            <td>75+</td>
+                            <td>13.1+</td>
+                            <td>79+</td>
+                            <td>✅ Excellent (94%+)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="info-box">
+                    <strong>ℹ️ Safe to Use:</strong> These functions have excellent browser support. Safe for production use on modern browsers. Provide fallbacks for legacy browsers if needed.
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="tutorial-section full-width">
+                <h2>Best Practices & Tips</h2>
+
+                <h3>✅ Do:</h3>
+                <ul>
+                    <li><strong>Use clamp() for responsive typography:</strong> It creates smooth scaling without media queries</li>
+                    <li><strong>Combine with viewport units:</strong> vw, vh for truly responsive designs</li>
+                    <li><strong>Use meaningful variable names:</strong> Consider using CSS custom properties for reusability</li>
+                    <li><strong>Test across viewport sizes:</strong> Ensure values scale appropriately</li>
+                    <li><strong>Mix units thoughtfully:</strong> Combine fixed (px, rem) with fluid (%, vw) for balance</li>
+                </ul>
+
+                <h3>❌ Don't:</h3>
+                <ul>
+                    <li><strong>Forget about readability:</strong> Always maintain minimum/maximum bounds for text</li>
+                    <li><strong>Over-scale with viewport units:</strong> Pure vw can become too small/large</li>
+                    <li><strong>Ignore performance:</strong> These are highly performant but consider calculation overhead in complex layouts</li>
+                    <li><strong>Use without fallbacks on legacy projects:</strong> Provide fallbacks for old browsers if necessary</li>
+                    <li><strong>Clamp() with only two parameters:</strong> It requires exactly 3 parameters</li>
+                </ul>
+
+                <div class="success-box">
+                    <strong>🎯 Pro Strategy:</strong> Replace 80% of your media queries with clamp(). You'll write less CSS and achieve better responsive design!
+                </div>
+            </div>
+
+            <!-- Advanced Patterns -->
+            <div class="tutorial-section full-width">
+                <h2>Advanced Patterns & Tricks</h2>
+
+                <h3>1. Combine with CSS Custom Properties</h3>
+                <div class="code-block">
+                    <code><span class="keyword">:root</span> {<br/>
+&nbsp;&nbsp;<span class="property">--min-font</span>: <span class="value">1rem</span>;<br/>
+&nbsp;&nbsp;<span class="property">--max-font</span>: <span class="value">3rem</span>;<br/>
+&nbsp;&nbsp;<span class="property">--fluid-font</span>: <span class="function">clamp</span>(<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">var</span>(<span class="value">--min-font</span>), <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="value">3vw</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">var</span>(<span class="value">--max-font</span>)<br/>
+&nbsp;&nbsp;);<br/>
+}<br/><br/>
+<span class="keyword">h1</span> {<br/>
+&nbsp;&nbsp;<span class="property">font-size</span>: <span class="property">var</span>(<span class="value">--fluid-font</span>);<br/>
+}</code>
+                </div>
+
+                <h3>2. Responsive Aspect Ratio Padding</h3>
+                <div class="code-block">
+                    <code><span class="keyword">.video-container</span> {<br/>
+&nbsp;&nbsp;<span class="property">aspect-ratio</span>: <span class="value">16 / 9</span>;<br/>
+&nbsp;&nbsp;<span class="property">width</span>: <span class="function">clamp</span>(<span class="value">320px</span>, <span class="value">90%</span>, <span class="value">1000px</span>);<br/>
+}</code>
+                </div>
+
+                <h3>3. Multi-Value min/max for Complex Calculations</h3>
+                <div class="code-block">
+                    <code><span class="keyword">.flexible-grid</span> {<br/>
+&nbsp;&nbsp;<span class="property">display</span>: <span class="value">grid</span>;<br/>
+&nbsp;&nbsp;<span class="property">grid-template-columns</span>: <span class="function">repeat</span>(<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">auto-fit</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">minmax</span>(<span class="function">clamp</span>(<span class="value">250px</span>, <span class="value">20vw</span>, <span class="value">350px</span>), <span class="value">1fr</span>)<br/>
+&nbsp;&nbsp;);<br/>
+}</code>
+                </div>
+
+                <h3>4. Combining Functions</h3>
+                <div class="code-block">
+                    <code><span class="comment">/* Use max() for minimum and min() for maximum */</span><br/>
+<span class="keyword">.hero-section</span> {<br/>
+&nbsp;&nbsp;<span class="property">padding</span>: <span class="function">max</span>(<span class="value">2rem</span>, <span class="value">5vh</span>) <span class="function">min</span>(<span class="value">5%</span>, <span class="value">3rem</span>);<br/>
+}</code>
+                </div>
+            </div>
+
+            <!-- When to Use Which -->
+            <div class="tutorial-section full-width">
+                <h2>Decision Tree: Which Function to Use?</h2>
+                
+                <div style="background: #f9fafb; padding: 20px; border-radius: 6px; margin: 15px 0;">
+                    <p style="font-weight: 600; color: #1f2937; margin-bottom: 15px;">Are you trying to:</p>
+                    <ul style="list-style: none; margin-left: 0;">
+                        <li style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;">
+                            <strong>🎯 Prevent something from being TOO BIG?</strong><br/>
+                            <span style="color: #6b7280;">Use <code style="background: #dbeafe; padding: 2px 6px; border-radius: 3px;">min()</code></span>
+                        </li>
+                        <li style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;">
+                            <strong>🎯 Prevent something from being TOO SMALL?</strong><br/>
+                            <span style="color: #6b7280;">Use <code style="background: #fee2e2; padding: 2px 6px; border-radius: 3px;">max()</code></span>
+                        </li>
+                        <li style="margin-bottom: 12px;">
+                            <strong>🎯 Make something SCALE RESPONSIVELY within BOUNDS?</strong><br/>
+                            <span style="color: #6b7280;">Use <code style="background: #ede9fe; padding: 2px 6px; border-radius: 3px;">clamp()</code></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>CSS min(), max(), clamp() Functions Tutorial</strong></p>
+            <p>Master responsive design without media queries</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Browser Support: 94%+ | Production Ready ✅</p>
+        </footer>
+    </div>
+</body>
+</html>

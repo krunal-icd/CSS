@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS @supports Rule - 12 Practical Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .examples-grid {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .example {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .example-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .example h2 {
+            color: #667eea;
+            font-size: 1.6em;
+            margin: 0;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .example-tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .example-tag.grid {
+            background: #28a745;
+        }
+
+        .example-tag.effects {
+            background: #fd7e14;
+        }
+
+        .example-tag.responsive {
+            background: #17a2b8;
+        }
+
+        .example-tag.interactive {
+            background: #6f42c1;
+        }
+
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .demo-area {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+
+        .code-block .keyword {
+            color: #569cd6;
+        }
+
+        .code-block .property {
+            color: #9cdcfe;
+        }
+
+        .code-block .value {
+            color: #ce9178;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* EXAMPLE 1: RESPONSIVE GRID */
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .grid-item {
+            flex: 1 1 calc(33.333% - 15px);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        @supports (display: grid) {
+            .grid-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 15px;
+            }
+
+            .grid-item {
+                flex: none;
+            }
+        }
+
+        /* EXAMPLE 2: GLASS MORPHISM */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 10px;
+            color: #333;
+        }
+
+        @supports (backdrop-filter: blur(10px)) {
+            .glass-card {
+                background: rgba(255, 255, 255, 0.6);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.7);
+            }
+        }
+
+        /* EXAMPLE 3: ASPECT RATIO */
+        .image-container {
+            width: 100%;
+            padding-bottom: 66.66%;
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .image-container-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        @supports (aspect-ratio: 1) {
+            .image-container {
+                aspect-ratio: 3 / 2;
+                padding-bottom: 0;
+                height: auto;
+            }
+        }
+
+        /* EXAMPLE 4: STICKY POSITIONING */
+        .sticky-demo {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .sticky-header {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            position: static;
+        }
+
+        @supports (position: sticky) {
+            .sticky-header {
+                position: sticky;
+                top: 0;
+            }
+        }
+
+        .sticky-content {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        /* EXAMPLE 5: CSS VARIABLES */
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #ff6b6b;
+            --border-radius: 8px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .var-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .var-button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        @supports (--css: variables) {
+            .var-button {
+                background: var(--primary-color);
+                border-radius: var(--border-radius);
+                box-shadow: var(--shadow);
+            }
+
+            .var-button:hover {
+                background: var(--secondary-color);
+            }
+
+            .var-button.accent {
+                background: var(--accent-color);
+            }
+        }
+
+        /* EXAMPLE 6: GAP PROPERTY */
+        .flex-with-gap {
+            display: flex;
+            flex-wrap: wrap;
+            margin: -10px;
+        }
+
+        .flex-with-gap > * {
+            margin: 10px;
+        }
+
+        @supports (gap: 1rem) {
+            .flex-with-gap {
+                gap: 20px;
+                margin: 0;
+            }
+
+            .flex-with-gap > * {
+                margin: 0;
+            }
+        }
+
+        .gap-item {
+            flex: 1 1 calc(33.333% - 20px);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        /* EXAMPLE 7: SUBGRID */
+        .subgrid-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .subgrid-item {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        @supports (display: grid) and (grid-template-columns: subgrid) {
+            .subgrid-demo {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+
+            .subgrid-item {
+                display: grid;
+                grid-template-columns: subgrid;
+            }
+        }
+
+        /* EXAMPLE 8: CALC WITH MIN/MAX */
+        .flexible-container {
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @supports (width: clamp(200px, 50vw, 800px)) {
+            .flexible-container {
+                width: clamp(280px, 90vw, 1000px);
+            }
+        }
+
+        .flexible-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* EXAMPLE 9: TRANSFORM 3D */
+        .card-3d {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto;
+        }
+
+        @supports (transform: perspective(1000px)) and (transform: rotateY(45deg)) {
+            .card-3d:hover {
+                transform: perspective(1000px) rotateY(15deg) rotateX(-10deg);
+                box-shadow: 20px 20px 60px rgba(0,0,0,0.3);
+            }
+        }
+
+        @supports not (transform: perspective(1000px)) {
+            .card-3d:hover {
+                transform: scale(1.05);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+        }
+
+        /* EXAMPLE 10: CONTAINER QUERIES */
+        .container-demo {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+        }
+
+        @supports (container-type: inline-size) {
+            .container-demo {
+                container-type: inline-size;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .container-content {
+                text-align: center;
+                padding: 20px;
+                background: white;
+                border-radius: 6px;
+                border: 2px solid #667eea;
+            }
+
+            @container (min-width: 400px) {
+                .container-content {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 15px;
+                    text-align: left;
+                }
+            }
+        }
+
+        .container-content {
+            width: 100%;
+        }
+
+        /* EXAMPLE 11: BACKDROP BLUR WITH VENDOR PREFIX */
+        .blur-element {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        @supports (-webkit-backdrop-filter: blur(10px)) {
+            .blur-element {
+                background: rgba(255, 255, 255, 0.5);
+                -webkit-backdrop-filter: blur(10px);
+            }
+        }
+
+        @supports (backdrop-filter: blur(10px)) {
+            .blur-element {
+                background: rgba(255, 255, 255, 0.5);
+                backdrop-filter: blur(10px);
+            }
+        }
+
+        /* EXAMPLE 12: LOGICAL OPERATOR COMBINATION */
+        .advanced-layout {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .advanced-item {
+            flex: 1 1 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            min-width: 200px;
+        }
+
+        @supports ((display: grid) and (gap: 1rem)) or (display: flex) {
+            .advanced-layout {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .advanced-item {
+                margin: 0;
+                flex: none;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .example {
+                padding: 20px;
+            }
+
+            .grid-item,
+            .gap-item {
+                flex: 1 1 calc(50% - 8px);
+            }
+
+            .card-3d {
+                width: 150px;
+                height: 150px;
+            }
+
+            .demo-area {
+                padding: 15px;
+                min-height: 150px;
+            }
+
+            .code-block {
+                font-size: 0.75em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+            }
+
+            .example {
+                padding: 15px;
+            }
+
+            .example-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .example h2 {
+                font-size: 1.2em;
+                min-width: auto;
+            }
+
+            .grid-item,
+            .gap-item {
+                flex: 1 1 calc(50% - 8px);
+            }
+
+            .card-3d {
+                width: 120px;
+                height: 120px;
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS @supports Rule</h1>
+            <p class="subtitle">12 Practical Examples • Progressive Enhancement Strategies</p>
+        </header>
+
+        <div class="examples-grid">
+            <!-- EXAMPLE 1 -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>1. Responsive Grid Layout</h2>
+                    <span class="example-tag grid">Layout</span>
+                </div>
+                <p class="example-description">
+                    Use CSS Grid with auto-fit for responsive columns when supported, fallback to flexible wrapping otherwise.
+                </p>
+                <div class="demo-area">
+                    <div class="grid-container">
+                        <div class="grid-item">Item 1</div>
+                        <div class="grid-item">Item 2</div>
+                        <div class="grid-item">Item 3</div>
+                        <div class="grid-item">Item 4</div>
+                        <div class="grid-item">Item 5</div>
+                        <div class="grid-item">Item 6</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">@supports</span> (display: grid) {
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+    }
+}
+
+<span class="keyword">@supports</span> not (display: grid) {
+    .grid-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 2 -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>2. Glass Morphism Effect</h2>
+                    <span class="example-tag effects">Effects</span>
+                </div>
+                <p class="example-description">
+                    Apply backdrop blur for modern glass effect when supported, maintain solid fallback background.
+                </p>
+                <div class="demo-area">
+                    <div class="glass-card">
+                        <strong>This is a glass morphism card.</strong><br>
+                        <small>Modern browsers show frosted glass effect</small>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">@supports</span> (backdrop-filter: blur(10px)) {
+    .glass-card {
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(10px);
+    }
+}
+
+<span class="keyword">@supports</span> not (backdrop-filter: blur(10px)) {
+    .glass-card {
+        background: rgba(255, 255, 255, 0.9);
+    }
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 3 -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>3. Aspect Ratio Sizing</h2>
+                    <span class="example-tag responsive">Responsive</span>
+                </div>
+                <p class="example-description">
+                    Use aspect-ratio property for consistent image dimensions, fallback to padding-bottom trick for older browsers.
+                </p>
+                <div class="demo-area">
+                    <div class="image-container">
+                        <div class="image-container-inner">3:2 Aspect Ratio</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">@supports</span> (aspect-ratio: 1) {
+    .image-container {
+        aspect-ratio: 3 / 2;
+        height: auto;
+    }
+}
+
+<span class="keyword">@supports</span> not (aspect-ratio: 1) {
+    .image-container {
+        padding-bottom: 66.66%;
+        position: relative;
+    }
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 4 -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>4. Sticky Header</h2>
+                    <span class="example-tag responsive">Responsive</span>
+                </div>
+                <p class="example-description">
+                    Make header sticky when supported, use fixed positioning as a fallback for older browsers.
+                </p>
+                <div class="demo-area">
+                    <div class="sticky-demo">
+                        <div class="sticky-header">Sticky Header (Scroll to test)</div>
+                        <div class="sticky-content">Content Line 1</div>
+                        <div class="sticky-content">Content Line 2</div>
+                        <div class="sticky-content">Content Line 3</div>
+                        <div class="sticky-content">Content Line 4</div>
+                        <div class="sticky-content">Content Line 5</div>
+                        <div class="sticky-content">Content Line 6</div>
+                        <div class="sticky-content">Content Line 7</div>
+                        <div class="sticky-content">Content Line 8</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">@supports</span> (position: sticky) {
+    .sticky-header {
+        position: sticky;
+        top: 0;
+    }
+}
+
+<span class="keyword">@supports</span> not (position: sticky) {
+    .sticky-header {
+        position: fixed;
+    }
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 5 -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>5. CSS Variables Theming</h2>
+                    <span class="example-tag interactive">Interactive</span>
+                </div>
+                <p class="example-description">
+                    Use CSS custom properties for dynamic theming when available, hardcoded values as fallback.
+                </p>
+                <div class="demo-area">
+                    <div style="text-align: center;">
+                        <button class="var-button">Primary Button</button>
+                        <button class="var-button accent">Accent Button</button>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">:root</span> {
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+}
+
+<span class="keyword">@supports</span> (--css: variables) {
+    .var-button {
+        background: var(--primary-color);
+    }
+    
+    .var-button:hover {
+        background: var(--secondary-color);
+    }
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 6 -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>6. Gap Property Spacing</h2>
+                    <span class="example-tag layout">Layout</span>
+                </div>
+                <p class="example-description">
+                    Modern gap property for spacing instead of margins, with margin fallback for unsupported browsers.
+                </p>
+                <div class="demo-area">
+                    <div class="flex-with-gap">
+                        <div class="gap-item">Item 1</div>
+                        <div class="gap-item">Item 2</div>
+                        <div class="gap-item">Item 3</div>
+                        <div class="gap-item">Item 4</div>
+                        <div class="gap-item">Item 5</div>
+                        <div class="gap-item">Item 6</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">@supports</span> (gap: 1rem) {
+    .flex-with-gap {
+        gap: 20px;
+        margin: 0;
+    }
+}
+
+<span class="keyword">@supports</span> not (gap: 1rem) {
+    .flex-with-gap {
+        margin: -10px;
+    }
+    
+    .flex-with-gap > * {
+        margin: 10px;
+    }
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 7 -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>7. Subgrid Enhancement</h2>
+                    <span class="example-tag grid">Layout</span>
+                </div>
+                <p class="example-description">
+                    Advanced grid with subgrid for aligned nested layouts when available, regular grid fallback.
+                </p>
+                <div class="demo-area">
+                    <div class="subgrid-demo">
+                        <div class="subgrid-item">Grid Item 1</div>
+                        <div class="subgrid-item">Grid Item 2</div>
+                        <div class="subgrid-item">Grid Item 3</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">@supports</span> (grid-template-columns: subgrid) {
+    .subgrid-item {
+        display: grid;
+        grid-template-columns: subgrid;
+    }
+}
+
+<span class="keyword">@supports</span> not (grid-template-columns: subgrid) {
+    .subgrid-item {
+        display: block;
+    }
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 8 -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>8. Fluid Sizing with Clamp</h2>
+                    <span class="example-tag responsive">Responsive</span>
+                </div>
+                <p class="example-description">
+                    Use clamp() for fluid responsive sizing between min and max values, fixed width fallback.
+                </p>
+                <div class="demo-area">
+                    <div class="flexible-container">
+                        <div class="flexible-box">
+                            Responsive Width<br>
+                            <small>(Resize viewport to see fluid scaling)</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">@supports</span> (width: clamp(200px, 50vw, 800px)) {
+    .flexible-container {
+        width: clamp(280px, 90vw, 1000px);
+    }
+}
+
+<span class="keyword">@supports</span> not (width: clamp(200px, 50vw, 800px)) {
+    .flexible-container {
+        width: 90%;
+        max-width: 600px;
+    }
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 9 -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>9. 3D Transforms</h2>
+                    <span class="example-tag effects">Effects</span>
+                </div>
+                <p class="example-description">
+                    Apply 3D perspective transforms on hover when supported, 2D scale fallback for older browsers.
+                </p>
+                <div class="demo-area">
+                    <div class="card-3d">
+                        Hover to see 3D effect
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">@supports</span> (transform: perspective(1000px)) {
+    .card-3d:hover {
+        transform: perspective(1000px) 
+                   rotateY(15deg) 
+                   rotateX(-10deg);
+    }
+}
+
+<span class="keyword">@supports</span> not (transform: perspective(1000px)) {
+    .card-3d:hover {
+        transform: scale(1.05);
+    }
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 10 -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>10. Container Queries</h2>
+                    <span class="example-tag responsive">Responsive</span>
+                </div>
+                <p class="example-description">
+                    Use container queries for component-relative responsive design when available.
+                </p>
+                <div class="demo-area">
+                    <div class="container-demo">
+                        <div class="container-content">
+                            <div><strong>Container Query Demo</strong><br>(Resize parent to test)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">@supports</span> (container-type: inline-size) {
+    .container-demo {
+        container-type: inline-size;
+    }
+
+    <span class="keyword">@container</span> (min-width: 400px) {
+        .container-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 11 -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>11. Vendor Prefix Detection</h2>
+                    <span class="example-tag effects">Effects</span>
+                </div>
+                <p class="example-description">
+                    Check for vendor-prefixed versions of newer properties like -webkit-backdrop-filter.
+                </p>
+                <div class="demo-area">
+                    <div class="blur-element">
+                        This element has backdrop blur applied (if supported)
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">@supports</span> (backdrop-filter: blur(10px)) {
+    .blur-element {
+        backdrop-filter: blur(10px);
+    }
+}
+
+<span class="keyword">@supports</span> (-webkit-backdrop-filter: blur(10px)) {
+    .blur-element {
+        -webkit-backdrop-filter: blur(10px);
+    }
+}
+                </div>
+            </div>
+
+            <!-- EXAMPLE 12 -->
+            <div class="example">
+                <div class="example-header">
+                    <h2>12. Complex Logical Operators</h2>
+                    <span class="example-tag grid">Layout</span>
+                </div>
+                <p class="example-description">
+                    Combine multiple conditions with AND/OR operators for sophisticated feature detection.
+                </p>
+                <div class="demo-area">
+                    <div class="advanced-layout">
+                        <div class="advanced-item">Advanced Item 1</div>
+                        <div class="advanced-item">Advanced Item 2</div>
+                        <div class="advanced-item">Advanced Item 3</div>
+                        <div class="advanced-item">Advanced Item 4</div>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">@supports</span> ((display: grid) and (gap: 1rem)) 
+           or (display: flex) {
+    .advanced-layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+}
+
+<span class="keyword">@supports</span> not ((display: grid) and (gap: 1rem)) {
+    .advanced-layout {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS @supports Rule • 12 Practical Examples</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Each example demonstrates progressive enhancement and graceful degradation</p>
+        </footer>
+    </div>
+</body>
+</html>

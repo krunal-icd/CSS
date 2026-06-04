@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Print Media Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .tutorial-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            border-left: 5px solid #2a5298;
+        }
+
+        .tutorial-section h2 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tutorial-section h3 {
+            color: #2a5298;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .print-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 18px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .code-block code {
+            display: block;
+        }
+
+        .keyword { color: #f472b6; }
+        .property { color: #60a5fa; }
+        .value { color: #34d399; }
+        .comment { color: #6b7280; }
+        .at-rule { color: #fbbf24; }
+
+        .example-box {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .example-box h4 {
+            color: #1f2937;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .example-box p {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .print-preview {
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            border: 3px solid #333;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 15px 0;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .print-preview.portrait {
+            width: 100%;
+            aspect-ratio: 8.5 / 11;
+        }
+
+        .print-preview.landscape {
+            width: 100%;
+            aspect-ratio: 11 / 8.5;
+        }
+
+        .print-preview-content {
+            background: white;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #1f2937;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1e40af;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #991b1b;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #166534;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: #1f2937;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .property-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            border-left: 3px solid #2a5298;
+        }
+
+        .property-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #1f2937;
+            font-size: 0.95em;
+        }
+
+        .property-item code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            color: #1e40af;
+        }
+
+        .property-item p {
+            font-size: 0.85em;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .use-case-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .use-case-item h4 {
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .use-case-item p {
+            font-size: 0.85em;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        footer {
+            background: #f3f4f6;
+            padding: 25px;
+            text-align: center;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .syntax-breakdown {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .syntax-breakdown strong {
+            color: #1f2937;
+            display: block;
+            margin: 8px 0 4px 0;
+        }
+
+        .syntax-breakdown code {
+            background: #fff7ed;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #92400e;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #4b5563;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            color: #4b5563;
+        }
+
+        ul li, ol li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        li strong {
+            color: #1f2937;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .page-break-demo {
+            background: white;
+            border: 2px dashed #e5e7eb;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        .page-break-demo .page {
+            background: #f9fafb;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #2a5298;
+        }
+
+        .page-break-demo .page:last-child {
+            margin-bottom: 0;
+        }
+
+        .rule-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #92400e;
+        }
+
+        @media (max-width: 1200px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .use-case-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @print {
+            body {
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            header {
+                background: white;
+                color: #1e3c72;
+                border-bottom: 2px solid #1e3c72;
+                page-break-after: avoid;
+            }
+
+            header h1 {
+                color: #1e3c72;
+            }
+
+            header p {
+                color: #666;
+            }
+
+            .tutorial-section {
+                page-break-inside: avoid;
+                border: 1px solid #ddd;
+                margin-bottom: 20px;
+            }
+
+            .code-block {
+                background: #f0f0f0;
+                color: #000;
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+
+            .print-preview {
+                display: none;
+            }
+
+            a {
+                color: #1e3c72;
+                text-decoration: underline;
+            }
+
+            a:after {
+                content: " (" attr(href) ")";
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🖨️ CSS Print Media</h1>
+            <p>Master Print Styling & Page Layouts</p>
+            <p class="subtitle">Optimize your website for perfect printed documents</p>
+        </header>
+
+        <div class="content">
+            <!-- Print Media Basics -->
+            <div class="tutorial-section">
+                <h2>
+                    <span class="print-badge">PRINT</span>
+                    Print Media Basics
+                </h2>
+                <p>CSS print media allows you to create different styles for printed documents. Hide elements, adjust colors, and optimize layouts specifically for printing.</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="comment">/* Styles applied when printing */</span><br/>
+&nbsp;&nbsp;<span class="keyword">body</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">background</span>: <span class="value">white</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">color</span>: <span class="value">black</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>How It Works</h3>
+                <ul>
+                    <li><strong>Triggers on:</strong> Print dialog (Ctrl+P, Cmd+P) or Print to PDF</li>
+                    <li><strong>Screen media:</strong> Default styles (web display)</li>
+                    <li><strong>Print media:</strong> Overrides for printing</li>
+                    <li><strong>Both:</strong> Can target with both simultaneously</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>ℹ️ Tip:</strong> Print media activates in Firefox's Print Preview (Ctrl+Shift+P), Chrome's Print Dialog (Ctrl+P), or any "Print to PDF" function.
+                </div>
+            </div>
+
+            <!-- Screen vs Print -->
+            <div class="tutorial-section">
+                <h2>📊 Screen vs Print Styling</h2>
+                <p>Different devices need different optimizations. Screen displays are bright and interactive. Print is static and requires readability on paper.</p>
+
+                <h3>Key Differences</h3>
+                <table class="comparison-table" style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Screen (@media screen)</th>
+                            <th>Print (@media print)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Background</strong></td>
+                            <td>Can be colorful</td>
+                            <td>Should be white to save ink</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Colors</strong></td>
+                            <td>RGB, vibrant</td>
+                            <td>Grayscale-friendly black</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Navigation</strong></td>
+                            <td>Visible, clickable</td>
+                            <td>Hidden (not printable)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ads/Decorations</strong></td>
+                            <td>Displayed</td>
+                            <td>Hidden</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Page Breaks</strong></td>
+                            <td>N/A</td>
+                            <td>Critical for layout</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Font Size</strong></td>
+                            <td>Relative units (px, rem)</td>
+                            <td>Physical units (pt, cm, in)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Hide Elements -->
+            <div class="tutorial-section">
+                <h2>🚫 Hiding Elements for Print</h2>
+                <p>Many page elements don't make sense in print. Navigation, ads, sidebars, and decorations should be hidden.</p>
+
+                <h3>Common Elements to Hide</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="comment">/* Hide navigation */</span><br/>
+&nbsp;&nbsp;<span class="keyword">nav</span>, <span class="keyword">header</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">none</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Hide ads and sidebars */</span><br/>
+&nbsp;&nbsp;.<span class="keyword">advertisement</span>, .<span class="keyword">sidebar</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">none</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Hide buttons and forms */</span><br/>
+&nbsp;&nbsp;<span class="keyword">button</span>, <span class="keyword">form</span>, .<span class="keyword">interactive</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">none</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>What to Hide</h3>
+                <ul>
+                    <li><strong>Navigation bars:</strong> Users can't click printed links</li>
+                    <li><strong>Advertisements:</strong> No value in print</li>
+                    <li><strong>Social media buttons:</strong> Not functional in print</li>
+                    <li><strong>Search forms:</strong> Can't be used on paper</li>
+                    <li><strong>Video players:</strong> Can't display videos</li>
+                    <li><strong>Sidebars:</strong> Often not needed in print</li>
+                </ul>
+
+                <div class="success-box">
+                    <strong>✨ Pro Tip:</strong> Add a "Print this page" button that shows only on screen using @media screen, then hide it in print.
+                </div>
+            </div>
+
+            <!-- Show URL Links -->
+            <div class="tutorial-section">
+                <h2>🔗 Display URLs for Links</h2>
+                <p>In print, users can't click links. Make URLs visible using the ::after pseudo-element.</p>
+
+                <h3>Show URLs in Print</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="comment">/* Display URLs after links */</span><br/>
+&nbsp;&nbsp;<span class="keyword">a</span><span class="keyword">::after</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">content</span>: <span class="value">" (" attr(href) ")"</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">0.8em</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">color</span>: <span class="value">#666</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Hide URLs for certain links */</span><br/>
+&nbsp;&nbsp;<span class="keyword">a.no-print-url</span><span class="keyword">::after</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">content</span>: <span class="value">""</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Example Output</h3>
+                <div class="example-box">
+                    <h4>Before Print: "Click here"</h4>
+                    <p>After Print: "Click here (https://example.com)"</p>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Note:</strong> Users see URLs for EVERY link. Be selective or it becomes clutter. Use .no-print-url class for exceptions.
+                </div>
+            </div>
+
+            <!-- Color Optimization -->
+            <div class="tutorial-section">
+                <h2>🎨 Color Optimization for Print</h2>
+                <p>Print uses CMYK color space. Optimize colors for ink efficiency and readability on paper.</p>
+
+                <h3>Grayscale Conversion</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="keyword">body</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">background</span>: <span class="value">white</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">color</span>: <span class="value">black</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">filter</span>: <span class="value">grayscale(1)</span>; <span class="comment">/* Convert to B&W */</span><br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Dark Text on White Background</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="keyword">body</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">background</span>: <span class="value">white</span> <span class="keyword">!important</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">color</span>: <span class="value">black</span> <span class="keyword">!important</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Override all colored text */</span><br/>
+&nbsp;&nbsp;<span class="keyword">*</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">background</span>: <span class="value">white</span> <span class="keyword">!important</span> <span class="keyword">!important</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">color</span>: <span class="value">black</span> <span class="keyword">!important</span> <span class="keyword">!important</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Color Best Practices</h3>
+                <ul>
+                    <li><strong>Use black text:</strong> Maximum contrast and readability</li>
+                    <li><strong>White background:</strong> Saves ink and looks professional</li>
+                    <li><strong>Remove decorative colors:</strong> They add no value in print</li>
+                    <li><strong>Test on B&W printer:</strong> Ensure legibility</li>
+                    <li><strong>Use grayscale filter:</strong> Convert colored layouts to B&W</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>ℹ️ Ink Saving Tip:</strong> White backgrounds save ~50% ink compared to colored backgrounds. Users appreciate lower printing costs!
+                </div>
+            </div>
+
+            <!-- Page Breaks -->
+            <div class="tutorial-section">
+                <h2>📄 Page Breaks</h2>
+                <p>Control where content breaks across pages. Essential for multi-page documents.</p>
+
+                <h3>Page Break Properties</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="comment">/* Force page break before element */</span><br/>
+&nbsp;&nbsp;<span class="keyword">h2</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">page-break-before</span>: <span class="value">always</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Avoid breaking inside element */</span><br/>
+&nbsp;&nbsp;.<span class="keyword">card</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">page-break-inside</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Force page break after */</span><br/>
+&nbsp;&nbsp;<span class="keyword">section</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">page-break-after</span>: <span class="value">always</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Page Break Values</h3>
+                <table class="comparison-table" style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Values</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>page-break-before</strong></td>
+                            <td>auto, always, avoid, left, right</td>
+                            <td>Break before element</td>
+                        </tr>
+                        <tr>
+                            <td><strong>page-break-after</strong></td>
+                            <td>auto, always, avoid, left, right</td>
+                            <td>Break after element</td>
+                        </tr>
+                        <tr>
+                            <td><strong>page-break-inside</strong></td>
+                            <td>auto, avoid</td>
+                            <td>Prevent breaking inside</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Practical Page Break Example</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="comment">/* New chapter on new page */</span><br/>
+&nbsp;&nbsp;<span class="keyword">h1</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">page-break-before</span>: <span class="value">always</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">page-break-after</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Keep paragraphs together */</span><br/>
+&nbsp;&nbsp;<span class="keyword">p</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">page-break-inside</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">orphans</span>: <span class="value">3</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">widows</span>: <span class="value">3</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+            </div>
+
+            <!-- Orphans and Widows -->
+            <div class="tutorial-section">
+                <h2>👥 Orphans & Widows</h2>
+                <p>Control how text breaks across pages. Orphans are lines at bottom of page; widows at top.</p>
+
+                <h3>Orphans & Widows Example</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="keyword">p</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">orphans</span>: <span class="value">2</span>; <span class="comment">/* Keep 2+ lines at bottom */</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">widows</span>: <span class="value">2</span>; <span class="comment">/* Keep 2+ lines at top */</span><br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Explanation</h3>
+                <ul>
+                    <li><strong>orphans: 2:</strong> Don't leave a single line at bottom of page</li>
+                    <li><strong>widows: 2:</strong> Don't leave a single line at top of page</li>
+                    <li><strong>Default:</strong> Usually 2 for both</li>
+                    <li><strong>Higher values:</strong> Stricter control but may increase pages</li>
+                </ul>
+
+                <div class="rule-box">
+                    <strong>📋 Rule:</strong> Always set both orphans and widows to 2 or higher for professional-looking printed documents.
+                </div>
+            </div>
+
+            <!-- Font Sizing for Print -->
+            <div class="tutorial-section">
+                <h2>📝 Font Sizing for Print</h2>
+                <p>Use physical units for print. Points (pt) and centimeters (cm) work better than pixels (px).</p>
+
+                <h3>Units Comparison</h3>
+                <table class="comparison-table" style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Unit</th>
+                            <th>Screen</th>
+                            <th>Print</th>
+                            <th>Recommendation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>px (pixels)</strong></td>
+                            <td>✅ Good</td>
+                            <td>⚠️ Varies</td>
+                            <td>Use for screen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>pt (points)</strong></td>
+                            <td>⚠️ Unusual</td>
+                            <td>✅ Excellent</td>
+                            <td>Use for print</td>
+                        </tr>
+                        <tr>
+                            <td><strong>cm (centimeters)</strong></td>
+                            <td>❌ Rare</td>
+                            <td>✅ Excellent</td>
+                            <td>Use for print</td>
+                        </tr>
+                        <tr>
+                            <td><strong>rem (relative)</strong></td>
+                            <td>✅ Good</td>
+                            <td>⚠️ Unpredictable</td>
+                            <td>Use for screen</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Print-Specific Font Sizing</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="keyword">body</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">12pt</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">line-height</span>: <span class="value">1.5</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="keyword">h1</span> { <span class="property">font-size</span>: <span class="value">28pt</span>; }<br/>
+&nbsp;&nbsp;<span class="keyword">h2</span> { <span class="property">font-size</span>: <span class="value">20pt</span>; }<br/>
+&nbsp;&nbsp;<span class="keyword">h3</span> { <span class="property">font-size</span>: <span class="value">16pt</span>; }<br/>
+&nbsp;&nbsp;<span class="keyword">p</span> { <span class="property">font-size</span>: <span class="value">12pt</span>; }<br/>
+}</code>
+                </div>
+
+                <div class="info-box">
+                    <strong>ℹ️ Conversion:</strong> 1 point = 1/72 inch = 0.35mm. For web: 12px ≈ 9pt.
+                </div>
+            </div>
+
+            <!-- Page Size & Margins -->
+            <div class="tutorial-section">
+                <h2>📐 Page Size & Margins</h2>
+                <p>Use @page rule to set paper size, margins, and page orientation.</p>
+
+                <h3>@page Rule</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@page</span> {<br/>
+&nbsp;&nbsp;<span class="property">size</span>: <span class="value">A4</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin</span>: <span class="value">2cm</span>;<br/>
+}<br/><br/>
+<span class="at-rule">@page</span> {<br/>
+&nbsp;&nbsp;<span class="property">size</span>: <span class="value">8.5in 11in</span>; <span class="comment">/* Letter size */</span><br/>
+&nbsp;&nbsp;<span class="property">margin-top</span>: <span class="value">1in</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin-bottom</span>: <span class="value">1in</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin-left</span>: <span class="value">0.75in</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin-right</span>: <span class="value">0.75in</span>;<br/>
+}</code>
+                </div>
+
+                <h3>Common Page Sizes</h3>
+                <ul>
+                    <li><strong>A4:</strong> 210mm × 297mm (most common)</li>
+                    <li><strong>Letter:</strong> 8.5in × 11in (North America)</li>
+                    <li><strong>Legal:</strong> 8.5in × 14in</li>
+                    <li><strong>Landscape:</strong> Rotate page with orientation</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>ℹ️ Tip:</strong> Set page margins to leave space for printer margins and binding. Most printers have 0.5in minimum margins.
+                </div>
+            </div>
+
+            <!-- Complete Print Example -->
+            <div class="tutorial-section full-width">
+                <h2>💼 Complete Print Stylesheet Example</h2>
+
+                <h3>Full Implementation</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@page</span> {<br/>
+&nbsp;&nbsp;<span class="property">size</span>: <span class="value">A4</span>;<br/>
+&nbsp;&nbsp;<span class="property">margin</span>: <span class="value">2cm</span>;<br/>
+}<br/><br/>
+<span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="comment">/* Basic styling */</span><br/>
+&nbsp;&nbsp;<span class="keyword">body</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">background</span>: <span class="value">white</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">color</span>: <span class="value">black</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">12pt</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">line-height</span>: <span class="value">1.6</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Hide unnecessary elements */</span><br/>
+&nbsp;&nbsp;<span class="keyword">nav</span>, <span class="keyword">header</span>, .<span class="keyword">sidebar</span>, <span class="keyword">button</span>, <span class="keyword">form</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">none</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Show URLs in links */</span><br/>
+&nbsp;&nbsp;<span class="keyword">a</span><span class="keyword">::after</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">content</span>: <span class="value">" (" attr(href) ")"</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">0.9em</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Page breaks */</span><br/>
+&nbsp;&nbsp;<span class="keyword">h1</span>, <span class="keyword">h2</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">page-break-after</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">page-break-inside</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">/* Typography */</span><br/>
+&nbsp;&nbsp;<span class="keyword">h1</span> { <span class="property">font-size</span>: <span class="value">28pt</span>; }<br/>
+&nbsp;&nbsp;<span class="keyword">h2</span> { <span class="property">font-size</span>: <span class="value">20pt</span>; }<br/>
+&nbsp;&nbsp;<span class="keyword">p</span> { <span class="property">orphans</span>: <span class="value">2</span>; <span class="property">widows</span>: <span class="value">2</span>; }<br/>
+}</code>
+                </div>
+            </div>
+
+            <!-- Real-World Use Cases -->
+            <div class="tutorial-section full-width">
+                <h2>🎯 Real-World Use Cases</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <h4>📄 Blog Articles</h4>
+                        <p>Hide navigation, sidebars, and ads. Show author info and print date. Clean, readable layout.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🧾 Invoices</h4>
+                        <p>Show company logo, invoice number, totals. Hide payment forms and navigation. Professional layout.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📋 Receipts</h4>
+                        <p>Optimize for 3-inch paper width. Hide unnecessary UI. Show transaction details clearly.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📚 Documentation</h4>
+                        <p>Multi-page document with table of contents. Page breaks between sections. Page numbers.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🎫 Tickets</h4>
+                        <p>Show barcode, event details, seat info. Hide interactive elements. Print-friendly layout.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📑 Reports</h4>
+                        <p>Multi-page reports with headers/footers. Page breaks between sections. Professional formatting.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="tutorial-section full-width">
+                <h2>🏆 Best Practices & Tips</h2>
+
+                <div class="grid-2">
+                    <div>
+                        <h3>✅ Do:</h3>
+                        <ul>
+                            <li><strong>Test the output:</strong> Use Print Preview (Ctrl+Shift+P) to verify</li>
+                            <li><strong>Use white backgrounds:</strong> Saves ink and looks professional</li>
+                            <li><strong>Hide all navigation:</strong> It's not functional in print</li>
+                            <li><strong>Show URLs for links:</strong> Users can't click on paper</li>
+                            <li><strong>Use physical units:</strong> Points (pt) and cm work best</li>
+                            <li><strong>Set page margins:</strong> Respect printer limitations</li>
+                            <li><strong>Control page breaks:</strong> Keep content logical across pages</li>
+                            <li><strong>Test on real printer:</strong> Screen preview may differ</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>❌ Don't:</h3>
+                        <ul>
+                            <li><strong>Print backgrounds:</strong> Users disable them to save ink</li>
+                            <li><strong>Use bright colors:</strong> They don't print well on B&W</li>
+                            <li><strong>Keep ads visible:</strong> No value in print format</li>
+                            <li><strong>Hide important URLs:</strong> Users need to reference them</li>
+                            <li><strong>Use only pixels:</strong> Unreliable on print output</li>
+                            <li><strong>Ignore page breaks:</strong> Content becomes hard to read</li>
+                            <li><strong>Make text too small:</strong> Minimum 10pt for readability</li>
+                            <li><strong>Assume print = screen:</strong> Always test separately</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Critical:</strong> Always test your print styles in Firefox Print Preview (Ctrl+Shift+P) or Chrome Print Dialog (Ctrl+P). Different browsers render print media differently!
+                </div>
+            </div>
+
+            <!-- Browser Support -->
+            <div class="tutorial-section full-width">
+                <h2>✅ Browser Support</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                            <th>Support Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>@media print</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>Universal</td>
+                        </tr>
+                        <tr>
+                            <td><strong>page-break-*</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>Excellent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>@page rule</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>⚠️ Limited</td>
+                            <td>✅ Yes</td>
+                            <td>Good</td>
+                        </tr>
+                        <tr>
+                            <td><strong>orphans/widows</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>⚠️ Limited</td>
+                            <td>✅ Yes</td>
+                            <td>Good</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="success-box">
+                    <strong>✨ Broad Support:</strong> Print media is widely supported. Safe to use across all modern browsers. IE11+ also supported.
+                </div>
+            </div>
+
+            <!-- Common Pitfalls -->
+            <div class="tutorial-section full-width">
+                <h2>⚡ Common Pitfalls & Solutions</h2>
+
+                <h3>Pitfall 1: Colored Backgrounds Print</h3>
+                <p><strong>Problem:</strong> User's browser prints background colors, wasting ink.</p>
+                <p><strong>Solution:</strong> Force white backgrounds in print media</p>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="keyword">*</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">background</span>: <span class="value">white</span> <span class="keyword">!important</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Pitfall 2: Content Breaks Mid-Section</h3>
+                <p><strong>Problem:</strong> Page breaks in wrong places, separating heading from content.</p>
+                <p><strong>Solution:</strong> Use page-break-inside: avoid</p>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="keyword">section</span>, .<span class="keyword">card</span>, <span class="keyword">table</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">page-break-inside</span>: <span class="value">avoid</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Pitfall 3: Missing Page Numbers</h3>
+                <p><strong>Problem:</strong> Multi-page documents have no page numbers.</p>
+                <p><strong>Solution:</strong> Add page numbers using counter CSS</p>
+                <div class="code-block">
+                    <code><span class="at-rule">@page</span> {<br/>
+&nbsp;&nbsp;<span class="property">@bottom-right</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">content</span>: <span class="value">"Page " counter(page)</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Pitfall 4: Links Not Clickable (But No URL Shown)</h3>
+                <p><strong>Problem:</strong> Links are visible but users can't reference the URL.</p>
+                <p><strong>Solution:</strong> Display URLs with ::after pseudo-element</p>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> <span class="value">print</span> {<br/>
+&nbsp;&nbsp;<span class="keyword">a</span><span class="keyword">::after</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">content</span>: <span class="value">" (" attr(href) ")"</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">0.9em</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+            </div>
+
+            <!-- Print CSS Checklist -->
+            <div class="tutorial-section full-width">
+                <h2>📋 Print CSS Checklist</h2>
+                <div style="background: white; padding: 20px; border-radius: 6px; border: 1px solid #e5e7eb;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Essential Elements</strong></h4>
+                            <ul style="list-style: none; margin: 0;">
+                                <li style="padding: 5px 0;">☐ Set white background</li>
+                                <li style="padding: 5px 0;">☐ Set black text color</li>
+                                <li style="padding: 5px 0;">☐ Hide navigation & ads</li>
+                                <li style="padding: 5px 0;">☐ Hide buttons & forms</li>
+                                <li style="padding: 5px 0;">☐ Show URLs for links</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 10px; color: #1f2937;"><strong>Advanced Features</strong></h4>
+                            <ul style="list-style: none; margin: 0;">
+                                <li style="padding: 5px 0;">☐ Set page size (@page)</li>
+                                <li style="padding: 5px 0;">☐ Control page breaks</li>
+                                <li style="padding: 5px 0;">☐ Set orphans/widows</li>
+                                <li style="padding: 5px 0;">☐ Use physical units (pt)</li>
+                                <li style="padding: 5px 0;">☐ Test in print preview</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>CSS Print Media Tutorial</strong></p>
+            <p>Master print styling for perfect printed documents</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Universal Browser Support ✅ | Production Ready 🖨️</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Orientation Media Rule Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .tutorial-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .tutorial-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tutorial-section h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .orientation-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .badge-portrait {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .badge-landscape {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 18px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            border-left: 4px solid #667eea;
+        }
+
+        .code-block code {
+            display: block;
+        }
+
+        .keyword { color: #f472b6; }
+        .property { color: #60a5fa; }
+        .value { color: #34d399; }
+        .comment { color: #6b7280; }
+        .at-rule { color: #fbbf24; }
+
+        .example-box {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .example-box h4 {
+            color: #1f2937;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .portrait-demo {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .portrait-demo .device-frame {
+            width: 150px;
+            height: 280px;
+            background: #1f2937;
+            border: 8px solid #000;
+            border-radius: 20px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .landscape-demo {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .landscape-demo .device-frame {
+            width: 280px;
+            height: 150px;
+            background: #1f2937;
+            border: 8px solid #000;
+            border-radius: 20px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .device-frame p {
+            color: #60a5fa;
+            font-weight: 600;
+            word-wrap: break-word;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #1e40af;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #991b1b;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #166534;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: #1f2937;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .device-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .device-item {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            border: 2px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .device-item.portrait {
+            border-top: 4px solid #667eea;
+        }
+
+        .device-item.landscape {
+            border-top: 4px solid #f5576c;
+        }
+
+        .device-item strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+            color: #1f2937;
+        }
+
+        .device-item p {
+            font-size: 0.9em;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .use-case-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .use-case-item h4 {
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .use-case-item code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            color: #667eea;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .use-case-item p {
+            font-size: 0.85em;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .responsive-demo {
+            background: linear-gradient(135deg, #dbeafe, #f3e8ff);
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .responsive-demo p {
+            color: #1f2937;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .responsive-element {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            border: 2px dashed #667eea;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        footer {
+            background: #f3f4f6;
+            padding: 25px;
+            text-align: center;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .syntax-breakdown {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .syntax-breakdown strong {
+            color: #1f2937;
+            display: block;
+            margin: 8px 0 4px 0;
+        }
+
+        .syntax-breakdown code {
+            background: #fff7ed;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #92400e;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #4b5563;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .problem-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .problem-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: absolute;
+            relative;
+            color: #4b5563;
+        }
+
+        .problem-list li:before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            color: #4b5563;
+        }
+
+        ul li, ol li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        li strong {
+            color: #1f2937;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 1200px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .use-case-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .device-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS Orientation Media Rule</h1>
+            <p>Master Device Orientation Detection</p>
+            <p class="subtitle">Responsive design for portrait and landscape screens</p>
+        </header>
+
+        <div class="content">
+            <!-- Orientation Basics -->
+            <div class="tutorial-section">
+                <h2>🎯 What is Orientation?</h2>
+                <p>The CSS orientation media feature detects whether a device is in portrait or landscape mode. It's essential for responsive design on mobile devices and tablets.</p>
+
+                <h3>Syntax</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">portrait</span>) {<br/>
+&nbsp;&nbsp;<span class="comment">/* Styles for portrait mode */</span><br/>
+}<br/><br/>
+<span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">landscape</span>) {<br/>
+&nbsp;&nbsp;<span class="comment">/* Styles for landscape mode */</span><br/>
+}</code>
+                </div>
+
+                <h3>Valid Values</h3>
+                <ul>
+                    <li><strong>portrait:</strong> Height ≥ width (vertical orientation)</li>
+                    <li><strong>landscape:</strong> Width > height (horizontal orientation)</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>ℹ️ Note:</strong> Orientation is determined by the aspect ratio, not device rotation. A device is portrait if height ≥ width.
+                </div>
+            </div>
+
+            <!-- Portrait Mode -->
+            <div class="tutorial-section">
+                <h2>📱 Portrait Orientation</h2>
+                <p>Detected when device height is greater than or equal to width. Common on mobile phones in standard position.</p>
+
+                <h3>Portrait Example</h3>
+                <div class="example-box">
+                    <div class="portrait-demo">
+                        <div class="device-frame">
+                            <p>Portrait<br/>Mode</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>CSS Implementation</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">portrait</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">body</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">flex</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">flex-direction</span>: <span class="value">column</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">width</span>: <span class="value">100%</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="keyword">.sidebar</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">width</span>: <span class="value">100%</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">margin-top</span>: <span class="value">20px</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Portrait Use Cases</h3>
+                <ul>
+                    <li>Single column layouts</li>
+                    <li>Full-width navigation</li>
+                    <li>Stacked content blocks</li>
+                    <li>Bottom navigation bars</li>
+                    <li>Larger touch targets</li>
+                </ul>
+            </div>
+
+            <!-- Landscape Mode -->
+            <div class="tutorial-section">
+                <h2>🖥️ Landscape Orientation</h2>
+                <p>Detected when device width is greater than height. Common on tablets, desktops, and rotated mobile phones.</p>
+
+                <h3>Landscape Example</h3>
+                <div class="example-box">
+                    <div class="landscape-demo">
+                        <div class="device-frame">
+                            <p>Landscape Mode</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>CSS Implementation</h3>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">landscape</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">body</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">grid</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">grid-template-columns</span>: <span class="value">250px 1fr</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">grid-gap</span>: <span class="value">20px</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="keyword">.sidebar</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">width</span>: <span class="value">auto</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">margin-top</span>: <span class="value">0</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Landscape Use Cases</h3>
+                <ul>
+                    <li>Multi-column layouts</li>
+                    <li>Side-by-side navigation</li>
+                    <li>Video content optimization</li>
+                    <li>Horizontal galleries</li>
+                    <li>More screen real estate</li>
+                </ul>
+            </div>
+
+            <!-- Combining with Other Media Queries -->
+            <div class="tutorial-section">
+                <h2>🔗 Combining with Other Media Queries</h2>
+                <p>Orientation works perfectly with other media features for more precise control.</p>
+
+                <h3>With Width Breakpoints</h3>
+                <div class="code-block">
+                    <code><span class="comment">/* Tablet in portrait */</span><br/>
+<span class="at-rule">@media</span> (<span class="property">min-width</span>: <span class="value">768px</span>) <span class="keyword">and</span> (<span class="property">orientation</span>: <span class="value">portrait</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">.container</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">width</span>: <span class="value">90%</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">max-width</span>: <span class="value">600px</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}<br/><br/>
+<span class="comment">/* Tablet in landscape */</span><br/>
+<span class="at-rule">@media</span> (<span class="property">min-width</span>: <span class="value">768px</span>) <span class="keyword">and</span> (<span class="property">orientation</span>: <span class="value">landscape</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">.container</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">width</span>: <span class="value">95%</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">max-width</span>: <span class="value">1000px</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>With Aspect Ratio</h3>
+                <div class="code-block">
+                    <code><span class="comment">/* Ultra-wide landscape */</span><br/>
+<span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">landscape</span>) <span class="keyword">and</span> (<span class="property">aspect-ratio</span>: <span class="value">21 / 9</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">.hero</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">height</span>: <span class="value">50vh</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <div class="info-box">
+                    <strong>ℹ️ Tip:</strong> Use <code>and</code> keyword to combine multiple media features for precise targeting.
+                </div>
+            </div>
+
+            <!-- Device Type Comparison -->
+            <div class="tutorial-section full-width">
+                <h2>📊 Device Orientation Comparison</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Device Type</th>
+                            <th>Portrait</th>
+                            <th>Landscape</th>
+                            <th>Typical Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Smartphone</strong></td>
+                            <td>Default (360-480px)</td>
+                            <td>Rotated (800px+ wide)</td>
+                            <td>Reading, messaging, social media</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tablet</strong></td>
+                            <td>Vertical (768-1024px)</td>
+                            <td>Horizontal (1024px+)</td>
+                            <td>Content, gaming, productivity</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Desktop</strong></td>
+                            <td>Rare (vertical monitors)</td>
+                            <td>Standard (1920x1080+)</td>
+                            <td>Work, web browsing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Laptop</strong></td>
+                            <td>Very rare</td>
+                            <td>Standard (1366x768+)</td>
+                            <td>Productivity, development</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Practical Examples -->
+            <div class="tutorial-section full-width">
+                <h2>💼 Real-World Implementation Examples</h2>
+
+                <h3>Example 1: Responsive Navigation</h3>
+                <div class="code-block">
+                    <code><span class="comment">/* Portrait: Bottom navigation */</span><br/>
+<span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">portrait</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">nav</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">position</span>: <span class="value">fixed</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">bottom</span>: <span class="value">0</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">width</span>: <span class="value">100%</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">flex</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">justify-content</span>: <span class="value">space-around</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}<br/><br/>
+<span class="comment">/* Landscape: Top navigation */</span><br/>
+<span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">landscape</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">nav</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">position</span>: <span class="value">fixed</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">top</span>: <span class="value">0</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">width</span>: <span class="value">100%</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">flex</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">justify-content</span>: <span class="value">flex-start</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Example 2: Video Container</h3>
+                <div class="code-block">
+                    <code><span class="comment">/* Portrait: Full width with reduced height */</span><br/>
+<span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">portrait</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">.video-container</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">width</span>: <span class="value">100%</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">aspect-ratio</span>: <span class="value">16 / 9</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">margin-bottom</span>: <span class="value">20px</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}<br/><br/>
+<span class="comment">/* Landscape: Larger player */</span><br/>
+<span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">landscape</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">.video-container</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">width</span>: <span class="value">90vw</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">height</span>: <span class="value">90vh</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">position</span>: <span class="value">fixed</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">top</span>: <span class="value">50%</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">left</span>: <span class="value">50%</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">transform</span>: <span class="value">translate(-50%, -50%)</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Example 3: Grid Layout</h3>
+                <div class="code-block">
+                    <code><span class="comment">/* Portrait: Single column */</span><br/>
+<span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">portrait</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">.gallery</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">grid</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">grid-template-columns</span>: <span class="value">1fr</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">gap</span>: <span class="value">15px</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}<br/><br/>
+<span class="comment">/* Landscape: Two columns */</span><br/>
+<span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">landscape</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">.gallery</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">grid</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">grid-template-columns</span>: <span class="value">repeat(2, 1fr)</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">gap</span>: <span class="value">20px</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Example 4: Form Layout</h3>
+                <div class="code-block">
+                    <code><span class="comment">/* Portrait: Full-width inputs */</span><br/>
+<span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">portrait</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">form input</span>, <span class="keyword">form textarea</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">width</span>: <span class="value">100%</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">margin-bottom</span>: <span class="value">15px</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}<br/><br/>
+<span class="comment">/* Landscape: Side-by-side inputs */</span><br/>
+<span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">landscape</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">.form-row</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">display</span>: <span class="value">grid</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">grid-template-columns</span>: <span class="value">1fr 1fr</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">gap</span>: <span class="value">15px</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+            </div>
+
+            <!-- Browser Support -->
+            <div class="tutorial-section full-width">
+                <h2>✅ Browser Support</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                            <th>Mobile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>@media orientation</strong></td>
+                            <td>✅ All versions</td>
+                            <td>✅ All versions</td>
+                            <td>✅ All versions</td>
+                            <td>✅ All versions</td>
+                            <td>✅ Excellent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Portrait mode</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Landscape mode</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="success-box">
+                    <strong>✨ Universal Support:</strong> Orientation media queries are supported across all browsers and devices. Safe for production use everywhere!
+                </div>
+            </div>
+
+            <!-- Use Cases Grid -->
+            <div class="tutorial-section full-width">
+                <h2>🎯 Common Use Cases</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <h4>📱 Mobile Apps</h4>
+                        <code>orientation: portrait</code>
+                        <p>Optimize layouts when users hold phone vertically, the most common position.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🎮 Mobile Gaming</h4>
+                        <code>orientation: landscape</code>
+                        <p>Provide better visual experience for games, requiring wider screen real estate.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📺 Video Players</h4>
+                        <code>orientation: landscape</code>
+                        <p>Enlarge video content when device is rotated horizontally for better viewing.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📸 Image Gallery</h4>
+                        <code>both orientations</code>
+                        <p>Adjust grid columns: single column (portrait) to multi-column (landscape).</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>📝 Forms</h4>
+                        <code>both orientations</code>
+                        <p>Stack inputs vertically in portrait, arrange horizontally in landscape.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>🗺️ Maps</h4>
+                        <code>orientation: landscape</code>
+                        <p>Show more map area in landscape for better navigation and content display.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="tutorial-section full-width">
+                <h2>🏆 Best Practices & Tips</h2>
+
+                <div class="grid-2">
+                    <div>
+                        <h3>✅ Do:</h3>
+                        <ul>
+                            <li><strong>Test on real devices:</strong> Emulators may not accurately reflect orientation behavior</li>
+                            <li><strong>Combine with width queries:</strong> Use both orientation and min-width/max-width</li>
+                            <li><strong>Optimize touch targets:</strong> Ensure buttons are 44px+ in portrait mode</li>
+                            <li><strong>Consider landscape keyboards:</strong> Virtual keyboards affect available height</li>
+                            <li><strong>Use appropriate layouts:</strong> Flex or CSS Grid adapt well to orientation changes</li>
+                            <li><strong>Test rotation transitions:</strong> Ensure smooth transitions when device rotates</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>❌ Don't:</h3>
+                        <ul>
+                            <li><strong>Ignore landscape mode:</strong> Many users rotate their devices</li>
+                            <li><strong>Force portrait only:</strong> Some devices/users prefer landscape</li>
+                            <li><strong>Use only orientation:</strong> Combine with width queries for precision</li>
+                            <li><strong>Forget about safe areas:</strong> Consider notches and camera cutouts</li>
+                            <li><strong>Make text too small:</strong> Maintain readability in both orientations</li>
+                            <li><strong>Block rotation:</strong> Let users choose their preferred orientation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Important:</strong> Always test orientation changes on real mobile devices. Browser emulators may not accurately represent the user experience.
+                </div>
+            </div>
+
+            <!-- JavaScript Integration -->
+            <div class="tutorial-section full-width">
+                <h2>⚙️ JavaScript Integration</h2>
+
+                <h3>Listen to Orientation Changes</h3>
+                <div class="code-block">
+                    <code><span class="keyword">window</span>.<span class="property">addEventListener</span>(<span class="value">'orientationchange'</span>, <span class="keyword">function</span>() {<br/>
+&nbsp;&nbsp;<span class="keyword">const</span> <span class="value">orientation</span> = <span class="keyword">window</span>.<span class="property">innerHeight</span> > <span class="keyword">window</span>.<span class="property">innerWidth</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;? <span class="value">'portrait'</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;: <span class="value">'landscape'</span>;<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="keyword">console</span>.<span class="property">log</span>(<span class="value">'Device orientation: '</span> + <span class="value">orientation</span>);<br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;<span class="comment">// Update layout or UI based on orientation</span><br/>
+&nbsp;&nbsp;<span class="keyword">document</span>.<span class="property">body</span>.<span class="property">classList</span>.<span class="property">add</span>(<span class="value">orientation</span>);<br/>
+});</code>
+                </div>
+
+                <h3>Access Orientation API</h3>
+                <div class="code-block">
+                    <code><span class="comment">// Get current orientation</span><br/>
+<span class="keyword">const</span> <span class="value">orientation</span> = <span class="keyword">window</span>.<span class="property">orientation</span>;<br/>
+<span class="comment">// Returns: 0 or 180 (portrait), 90 or -90 (landscape)</span><br/><br/>
+<span class="comment">// Check screen dimensions</span><br/>
+<span class="keyword">const</span> <span class="value">isPortrait</span> = <span class="keyword">window</span>.<span class="property">innerHeight</span> > <span class="keyword">window</span>.<span class="property">innerWidth</span>;<br/>
+<span class="keyword">const</span> <span class="value">isLandscape</span> = <span class="keyword">window</span>.<span class="property">innerWidth</span> > <span class="keyword">window</span>.<span class="property">innerHeight</span>;</code>
+                </div>
+
+                <div class="info-box">
+                    <strong>ℹ️ CSS First:</strong> Use CSS media queries for most orientation changes. Reserve JavaScript for complex interactions.
+                </div>
+            </div>
+
+            <!-- Common Pitfalls -->
+            <div class="tutorial-section full-width">
+                <h2>⚡ Common Pitfalls & Solutions</h2>
+
+                <h3>Pitfall 1: Ignoring Landscape Mode</h3>
+                <p><strong>Problem:</strong> App looks broken when rotated to landscape.</p>
+                <p><strong>Solution:</strong></p>
+                <div class="code-block">
+                    <code><span class="comment">/* Test BOTH orientations */</span><br/>
+<span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">portrait</span>) { <span class="comment">/* ... */</span> }<br/>
+<span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">landscape</span>) { <span class="comment">/* ... */</span> }</code>
+                </div>
+
+                <h3>Pitfall 2: Virtual Keyboard Space</h3>
+                <p><strong>Problem:</strong> Form inputs get hidden by keyboard in portrait mode.</p>
+                <p><strong>Solution:</strong></p>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">portrait</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">input:focus</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">scroll-behavior</span>: <span class="value">smooth</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">padding-bottom</span>: <span class="value">50vh</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Pitfall 3: Text Size Issues</h3>
+                <p><strong>Problem:</strong> Text becomes too small in landscape mode due to reduced height.</p>
+                <p><strong>Solution:</strong></p>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">landscape</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">h1</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">clamp(1.5rem, 5vw, 2.5rem)</span>;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<span class="keyword">p</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">font-size</span>: <span class="value">clamp(0.875rem, 2vw, 1rem)</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+
+                <h3>Pitfall 4: Notch/Safe Area</h3>
+                <p><strong>Problem:</strong> Content gets hidden behind notch or rounded corners.</p>
+                <p><strong>Solution:</strong></p>
+                <div class="code-block">
+                    <code><span class="at-rule">@media</span> (<span class="property">orientation</span>: <span class="value">landscape</span>) {<br/>
+&nbsp;&nbsp;<span class="keyword">body</span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">padding-top</span>: <span class="value">max(20px, env(safe-area-inset-top))</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="property">padding-left</span>: <span class="value">max(20px, env(safe-area-inset-left))</span>;<br/>
+&nbsp;&nbsp;}<br/>
+}</code>
+                </div>
+            </div>
+
+            <!-- Quick Reference -->
+            <div class="tutorial-section full-width">
+                <h2>📋 Quick Reference Card</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Portrait</th>
+                            <th>Landscape</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Detection</strong></td>
+                            <td>height ≥ width</td>
+                            <td>width > height</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Typical Width</strong></td>
+                            <td>360-480px (mobile)</td>
+                            <td>800px+ (mobile rotated)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Media Query</strong></td>
+                            <td>@media (orientation: portrait)</td>
+                            <td>@media (orientation: landscape)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Layout Pattern</strong></td>
+                            <td>Single column, stacked</td>
+                            <td>Multi-column, side-by-side</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Common Use</strong></td>
+                            <td>Mobile reading, texting</td>
+                            <td>Gaming, video, content</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Navigation</strong></td>
+                            <td>Bottom bar, hamburger</td>
+                            <td>Top bar, side drawer</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Touch Targets</strong></td>
+                            <td>Larger, more spacious</td>
+                            <td>Compact, efficient</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>CSS Orientation Media Rule Tutorial</strong></p>
+            <p>Master device orientation detection for responsive design</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Universal Browser Support ✅ | Production Ready 🚀</p>
+        </footer>
+    </div>
+</body>
+</html>

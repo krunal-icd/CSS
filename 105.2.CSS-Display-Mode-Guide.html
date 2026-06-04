@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>CSS Display-Mode @media Rule - Basic Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border: #e0e0e0;
+            --accent: #667eea;
+            --accent-dark: #764ba2;
+            --success: #28a745;
+            --info: #17a2b8;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #1e1e1e;
+                --bg-secondary: #2d2d2d;
+                --text-primary: #e0e0e0;
+                --text-secondary: #b0b0b0;
+                --border: #444444;
+                --accent: #bb86fc;
+                --accent-dark: #3dd5f3;
+                --shadow: rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .section h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: var(--accent-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        code {
+            background: var(--bg-primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        pre {
+            background: var(--bg-primary);
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .example {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .example-demo {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .card h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: color-mix(in srgb, var(--info) 20%, transparent);
+            border-left: 4px solid var(--info);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background: color-mix(in srgb, #ff9800 20%, transparent);
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .mode-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        .browser-badge { background: #667eea; }
+        .standalone-badge { background: #28a745; }
+        .fullscreen-badge { background: #ff9800; }
+        .minimal-ui-badge { background: #17a2b8; }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .code-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            .code-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS Display-Mode @media Rule</h1>
+        <p class="subtitle">Basic Examples & Common Patterns</p>
+
+        <!-- ===== SECTION 1: What is Display-Mode ===== -->
+        <div class="section">
+            <h2>1. What is display-mode?</h2>
+            <p>The <code>display-mode</code> media query detects how a Progressive Web App is displayed and allows you to apply different CSS styles based on the display context.</p>
+
+            <h3>Four Display Modes:</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <h4><span class="mode-badge browser-badge">browser</span></h4>
+                    <p>Opened in browser tab with full UI (address bar, navigation buttons)</p>
+                </div>
+                <div class="card">
+                    <h4><span class="mode-badge standalone-badge">standalone</span></h4>
+                    <p>Installed PWA on device, no browser UI (like native app)</p>
+                </div>
+                <div class="card">
+                    <h4><span class="mode-badge fullscreen-badge">fullscreen</span></h4>
+                    <p>Immersive display using all screen space</p>
+                </div>
+                <div class="card">
+                    <h4><span class="mode-badge minimal-ui-badge">minimal-ui</span></h4>
+                    <p>Minimal browser controls visible</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 2: Basic Syntax ===== -->
+        <div class="section">
+            <h2>2. Basic Syntax</h2>
+
+            <h3>Simplest Form:</h3>
+            <pre>@media (display-mode: standalone) {
+    /* Styles for standalone/installed PWA */
+}</pre>
+
+            <h3>All Four Modes:</h3>
+            <pre>/* Browser mode */
+@media (display-mode: browser) {
+    body { padding: 20px; }
+}
+
+/* Standalone mode - PWA installed */
+@media (display-mode: standalone) {
+    body { padding: 0; }
+}
+
+/* Fullscreen mode */
+@media (display-mode: fullscreen) {
+    header { display: none; }
+}
+
+/* Minimal UI mode */
+@media (display-mode: minimal-ui) {
+    nav { display: flex; }
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 3: Example 1 - Header ===== -->
+        <div class="section">
+            <h2>3. Example 1: Responsive Header</h2>
+            <p>Show different header styles based on display mode:</p>
+
+            <h3>HTML:</h3>
+            <pre>&lt;header class="app-header"&gt;
+    &lt;h1&gt;My App&lt;/h1&gt;
+    &lt;nav class="browser-nav"&gt;...&lt;/nav&gt;
+&lt;/header&gt;</pre>
+
+            <h3>CSS:</h3>
+            <pre>/* Browser: Show navigation in header */
+@media (display-mode: browser) {
+    .app-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .browser-nav {
+        display: flex;
+        gap: 20px;
+    }
+}
+
+/* Standalone: Full-width header, no nav */
+@media (display-mode: standalone) {
+    .app-header {
+        padding: 12px 16px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+    }
+
+    .browser-nav {
+        display: none;
+    }
+}</pre>
+
+            <div class="note">
+                <strong>Key Point:</strong> Browser mode shows navigation, standalone mode uses fixed positioning.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 4: Example 2 - Main Content ===== -->
+        <div class="section">
+            <h2>4. Example 2: Content Padding Adjustments</h2>
+            <p>Adjust content padding based on header/navigation positioning:</p>
+
+            <h3>CSS:</h3>
+            <pre>/* Browser: Natural content flow */
+@media (display-mode: browser) {
+    main {
+        padding: 20px;
+    }
+}
+
+/* Standalone: Account for fixed header */
+@media (display-mode: standalone) {
+    main {
+        padding-top: 56px; /* Height of fixed header */
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-bottom: 56px; /* Space for bottom nav */
+    }
+}
+
+/* Fullscreen: Maximize space */
+@media (display-mode: fullscreen) {
+    main {
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+}</pre>
+
+            <div class="example">
+                <div class="example-title">Result:</div>
+                <div class="example-demo" style="height: 100px; display: flex; align-items: center; justify-content: center;">
+                    Content adjusts padding based on mode
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 5: Example 3 - Bottom Navigation ===== -->
+        <div class="section">
+            <h2>5. Example 3: Bottom Navigation (Standalone)</h2>
+            <p>Show bottom navigation only in standalone/app mode:</p>
+
+            <h3>HTML:</h3>
+            <pre>&lt;nav class="bottom-nav"&gt;
+    &lt;button&gt;Home&lt;/button&gt;
+    &lt;button&gt;Search&lt;/button&gt;
+    &lt;button&gt;Settings&lt;/button&gt;
+&lt;/nav&gt;</pre>
+
+            <h3>CSS:</h3>
+            <pre>/* Hide in browser mode */
+@media (display-mode: browser) {
+    .bottom-nav {
+        display: none;
+    }
+}
+
+/* Show in standalone - fixed bottom */
+@media (display-mode: standalone) {
+    .bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 56px;
+        border-top: 1px solid #ddd;
+        background: white;
+    }
+
+    .bottom-nav button {
+        flex: 1;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-top: 2px solid transparent;
+        transition: all 0.3s;
+    }
+
+    .bottom-nav button:hover {
+        background: #f5f5f5;
+        border-top-color: #667eea;
+    }
+}
+
+/* Hide completely in fullscreen */
+@media (display-mode: fullscreen) {
+    .bottom-nav {
+        display: none;
+    }
+}</pre>
+
+            <div class="note">
+                <strong>Pattern:</strong> Bottom navigation is common in mobile apps (like WhatsApp, Instagram, Twitter).
+            </div>
+        </div>
+
+        <!-- ===== SECTION 6: Example 4 - Safe Areas ===== -->
+        <div class="section">
+            <h2>6. Example 4: Safe Area Handling (Notches)</h2>
+            <p>Handle device notches and safe areas for fullscreen mode:</p>
+
+            <h3>CSS:</h3>
+            <pre>/* Account for notches in fullscreen */
+@media (display-mode: fullscreen) {
+    body {
+        padding-top: max(20px, env(safe-area-inset-top));
+        padding-left: max(20px, env(safe-area-inset-left));
+        padding-right: max(20px, env(safe-area-inset-right));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+    }
+
+    header {
+        padding-top: env(safe-area-inset-top);
+    }
+}
+
+/* Standalone with safe areas */
+@media (display-mode: standalone) {
+    header {
+        padding-top: max(12px, env(safe-area-inset-top));
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+}</pre>
+
+            <div class="warning">
+                <strong>Important:</strong> Use <code>env(safe-area-inset-*)</code> to avoid content being hidden behind notches or system UI.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 7: Example 5 - Combining with Other Queries ===== -->
+        <div class="section">
+            <h2>7. Example 5: Combining with Screen Size</h2>
+            <p>Use display-mode with responsive breakpoints:</p>
+
+            <h3>CSS:</h3>
+            <pre>/* Standalone on mobile */
+@media (display-mode: standalone) and (max-width: 600px) {
+    header {
+        font-size: 1em;
+        padding: 8px 12px;
+    }
+}
+
+/* Standalone on desktop/tablet */
+@media (display-mode: standalone) and (min-width: 601px) {
+    header {
+        font-size: 1.5em;
+        padding: 12px 20px;
+    }
+
+    .sidebar {
+        display: block;
+        width: 250px;
+    }
+}
+
+/* Browser and dark mode */
+@media (display-mode: browser) and (prefers-color-scheme: dark) {
+    body {
+        background: #1a1a1a;
+        color: #e0e0e0;
+    }
+}</pre>
+
+            <div class="note">
+                <strong>Pattern:</strong> Combine display-mode with screen size queries for powerful responsive control.
+            </div>
+        </div>
+
+        <!-- ===== SECTION 8: Example 6 - Status/Info Bar ===== -->
+        <div class="section">
+            <h2>8. Example 6: Status Bar Visibility</h2>
+            <p>Show/hide status information based on display mode:</p>
+
+            <h3>HTML:</h3>
+            <pre>&lt;div class="status-bar"&gt;
+    📱 Running in Browser Mode - Install to use offline
+&lt;/div&gt;</pre>
+
+            <h3>CSS:</h3>
+            <pre>/* Browser: Show status bar */
+@media (display-mode: browser) {
+    .status-bar {
+        display: block;
+        background: #e3f2fd;
+        border-bottom: 1px solid #90caf9;
+        padding: 8px 16px;
+        font-size: 0.9em;
+        color: #1565c0;
+    }
+}
+
+/* Standalone: Hide status bar */
+@media (display-mode: standalone),
+@media (display-mode: fullscreen),
+@media (display-mode: minimal-ui) {
+    .status-bar {
+        display: none;
+    }
+}</pre>
+
+            <div class="example">
+                <div class="example-title">Browser Mode:</div>
+                <div style="background: #e3f2fd; border-bottom: 1px solid #90caf9; padding: 8px 16px; font-size: 0.9em; color: #1565c0;">
+                    📱 Running in Browser Mode - Install to use offline
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 9: Example 7 - Sidebar Visibility ===== -->
+        <div class="section">
+            <h2>9. Example 7: Sidebar Toggle</h2>
+            <p>Show/hide sidebar based on available space in different modes:</p>
+
+            <h3>CSS:</h3>
+            <pre>/* Browser with sidebar visible */
+@media (display-mode: browser) {
+    body {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+    }
+
+    .sidebar {
+        display: block;
+        border-right: 1px solid #ddd;
+    }
+}
+
+/* Standalone on mobile: hamburger menu */
+@media (display-mode: standalone) and (max-width: 600px) {
+    .sidebar {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 56px;
+        width: 100%;
+        z-index: 99;
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+/* Standalone on desktop: always visible */
+@media (display-mode: standalone) and (min-width: 601px) {
+    body {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+    }
+
+    .sidebar {
+        display: block;
+    }
+
+    .menu-toggle {
+        display: none;
+    }
+}</pre>
+        </div>
+
+        <!-- ===== SECTION 10: Example 8 - Theme Toggle ===== -->
+        <div class="section">
+            <h2>10. Example 8: Theme Button Position</h2>
+            <p>Position theme toggle button differently based on mode:</p>
+
+            <h3>CSS:</h3>
+            <pre>/* Browser: Theme toggle in header */
+@media (display-mode: browser) {
+    .theme-toggle {
+        position: static;
+        margin: 0;
+    }
+}
+
+/* Standalone: Floating button in corner */
+@media (display-mode: standalone) {
+    .theme-toggle {
+        position: fixed;
+        bottom: 70px; /* Above bottom nav */
+        right: 16px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #667eea;
+        color: white;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .theme-toggle:active {
+        transform: scale(0.95);
+    }
+}
+
+/* Fullscreen: Hide theme toggle */
+@media (display-mode: fullscreen) {
+    .theme-toggle {
+        display: none;
+    }
+}</pre>
+
+            <div class="note">
+                <strong>UX Tip:</strong> Place interactive elements in the "thumb zone" on mobile (bottom of screen).
+            </div>
+        </div>
+
+        <!-- ===== SECTION 11: JavaScript Detection ===== -->
+        <div class="section">
+            <h2>11. JavaScript Detection</h2>
+            <p>Detect display mode with JavaScript using matchMedia API:</p>
+
+            <h3>Check Current Mode:</h3>
+            <pre>// Check if running in standalone mode
+if (window.matchMedia('(display-mode: standalone)').matches) {
+    console.log('Running as installed PWA');
+}
+
+// Check if running in fullscreen
+if (window.matchMedia('(display-mode: fullscreen)').matches) {
+    console.log('Running in fullscreen mode');
+}
+
+// Check if running in browser
+if (window.matchMedia('(display-mode: browser)').matches) {
+    console.log('Running in browser');
+}</pre>
+
+            <h3>Detect Mode Changes:</h3>
+            <pre>// Listen for mode changes
+window.matchMedia('(display-mode: standalone)').addEventListener('change', (e) => {
+    if (e.matches) {
+        console.log('Entered standalone mode');
+        // Update layout, show/hide elements
+    } else {
+        console.log('Exited standalone mode');
+    }
+});
+
+// Helper function to get current mode
+function getDisplayMode() {
+    if (window.matchMedia('(display-mode: fullscreen)').matches) {
+        return 'fullscreen';
+    }
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        return 'standalone';
+    }
+    if (window.matchMedia('(display-mode: minimal-ui)').matches) {
+        return 'minimal-ui';
+    }
+    return 'browser';
+}
+
+console.log('Current mode:', getDisplayMode());</pre>
+        </div>
+
+        <!-- ===== SECTION 12: Quick Reference ===== -->
+        <div class="section">
+            <h2>12. Quick Reference Guide</h2>
+
+            <h3>All Display Modes:</h3>
+            <div class="code-comparison">
+                <div>
+                    <strong>Browser</strong>
+                    <pre>@media (display-mode: browser) {
+    /* Opened in browser tab */
+}</pre>
+                </div>
+                <div>
+                    <strong>Standalone</strong>
+                    <pre>@media (display-mode: standalone) {
+    /* Installed PWA */
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-comparison">
+                <div>
+                    <strong>Fullscreen</strong>
+                    <pre>@media (display-mode: fullscreen) {
+    /* Immersive display */
+}</pre>
+                </div>
+                <div>
+                    <strong>Minimal-UI</strong>
+                    <pre>@media (display-mode: minimal-ui) {
+    /* Minimal controls */
+}</pre>
+                </div>
+            </div>
+
+            <h3>Common Patterns:</h3>
+            <pre>/* Only in standalone */
+@media (display-mode: standalone) { }
+
+/* In any app mode (not browser) */
+@media (display-mode: standalone),
+       (display-mode: fullscreen),
+       (display-mode: minimal-ui) { }
+
+/* With screen size */
+@media (display-mode: standalone) and (min-width: 800px) { }
+
+/* With color scheme */
+@media (display-mode: standalone) and (prefers-color-scheme: dark) { }
+
+/* With orientation */
+@media (display-mode: standalone) and (orientation: portrait) { }</pre>
+
+            <h3>Checklist for PWA:</h3>
+            <ul>
+                <li>✓ Define Web App Manifest with "display": "standalone"</li>
+                <li>✓ Add display-mode media queries for standalone</li>
+                <li>✓ Set fixed header height for padding calculations</li>
+                <li>✓ Create bottom navigation for app-like feel</li>
+                <li>✓ Handle safe areas for notched devices</li>
+                <li>✓ Test on actual devices/emulator</li>
+                <li>✓ Use JavaScript detection for dynamic changes</li>
+            </ul>
+        </div>
+
+        <!-- ===== SECTION 13: Real-World Examples ===== -->
+        <div class="section">
+            <h2>13. Real-World App Patterns</h2>
+
+            <h3>Messaging App (like WhatsApp):</h3>
+            <pre>/* Browser: Show full interface */
+@media (display-mode: browser) {
+    body { grid-template-columns: 250px 1fr; }
+    .chat-list { display: block; }
+    .bottom-nav { display: none; }
+}
+
+/* Standalone: Bottom navigation */
+@media (display-mode: standalone) {
+    body { grid-template-rows: 56px 1fr 56px; }
+    .bottom-nav { display: flex; }
+    .chat-detail { padding-bottom: 56px; }
+}</pre>
+
+            <h3>Notes App (like Google Keep):</h3>
+            <pre>/* Browser: Card layout with padding */
+@media (display-mode: browser) {
+    .notes-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+}
+
+/* Standalone: Full screen with fixed header */
+@media (display-mode: standalone) {
+    .header { position: fixed; }
+    .notes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        padding-top: 56px;
+    }
+}</pre>
+
+            <h3>Todo App:</h3>
+            <pre>/* Browser: Sidebar layout */
+@media (display-mode: browser) {
+    body { display: grid; grid-template-columns: 200px 1fr; }
+    .sidebar { display: block; }
+}
+
+/* Standalone Mobile: Hamburger menu */
+@media (display-mode: standalone) and (max-width: 600px) {
+    .sidebar { position: fixed; transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+}
+
+/* Standalone Desktop: Sidebar visible */
+@media (display-mode: standalone) and (min-width: 601px) {
+    body { display: grid; grid-template-columns: 200px 1fr; }
+    .sidebar { display: block; }
+}</pre>
+        </div>
+
+        <footer>
+            <p>CSS Display-Mode @media Rule - Basic Examples | Created for Web Development Learning</p>
+            <p>For more information, visit <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/display-mode">MDN Web Docs</a></p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS scroll-snap Properties - Complete Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .feature-status {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .syntax-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .example-grid {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .example-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .example-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .example-card code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #764ba2;
+            font-size: 0.9em;
+        }
+
+        .key-points {
+            background: #e8f4f8;
+            border-left: 4px solid #17a2b8;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .key-points h4 {
+            color: #17a2b8;
+            margin-bottom: 10px;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .key-points li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .browser-support {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px;
+            color: #555;
+        }
+
+        .comparison-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .tag.snap {
+            background: #28a745;
+        }
+
+        .tag.type {
+            background: #fd7e14;
+        }
+
+        .tag.align {
+            background: #17a2b8;
+        }
+
+        .tag.stop {
+            background: #dc3545;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            header {
+                padding: 25px;
+            }
+
+            .comparison-table {
+                font-size: 0.9em;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            h2 {
+                font-size: 1.2em;
+            }
+
+            h3 {
+                font-size: 1.1em;
+            }
+
+            .section {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .syntax-box {
+                font-size: 0.85em;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSS scroll-snap Properties</h1>
+            <p class="subtitle">Snap Scrolling & Carousel Effects</p>
+            <div class="feature-status">
+                <div class="status-badge">✓ Snap Points</div>
+                <div class="status-badge">✓ Snap Alignment</div>
+                <div class="status-badge">✓ Snap Behavior</div>
+            </div>
+        </header>
+
+        <div class="section">
+            <h2>What are scroll-snap Properties?</h2>
+            <p>
+                CSS scroll-snap properties enable scrollable containers to snap to specific elements or positions after scrolling. They create smooth carousel-like experiences and improve usability by helping users navigate content predictably. Three main properties control snap behavior: <code>scroll-snap-type</code>, <code>scroll-snap-align</code>, and <code>scroll-snap-stop</code>.
+            </p>
+            <div class="key-points">
+                <h4>Core Concepts:</h4>
+                <ul>
+                    <li><code>scroll-snap-type</code> - Applied to container, defines snap behavior (direction and strictness)</li>
+                    <li><code>scroll-snap-align</code> - Applied to children, specifies alignment within container</li>
+                    <li><code>scroll-snap-stop</code> - Applied to children, forces scrolling to stop at element</li>
+                    <li>Creates touch-friendly carousel experiences without JavaScript</li>
+                    <li>Works with scroll-behavior for smooth snapping animations</li>
+                    <li>Improves mobile scrolling predictability and accessibility</li>
+                </ul>
+            </div>
+            <div class="browser-support">
+                <strong>Browser Support:</strong> Modern browsers (Chrome 69+, Firefox 68+, Safari 15+, Edge 79+). Mobile support excellent for native scrolling.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>scroll-snap-type Property</h2>
+            
+            <h3>Syntax & Values</h3>
+            <p>Applied to the scrollable container to enable snap behavior:</p>
+            <div class="syntax-box">
+/* Disable snap scrolling (default) */
+.container {
+    scroll-snap-type: none;
+}
+
+/* X-axis snapping (horizontal) */
+.carousel {
+    scroll-snap-type: x mandatory;      /* Must snap */
+    scroll-snap-type: x proximity;      /* Snaps nearby */
+}
+
+/* Y-axis snapping (vertical) */
+.list {
+    scroll-snap-type: y mandatory;      /* Vertical mandatory */
+    scroll-snap-type: y proximity;      /* Vertical proximity */
+}
+
+/* Both axes */
+.twodimensional {
+    scroll-snap-type: both mandatory;   /* Snap both directions */
+    scroll-snap-type: both proximity;   /* Proximity on both */
+}
+
+/* With scroll-padding adjustment */
+.container {
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 50px;           /* Offset for fixed headers */
+}
+            </div>
+
+            <h3>Mandatory vs Proximity</h3>
+            <div class="syntax-box">
+/* mandatory - Browser MUST snap to nearest snap point */
+.carousel {
+    scroll-snap-type: x mandatory;
+}
+/* Result: Always snaps, every scroll stops at element */
+
+/* proximity - Browser MAY snap if close to snap point */
+.list {
+    scroll-snap-type: y proximity;
+}
+/* Result: Snaps only if user scrolls near snap point */
+            </div>
+
+            <span class="tag snap">Container</span>
+        </div>
+
+        <div class="section">
+            <h2>scroll-snap-align Property</h2>
+            
+            <h3>Alignment Values</h3>
+            <p>Applied to children, specifies where element aligns in container:</p>
+            <div class="syntax-box">
+/* snap-align: start | center | end | none */
+
+/* Align to start of container */
+.snap-item {
+    scroll-snap-align: start;
+}
+
+/* Align to center of container */
+.snap-item {
+    scroll-snap-align: center;
+}
+
+/* Align to end of container */
+.snap-item {
+    scroll-snap-align: end;
+}
+
+/* No snap alignment */
+.snap-item {
+    scroll-snap-align: none;
+}
+
+/* Two-dimensional alignment */
+.snap-item {
+    scroll-snap-align: start center;    /* X: start, Y: center */
+    scroll-snap-align: center end;      /* X: center, Y: end */
+}
+            </div>
+
+            <h3>With scroll-snap-type: x mandatory</h3>
+            <div class="syntax-box">
+.carousel {
+    scroll-snap-type: x mandatory;
+}
+
+/* Children snap to different positions */
+.item.start {
+    scroll-snap-align: start;           /* Left edge of container */
+}
+
+.item.center {
+    scroll-snap-align: center;          /* Center of container */
+}
+
+.item.end {
+    scroll-snap-align: end;             /* Right edge of container */
+}
+            </div>
+
+            <span class="tag align">Child Elements</span>
+        </div>
+
+        <div class="section">
+            <h2>scroll-snap-stop Property</h2>
+            
+            <h3>Strictness Control</h3>
+            <p>Determines if scrolling must stop at snap point:</p>
+            <div class="syntax-box">
+/* normal - May skip snap points during fast scrolling */
+.item {
+    scroll-snap-stop: normal;
+}
+
+/* always - Cannot skip, must stop at this snap point */
+.item {
+    scroll-snap-stop: always;
+}
+            </div>
+
+            <h3>Use Cases</h3>
+            <div class="syntax-box">
+/* Gallery - always stop at each image */
+.gallery-item {
+    scroll-snap-type: x mandatory;
+    scroll-snap-stop: always;           /* Stops at every image */
+    scroll-snap-align: center;
+}
+
+/* List - may skip some items */
+.list-item {
+    scroll-snap-type: y proximity;
+    scroll-snap-stop: normal;           /* Can skip items */
+    scroll-snap-align: start;
+}
+            </div>
+
+            <span class="tag stop">Child Elements</span>
+        </div>
+
+        <div class="section">
+            <h2>Complete Example Combinations</h2>
+            
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>Horizontal Carousel</h4>
+                    <p>Mandatory snapping to center-aligned items:</p>
+                    <div class="syntax-box">
+.carousel {
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    display: flex;
+}
+
+.carousel-item {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    flex-shrink: 0;
+    width: 100%;
+}
+                    </div>
+                    <span class="tag snap">Horizontal</span>
+                </div>
+
+                <div class="example-card">
+                    <h4>Vertical Gallery</h4>
+                    <p>Full-height image gallery with strict snapping:</p>
+                    <div class="syntax-box">
+.gallery {
+    scroll-snap-type: y mandatory;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.gallery-image {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    height: 100vh;
+    width: 100%;
+}
+                    </div>
+                    <span class="tag snap">Vertical</span>
+                </div>
+
+                <div class="example-card">
+                    <h4>Proximity List</h4>
+                    <p>Loose snapping for touch-friendly lists:</p>
+                    <div class="syntax-box">
+.list {
+    scroll-snap-type: y proximity;
+    overflow-y: auto;
+}
+
+.list-item {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+    min-height: 100px;
+}
+                    </div>
+                    <span class="tag snap">Proximity</span>
+                </div>
+
+                <div class="example-card">
+                    <h4>Two-Dimensional Grid</h4>
+                    <p>Snap both horizontally and vertically:</p>
+                    <div class="syntax-box">
+.grid-container {
+    scroll-snap-type: both mandatory;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 300px);
+}
+
+.grid-item {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+                    </div>
+                    <span class="tag snap">2D Grid</span>
+                </div>
+
+                <div class="example-card">
+                    <h4>Product Carousel</h4>
+                    <p>Center-aligned carousel with smooth snapping:</p>
+                    <div class="syntax-box">
+.products {
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    overflow-x: auto;
+}
+
+.product-card {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    flex-shrink: 0;
+    width: 300px;
+}
+                    </div>
+                    <span class="tag snap">E-commerce</span>
+                </div>
+
+                <div class="example-card">
+                    <h4>Touch-Friendly Slides</h4>
+                    <p>Mobile-optimized snap points:</p>
+                    <div class="syntax-box">
+.slides {
+    scroll-snap-type: x mandatory;
+    touch-action: manipulation;
+    overflow-x: auto;
+}
+
+.slide {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    width: 100vw;
+}
+                    </div>
+                    <span class="tag snap">Mobile</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Related Properties</h2>
+            
+            <h3>scroll-padding</h3>
+            <p>Adjust snap position offset (useful for fixed headers/footers):</p>
+            <div class="syntax-box">
+/* Add space at top for fixed header */
+html {
+    scroll-padding-top: 100px;
+}
+
+.container {
+    scroll-snap-type: y mandatory;
+    scroll-padding: 50px;               /* All sides */
+}
+
+/* Individual sides */
+.container {
+    scroll-padding-top: 100px;
+    scroll-padding-bottom: 50px;
+}
+            </div>
+
+            <h3>Combining with scroll-behavior</h3>
+            <div class="syntax-box">
+.carousel {
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;            /* Smooth animation */
+}
+
+.item {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+}
+
+/* Result: Smooth animation to snap points */
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Best Practices</h2>
+            
+            <div class="key-points">
+                <h4>✓ DO:</h4>
+                <ul>
+                    <li><strong>Use mandatory for carousels:</strong> Users expect items to snap</li>
+                    <li><strong>Use proximity for lists:</strong> More flexible scrolling experience</li>
+                    <li><strong>Set scroll-snap-stop: always on important items:</strong> Ensure key content is visible</li>
+                    <li><strong>Combine with scroll-behavior: smooth:</strong> Create polished animations</li>
+                    <li><strong>Use scroll-padding for fixed headers:</strong> Prevent content overlap</li>
+                    <li><strong>Test on multiple devices:</strong> Mobile experience is different</li>
+                    <li><strong>Provide fallback styles:</strong> Older browsers won't have snapping</li>
+                </ul>
+            </div>
+
+            <div class="key-points" style="background: #f8d7da; border-color: #721c24; color: #721c24;">
+                <h4 style="color: #721c24;">✗ DON'T:</h4>
+                <ul style="color: #721c24;">
+                    <li><strong>Overuse mandatory snapping:</strong> Can feel restrictive</li>
+                    <li><strong>Set snap-stop: always on every item:</strong> Only on critical content</li>
+                    <li><strong>Use with heavy JavaScript scrolling:</strong> Can conflict and cause jank</li>
+                    <li><strong>Forget about touch users:</strong> Test on actual mobile devices</li>
+                    <li><strong>Create inconsistent snap points:</strong> Varying sizes confuse users</li>
+                    <li><strong>Snap items that don't fit container:</strong> Ensures visibility</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Browser Support & Compatibility</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Browser Support</th>
+                        <th>Version</th>
+                        <th>Mobile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>scroll-snap-type</td>
+                        <td>Chrome, Firefox, Safari, Edge</td>
+                        <td>69+</td>
+                        <td>✓ Excellent</td>
+                    </tr>
+                    <tr>
+                        <td>scroll-snap-align</td>
+                        <td>Chrome, Firefox, Safari, Edge</td>
+                        <td>69+</td>
+                        <td>✓ Excellent</td>
+                    </tr>
+                    <tr>
+                        <td>scroll-snap-stop</td>
+                        <td>Chrome, Firefox, Edge</td>
+                        <td>75+</td>
+                        <td>⚠ Partial</td>
+                    </tr>
+                    <tr>
+                        <td>scroll-padding</td>
+                        <td>Chrome, Firefox, Safari, Edge</td>
+                        <td>69+</td>
+                        <td>✓ Good</td>
+                    </tr>
+                    <tr>
+                        <td>IE 11</td>
+                        <td>✗ No Support</td>
+                        <td>N/A</td>
+                        <td>✗ None</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Performance Considerations</h2>
+            
+            <div class="key-points">
+                <h4>Performance Tips:</h4>
+                <ul>
+                    <li><strong>Native browser feature:</strong> No JavaScript required, better performance than JS carousels</li>
+                    <li><strong>Hardware accelerated:</strong> Native scrolling uses GPU for smooth animations</li>
+                    <li><strong>Minimal CPU usage:</strong> Much lighter than JavaScript animation libraries</li>
+                    <li><strong>Predictable snapping:</strong> Browser handles snapping logic efficiently</li>
+                    <li><strong>Touch-optimized:</strong> Works seamlessly with native mobile scrolling</li>
+                    <li><strong>Battery friendly:</strong> Minimal power consumption compared to JS scrolling</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Key Takeaways</h2>
+            
+            <div class="key-points">
+                <ul>
+                    <li>
+                        <strong>Three Main Properties:</strong> scroll-snap-type (container), scroll-snap-align (child), scroll-snap-stop (child)
+                    </li>
+                    <li>
+                        <strong>Mandatory vs Proximity:</strong> Mandatory always snaps, proximity snaps only when nearby
+                    </li>
+                    <li>
+                        <strong>Direction Control:</strong> x (horizontal), y (vertical), both (2D)
+                    </li>
+                    <li>
+                        <strong>Alignment Options:</strong> start, center, end for positioning within container
+                    </li>
+                    <li>
+                        <strong>Pure CSS Solution:</strong> No JavaScript required for smooth carousel experiences
+                    </li>
+                    <li>
+                        <strong>Mobile-Friendly:</strong> Excellent native browser support on all modern devices
+                    </li>
+                    <li>
+                        <strong>Accessibility:</strong> Improves touch navigation and predictable content browsing
+                    </li>
+                    <li>
+                        <strong>Performance:</strong> Native implementation is faster than JavaScript carousels
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>CSS scroll-snap Properties • Complete Snap Scrolling Guide</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Created with ❤️ for modern CSS education</p>
+        </footer>
+    </div>
+</body>
+</html>
