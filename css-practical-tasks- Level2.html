@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Intermediate CSS Practical Tasks (No Shorthand)</title>
+<style>
+
+  :root {
+    --main-color: #2563eb;
+    --accent-color: #f59e0b;
+  }
+
+  /* ---------- Base page styling ---------- */
+  body {
+    background-color: #fafafa;
+    color: #1f2933;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 40px;
+    padding-left: 0px;
+  }
+
+  .page-header {
+    background-color: #1f2933;
+    color: #ffffff;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .page-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 0px;
+    margin-bottom: 6px;
+  }
+
+  .page-header p {
+    color: #cbd2d9;
+    font-size: 14px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .wrapper {
+    max-width: 800px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .task {
+    background-color: #ffffff;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #e4e7eb;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-top: 24px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .task h2 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #102a43;
+    margin-top: 0px;
+    margin-bottom: 4px;
+  }
+
+  .task .task-desc {
+    font-size: 14px;
+    color: #52606d;
+    margin-top: 0px;
+    margin-bottom: 14px;
+  }
+
+  .note {
+    background-color: #fef9c3;
+    color: #713f12;
+    font-size: 13px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-top: 0px;
+    margin-bottom: 14px;
+    border-left-width: 3px;
+    border-left-style: solid;
+    border-left-color: #ca8a04;
+  }
+
+  .demo {
+    border-top-width: 1px;
+    border-top-style: dashed;
+    border-top-color: #cbd2d9;
+    border-bottom-width: 1px;
+    border-bottom-style: dashed;
+    border-bottom-color: #cbd2d9;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-bottom: 12px;
+    overflow-x: auto;
+  }
+
+  pre {
+    background-color: #0b1620;
+    color: #d5f5e3;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 14px;
+    padding-right: 14px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    overflow-x: auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  /* ---------- Task 1: Flexbox Basic Layout ---------- */
+  .t1-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #eef2ff;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .t1-item {
+    background-color: #6366f1;
+    color: #ffffff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* ---------- Task 2: Flexbox Item Sizing ---------- */
+  .t2-flex {
+    display: flex;
+    background-color: #f8fafc;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .t2-item1 { flex-grow: 1; flex-shrink: 1; flex-basis: 80px; background-color: #a5b4fc; color: #1f2933; padding-top: 10px; padding-bottom: 10px; }
+  .t2-item2 { flex-grow: 2; flex-shrink: 1; flex-basis: 80px; background-color: #818cf8; color: #ffffff; padding-top: 10px; padding-bottom: 10px; }
+  .t2-item3 { flex-grow: 1; flex-shrink: 0; flex-basis: 80px; background-color: #6366f1; color: #ffffff; padding-top: 10px; padding-bottom: 10px; }
+
+  /* ---------- Task 3: CSS Grid Basic Layout ---------- */
+  .t3-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 60px 60px;
+  }
+  .t3-grid div {
+    background-color: #bae6fd;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ffffff;
+  }
+
+  /* ---------- Task 4: Grid Gap Task ---------- */
+  .t4-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 14px;
+    column-gap: 24px;
+  }
+  .t4-grid div {
+    background-color: #bbf7d0;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    text-align: center;
+  }
+
+  /* ---------- Task 5: Grid Item Placement ---------- */
+  .t5-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 60px);
+    row-gap: 6px;
+    column-gap: 6px;
+  }
+  .t5-a { grid-column-start: 1; grid-column-end: 3; grid-row-start: 1; grid-row-end: 2; background-color: #fca5a5; }
+  .t5-b { grid-column-start: 3; grid-column-end: 5; grid-row-start: 1; grid-row-end: 3; background-color: #fdba74; }
+  .t5-c { grid-column-start: 1; grid-column-end: 3; grid-row-start: 2; grid-row-end: 3; background-color: #93c5fd; }
+  .t5-grid div { color: #1f2933; padding-top: 6px; padding-left: 8px; }
+
+  /* ---------- Task 6: CSS Variables ---------- */
+  .t6-box {
+    background-color: var(--main-color);
+    color: #ffffff;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .t6-text {
+    color: var(--accent-color);
+    font-weight: 700;
+  }
+
+  /* ---------- Task 7: Transition Effect ---------- */
+  .t7-btn {
+    background-color: #3b82f6;
+    color: #ffffff;
+    border-style: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 22px;
+    padding-right: 22px;
+    transition-property: background-color, transform;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s;
+  }
+  .t7-btn:hover {
+    background-color: #1d4ed8;
+    transform: scale(1.1);
+  }
+
+  /* ---------- Task 8: Transform Task ---------- */
+  .t8-row { display: flex; gap: 20px; }
+  .t8-box {
+    width: 80px;
+    height: 80px;
+    background-color: #f472b6;
+    color: #ffffff;
+    font-size: 13px;
+    text-align: center;
+    padding-top: 30px;
+  }
+  .t8-translate { transform: translate(15px, 0px); }
+  .t8-rotate    { transform: rotate(20deg); }
+  .t8-scale     { transform: scale(1.25); }
+
+  /* ---------- Task 9: Keyframe Animation ---------- */
+  @keyframes t9-bounce {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-18px); }
+    100% { transform: translateY(0px); }
+  }
+  .t9-box {
+    width: 70px;
+    height: 70px;
+    background-color: #34d399;
+    animation-name: t9-bounce;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+  }
+
+  /* ---------- Task 10: Pseudo-class Practice ---------- */
+  .t10-list { list-style-type: none; padding-left: 0px; }
+  .t10-list li { padding-top: 8px; padding-bottom: 8px; padding-left: 12px; margin-bottom: 4px; }
+  .t10-list li:first-child { background-color: #fde68a; }
+  .t10-list li:last-child { background-color: #a7f3d0; }
+  .t10-list li:nth-child(2) { background-color: #93c5fd; }
+
+  /* ---------- Task 11: Pseudo-element Practice ---------- */
+  .t11-quote::before { content: "\201C"; font-size: 22px; color: #6366f1; }
+  .t11-quote::after  { content: "\201D"; font-size: 22px; color: #6366f1; }
+
+  /* ---------- Task 12: Z-index Stacking ---------- */
+  .t12-container { position: relative; height: 150px; }
+  .t12-box1 {
+    position: absolute; top: 15px; left: 15px;
+    width: 100px; height: 100px;
+    background-color: #fca5a5; z-index: 1;
+  }
+  .t12-box2 {
+    position: absolute; top: 45px; left: 65px;
+    width: 100px; height: 100px;
+    background-color: #93c5fd; z-index: 2;
+  }
+
+  /* ---------- Task 13: Box-sizing Task ---------- */
+  .t13-content-box {
+    box-sizing: content-box;
+    width: 150px;
+    padding-top: 16px; padding-bottom: 16px; padding-left: 16px; padding-right: 16px;
+    border-width: 5px; border-style: solid; border-color: #495057;
+    background-color: #fef3c7;
+    margin-bottom: 10px;
+  }
+  .t13-border-box {
+    box-sizing: border-box;
+    width: 150px;
+    padding-top: 16px; padding-bottom: 16px; padding-left: 16px; padding-right: 16px;
+    border-width: 5px; border-style: solid; border-color: #495057;
+    background-color: #dbeafe;
+  }
+
+  /* ---------- Task 14: Media Query Task ---------- */
+  .t14-box {
+    background-color: #a5b4fc;
+    color: #1f2933;
+    padding-top: 16px; padding-bottom: 16px; padding-left: 16px; padding-right: 16px;
+    text-align: center;
+  }
+  .t14-box::after { content: " (wide screen)"; }
+  @media (max-width: 500px) {
+    .t14-box { background-color: #f87171; color: #ffffff; }
+    .t14-box::after { content: " (narrow screen)"; }
+  }
+
+  /* ---------- Task 15: CSS Combinators ---------- */
+  .t15-parent { border-width: 1px; border-style: solid; border-color: #cbd2d9; padding-top: 10px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; }
+  .t15-parent p { color: #2563eb; }
+  .t15-parent > p { font-weight: 700; }
+  .t15-anchor { background-color: #e5e7eb; padding-top: 6px; padding-left: 8px; margin-bottom: 4px; }
+  .t15-anchor + div { background-color: #fde68a; }
+  .t15-anchor ~ div { border-left-width: 4px; border-left-style: solid; border-left-color: #10b981; padding-left: 8px; margin-bottom: 4px; }
+
+  /* ---------- Task 16: Attribute Selector Task ---------- */
+  input[type="text"] { border-width: 2px; border-style: solid; border-color: #10b981; padding-top: 6px; padding-bottom: 6px; padding-left: 8px; }
+  a[target="_blank"] { color: #dc2626; font-weight: 700; }
+
+  /* ---------- Task 17: Form Styling Task ---------- */
+  .t17-form input, .t17-form textarea, .t17-form select {
+    border-width: 2px;
+    border-style: solid;
+    border-color: #9ca3af;
+    outline-style: none;
+    background-color: #f9fafb;
+    padding-top: 8px; padding-bottom: 8px; padding-left: 10px; padding-right: 10px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .t17-form input:focus, .t17-form textarea:focus, .t17-form select:focus {
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: #3b82f6;
+    border-color: #3b82f6;
+  }
+
+  /* ---------- Task 18: Sticky Positioning Task ---------- */
+  .t18-scroll {
+    height: 160px;
+    overflow-y: auto;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cbd2d9;
+  }
+  .t18-sticky {
+    position: sticky;
+    top: 0px;
+    background-color: #102a43;
+    color: #ffffff;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+  }
+  .t18-content { padding-top: 8px; padding-left: 10px; padding-right: 10px; padding-bottom: 8px; }
+
+  /* ---------- Task 19: Grid Template Areas Task ---------- */
+  .t19-grid {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    grid-template-rows: 40px 100px 40px;
+    grid-template-areas:
+      "header header"
+      "sidebar content"
+      "footer footer";
+    row-gap: 4px;
+    column-gap: 4px;
+  }
+  .t19-header  { grid-area: header;  background-color: #1d4ed8; color: #ffffff; padding-top: 8px; padding-left: 10px; }
+  .t19-sidebar { grid-area: sidebar; background-color: #93c5fd; padding-top: 8px; padding-left: 10px; }
+  .t19-content { grid-area: content; background-color: #dbeafe; padding-top: 8px; padding-left: 10px; }
+  .t19-footer  { grid-area: footer;  background-color: #1d4ed8; color: #ffffff; padding-top: 8px; padding-left: 10px; }
+
+  /* ---------- Task 20: Multi-column Layout Task ---------- */
+  .t20-cols {
+    column-count: 3;
+    column-width: 140px;
+    column-rule-width: 1px;
+    column-rule-style: solid;
+    column-rule-color: #9ca3af;
+  }
+
+  /* ---------- Task 21: Filter Effects Task ---------- */
+  .t21-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .t21-box {
+    width: 110px;
+    height: 90px;
+    background-image: linear-gradient(135deg, #f97316, #ec4899);
+    color: #ffffff;
+    text-align: center;
+    padding-top: 32px;
+    font-size: 13px;
+  }
+  .t21-blur   { filter: blur(2px); }
+  .t21-bright { filter: brightness(1.6); }
+  .t21-gray   { filter: grayscale(100%); }
+
+  /* ---------- Task 22: Object-fit Task ---------- */
+  .t22-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .t22-frame { width: 160px; height: 110px; border-width: 2px; border-style: solid; border-color: #495057; }
+  .t22-cover   { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .t22-contain { width: 100%; height: 100%; object-fit: contain; object-position: center; background-color: #e5e7eb; }
+
+  /* ---------- Task 23: Custom Scrollbar Task ---------- */
+  .t23-box {
+    width: 220px;
+    height: 100px;
+    overflow-y: scroll;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cbd2d9;
+    padding-top: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .t23-box::-webkit-scrollbar {
+    width: 10px;
+  }
+  .t23-box::-webkit-scrollbar-track {
+    background-color: #e5e7eb;
+  }
+  .t23-box::-webkit-scrollbar-thumb {
+    background-color: #6366f1;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  /* ---------- Task 24: CSS Specificity Task ---------- */
+  .t24-demo p { color: #16a34a; }
+  .t24-demo .t24-class-color { color: #2563eb; }
+  .t24-demo #t24-target { color: #dc2626; }
+
+</style>
+</head>
+<body>
+
+  <div class="page-header">
+    <h1>Intermediate CSS Practical Tasks</h1>
+    <p>24 examples — only individual (longhand) properties used, no shorthand.</p>
+  </div>
+
+  <div class="wrapper">
+
+    <!-- Task 1 -->
+    <div class="task">
+      <h2>1. Flexbox Basic Layout</h2>
+      <p class="task-desc">display: flex ke sath flex-direction, justify-content, align-items alag-alag set kiye.</p>
+      <div class="demo">
+        <div class="t1-flex">
+          <div class="t1-item">One</div>
+          <div class="t1-item">Two</div>
+          <div class="t1-item">Three</div>
+        </div>
+      </div>
+      <pre>.flex-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}</pre>
+    </div>
+
+    <!-- Task 2 -->
+    <div class="task">
+      <h2>2. Flexbox Item Sizing</h2>
+      <p class="task-desc">flex-grow, flex-shrink, flex-basis individually set kiye (flex shorthand nahi).</p>
+      <div class="demo">
+        <div class="t2-flex">
+          <div class="t2-item1">grow:1</div>
+          <div class="t2-item2">grow:2</div>
+          <div class="t2-item3">grow:1, shrink:0</div>
+        </div>
+      </div>
+      <pre>.item {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 80px;
+}</pre>
+    </div>
+
+    <!-- Task 3 -->
+    <div class="task">
+      <h2>3. CSS Grid Basic Layout</h2>
+      <p class="task-desc">display: grid se grid-template-columns aur grid-template-rows set kiye.</p>
+      <div class="demo">
+        <div class="t3-grid">
+          <div>1</div><div>2</div><div>3</div>
+          <div>4</div><div>5</div><div>6</div>
+        </div>
+      </div>
+      <pre>.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 60px 60px;
+}</pre>
+    </div>
+
+    <!-- Task 4 -->
+    <div class="task">
+      <h2>4. Grid Gap Task</h2>
+      <p class="task-desc">row-gap aur column-gap alag-alag set kiye (gap shorthand nahi).</p>
+      <div class="demo">
+        <div class="t4-grid">
+          <div>A</div><div>B</div><div>C</div>
+          <div>D</div><div>E</div><div>F</div>
+        </div>
+      </div>
+      <pre>.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 14px;
+  column-gap: 24px;
+}</pre>
+    </div>
+
+    <!-- Task 5 -->
+    <div class="task">
+      <h2>5. Grid Item Placement</h2>
+      <p class="task-desc">grid-column-start/end aur grid-row-start/end use karke items place kiye.</p>
+      <div class="demo">
+        <div class="t5-grid">
+          <div class="t5-a">A (wide top)</div>
+          <div class="t5-b">B (tall right)</div>
+          <div class="t5-c">C (bottom left)</div>
+        </div>
+      </div>
+      <pre>.item-a {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}</pre>
+    </div>
+
+    <!-- Task 6 -->
+    <div class="task">
+      <h2>6. CSS Variables (Custom Properties)</h2>
+      <p class="task-desc">--main-color jaisi variable define karke var() se use ki.</p>
+      <div class="demo">
+        <div class="t6-box">Background uses var(--main-color)</div>
+        <p class="t6-text">This text uses var(--accent-color)</p>
+      </div>
+      <pre>:root {
+  --main-color: #2563eb;
+  --accent-color: #f59e0b;
+}
+.box  { background-color: var(--main-color); }
+.text { color: var(--accent-color); }</pre>
+    </div>
+
+    <!-- Task 7 -->
+    <div class="task">
+      <h2>7. Transition Effect Task</h2>
+      <p class="task-desc">transition-property, transition-duration, transition-timing-function, transition-delay alag likhe. Button par hover karo.</p>
+      <div class="demo">
+        <button class="t7-btn">Hover Me</button>
+      </div>
+      <pre>.btn {
+  transition-property: background-color, transform;
+  transition-duration: 0.4s;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
+}
+.btn:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.1);
+}</pre>
+    </div>
+
+    <!-- Task 8 -->
+    <div class="task">
+      <h2>8. Transform Task</h2>
+      <p class="task-desc">transform: translate/rotate/scale use karke box animate kiya.</p>
+      <div class="demo">
+        <div class="t8-row">
+          <div class="t8-box t8-translate">translate</div>
+          <div class="t8-box t8-rotate">rotate</div>
+          <div class="t8-box t8-scale">scale</div>
+        </div>
+      </div>
+      <pre>.translate { transform: translate(15px, 0px); }
+.rotate    { transform: rotate(20deg); }
+.scale     { transform: scale(1.25); }</pre>
+    </div>
+
+    <!-- Task 9 -->
+    <div class="task">
+      <h2>9. Keyframe Animation Task</h2>
+      <p class="task-desc">@keyframes bana ke animation-name, animation-duration, animation-iteration-count set kiye.</p>
+      <div class="demo">
+        <div class="t9-box"></div>
+      </div>
+      <pre>@keyframes bounce {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-18px); }
+  100% { transform: translateY(0px); }
+}
+.box {
+  animation-name: bounce;
+  animation-duration: 1.2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}</pre>
+    </div>
+
+    <!-- Task 10 -->
+    <div class="task">
+      <h2>10. Pseudo-class Practice</h2>
+      <p class="task-desc">:first-child, :last-child, :nth-child() use karke list items style kiye.</p>
+      <div class="demo">
+        <ul class="t10-list">
+          <li>First item</li>
+          <li>Second item</li>
+          <li>Third item</li>
+          <li>Fourth item</li>
+        </ul>
+      </div>
+      <pre>li:first-child  { background-color: #fde68a; }
+li:last-child   { background-color: #a7f3d0; }
+li:nth-child(2) { background-color: #93c5fd; }</pre>
+    </div>
+
+    <!-- Task 11 -->
+    <div class="task">
+      <h2>11. Pseudo-element Practice</h2>
+      <p class="task-desc">::before aur ::after use karke content add kiya.</p>
+      <div class="demo">
+        <p class="t11-quote">This is a quoted sentence</p>
+      </div>
+      <pre>.quote::before { content: "\201C"; }
+.quote::after  { content: "\201D"; }</pre>
+    </div>
+
+    <!-- Task 12 -->
+    <div class="task">
+      <h2>12. Z-index Stacking Task</h2>
+      <p class="task-desc">Overlapping boxes banake position aur z-index se stacking order control kiya.</p>
+      <div class="demo">
+        <div class="t12-container">
+          <div class="t12-box1">z-index: 1</div>
+          <div class="t12-box2">z-index: 2</div>
+        </div>
+      </div>
+      <pre>.box1 { position: absolute; z-index: 1; }
+.box2 { position: absolute; z-index: 2; }</pre>
+    </div>
+
+    <!-- Task 13 -->
+    <div class="task">
+      <h2>13. Box-sizing Task</h2>
+      <p class="task-desc">box-sizing: content-box vs border-box ka difference — dono boxes ki width same (150px) hai, par total rendered size alag hai.</p>
+      <div class="demo">
+        <div class="t13-content-box">content-box: width + padding + border sab add hote hain (total wider)</div>
+        <div class="t13-border-box">border-box: padding + border width ke andar hi count hote hain</div>
+      </div>
+      <pre>.content-box { box-sizing: content-box; width: 150px; }
+.border-box  { box-sizing: border-box;  width: 150px; }</pre>
+    </div>
+
+    <!-- Task 14 -->
+    <div class="task">
+      <h2>14. Media Query Task</h2>
+      <p class="task-desc">@media use karke screen size ke hisaab se layout change kiya.</p>
+      <div class="note">Browser window ko resize karke (ya device toolbar se) 500px se neeche le jaake dekho — color change hoga.</div>
+      <div class="demo">
+        <div class="t14-box">Responsive Box</div>
+      </div>
+      <pre>.box { background-color: #a5b4fc; }
+
+@media (max-width: 500px) {
+  .box { background-color: #f87171; }
+}</pre>
+    </div>
+
+    <!-- Task 15 -->
+    <div class="task">
+      <h2>15. CSS Combinators Task</h2>
+      <p class="task-desc">Descendant, child (&gt;), adjacent sibling (+), general sibling (~) selectors practice kiye.</p>
+      <div class="demo">
+        <div class="t15-parent">
+          <p>Descendant + direct child paragraph (blue, bold)</p>
+          <span>A plain descendant span (not styled by these rules)</span>
+          <div class="t15-anchor">Anchor element</div>
+          <div>Adjacent sibling — right after anchor (yellow bg + green border)</div>
+          <div>General sibling — further away (only green border)</div>
+        </div>
+      </div>
+      <pre>.parent p     { color: #2563eb; }        /* descendant */
+.parent > p   { font-weight: 700; }      /* direct child */
+.anchor + div { background-color: #fde68a; } /* adjacent sibling */
+.anchor ~ div { border-left-width: 4px; border-left-style: solid; border-left-color: #10b981; } /* general sibling */</pre>
+    </div>
+
+    <!-- Task 16 -->
+    <div class="task">
+      <h2>16. Attribute Selector Task</h2>
+      <p class="task-desc">input[type="text"] aur a[target="_blank"] jaise attribute selectors use kiye.</p>
+      <div class="demo">
+        <input type="text" placeholder="Styled by attribute selector"><br>
+        <a href="#" target="_blank">External link (target="_blank")</a>
+      </div>
+      <pre>input[type="text"] {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #10b981;
+}
+a[target="_blank"] {
+  color: #dc2626;
+  font-weight: 700;
+}</pre>
+    </div>
+
+    <!-- Task 17 -->
+    <div class="task">
+      <h2>17. Form Styling Task</h2>
+      <p class="task-desc">Input, textarea, select ko border-width, outline-style, background-color se style kiya.</p>
+      <div class="demo">
+        <form class="t17-form">
+          <input type="text" placeholder="Your name">
+          <select>
+            <option>Choose an option</option>
+            <option>Option A</option>
+          </select>
+          <textarea rows="2" placeholder="Your message"></textarea>
+        </form>
+      </div>
+      <pre>input, textarea, select {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #9ca3af;
+  outline-style: none;
+  background-color: #f9fafb;
+}
+input:focus {
+  outline-style: solid;
+  outline-width: 2px;
+  outline-color: #3b82f6;
+}</pre>
+    </div>
+
+    <!-- Task 18 -->
+    <div class="task">
+      <h2>18. Sticky Positioning Task</h2>
+      <p class="task-desc">position: sticky use karke header ko scroll ke time fix kiya. Neeche wale box ko scroll karo.</p>
+      <div class="demo">
+        <div class="t18-scroll">
+          <div class="t18-sticky">Sticky Header</div>
+          <div class="t18-content">
+            <p>Line one of scrollable content.</p>
+            <p>Line two of scrollable content.</p>
+            <p>Line three of scrollable content.</p>
+            <p>Line four of scrollable content.</p>
+            <p>Line five of scrollable content.</p>
+            <p>Line six of scrollable content.</p>
+          </div>
+        </div>
+      </div>
+      <pre>.sticky {
+  position: sticky;
+  top: 0px;
+}</pre>
+    </div>
+
+    <!-- Task 19 -->
+    <div class="task">
+      <h2>19. CSS Grid Template Areas Task</h2>
+      <p class="task-desc">grid-template-areas use karke named layout areas (header, sidebar, content, footer) banaye.</p>
+      <div class="demo">
+        <div class="t19-grid">
+          <div class="t19-header">Header</div>
+          <div class="t19-sidebar">Sidebar</div>
+          <div class="t19-content">Content</div>
+          <div class="t19-footer">Footer</div>
+        </div>
+      </div>
+      <pre>.grid {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: 40px 100px 40px;
+  grid-template-areas:
+    "header header"
+    "sidebar content"
+    "footer footer";
+}
+.header  { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.content { grid-area: content; }
+.footer  { grid-area: footer; }</pre>
+    </div>
+
+    <!-- Task 20 -->
+    <div class="task">
+      <h2>20. Multi-column Layout Task</h2>
+      <p class="task-desc">column-count aur column-width individually use karke text ko columns mein toda.</p>
+      <div class="demo">
+        <div class="t20-cols">
+          This is a block of text split into multiple columns using the multi-column layout module. Notice how the text flows from one column into the next automatically, similar to a newspaper layout, without needing any extra markup.
+        </div>
+      </div>
+      <pre>.cols {
+  column-count: 3;
+  column-width: 140px;
+  column-rule-width: 1px;
+  column-rule-style: solid;
+  column-rule-color: #9ca3af;
+}</pre>
+    </div>
+
+    <!-- Task 21 -->
+    <div class="task">
+      <h2>21. Filter Effects Task</h2>
+      <p class="task-desc">filter: blur/brightness/grayscale use karke box par effect lagaya.</p>
+      <div class="demo">
+        <div class="t21-row">
+          <div class="t21-box t21-blur">blur(2px)</div>
+          <div class="t21-box t21-bright">brightness(1.6)</div>
+          <div class="t21-box t21-gray">grayscale(100%)</div>
+        </div>
+      </div>
+      <pre>.blur   { filter: blur(2px); }
+.bright { filter: brightness(1.6); }
+.gray   { filter: grayscale(100%); }</pre>
+    </div>
+
+    <!-- Task 22 -->
+    <div class="task">
+      <h2>22. Object-fit Task</h2>
+      <p class="task-desc">object-fit aur object-position use karke image ko container mein fit kiya.</p>
+      <div class="demo">
+        <div class="t22-row">
+          <div class="t22-frame"><img class="t22-cover" src="https://picsum.photos/400/300?1" alt="cover example"></div>
+          <div class="t22-frame"><img class="t22-contain" src="https://picsum.photos/400/300?1" alt="contain example"></div>
+        </div>
+      </div>
+      <pre>.cover   { object-fit: cover;   object-position: center; }
+.contain { object-fit: contain; object-position: center; }</pre>
+    </div>
+
+    <!-- Task 23 -->
+    <div class="task">
+      <h2>23. Custom Scrollbar Task</h2>
+      <p class="task-desc">::-webkit-scrollbar pseudo-element use karke scrollbar style kiya.</p>
+      <div class="note">Yeh sirf WebKit-based browsers (Chrome, Edge, Safari) mein dikhega, Firefox mein nahi.</div>
+      <div class="demo">
+        <div class="t23-box">
+          <p>Scroll inside this box to see the custom purple scrollbar thumb on a light grey track.</p>
+          <p>More content to make scrolling possible.</p>
+          <p>Even more content here.</p>
+          <p>Keep scrolling to see the full effect.</p>
+        </div>
+      </div>
+      <pre>.box::-webkit-scrollbar { width: 10px; }
+.box::-webkit-scrollbar-track { background-color: #e5e7eb; }
+.box::-webkit-scrollbar-thumb { background-color: #6366f1; }</pre>
+    </div>
+
+    <!-- Task 24 -->
+    <div class="task">
+      <h2>24. CSS Specificity Task</h2>
+      <p class="task-desc">Element, class, aur id selector ek hi element par — id sabse zyada specific hone se jeetta hai (red dikhega).</p>
+      <div class="demo">
+        <div class="t24-demo">
+          <p id="t24-target" class="t24-class-color">This text's final color is decided by specificity.</p>
+        </div>
+      </div>
+      <pre>p               { color: #16a34a; } /* element - lowest */
+.class-color    { color: #2563eb; } /* class - medium */
+#target         { color: #dc2626; } /* id - highest, wins */</pre>
+    </div>
+
+  </div>
+
+</body>
+</html>

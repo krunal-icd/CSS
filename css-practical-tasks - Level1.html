@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Beginner CSS Practical Tasks (No Shorthand)</title>
+<style>
+
+  /* ---------- Base page styling (all longhand) ---------- */
+  body {
+    background-color: #fafafa;
+    color: #1f2933;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 40px;
+    padding-left: 0px;
+  }
+
+  .page-header {
+    background-color: #1f2933;
+    color: #ffffff;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .page-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 0px;
+    margin-bottom: 6px;
+  }
+
+  .page-header p {
+    color: #cbd2d9;
+    font-size: 14px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .wrapper {
+    max-width: 760px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .task {
+    background-color: #ffffff;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #e4e7eb;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-top: 24px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .task h2 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #102a43;
+    margin-top: 0px;
+    margin-bottom: 4px;
+  }
+
+  .task .task-desc {
+    font-size: 14px;
+    color: #52606d;
+    margin-top: 0px;
+    margin-bottom: 14px;
+  }
+
+  .demo {
+    border-top-width: 1px;
+    border-top-style: dashed;
+    border-top-color: #cbd2d9;
+    border-bottom-width: 1px;
+    border-bottom-style: dashed;
+    border-bottom-color: #cbd2d9;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-bottom: 12px;
+  }
+
+  pre {
+    background-color: #0b1620;
+    color: #d5f5e3;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 14px;
+    padding-right: 14px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    overflow-x: auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  /* ---------- Task 1: Heading Styling ---------- */
+  .t1-heading {
+    color: #2c3e50;
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* ---------- Task 2: Paragraph Text Formatting ---------- */
+  .t2-para {
+    font-family: Georgia, serif;
+    font-size: 16px;
+    line-height: 1.8;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---------- Task 3: Background Color ---------- */
+  .t3-box {
+    background-color: #fef3c7;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* ---------- Task 4: Border Practice ---------- */
+  .t4-box {
+    border-width: 3px;
+    border-style: dashed;
+    border-color: #e74c3c;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  /* ---------- Task 5: Margin Practice ---------- */
+  .t5-box {
+    background-color: #dbeafe;
+    margin-top: 8px;
+    margin-right: 40px;
+    margin-bottom: 8px;
+    margin-left: 4px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    display: inline-block;
+  }
+
+  /* ---------- Task 6: Padding Practice ---------- */
+  .t6-box {
+    background-color: #dcfce7;
+    padding-top: 6px;
+    padding-right: 40px;
+    padding-bottom: 6px;
+    padding-left: 40px;
+    display: inline-block;
+  }
+
+  /* ---------- Task 7: Box Model Diagram ---------- */
+  .t7-box {
+    width: 180px;
+    height: 80px;
+    background-color: #fff9db;
+    padding-top: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #495057;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
+
+  /* ---------- Task 8: Text Decoration ---------- */
+  .t8-link {
+    text-decoration-line: underline;
+    text-decoration-color: #e11d48;
+    text-decoration-style: wavy;
+    color: #1f2933;
+    font-size: 16px;
+  }
+
+  /* ---------- Task 9: List Styling ---------- */
+  .t9-ul {
+    list-style-type: square;
+    list-style-position: inside;
+  }
+  .t9-ol {
+    list-style-type: upper-roman;
+    list-style-position: outside;
+  }
+
+  /* ---------- Task 10: Width and Height ---------- */
+  .t10-box {
+    width: 140px;
+    height: 140px;
+    background-color: #93c5fd;
+  }
+
+  /* ---------- Task 11: Color vs Background-Color ---------- */
+  .t11-box {
+    color: #ffffff;
+    background-color: #1e3a8a;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  /* ---------- Task 12: Font Properties ---------- */
+  .t12-text {
+    font-style: italic;
+    font-weight: 600;
+    font-size: 18px;
+    font-family: "Courier New", monospace;
+  }
+
+  /* ---------- Task 13: Border Radius ---------- */
+  .t13-box {
+    width: 110px;
+    height: 110px;
+    background-color: #fbcfe8;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 40px;
+    border-bottom-left-radius: 6px;
+  }
+
+  /* ---------- Task 14: Display Property ---------- */
+  .t14-block {
+    display: block;
+    background-color: #fca5a5;
+    margin-bottom: 6px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .t14-inline {
+    display: inline;
+    background-color: #86efac;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .t14-inline-block {
+    display: inline-block;
+    background-color: #93c5fd;
+    width: 90px;
+    height: 30px;
+    margin-left: 6px;
+  }
+
+  /* ---------- Task 15: Position Property ---------- */
+  .t15-container {
+    position: relative;
+    width: 240px;
+    height: 140px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #495057;
+    background-color: #f8fafc;
+  }
+  .t15-relative {
+    position: relative;
+    top: 10px;
+    left: 10px;
+    background-color: #fde68a;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+    display: inline-block;
+  }
+  .t15-absolute {
+    position: absolute;
+    top: 60px;
+    left: 90px;
+    background-color: #a7f3d0;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  /* ---------- Task 16: Text Alignment ---------- */
+  .t16-left   { text-align: left; }
+  .t16-center { text-align: center; }
+  .t16-right  { text-align: right; }
+
+  /* ---------- Task 17: Hover Effect ---------- */
+  .t17-btn {
+    background-color: #3b82f6;
+    color: #ffffff;
+    border-style: none;
+    font-size: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 22px;
+    padding-right: 22px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+  }
+  .t17-btn:hover {
+    background-color: #1d4ed8;
+  }
+
+  /* ---------- Task 18: Simple Navbar ---------- */
+  .t18-navbar {
+    list-style-type: none;
+    padding-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    background-color: #102a43;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .t18-navbar li {
+    display: inline-block;
+    margin-left: 18px;
+  }
+  .t18-navbar a {
+    text-decoration-line: none;
+    color: #ffffff;
+    font-size: 15px;
+  }
+
+  /* ---------- Task 19: Overflow Property ---------- */
+  .t19-box {
+    width: 160px;
+    height: 60px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #495057;
+    overflow-y: scroll;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  /* ---------- Task 20: Opacity ---------- */
+  .t20-box {
+    width: 100px;
+    height: 100px;
+    background-color: #0f172a;
+    opacity: 0.4;
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="page-header">
+    <h1>Beginner CSS Practical Tasks</h1>
+    <p>20 examples — only individual (longhand) properties used, no shorthand.</p>
+  </div>
+
+  <div class="wrapper">
+
+    <!-- Task 1 -->
+    <div class="task">
+      <h2>1. Heading Styling</h2>
+      <p class="task-desc">h1 par color, font-size, font-weight, text-align set kiya.</p>
+      <div class="demo">
+        <h1 class="t1-heading">This is a Styled Heading</h1>
+      </div>
+      <pre>.heading {
+  color: #2c3e50;
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+}</pre>
+    </div>
+
+    <!-- Task 2 -->
+    <div class="task">
+      <h2>2. Paragraph Text Formatting</h2>
+      <p class="task-desc">font-family, font-size, line-height, letter-spacing alag-alag likhe.</p>
+      <div class="demo">
+        <p class="t2-para">This paragraph demonstrates individual font and spacing properties applied without using the font shorthand.</p>
+      </div>
+      <pre>.para {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  line-height: 1.8;
+  letter-spacing: 0.5px;
+}</pre>
+    </div>
+
+    <!-- Task 3 -->
+    <div class="task">
+      <h2>3. Background Color Task</h2>
+      <p class="task-desc">background-color individually set kiya (background shorthand nahi).</p>
+      <div class="demo">
+        <div class="t3-box">This box has a background-color.</div>
+      </div>
+      <pre>.box {
+  background-color: #fef3c7;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+}</pre>
+    </div>
+
+    <!-- Task 4 -->
+    <div class="task">
+      <h2>4. Border Practice</h2>
+      <p class="task-desc">border-width, border-style, border-color alag likhe.</p>
+      <div class="demo">
+        <div class="t4-box">A box with a dashed border.</div>
+      </div>
+      <pre>.box {
+  border-width: 3px;
+  border-style: dashed;
+  border-color: #e74c3c;
+}</pre>
+    </div>
+
+    <!-- Task 5 -->
+    <div class="task">
+      <h2>5. Margin Practice</h2>
+      <p class="task-desc">margin-top, margin-right, margin-bottom, margin-left individually set kiye.</p>
+      <div class="demo">
+        <span class="t5-box">Box A</span><span class="t5-box">Box B</span>
+      </div>
+      <pre>.box {
+  margin-top: 8px;
+  margin-right: 40px;
+  margin-bottom: 8px;
+  margin-left: 4px;
+}</pre>
+    </div>
+
+    <!-- Task 6 -->
+    <div class="task">
+      <h2>6. Padding Practice</h2>
+      <p class="task-desc">padding-top, padding-right, padding-bottom, padding-left individually set kiye.</p>
+      <div class="demo">
+        <span class="t6-box">Padded Box</span>
+      </div>
+      <pre>.box {
+  padding-top: 6px;
+  padding-right: 40px;
+  padding-bottom: 6px;
+  padding-left: 40px;
+}</pre>
+    </div>
+
+    <!-- Task 7 -->
+    <div class="task">
+      <h2>7. Box Model Diagram Task</h2>
+      <p class="task-desc">Ek box jisme border, padding, margin sab visible hain (sab individually).</p>
+      <div class="demo">
+        <div class="t7-box">Box Model</div>
+      </div>
+      <pre>.box {
+  width: 180px;
+  height: 80px;
+  padding-top: 16px;
+  padding-right: 16px;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #495057;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}</pre>
+    </div>
+
+    <!-- Task 8 -->
+    <div class="task">
+      <h2>8. Text Decoration Task</h2>
+      <p class="task-desc">Link par text-decoration-line, text-decoration-color, text-decoration-style set kiye.</p>
+      <div class="demo">
+        <a href="#" class="t8-link">This is a styled link</a>
+      </div>
+      <pre>a.link {
+  text-decoration-line: underline;
+  text-decoration-color: #e11d48;
+  text-decoration-style: wavy;
+}</pre>
+    </div>
+
+    <!-- Task 9 -->
+    <div class="task">
+      <h2>9. List Styling</h2>
+      <p class="task-desc">ul/ol par list-style-type aur list-style-position set kiye.</p>
+      <div class="demo">
+        <ul class="t9-ul">
+          <li>Unordered item one</li>
+          <li>Unordered item two</li>
+        </ul>
+        <ol class="t9-ol">
+          <li>Ordered item one</li>
+          <li>Ordered item two</li>
+        </ol>
+      </div>
+      <pre>ul.list {
+  list-style-type: square;
+  list-style-position: inside;
+}
+ol.list {
+  list-style-type: upper-roman;
+  list-style-position: outside;
+}</pre>
+    </div>
+
+    <!-- Task 10 -->
+    <div class="task">
+      <h2>10. Width and Height Task</h2>
+      <p class="task-desc">Ek box ki width aur height fix ki.</p>
+      <div class="demo">
+        <div class="t10-box"></div>
+      </div>
+      <pre>.box {
+  width: 140px;
+  height: 140px;
+}</pre>
+    </div>
+
+    <!-- Task 11 -->
+    <div class="task">
+      <h2>11. Color vs Background-Color Task</h2>
+      <p class="task-desc">Text color aur background color ka difference dikhaya.</p>
+      <div class="demo">
+        <div class="t11-box">White text on a dark blue background.</div>
+      </div>
+      <pre>.box {
+  color: #ffffff;
+  background-color: #1e3a8a;
+}</pre>
+    </div>
+
+    <!-- Task 12 -->
+    <div class="task">
+      <h2>12. Font Properties Task</h2>
+      <p class="task-desc">font-style, font-weight, font-size, font-family sab alag-alag likhe.</p>
+      <div class="demo">
+        <p class="t12-text">Styled monospace italic text.</p>
+      </div>
+      <pre>.text {
+  font-style: italic;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: "Courier New", monospace;
+}</pre>
+    </div>
+
+    <!-- Task 13 -->
+    <div class="task">
+      <h2>13. Border Radius Task</h2>
+      <p class="task-desc">Har corner ka radius individually set karke rounded box banaya.</p>
+      <div class="demo">
+        <div class="t13-box"></div>
+      </div>
+      <pre>.box {
+  border-top-left-radius: 40px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 40px;
+  border-bottom-left-radius: 6px;
+}</pre>
+    </div>
+
+    <!-- Task 14 -->
+    <div class="task">
+      <h2>14. Display Property Task</h2>
+      <p class="task-desc">block, inline, inline-block ka difference dikhaya.</p>
+      <div class="demo">
+        <div class="t14-block">I am display: block</div>
+        <span class="t14-inline">I am inline</span>
+        <span class="t14-inline">I am also inline</span><br>
+        <div class="t14-inline-block">inline-block</div>
+        <div class="t14-inline-block">inline-block</div>
+      </div>
+      <pre>.block        { display: block; }
+.inline       { display: inline; }
+.inline-block { display: inline-block; }</pre>
+    </div>
+
+    <!-- Task 15 -->
+    <div class="task">
+      <h2>15. Position Property Task</h2>
+      <p class="task-desc">position: relative aur position: absolute ka basic example.</p>
+      <div class="demo">
+        <div class="t15-container">
+          <span class="t15-relative">Relative</span>
+          <span class="t15-absolute">Absolute</span>
+        </div>
+      </div>
+      <pre>.container { position: relative; }
+
+.relative {
+  position: relative;
+  top: 10px;
+  left: 10px;
+}
+
+.absolute {
+  position: absolute;
+  top: 60px;
+  left: 90px;
+}</pre>
+    </div>
+
+    <!-- Task 16 -->
+    <div class="task">
+      <h2>16. Text Alignment Task</h2>
+      <p class="task-desc">text-align se left, center, right alignment.</p>
+      <div class="demo">
+        <p class="t16-left">Left aligned text</p>
+        <p class="t16-center">Center aligned text</p>
+        <p class="t16-right">Right aligned text</p>
+      </div>
+      <pre>.left   { text-align: left; }
+.center { text-align: center; }
+.right  { text-align: right; }</pre>
+    </div>
+
+    <!-- Task 17 -->
+    <div class="task">
+      <h2>17. Hover Effect Task</h2>
+      <p class="task-desc">Button par :hover se background-color change hota hai (mouse le jaake dekho).</p>
+      <div class="demo">
+        <button class="t17-btn">Hover Me</button>
+      </div>
+      <pre>.btn {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+.btn:hover {
+  background-color: #1d4ed8;
+}</pre>
+    </div>
+
+    <!-- Task 18 -->
+    <div class="task">
+      <h2>18. Simple Navbar Task</h2>
+      <p class="task-desc">display: inline-block use karke horizontal navbar banaya.</p>
+      <div class="demo">
+        <ul class="t18-navbar">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <pre>.navbar { list-style-type: none; }
+.navbar li { display: inline-block; }
+.navbar a  { text-decoration-line: none; }</pre>
+    </div>
+
+    <!-- Task 19 -->
+    <div class="task">
+      <h2>19. Overflow Property Task</h2>
+      <p class="task-desc">Chhoti box mein bada text daal ke overflow-y: scroll test kiya.</p>
+      <div class="demo">
+        <div class="t19-box">
+          Yeh ek lamba text hai jo box ki height se zyada hai, isliye scrollbar dikhega jab overflow-y scroll set hota hai.
+        </div>
+      </div>
+      <pre>.box {
+  width: 160px;
+  height: 60px;
+  overflow-y: scroll;
+}</pre>
+    </div>
+
+    <!-- Task 20 -->
+    <div class="task">
+      <h2>20. Opacity Task</h2>
+      <p class="task-desc">Box par opacity property apply ki.</p>
+      <div class="demo">
+        <div class="t20-box"></div>
+      </div>
+      <pre>.box {
+  background-color: #0f172a;
+  opacity: 0.4;
+}</pre>
+    </div>
+
+  </div>
+
+</body>
+</html>
