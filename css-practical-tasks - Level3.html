@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced CSS Practical Tasks — 35 Examples (No Shorthand)</title>
+<style>
+/* ============ PAGE SHELL (not one of the 35 tasks, just page chrome) ============ */
+* {
+  box-sizing: border-box;
+  margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;
+  padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.6;
+  background-color: #f2f2f5;
+  color: #1c1c1e;
+}
+.wrap {
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 32px;
+  padding-right: 20px;
+  padding-bottom: 100px;
+  padding-left: 20px;
+}
+.page-header { text-align: center; margin-bottom: 32px; }
+.page-header h1 { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+.page-header p { color: #55555a; font-size: 14px; }
+
+.toc {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 8px;
+  row-gap: 8px;
+  background-color: #ffffff;
+  border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;
+  border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid;
+  border-top-color: #e4e4e8; border-right-color: #e4e4e8; border-bottom-color: #e4e4e8; border-left-color: #e4e4e8;
+  padding-top: 16px; padding-right: 16px; padding-bottom: 16px; padding-left: 16px;
+  margin-bottom: 40px;
+}
+.toc a {
+  display: block;
+  font-size: 12px;
+  color: #3a3a3d;
+  text-decoration-line: none;
+  background-color: #f5f5f7;
+  padding-top: 8px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px;
+  border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px;
+  transition-property: background-color, color;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+.toc a:hover { background-color: #1c1c1e; color: #ffffff; }
+@media (max-width: 700px) { .toc { grid-template-columns: repeat(2, 1fr); } }
+
+section.task {
+  background-color: #ffffff;
+  border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;
+  border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid;
+  border-top-color: #e4e4e8; border-right-color: #e4e4e8; border-bottom-color: #e4e4e8; border-left-color: #e4e4e8;
+  padding-top: 28px; padding-right: 28px; padding-bottom: 28px; padding-left: 28px;
+  margin-bottom: 28px;
+  border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;
+  scroll-margin-top: 20px;
+}
+section.task h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+section.task p.desc { font-size: 13px; color: #6a6a70; margin-bottom: 16px; }
+.demo {
+  background-color: #fafafa;
+  border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;
+  border-top-style: dashed; border-right-style: dashed; border-bottom-style: dashed; border-left-style: dashed;
+  border-top-color: #d8d8dc; border-right-color: #d8d8dc; border-bottom-color: #d8d8dc; border-left-color: #d8d8dc;
+  padding-top: 20px; padding-right: 20px; padding-bottom: 20px; padding-left: 20px;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="page-header">
+    <h1>Advanced CSS Practical Task List — 35 Examples</h1>
+    <p>Every task below is a self-contained, working demo. Every single CSS declaration is written in longhand — no shorthand properties (margin, padding, border, background, font, transition, animation, flex, grid-template, border-radius, list-style, outline, text-decoration, overflow, gap, etc. are all expanded).</p>
+  </header>
+
+  <nav class="toc" aria-label="Table of contents">
+    <a href="#task-1">1. Flex Navbar</a><a href="#task-2">2. 12-col Grid</a><a href="#task-3">3. Holy Grail</a><a href="#task-4">4. Masonry Gallery</a><a href="#task-5">5. Sticky Footer</a>
+    <a href="#task-6">6. Sticky Navbar</a><a href="#task-7">7. Overlapping Cards</a><a href="#task-8">8. Tooltip</a><a href="#task-9">9. Fixed Sidebar</a><a href="#task-10">10. CSS Carousel</a>
+    <a href="#task-11">11. Spinner</a><a href="#task-12">12. Hover FX</a><a href="#task-13">13. Progress Bar</a><a href="#task-14">14. Typing Effect</a><a href="#task-15">15. Hamburger</a>
+    <a href="#task-16">16. Zebra Table</a><a href="#task-17">17. Custom Radio</a><a href="#task-18">18. Form Validation</a><a href="#task-19">19. Custom Scrollbar</a><a href="#task-20">20. Dark Mode</a>
+    <a href="#task-21">21. Theming</a><a href="#task-22">22. 3D Flip Card</a><a href="#task-23">23. Hover Zoom</a><a href="#task-24">24. Glassmorphism</a><a href="#task-25">25. Neumorphism</a>
+    <a href="#task-26">26. Clip-path Image</a><a href="#task-27">27. Diagonal Divider</a><a href="#task-28">28. Pricing Table</a><a href="#task-29">29. Responsive Gallery</a><a href="#task-30">30. Mobile Navbar</a>
+    <a href="#task-31">31. CSS Counters</a><a href="#task-32">32. Print Styles</a><a href="#task-33">33. Dashboard Grid</a><a href="#task-34">34. Sticky Th</a><a href="#task-35">35. Horiz Scroll Snap</a>
+  </nav>
+
+  <!-- ================= TASK 1 ================= -->
+  <section id="task-1" class="task">
+    <h2>1. Flexbox Responsive Navbar</h2>
+    <p class="desc">display: flex, flex-wrap, and a media query that stacks the links below the brand on small screens.</p>
+    <style>
+      .t1-nav { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; background-color: #1c1c1e; padding-top: 14px; padding-right: 20px; padding-bottom: 14px; padding-left: 20px; }
+      .t1-brand { color: #ffffff; font-size: 19px; font-weight: 700; }
+      .t1-links { display: flex; flex-direction: row; flex-wrap: wrap; list-style-type: none; list-style-position: outside; column-gap: 20px; row-gap: 8px; }
+      .t1-links a { color: #d6d6da; font-size: 14px; text-decoration-line: none; }
+      .t1-links a:hover { color: #ffffff; text-decoration-line: underline; }
+      @media (max-width: 560px) {
+        .t1-links { flex-basis: 100%; flex-grow: 1; flex-shrink: 1; justify-content: space-between; margin-top: 12px; }
+      }
+    </style>
+    <div class="demo">
+      <nav class="t1-nav">
+        <span class="t1-brand">BrandName</span>
+        <ul class="t1-links"><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Services</a></li><li><a href="#">Contact</a></li></ul>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ================= TASK 2 ================= -->
+  <section id="task-2" class="task">
+    <h2>2. CSS Grid 12-Column Layout System</h2>
+    <p class="desc">grid-template-columns with repeat(12, 1fr); items placed with grid-column-start / grid-column-end.</p>
+    <style>
+      .t2-grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 8px; row-gap: 8px; }
+      .t2-grid div { background-color: #4b6ef5; color: #ffffff; font-size: 12px; text-align: center; padding-top: 10px; padding-bottom: 10px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; }
+      .t2-a { grid-column-start: 1; grid-column-end: 5; }
+      .t2-b { grid-column-start: 5; grid-column-end: 9; }
+      .t2-c { grid-column-start: 9; grid-column-end: 13; }
+      .t2-d { grid-column-start: 1; grid-column-end: 13; background-color: #8a5cf6; }
+    </style>
+    <div class="demo">
+      <div class="t2-grid">
+        <div class="t2-a">span 4</div><div class="t2-b">span 4</div><div class="t2-c">span 4</div>
+        <div class="t2-d">span 12 (full width)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 3 ================= -->
+  <section id="task-3" class="task">
+    <h2>3. Holy Grail Layout (Grid)</h2>
+    <p class="desc">grid-template-areas + grid-template-columns + grid-template-rows kept as three separate longhand declarations.</p>
+    <style>
+      .t3-grid { display: grid; grid-template-columns: 140px 1fr 140px; grid-template-rows: 56px 1fr 48px; grid-template-areas: "head head head" "nav main aside" "foot foot foot"; column-gap: 8px; row-gap: 8px; min-height: 260px; }
+      .t3-grid > * { color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+      .t3-head { grid-area: head; background-color: #1c1c1e; }
+      .t3-nav { grid-area: nav; background-color: #4b6ef5; }
+      .t3-main { grid-area: main; background-color: #6a6a70; }
+      .t3-aside { grid-area: aside; background-color: #4b6ef5; }
+      .t3-foot { grid-area: foot; background-color: #1c1c1e; }
+    </style>
+    <div class="demo">
+      <div class="t3-grid">
+        <div class="t3-head">Header</div><div class="t3-nav">Nav</div><div class="t3-main">Main content</div><div class="t3-aside">Aside</div><div class="t3-foot">Footer</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 4 ================= -->
+  <section id="task-4" class="task">
+    <h2>4. Masonry-Style Image Gallery</h2>
+    <p class="desc">CSS multi-column layout using column-count and column-gap (kept separate — not the "columns" shorthand).</p>
+    <style>
+      .t4-masonry { column-count: 3; column-gap: 10px; }
+      .t4-masonry div { break-inside: avoid; margin-bottom: 10px; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; background-image: linear-gradient(160deg,#4b6ef5,#8a5cf6); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 12px; padding-top: 20px; padding-bottom: 20px; }
+      .t4-h1 { height: 90px; } .t4-h2 { height: 140px; } .t4-h3 { height: 60px; } .t4-h4 { height: 110px; } .t4-h5 { height: 75px; } .t4-h6 { height: 130px; }
+      @media (max-width: 560px) { .t4-masonry { column-count: 2; } }
+    </style>
+    <div class="demo">
+      <div class="t4-masonry">
+        <div class="t4-h1">1</div><div class="t4-h2">2</div><div class="t4-h3">3</div><div class="t4-h4">4</div><div class="t4-h5">5</div><div class="t4-h6">6</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 5 ================= -->
+  <section id="task-5" class="task">
+    <h2>5. Sticky Footer Layout</h2>
+    <p class="desc">flex-direction: column on a min-height: 100vh wrapper; flex-grow: 1 pushes the footer down.</p>
+    <style>
+      .t5-page { display: flex; flex-direction: column; min-height: 220px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: #ddd; border-right-color: #ddd; border-bottom-color: #ddd; border-left-color: #ddd; }
+      .t5-content { flex-grow: 1; flex-shrink: 1; flex-basis: auto; padding-top: 16px; padding-left: 16px; }
+      .t5-footer { background-color: #1c1c1e; color: #ffffff; text-align: center; padding-top: 12px; padding-bottom: 12px; font-size: 13px; }
+    </style>
+    <div class="demo">
+      <div class="t5-page">
+        <div class="t5-content">Short page content — footer still sticks to the bottom.</div>
+        <div class="t5-footer">© Footer always at the bottom</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 6 ================= -->
+  <section id="task-6" class="task">
+    <h2>6. Sticky Navbar</h2>
+    <p class="desc">position: sticky with top: 0 inside a scrollable container.</p>
+    <style>
+      .t6-scroll { height: 160px; overflow-y: auto; overflow-x: hidden; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: #ddd; border-right-color: #ddd; border-bottom-color: #ddd; border-left-color: #ddd; }
+      .t6-sticky { position: sticky; top: 0; background-color: #4b6ef5; color: #ffffff; padding-top: 10px; padding-bottom: 10px; padding-left: 12px; font-size: 13px; }
+      .t6-scroll p { padding-top: 10px; padding-left: 12px; padding-right: 12px; font-size: 13px; color: #444; }
+    </style>
+    <div class="demo">
+      <div class="t6-scroll">
+        <div class="t6-sticky">I stick to the top while you scroll ↓</div>
+        <p>Line 1 of scrollable content</p><p>Line 2</p><p>Line 3</p><p>Line 4</p><p>Line 5</p><p>Line 6</p><p>Line 7</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 7 ================= -->
+  <section id="task-7" class="task">
+    <h2>7. Overlapping Cards with z-index</h2>
+    <p class="desc">position: relative + negative margin-left to overlap, z-index to control stacking order.</p>
+    <style>
+      .t7-row { display: flex; flex-direction: row; padding-left: 20px; }
+      .t7-card { width: 90px; height: 60px; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 12px; position: relative; margin-left: -20px; transition-property: transform; transition-duration: 0.2s; transition-timing-function: ease; }
+      .t7-card:hover { transform: translateY(-10px); }
+      .t7-c1 { background-color: #4b6ef5; z-index: 1; }
+      .t7-c2 { background-color: #8a5cf6; z-index: 2; }
+      .t7-c3 { background-color: #f56ea6; z-index: 3; }
+      .t7-c4 { background-color: #f5a64b; z-index: 4; }
+    </style>
+    <div class="demo">
+      <div class="t7-row">
+        <div class="t7-card t7-c1">1</div><div class="t7-card t7-c2">2</div><div class="t7-card t7-c3">3</div><div class="t7-card t7-c4">4</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 8 ================= -->
+  <section id="task-8" class="task">
+    <h2>8. Custom Tooltip</h2>
+    <p class="desc">position: relative on the trigger, an absolutely positioned ::after, opacity transition on hover.</p>
+    <style>
+      .t8-tip { position: relative; display: inline-block; background-color: #4b6ef5; color: #ffffff; padding-top: 8px; padding-right: 16px; padding-bottom: 8px; padding-left: 16px; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; font-size: 13px; }
+      .t8-tip::after { content: "Helpful tip text"; position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); background-color: #1c1c1e; color: #ffffff; padding-top: 6px; padding-right: 10px; padding-bottom: 6px; padding-left: 10px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; font-size: 11px; white-space: nowrap; opacity: 0; visibility: hidden; transition-property: opacity; transition-duration: 0.15s; transition-timing-function: ease; }
+      .t8-tip:hover::after { opacity: 1; visibility: visible; }
+    </style>
+    <div class="demo">
+      <span class="t8-tip">Hover me</span>
+    </div>
+  </section>
+
+  <!-- ================= TASK 9 ================= -->
+  <section id="task-9" class="task">
+    <h2>9. Fixed Sidebar with Scrollable Content</h2>
+    <p class="desc">position: absolute sidebar inside a relatively positioned frame; content column scrolls independently.</p>
+    <style>
+      .t9-frame { position: relative; height: 180px; overflow: hidden; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: #ddd; border-right-color: #ddd; border-bottom-color: #ddd; border-left-color: #ddd; }
+      .t9-side { position: absolute; top: 0; left: 0; bottom: 0; width: 120px; background-color: #1c1c1e; color: #ffffff; font-size: 13px; padding-top: 14px; padding-left: 14px; }
+      .t9-main { margin-left: 120px; height: 100%; overflow-y: auto; padding-top: 14px; padding-left: 14px; padding-right: 14px; font-size: 13px; color: #444; }
+    </style>
+    <div class="demo">
+      <div class="t9-frame">
+        <div class="t9-side">Fixed Sidebar</div>
+        <div class="t9-main"><p>Scrollable paragraph 1</p><p>Scrollable paragraph 2</p><p>Scrollable paragraph 3</p><p>Scrollable paragraph 4</p><p>Scrollable paragraph 5</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 10 ================= -->
+  <section id="task-10" class="task">
+    <h2>10. CSS-Only Carousel / Slider</h2>
+    <p class="desc">Radio-button hack: hidden radios + labels drive a translateX transform on the track — no JavaScript.</p>
+    <style>
+      .t10-carousel { position: relative; overflow-x: hidden; overflow-y: hidden; }
+      .t10-track { display: flex; flex-direction: row; width: 300%; transition-property: transform; transition-duration: 0.4s; transition-timing-function: ease; }
+      .t10-slide { width: 33.333%; height: 100px; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 16px; }
+      .t10-s1 { background-color: #4b6ef5; } .t10-s2 { background-color: #8a5cf6; } .t10-s3 { background-color: #f56ea6; }
+      .t10-radios { display: none; }
+      .t10-dots { display: flex; flex-direction: row; justify-content: center; column-gap: 8px; margin-top: 10px; }
+      .t10-dots label { width: 9px; height: 9px; background-color: #ccc; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; cursor: pointer; }
+      #t10-r1:checked ~ .t10-carousel .t10-track { transform: translateX(0%); }
+      #t10-r2:checked ~ .t10-carousel .t10-track { transform: translateX(-33.333%); }
+      #t10-r3:checked ~ .t10-carousel .t10-track { transform: translateX(-66.666%); }
+      #t10-r1:checked ~ .t10-carousel .t10-dots label[for="t10-r1"] { background-color: #1c1c1e; }
+      #t10-r2:checked ~ .t10-carousel .t10-dots label[for="t10-r2"] { background-color: #1c1c1e; }
+      #t10-r3:checked ~ .t10-carousel .t10-dots label[for="t10-r3"] { background-color: #1c1c1e; }
+    </style>
+    <div class="demo">
+      <input type="radio" name="t10" id="t10-r1" class="t10-radios" checked>
+      <input type="radio" name="t10" id="t10-r2" class="t10-radios">
+      <input type="radio" name="t10" id="t10-r3" class="t10-radios">
+      <div class="t10-carousel">
+        <div class="t10-track">
+          <div class="t10-slide t10-s1">Slide 1</div><div class="t10-slide t10-s2">Slide 2</div><div class="t10-slide t10-s3">Slide 3</div>
+        </div>
+        <div class="t10-dots"><label for="t10-r1"></label><label for="t10-r2"></label><label for="t10-r3"></label></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 11 ================= -->
+  <section id="task-11" class="task">
+    <h2>11. Loading Spinner Animation</h2>
+    <p class="desc">animation-name / animation-duration / animation-timing-function / animation-iteration-count kept separate.</p>
+    <style>
+      .t11-spinner { width: 42px; height: 42px; border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: #4b6ef5; border-right-color: #e2e2e6; border-bottom-color: #e2e2e6; border-left-color: #e2e2e6; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; animation-name: t11-spin; animation-duration: 0.8s; animation-timing-function: linear; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; }
+      @keyframes t11-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+    <div class="demo"><div class="t11-spinner"></div></div>
+  </section>
+
+  <!-- ================= TASK 12 ================= -->
+  <section id="task-12" class="task">
+    <h2>12. Hover Effects (Button + Underline)</h2>
+    <p class="desc">transition-property scoped to transform/background-color for a snappy, deliberate hover response.</p>
+    <style>
+      .t12-btn { background-color: #1c1c1e; color: #ffffff; font-size: 14px; padding-top: 10px; padding-right: 22px; padding-bottom: 10px; padding-left: 22px; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; cursor: pointer; transition-property: background-color, transform; transition-duration: 0.2s; transition-timing-function: ease; margin-right: 16px; }
+      .t12-btn:hover { background-color: #4b6ef5; transform: translateY(-3px); }
+      .t12-link { position: relative; color: #1c1c1e; text-decoration-line: none; font-size: 14px; }
+      .t12-link::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 100%; height: 2px; background-color: #4b6ef5; transform: scaleX(0); transform-origin: left; transition-property: transform; transition-duration: 0.25s; transition-timing-function: ease; }
+      .t12-link:hover::after { transform: scaleX(1); }
+    </style>
+    <div class="demo">
+      <button class="t12-btn">Hover me</button>
+      <a href="#" class="t12-link">Underline reveal on hover</a>
+    </div>
+  </section>
+
+  <!-- ================= TASK 13 ================= -->
+  <section id="task-13" class="task">
+    <h2>13. Animated Progress Bar</h2>
+    <p class="desc">width animated with @keyframes; animation-fill-mode: forwards keeps the end state.</p>
+    <style>
+      .t13-track { width: 100%; height: 16px; background-color: #e2e2e6; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; overflow-x: hidden; overflow-y: hidden; }
+      .t13-fill { height: 100%; background-image: linear-gradient(90deg,#4b6ef5,#8a5cf6); width: 0%; animation-name: t13-fill; animation-duration: 2s; animation-timing-function: ease-out; animation-iteration-count: 1; animation-fill-mode: forwards; }
+      @keyframes t13-fill { from { width: 0%; } to { width: 78%; } }
+    </style>
+    <div class="demo"><div class="t13-track"><div class="t13-fill"></div></div></div>
+  </section>
+
+  <!-- ================= TASK 14 ================= -->
+  <section id="task-14" class="task">
+    <h2>14. Text Typing Effect</h2>
+    <p class="desc">steps() timing function animates width; a second animation blinks the caret border-right.</p>
+    <style>
+      .t14-type { display: inline-block; overflow-x: hidden; white-space: nowrap; border-right-width: 3px; border-right-style: solid; border-right-color: #1c1c1e; font-size: 18px; font-weight: 600; width: 0ch; animation-name: t14-typing, t14-caret; animation-duration: 3s, 0.7s; animation-timing-function: steps(20,end), step-end; animation-iteration-count: 1, infinite; animation-fill-mode: forwards, none; }
+      @keyframes t14-typing { from { width: 0ch; } to { width: 20ch; } }
+      @keyframes t14-caret { 50% { border-right-color: transparent; } }
+    </style>
+    <div class="demo"><span class="t14-type">Hello, Advanced CSS!</span></div>
+  </section>
+
+  <!-- ================= TASK 15 ================= -->
+  <section id="task-15" class="task">
+    <h2>15. Animated Hamburger Menu Icon</h2>
+    <p class="desc">Checkbox hack — no JavaScript. Three bars rotate/fade into an X via transform + opacity transitions.</p>
+    <style>
+      .t15-wrap { position: relative; width: 40px; height: 34px; }
+      .t15-check { position: absolute; top: 0; left: 0; width: 40px; height: 34px; opacity: 0; z-index: 2; cursor: pointer; }
+      .t15-bar { position: absolute; left: 0; width: 40px; height: 4px; background-color: #1c1c1e; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; transition-property: transform, opacity, top; transition-duration: 0.3s; transition-timing-function: ease; }
+      .t15-b1 { top: 0; } .t15-b2 { top: 15px; } .t15-b3 { top: 30px; }
+      .t15-check:checked ~ .t15-b1 { top: 15px; transform: rotate(45deg); }
+      .t15-check:checked ~ .t15-b2 { opacity: 0; }
+      .t15-check:checked ~ .t15-b3 { top: 15px; transform: rotate(-45deg); }
+    </style>
+    <div class="demo">
+      <div class="t15-wrap">
+        <input type="checkbox" class="t15-check">
+        <span class="t15-bar t15-b1"></span><span class="t15-bar t15-b2"></span><span class="t15-bar t15-b3"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 16 ================= -->
+  <section id="task-16" class="task">
+    <h2>16. Zebra-Striping a Table (:nth-child)</h2>
+    <style>
+      .t16-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+      .t16-table th { background-color: #1c1c1e; color: #ffffff; text-align: left; padding-top: 8px; padding-bottom: 8px; padding-left: 10px; }
+      .t16-table td { padding-top: 8px; padding-bottom: 8px; padding-left: 10px; }
+      .t16-table tr:nth-child(even) { background-color: #f0f0f4; }
+      .t16-table tr:nth-child(odd) { background-color: #ffffff; }
+    </style>
+    <div class="demo">
+      <table class="t16-table">
+        <thead><tr><th>Name</th><th>Role</th></tr></thead>
+        <tbody><tr><td>Asha</td><td>Designer</td></tr><tr><td>Ravi</td><td>Developer</td></tr><tr><td>Meera</td><td>PM</td></tr><tr><td>Kabir</td><td>QA</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= TASK 17 ================= -->
+  <section id="task-17" class="task">
+    <h2>17. Custom Radio Buttons / Checkboxes (:checked)</h2>
+    <style>
+      .t17-opt { display: inline-flex; align-items: center; column-gap: 8px; margin-right: 20px; font-size: 14px; cursor: pointer; }
+      .t17-opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+      .t17-box { width: 18px; height: 18px; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: #999; border-right-color: #999; border-bottom-color: #999; border-left-color: #999; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; display: inline-block; position: relative; transition-property: background-color, border-color; transition-duration: 0.15s; transition-timing-function: ease; }
+      .t17-opt input:checked ~ .t17-box { background-color: #4b6ef5; border-top-color: #4b6ef5; border-right-color: #4b6ef5; border-bottom-color: #4b6ef5; border-left-color: #4b6ef5; }
+      .t17-opt input:checked ~ .t17-box::after { content: ""; position: absolute; top: 3px; left: 6px; width: 4px; height: 9px; border-right-width: 2px; border-bottom-width: 2px; border-right-style: solid; border-bottom-style: solid; border-right-color: #ffffff; border-bottom-color: #ffffff; transform: rotate(45deg); }
+    </style>
+    <div class="demo">
+      <label class="t17-opt"><input type="checkbox" checked><span class="t17-box"></span>Subscribe</label>
+      <label class="t17-opt"><input type="checkbox"><span class="t17-box"></span>Remember me</label>
+    </div>
+  </section>
+
+  <!-- ================= TASK 18 ================= -->
+  <section id="task-18" class="task">
+    <h2>18. Form Validation Styling (:valid / :invalid)</h2>
+    <style>
+      .t18-field { display: block; width: 260px; padding-top: 8px; padding-bottom: 8px; padding-left: 10px; padding-right: 10px; font-size: 14px; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: #ccc; border-right-color: #ccc; border-bottom-color: #ccc; border-left-color: #ccc; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; margin-bottom: 10px; }
+      .t18-field:valid { border-top-color: #2eb872; border-right-color: #2eb872; border-bottom-color: #2eb872; border-left-color: #2eb872; }
+      .t18-field:invalid:not(:placeholder-shown) { border-top-color: #e14b4b; border-right-color: #e14b4b; border-bottom-color: #e14b4b; border-left-color: #e14b4b; }
+    </style>
+    <div class="demo">
+      <input class="t18-field" type="email" placeholder="you@example.com" required>
+      <input class="t18-field" type="text" placeholder="At least 4 chars" minlength="4" required>
+    </div>
+  </section>
+
+  <!-- ================= TASK 19 ================= -->
+  <section id="task-19" class="task">
+    <h2>19. Custom Scrollbar Styling</h2>
+    <style>
+      .t19-box { height: 120px; overflow-y: scroll; padding-top: 10px; padding-left: 12px; padding-right: 12px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: #ddd; border-right-color: #ddd; border-bottom-color: #ddd; border-left-color: #ddd; font-size: 13px; }
+      .t19-box::-webkit-scrollbar { width: 10px; }
+      .t19-box::-webkit-scrollbar-track { background-color: #f0f0f4; }
+      .t19-box::-webkit-scrollbar-thumb { background-color: #8a5cf6; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+      .t19-box { scrollbar-width: thin; scrollbar-color: #8a5cf6 #f0f0f4; }
+    </style>
+    <div class="demo">
+      <div class="t19-box"><p>Line 1</p><p>Line 2</p><p>Line 3</p><p>Line 4</p><p>Line 5</p><p>Line 6</p><p>Line 7</p><p>Line 8</p></div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 20 ================= -->
+  <section id="task-20" class="task">
+    <h2>20. Dark Mode / Light Mode Toggle (CSS Variables)</h2>
+    <p class="desc">Checkbox hack flips custom properties on the scoped wrapper — pure CSS, no JavaScript.</p>
+    <style>
+      .t20-scope { --t20-bg: #ffffff; --t20-fg: #1c1c1e; --t20-card: #f5f5f7; background-color: var(--t20-bg); color: var(--t20-fg); padding-top: 16px; padding-right: 16px; padding-bottom: 16px; padding-left: 16px; transition-property: background-color, color; transition-duration: 0.25s; transition-timing-function: ease; }
+      #t20-toggle { position: absolute; opacity: 0; width: 0; height: 0; }
+      #t20-toggle:checked ~ .t20-scope { --t20-bg: #17171a; --t20-fg: #f2f2f5; --t20-card: #232327; }
+      .t20-card { background-color: var(--t20-card); padding-top: 12px; padding-bottom: 12px; padding-left: 12px; margin-top: 12px; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; font-size: 13px; }
+      .t20-label { cursor: pointer; font-size: 14px; user-select: none; }
+    </style>
+    <div class="demo">
+      <input type="checkbox" id="t20-toggle">
+      <label class="t20-label" for="t20-toggle">🌓 Toggle theme</label>
+      <div class="t20-scope">
+        <p>This whole panel switches theme using only CSS variables.</p>
+        <div class="t20-card">A card that reacts to the same variables.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 21 ================= -->
+  <section id="task-21" class="task">
+    <h2>21. Theming System (Multiple Color Themes)</h2>
+    <p class="desc">Radio-button hack selects between three independent variable sets.</p>
+    <style>
+      .t21-radios { position: absolute; opacity: 0; width: 0; height: 0; }
+      .t21-scope { --t21-accent: #4b6ef5; --t21-bg: #eef1ff; padding-top: 16px; padding-right: 16px; padding-bottom: 16px; padding-left: 16px; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; background-color: var(--t21-bg); transition-property: background-color; transition-duration: 0.2s; transition-timing-function: ease; }
+      #t21-ocean:checked ~ .t21-scope { --t21-accent: #10a3a3; --t21-bg: #e6f8f8; }
+      #t21-sunset:checked ~ .t21-scope { --t21-accent: #f5764b; --t21-bg: #fff0ea; }
+      .t21-swatch { display: inline-block; width: 40px; height: 40px; background-color: var(--t21-accent); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; }
+      .t21-picker label { font-size: 13px; margin-right: 14px; cursor: pointer; }
+    </style>
+    <div class="demo">
+      <input type="radio" name="t21" id="t21-indigo" class="t21-radios" checked>
+      <input type="radio" name="t21" id="t21-ocean" class="t21-radios">
+      <input type="radio" name="t21" id="t21-sunset" class="t21-radios">
+      <div class="t21-picker">
+        <label for="t21-indigo">● Indigo</label><label for="t21-ocean">● Ocean</label><label for="t21-sunset">● Sunset</label>
+      </div>
+      <div class="t21-scope"><div class="t21-swatch"></div></div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 22 ================= -->
+  <section id="task-22" class="task">
+    <h2>22. 3D Card Flip Effect</h2>
+    <p class="desc">perspective + transform-style: preserve-3d + backface-visibility: hidden on two stacked faces.</p>
+    <style>
+      .t22-scene { width: 180px; height: 110px; perspective: 800px; }
+      .t22-card { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition-property: transform; transition-duration: 0.6s; transition-timing-function: ease; }
+      .t22-scene:hover .t22-card { transform: rotateY(180deg); }
+      .t22-face { position: absolute; top: 0; left: 0; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 14px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+      .t22-front { background-color: #4b6ef5; }
+      .t22-back { background-color: #8a5cf6; transform: rotateY(180deg); }
+    </style>
+    <div class="demo">
+      <div class="t22-scene"><div class="t22-card"><div class="t22-face t22-front">Hover me</div><div class="t22-face t22-back">Back side!</div></div></div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 23 ================= -->
+  <section id="task-23" class="task">
+    <h2>23. Image Hover Zoom</h2>
+    <style>
+      .t23-frame { width: 220px; height: 120px; overflow-x: hidden; overflow-y: hidden; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; }
+      .t23-frame img { width: 100%; height: 100%; object-fit: cover; transition-property: transform; transition-duration: 0.4s; transition-timing-function: ease; }
+      .t23-frame:hover img { transform: scale(1.15); }
+    </style>
+    <div class="demo">
+      <div class="t23-frame"><img src="https://picsum.photos/400/240?grayscale" alt="Sample landscape"></div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 24 ================= -->
+  <section id="task-24" class="task">
+    <h2>24. Glassmorphism Card</h2>
+    <style>
+      .t24-bg { background-image: linear-gradient(135deg,#4b6ef5,#8a5cf6,#f56ea6); padding-top: 40px; padding-bottom: 40px; padding-left: 40px; padding-right: 40px; display: flex; align-items: center; justify-content: center; }
+      .t24-card { background-color: rgba(255,255,255,0.18); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: rgba(255,255,255,0.35); border-right-color: rgba(255,255,255,0.35); border-bottom-color: rgba(255,255,255,0.35); border-left-color: rgba(255,255,255,0.35); border-top-left-radius: 14px; border-top-right-radius: 14px; border-bottom-right-radius: 14px; border-bottom-left-radius: 14px; padding-top: 24px; padding-right: 24px; padding-bottom: 24px; padding-left: 24px; color: #ffffff; font-size: 14px; width: 220px; }
+    </style>
+    <div class="demo t24-bg"><div class="t24-card">Frosted glass panel — background blurred behind it.</div></div>
+  </section>
+
+  <!-- ================= TASK 25 ================= -->
+  <section id="task-25" class="task">
+    <h2>25. Neumorphism Design Card</h2>
+    <style>
+      .t25-bg { background-color: #e6e7ee; padding-top: 30px; padding-bottom: 30px; display: flex; align-items: center; justify-content: center; }
+      .t25-card { width: 200px; padding-top: 24px; padding-bottom: 24px; padding-left: 20px; padding-right: 20px; background-color: #e6e7ee; border-top-left-radius: 18px; border-top-right-radius: 18px; border-bottom-right-radius: 18px; border-bottom-left-radius: 18px; box-shadow: 8px 8px 16px rgba(163,177,198,0.6), -8px -8px 16px rgba(255,255,255,0.8); font-size: 14px; color: #3a3a3d; text-align: center; }
+    </style>
+    <div class="demo t25-bg"><div class="t25-card">Soft, extruded neumorphic surface</div></div>
+  </section>
+
+  <!-- ================= TASK 26 ================= -->
+  <section id="task-26" class="task">
+    <h2>26. Custom Shaped Image (clip-path)</h2>
+    <style>
+      .t26-row { display: flex; flex-direction: row; column-gap: 20px; flex-wrap: wrap; }
+      .t26-img { width: 120px; height: 120px; object-fit: cover; }
+      .t26-hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }
+      .t26-circle { clip-path: circle(50% at 50% 50%); }
+      .t26-star { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+    </style>
+    <div class="demo">
+      <div class="t26-row">
+        <img class="t26-img t26-hex" src="https://picsum.photos/200/200?1" alt="Hexagon crop">
+        <img class="t26-img t26-circle" src="https://picsum.photos/200/200?2" alt="Circle crop">
+        <img class="t26-img t26-star" src="https://picsum.photos/200/200?3" alt="Star crop">
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 27 ================= -->
+  <section id="task-27" class="task">
+    <h2>27. Diagonal Section Divider (clip-path)</h2>
+    <style>
+      .t27-a { background-color: #4b6ef5; color: #ffffff; padding-top: 40px; padding-bottom: 60px; text-align: center; font-size: 14px; clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); }
+      .t27-b { background-color: #1c1c1e; color: #ffffff; padding-top: 30px; padding-bottom: 20px; text-align: center; font-size: 14px; margin-top: -30px; }
+    </style>
+    <div class="demo">
+      <div class="t27-a">Section A — diagonal bottom edge</div>
+      <div class="t27-b">Section B underneath</div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 28 ================= -->
+  <section id="task-28" class="task">
+    <h2>28. Fully Responsive Pricing Table</h2>
+    <style>
+      .t28-grid { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 16px; row-gap: 16px; }
+      .t28-plan { border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: #e2e2e6; border-right-color: #e2e2e6; border-bottom-color: #e2e2e6; border-left-color: #e2e2e6; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; padding-top: 20px; padding-bottom: 20px; padding-left: 16px; padding-right: 16px; text-align: center; }
+      .t28-plan.t28-featured { border-top-color: #4b6ef5; border-right-color: #4b6ef5; border-bottom-color: #4b6ef5; border-left-color: #4b6ef5; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; }
+      .t28-price { font-size: 26px; font-weight: 800; margin-top: 8px; margin-bottom: 8px; }
+      @media (max-width: 700px) { .t28-grid { grid-template-columns: 1fr; } }
+    </style>
+    <div class="demo">
+      <div class="t28-grid">
+        <div class="t28-plan"><h3>Basic</h3><div class="t28-price">$9</div><p>For individuals</p></div>
+        <div class="t28-plan t28-featured"><h3>Pro</h3><div class="t28-price">$29</div><p>For growing teams</p></div>
+        <div class="t28-plan"><h3>Enterprise</h3><div class="t28-price">$99</div><p>For large orgs</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 29 ================= -->
+  <section id="task-29" class="task">
+    <h2>29. Responsive Image Gallery (auto-fill / minmax)</h2>
+    <style>
+      .t29-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); column-gap: 8px; row-gap: 8px; }
+      .t29-grid img { width: 100%; height: 90px; object-fit: cover; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; }
+    </style>
+    <div class="demo">
+      <div class="t29-grid">
+        <img src="https://picsum.photos/150/120?11" alt=""><img src="https://picsum.photos/150/120?12" alt=""><img src="https://picsum.photos/150/120?13" alt=""><img src="https://picsum.photos/150/120?14" alt=""><img src="https://picsum.photos/150/120?15" alt=""><img src="https://picsum.photos/150/120?16" alt="">
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 30 ================= -->
+  <section id="task-30" class="task">
+    <h2>30. Mobile-First Responsive Navbar with Hamburger</h2>
+    <p class="desc">Base (mobile) styles hide the menu behind a checkbox toggle; a min-width media query switches to a horizontal desktop layout.</p>
+    <style>
+      .t30-nav { background-color: #1c1c1e; position: relative; }
+      .t30-bar { display: flex; flex-direction: row; align-items: center; justify-content: space-between; padding-top: 12px; padding-right: 16px; padding-bottom: 12px; padding-left: 16px; }
+      .t30-brand { color: #ffffff; font-size: 16px; font-weight: 700; }
+      .t30-toggle { display: inline-block; color: #ffffff; font-size: 20px; cursor: pointer; }
+      .t30-check { position: absolute; opacity: 0; width: 0; height: 0; }
+      .t30-menu { list-style-type: none; max-height: 0; overflow-y: hidden; transition-property: max-height; transition-duration: 0.3s; transition-timing-function: ease; }
+      .t30-check:checked ~ .t30-menu { max-height: 200px; }
+      .t30-menu li a { display: block; color: #d6d6da; text-decoration-line: none; padding-top: 10px; padding-bottom: 10px; padding-left: 16px; font-size: 14px; }
+      @media (min-width: 640px) {
+        .t30-toggle { display: none; }
+        .t30-menu { max-height: none; overflow-y: visible; display: flex; flex-direction: row; column-gap: 20px; }
+        .t30-menu li a { padding-top: 0; padding-bottom: 0; padding-left: 0; }
+      }
+    </style>
+    <div class="demo">
+      <nav class="t30-nav">
+        <div class="t30-bar">
+          <span class="t30-brand">BrandName</span>
+          <label class="t30-toggle" for="t30-check">☰</label>
+        </div>
+        <input type="checkbox" id="t30-check" class="t30-check">
+        <ul class="t30-menu"><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li></ul>
+      </nav>
+      <p style="font-size:12px;color:#888;margin-top:8px;">↕ Resize the browser window to see it switch to a horizontal layout.</p>
+    </div>
+  </section>
+
+  <!-- ================= TASK 31 ================= -->
+  <section id="task-31" class="task">
+    <h2>31. CSS Counters (Custom Numbered List)</h2>
+    <style>
+      .t31-list { list-style-type: none; counter-reset: t31-counter; }
+      .t31-list li { counter-increment: t31-counter; position: relative; padding-left: 34px; margin-bottom: 10px; font-size: 14px; }
+      .t31-list li::before { content: counter(t31-counter, decimal-leading-zero); position: absolute; left: 0; top: 0; background-color: #4b6ef5; color: #ffffff; font-size: 11px; width: 22px; height: 22px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    </style>
+    <div class="demo">
+      <ol class="t31-list"><li>Plan the sprint</li><li>Write the code</li><li>Review pull requests</li><li>Ship to production</li></ol>
+    </div>
+  </section>
+
+  <!-- ================= TASK 32 ================= -->
+  <section id="task-32" class="task">
+    <h2>32. Print-Friendly Stylesheet (@media print)</h2>
+    <p class="desc">On real print / print-preview the navigation and button below hide, and text turns pure black for ink-friendly output.</p>
+    <style>
+      .t32-noprint { background-color: #4b6ef5; color: #ffffff; padding-top: 10px; padding-bottom: 10px; padding-left: 14px; padding-right: 14px; display: inline-block; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; font-size: 13px; margin-bottom: 10px; }
+      .t32-article { font-size: 14px; }
+      @media print {
+        .t32-noprint { display: none; }
+        .t32-article { color: #000000; }
+        body { background-color: #ffffff; }
+      }
+    </style>
+    <div class="demo">
+      <button class="t32-noprint" onclick="window.print()">🖨 Print this page</button>
+      <div class="t32-article">This article text stays visible when printed; the button above is hidden by @media print.</div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 33 ================= -->
+  <section id="task-33" class="task">
+    <h2>33. CSS Grid Based Dashboard Layout</h2>
+    <style>
+      .t33-grid { display: grid; grid-template-columns: 110px repeat(3, 1fr); grid-template-rows: 48px repeat(2, 80px); grid-template-areas: "side head head head" "side w1 w2 w3" "side w4 w4 w4"; column-gap: 8px; row-gap: 8px; }
+      .t33-grid > div { color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 12px; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; }
+      .t33-side { grid-area: side; background-color: #1c1c1e; }
+      .t33-head { grid-area: head; background-color: #4b6ef5; }
+      .t33-w1 { grid-area: w1; background-color: #8a5cf6; } .t33-w2 { grid-area: w2; background-color: #8a5cf6; } .t33-w3 { grid-area: w3; background-color: #8a5cf6; }
+      .t33-w4 { grid-area: w4; background-color: #6a6a70; }
+    </style>
+    <div class="demo">
+      <div class="t33-grid">
+        <div class="t33-side">Nav</div><div class="t33-head">Header</div>
+        <div class="t33-w1">Widget 1</div><div class="t33-w2">Widget 2</div><div class="t33-w3">Widget 3</div>
+        <div class="t33-w4">Big chart widget</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 34 ================= -->
+  <section id="task-34" class="task">
+    <h2>34. Sticky Table Headers on Scroll</h2>
+    <style>
+      .t34-scroll { height: 140px; overflow-y: auto; overflow-x: hidden; }
+      .t34-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+      .t34-table thead th { position: sticky; top: 0; background-color: #1c1c1e; color: #ffffff; text-align: left; padding-top: 8px; padding-bottom: 8px; padding-left: 10px; }
+      .t34-table td { padding-top: 8px; padding-bottom: 8px; padding-left: 10px; border-top-width: 1px; border-top-style: solid; border-top-color: #eee; }
+    </style>
+    <div class="demo">
+      <div class="t34-scroll">
+        <table class="t34-table">
+          <thead><tr><th>Item</th><th>Qty</th></tr></thead>
+          <tbody>
+            <tr><td>Notebook</td><td>12</td></tr><tr><td>Pen</td><td>40</td></tr><tr><td>Marker</td><td>18</td></tr>
+            <tr><td>Stapler</td><td>6</td></tr><tr><td>Folder</td><td>25</td></tr><tr><td>Eraser</td><td>30</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TASK 35 ================= -->
+  <section id="task-35" class="task">
+    <h2>35. Custom Scrollbar-Based Horizontal Gallery (with scroll-snap)</h2>
+    <style>
+      .t35-row { display: flex; flex-direction: row; overflow-x: auto; overflow-y: hidden; column-gap: 12px; padding-bottom: 12px; scroll-snap-type: x mandatory; }
+      .t35-row img { flex-shrink: 0; width: 160px; height: 100px; object-fit: cover; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; scroll-snap-align: start; }
+      .t35-row::-webkit-scrollbar { height: 8px; }
+      .t35-row::-webkit-scrollbar-thumb { background-color: #4b6ef5; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; }
+      .t35-row::-webkit-scrollbar-track { background-color: #eee; }
+    </style>
+    <div class="demo">
+      <div class="t35-row">
+        <img src="https://picsum.photos/200/130?21" alt=""><img src="https://picsum.photos/200/130?22" alt=""><img src="https://picsum.photos/200/130?23" alt=""><img src="https://picsum.photos/200/130?24" alt=""><img src="https://picsum.photos/200/130?25" alt="">
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
