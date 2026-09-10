@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kagaz &amp; Kettle — Chai, Ink and Slow Mornings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+/* ============================================================
+   PRACTICE NOTE FOR THE LEARNER
+   This entire stylesheet intentionally avoids CSS shorthand
+   properties. Wherever a shorthand exists, the longhand form
+   is used instead, for example:
+
+     margin          -> margin-top / margin-right / margin-bottom / margin-left
+     padding         -> padding-top / padding-right / padding-bottom / padding-left
+     border          -> border-top-width/style/color (and right/bottom/left)
+     border-radius   -> border-top-left-radius / border-top-right-radius /
+                         border-bottom-right-radius / border-bottom-left-radius
+     background      -> background-color / background-image / background-repeat /
+                         background-position-x / background-position-y / background-size
+     font            -> font-family / font-size / font-weight / font-style / line-height
+     flex            -> flex-grow / flex-shrink / flex-basis
+     flex-flow       -> flex-direction / flex-wrap
+     gap             -> row-gap / column-gap
+     transition      -> transition-property / transition-duration / transition-timing-function
+     animation       -> animation-name / animation-duration / animation-timing-function / animation-fill-mode
+     list-style      -> list-style-type / list-style-position
+     text-decoration -> text-decoration-line / text-decoration-color / text-decoration-style
+
+   All layout on this page (nav bar, hero, cards, forms, footer)
+   is built with display: flex — no CSS grid is used.
+   ============================================================ */
+
+/* ---------- Reset & base ---------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.6;
+  color: var(--color-charcoal);
+  background-color: var(--color-paper);
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration-line: none;
+}
+
+ul {
+  list-style-type: none;
+  list-style-position: outside;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+}
+
+button, input, textarea {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+  border-top-style: none;
+  border-right-style: none;
+  border-bottom-style: none;
+  border-left-style: none;
+}
+
+h1, h2, h3, h4, p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+:root {
+  --color-ink: #1B2A41;
+  --color-ink-soft: #24374F;
+  --color-paper: #F6EFE3;
+  --color-paper-dim: #EEE3CD;
+  --color-turmeric: #D9A441;
+  --color-turmeric-dark: #B8842A;
+  --color-rust: #A63D40;
+  --color-charcoal: #2E2A25;
+  --color-cream-text: #F6EFE3;
+  --color-line: #D8CBB0;
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Work Sans', sans-serif;
+}
+
+:focus-visible {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: var(--color-turmeric);
+  outline-offset: 3px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.eyebrow-free-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  padding-left: 24px;
+  padding-right: 24px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  transition-property: background-color, transform;
+  transition-duration: 0.18s;
+  transition-timing-function: ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background-color: var(--color-turmeric);
+  color: var(--color-ink);
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-turmeric-dark);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-cream-text);
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-color: rgba(246, 239, 227, 0.4);
+  border-right-color: rgba(246, 239, 227, 0.4);
+  border-bottom-color: rgba(246, 239, 227, 0.4);
+  border-left-color: rgba(246, 239, 227, 0.4);
+}
+
+.btn-outline:hover {
+  border-top-color: var(--color-cream-text);
+  border-right-color: var(--color-cream-text);
+  border-bottom-color: var(--color-cream-text);
+  border-left-color: var(--color-cream-text);
+}
+
+.btn-dark {
+  background-color: var(--color-ink);
+  color: var(--color-cream-text);
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+}
+
+.btn-dark:hover {
+  background-color: var(--color-ink-soft);
+}
+
+/* ============================================================
+   HEADER / NAV — flex row, space-between
+   ============================================================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--color-ink);
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.nav-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.logo span.accent {
+  color: var(--color-turmeric);
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 32px;
+  row-gap: 8px;
+}
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-paper-dim);
+  transition-property: color;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+
+.nav-links a:hover {
+  color: var(--color-cream-text);
+}
+
+.nav-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 16px;
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  row-gap: 5px;
+  background-color: transparent;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 6px;
+  padding-right: 6px;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  width: 22px;
+  height: 2px;
+  background-color: var(--color-cream-text);
+}
+
+/* ============================================================
+   HERO — two-column flex row
+   ============================================================ */
+.hero {
+  background-color: var(--color-ink);
+  padding-top: 64px;
+  padding-bottom: 88px;
+}
+
+.hero-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 56px;
+  row-gap: 48px;
+}
+
+.hero-copy {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 420px;
+  animation-name: rise-in;
+  animation-duration: 0.7s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+.hero-copy h1 {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--color-cream-text);
+  margin-bottom: 20px;
+}
+
+.hero-copy p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--color-paper-dim);
+  max-width: 46ch;
+  margin-bottom: 32px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 16px;
+  row-gap: 12px;
+}
+
+.hero-side {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 280px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.ticket-card {
+  background-color: var(--color-paper);
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 2px;
+  border-left-width: 0px;
+  border-bottom-style: dashed;
+  border-bottom-color: var(--color-turmeric);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.28);
+}
+
+.ticket-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-rust);
+  margin-bottom: 8px;
+}
+
+.ticket-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-ink);
+  margin-bottom: 6px;
+}
+
+.ticket-desc {
+  font-size: 14px;
+  color: var(--color-charcoal);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.ticket-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ticket-price {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.stamp {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 12px;
+  padding-top: 14px;
+  padding-right: 18px;
+  padding-bottom: 14px;
+  padding-left: 18px;
+  border-top-left-radius: 999px;
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+  border-bottom-left-radius: 999px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-color: rgba(217, 164, 65, 0.5);
+  border-right-color: rgba(217, 164, 65, 0.5);
+  border-bottom-color: rgba(217, 164, 65, 0.5);
+  border-left-color: rgba(217, 164, 65, 0.5);
+}
+
+.stamp-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-turmeric);
+  border-top-left-radius: 999px;
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+  border-bottom-left-radius: 999px;
+}
+
+.stamp span.text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-paper-dim);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   SECTION SHELL
+   ============================================================ */
+.section {
+  padding-top: 88px;
+  padding-bottom: 88px;
+}
+
+.section-dim {
+  background-color: var(--color-paper-dim);
+}
+
+.section-head {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  column-gap: 24px;
+  row-gap: 16px;
+  margin-bottom: 44px;
+}
+
+.section-head h2 {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 600;
+  color: var(--color-ink);
+  max-width: 22ch;
+}
+
+.section-head p {
+  font-size: 15px;
+  color: #6B6255;
+  max-width: 38ch;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   ABOUT — flex row, image block + text
+   ============================================================ */
+.about-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 56px;
+  row-gap: 36px;
+}
+
+.about-image {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 340px;
+  height: 360px;
+  background-color: var(--color-ink);
+  background-image: linear-gradient(155deg, #24374F 0%, #1B2A41 55%, #14202F 100%);
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 8px;
+}
+
+.about-image .monogram {
+  font-family: var(--font-display);
+  font-size: 64px;
+  font-weight: 600;
+  color: var(--color-turmeric);
+  line-height: 1;
+}
+
+.about-image .caption {
+  font-size: 13px;
+  color: var(--color-paper-dim);
+}
+
+.about-text {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 420px;
+}
+
+.about-text h2 {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--color-ink);
+  margin-bottom: 18px;
+}
+
+.about-text p {
+  font-size: 16px;
+  line-height: 1.75;
+  color: #4A443A;
+  margin-bottom: 16px;
+}
+
+.about-facts {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 32px;
+  row-gap: 20px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: var(--color-line);
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+}
+
+.fact-num {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--color-rust);
+}
+
+.fact-label {
+  font-size: 13px;
+  color: #6B6255;
+  margin-top: 4px;
+}
+
+/* ============================================================
+   MENU — flex wrap cards
+   ============================================================ */
+.card-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 24px;
+  row-gap: 24px;
+}
+
+.menu-card {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 240px;
+  background-color: var(--color-paper);
+  padding-top: 26px;
+  padding-right: 22px;
+  padding-bottom: 26px;
+  padding-left: 22px;
+  border-top-width: 3px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-top-style: solid;
+  border-top-color: var(--color-turmeric);
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 10px 26px rgba(27, 42, 65, 0.08);
+}
+
+.menu-card .ticket-name {
+  font-size: 19px;
+}
+
+/* ============================================================
+   WORKSHOPS — flex wrap feature cards with simple icon
+   ============================================================ */
+.workshop-card {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 300px;
+  background-color: var(--color-ink);
+  padding-top: 32px;
+  padding-right: 28px;
+  padding-bottom: 32px;
+  padding-left: 28px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.workshop-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(217, 164, 65, 0.14);
+  border-top-left-radius: 999px;
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+  border-bottom-left-radius: 999px;
+  margin-bottom: 20px;
+}
+
+.workshop-card h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-cream-text);
+  margin-bottom: 10px;
+}
+
+.workshop-card p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--color-paper-dim);
+  margin-bottom: 16px;
+}
+
+.workshop-meta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: rgba(246, 239, 227, 0.14);
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+}
+
+.workshop-meta span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-turmeric);
+}
+
+/* ============================================================
+   GALLERY — masonry-style flex wrap
+   ============================================================ */
+.gallery-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 16px;
+  row-gap: 16px;
+}
+
+.gallery-item {
+  flex-grow: 1;
+  flex-shrink: 1;
+  position: relative;
+  height: 220px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.gallery-item span {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-cream-text);
+  padding-top: 8px;
+  padding-right: 14px;
+  padding-bottom: 14px;
+  padding-left: 14px;
+  background-image: linear-gradient(to top, rgba(0,0,0,0.55), transparent);
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: bottom;
+}
+
+.g1 { flex-basis: 320px; background-color: #7A5C3E; background-image: linear-gradient(135deg, #8C6A46 0%, #5C4429 100%); }
+.g2 { flex-basis: 220px; background-color: #4E6B5C; background-image: linear-gradient(135deg, #5E7F6D 0%, #35473D 100%); }
+.g3 { flex-basis: 260px; background-color: #7C3F42; background-image: linear-gradient(135deg, #A63D40 0%, #5E2224 100%); }
+.g4 { flex-basis: 240px; background-color: #3A4E63; background-image: linear-gradient(135deg, #4E6883 0%, #1B2A41 100%); }
+.g5 { flex-basis: 300px; background-color: #8A7648; background-image: linear-gradient(135deg, #D9A441 0%, #8A6A2C 100%); }
+.g6 { flex-basis: 220px; background-color: #5B4A5E; background-image: linear-gradient(135deg, #6E5B72 0%, #382E3A 100%); }
+
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+.quote-card {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 300px;
+  background-color: var(--color-paper);
+  padding-top: 28px;
+  padding-right: 26px;
+  padding-bottom: 28px;
+  padding-left: 26px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-left-color: var(--color-rust);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.quote-text {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-ink);
+  margin-bottom: 20px;
+}
+
+.quote-person {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 12px;
+}
+
+.quote-avatar {
+  width: 38px;
+  height: 38px;
+  background-color: var(--color-ink);
+  border-top-left-radius: 999px;
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+  border-bottom-left-radius: 999px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-turmeric);
+}
+
+.quote-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.quote-role {
+  font-size: 12px;
+  color: #8A8072;
+  margin-top: 2px;
+}
+
+/* ============================================================
+   MEMBERSHIP / PRICING
+   ============================================================ */
+.price-card {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 280px;
+  background-color: var(--color-paper);
+  padding-top: 32px;
+  padding-right: 28px;
+  padding-bottom: 32px;
+  padding-left: 28px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-color: var(--color-line);
+  border-right-color: var(--color-line);
+  border-bottom-color: var(--color-line);
+  border-left-color: var(--color-line);
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.price-card.featured {
+  background-color: var(--color-ink);
+  border-top-color: var(--color-turmeric);
+  border-right-color: var(--color-turmeric);
+  border-bottom-color: var(--color-turmeric);
+  border-left-color: var(--color-turmeric);
+  border-top-width: 2px;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+  transform: translateY(-8px);
+}
+
+.price-badge {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-ink);
+  background-color: var(--color-turmeric);
+  padding-top: 4px;
+  padding-right: 12px;
+  padding-bottom: 4px;
+  padding-left: 12px;
+  border-top-left-radius: 999px;
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+  border-bottom-left-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.price-card h3 {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.price-card.featured h3,
+.price-card.featured .price-amount,
+.price-card.featured .price-cycle {
+  color: var(--color-cream-text);
+}
+
+.price-amount {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.price-cycle {
+  font-size: 13px;
+  color: #8A8072;
+  margin-bottom: 22px;
+}
+
+.price-features {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  margin-bottom: 26px;
+  flex-grow: 1;
+}
+
+.price-features li {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  column-gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #4A443A;
+}
+
+.price-card.featured .price-features li {
+  color: var(--color-paper-dim);
+}
+
+.price-features li .tick {
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 16px;
+  color: var(--color-rust);
+  font-weight: 700;
+}
+
+.price-card.featured .price-features li .tick {
+  color: var(--color-turmeric);
+}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-item {
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: var(--color-line);
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  padding-top: 22px;
+  padding-bottom: 22px;
+}
+
+.faq-item:last-child {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--color-line);
+}
+
+.faq-item summary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 20px;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::marker {
+  content: "";
+}
+
+.faq-item .icon-plusminus {
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 22px;
+  height: 22px;
+  position: relative;
+}
+
+.faq-item .icon-plusminus::before,
+.faq-item .icon-plusminus::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: var(--color-rust);
+  transition-property: transform;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+.faq-item .icon-plusminus::before {
+  width: 14px;
+  height: 2px;
+  margin-top: -1px;
+  margin-left: -7px;
+}
+
+.faq-item .icon-plusminus::after {
+  width: 2px;
+  height: 14px;
+  margin-top: -7px;
+  margin-left: -1px;
+}
+
+.faq-item[open] .icon-plusminus::after {
+  transform: rotate(90deg);
+}
+
+.faq-item p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #5A5245;
+  margin-top: 14px;
+  max-width: 62ch;
+}
+
+/* ============================================================
+   NEWSLETTER BAND
+   ============================================================ */
+.newsletter {
+  background-color: var(--color-rust);
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+
+.newsletter-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 32px;
+  row-gap: 24px;
+}
+
+.newsletter-copy h2 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--color-cream-text);
+  margin-bottom: 8px;
+}
+
+.newsletter-copy p {
+  font-size: 14px;
+  color: rgba(246, 239, 227, 0.8);
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 10px;
+  row-gap: 10px;
+}
+
+.newsletter-form input[type="email"] {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 240px;
+  background-color: var(--color-cream-text);
+  color: var(--color-ink);
+  padding-top: 13px;
+  padding-right: 16px;
+  padding-bottom: 13px;
+  padding-left: 16px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.newsletter-note {
+  font-size: 12px;
+  color: rgba(246, 239, 227, 0.75);
+  margin-top: 10px;
+  flex-basis: 100%;
+}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 56px;
+  row-gap: 40px;
+}
+
+.contact-form {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 380px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 18px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+}
+
+.form-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.form-field input,
+.form-field textarea {
+  background-color: var(--color-paper);
+  padding-top: 12px;
+  padding-right: 14px;
+  padding-bottom: 12px;
+  padding-left: 14px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-color: var(--color-line);
+  border-right-color: var(--color-line);
+  border-bottom-color: var(--color-line);
+  border-left-color: var(--color-line);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  color: var(--color-charcoal);
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-info {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 300px;
+  background-color: var(--color-ink);
+  padding-top: 32px;
+  padding-right: 28px;
+  padding-bottom: 32px;
+  padding-left: 28px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 22px;
+}
+
+.contact-info h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-cream-text);
+}
+
+.contact-line {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+}
+
+.contact-line .label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-turmeric);
+}
+
+.contact-line .value {
+  font-size: 14px;
+  color: var(--color-paper-dim);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer {
+  background-color: var(--color-ink);
+  padding-top: 64px;
+  padding-bottom: 28px;
+}
+
+.footer-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 40px;
+  row-gap: 36px;
+  padding-bottom: 40px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(246, 239, 227, 0.12);
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-left-width: 0px;
+}
+
+.footer-col {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 200px;
+}
+
+.footer-col h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-cream-text);
+  margin-bottom: 16px;
+}
+
+.footer-col p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-paper-dim);
+  max-width: 32ch;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--color-paper-dim);
+  transition-property: color;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+
+.footer-links a:hover {
+  color: var(--color-turmeric);
+}
+
+.footer-social {
+  display: flex;
+  flex-direction: row;
+  column-gap: 12px;
+  margin-top: 16px;
+}
+
+.footer-social a {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(246, 239, 227, 0.08);
+  border-top-left-radius: 999px;
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+  border-bottom-left-radius: 999px;
+  transition-property: background-color;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+
+.footer-social a:hover {
+  background-color: var(--color-turmeric);
+}
+
+.footer-bottom {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 16px;
+  row-gap: 10px;
+  padding-top: 24px;
+}
+
+.footer-bottom p {
+  font-size: 12px;
+  color: rgba(246, 239, 227, 0.55);
+}
+
+/* ============================================================
+   RESPONSIVE — flexbox direction changes
+   ============================================================ */
+@media (max-width: 900px) {
+  .hero-copy h1 {
+    font-size: 38px;
+  }
+  .section-head h2 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 720px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 18px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-ink);
+    padding-top: 24px;
+    padding-right: 24px;
+    padding-bottom: 24px;
+    padding-left: 24px;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: rgba(246, 239, 227, 0.1);
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+  }
+  .nav-links.is-open {
+    display: flex;
+  }
+  .nav-toggle {
+    display: flex;
+  }
+  .nav-actions .btn-outline {
+    display: none;
+  }
+  .price-card.featured {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-copy {
+    animation-name: none;
+  }
+  * {
+    transition-duration: 0.001ms;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="wrap nav-row" style="position:relative;">
+    <a href="#top" class="logo">Kagaz <span class="accent">&amp; Kettle</span></a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#menu">Menu</a>
+      <a href="#workshops">Workshops</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#membership">Membership</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="#contact" class="btn btn-outline">Visit Us</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap hero-row">
+    <div class="hero-copy">
+      <h1>Chai steeped slow. Sentences written slower.</h1>
+      <p>A corner counter near Law Garden, Ahmedabad, where kettles share shelf space with fountain pens. Come in for the ginger-cardamom chai, stay for the letter-writing table by the window.</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-primary">See the menu</a>
+        <a href="#workshops" class="btn btn-outline">Sunday workshops</a>
+      </div>
+    </div>
+
+    <div class="hero-side">
+      <div class="ticket-card">
+        <div class="ticket-label">Today's Blend</div>
+        <div class="ticket-name">Adrak Kadak Chai</div>
+        <div class="ticket-desc">Ginger-forward, jaggery-sweetened, brewed for eight minutes on a slow flame.</div>
+        <div class="ticket-row">
+          <span class="ticket-price">₹60</span>
+          <span style="font-size:12px; color:#8A8072;">Brewing since 6 AM</span>
+        </div>
+      </div>
+
+      <div class="stamp">
+        <span class="stamp-dot"></span>
+        <span class="text">Est. 2019 · Ahmedabad</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section" id="about">
+  <div class="wrap about-row">
+    <div class="about-image">
+      <span class="monogram">K&amp;K</span>
+      <span class="caption">Counter, corner table, and a shelf of second-hand paper</span>
+    </div>
+
+    <div class="about-text">
+      <h2>Started with a kettle and a drawer of old letters</h2>
+      <p>Meher opened the first counter in 2019, combining her grandmother's chai recipes with a lifelong habit of writing to people she missed. What began as four stools and one kettle is now a small room where students, writers, and slow mornings all find a seat.</p>
+      <p>We still brew in small batches, still keep a box of postcards by the door, and still close the register for anyone who wants to finish a paragraph before paying.</p>
+
+      <div class="about-facts">
+        <div>
+          <div class="fact-num">6</div>
+          <div class="fact-label">Years brewing</div>
+        </div>
+        <div>
+          <div class="fact-num">12</div>
+          <div class="fact-label">Chai &amp; kadha blends</div>
+        </div>
+        <div>
+          <div class="fact-num">40+</div>
+          <div class="fact-label">Sunday workshops held</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MENU ============ -->
+<section class="section section-dim" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Blends worth pausing for</h2>
+      <p>Everything is brewed to order in small kettles — nothing sits warming on a burner.</p>
+    </div>
+
+    <div class="card-row">
+      <div class="menu-card">
+        <div class="ticket-name">Adrak Kadak Chai</div>
+        <div class="ticket-desc">Ginger-forward, jaggery-sweetened, brewed eight minutes on a slow flame.</div>
+        <div class="ticket-row"><span class="ticket-price">₹60</span></div>
+      </div>
+      <div class="menu-card">
+        <div class="ticket-name">Elaichi Malai Chai</div>
+        <div class="ticket-desc">Cardamom and full-cream milk, finished with a pinch of saffron.</div>
+        <div class="ticket-row"><span class="ticket-price">₹70</span></div>
+      </div>
+      <div class="menu-card">
+        <div class="ticket-name">Tulsi-Lemongrass Kadha</div>
+        <div class="ticket-desc">Caffeine-free evening blend, easy on tired wrists after long writing sessions.</div>
+        <div class="ticket-row"><span class="ticket-price">₹55</span></div>
+      </div>
+      <div class="menu-card">
+        <div class="ticket-name">Filter Coffee Interlude</div>
+        <div class="ticket-desc">For the days chai needs a rest — South Indian filter coffee, brewed fresh.</div>
+        <div class="ticket-row"><span class="ticket-price">₹65</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORKSHOPS ============ -->
+<section class="section" id="workshops">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Slow Sunday sessions</h2>
+      <p>Small, seated workshops around the things we love most — pens, letters, and chai.</p>
+    </div>
+
+    <div class="card-row">
+      <div class="workshop-card">
+        <div class="workshop-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 20L14 10M14 10L20 4L21 5L15 11M14 10L15 11" stroke="#D9A441" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Fountain Pen Repair Circle</h3>
+        <p>Learn to clean nibs, fix flow issues, and give an old pen a second life. Bring your own or borrow one of ours.</p>
+        <div class="workshop-meta">
+          <span>First Sunday · 2 hrs</span>
+          <span>₹300</span>
+        </div>
+      </div>
+
+      <div class="workshop-card">
+        <div class="workshop-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4H16V16H8L4 20V4Z" stroke="#D9A441" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Letter Writing Table</h3>
+        <p>A quiet hour to write to someone you've been meaning to. Paper, stamps, and a postbox provided.</p>
+        <div class="workshop-meta">
+          <span>Third Sunday · 1.5 hrs</span>
+          <span>₹200</span>
+        </div>
+      </div>
+
+      <div class="workshop-card">
+        <div class="workshop-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 3V13C5 15.2 6.8 17 9 17C11.2 17 13 15.2 13 13V3" stroke="#D9A441" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M17 8H21C21 11 19 12 17 12" stroke="#D9A441" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M4 21H14" stroke="#D9A441" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Chai Cupping</h3>
+        <p>Taste four single-estate blends side by side and learn what makes each leaf different.</p>
+        <div class="workshop-meta">
+          <span>Last Friday · 1 hr</span>
+          <span>₹350</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="section section-dim" id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>A few corners of the room</h2>
+      <p>No filters — just the counter, the shelves, and the window seat on a rainy afternoon.</p>
+    </div>
+
+    <div class="gallery-row">
+      <div class="gallery-item g1"><span>Morning pour, 7 AM</span></div>
+      <div class="gallery-item g2"><span>Nib cleaning table</span></div>
+      <div class="gallery-item g3"><span>Rain-soaked window seat</span></div>
+      <div class="gallery-item g4"><span>Postbox by the door</span></div>
+      <div class="gallery-item g5"><span>Second-hand paper stock</span></div>
+      <div class="gallery-item g6"><span>Closing time, 9 PM</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What regulars say</h2>
+      <p>A few notes left in the guest book by the door.</p>
+    </div>
+
+    <div class="card-row">
+      <div class="quote-card">
+        <p class="quote-text">"I came in for chai and left with a repaired pen and a new pen-pal. Still not sure how that happened."</p>
+        <div class="quote-person">
+          <div class="quote-avatar">P</div>
+          <div>
+            <div class="quote-name">Priya M.</div>
+            <div class="quote-role">Design student</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quote-card">
+        <p class="quote-text">"The Tulsi-Lemongrass kadha is what I order when my wrist is tired from sketching all day. Cheapest therapy in the city."</p>
+        <div class="quote-person">
+          <div class="quote-avatar">K</div>
+          <div>
+            <div class="quote-name">Kunal R.</div>
+            <div class="quote-role">Letter-writing regular</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quote-card">
+        <p class="quote-text">"Slowest, kindest café I know. Nobody has ever once asked me to give up the corner table."</p>
+        <div class="quote-person">
+          <div class="quote-avatar">A</div>
+          <div>
+            <div class="quote-name">Ansh D.</div>
+            <div class="quote-role">Sunday regular</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEMBERSHIP / PRICING ============ -->
+<section class="section section-dim" id="membership">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Membership, for the regulars</h2>
+      <p>For people who'd rather have a running tab than count cups.</p>
+    </div>
+
+    <div class="card-row">
+      <div class="price-card">
+        <h3>Everyday Reader</h3>
+        <div class="price-amount">₹499</div>
+        <div class="price-cycle">per month</div>
+        <ul class="price-features">
+          <li><span class="tick">✓</span> 10% off all chai &amp; kadha blends</li>
+          <li><span class="tick">✓</span> Reserved corner seat, weekdays</li>
+          <li><span class="tick">✓</span> Free refill of hot water all day</li>
+        </ul>
+        <a href="#contact" class="btn btn-dark">Join</a>
+      </div>
+
+      <div class="price-card featured">
+        <span class="price-badge">Most brewed</span>
+        <h3>Regular Blend</h3>
+        <div class="price-amount">₹899</div>
+        <div class="price-cycle">per month</div>
+        <ul class="price-features">
+          <li><span class="tick">✓</span> Everything in Everyday Reader</li>
+          <li><span class="tick">✓</span> One free workshop seat monthly</li>
+          <li><span class="tick">✓</span> 15% off house stationery</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Join</a>
+      </div>
+
+      <div class="price-card">
+        <h3>Kagaz Circle</h3>
+        <div class="price-amount">₹1499</div>
+        <div class="price-cycle">per month</div>
+        <ul class="price-features">
+          <li><span class="tick">✓</span> Everything in Regular Blend</li>
+          <li><span class="tick">✓</span> Quarterly stationery box, curated</li>
+          <li><span class="tick">✓</span> Priority workshop booking</li>
+        </ul>
+        <a href="#contact" class="btn btn-dark">Join</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Before you visit</h2>
+      <p>A few things people usually ask at the counter.</p>
+    </div>
+
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary>Do you have Wi-Fi and plug points?<span class="icon-plusminus"></span></summary>
+        <p>Yes — Wi-Fi is free, and every table along the window has a plug point. We only ask that video calls happen outside.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I just come to write, without ordering chai?<span class="icon-plusminus"></span></summary>
+        <p>Of course. The letter-writing table stays open through the day, no order required — though most people end up ordering anyway.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do I book a Sunday workshop seat?<span class="icon-plusminus"></span></summary>
+        <p>Send us a message using the contact form below with the workshop name and date, and we'll hold a seat for you.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Are dogs allowed inside?<span class="icon-plusminus"></span></summary>
+        <p>Well-behaved dogs are welcome on the outdoor bench seats. There's usually a bowl of water waiting by the door.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="newsletter">
+  <div class="wrap newsletter-row">
+    <div class="newsletter-copy">
+      <h2>The Weekly Nib</h2>
+      <p>One short letter every Sunday — new blend notes and a small journaling prompt.</p>
+    </div>
+
+    <form class="newsletter-form" id="newsletterForm">
+      <input type="email" placeholder="you@example.com" required aria-label="Email address">
+      <button type="submit" class="btn btn-dark">Subscribe</button>
+      <p class="newsletter-note" id="newsletterNote">No spam, just one letter a week. Unsubscribe anytime.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Come find us</h2>
+      <p>Near Law Garden — or write ahead if you'd rather plan the visit.</p>
+    </div>
+
+    <div class="contact-row">
+      <form class="contact-form" id="contactForm">
+        <div class="form-field">
+          <label for="fname">Name</label>
+          <input type="text" id="fname" placeholder="Your name" required>
+        </div>
+        <div class="form-field">
+          <label for="femail">Email</label>
+          <input type="email" id="femail" placeholder="you@example.com" required>
+        </div>
+        <div class="form-field">
+          <label for="fmsg">Message</label>
+          <textarea id="fmsg" placeholder="Tell us what brings you in..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Send message</button>
+        <p id="contactNote" style="font-size:13px; color:#6B6255;"></p>
+      </form>
+
+      <div class="contact-info">
+        <h3>Kagaz &amp; Kettle</h3>
+        <div class="contact-line">
+          <span class="label">Address</span>
+          <span class="value">14, Kagaz Lane, near Law Garden, Ahmedabad, Gujarat 380006</span>
+        </div>
+        <div class="contact-line">
+          <span class="label">Hours</span>
+          <span class="value">Every day, 8 AM – 9 PM</span>
+        </div>
+        <div class="contact-line">
+          <span class="label">Phone</span>
+          <span class="value">+91 98765 43210</span>
+        </div>
+        <div class="contact-line">
+          <span class="label">Email</span>
+          <span class="value">hello@kagazandkettle.example</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-row">
+      <div class="footer-col">
+        <h4>Kagaz &amp; Kettle</h4>
+        <p>A small counter for chai, ink, and unhurried mornings, near Law Garden, Ahmedabad.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="#F6EFE3" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="#F6EFE3" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1" fill="#F6EFE3"/></svg>
+          </a>
+          <a href="#" aria-label="Email">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#F6EFE3" stroke-width="1.6"/><path d="M3 6L12 13L21 6" stroke="#F6EFE3" stroke-width="1.6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <div class="footer-links">
+          <a href="#menu">Menu</a>
+          <a href="#workshops">Workshops</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#membership">Membership</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Visit</h4>
+        <div class="footer-links">
+          <a href="#contact">14, Kagaz Lane, Law Garden</a>
+          <a href="#contact">Ahmedabad, Gujarat 380006</a>
+          <a href="#contact">8 AM – 9 PM, every day</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Say hello</h4>
+        <div class="footer-links">
+          <a href="mailto:hello@kagazandkettle.example">hello@kagazandkettle.example</a>
+          <a href="tel:+919876543210">+91 98765 43210</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap footer-bottom" style="padding-left:0; padding-right:0;">
+      <p>© 2026 Kagaz &amp; Kettle. All rights reserved.</p>
+      <p>Practice build — HTML &amp; CSS Flexbox, zero shorthand properties.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  var navToggle = document.getElementById('navToggle');
+  var navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', function () {
+    var isOpen = navLinks.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      navLinks.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Newsletter demo submit
+  var newsletterForm = document.getElementById('newsletterForm');
+  var newsletterNote = document.getElementById('newsletterNote');
+  newsletterForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    newsletterNote.textContent = "You're on the list — first letter arrives Sunday.";
+  });
+
+  // Contact form demo submit
+  var contactForm = document.getElementById('contactForm');
+  var contactNote = document.getElementById('contactNote');
+  contactForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    contactNote.textContent = "Thanks — we'll write back within a day.";
+    contactForm.reset();
+  });
+</script>
+
+</body>
+</html>
