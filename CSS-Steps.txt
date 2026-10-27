@@ -1,0 +1,20 @@
+Step 1: Display and layout mode
+display, flex-direction, justify-content, align-items, gap, grid-template-*, float, clear
+
+Step 2: Positioning
+position, top, right, bottom, left, z-index
+
+Step 3: Box model (size and spacing)
+width, min-width, max-width, height, min-height, max-height, margin, padding, box-sizing, overflow
+
+Step 4: Border
+border, border-radius, outline
+
+Step 5: Typography
+font-family, font-size, font-weight, line-height, letter-spacing, text-align, text-transform, text-decoration, color
+
+Step 6: Background and visual effects
+background, box-shadow, opacity, filter
+
+Step 7: Transitions, animations, and misc
+transition, transform, animation, cursor, pointer-events, content
